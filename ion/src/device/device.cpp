@@ -13,9 +13,11 @@ extern "C" {
 #include "console.h"
 #include "swd.h"
 #include "usb.h"
+#include "extflash.h"
 #include "bench/bench.h"
 
 #define USE_SD_CARD 0
+#define USE_EXTFLASH 1
 
 // Public Ion methods
 
@@ -138,6 +140,9 @@ void initPeripherals() {
 #endif
   Console::Device::init();
   SWD::Device::init();
+#if USE_EXTFLASH
+  ExtFlash::Device::init();
+#endif
 }
 
 void shutdownPeripherals() {
@@ -152,6 +157,9 @@ void shutdownPeripherals() {
   Keyboard::Device::shutdown();
   Backlight::Device::shutdown();
   Display::Device::shutdown();
+  #if USE_EXTFLASH
+    ExtFlash::Device::shutdown();
+  #endif
 }
 
 void initClocks() {
@@ -212,6 +220,10 @@ void initClocks() {
   RCC.APB2ENR()->set(apb2enr);
 
   RCC.AHB3ENR()->setFSMCEN(true);
+
+#if USE_EXTFLASH
+  RCC.AHB3ENR()->setQSPIEN(true);
+#endif
 }
 
 void shutdownClocks() {
@@ -225,8 +237,10 @@ void shutdownClocks() {
   RCC.AHB1ENR()->set(0); // Reset value
 
   RCC.AHB3ENR()->setFSMCEN(false);
+#if USE_EXTFLASH
+  RCC.AHB3ENR()->setQSPIEN(false);
+#endif
 }
 
 }
 }
-
