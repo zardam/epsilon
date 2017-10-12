@@ -27,7 +27,17 @@ void initGPIO() {
 }
 
 void initQSPI() {
-  // QSPI.CR()->setEN(true);
+  QSPI.CR()->setPRESCALER(47); // 1MHz QSPI frequency
+  QSPI.DCR()->setFSIZE(19);  // Number of bytes in Flash memory = 2^[FSIZE+1] (1 MBytes)
+  QSPI.CCR()->setFMODE(3); // Memory mapped mode
+  QSPI.CCR()->setDMODE(3); // Quad data lines
+  QSPI.CCR()->setDCYC(8); // 1 dummy byte
+  QSPI.CCR()->setADSIZE(2); // 24 bits address
+  QSPI.CCR()->setADMODE(1); // Address on a single line
+  QSPI.CCR()->setIMODE(1); // Instruction on a single line
+  QSPI.CCR()->setINSTRUCTION(0x6B); // "Quad Output Fast Read" from the flash
+
+  QSPI.CR()->setEN(true); // Enable QSPI Controller
 }
 
 void init() {
