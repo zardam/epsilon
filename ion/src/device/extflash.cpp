@@ -20,7 +20,7 @@ void initGPIO() {
   // Set GPIOs AF
   GPIOB.AFR()->setAlternateFunction(2, GPIO::AFR::AlternateFunction::AF9);
   GPIOB.AFR()->setAlternateFunction(6, GPIO::AFR::AlternateFunction::AF10);
-  GPIOC.AFR()->setAlternateFunction(8, GPIO::AFR::AlternateFunction::AF10);
+  GPIOC.AFR()->setAlternateFunction(8, GPIO::AFR::AlternateFunction::AF9);
   GPIOC.AFR()->setAlternateFunction(9, GPIO::AFR::AlternateFunction::AF9);
   GPIOD.AFR()->setAlternateFunction(12, GPIO::AFR::AlternateFunction::AF9);
   GPIOD.AFR()->setAlternateFunction(13, GPIO::AFR::AlternateFunction::AF9);
