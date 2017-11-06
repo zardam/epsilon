@@ -49,12 +49,14 @@ void Calculation::reset() {
   tidy();
 }
 
+extern "C" const char * caseval(const char *);
+
 void Calculation::setContent(const char * c, Context * context) {
   reset();
   strlcpy(m_inputText, c, sizeof(m_inputText));
-  Evaluation<double> * evaluation = input()->evaluate<double>(*context);
-  evaluation->writeTextInBuffer(m_outputText, sizeof(m_outputText));
-  delete evaluation;
+  static const char * bidon=caseval("init geogebra");
+  const char * ans=caseval(c);
+  strlcpy(m_outputText,ans,sizeof(m_outputText));
 }
 
 const char * Calculation::inputText() {
@@ -79,17 +81,9 @@ ExpressionLayout * Calculation::inputLayout() {
   return m_inputLayout;
 }
 
-Evaluation<double> * Calculation::output(Context * context) {
+Expression * Calculation::output(Context * context) {
   if (m_output == nullptr) {
-    /* To ensure that the expression 'm_output' is a matrix or a complex, we
-     * call 'evaluate'. */
-    Expression * exp = Expression::parse(m_outputText);
-    if (exp != nullptr) {
-      m_output = exp->evaluate<double>(*context);
-      delete exp;
-    } else {
-      m_output = new Complex<double>(Complex<double>::Float(NAN));
-    }
+    m_output = Expression::parse(m_outputText);
   }
   return m_output;
 }

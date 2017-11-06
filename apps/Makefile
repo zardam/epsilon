@@ -17,7 +17,7 @@ include apps/settings/Makefile
 include apps/statistics/Makefile
 include apps/probability/Makefile
 include apps/regression/Makefile
-include apps/code/Makefile
+#include apps/code/Makefile
 #include apps/picview/Makefile
 
 app_objs += $(addprefix apps/,\

@@ -28,6 +28,8 @@ SFLAGS += -MD -MP
 CFLAGS = -std=c99
 CXXFLAGS = -std=c++11 -fno-exceptions -fno-rtti -fno-threadsafe-statics
 
+LDFLAGS = -L../giac-1.2.0/src -L../libtommath-0.39 -lgiac -ltommath 
+
 products :=
 
 ifeq ($(VERBOSE),1)
@@ -69,7 +71,7 @@ endif
 include ion/Makefile
 include kandinsky/Makefile
 include poincare/Makefile
-include python/Makefile
+#include python/Makefile
 include escher/Makefile
 # Executable Makefiles
 include apps/Makefile
