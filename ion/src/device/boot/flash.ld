@@ -11,11 +11,24 @@
 MEMORY {
   FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 1024K
   SRAM (rw) : ORIGIN = 0x20000000, LENGTH = 256K
+  EXTFLASH (rx) : ORIGIN = 0x90000000, LENGTH = 8192K
 }
 
-STACK_SIZE = 32K;
+STACK_SIZE = 64K;
 
 SECTIONS {
+    .giac : {
+      . = ALIGN(4);
+      *libtommath.a:(.text);
+      *libtommath.a:(.text.*);
+      *libtommath.a:(.rodata);
+      *libtommath.a:(.rodata.*);
+      *libgiac.a:(.text);
+      *libgiac.a:(.text.*);
+      *libgiac.a:(.rodata);
+      *libgiac.a:(.rodata.*);
+    } >EXTFLASH
+
   .isr_vector_table ORIGIN(FLASH) : {
     /* When booting, the STM32F412 fetches the content of address 0x0, and
      * extracts from it various key infos: the initial value of the PC register
@@ -55,6 +68,12 @@ SECTIONS {
     . = ALIGN(4);
     *(.rodata)
     *(.rodata.*)
+  } >FLASH
+
+  .ARM.exidx : {
+    __exidx_start = .;
+     *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+    __exidx_end = .;
   } >FLASH
 
   .data : {
@@ -97,6 +116,7 @@ SECTIONS {
 
   .heap : {
     _heap_start = .;
+    end = _heap_start;
     /* Note: We don't increment "." here, we set it. */
     . = (ORIGIN(SRAM) + LENGTH(SRAM) - STACK_SIZE);
     _heap_end = .;
@@ -109,4 +129,5 @@ SECTIONS {
     . = ALIGN(8);
     _stack_start = .;
   } >SRAM
+
 }

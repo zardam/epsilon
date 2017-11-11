@@ -18,5 +18,6 @@
 #include "syscfg.h"
 #include "tim.h"
 #include "usart.h"
+#include "qspi.h"
 
 #endif

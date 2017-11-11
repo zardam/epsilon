@@ -13,6 +13,7 @@ extern "C" {
 #include "console.h"
 #include "swd.h"
 #include "usb.h"
+#include "extflash.h"
 #include "bench/bench.h"
 
 #define USE_SD_CARD 0
@@ -138,6 +139,8 @@ void initPeripherals() {
 #endif
   Console::Device::init();
   SWD::Device::init();
+  ExtFlash::Device::init();
+
 }
 
 void shutdownPeripherals() {
@@ -152,6 +155,7 @@ void shutdownPeripherals() {
   Keyboard::Device::shutdown();
   Backlight::Device::shutdown();
   Display::Device::shutdown();
+  ExtFlash::Device::shutdown();
 }
 
 void initClocks() {
@@ -212,6 +216,7 @@ void initClocks() {
   RCC.APB2ENR()->set(apb2enr);
 
   RCC.AHB3ENR()->setFSMCEN(true);
+  RCC.AHB3ENR()->setQSPIEN(true);
 }
 
 void shutdownClocks() {
@@ -225,8 +230,8 @@ void shutdownClocks() {
   RCC.AHB1ENR()->set(0); // Reset value
 
   RCC.AHB3ENR()->setFSMCEN(false);
+  RCC.AHB3ENR()->setQSPIEN(false);
 }
 
 }
 }
-

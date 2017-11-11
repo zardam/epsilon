@@ -6,6 +6,7 @@ extern "C" {
 #include <ion.h>
 #include "../device.h"
 #include "../console.h"
+#include "../extflash.h"
 
 typedef void (*cxx_constructor)();
 
@@ -49,6 +50,13 @@ void start() {
    * For example, static C++ objects are very likely to manipulate float values */
   Ion::Device::initFPU();
 
+  /* Need to initialize the extflash for C++ object constructors
+   * TODO: here the CPU does not run at full speed, it is possible to
+   * clock the external flash higher */
+  RCC.AHB1ENR()->set(0x0000000e);
+  RCC.AHB3ENR()->setQSPIEN(true);
+  Ion::ExtFlash::Device::init();
+
   /* Call static C++ object constructors
    * The C++ compiler creates an initialization function for each static object.
    * The linker then stores the address of each of those functions consecutively
@@ -58,6 +66,7 @@ void start() {
   for (cxx_constructor * c = &_init_array_start; c<&_init_array_end; c++) {
     (*c)();
   }
+
 
   Ion::Device::init();
 

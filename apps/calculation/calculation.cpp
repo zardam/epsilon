@@ -54,7 +54,7 @@ extern "C" const char * caseval(const char *);
 void Calculation::setContent(const char * c, Context * context) {
   reset();
   strlcpy(m_inputText, c, sizeof(m_inputText));
-  static const char * bidon=caseval("init geogebra");
+  caseval("init geogebra");
   const char * ans=caseval(c);
   strlcpy(m_outputText,ans,sizeof(m_outputText));
 }

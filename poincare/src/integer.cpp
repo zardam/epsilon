@@ -56,7 +56,7 @@ Integer::Integer(const char * digits, bool negative) {
     digits++;
   }
 
-  Integer result = Integer(0);
+  Integer result = Integer((native_int_t)0);
 
   if (digits != nullptr) {
     Integer base = Integer(10);

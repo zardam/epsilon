@@ -27,8 +27,7 @@ SFLAGS += -MD -MP
 # Language-specific flags
 CFLAGS = -std=c99
 CXXFLAGS = -std=c++11 -fno-exceptions -fno-rtti -fno-threadsafe-statics
-
-LDFLAGS = -L../giac-1.2.0/src -L../libtommath-0.39 -lgiac -ltommath 
+LDFLAGS := -L../giac-1.4.9/src -L../libtommath-0.39 -lgiac -ltommath $(LDFLAGS)
 
 products :=
 
@@ -104,7 +103,10 @@ products += $(products:.$(EXE)=.hex) $(products:.$(EXE)=.bin)
 	@$(OBJCOPY) -O ihex $< $@
 %.bin: %.$(EXE)
 	@echo "OBJCOPY $@"
-	@$(OBJCOPY) -O binary $< $@
+	@$(OBJCOPY) -O binary -R.giac $< $@
+%-extflash.bin: %.$(EXE)
+	@echo "OBJCOPY $@"
+	@$(OBJCOPY) -O binary -j.giac $< $@
 endif
 
 %.o: %.c

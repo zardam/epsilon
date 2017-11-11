@@ -1,5 +1,5 @@
 TOOLCHAIN ?= arm-gcc
-USE_LIBA = 1
+USE_LIBA = 0
 EXE = elf
 
 .PHONY: %_run
