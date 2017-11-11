@@ -1,6 +1,7 @@
 TOOLCHAIN ?= arm-gcc
 USE_LIBA = 0
 EXE = elf
+PORT ?= /dev/ttyACM0
 
 .PHONY: %_run
 %_run: %.$(EXE)
@@ -14,3 +15,7 @@ EXE = elf
 	@until dfu-util -l | grep "Internal Flash" > /dev/null 2>&1; do sleep 1;done
 	@echo "DFU     $@"
 	@dfu-util -i 0 -a 0 -s 0x08000000:leave -D $<
+
+.PHONY: %_extflash
+%_extflash: %-extflash.bin
+	@flashrom -p serprog:dev=$(PORT) -w $<
