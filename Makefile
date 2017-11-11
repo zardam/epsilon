@@ -106,7 +106,7 @@ products += $(products:.$(EXE)=.hex) $(products:.$(EXE)=.bin)
 	@$(OBJCOPY) -O binary -R.giac $< $@
 %-extflash.bin: %.$(EXE)
 	@echo "OBJCOPY $@"
-	@$(OBJCOPY) -O binary -j.giac $< $@
+	@$(OBJCOPY) -O binary -j.giac --gap-fill 0xff --pad-to 0x90800000 $< $@
 endif
 
 %.o: %.c
