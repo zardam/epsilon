@@ -27,6 +27,18 @@ public:
     void setType(int index, Type type) volatile { setBitRange(index, index, (uint32_t)type); }
   };
 
+  class OSPEEDR : Register32 {
+  public:
+    enum class Speed {
+      Low = 0,
+      Medium = 1,
+      Fast = 2,
+      High = 3
+    };
+    Speed getSpeed(int index) { return (Speed)getBitRange(2*index+1, 2*index); }
+    void setSpeed(int index, Speed speed) volatile { setBitRange(2*index+1, 2*index, (uint32_t)speed); }
+  };
+
   class PUPDR : public Register32 {
   public:
     enum class Pull {
@@ -72,6 +84,7 @@ public:
   constexpr operator int() const { return m_index; }
   REGS_REGISTER_AT(MODER, 0x00);
   REGS_REGISTER_AT(OTYPER, 0x04);
+  REGS_REGISTER_AT(OSPEEDR, 0x08);
   REGS_REGISTER_AT(PUPDR, 0x0C);
   REGS_REGISTER_AT(IDR, 0x10);
   REGS_REGISTER_AT(ODR, 0x14);

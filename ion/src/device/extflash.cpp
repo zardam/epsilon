@@ -24,18 +24,30 @@ void initGPIO() {
   GPIOC.AFR()->setAlternateFunction(9, GPIO::AFR::AlternateFunction::AF9);
   GPIOD.AFR()->setAlternateFunction(12, GPIO::AFR::AlternateFunction::AF9);
   GPIOD.AFR()->setAlternateFunction(13, GPIO::AFR::AlternateFunction::AF9);
+  
+  // Set GPIOs Speed
+  GPIOB.OSPEEDR()->setSpeed(2, GPIO::OSPEEDR::Speed::High);
+  GPIOB.OSPEEDR()->setSpeed(6, GPIO::OSPEEDR::Speed::High);
+  GPIOC.OSPEEDR()->setSpeed(8, GPIO::OSPEEDR::Speed::High);
+  GPIOC.OSPEEDR()->setSpeed(9, GPIO::OSPEEDR::Speed::High);
+  GPIOD.OSPEEDR()->setSpeed(12, GPIO::OSPEEDR::Speed::High);
+  GPIOD.OSPEEDR()->setSpeed(13, GPIO::OSPEEDR::Speed::High);
 }
 
 void initQSPI() {
-  QSPI.CR()->setPRESCALER(3); // 8MHz QSPI frequency
-  QSPI.DCR()->setFSIZE(22);  // Number of bytes in Flash memory = 2^[FSIZE+1] (16 MBytes)
+  QSPI.CR()->setPRESCALER(0); // 96MHz QSPI frequency
+  QSPI.DCR()->setFSIZE(22); // Number of bytes in Flash memory = 2^[FSIZE+1] (8 MBytes)
+  QSPI.CCR()->setSIOO(true); // Send instruction only once mode
   QSPI.CCR()->setFMODE(3); // Memory mapped mode
-  QSPI.CCR()->setDMODE(1); // Quad data lines
-  QSPI.CCR()->setDCYC(0); // 1 dummy byte
+  QSPI.CCR()->setDMODE(3); // Quad data lines
+  QSPI.CCR()->setDCYC(4); // 4 dummy cycles
+  QSPI.CCR()->setABSIZE(0); // One alternate byte
+  QSPI.CCR()->setABMODE(3); // Alternate byte on four lines
   QSPI.CCR()->setADSIZE(2); // 24 bits address
-  QSPI.CCR()->setADMODE(1); // Address on a single line
+  QSPI.CCR()->setADMODE(3); // Address on four lines
   QSPI.CCR()->setIMODE(1); // Instruction on a single line
-  QSPI.CCR()->setINSTRUCTION(0x03); // "Quad Output Fast Read" from the flash
+  QSPI.CCR()->setINSTRUCTION(0xeb); // "Fast Read Quad I/O" from the flash
+  QSPI.ABR()->setALTERNATE(0xa0); // Send instruction only once
   QSPI.CR()->setEN(true); // Enable QSPI Controller
 }
 
