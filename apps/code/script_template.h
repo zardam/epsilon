@@ -11,6 +11,7 @@ public:
   static const ScriptTemplate * Fibonacci();
   static const ScriptTemplate * Mandelbrot();
   static const ScriptTemplate * Polynomial();
+  static const ScriptTemplate * UartChat();
   const char * name() const { return m_name; }
   const char * content() const { return m_content; }
 private:

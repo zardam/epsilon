@@ -18,9 +18,9 @@ void init();
 void shutdown();
 bool peerConnected();
 
-constexpr USART UARTPort = USART(3);
-constexpr static GPIOPin RxPin = GPIOPin(GPIOC, 11);
-constexpr static GPIOPin TxPin = GPIOPin(GPIOD, 8);
+constexpr USART UARTPort = USART(6);
+constexpr static GPIOPin RxPin = GPIOPin(GPIOA, 12);
+constexpr static GPIOPin TxPin = GPIOPin(GPIOA, 11);
 constexpr static GPIOPin Pins[] = { RxPin, TxPin };
 
 }

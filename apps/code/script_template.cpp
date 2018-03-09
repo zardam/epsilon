@@ -60,6 +60,14 @@ def roots(a,b,c):
   else:
     return None)");
 
+constexpr ScriptTemplate uartChatScriptTemplate("uart_chat.py", R"(import uart
+def chat():
+  while True:
+    line = input("-->")
+    uart.writeLine(line)
+    line = uart.readLine()
+    print("<--" + line))");
+
 const ScriptTemplate * ScriptTemplate::Empty() {
   return &emptyScriptTemplate;
 }
@@ -80,6 +88,8 @@ const ScriptTemplate * ScriptTemplate::Polynomial() {
   return &polynomialScriptTemplate;
 }
 
+const ScriptTemplate * ScriptTemplate::UartChat() {
+  return &uartChatScriptTemplate;
 }
 
-
+}

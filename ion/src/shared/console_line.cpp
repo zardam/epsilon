@@ -10,7 +10,7 @@ void writeLine(const char * line) {
   while (*line != 0) {
     writeChar(*line++);
   }
-  writeChar('\r');
+  //writeChar('\r');
   writeChar('\n');
 }
 
@@ -22,7 +22,7 @@ void readLine(char * line, int maxLineLength) {
   char * last = line+maxLineLength-1;
   while (true) {
     *cursor = readChar();
-    if (*cursor == '\r' || cursor == last) {
+    if (*cursor == '\n' || cursor == last) {
       *cursor = 0;
       return;
     }

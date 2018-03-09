@@ -27,11 +27,11 @@ namespace Console {
 namespace Device {
 
 void init() {
-  RCC.APB1ENR()->setUSART3EN(true);
+  RCC.APB2ENR()->setUSART6EN(true);
 
   for(const GPIOPin & g : Pins) {
     g.group().MODER()->setMode(g.pin(), GPIO::MODER::Mode::AlternateFunction);
-    g.group().AFR()->setAlternateFunction(g.pin(), GPIO::AFR::AlternateFunction::AF7);
+    g.group().AFR()->setAlternateFunction(g.pin(), GPIO::AFR::AlternateFunction::AF8);
   }
 
   UARTPort.CR1()->setUE(true);
@@ -49,7 +49,7 @@ void init() {
    * DIV_MANTISSA = 26
    * DIV_FRAC = 16*0.0416667 = 1
    */
-  UARTPort.BRR()->setDIV_MANTISSA(26);
+  UARTPort.BRR()->setDIV_MANTISSA(52);
   UARTPort.BRR()->setDIV_FRAC(1);
 }
 
@@ -67,7 +67,7 @@ bool peerConnected() {
   bool result = RxPin.group().IDR()->get(RxPin.pin());
   RxPin.group().PUPDR()->setPull(RxPin.pin(), GPIO::PUPDR::Pull::None);
   RxPin.group().MODER()->setMode(RxPin.pin(), GPIO::MODER::Mode::AlternateFunction);
-  return result;
+  return false;
 }
 
 

@@ -187,6 +187,8 @@ port_objs += $(addprefix python/port/,\
   modkandinsky_impl.o \
   mphalport.o \
   stackctrl.o \
+	uart.o \
+	uart_impl.o \
 )
 
 # Reduce optimization for the emscripten platform.

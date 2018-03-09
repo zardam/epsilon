@@ -15,6 +15,7 @@ constexpr char ScriptStore::k_defaultScriptName[];
 ScriptStore::ScriptStore() :
   m_accordion(m_scriptData, k_scriptDataSize)
 {
+  addScriptFromTemplate(ScriptTemplate::UartChat());
   addScriptFromTemplate(ScriptTemplate::Factorial());
   addScriptFromTemplate(ScriptTemplate::Mandelbrot());
   addScriptFromTemplate(ScriptTemplate::Polynomial());
