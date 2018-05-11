@@ -423,7 +423,6 @@ void TextArea::ContentView::drawRect(KDContext * ctx, KDRect rect) const {
     mp_token_kind_t prev_tok_kind = MP_TOKEN_END;
     mp_token_kind_t tok_kind = MP_TOKEN_END;
 
-    ctx->fillRect(rect, m_backgroundColor);
     do {
       int beginIndex = m_text.indexAtPosition(TextArea::Text::Position(cur_col-1, cur_line-1));
       TextArea::Text::Position middlePosition = m_text.positionAtIndex(beginIndex + cur_len);
@@ -453,7 +452,7 @@ void TextArea::ContentView::drawRect(KDContext * ctx, KDRect rect) const {
            endIndex - beginIndex - cur_len
          );
       }
-      
+
       // Stores the "next" current token to be displayed
       cur_line = lex->tok_line;
       cur_col = lex->tok_column;
@@ -464,6 +463,20 @@ void TextArea::ContentView::drawRect(KDContext * ctx, KDRect rect) const {
 
       mp_lexer_to_next(lex);
     } while(tok_kind != MP_TOKEN_END);
+
+    // Clears the lines under the last line of the script
+    cur_line--;
+    while(cur_line < bottomRight.line()) {
+      ctx->drawString(
+         "\n",
+         KDPoint(0, cur_line*charSize.height()),
+         m_fontSize,
+         KDColorBlack,
+         KDColorWhite,
+         1
+       );
+       cur_line++;
+    }
 
     mp_lexer_free(lex);
     nlr_pop();

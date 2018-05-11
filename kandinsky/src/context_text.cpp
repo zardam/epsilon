@@ -24,6 +24,9 @@ KDPoint KDContext::writeString(const char * text, KDPoint p, KDText::FontSize si
   while(*text != 0 && text != end) {
     writeChar(*text, position, size, textColor, backgroundColor, transparentBackground);
     if (*text == '\n') {
+      // TODO: Clearing the remaining of the line should be an option, and it should be done better than that...
+      // For now, it avoids severe flickering in the code editor
+      writeString("                                        ", KDPoint(position.x(), position.y()), size, textColor, backgroundColor, 40, transparentBackground);
       position = KDPoint(0, position.y()+characterHeight);
     } else if (*text == '\t') {
       position = position.translatedBy(KDPoint(KDText::k_tabCharacterWidth*characterWidth, 0));
