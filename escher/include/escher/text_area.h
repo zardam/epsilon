@@ -62,7 +62,7 @@ private:
     Position span() const;
 
     Position positionAtIndex(size_t index) const;
-    size_t indexAtPosition(Position p);
+    size_t indexAtPosition(Position p) const;
 
     void insertChar(char c, size_t index);
     char removeChar(size_t index);

@@ -6,6 +6,11 @@
 #include <assert.h>
 #include <limits.h>
 
+extern "C" {
+#include "py/nlr.h"
+#include "py/lexer.h"
+}
+#include <python/port/port.h>
 
 static inline size_t min(size_t a, size_t b) {
   return (a>b ? b : a);
@@ -44,7 +49,7 @@ TextArea::Text::LineIterator & TextArea::Text::LineIterator::operator++() {
   return *this;
 }
 
-size_t TextArea::Text::indexAtPosition(Position p) {
+size_t TextArea::Text::indexAtPosition(Position p) const {
   assert(m_buffer != nullptr);
   if (p.line() < 0) {
     return 0;
@@ -167,40 +172,303 @@ KDSize TextArea::ContentView::minimalSizeForOptimalDisplay() const {
   );
 }
 
+bool isBuiltin(const char * name) {
+  switch(*name) {
+    case 'a':
+      return strcmp(name, "abs") == 0
+      || strcmp(name, "all") == 0
+      || strcmp(name, "any") == 0
+      || strcmp(name, "ascii") == 0;
+    case 'b':
+      return strcmp(name, "bin") == 0
+      || strcmp(name, "bool") == 0
+      || strcmp(name, "bytearray") == 0
+      || strcmp(name, "bytes") == 0;
+    case 'c':
+      return strcmp(name, "callable") == 0
+      || strcmp(name, "chr") == 0
+      || strcmp(name, "classmethod") == 0
+      || strcmp(name, "compile") == 0
+      || strcmp(name, "complex") == 0
+      || strcmp(name, "copyright") == 0
+      || strcmp(name, "credits") == 0;
+    case 'd':
+      return strcmp(name, "delattr") == 0
+      || strcmp(name, "dict") == 0
+      || strcmp(name, "dir") == 0
+      || strcmp(name, "divmod") == 0;
+    case 'e':
+      return strcmp(name, "enumerate") == 0
+      || strcmp(name, "eval") == 0
+      || strcmp(name, "exec") == 0
+      || strcmp(name, "exit") == 0;
+    case 'f':
+      return strcmp(name, "filter") == 0
+      || strcmp(name, "float") == 0
+      || strcmp(name, "format") == 0
+      || strcmp(name, "frozenset") == 0;
+    case 'g':
+      return strcmp(name, "getattr") == 0
+      || strcmp(name, "globals") == 0;
+    case 'h':
+      return strcmp(name, "hasattr") == 0
+      || strcmp(name, "hash") == 0
+      || strcmp(name, "help") == 0
+      || strcmp(name, "hex") == 0;
+    case 'i':
+      return strcmp(name, "id") == 0
+      || strcmp(name, "input") == 0
+      || strcmp(name, "int") == 0
+      || strcmp(name, "isinstance") == 0
+      || strcmp(name, "issubclass") == 0
+      || strcmp(name, "iter") == 0;
+    case 'l':
+      return strcmp(name, "len") == 0
+      || strcmp(name, "license") == 0
+      || strcmp(name, "list") == 0
+      || strcmp(name, "locals") == 0;
+    case 'm':
+      return strcmp(name, "map") == 0
+      || strcmp(name, "max") == 0
+      || strcmp(name, "memoryview") == 0
+      || strcmp(name, "min") == 0;
+    case 'o':
+      return strcmp(name, "object") == 0
+      || strcmp(name, "oct") == 0
+      || strcmp(name, "open") == 0
+      || strcmp(name, "ord") == 0;
+    case 'p':
+      return strcmp(name, "pow") == 0
+      || strcmp(name, "print") == 0
+      || strcmp(name, "property") == 0;
+    case 'r':
+      return strcmp(name, "range") == 0
+      || strcmp(name, "repr") == 0
+      || strcmp(name, "reversed") == 0
+      || strcmp(name, "round") == 0;
+    case 's':
+      return strcmp(name, "set") == 0
+      || strcmp(name, "setattr") == 0
+      || strcmp(name, "slice") == 0
+      || strcmp(name, "sorted") == 0
+      || strcmp(name, "staticmethod") == 0
+      || strcmp(name, "str") == 0
+      || strcmp(name, "sum") == 0
+      || strcmp(name, "super") == 0;
+    case 't':
+      return strcmp(name, "tuple")  == 0
+      || strcmp(name, "type") == 0;
+    default:
+      return strcmp(name, "next") == 0
+      || strcmp(name, "quit") == 0
+      || strcmp(name, "vars") == 0
+      || strcmp(name, "zip") == 0;
+  }
+}
+
+constexpr KDColor KDColorString = KDColor::RGB24(0x00AA00);
+constexpr KDColor KDColorClassOrFunction = KDColor::RGB24(0x0000FF);
+constexpr KDColor KDColorBuiltin = KDColor::RGB24(0x900090);
+constexpr KDColor KDColorKeyord = KDColor::RGB24(0xFF7700);
+constexpr KDColor KDColorComment = KDColor::RGB24(0xDD0000);
+
+KDColor determineColor(mp_token_kind_t prev_tok_kind, mp_token_kind_t tok_kind, bool isBuiltin) {
+  switch(tok_kind) {
+    case MP_TOKEN_STRING:
+    case MP_TOKEN_LONELY_STRING_OPEN:
+      return KDColorString;
+
+    case MP_TOKEN_NAME:
+      if(prev_tok_kind == MP_TOKEN_KW_DEF || prev_tok_kind == MP_TOKEN_KW_CLASS) {
+        return KDColorClassOrFunction;
+      } else if(isBuiltin) {
+        return KDColorBuiltin;
+      } else {
+        return KDColorBlack;
+      }
+
+    case MP_TOKEN_KW_FALSE:
+    case MP_TOKEN_KW_NONE:
+    case MP_TOKEN_KW_TRUE:
+    case MP_TOKEN_KW___DEBUG__:
+    case MP_TOKEN_KW_AND:
+    case MP_TOKEN_KW_AS:
+    case MP_TOKEN_KW_ASSERT:
+    #if MICROPY_PY_ASYNC_AWAIT
+    case MP_TOKEN_KW_ASYNC:
+    case MP_TOKEN_KW_AWAIT:
+    #endif
+    case MP_TOKEN_KW_BREAK:
+    case MP_TOKEN_KW_CLASS:
+    case MP_TOKEN_KW_CONTINUE:
+    case MP_TOKEN_KW_DEF:
+    case MP_TOKEN_KW_DEL:
+    case MP_TOKEN_KW_ELIF:
+    case MP_TOKEN_KW_ELSE:
+    case MP_TOKEN_KW_EXCEPT:
+    case MP_TOKEN_KW_FINALLY:
+    case MP_TOKEN_KW_FOR:
+    case MP_TOKEN_KW_FROM:
+    case MP_TOKEN_KW_GLOBAL:
+    case MP_TOKEN_KW_IF:
+    case MP_TOKEN_KW_IMPORT:
+    case MP_TOKEN_KW_IN:
+    case MP_TOKEN_KW_IS:
+    case MP_TOKEN_KW_LAMBDA:
+    case MP_TOKEN_KW_NONLOCAL:
+    case MP_TOKEN_KW_NOT:
+    case MP_TOKEN_KW_OR:
+    case MP_TOKEN_KW_PASS:
+    case MP_TOKEN_KW_RAISE:
+    case MP_TOKEN_KW_RETURN:
+    case MP_TOKEN_KW_TRY:
+    case MP_TOKEN_KW_WHILE:
+    case MP_TOKEN_KW_WITH:
+    case MP_TOKEN_KW_YIELD:
+      return KDColorKeyord;
+
+    default:
+      return KDColorBlack;
+  }
+}
+
+int tokenLength(mp_lexer_t * lex, const char * text) {
+  switch(lex->tok_kind) {
+    case MP_TOKEN_OP_PLUS:
+    case MP_TOKEN_OP_MINUS:
+    case MP_TOKEN_OP_STAR:
+    case MP_TOKEN_OP_SLASH:
+    case MP_TOKEN_OP_PERCENT:
+    case MP_TOKEN_OP_LESS:
+    case MP_TOKEN_OP_MORE:
+    case MP_TOKEN_OP_AMPERSAND:
+    case MP_TOKEN_OP_PIPE:
+    case MP_TOKEN_OP_CARET:
+    case MP_TOKEN_OP_TILDE:
+    case MP_TOKEN_OP_LESS_EQUAL:
+    case MP_TOKEN_OP_MORE_EQUAL:
+    case MP_TOKEN_OP_NOT_EQUAL:
+    case MP_TOKEN_DEL_PAREN_OPEN:
+    case MP_TOKEN_DEL_PAREN_CLOSE:
+    case MP_TOKEN_DEL_BRACKET_OPEN:
+    case MP_TOKEN_DEL_BRACKET_CLOSE:
+    case MP_TOKEN_DEL_BRACE_OPEN:
+    case MP_TOKEN_DEL_BRACE_CLOSE:
+    case MP_TOKEN_DEL_COMMA:
+    case MP_TOKEN_DEL_COLON:
+    case MP_TOKEN_DEL_PERIOD:
+    case MP_TOKEN_DEL_SEMICOLON:
+    case MP_TOKEN_DEL_AT:
+    case MP_TOKEN_DEL_EQUAL:
+    case MP_TOKEN_DEL_PLUS_EQUAL:
+    case MP_TOKEN_DEL_MINUS_EQUAL:
+    case MP_TOKEN_DEL_STAR_EQUAL:
+    case MP_TOKEN_DEL_SLASH_EQUAL:
+    case MP_TOKEN_DEL_PERCENT_EQUAL:
+    case MP_TOKEN_DEL_AMPERSAND_EQUAL:
+    case MP_TOKEN_DEL_PIPE_EQUAL:
+    case MP_TOKEN_DEL_CARET_EQUAL:
+    case MP_TOKEN_DEL_MINUS_MORE:
+      return 1;
+    case MP_TOKEN_OP_DBL_STAR:
+    case MP_TOKEN_OP_DBL_SLASH:
+    case MP_TOKEN_OP_DBL_LESS:
+    case MP_TOKEN_OP_DBL_MORE:
+    case MP_TOKEN_OP_DBL_EQUAL:
+    case MP_TOKEN_DEL_DBL_SLASH_EQUAL:
+    case MP_TOKEN_DEL_DBL_MORE_EQUAL:
+    case MP_TOKEN_DEL_DBL_LESS_EQUAL:
+    case MP_TOKEN_DEL_DBL_STAR_EQUAL:
+      return 2;
+    case MP_TOKEN_STRING:
+      if(lex->vstr.len > 0 && text[0] == text[1]) {
+        return lex->vstr.len + 6;
+      } else {
+        return lex->vstr.len + 2;
+      }
+    case MP_TOKEN_LONELY_STRING_OPEN:
+      if(lex->vstr.len > 0 && text[0] == text[1]) {
+        return lex->vstr.len + 2;
+      } else {
+        return lex->vstr.len + 1;
+      }
+    default:
+      return lex->vstr.len;
+  }
+}
 
 void TextArea::ContentView::drawRect(KDContext * ctx, KDRect rect) const {
-  ctx->fillRect(rect, m_backgroundColor);
-
   KDSize charSize = KDText::charSize(m_fontSize);
 
-  // We want to draw even partially visible characters. So we need to round
-  // down for the top left corner and up for the bottom right one.
   Text::Position topLeft(
-    rect.x()/charSize.width(),
-    rect.y()/charSize.height()
-  );
-  Text::Position bottomRight(
-    rect.right()/charSize.width() + 1,
-    rect.bottom()/charSize.height() + 1
-  );
+       rect.x()/charSize.width(),
+       rect.y()/charSize.height()
+     );
+   Text::Position bottomRight(
+     rect.right()/charSize.width() + 1,
+     rect.bottom()/charSize.height() + 1
+   );
 
-  int y = 0;
-  size_t x = topLeft.column();
+  char m_pythonHeap[4096];
+  MicroPython::init(m_pythonHeap, m_pythonHeap + 4096);
 
-  for (Text::Line line : m_text) {
-    if (y >= topLeft.line() && y <= bottomRight.line() && topLeft.column() < (int)line.length()) {
-      //drawString(line.text(), 0, y*charHeight); // Naive version
-      ctx->drawString(
-        line.text() + topLeft.column(),
-        KDPoint(x*charSize.width(), y*charSize.height()),
-        m_fontSize,
-        m_textColor,
-        m_backgroundColor,
-        min(line.length() - topLeft.column(), bottomRight.column() - topLeft.column())
-      );
-    }
-    y++;
+  nlr_buf_t nlr;
+  if (nlr_push(&nlr) == 0) {
+    mp_lexer_t * lex = mp_lexer_new_from_str_len(0, text(), strlen(text()), false);
+
+    int cur_line = 1;
+    int cur_col = 1;
+    int cur_len = 0;
+    bool cur_builtin = false;
+    mp_token_kind_t prev_tok_kind = MP_TOKEN_END;
+    mp_token_kind_t tok_kind = MP_TOKEN_END;
+
+    ctx->fillRect(rect, m_backgroundColor);
+    do {
+      int beginIndex = m_text.indexAtPosition(TextArea::Text::Position(cur_col-1, cur_line-1));
+      TextArea::Text::Position middlePosition = m_text.positionAtIndex(beginIndex + cur_len);
+      TextArea::Text::Position endPosition = TextArea::Text::Position(lex->tok_column-1, lex->tok_line-1);
+      int endIndex = m_text.indexAtPosition(endPosition);
+
+      // Draws the current token.
+      if(cur_line-1 <= bottomRight.line() && middlePosition.line() >= topLeft.line()) {
+        ctx->drawString(
+          m_text.text() + beginIndex,
+          KDPoint(cur_col*charSize.width()-charSize.width(), cur_line*charSize.height()-charSize.height()),
+          m_fontSize,
+          determineColor(prev_tok_kind, tok_kind, cur_builtin),
+          KDColorWhite,
+          cur_len
+        );
+      }
+
+      // Draws what is between the current token and the next token to be displayed (comment or whitespace)
+      if(middlePosition.line() <= bottomRight.line() &&  endPosition.line() >= topLeft.line()) {
+        ctx->drawString(
+           m_text.text() + beginIndex + cur_len,
+           KDPoint(middlePosition.column()*charSize.width(), middlePosition.line()*charSize.height()),
+           m_fontSize,
+           KDColorComment,
+           KDColorWhite,
+           endIndex - beginIndex - cur_len
+         );
+      }
+      
+      // Stores the "next" current token to be displayed
+      cur_line = lex->tok_line;
+      cur_col = lex->tok_column;
+      cur_len = tokenLength(lex, m_text.text() + endIndex);
+      cur_builtin = lex->tok_kind == MP_TOKEN_NAME && isBuiltin(lex->vstr.buf);
+      prev_tok_kind = tok_kind;
+      tok_kind = lex->tok_kind;
+
+      mp_lexer_to_next(lex);
+    } while(tok_kind != MP_TOKEN_END);
+
+    mp_lexer_free(lex);
+    nlr_pop();
   }
+  MicroPython::deinit();
 }
 
 void TextArea::TextArea::ContentView::setText(char * textBuffer, size_t textBufferSize) {
@@ -255,7 +523,7 @@ bool TextArea::ContentView::removeStartOfLine() {
   }
   int removedLine = m_text.removeRemainingLine(cursorLocation()-1, -1);
   if (removedLine > 0) {
-    assert(m_cursorIndex >= removedLine);
+    assert((int)m_cursorIndex >= removedLine);
     setCursorLocation(cursorLocation()-removedLine);
     reloadRectFromCursorPosition(cursorLocation(), false);
     return true;
