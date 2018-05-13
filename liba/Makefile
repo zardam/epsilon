@@ -27,6 +27,10 @@ objs += $(addprefix liba/src/, \
 )
 
 objs += $(addprefix liba/src/external/openbsd/, \
+  bsearch.o \
+)
+
+objs += $(addprefix liba/src/external/openbsd/, \
   b_exp__D.o \
   b_log__D.o \
   b_tgamma.o \

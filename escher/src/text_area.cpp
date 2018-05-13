@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <assert.h>
 #include <limits.h>
+#include <stdlib.h>
 
 extern "C" {
 #include "py/nlr.h"
@@ -172,98 +173,19 @@ KDSize TextArea::ContentView::minimalSizeForOptimalDisplay() const {
   );
 }
 
+// This list must be sorted according to strcmp
+const char builtins[][20] = { "abs", "all", "any", "ascii", "bin", "bool", "bytearray",
+  "bytes", "callable", "chr", "classmethod", "compile", "complex", "copyright",
+  "credits", "delattr", "dict", "dir", "divmod", "enumerate", "eval", "exec",
+  "exit", "filter", "float", "format", "frozenset", "getattr", "globals", "hasattr",
+  "hash", "help", "hex", "id", "input", "int", "isinstance", "issubclass", "iter", "len",
+  "license", "list", "locals", "map", "max", "memoryview", "min", "next", "object",
+  "oct", "open", "ord", "pow", "print", "property", "quit", "range", "repr", "reversed",
+  "round", "set", "setattr", "slice", "sorted", "staticmethod", "str", "sum", "super",
+  "tuple", "type", "vars", "zip"};
+
 bool isBuiltin(const char * name) {
-  switch(*name) {
-    case 'a':
-      return strcmp(name, "abs") == 0
-      || strcmp(name, "all") == 0
-      || strcmp(name, "any") == 0
-      || strcmp(name, "ascii") == 0;
-    case 'b':
-      return strcmp(name, "bin") == 0
-      || strcmp(name, "bool") == 0
-      || strcmp(name, "bytearray") == 0
-      || strcmp(name, "bytes") == 0;
-    case 'c':
-      return strcmp(name, "callable") == 0
-      || strcmp(name, "chr") == 0
-      || strcmp(name, "classmethod") == 0
-      || strcmp(name, "compile") == 0
-      || strcmp(name, "complex") == 0
-      || strcmp(name, "copyright") == 0
-      || strcmp(name, "credits") == 0;
-    case 'd':
-      return strcmp(name, "delattr") == 0
-      || strcmp(name, "dict") == 0
-      || strcmp(name, "dir") == 0
-      || strcmp(name, "divmod") == 0;
-    case 'e':
-      return strcmp(name, "enumerate") == 0
-      || strcmp(name, "eval") == 0
-      || strcmp(name, "exec") == 0
-      || strcmp(name, "exit") == 0;
-    case 'f':
-      return strcmp(name, "filter") == 0
-      || strcmp(name, "float") == 0
-      || strcmp(name, "format") == 0
-      || strcmp(name, "frozenset") == 0;
-    case 'g':
-      return strcmp(name, "getattr") == 0
-      || strcmp(name, "globals") == 0;
-    case 'h':
-      return strcmp(name, "hasattr") == 0
-      || strcmp(name, "hash") == 0
-      || strcmp(name, "help") == 0
-      || strcmp(name, "hex") == 0;
-    case 'i':
-      return strcmp(name, "id") == 0
-      || strcmp(name, "input") == 0
-      || strcmp(name, "int") == 0
-      || strcmp(name, "isinstance") == 0
-      || strcmp(name, "issubclass") == 0
-      || strcmp(name, "iter") == 0;
-    case 'l':
-      return strcmp(name, "len") == 0
-      || strcmp(name, "license") == 0
-      || strcmp(name, "list") == 0
-      || strcmp(name, "locals") == 0;
-    case 'm':
-      return strcmp(name, "map") == 0
-      || strcmp(name, "max") == 0
-      || strcmp(name, "memoryview") == 0
-      || strcmp(name, "min") == 0;
-    case 'o':
-      return strcmp(name, "object") == 0
-      || strcmp(name, "oct") == 0
-      || strcmp(name, "open") == 0
-      || strcmp(name, "ord") == 0;
-    case 'p':
-      return strcmp(name, "pow") == 0
-      || strcmp(name, "print") == 0
-      || strcmp(name, "property") == 0;
-    case 'r':
-      return strcmp(name, "range") == 0
-      || strcmp(name, "repr") == 0
-      || strcmp(name, "reversed") == 0
-      || strcmp(name, "round") == 0;
-    case 's':
-      return strcmp(name, "set") == 0
-      || strcmp(name, "setattr") == 0
-      || strcmp(name, "slice") == 0
-      || strcmp(name, "sorted") == 0
-      || strcmp(name, "staticmethod") == 0
-      || strcmp(name, "str") == 0
-      || strcmp(name, "sum") == 0
-      || strcmp(name, "super") == 0;
-    case 't':
-      return strcmp(name, "tuple")  == 0
-      || strcmp(name, "type") == 0;
-    default:
-      return strcmp(name, "next") == 0
-      || strcmp(name, "quit") == 0
-      || strcmp(name, "vars") == 0
-      || strcmp(name, "zip") == 0;
-  }
+  return bsearch(name, builtins, sizeof(builtins) / sizeof(*builtins), sizeof(*builtins), (int(*) (const void*,const void*)) strcmp);
 }
 
 constexpr KDColor KDColorString = KDColor::RGB24(0x00AA00);
