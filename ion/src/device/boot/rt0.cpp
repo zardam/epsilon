@@ -79,3 +79,9 @@ void start() {
 
   abort();
 }
+
+volatile long millis_elapsed = 0;
+
+void __attribute__((interrupt)) sysTick() {
+  millis_elapsed++;
+}
