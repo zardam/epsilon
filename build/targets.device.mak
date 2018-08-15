@@ -12,8 +12,8 @@ products += $(patsubst %.$(EXE),%.map,$(filter %.$(EXE),$(products)))
 # We pad the device binary files because there was a bug in an older version of
 # the dfu code, and it did not upload properly a binary of length non-multiple
 # of 32 bits.
-	@echo "Padding $@"
-	@echo "\x1\x1\x1\x1" >> $@
+#	@echo "Padding $@"
+#	@echo "\x1\x1\x1\x1" >> $@
 
 .PHONY: %_size
 %_size: %.$(EXE)

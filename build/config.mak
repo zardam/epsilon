@@ -7,7 +7,7 @@ EPSILON_VERSION ?= 1.9.0
 EPSILON_ONBOARDING_APP ?= 1
 # Valid values are "none", "update", "beta"
 EPSILON_BOOT_PROMPT ?= none
-EPSILON_APPS ?= calculation graph code statistics probability solver sequence regression settings
+EPSILON_APPS ?= calculation graph code statistics probability solver sequence regression settings nes
 EPSILON_I18N ?= en fr es de pt
 EPSILON_GETOPT ?= 0
 MATRICES_ARE_DEFINED ?=1
