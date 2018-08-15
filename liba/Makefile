@@ -1,7 +1,5 @@
 SFLAGS += -Iliba/include
 
-liba/src/external/sqlite/mem5.o: CFLAGS += -w
-
 objs += $(addprefix liba/src/, \
   armv7m/setjmp.o \
   armv7m/longjmp.o \
@@ -23,8 +21,10 @@ objs += $(addprefix liba/src/, \
   strchr.o \
   strlcpy.o \
   strlen.o \
-  external/sqlite/mem5.o \
 )
+
+liba/src/malloc.o: SFLAGS := $(subst -Os,-O3,$(SFLAGS))
+liba/src/malloc.o: CFLAGS := $(subst -std=c99,-std=gnu99,$(CFLAGS))
 
 objs += $(addprefix liba/src/external/openbsd/, \
   b_exp__D.o \
