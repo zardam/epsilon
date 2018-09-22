@@ -150,7 +150,9 @@ int osd_init()
 	return 0;
 }
 
-extern const unsigned char _rom_data[];
+extern const unsigned char _data_section_start_flash;
+extern const unsigned char _data_section_start_ram;
+extern const unsigned char _data_section_end_ram;
 const char *osd_getromdata() {
-  return (char*) _rom_data;
+  return (char*) (&_data_section_end_ram - &_data_section_start_ram + &_data_section_start_flash);
 }
