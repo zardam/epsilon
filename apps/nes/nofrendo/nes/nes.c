@@ -249,10 +249,10 @@ static void build_address_handlers(nes_t *machine)
 /* raise an IRQ */
 void nes_irq(void)
 {
-#ifdef NOFRENDO_DEBUG
-   if (nes.scanline <= NES_SCREEN_HEIGHT)
-      memset(nes.vidbuf->line[nes.scanline - 1], GUI_RED, NES_SCREEN_WIDTH);
-#endif /* NOFRENDO_DEBUG */
+// #ifdef NOFRENDO_DEBUG
+//    if (nes.scanline <= NES_SCREEN_HEIGHT)
+//       memset(nes.vidbuf->line[nes.scanline - 1], GUI_RED, NES_SCREEN_WIDTH);
+// #endif /* NOFRENDO_DEBUG */
 
    nes6502_irq();
 }
@@ -299,9 +299,12 @@ static void nes_renderframe(bool draw_flag)
    mapintf_t *mapintf = nes.mmc->intf;
    int in_vblank = 0;
 
+   uint8 scanline[NES_SCREEN_WIDTH+16];
+
    while (262 != nes.scanline)
    {
-      ppu_scanline(nes.vidbuf, nes.scanline, draw_flag);
+      ppu_scanline(scanline+8, nes.scanline, draw_flag);
+      ppu_scanline_blit(scanline, nes.scanline, draw_flag);
 
       if (241 == nes.scanline)
       {
@@ -342,8 +345,8 @@ static void system_video(bool draw)
    }
 
    /* blit the NES screen to our video surface */
-   vid_blit(nes.vidbuf, 0, (NES_SCREEN_HEIGHT - NES_VISIBLE_HEIGHT) / 2,
-            0, 0, NES_SCREEN_WIDTH, NES_VISIBLE_HEIGHT);
+   // vid_blit(nes.vidbuf, 0, (NES_SCREEN_HEIGHT - NES_VISIBLE_HEIGHT) / 2,
+            // 0, 0, NES_SCREEN_WIDTH, NES_VISIBLE_HEIGHT);
 
    /* overlay our GUI on top of it */
    gui_frame(true);
@@ -437,7 +440,7 @@ void nes_destroy(nes_t **machine)
       mmc_destroy(&(*machine)->mmc);
       ppu_destroy(&(*machine)->ppu);
       apu_destroy(&(*machine)->apu);
-      bmp_destroy(&(*machine)->vidbuf);
+      //bmp_destroy(&(*machine)->vidbuf);
       if ((*machine)->cpu)
       {
          if ((*machine)->cpu->mem_page[0])
@@ -516,9 +519,9 @@ nes_t *nes_create(void)
 
    /* bitmap */
    /* 8 pixel overdraw */
-   machine->vidbuf = bmp_create(NES_SCREEN_WIDTH, NES_SCREEN_HEIGHT, 8);
-   if (NULL == machine->vidbuf)
-      goto _fail;
+   // machine->vidbuf = bmp_create(NES_SCREEN_WIDTH, NES_SCREEN_HEIGHT, 8);
+   // if (NULL == machine->vidbuf)
+   //    goto _fail;
 
    machine->autoframeskip = true;
 

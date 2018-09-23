@@ -145,14 +145,12 @@ rgb_t gui_pal[GUI_TOTALCOLORS] =
    { 0x00, 0x00, 0x3F }  /* dark blue  */
 };
 
-static bitmap_t *primary_buffer = NULL;
 static uint16 myPalette[256];
 
 int  vid_init(int width, int height, viddriver_t *osd_driver) {
   return 0;
 }
 void vid_flush(void) {
-  draw(primary_buffer, myPalette);
 }
 
 void vid_setpalette(rgb_t *pal) {
@@ -169,15 +167,6 @@ void vid_setpalette(rgb_t *pal) {
 
 }
 int  vid_setmode(int width, int height) {
-  if (NULL != primary_buffer)
-     bmp_destroy(&primary_buffer);
-
-  primary_buffer = bmp_create(width, height, 0); /* no overdraw */
-  if (NULL == primary_buffer)
-     return -1;
-
-  bmp_clear(primary_buffer, GUI_BLACK);
-
   return 0;
 }
 
@@ -213,71 +202,14 @@ INLINE void vid_memcpy(void *dest, const void *src, int len)
 void vid_blit(bitmap_t *bitmap, int src_x, int src_y, int dest_x, int dest_y,
               int width, int height)
 {
-   int bitmap_pitch, primary_pitch;
-   uint8 *dest_ptr, *src_ptr;
-
-   ASSERT(bitmap);
-
-   /* clip to source */
-   if (src_y >= bitmap->height)
-      return;
-   if (src_y + height > bitmap->height)
-      height = bitmap->height - src_y;
-
-   if (src_x >= bitmap->width)
-      return;
-   if (src_x + width > bitmap->width)
-      width = bitmap->width - src_x;
-
-   /* clip to dest */
-   if (dest_y + height <= 0)
-   {
-      return;
-   }
-   else if (dest_y < 0)
-   {
-      height += dest_y;
-      src_y -= dest_y;
-      dest_y = 0;
-   }
-
-   if (dest_y >= primary_buffer->height)
-      return;
-   if (dest_y + height > primary_buffer->height)
-      height = primary_buffer->height - dest_y;
-
-   if (dest_x + width <= 0)
-   {
-      return;
-   }
-   else if (dest_x < 0)
-   {
-      width += dest_x;
-      src_x -= dest_x;
-      dest_x = 0;
-   }
-
-   if (dest_x >= primary_buffer->width)
-      return;
-   if (dest_x + width > primary_buffer->width)
-      width = primary_buffer->width - dest_x;
-
-   src_ptr = bitmap->line[src_y] + src_x;
-   dest_ptr = primary_buffer->line[dest_y] + dest_x;
-
-   /* Avoid doing unnecessary indexed lookups */
-   bitmap_pitch = bitmap->pitch;
-   primary_pitch = primary_buffer->pitch;
-
-   /* do the copy */
-   while (height--)
-   {
-      vid_memcpy(dest_ptr, src_ptr, width);
-      src_ptr += bitmap_pitch;
-      dest_ptr += primary_pitch;
-   }
+  draw(bitmap, myPalette);
 }
+
+void ppu_scanline_blit(uint8_t *bmp, int scanline, bool draw_flag) {
+  if(draw_flag) {
+    draw_scanline(bmp, myPalette, scanline);
+  }
+}
+
 void vid_shutdown(void) {
-  if (NULL != primary_buffer)
-     bmp_destroy(&primary_buffer);
 }

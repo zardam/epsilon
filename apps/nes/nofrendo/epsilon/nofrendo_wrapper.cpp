@@ -22,6 +22,64 @@ void NofrendoWrapper::run() {
   nofrendo_main(0, NULL);
 }
 
+void draw_scanline(uint8_t *bmp, uint16_t *palette, int scanline) {
+  if(scanline < 0 || scanline >= Ion::Display::Height) {
+    return;
+  }
+  int xoffset = (Ion::Display::Width - NES_SCREEN_WIDTH) / 2;
+  int yoffset = (Ion::Display::Height - NES_SCREEN_HEIGHT) / 2;
+#if PLATFORM_DEVICE
+  Ion::Display::Device::setDrawingArea(KDRect(xoffset, scanline+yoffset, NES_SCREEN_WIDTH, 1), Ion::Display::Device::Orientation::Portrait);
+  *Ion::Display::Device::CommandAddress  = Ion::Display::Device::Command::MemoryWrite;
+  uint8_t *pixels = bmp + NES_SCREEN_WIDTH + 7;
+  size_t numberOfPixels = NES_SCREEN_WIDTH;
+  while (numberOfPixels >= 32) {
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    *Ion::Display::Device::DataAddress = palette[*pixels--];
+    numberOfPixels -= 32;
+  }
+
+#else
+  for(int x=0; x<NES_SCREEN_WIDTH+16; x++) {
+    Ion::Display::pushRectUniform(
+      KDRect(x+xoffset, scanline+yoffset, 1, 1),
+      KDColor::RGB16(palette[bmp[x]])
+    );
+  }
+#endif
+}
+
+
 void draw(bitmap_t *bmp, uint16 palette[]) {
   int xoffset = (Ion::Display::Width - bmp->width) / 2;
   int yoffset = (Ion::Display::Height - bmp->height) / 2;

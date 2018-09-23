@@ -3,14 +3,14 @@
 **
 **
 ** This program is free software; you can redistribute it and/or
-** modify it under the terms of version 2 of the GNU Library General 
+** modify it under the terms of version 2 of the GNU Library General
 ** Public License as published by the Free Software Foundation.
 **
-** This program is distributed in the hope that it will be useful, 
+** This program is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
-** Library General Public License for more details.  To obtain a 
-** copy of the GNU Library General Public License, write to the Free 
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+** Library General Public License for more details.  To obtain a
+** copy of the GNU Library General Public License, write to the Free
 ** Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
 ** Any permitted reproduction of these routines, in whole or in part,
@@ -27,6 +27,7 @@
 #define _NES_PPU_H_
 
 #include <bitmap.h>
+#include <stdint.h>
 
 /* PPU register defines */
 #define  PPU_CTRL0            0x2000
@@ -93,7 +94,7 @@ typedef struct ppu_s
 
    bool bg_on, obj_on;
    bool obj_mask, bg_mask;
-   
+
    uint8 latch, vdata_latch;
    uint8 strobe;
 
@@ -134,7 +135,7 @@ extern uint8 *ppu_getpage(int page);
 /* control */
 extern void ppu_reset(int reset_type);
 extern bool ppu_enabled(void);
-extern void ppu_scanline(bitmap_t *bmp, int scanline, bool draw_flag);
+extern void ppu_scanline(uint8_t *bmp, int scanline, bool draw_flag);
 extern void ppu_endscanline(int scanline);
 extern void ppu_checknmi();
 
