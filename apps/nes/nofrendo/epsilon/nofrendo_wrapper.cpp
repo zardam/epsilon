@@ -70,10 +70,10 @@ void draw_scanline(uint8_t *bmp, uint16_t *palette, int scanline) {
   }
 
 #else
-  for(int x=0; x<NES_SCREEN_WIDTH+16; x++) {
+  for(int x=0; x<NES_SCREEN_WIDTH; x++) {
     Ion::Display::pushRectUniform(
       KDRect(x+xoffset, scanline+yoffset, 1, 1),
-      KDColor::RGB16(palette[bmp[x]])
+      KDColor::RGB16(palette[bmp[x+8]])
     );
   }
 #endif
