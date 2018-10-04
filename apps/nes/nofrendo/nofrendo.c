@@ -26,6 +26,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <noftypes.h>
 #include <nofrendo.h>
 #include <event.h>
@@ -81,7 +82,7 @@ void main_eject(void)
    {
    case system_nes:
       nes_poweroff();
-      nes_destroy(&(console.machine.nes));
+      //nes_destroy(&(console.machine.nes));
       break;
 
    default:
@@ -132,7 +133,7 @@ static int internal_insert(const char *filename, system_t type)
    if (system_autodetect == type)
       type = detect_systemtype(filename);
 
-   console.filename = strdup(filename);
+   //console.filename = strdup(filename);
    console.type = type;
 
    /* set up the event system for this system type */
@@ -143,6 +144,7 @@ static int internal_insert(const char *filename, system_t type)
    case system_nes:
       gui_setrefresh(NES_REFRESH_RATE);
 
+if(console.machine.nes == NULL) {
       console.machine.nes = nes_create();
       if (NULL == console.machine.nes)
       {
@@ -152,6 +154,10 @@ static int internal_insert(const char *filename, system_t type)
 
       if (nes_insertcart(console.filename, console.machine.nes))
          return -1;
+} else {
+  console.machine.nes->poweroff = false;
+  memcpy(nes_getcontextptr(), console.machine.nes, sizeof(nes_t));
+}
 
       vid_setmode(NES_SCREEN_WIDTH, NES_VISIBLE_HEIGHT);
 
@@ -174,7 +180,7 @@ static int internal_insert(const char *filename, system_t type)
 /* This tells main_loop to load this next image */
 void main_insert(const char *filename, system_t type)
 {
-   console.nextfilename = strdup(filename);
+   //console.nextfilename = strdup(filename);
    console.nexttype = type;
 
    main_eject();
@@ -224,7 +230,7 @@ int main_loop(const char *filename, system_t type)
    if (vid_init(video.default_width, video.default_height, video.driver))
       return -1;
 
-   console.nextfilename = strdup(filename);
+   //console.nextfilename = strdup(filename);
    console.nexttype = type;
 
    while (false == console.quit)
