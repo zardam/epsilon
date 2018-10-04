@@ -106,7 +106,9 @@ void osd_getinput(void)
   uint64_t chg_keys_pressed = cur_keys_pressed ^ old_keys_pressed;
   old_keys_pressed = cur_keys_pressed;
 
-  if(cur_keys_pressed > 255) {
+  if(cur_keys_pressed & (1<<17)) {
+    event_get(event_hard_reset)(INP_STATE_MAKE);
+  } else if(cur_keys_pressed > 255) {
     event_get(event_quit)(INP_STATE_MAKE);
   }
   for (int i=0; i<8; i++) {
