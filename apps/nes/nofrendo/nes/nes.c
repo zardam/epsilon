@@ -39,7 +39,6 @@
 #include <vid_drv.h>
 #include <nofrendo.h>
 
-
 #define  NES_CLOCK_DIVIDER    12
 //#define  NES_MASTER_CLOCK     21477272.727272727272
 #define  NES_MASTER_CLOCK     (236250000 / 11)
@@ -358,27 +357,31 @@ static void system_video(bool draw)
    osd_getinput();
 }
 
+static uint32_t rounded_micros() {
+  return NES_PERIOD_US * (((uint32_t)micros()) / NES_PERIOD_US);
+}
+
 /* main emulation loop */
 void nes_emulate(void)
 {
-   int last_ticks, frames_to_render;
+   uint32_t last_ticks, frames_to_render;
 
    osd_setsound(nes.apu->process);
 
-   last_ticks = nofrendo_ticks();
+   last_ticks = rounded_micros();
    frames_to_render = 0;
    nes.scanline_cycles = 0;
    nes.fiq_cycles = (int) NES_FIQ_PERIOD;
 
    while (false == nes.poweroff)
    {
-      if (nofrendo_ticks() != last_ticks)
+     uint32_t current_ticks = rounded_micros();
+     int tick_diff = (current_ticks - last_ticks) / NES_PERIOD_US;
+      if (tick_diff != 0)
       {
-         int tick_diff = nofrendo_ticks() - last_ticks;
-
          frames_to_render += tick_diff;
          gui_tick(tick_diff);
-         last_ticks = nofrendo_ticks();
+         last_ticks = current_ticks;
       }
 
       if (true == nes.pause)

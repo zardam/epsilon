@@ -42,11 +42,8 @@
 #define  NES_SCREEN_HEIGHT    240
 
 /* NTSC = 60Hz, PAL = 50Hz */
-#ifdef PAL
 #define  NES_REFRESH_RATE     50
-#else /* !PAL */
-#define  NES_REFRESH_RATE     60
-#endif /* !PAL */
+#define  NES_PERIOD_US        (1000000/NES_REFRESH_RATE)
 
 #define  MAX_MEM_HANDLERS     32
 

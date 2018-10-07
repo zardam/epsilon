@@ -15,7 +15,6 @@ public:
 #define EXTERNC
 #endif
 
-EXTERNC int nofrendo_ticks(void);
 EXTERNC uint64_t readKeyboard();
 EXTERNC void draw(bitmap_t *bitmap, uint16_t *palette);
 EXTERNC void draw_scanline(uint8_t *bitmap, uint16_t *palette, int scanline);

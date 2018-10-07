@@ -144,7 +144,3 @@ void draw(bitmap_t *bmp, uint16 palette[]) {
 uint64_t readKeyboard() {
   return Ion::Keyboard::scan();
 }
-
-int nofrendo_ticks() {
-  return Ion::millis() / 20;
-}
