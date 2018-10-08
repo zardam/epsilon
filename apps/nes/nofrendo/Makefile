@@ -1,3 +1,4 @@
+NES_ROM ?= apps/nes/nofrendo/epsilon/2048.nes
 SFLAGS += -Iapps/nes/nofrendo -Iapps/nes/nofrendo/nes -Iapps/nes/nofrendo/sndhrdw -Iapps/nes/nofrendo/libsnss -Iapps/nes/nofrendo/cpu
 nof_objs = $(addprefix apps/nes/nofrendo/,\
 	bitmap.o\
@@ -65,6 +66,21 @@ nof_objs = $(addprefix apps/nes/nofrendo/,\
 	epsilon/osd_epsilon.o\
 	epsilon/stubs.o\
 )
+
+ifneq ($(PLATFORM),device)
+nof_objs += $(addprefix apps/nes/nofrendo/,\
+	epsilon/rom.o\
+)
+apps/nes/nofrendo/epsilon/rom.c: FORCE
+	@echo "BIN     $@"
+	$(Q) echo "const unsigned char _rom_data[] = {" > $@
+	$(Q) cat "$(NES_ROM)" | xxd -i >> $@
+	$(Q) echo "};" >> $@
+
+FORCE:
+
+products += apps/nes/nofrendo/epsilon/rom.c
+endif
 
 $(nof_objs): SFLAGS := $(subst -Os,-O2,$(SFLAGS))
 
