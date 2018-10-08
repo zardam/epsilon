@@ -155,8 +155,7 @@ if(console.machine.nes == NULL) {
       if (nes_insertcart(console.filename, console.machine.nes))
          return -1;
 } else {
-  console.machine.nes->poweroff = false;
-  memcpy(nes_getcontextptr(), console.machine.nes, sizeof(nes_t));
+  nes_getcontextptr()->poweroff = false;
 }
 
       vid_setmode(NES_SCREEN_WIDTH, NES_VISIBLE_HEIGHT);
