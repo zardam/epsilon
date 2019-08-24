@@ -8,6 +8,12 @@
 
 typedef void (*cxx_constructor)();
 
+/* C++ expects the __dso_handle symbol to be defined to some unique value in
+ * each dynamic shared object. Even though we're not using dynamic loading,
+ * we still have to define __dso_handle. */
+
+void * __dso_handle = nullptr;
+
 extern "C" {
   extern char _data_section_start_flash;
   extern char _data_section_start_ram;
