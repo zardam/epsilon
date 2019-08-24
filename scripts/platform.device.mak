@@ -1,5 +1,5 @@
 MODEL ?= n0110
-USE_LIBA = 1
+USE_LIBA = 0
 EXE = elf
 EPSILON_BOOT_PROMPT = update
 
