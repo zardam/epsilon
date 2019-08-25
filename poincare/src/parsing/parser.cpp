@@ -432,11 +432,16 @@ void Parser::parseCustomIdentifier(Expression & leftHandSide, const char * name,
     return;
   }
   assert(!parameter.isUninitialized());
+#ifdef GIAC_NUMWORKS
+  if (parameter.numberOfChildren() == 1)
+    parameter = parameter.childAtIndex(0);
+#else
   if (parameter.numberOfChildren() != 1) {
     m_status = Status::Error; // Unexpected number of paramters.
     return;
   }
   parameter = parameter.childAtIndex(0);
+#endif
   if (parameter.type() == ExpressionNode::Type::Symbol && strncmp(static_cast<SymbolAbstract&>(parameter).name(), name, length) == 0) {
     m_status = Status::Error; // Function and variable must have distinct names.
   } else {

@@ -10,7 +10,7 @@ using namespace Poincare;
 TitleBarView::TitleBarView() :
   View(),
   m_titleView(KDFont::SmallFont, I18n::Message::Default, 0.5f, 0.5f, KDColorWhite, Palette::YellowDark),
-  m_preferenceView(KDFont::SmallFont, 1.0f, 0.5, KDColorWhite, Palette::YellowDark)
+  m_preferenceView(KDFont::SmallFont, 1.0f, 0.5, KDColorWhite, Palette::Red)
 {
   m_examModeIconView.setImage(ImageStore::ExamIcon);
 }

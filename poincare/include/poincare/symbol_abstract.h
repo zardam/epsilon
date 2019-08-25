@@ -71,7 +71,7 @@ public:
     return f.isUninitialized() || f.type() == s.type();
   }
   static bool matches(const SymbolAbstract & symbol, ExpressionTest test, Context & context);
-  constexpr static size_t k_maxNameSize = 8;
+  constexpr static size_t k_maxNameSize = 16  ;
 
 protected:
   SymbolAbstract(const SymbolAbstractNode * node) : Expression(node) {}

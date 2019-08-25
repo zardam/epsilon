@@ -38,3 +38,19 @@ SFLAGS += -DEPSILON_BOOT_PROMPT=$(EPSILON_UPDATE_PROMPT)
 endif
 SFLAGS += -DMATRICES_ARE_DEFINED=$(MATRICES_ARE_DEFINED)
 SFLAGS += -DESCHER_LOG_EVENTS_BINARY=$(ESCHER_LOG_EVENTS_BINARY)
+
+# giac
+ifeq ($(PLATFORM),device)
+SFLAGS += -DGIAC_NUMWORKS
+LDFLAGS += -L../giac-1.5.0/src -L../libtommath-0.39 -lgiac -ltommath
+endif
+
+ifeq ($(PLATFORM),emscripten)
+SFLAGS += -DGIAC_NUMWORKS
+LDFLAGS += -O3 -v -s TOTAL_MEMORY=1GB -s LEGACY_GL_EMULATION=1 -s GL_UNSAFE_OPTS=0 --memory-init-file 0 -s ASSERTIONS=1 -s ERROR_ON_UNDEFINED_SYMBOLS=0 -L/home/parisse/emgiac/giac  -lgiac -lpari -lmpfi -lmpfr -lgmp -lglpk --js-library /home/parisse/emgiac/giac/time.js
+endif
+
+ifeq ($(PLATFORM),simulator)
+SFLAGS += -DGIAC_NUMWORKS
+LDFLAGS += -lgiac
+endif
