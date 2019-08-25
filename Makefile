@@ -1,3 +1,4 @@
+include scripts/giac.mak
 include scripts/config.mak
 
 # Disable default Make rules
@@ -91,7 +92,7 @@ objs = $(call object_for,$(src))
 
 executables = epsilon test
 define rules_for_executable
-$$(BUILD_DIR)/$(1).$$(EXE): $$(objs)
+$$(BUILD_DIR)/$(1).$$(EXE): $$(objs) giac-1.5.0/src/libgiac.a
 .PHONY: $(1).$$(EXE)
 $(1).$$(EXE): $$(BUILD_DIR)/$(1).$$(EXE)
 endef
@@ -145,4 +146,3 @@ cowsay_%:
 
 .PHONY: clena
 clena: cowsay_CLENA clean
-

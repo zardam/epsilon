@@ -42,7 +42,7 @@ SFLAGS += -DESCHER_LOG_EVENTS_BINARY=$(ESCHER_LOG_EVENTS_BINARY)
 # giac
 ifeq ($(PLATFORM),device)
 SFLAGS += -DGIAC_NUMWORKS
-LDFLAGS += -L../giac-1.5.0/src -L../libtommath-0.39 -lgiac -ltommath
+LDFLAGS += -Lgiac-1.5.0/src -Llibtommath-0.39 -lgiac -ltommath
 endif
 
 ifeq ($(PLATFORM),emscripten)

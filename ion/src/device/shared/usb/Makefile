@@ -76,7 +76,7 @@ dfu_src += $(addprefix ion/src/device/shared/drivers/, \
   wakeup.cpp \
 )
 $(BUILD_DIR)/ion/src/device/shared/usb/dfu.elf: LDSCRIPT = ion/src/device/shared/usb/dfu.ld
-$(BUILD_DIR)/ion/src/device/shared/usb/dfu.elf: $(call object_for,$(usb_src) $(dfu_src))
+$(BUILD_DIR)/ion/src/device/shared/usb/dfu.elf: $(call object_for,$(usb_src) $(dfu_src)) giac-1.5.0/src/libgiac.a
 
 # In order to link the dfu bootloader inside the epsilon firmware, we need to
 # turn the dfu binary (dfu.bin) into an elf object.
