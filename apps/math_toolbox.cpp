@@ -12,8 +12,32 @@ using namespace Poincare;
 const ToolboxMessageTree calculChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::DiffCommandWithArg, I18n::Message::DerivateNumber, false, I18n::Message::DiffCommand),
   ToolboxMessageTree::Leaf(I18n::Message::IntCommandWithArg, I18n::Message::Integral, false, I18n::Message::IntCommand),
+  ToolboxMessageTree::Leaf(I18n::Message::LimitCommandWithArg, I18n::Message::LimitValue),
+  ToolboxMessageTree::Leaf(I18n::Message::PtaylCommandWithArg, I18n::Message::PtaylValue),
   ToolboxMessageTree::Leaf(I18n::Message::SumCommandWithArg, I18n::Message::Sum, false, I18n::Message::SumCommand),
   ToolboxMessageTree::Leaf(I18n::Message::ProductCommandWithArg, I18n::Message::Product, false, I18n::Message::ProductCommand)
+};
+
+const ToolboxMessageTree algebraChildren[] = {
+  ToolboxMessageTree::Leaf(I18n::Message::NormalCommandWithArg, I18n::Message::NormalValue),
+  ToolboxMessageTree::Leaf(I18n::Message::FactorCommandWithArg, I18n::Message::FactorValue),
+  ToolboxMessageTree::Leaf(I18n::Message::CfactorCommandWithArg, I18n::Message::CfactorValue),
+  ToolboxMessageTree::Leaf(I18n::Message::PartfracCommandWithArg, I18n::Message::PartfracDecomposition),
+  ToolboxMessageTree::Leaf(I18n::Message::SimplifyCommandWithArg, I18n::Message::SimplifyValue),
+};
+
+const ToolboxMessageTree solveChildren[] = {
+  ToolboxMessageTree::Leaf(I18n::Message::SolveCommandWithArg, I18n::Message::SolveValue),
+  ToolboxMessageTree::Leaf(I18n::Message::CsolveCommandWithArg, I18n::Message::CsolveValue),
+  // ToolboxMessageTree::Leaf(I18n::Message::LinsolveCommandWithArg, I18n::Message::LinsolveValue),
+  ToolboxMessageTree::Leaf(I18n::Message::DesolveCommandWithArg, I18n::Message::DesolveValue),
+  // ToolboxMessageTree::Leaf(I18n::Message::RsolveCommandWithArg, I18n::Message::RsolveValue),
+};
+
+const ToolboxMessageTree realChildren[] = {
+  ToolboxMessageTree::Leaf(I18n::Message::AbsCommandWithArg, I18n::Message::AbsoluteValue),
+  ToolboxMessageTree::Leaf(I18n::Message::RootCommandWithArg, I18n::Message::NthRoot),
+  ToolboxMessageTree::Leaf(I18n::Message::LogCommandWithArg, I18n::Message::BasedLogarithm),
 };
 
 const ToolboxMessageTree complexChildren[] = {
@@ -32,7 +56,8 @@ const ToolboxMessageTree probabilityChildren[] = {
 const ToolboxMessageTree arithmeticChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::GcdCommandWithArg, I18n::Message::GreatCommonDivisor),
   ToolboxMessageTree::Leaf(I18n::Message::LcmCommandWithArg, I18n::Message::LeastCommonMultiple),
-  ToolboxMessageTree::Leaf(I18n::Message::FactorCommandWithArg, I18n::Message::PrimeFactorDecomposition),
+  ToolboxMessageTree::Leaf(I18n::Message::IfactorCommandWithArg, I18n::Message::PrimeFactorDecomposition),
+  ToolboxMessageTree::Leaf(I18n::Message::IegcdCommandWithArg, I18n::Message::Iegcd),
   ToolboxMessageTree::Leaf(I18n::Message::RemCommandWithArg, I18n::Message::Remainder),
   ToolboxMessageTree::Leaf(I18n::Message::QuoCommandWithArg, I18n::Message::Quotient)
 };
@@ -40,12 +65,18 @@ const ToolboxMessageTree arithmeticChildren[] = {
 #if MATRICES_ARE_DEFINED
 const ToolboxMessageTree matricesChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::MatrixCommandWithArg, I18n::Message::NewMatrix, false, I18n::Message::MatrixCommand),
-  ToolboxMessageTree::Leaf(I18n::Message::IndentityCommandWithArg, I18n::Message::Identity),
+  ToolboxMessageTree::Leaf(I18n::Message::IdentityCommandWithArg, I18n::Message::Identity),
+  ToolboxMessageTree::Leaf(I18n::Message::RandmatrixCommandWithArg, I18n::Message::Randmatrix),
+  ToolboxMessageTree::Leaf(I18n::Message::DimensionCommandWithArg, I18n::Message::Dimension),
   ToolboxMessageTree::Leaf(I18n::Message::InverseCommandWithArg, I18n::Message::Inverse),
+  ToolboxMessageTree::Leaf(I18n::Message::MatpowCommandWithArg, I18n::Message::Matpow),
   ToolboxMessageTree::Leaf(I18n::Message::DeterminantCommandWithArg, I18n::Message::Determinant),
   ToolboxMessageTree::Leaf(I18n::Message::TransposeCommandWithArg, I18n::Message::Transpose),
   ToolboxMessageTree::Leaf(I18n::Message::TraceCommandWithArg, I18n::Message::Trace),
-  ToolboxMessageTree::Leaf(I18n::Message::DimensionCommandWithArg, I18n::Message::Dimension)
+  ToolboxMessageTree::Leaf(I18n::Message::RrefCommandWithArg, I18n::Message::Rref),
+  ToolboxMessageTree::Leaf(I18n::Message::KerCommandWithArg, I18n::Message::Ker),
+  ToolboxMessageTree::Leaf(I18n::Message::EigenvalueCommandWithArg, I18n::Message::Eigenvalue),
+  ToolboxMessageTree::Leaf(I18n::Message::EigenvectorCommandWithArg, I18n::Message::Eigenvector),
 };
 #endif
 
@@ -81,10 +112,10 @@ const ToolboxMessageTree predictionChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::ConfidenceCommandWithArg, I18n::Message::Confidence)};
 
 const ToolboxMessageTree menu[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::AbsCommandWithArg, I18n::Message::AbsoluteValue),
-  ToolboxMessageTree::Leaf(I18n::Message::RootCommandWithArg, I18n::Message::NthRoot),
-  ToolboxMessageTree::Leaf(I18n::Message::LogCommandWithArg, I18n::Message::BasedLogarithm),
+  ToolboxMessageTree::Node(I18n::Message::RealNumber, realChildren),
+  ToolboxMessageTree::Node(I18n::Message::Algebra, algebraChildren),
   ToolboxMessageTree::Node(I18n::Message::Calculation, calculChildren),
+  //ToolboxMessageTree::Node(I18n::Message::Solve, solveChildren),
   ToolboxMessageTree::Node(I18n::Message::ComplexNumber, complexChildren),
   ToolboxMessageTree::Node(I18n::Message::Probability, probabilityChildren),
   ToolboxMessageTree::Node(I18n::Message::Arithmetic, arithmeticChildren),
