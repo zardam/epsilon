@@ -50,39 +50,58 @@ void Calculation::reset() {
 
 void Calculation::setContent(const char * c, Context * context, Expression ansExpression) {
   reset();
-#ifdef GIAC_NUMWORKS
+#ifdef GIAC_NUMWORKS  
   Preferences * preferences = Preferences::sharedPreferences();
-  if (preferences->angleUnit() == Preferences::AngleUnit::Radian)
-    caseval("angle_radian:=1");
-  else
-    caseval("angle_radian:=0");
-  char buf[1024]="add_autosimplify(";
-  strlcpy(&buf[strlen(buf)],c,sizeof(buf)-strlen(buf));
-  buf[strlen(buf)+1]=0;
-  buf[strlen(buf)]=')';
-  const char * out=caseval(buf);
-  strlcpy(m_inputText,c,sizeof(m_inputText));
-  strlcpy(m_exactOutputText,out,sizeof(m_exactOutputText));
-  strlcpy(buf,"evalf(",sizeof(buf));
-  strlcpy(&buf[strlen(buf)],out,sizeof(buf)-strlen(buf));
-  buf[strlen(out)+7]=0;
-  buf[strlen(out)+6]=')';
-  out=caseval(buf);
-  if (strcmp(out,m_exactOutputText)==0 || (m_exactOutputText[0]=='[' && out[0]!='[')){
-    bool undef=false;
-    int l=strlen(m_exactOutputText);
-    for (int i=0;i<l;++i){
-      char ch=m_exactOutputText[i];
-      if ( (ch>='a' && ch<='z') || (ch>='A' && ch<='Z')){
-   undef=true;
-   break;
+  if (preferences->angleUnit() == Preferences::AngleUnit::Radian){
+    Preferences * preferences = Preferences::sharedPreferences();
+    if (preferences->angleUnit() == Preferences::AngleUnit::Radian)
+      caseval("angle_radian:=1"); 
+    else
+      caseval("angle_radian:=0"); 
+    char buf[1024]="add_autosimplify(";
+    strlcpy(&buf[strlen(buf)],c,sizeof(buf)-strlen(buf));
+    buf[strlen(buf)+1]=0;
+    buf[strlen(buf)]=')';
+    const char * out=caseval(buf);
+    strlcpy(m_inputText,c,sizeof(m_inputText));
+    strlcpy(m_exactOutputText,out,sizeof(m_exactOutputText));
+    strlcpy(buf,"evalf(",sizeof(buf));
+    strlcpy(&buf[strlen(buf)],out,sizeof(buf)-strlen(buf));
+    buf[strlen(out)+7]=0;
+    buf[strlen(out)+6]=')';
+    out=caseval(buf);
+    if (strcmp(out,m_exactOutputText)==0 || (m_exactOutputText[0]=='[' && out[0]!='[')){
+      bool undef=false;
+      int l=strlen(m_exactOutputText);
+      for (int i=0;i<l;++i){
+	char ch=m_exactOutputText[i];
+	if ( (ch>='a' && ch<='z') || (ch>='A' && ch<='Z')){
+	  undef=true;
+	  break;
+	}
       }
+      strlcpy(m_approximateOutputText,undef?"undef":m_exactOutputText,sizeof(m_approximateOutputText));
     }
-    strlcpy(m_approximateOutputText,undef?"undef":m_exactOutputText,sizeof(m_approximateOutputText));
+    else
+      strlcpy(m_approximateOutputText,out,sizeof(m_approximateOutputText));
   }
-  else
-    strlcpy(m_approximateOutputText,out,sizeof(m_approximateOutputText));
-#else
+  else {
+    {
+      Symbol ansSymbol = Symbol::Ans();
+      Expression input = Expression::Parse(c).replaceSymbolWithExpression(ansSymbol, ansExpression);
+      /* We do not store directly the text enter by the user because we do not want
+       * to keep Ans symbol in the calculation store. */
+      PoincareHelpers::Serialize(input, m_inputText, sizeof(m_inputText));
+    }
+    Expression exactOutput;
+    Expression approximateOutput;
+    PoincareHelpers::ParseAndSimplifyAndApproximate(m_inputText, &exactOutput, &approximateOutput, *context, true /* symbolicComputation */);
+    PoincareHelpers::Serialize(exactOutput, m_exactOutputText, sizeof(m_exactOutputText));
+    PoincareHelpers::Serialize(approximateOutput, m_approximateOutputText, sizeof(m_approximateOutputText));
+  }
+#else // GIAC_NUMWORKS
+   if (c[0]=='%')
+     caseval("0");
   {
     Symbol ansSymbol = Symbol::Ans();
     Expression input = Expression::Parse(c).replaceSymbolWithExpression(ansSymbol, ansExpression);
@@ -92,10 +111,10 @@ void Calculation::setContent(const char * c, Context * context, Expression ansEx
   }
   Expression exactOutput;
   Expression approximateOutput;
-  PoincareHelpers::ParseAndSimplifyAndApproximate(m_inputText, &exactOutput, &approximateOutput, *context, false);
+  PoincareHelpers::ParseAndSimplifyAndApproximate(m_inputText, &exactOutput, &approximateOutput, *context, true /* symbolicComputation */);
   PoincareHelpers::Serialize(exactOutput, m_exactOutputText, sizeof(m_exactOutputText));
   PoincareHelpers::Serialize(approximateOutput, m_approximateOutputText, sizeof(m_approximateOutputText));
-#endif
+#endif // GIAC_NUMWORKS
 }
 
 KDCoordinate Calculation::height(Context * context, bool expanded) {
