@@ -6,12 +6,12 @@
 
 namespace Code {
 
-I18n::Message App::Descriptor::name() {
-  return I18n::Message::CodeApp;
+const char * App::Descriptor::name() {
+  return I18n::translate(I18n::Message::CodeApp);
 }
 
-I18n::Message App::Descriptor::upperName() {
-  return I18n::Message::CodeAppCapital;
+const char * App::Descriptor::upperName() {
+  return I18n::translate(I18n::Message::CodeAppCapital);
 }
 
 const Image * App::Descriptor::icon() {

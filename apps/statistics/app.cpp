@@ -6,12 +6,12 @@ using namespace Shared;
 
 namespace Statistics {
 
-I18n::Message App::Descriptor::name() {
-  return I18n::Message::StatsApp;
+const char * App::Descriptor::name() {
+  return I18n::translate(I18n::Message::StatsApp);
 }
 
-I18n::Message App::Descriptor::upperName() {
-  return I18n::Message::StatsAppCapital;
+const char * App::Descriptor::upperName() {
+  return I18n::translate(I18n::Message::StatsAppCapital);
 }
 
 const Image * App::Descriptor::icon() {

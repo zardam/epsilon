@@ -4,12 +4,12 @@
 
 namespace Settings {
 
-I18n::Message App::Descriptor::name() {
-  return I18n::Message::SettingsApp;
+const char * App::Descriptor::name() {
+  return I18n::translate(I18n::Message::SettingsApp);
 }
 
-I18n::Message App::Descriptor::upperName() {
-  return I18n::Message::SettingsAppCapital;
+const char * App::Descriptor::upperName() {
+  return I18n::translate(I18n::Message::SettingsAppCapital);
 }
 
 const Image * App::Descriptor::icon() {

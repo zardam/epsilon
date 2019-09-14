@@ -8,12 +8,12 @@ using namespace Shared;
 
 namespace Graph {
 
-I18n::Message App::Descriptor::name() {
-  return I18n::Message::FunctionApp;
+const char * App::Descriptor::name() {
+  return I18n::translate(I18n::Message::FunctionApp);
 }
 
-I18n::Message App::Descriptor::upperName() {
-  return I18n::Message::FunctionAppCapital;
+const char * App::Descriptor::upperName() {
+  return I18n::translate(I18n::Message::FunctionAppCapital);
 }
 
 const Image * App::Descriptor::icon() {

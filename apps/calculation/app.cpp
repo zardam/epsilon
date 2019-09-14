@@ -9,12 +9,12 @@ using namespace Shared;
 
 namespace Calculation {
 
-I18n::Message App::Descriptor::name() {
-  return I18n::Message::CalculApp;
+const char * App::Descriptor::name() {
+  return I18n::translate(I18n::Message::CalculApp);
 }
 
-I18n::Message App::Descriptor::upperName() {
-  return I18n::Message::CalculAppCapital;
+const char * App::Descriptor::upperName() {
+  return I18n::translate(I18n::Message::CalculAppCapital);
 }
 
 const Image * App::Descriptor::icon() {

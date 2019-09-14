@@ -24,7 +24,7 @@ private:
   static constexpr KDCoordinate k_nameWidthMargin = 4;
   static constexpr KDCoordinate k_nameHeightMargin = 1;
   ImageView m_iconView;
-  MessageTextView m_nameView;
+  PointerTextView m_nameView;
   bool m_visible;
 };
 

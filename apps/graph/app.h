@@ -15,8 +15,8 @@ class App : public Shared::FunctionApp {
 public:
   class Descriptor : public ::App::Descriptor {
   public:
-    I18n::Message name() override;
-    I18n::Message upperName() override;
+    const char * name() override;
+    const char * upperName() override;
     const Image * icon() override;
   };
   class Snapshot : public Shared::FunctionApp::Snapshot {

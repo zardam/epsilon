@@ -6,12 +6,12 @@ using namespace Shared;
 
 namespace Solver {
 
-I18n::Message App::Descriptor::name() {
-  return I18n::Message::SolverApp;
+const char * App::Descriptor::name() {
+  return I18n::translate(I18n::Message::SolverApp);
 }
 
-I18n::Message App::Descriptor::upperName() {
-  return I18n::Message::SolverAppCapital;
+const char * App::Descriptor::upperName() {
+  return I18n::translate(I18n::Message::SolverAppCapital);
 }
 
 const Image * App::Descriptor::icon() {

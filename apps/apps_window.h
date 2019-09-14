@@ -7,7 +7,7 @@
 class AppsWindow : public Window {
 public:
   AppsWindow();
-  void setTitle(I18n::Message title);
+  void setTitle(const char * title);
   bool updateBatteryLevel();
   bool updateIsChargingState();
   bool updatePluggedState();

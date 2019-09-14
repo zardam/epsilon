@@ -4,12 +4,12 @@
 
 namespace USB {
 
-I18n::Message App::Descriptor::name() {
+const char * App::Descriptor::name() {
   return upperName();
 }
 
-I18n::Message App::Descriptor::upperName() {
-  return I18n::Message::USBAppCapital;
+const char * App::Descriptor::upperName() {
+  return I18n::translate(I18n::Message::USBAppCapital);
 }
 
 App * App::Snapshot::unpack(Container * container) {

@@ -5,7 +5,7 @@ namespace Home {
 
 AppCell::AppCell() :
   HighlightCell(),
-  m_nameView(KDFont::SmallFont, (I18n::Message)0, 0.5f, 0.5f, KDColorBlack, KDColorWhite),
+  m_nameView(KDFont::SmallFont, nullptr, 0.5f, 0.5f, KDColorBlack, KDColorWhite),
   m_visible(true)
 {
 }
@@ -33,7 +33,7 @@ void AppCell::layoutSubviews() {
 
 void AppCell::setAppDescriptor(::App::Descriptor * descriptor) {
   m_iconView.setImage(descriptor->icon());
-  m_nameView.setMessage(descriptor->name());
+  m_nameView.setText(descriptor->name());
   layoutSubviews();
 }
 

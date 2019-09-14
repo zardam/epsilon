@@ -5,12 +5,12 @@ extern "C" {
 #include <assert.h>
 }
 
-I18n::Message App::Descriptor::name() {
-  return (I18n::Message)0;
+const char * App::Descriptor::name() {
+  return nullptr;
 }
 
-I18n::Message App::Descriptor::upperName() {
-  return (I18n::Message)0;
+const char * App::Descriptor::upperName() {
+  return nullptr;
 }
 
 const Image * App::Descriptor::icon() {

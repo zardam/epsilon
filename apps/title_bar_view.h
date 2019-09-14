@@ -10,7 +10,7 @@ class TitleBarView : public View {
 public:
   TitleBarView();
   void drawRect(KDContext * ctx, KDRect rect) const override;
-  void setTitle(I18n::Message title);
+  void setTitle(const char * title);
   bool setChargeState(Ion::Battery::Charge chargeState);
   bool setIsCharging(bool isCharging);
   bool setIsPlugged(bool isPlugged);
@@ -25,7 +25,7 @@ private:
   int numberOfSubviews() const override;
   void layoutSubviews() override;
   View * subviewAtIndex(int index) override;
-  MessageTextView m_titleView;
+  PointerTextView m_titleView;
   BatteryView m_batteryView;
   ShiftAlphaLockView m_shiftAlphaLockView;
   BufferTextView m_preferenceView;

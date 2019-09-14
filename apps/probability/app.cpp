@@ -7,12 +7,12 @@ using namespace Shared;
 
 namespace Probability {
 
-I18n::Message App::Descriptor::name() {
-  return I18n::Message::ProbaApp;
+const char * App::Descriptor::name() {
+  return I18n::translate(I18n::Message::ProbaApp);
 }
 
-I18n::Message App::Descriptor::upperName() {
-  return I18n::Message::ProbaAppCapital;
+const char * App::Descriptor::upperName() {
+  return I18n::translate(I18n::Message::ProbaAppCapital);
 }
 
 const Image * App::Descriptor::icon() {

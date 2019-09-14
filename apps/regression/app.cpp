@@ -6,12 +6,12 @@ using namespace Shared;
 
 namespace Regression {
 
-I18n::Message App::Descriptor::name() {
-  return I18n::Message::RegressionApp;
+const char * App::Descriptor::name() {
+  return I18n::translate(I18n::Message::RegressionApp);
 }
 
-I18n::Message App::Descriptor::upperName() {
-  return I18n::Message::RegressionAppCapital;
+const char * App::Descriptor::upperName() {
+  return I18n::translate(I18n::Message::RegressionAppCapital);
 }
 
 const Image * App::Descriptor::icon() {

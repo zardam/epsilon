@@ -16,8 +16,8 @@ class App : public Shared::InputEventHandlerDelegateApp {
 public:
   class Descriptor : public Shared::InputEventHandlerDelegateApp::Descriptor {
   public:
-    I18n::Message name() override;
-    I18n::Message upperName() override;
+    const char * name() override;
+    const char * upperName() override;
     const Image * icon() override;
   };
   class Snapshot : public ::App::Snapshot {

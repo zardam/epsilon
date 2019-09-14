@@ -7,12 +7,12 @@ extern "C" {
 
 namespace Home {
 
-I18n::Message App::Descriptor::name() {
-  return I18n::Message::Apps;
+const char * App::Descriptor::name() {
+  return I18n::translate(I18n::Message::Apps);
 }
 
-I18n::Message App::Descriptor::upperName() {
-  return I18n::Message::AppsCapital;
+const char * App::Descriptor::upperName() {
+  return I18n::translate(I18n::Message::AppsCapital);
 }
 
 App * App::Snapshot::unpack(Container * container) {

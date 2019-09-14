@@ -6,12 +6,12 @@ using namespace Poincare;
 
 namespace Sequence {
 
-I18n::Message App::Descriptor::name() {
-  return I18n::Message::SequenceApp;
+const char * App::Descriptor::name() {
+  return I18n::translate(I18n::Message::SequenceApp);
 }
 
-I18n::Message App::Descriptor::upperName() {
-  return I18n::Message::SequenceAppCapital;
+const char * App::Descriptor::upperName() {
+  return I18n::translate(I18n::Message::SequenceAppCapital);
 }
 
 const Image * App::Descriptor::icon() {

@@ -10,8 +10,8 @@ class App : public ::App {
 public:
   class Descriptor : public ::App::Descriptor {
   public:
-    I18n::Message name() override;
-    I18n::Message upperName() override;
+    const char * name() override;
+    const char * upperName() override;
   };
   class Snapshot : public ::App::Snapshot {
   public:
