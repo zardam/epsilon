@@ -7,7 +7,7 @@
 #include "variable_box_controller.h"
 #include "../shared/input_event_handler_delegate.h"
 
-namespace Code {
+namespace Khicas {
 
 class MenuController;
 class ScriptParameterController;

@@ -1,7 +1,7 @@
 #include "sandbox_controller.h"
 #include <apps/apps_container.h>
 
-namespace Code {
+namespace Khicas {
 
 SandboxController::SandboxController(Responder * parentResponder, MicroPython::ExecutionEnvironment * executionEnvironment) :
   ViewController(parentResponder),

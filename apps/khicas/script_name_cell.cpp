@@ -2,7 +2,7 @@
 #include "app.h"
 #include <assert.h>
 
-namespace Code {
+namespace Khicas {
 
 void ScriptNameCell::setEven(bool even) {
   EvenOddCell::setEven(even);

@@ -8,7 +8,7 @@
 #include <apps/shared/text_field_with_extension.h>
 #include "script_store.h"
 
-namespace Code {
+namespace Khicas {
 
 class ScriptNameCell : public EvenOddCell, public Responder {
 public:

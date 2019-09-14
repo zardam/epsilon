@@ -1,7 +1,7 @@
 #include "script_parameter_controller.h"
 #include "menu_controller.h"
 
-namespace Code {
+namespace Khicas {
 
 ScriptParameterController::ScriptParameterController(Responder * parentResponder, I18n::Message title, MenuController * menuController) :
   ViewController(parentResponder),

@@ -11,7 +11,7 @@ extern "C" {
 #include <stdlib.h>
 }
 
-namespace Code {
+namespace Khicas {
 
 static inline int minInt(int x, int y) { return x < y ? x : y; }
 

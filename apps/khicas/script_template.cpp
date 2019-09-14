@@ -1,6 +1,6 @@
 #include "script_template.h"
 
-namespace Code {
+namespace Khicas {
 
 constexpr ScriptTemplate emptyScriptTemplate(".py", "\x01" R"(from math import *
 )");

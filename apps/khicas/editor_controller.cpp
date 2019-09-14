@@ -7,7 +7,7 @@
 
 using namespace Shared;
 
-namespace Code {
+namespace Khicas {
 
 EditorController::EditorController(MenuController * menuController, App * pythonDelegate) :
   ViewController(nullptr),

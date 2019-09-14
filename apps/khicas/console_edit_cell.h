@@ -7,7 +7,7 @@
 #include <escher/text_field_delegate.h>
 #include <escher/pointer_text_view.h>
 
-namespace Code {
+namespace Khicas {
 
 class ConsoleEditCell : public HighlightCell, public Responder {
 public:

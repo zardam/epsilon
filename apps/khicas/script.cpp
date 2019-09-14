@@ -1,7 +1,7 @@
 #include "script.h"
 #include "script_store.h"
 
-namespace Code {
+namespace Khicas {
 
 static inline void intToText(int i, char * buffer, int bufferSize) {
   // We only support integers from 0 to 99.

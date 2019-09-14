@@ -8,7 +8,7 @@ extern "C" {
 #include <python/port/port.h>
 #include <stdlib.h>
 
-namespace Code {
+namespace Khicas {
 
 constexpr KDColor CommentColor = KDColor::RGB24(0x999988);
 constexpr KDColor NumberColor =  KDColor::RGB24(0x009999);

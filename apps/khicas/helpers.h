@@ -3,7 +3,7 @@
 
 #include <ion/events.h>
 
-namespace Code {
+namespace Khicas {
 namespace Helpers {
 
 const char * PythonTextForEvent(Ion::Events::Event event);

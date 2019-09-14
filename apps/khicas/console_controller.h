@@ -10,7 +10,7 @@
 #include "sandbox_controller.h"
 #include "script_store.h"
 
-namespace Code {
+namespace Khicas {
 
 class App;
 

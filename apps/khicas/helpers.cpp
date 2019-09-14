@@ -3,7 +3,7 @@
 #include <ion/unicode/code_point.h>
 #include <ion.h>
 
-namespace Code {
+namespace Khicas {
 namespace Helpers {
 
 class EventTextPair {

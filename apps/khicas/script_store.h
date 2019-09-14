@@ -9,7 +9,7 @@ extern "C" {
 #include "py/parse.h"
 }
 
-namespace Code {
+namespace Khicas {
 
 class ScriptStore : public MicroPython::ScriptProvider {
 public:

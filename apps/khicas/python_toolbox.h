@@ -6,7 +6,7 @@
 #include <ion/events.h>
 #include <kandinsky/font.h>
 
-namespace Code {
+namespace Khicas {
 
 class PythonToolbox : public Toolbox {
 public:

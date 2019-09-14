@@ -2,7 +2,7 @@
 #include <poincare/integer.h>
 #include <escher/app.h>
 
-namespace Code {
+namespace Khicas {
 
 /* EditorView */
 

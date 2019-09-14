@@ -4,7 +4,7 @@
 #include <apps/i18n.h>
 #include <assert.h>
 
-namespace Code {
+namespace Khicas {
 
 ConsoleEditCell::ConsoleEditCell(Responder * parentResponder, InputEventHandlerDelegate * inputEventHandlerDelegate, TextFieldDelegate * delegate) :
   HighlightCell(),

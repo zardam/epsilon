@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-namespace Code {
+namespace Khicas {
 
 class ScriptNode {
 public:

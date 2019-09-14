@@ -6,7 +6,7 @@
 #include <escher/table_cell.h>
 #include <kandinsky/coordinate.h>
 
-namespace Code {
+namespace Khicas {
 
 class ScriptNodeCell : public TableCell {
 public:

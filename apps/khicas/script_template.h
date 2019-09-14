@@ -1,7 +1,7 @@
 #ifndef CODE_SCRIPT_TEMPLATE_H
 #define CODE_SCRIPT_TEMPLATE_H
 
-namespace Code {
+namespace Khicas {
 
 class ScriptTemplate {
 public:

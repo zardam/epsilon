@@ -3,7 +3,7 @@
 
 #include <ion.h>
 
-namespace Code {
+namespace Khicas {
 
 /* Record  : | Total Size |  Name |             Body                |
  * Script:                        | AutoImportationStatus | Content |*/

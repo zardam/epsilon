@@ -7,7 +7,7 @@
 #include <escher/view_controller.h>
 #include <python/port/port.h>
 
-namespace Code {
+namespace Khicas {
 
 class SandboxController : public ViewController {
 public:

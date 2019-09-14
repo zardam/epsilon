@@ -5,7 +5,7 @@
 #include <apps/i18n.h>
 #include "script_store.h"
 
-namespace Code {
+namespace Khicas {
 
 class MenuController;
 

@@ -11,7 +11,7 @@
 
 #include "console_line.h"
 
-namespace Code {
+namespace Khicas {
 
 class ConsoleLineCell : public HighlightCell, public Responder {
 public:

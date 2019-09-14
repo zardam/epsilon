@@ -6,7 +6,7 @@
 #include "script_node_cell.h"
 #include "script_store.h"
 
-namespace Code {
+namespace Khicas {
 
 class VariableBoxController : public NestedMenuController {
 public:

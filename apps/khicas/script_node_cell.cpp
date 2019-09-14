@@ -2,7 +2,7 @@
 #include <kandinsky/point.h>
 #include <escher.h>
 
-namespace Code {
+namespace Khicas {
 
 constexpr char ScriptNodeCell::k_parentheses[];
 constexpr char ScriptNodeCell::k_parenthesesWithEmpty[];

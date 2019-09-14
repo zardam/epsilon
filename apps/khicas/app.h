@@ -1,5 +1,5 @@
-#ifndef CODE_APP_H
-#define CODE_APP_H
+#ifndef KHICAS_APP_H
+#define KHICAS_APP_H
 
 #include <escher.h>
 #include <ion/events.h>
@@ -10,7 +10,7 @@
 #include "python_toolbox.h"
 #include "variable_box_controller.h"
 
-namespace Code {
+namespace Khicas {
 
 class App : public Shared::InputEventHandlerDelegateApp {
 public:
@@ -60,7 +60,7 @@ public:
   /* TextInputDelegate */
   bool textInputDidReceiveEvent(InputEventHandler * textInput, Ion::Events::Event event);
 
-  /* Code::App */
+  /* Khicas::App */
   // Python delegate
   bool pythonIsInited() { return m_pythonUser != nullptr; }
   bool isPythonUser(const void * pythonUser) { return m_pythonUser == pythonUser; }

@@ -3,7 +3,7 @@
 
 #include <escher/text_area.h>
 
-namespace Code {
+namespace Khicas {
 
 class App;
 

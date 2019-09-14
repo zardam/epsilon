@@ -5,7 +5,7 @@
 #include <assert.h>
 #include <stddef.h>
 
-namespace Code {
+namespace Khicas {
 
 class ConsoleStore {
 public:

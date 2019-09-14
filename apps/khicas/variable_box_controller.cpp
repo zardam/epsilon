@@ -9,7 +9,7 @@
 #include <ion/unicode/utf8_helper.h>
 #include <string.h>
 
-namespace Code {
+namespace Khicas {
 
 VariableBoxController::VariableBoxController(ScriptStore * scriptStore) :
   NestedMenuController(nullptr, I18n::Message::FunctionsAndVariables),
@@ -29,7 +29,7 @@ bool VariableBoxController::handleEvent(Ion::Events::Event event) {
 }
 
 void VariableBoxController::didEnterResponderChain(Responder * previousFirstResponder) {
-  /* This Code::VariableBoxController should always be called from an
+  /* This Khicas::VariableBoxController should always be called from an
    * environment where Python has already been inited. This way, we do not
    * deinit Python when leaving the VariableBoxController, so we do not lose the
    * environment that was loaded when entering the VariableBoxController. */

@@ -4,7 +4,7 @@
 #include <kandinsky/coordinate.h>
 #include <apps/i18n.h>
 
-namespace Code {
+namespace Khicas {
 
 ConsoleLineCell::ScrollableConsoleLineView::ConsoleLineView::ConsoleLineView() :
   HighlightCell(),
@@ -34,7 +34,7 @@ ConsoleLineCell::ScrollableConsoleLineView::ScrollableConsoleLineView(Responder 
 ConsoleLineCell::ConsoleLineCell(Responder * parentResponder) :
   HighlightCell(),
   Responder(parentResponder),
-  m_promptView(ConsoleController::k_font, I18n::Message::ConsolePrompt, 0, 0.5),
+  m_promptView(ConsoleController::k_font, I18n::Message::KhicasConsolePrompt, 0, 0.5),
   m_scrollableView(this),
   m_line()
 {
@@ -79,7 +79,7 @@ View * ConsoleLineCell::subviewAtIndex(int index) {
 
 void ConsoleLineCell::layoutSubviews() {
   if (m_line.isCommand()) {
-    KDSize promptSize = ConsoleController::k_font->stringSize(I18n::translate(I18n::Message::ConsolePrompt));
+    KDSize promptSize = ConsoleController::k_font->stringSize(I18n::translate(I18n::Message::KhicasConsolePrompt));
     m_promptView.setFrame(KDRect(KDPointZero, promptSize.width(), bounds().height()));
     m_scrollableView.setFrame(KDRect(KDPoint(promptSize.width(), 0), bounds().width() - promptSize.width(), bounds().height()));
     return;

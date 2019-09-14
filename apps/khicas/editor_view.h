@@ -4,7 +4,7 @@
 #include <escher.h>
 #include "python_text_area.h"
 
-namespace Code {
+namespace Khicas {
 
 class EditorView : public Responder, public View, public ScrollViewDelegate {
 public:

@@ -1,7 +1,7 @@
-apps += Code::App
-app_headers += apps/code/app.h
+apps += Khicas::App
+app_headers += apps/khicas/app.h
 
-app_src += $(addprefix apps/code/,\
+app_src += $(addprefix apps/khicas/,\
   app.cpp \
   console_controller.cpp \
   console_edit_cell.cpp \
@@ -23,7 +23,7 @@ app_src += $(addprefix apps/code/,\
   variable_box_controller.cpp \
 )
 
-i18n_files += $(addprefix apps/code/,\
+i18n_files += $(addprefix apps/khicas/,\
   base.de.i18n\
   base.en.i18n\
   base.es.i18n\
@@ -44,4 +44,4 @@ i18n_files += $(addprefix apps/code/,\
   toolbox.universal.i18n\
 )
 
-$(eval $(call depends_on_image,apps/code/app.cpp,apps/code/code_icon.png))
+$(eval $(call depends_on_image,apps/khicas/app.cpp,apps/khicas/khicas_icon.png))

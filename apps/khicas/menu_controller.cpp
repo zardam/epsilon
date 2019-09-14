@@ -7,7 +7,7 @@
 #include <ion/events.h>
 #include <ion/unicode/utf8_decoder.h>
 
-namespace Code {
+namespace Khicas {
 
 MenuController::MenuController(Responder * parentResponder, App * pythonDelegate, ScriptStore * scriptStore, ButtonRowController * footer) :
   ViewController(parentResponder),

@@ -1,21 +1,21 @@
 #include "app.h"
-#include "code_icon.h"
+#include "khicas_icon.h"
 #include <apps/i18n.h>
 #include "helpers.h"
 #include <ion/unicode/utf8_helper.h>
 
-namespace Code {
+namespace Khicas {
 
 I18n::Message App::Descriptor::name() {
-  return I18n::Message::CodeApp;
+  return I18n::Message::KhicasApp;
 }
 
 I18n::Message App::Descriptor::upperName() {
-  return I18n::Message::CodeAppCapital;
+  return I18n::Message::KhicasAppCapital;
 }
 
 const Image * App::Descriptor::icon() {
-  return ImageStore::CodeIcon;
+  return ImageStore::KhicasIcon;
 }
 
 App::Snapshot::Snapshot() :
@@ -59,7 +59,7 @@ void App::Snapshot::setOpt(const char * name, char * value) {
      * importation status; we cannot set it to 1 before adding the script to
      * storage. */
     const char * scriptContent = separator;
-    Code::ScriptTemplate script(scriptName, scriptContent);
+    Khicas::ScriptTemplate script(scriptName, scriptContent);
     m_scriptStore.addScriptFromTemplate(&script);
     m_scriptStore.scriptNamed(scriptName).toggleImportationStatus(); // set Importation Status to 1
     return;

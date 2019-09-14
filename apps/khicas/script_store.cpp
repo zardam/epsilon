@@ -7,7 +7,7 @@ extern "C" {
 #include "py/nlr.h"
 }
 
-namespace Code {
+namespace Khicas {
 
 constexpr char ScriptStore::k_scriptExtension[];
 

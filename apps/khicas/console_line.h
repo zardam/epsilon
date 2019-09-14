@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-namespace Code {
+namespace Khicas {
 
 class ConsoleLine {
 public:
