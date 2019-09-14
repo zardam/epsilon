@@ -3,6 +3,7 @@
 extern "C" {
 #include "mphalport.h"
 }
+#include <iostream>
 
 bool micropython_port_vm_hook_loop() {
   /* This function is called very frequently by the MicroPython engine. We grab
@@ -45,4 +46,20 @@ bool micropython_port_interrupt_if_needed() {
 
 int micropython_port_random() {
   return Ion::random();
+}
+
+bool back_key_pressed() {
+  static int c = 0;
+
+  ++c ;
+  if (c<200 || (c & 0xf)!= 0) {
+    return false;
+  }
+
+  Ion::Keyboard::State scan = Ion::Keyboard::scan();
+  Ion::Keyboard::Key interruptKey = static_cast<Ion::Keyboard::Key>(mp_interrupt_char);
+  // std::cerr << scan << '\n';
+  if (scan.keyDown(interruptKey)) 
+    return true;
+  return false;
 }

@@ -5,8 +5,8 @@ namespace Khicas {
 constexpr ScriptTemplate emptyScriptTemplate(".py", "\x01" R"(from math import *
 )");
 
-constexpr ScriptTemplate squaresScriptTemplate("squares.py", "\x01" R"(from math import *
-from turtle import *
+#if 0
+constexpr ScriptTemplate squaresScriptTemplate("squares.py", "\x01" R"(
 def squares(angle=0.5):
   reset()
   L=330
@@ -19,7 +19,12 @@ def squares(angle=0.5):
     left(90+angle)
     L=L-L*sin(angle*pi/180)
   hideturtle())");
-
+#else
+constexpr ScriptTemplate squaresScriptTemplate("squares.py", "\x01" R"(def squares(n):
+  for j in range(n):
+    print(j)
+)");
+#endif
 constexpr ScriptTemplate mandelbrotScriptTemplate("mandelbrot.py", "\x01" R"(# This script draws a Mandelbrot fractal set
 # N_iteration: degree of precision
 import kandinsky
@@ -41,8 +46,8 @@ def mandelbrot(N_iteration):
       kandinsky.set_pixel(x,y,col))");
 
 constexpr ScriptTemplate polynomialScriptTemplate("polynomial.py", "\x01" R"(from math import *
-# roots(a,b,c) computes the solutions of the equation a*x**2+b*x+c=0
-def roots(a,b,c):
+# rac(a,b,c) calcule les racines de a*x**2+b*x+c=0
+def rac(a,b,c):
   delta = b*b-4*a*c
   if delta == 0:
     return -b/(2*a)
