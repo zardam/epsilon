@@ -4,6 +4,9 @@
 #include <poincare/symbol.h>
 #include <poincare/undefined.h>
 #include <poincare/unreal.h>
+extern "C" {
+#include <mphalport.h>
+}
 #include <string.h>
 #include <cmath>
 
@@ -62,7 +65,9 @@ void Calculation::setContent(const char * c, Context * context, Expression ansEx
     strlcpy(&buf[strlen(buf)],c,sizeof(buf)-strlen(buf));
     buf[strlen(buf)+1]=0;
     buf[strlen(buf)]=')';
+    mp_interrupt_char = (int)Ion::Keyboard::Key::Back;
     const char * out=caseval(buf);
+    // take care of GIAC_ERROR
     strlcpy(m_inputText,c,sizeof(m_inputText));
     strlcpy(m_exactOutputText,out,sizeof(m_exactOutputText));
     strlcpy(buf,"evalf(",sizeof(buf));
@@ -70,6 +75,7 @@ void Calculation::setContent(const char * c, Context * context, Expression ansEx
     buf[strlen(out)+7]=0;
     buf[strlen(out)+6]=')';
     out=caseval(buf);
+    mp_interrupt_char = -1; // Disable interrupt
     if (strcmp(out,m_exactOutputText)==0 || (m_exactOutputText[0]=='[' && out[0]!='[')){
       bool undef=false;
       int l=strlen(m_exactOutputText);

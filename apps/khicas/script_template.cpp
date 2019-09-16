@@ -27,23 +27,20 @@ constexpr ScriptTemplate squaresScriptTemplate("squares.py", "\x01" R"(def squar
 #endif
 constexpr ScriptTemplate mandelbrotScriptTemplate("mandelbrot.py", "\x01" R"(# This script draws a Mandelbrot fractal set
 # N_iteration: degree of precision
-import kandinsky
-def mandelbrot(N_iteration):
-  for x in range(320):
-    for y in range(222):
-# Compute the mandelbrot sequence for the point c = (c_r, c_i) with start value z = (z_r, z_i)
-      z = complex(0,0)
-# Rescale to fit the drawing screen 320x222
-      c = complex(3.5*x/319-2.5, -2.5*y/221+1.25)
-      i = 0
-      while (i < N_iteration) and abs(z) < 2:
-        i = i + 1
-        z = z*z+c
-# Choose the color of the dot from the Mandelbrot sequence
-      rgb = int(255*i/N_iteration)
-      col = kandinsky.color(int(rgb),int(rgb*0.75),int(rgb*0.25))
-# Draw a pixel colored in 'col' at position (x,y)
-      kandinsky.set_pixel(x,y,col))");
+def mandelbrot(X=320,Y=222,Nmax=10):
+  w=2.7/X
+  h=-1.87/Y
+  Y=Y-1
+  for y in range(ceiling(Y/2)+1):
+    c = -2.1+i*(h*y+0.935)
+    for x in range(X):
+      z = 0
+      for j in range(Nmax):
+        if abs(z:=z**2+c)>2:
+          break
+      set_pixel(x,y,5100*j+512)
+      set_pixel(x,Y-y,5100*j+512)
+      c = c+w)");
 
 constexpr ScriptTemplate polynomialScriptTemplate("polynomial.py", "\x01" R"(from math import *
 # rac(a,b,c) calcule les racines de a*x**2+b*x+c=0
@@ -54,7 +51,7 @@ def rac(a,b,c):
   elif delta > 0:
     x_1 = (-b-sqrt(delta))/(2*a)
     x_2 = (-b+sqrt(delta))/(2*a)
-    return x_1, x_2
+    return [x_1, x_2]
   else:
     return None)");
 

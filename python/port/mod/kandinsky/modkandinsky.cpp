@@ -63,6 +63,18 @@ mp_obj_t modkandinsky_set_pixel(mp_obj_t x, mp_obj_t y, mp_obj_t color) {
   return mp_const_none;
 }
 
+void numworks_giac_set_pixel(int x, int y, int color) {
+  KDPoint point(x,y);
+  MicroPython::ExecutionEnvironment::currentExecutionEnvironment()->displaySandbox();
+  KDIonContext::sharedContext()->setPixel(point, color);
+}
+
+int numworks_giac_get_pixel(int x, int y) {
+  KDPoint point(x,y);
+  KDColor c = KDIonContext::sharedContext()->getPixel(point);
+  return c;
+}
+
 mp_obj_t modkandinsky_draw_string(size_t n_args, const mp_obj_t * args) {
   const char * text = mp_obj_str_get_str(args[0]);
   KDPoint point(mp_obj_get_int(args[1]), mp_obj_get_int(args[2]));
@@ -71,6 +83,12 @@ mp_obj_t modkandinsky_draw_string(size_t n_args, const mp_obj_t * args) {
   MicroPython::ExecutionEnvironment::currentExecutionEnvironment()->displaySandbox();
   KDIonContext::sharedContext()->drawString(text, point, KDFont::LargeFont, textColor, backgroundColor);
   return mp_const_none;
+}
+
+void numworks_giac_draw_string(int x,int y,int c,int bg,const char * text){
+  KDPoint point(x,y);
+  MicroPython::ExecutionEnvironment::currentExecutionEnvironment()->displaySandbox();
+  KDIonContext::sharedContext()->drawString(text, point, KDFont::LargeFont, c, bg);
 }
 
 mp_obj_t modkandinsky_fill_rect(size_t n_args, const mp_obj_t * args) {
@@ -84,4 +102,11 @@ mp_obj_t modkandinsky_fill_rect(size_t n_args, const mp_obj_t * args) {
   MicroPython::ExecutionEnvironment::currentExecutionEnvironment()->displaySandbox();
   KDIonContext::sharedContext()->fillRect(rect, color);
   return mp_const_none;
+}
+
+void numworks_giac_fill_rect(int x,int y,int w,int h,int c){
+  KDRect rect(x,y,w,h);
+  KDColor color = c;
+  MicroPython::ExecutionEnvironment::currentExecutionEnvironment()->displaySandbox();
+  KDIonContext::sharedContext()->fillRect(rect, color);
 }

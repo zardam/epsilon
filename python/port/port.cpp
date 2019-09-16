@@ -96,7 +96,7 @@ void MicroPython::ExecutionEnvironment::runCode(const char * str) {
 	  }
         }
       }
-    }
+    } 
     mp_obj_print_helper(&mp_plat_print, (mp_obj_t)nlr.ret_val, PRINT_EXC);
     mp_print_str(&mp_plat_print, "\n");
     /* End of mp_obj_print_exception. */
@@ -213,7 +213,7 @@ mp_lexer_t * mp_lexer_new_from_file(const char * filename) {
 }
 
 const char * giac_read_file(const char * filename){
-  if (sScriptProvider != nullptr)
+  if (sScriptProvider != nullptr) 
     return sScriptProvider->contentOfScript(filename);
   return 0;
 }
@@ -226,8 +226,8 @@ mp_import_stat_t mp_import_stat(const char *path) {
 }
 
 void mp_hal_stdout_tx_strn_cooked(const char * str, size_t len) {
-   if (sCurrentExecutionEnvironment != nullptr)
-     sCurrentExecutionEnvironment->printText(str, len);
+  if (sCurrentExecutionEnvironment != nullptr)
+    sCurrentExecutionEnvironment->printText(str, len);
 }
 
 const char * mp_hal_input(const char * prompt) {
