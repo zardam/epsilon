@@ -27,7 +27,7 @@ constexpr ScriptTemplate squaresScriptTemplate("squares.py", "\x01" R"(def squar
 #endif
 constexpr ScriptTemplate mandelbrotScriptTemplate("mandelbrot.py", "\x01" R"(# This script draws a Mandelbrot fractal set
 # N_iteration: degree of precision
-def mandelbrot(X=320,Y=222,Nmax=10):
+def mandelbrot(X=160,Y=111,Nmax=10):
   w=2.7/X
   h=-1.87/Y
   Y=Y-1
@@ -38,8 +38,8 @@ def mandelbrot(X=320,Y=222,Nmax=10):
       for j in range(Nmax):
         if abs(z:=z**2+c)>2:
           break
-      set_pixel(x,y,5100*j+512)
-      set_pixel(x,Y-y,5100*j+512)
+      draw_rectangle(2*x,2*y,2,2,126*j+1073743903)
+      draw_rectangle(2*x,2*(Y-y),2,2,126*j+1073743903)
       c = c+w)");
 
 constexpr ScriptTemplate polynomialScriptTemplate("polynomial.py", "\x01" R"(from math import *
