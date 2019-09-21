@@ -63,10 +63,49 @@ mp_obj_t modkandinsky_set_pixel(mp_obj_t x, mp_obj_t y, mp_obj_t color) {
   return mp_const_none;
 }
 
+#define LCD_WIDTH_PX 320
+#define LCD_HEIGHT_PX 222
+
 void numworks_giac_set_pixel(int x, int y, int color) {
+  auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
+  if (ptr) ptr->displaySandbox();
+  KDColor c(color);
+#if 1
+  if (x<0 || x>=LCD_WIDTH_PX || y<0 || y>=LCD_HEIGHT_PX)
+    return;
+  KDPoint point(x,y+18);
+  KDIonContext::sharedContext()->pushRect(KDRect(point, 1, 1), &c);
+#else
   KDPoint point(x,y);
-  MicroPython::ExecutionEnvironment::currentExecutionEnvironment()->displaySandbox();
-  KDIonContext::sharedContext()->setPixel(point, color);
+  KDIonContext::sharedContext()->setPixel(point,c);
+#endif
+}
+
+void numworks_giac_fill_rect(int x,int y,int w,int h,int c){
+  KDColor color = c;
+  auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
+  if (ptr) ptr->displaySandbox();
+#if 1
+  if (x<0){
+    w += x;
+    x=0;
+  }
+  if (y<0){
+    h += y;
+    y=0;
+  }
+  if (h+y>=LCD_HEIGHT_PX)
+    h=LCD_HEIGHT_PX-y;
+  if (x+w>=LCD_WIDTH_PX)
+    w=LCD_WIDTH_PX-x;
+  if (h<=0 || w<=0)
+    return;
+  KDRect rect(x,y+18,w,h);
+  KDIonContext::sharedContext()->pushRectUniform(rect,color);
+#else
+  KDRect rect(x,y,w,h); 
+  KDIonContext::sharedContext()->fillRect(rect, color);
+#endif
 }
 
 int numworks_giac_get_pixel(int x, int y) {
@@ -86,9 +125,19 @@ mp_obj_t modkandinsky_draw_string(size_t n_args, const mp_obj_t * args) {
 }
 
 void numworks_giac_draw_string(int x,int y,int c,int bg,const char * text){
+  auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
   KDPoint point(x,y);
-  MicroPython::ExecutionEnvironment::currentExecutionEnvironment()->displaySandbox();
+  if (ptr)
+    ptr->displaySandbox();
   KDIonContext::sharedContext()->drawString(text, point, KDFont::LargeFont, c, bg);
+}
+
+void numworks_giac_draw_string_small(int x,int y,int c,int bg,const char * text){
+  auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
+  KDPoint point(x,y);
+  if (ptr)
+    ptr->displaySandbox();
+  KDIonContext::sharedContext()->drawString(text, point, KDFont::SmallFont, c, bg);
 }
 
 mp_obj_t modkandinsky_fill_rect(size_t n_args, const mp_obj_t * args) {
@@ -104,9 +153,14 @@ mp_obj_t modkandinsky_fill_rect(size_t n_args, const mp_obj_t * args) {
   return mp_const_none;
 }
 
-void numworks_giac_fill_rect(int x,int y,int w,int h,int c){
-  KDRect rect(x,y,w,h);
-  KDColor color = c;
-  MicroPython::ExecutionEnvironment::currentExecutionEnvironment()->displaySandbox();
-  KDIonContext::sharedContext()->fillRect(rect, color);
+void numworks_giac_hide_graph(){
+  auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
+  if (ptr)
+    ptr->hideSandbox();
+}
+
+void numworks_giac_show_graph(){
+  auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
+  if (ptr)
+    ptr->displaySandbox();
 }

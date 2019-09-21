@@ -1,5 +1,8 @@
 #include "helpers.h"
 #include <ion.h>
+#ifdef SIMULATOR
+#include <FL/Fl.H>
+#endif
 extern "C" {
 #include "mphalport.h"
 }
@@ -52,14 +55,19 @@ bool back_key_pressed() {
   static int c = 0;
 
   ++c ;
-  if (c<200 || (c & 0xf)!= 0) {
+  if (c<400 || (c & 0xf)!= 0) {
     return false;
   }
+#ifdef SIMULATOR
+  Fl::wait(0.00001);
+#endif
 
   Ion::Keyboard::State scan = Ion::Keyboard::scan();
+  // if (scan!=16) std::cerr << scan << '\n';
   Ion::Keyboard::Key interruptKey = static_cast<Ion::Keyboard::Key>(mp_interrupt_char);
-  // std::cerr << scan << '\n';
-  if (scan.keyDown(interruptKey)) 
+  if (scan.keyDown(interruptKey)
+      // || scan.keyDown(static_cast<Ion::Keyboard::Key>(16))
+      ) 
     return true;
   return false;
 }

@@ -20,9 +20,10 @@ def squares(angle=0.5):
     L=L-L*sin(angle*pi/180)
   hideturtle())");
 #else
-constexpr ScriptTemplate squaresScriptTemplate("squares.py", "\x01" R"(def squares(n):
-  for j in range(n):
-    print(j)
+constexpr ScriptTemplate squaresScriptTemplate("squares.py", "\x01" R"(def s(n=333333):
+  plot(sin(x))
+#  for j in range(n):
+#    print(j)
 )");
 #endif
 constexpr ScriptTemplate mandelbrotScriptTemplate("mandelbrot.py", "\x01" R"(# This script draws a Mandelbrot fractal set

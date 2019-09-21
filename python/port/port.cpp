@@ -1,6 +1,7 @@
 #include "port.h"
 
 #include <ion/keyboard.h>
+#include <ion/events.h>
 
 #include <math.h>
 #include <stdint.h>
@@ -33,6 +34,14 @@ MicroPython::ExecutionEnvironment * MicroPython::ExecutionEnvironment::currentEx
   return sCurrentExecutionEnvironment;
 }
 
+void enable_back_interrupt(){
+  mp_interrupt_char = (int)Ion::Keyboard::Key::Back;
+}
+
+void disable_back_interrupt(){
+  mp_interrupt_char = -1;
+}
+
 void MicroPython::ExecutionEnvironment::runCode(const char * str) {
   static bool khicas_eval=true;
   if (strcmp(str,"python")==0){
@@ -50,9 +59,9 @@ void MicroPython::ExecutionEnvironment::runCode(const char * str) {
   assert(sCurrentExecutionEnvironment == nullptr);
   sCurrentExecutionEnvironment = this;
   if (khicas_eval){
-    mp_hal_set_interrupt_char((int)Ion::Keyboard::Key::Back);
+    // mp_hal_set_interrupt_char((int)Ion::Keyboard::Key::Back);
     const char * out=caseval(str);
-    mp_hal_set_interrupt_char(-1); // Disable interrupt
+    // mp_hal_set_interrupt_char(-1); 
     printText(out,strlen(out));
   }
   else {
@@ -233,4 +242,15 @@ void mp_hal_stdout_tx_strn_cooked(const char * str, size_t len) {
 const char * mp_hal_input(const char * prompt) {
   assert(sCurrentExecutionEnvironment != nullptr);
   return sCurrentExecutionEnvironment->inputText(prompt);
+}
+
+void GetKey(int * key){
+  for (;;){
+    int timeout=10000;
+    Ion::Events::Event e=Ion::Events::getEvent(&timeout);
+    if (e.isKeyboardEvent()){
+      *key=e.id();
+      break;
+    }
+  }
 }
