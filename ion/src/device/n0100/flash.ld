@@ -6,17 +6,19 @@
  * written at a specific address (in Flash ROM) and the data at another. */
 
 /* Let's instruct the linker about our memory layout.
- * This will let us use shortcuts such as ">FLASH" to ask for a given section to
+ * This will let us use shortcuts such as ">INTERNAL_FLASH" to ask for a given section to
  * be stored in Flash. */
+
 MEMORY {
-  FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 1024K
-  SRAM (rw) : ORIGIN = 0x20000000, LENGTH = 256K
+  INTERNAL_FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 1M
+  SRAM (rw)  : ORIGIN = 0x20000000, LENGTH = 256K
+  EXTERNAL_FLASH (rx) : ORIGIN = 0x90000000, LENGTH = 8M
 }
 
 STACK_SIZE = 32K;
 
 SECTIONS {
-  .isr_vector_table ORIGIN(FLASH) : {
+  .isr_vector_table ORIGIN(INTERNAL_FLASH) : {
     /* When booting, the STM32F412 fetches the content of address 0x0, and
      * extracts from it various key infos: the initial value of the PC register
      * (program counter), the initial value of the stack pointer, and various
@@ -31,30 +33,107 @@ SECTIONS {
      * convenient: using function pointers, we can easily point to the service
      * routine for each interrupt. */
     KEEP(*(.isr_vector_table))
-  } >FLASH
+  } >INTERNAL_FLASH
 
   .header : {
     KEEP(*(.header))
-  } >FLASH
+  } >INTERNAL_FLASH
 
-  .text : {
+  /* Internal flash memory */
+
+  /* We link 'jump_to_external_flash' in a separate section from text.internal.
+   * Indeed, it is the only internal flash symbol that refers the external
+   * flash. This way we can assert that there are no cross references from the
+   * internal flash to the external flash. */
+  .text.internal_to_external : {
+    *(.text._ZL22jump_to_external_flashv)
+  } >INTERNAL_FLASH
+
+  /* Use boot routine and required dependencies */
+  /* We're relying on symbols being in their own sub-section. On GCC, this is
+   * done with -fdata-sections -ffunction-sections */
+  .text.internal : {
+    . = ALIGN(4);
+    *(.text.start)
+    *(.text.abort)
+    *(.text.isr_systick)
+    *(.text.__assert)
+    *(.text.memcpy)
+    *(.text.memset)
+    /*
+    *(.text.strlen)
+    *(.text.strncmp)
+    *(.text.strlcpy)
+    *(.text.strcmp)
+    *(.text.memmove)
+    */
+    /* 'start' dependencies */
+    *(.text._ZN3Ion6Device5Board4initEv)
+    *(.text._ZN3Ion6Device5Board7initFPUEv)
+    *(.text._ZN3Ion6Device5Board7initMPUEv)
+    *(.text._ZN3Ion6Device5Board10initClocksEv)
+    *(.text._ZNV3Ion6Device4Regs*)
+    *(.text._ZN3Ion6Device4Regs*)
+    *(.text.*3Ion6Device4Regs4GPIO5PUPDR*)
+    *(.text._ZNK3Ion6Device4Regs9AFGPIOPin*)
+    *(.text._ZN3Ion6Device13ExternalFlash*)
+    *(.text._ZN3Ion6Device5Cache*)
+    *(.text._ZN3Ion6Timing6usleepEj)
+
+    /* 'abort' dependencies */
+    *(.text._ZN3Ion6Device5Reset4coreEv)
+
+    /* 'standby' dependencies '*/
+    *(.text._ZN3Ion6Device5Power20internalFlashStandbyEv)
+    *(.text._ZN3Ion6Device5Power17enterLowPowerModeEv)
+    *(.text._ZN3Ion6Device5Board14shutdownClocksEb)
+    *(.text._ZN3Ion6Device5Reset16coreWhilePluggedEv)
+
+    /* 'suspend' dependencies '*/
+    *(.text._ZN3Ion6Device5Power20internalFlashSuspendEb)
+
+    /* 'Reset::jump' dependencies '*/
+    *(.text._ZN3Ion6Device5Reset17internalFlashJumpEj*)
+    *(.text._ZN3Ion6Device5Board19shutdownPeripheralsEb)
+    *(.text._ZN3Ion6Device6Timing8shutdownEv)
+    *(.text._ZN3Ion6Timing6msleepEj)
+    *(.text._ZN3Ion6Device5Board17setClockFrequencyENS1_9FrequencyE)
+
+    /* Optimization */
+    */libgcc.a:(.text)
+  } >INTERNAL_FLASH
+
+
+  .rodata.internal : {
+    . = ALIGN(4);
+    *(.rodata._ZN3Ion6Device13ExternalFlash*)
+    /* 'start' dependencies */
+    *(.rodata._ZN3Ion6Device4RegsL5GPIOAE)
+    *(.rodata._ZN3Ion6Device4RegsL5GPIOBE)
+    *(.rodata._ZN3Ion6Device5Board4initEv.str1.4)
+
+    *(.rodata._ZN3Ion6Device*)
+    *(.rodata._ZZN3Ion6Device3USB12shutdownGPIOEvE4Pins)
+  } >INTERNAL_FLASH
+
+  /* External flash memory */
+  .text.external : {
     . = ALIGN(4);
     *(.text)
     *(.text.*)
-  } >FLASH
+  } >EXTERNAL_FLASH
+
+  .rodata.external : {
+    *(.rodata)
+    *(.rodata.*)
+  } >EXTERNAL_FLASH
 
   .init_array : {
     . = ALIGN(4);
     _init_array_start = .;
     KEEP (*(.init_array*))
     _init_array_end = .;
-  } >FLASH
-
-  .rodata : {
-    . = ALIGN(4);
-    *(.rodata)
-    *(.rodata.*)
-  } >FLASH
+  } >INTERNAL_FLASH
 
   .data : {
     /* The data section is written to Flash but linked as if it were in RAM.
@@ -75,7 +154,7 @@ SECTIONS {
     *(.data)
     *(.data.*)
     _data_section_end_ram = .;
-  } >SRAM AT> FLASH
+  } >SRAM AT> INTERNAL_FLASH
 
   .bss : {
     /* The bss section contains data for all uninitialized variables
@@ -109,3 +188,12 @@ SECTIONS {
     _stack_start = .;
   } >SRAM
 }
+
+NOCROSSREFS_TO(.text.external .text.internal);
+NOCROSSREFS_TO(.rodata.external .text.internal);
+NOCROSSREFS_TO(.text.external .rodata.internal);
+NOCROSSREFS_TO(.rodata.external .rodata.internal);
+NOCROSSREFS_TO(.text.external .isr_vector_table);
+NOCROSSREFS_TO(.rodata.external .isr_vector_table);
+NOCROSSREFS_TO(.text.external .header);
+NOCROSSREFS_TO(.rodata.external .header);
