@@ -9,10 +9,11 @@ extern "C" {
 namespace Khicas {
 
 const ToolboxMessageTree forLoopChildren[] = {
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasWhileLoopWithArg, I18n::Message::Default, false, I18n::Message::KhicasWhileLoop),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasForInRange1ArgLoopWithArg, I18n::Message::Default, false, I18n::Message::KhicasForInRange1ArgLoop),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasForInRange2ArgsLoopWithArg, I18n::Message::Default, false, I18n::Message::KhicasForInRange2ArgsLoop),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasForInRange3ArgsLoopWithArg, I18n::Message::Default, false, I18n::Message::KhicasForInRange3ArgsLoop),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasForInListLoopWithArg, I18n::Message::Default, false, I18n::Message::KhicasForInListLoop)
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasForInListLoopWithArg, I18n::Message::Default, false, I18n::Message::KhicasForInListLoop),
 };
 
 const ToolboxMessageTree ifStatementChildren[] = {
@@ -23,8 +24,9 @@ const ToolboxMessageTree ifStatementChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::KhicasIfOrIfElseStatementWithArg, I18n::Message::Default, false, I18n::Message::KhicasIfOrIfElseStatement)
 };
 
-const ToolboxMessageTree whileLoopChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasWhileLoopWithArg, I18n::Message::Default, false, I18n::Message::KhicasWhileLoop)
+const ToolboxMessageTree pythonxcasChildren[] = {
+  ToolboxMessageTree::Leaf(I18n::Message::selectPythonWithArg, I18n::Message::selectPython),
+  ToolboxMessageTree::Leaf(I18n::Message::selectXcasWithArg, I18n::Message::selectXcas),
 };
 
 const ToolboxMessageTree conditionsChildren[] = {
@@ -361,10 +363,10 @@ const ToolboxMessageTree matricesChildren[] = {
 };
 
 const ToolboxMessageTree progChildren[] = {
+  ToolboxMessageTree::Node(I18n::Message::pythonxcasMenu, pythonxcasChildren),
   ToolboxMessageTree::Node(I18n::Message::Functions, functionsChildren),
   ToolboxMessageTree::Node(I18n::Message::KhicasForLoopMenu, forLoopChildren),
   ToolboxMessageTree::Node(I18n::Message::KhicasIfStatementMenu, ifStatementChildren),
-  ToolboxMessageTree::Node(I18n::Message::KhicasWhileLoopMenu, whileLoopChildren),
   ToolboxMessageTree::Node(I18n::Message::KhicasConditionsMenu, conditionsChildren),
 };
 

@@ -47,7 +47,8 @@ def mandelbrot(X=160,Y=111,Nmax=10):
       draw_rectangle(2*x,2*(Y-y),2,2,126*j+1073743903)
       c = c+w)");
 
-constexpr ScriptTemplate polynomialScriptTemplate("polynomial.py", "\x01" R"(# rac(a,b,c) calcule les racines de a*x**2+b*x+c=0
+constexpr ScriptTemplate polynomialScriptTemplate("polynomial.py", "\x01" R"(from math import *
+# rac(a,b,c) calcule les racines de a*x**2+b*x+c=0
 def rac(a,b,c):
   delta = b*b-4*a*c
   if delta == 0:
