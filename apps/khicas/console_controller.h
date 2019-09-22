@@ -1,5 +1,5 @@
-#ifndef CODE_CONSOLE_CONTROLLER_H
-#define CODE_CONSOLE_CONTROLLER_H
+#ifndef KHICAS_CONSOLE_CONTROLLER_H
+#define KHICAS_CONSOLE_CONTROLLER_H
 
 #include <escher.h>
 #include <python/port/port.h>
@@ -8,7 +8,7 @@
 #include "console_line_cell.h"
 #include "console_store.h"
 #include "sandbox_controller.h"
-#include "script_store.h"
+#include "khicas_script_store.h"
 
 namespace Khicas {
 
@@ -18,7 +18,7 @@ class ConsoleController : public ViewController, public ListViewDataSource, publ
 public:
   static constexpr const KDFont * k_font = KDFont::LargeFont;
 
-  ConsoleController(Responder * parentResponder, App * pythonDelegate, ScriptStore * scriptStore
+  ConsoleController(Responder * parentResponder, App * pythonDelegate, KhicasScriptStore * scriptStore
 #if EPSILON_GETOPT
       , bool m_lockOnConsole
 #endif
@@ -98,7 +98,7 @@ private:
    * different strings until a new line char appears in the text. When this
    * happens, or when m_outputAccumulationBuffer is full, we create a new
    * ConsoleLine in the ConsoleStore and empty m_outputAccumulationBuffer. */
-  ScriptStore * m_scriptStore;
+  KhicasScriptStore * m_scriptStore;
   SandboxController m_sandboxController;
   bool m_inputRunLoopActive;
   bool m_autoImportScripts;

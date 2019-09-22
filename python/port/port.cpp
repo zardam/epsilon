@@ -42,8 +42,9 @@ void disable_back_interrupt(){
   mp_interrupt_char = -1;
 }
 
-void MicroPython::ExecutionEnvironment::runCode(const char * str) {
-  static bool khicas_eval=true;
+
+void MicroPython::ExecutionEnvironment::runCode(const char * str,bool khicas_eval) {
+#if 1
   if (strcmp(str,"python")==0){
     const char msg[]="Python evaluation\n";
     printText(msg,strlen(msg));
@@ -56,6 +57,7 @@ void MicroPython::ExecutionEnvironment::runCode(const char * str) {
     khicas_eval=true;
     return ;
   }
+#endif
   assert(sCurrentExecutionEnvironment == nullptr);
   sCurrentExecutionEnvironment = this;
   if (khicas_eval){

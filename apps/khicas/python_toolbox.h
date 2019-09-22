@@ -1,5 +1,5 @@
-#ifndef CODE_PYTHON_TOOLBOX_H
-#define CODE_PYTHON_TOOLBOX_H
+#ifndef KHICAS_PYTHON_TOOLBOX_H
+#define KHICAS_PYTHON_TOOLBOX_H
 
 #include <apps/i18n.h>
 #include <escher.h>

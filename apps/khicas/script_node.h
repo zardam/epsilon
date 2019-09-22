@@ -1,5 +1,5 @@
-#ifndef CODE_SCRIPT_NODE_H
-#define CODE_SCRIPT_NODE_H
+#ifndef KHICAS_SCRIPT_NODE_H
+#define KHICAS_SCRIPT_NODE_H
 
 #include <stdint.h>
 

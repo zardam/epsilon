@@ -29,6 +29,7 @@ static constexpr EventTextPair sEventTextMap[] = {
   EventTextPair(Ion::Events::Square, "**2"),
   EventTextPair(Ion::Events::Multiplication, "*"),
   EventTextPair(Ion::Events::EE, "e"),
+  EventTextPair(Ion::Events::Ans, "'"),
 };
 
 const char * PythonTextForEvent(Ion::Events::Event event) {

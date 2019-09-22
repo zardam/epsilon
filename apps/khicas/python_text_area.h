@@ -1,5 +1,5 @@
-#ifndef CODE_PYTHON_TEXT_AREA_H
-#define CODE_PYTHON_TEXT_AREA_H
+#ifndef KHICAS_PYTHON_TEXT_AREA_H
+#define KHICAS_PYTHON_TEXT_AREA_H
 
 #include <escher/text_area.h>
 

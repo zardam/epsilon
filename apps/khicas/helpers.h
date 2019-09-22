@@ -1,5 +1,5 @@
-#ifndef CODE_HELPERS_H
-#define CODE_HELPERS_H
+#ifndef KHICAS_HELPERS_H
+#define KHICAS_HELPERS_H
 
 #include <ion/events.h>
 

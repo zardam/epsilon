@@ -16,7 +16,7 @@ class ExecutionEnvironment {
 public:
   ExecutionEnvironment() : m_sandboxIsDisplayed(false) {}
   static ExecutionEnvironment * currentExecutionEnvironment();
-  void runCode(const char * );
+  void runCode(const char * ,bool khicas_eval=false);
   virtual const char * inputText(const char * prompt) { return nullptr; }
   virtual void displaySandbox() {}
   virtual void hideSandbox() {}

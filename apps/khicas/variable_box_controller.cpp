@@ -11,13 +11,13 @@
 
 namespace Khicas {
 
-VariableBoxController::VariableBoxController(ScriptStore * scriptStore) :
+VariableBoxController::VariableBoxController(KhicasScriptStore * scriptStore) :
   NestedMenuController(nullptr, I18n::Message::FunctionsAndVariables),
   m_scriptNodesCount(0),
   m_scriptStore(scriptStore)
 {
   for (int i = 0; i < k_maxNumberOfDisplayedRows; i++) {
-    m_leafCells[i].setScriptStore(scriptStore);
+    m_leafCells[i].setKhicasScriptStore(scriptStore);
   }
 }
 
