@@ -83,7 +83,9 @@ void MenuController::viewWillAppear() {
 }
 
 bool MenuController::handleEvent(Ion::Events::Event event) {
-  if (event == Ion::Events::Down) {
+  if (event == Ion::Events::Down || event == Ion::Events::Back) {
+    if (footer()->selectedButton() == 0)
+      return false;
     m_selectableTableView.deselectTable();
     footer()->setSelectedButton(0);
     return true;

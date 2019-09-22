@@ -137,7 +137,14 @@ void numworks_giac_draw_string_small(int x,int y,int c,int bg,const char * text)
   KDPoint point(x,y);
   if (ptr)
     ptr->displaySandbox();
-  KDIonContext::sharedContext()->drawString(text, point, KDFont::SmallFont, c, bg);
+  auto ctx=KDIonContext::sharedContext();
+  KDRect save=ctx->m_clippingRect;
+  KDPoint o=ctx->m_origin;
+  ctx->setClippingRect(KDRect(0,18,320,222));
+  ctx->setOrigin(KDPoint(0,18));
+  ctx->drawString(text, point, KDFont::SmallFont, c, bg);
+  ctx->setClippingRect(save);
+  ctx->setOrigin(o);
 }
 
 mp_obj_t modkandinsky_fill_rect(size_t n_args, const mp_obj_t * args) {

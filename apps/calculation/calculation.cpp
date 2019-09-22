@@ -66,6 +66,7 @@ void Calculation::setContent(const char * c, Context * context, Expression ansEx
     buf[strlen(buf)+1]=0;
     buf[strlen(buf)]=')';
     // mp_interrupt_char = (int)Ion::Keyboard::Key::Back;
+    caseval("shell off");
     const char * out=caseval(buf);
     // take care of GIAC_ERROR
     strlcpy(m_inputText,c,sizeof(m_inputText));

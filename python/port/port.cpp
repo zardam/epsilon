@@ -59,6 +59,7 @@ void MicroPython::ExecutionEnvironment::runCode(const char * str) {
   assert(sCurrentExecutionEnvironment == nullptr);
   sCurrentExecutionEnvironment = this;
   if (khicas_eval){
+    caseval("shell on");
     // mp_hal_set_interrupt_char((int)Ion::Keyboard::Key::Back);
     const char * out=caseval(str);
     // mp_hal_set_interrupt_char(-1); 
