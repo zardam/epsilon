@@ -43,7 +43,7 @@ const ToolboxMessageTree conditionsChildren[] = {
 
 
 const ToolboxMessageTree MathModuleChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandMathFunction, I18n::Message::KhicasMathFunction, false, I18n::Message::KhicasCommandMathFunctionWithoutArg),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportFromMath, I18n::Message::KhicasImportFromMath, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandConstantE, I18n::Message::KhicasConstantE, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandConstantPi, I18n::Message::KhicasConstantPi, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandSqrt, I18n::Message::KhicasSqrt),
@@ -85,18 +85,18 @@ const ToolboxMessageTree MathModuleChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandGamma, I18n::Message::KhicasGamma),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandLgamma, I18n::Message::KhicasLgamma),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportMath, I18n::Message::KhicasImportMath, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportFromMath, I18n::Message::KhicasImportFromMath, false),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandMathFunction, I18n::Message::KhicasMathFunction, false, I18n::Message::KhicasCommandMathFunctionWithoutArg),
 };
 
 const ToolboxMessageTree KandinskyModuleChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandKandinskyFunction, I18n::Message::KhicasKandinskyFunction, false, I18n::Message::KhicasCommandKandinskyFunctionWithoutArg),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportFromKandinsky, I18n::Message::KhicasImportFromKandinsky, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandGetPixel, I18n::Message::KhicasGetPixel),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandSetPixel, I18n::Message::KhicasSetPixel),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandColor, I18n::Message::KhicasColor),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandDrawString, I18n::Message::KhicasDrawString),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandFillRect, I18n::Message::KhicasFillRect),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportKandinsky, I18n::Message::KhicasImportKandinsky, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportFromKandinsky, I18n::Message::KhicasImportFromKandinsky, false),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandKandinskyFunction, I18n::Message::KhicasKandinskyFunction, false, I18n::Message::KhicasCommandKandinskyFunctionWithoutArg),
 };
 
 const ToolboxMessageTree PlotsChildren[] = {
@@ -138,22 +138,20 @@ const ToolboxMessageTree CASChildren[] = {
 };
   
 const ToolboxMessageTree RandomModuleChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportRandom, I18n::Message::KhicasImportRandom, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportFromRandom, I18n::Message::KhicasImportFromRandom, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandRandomFunction, I18n::Message::KhicasRandomFunction, false, I18n::Message::KhicasCommandRandomFunctionWithoutArg),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandGetrandbits, I18n::Message::KhicasGetrandbits),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandSeed, I18n::Message::KhicasSeed),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandRandrange, I18n::Message::KhicasRandrange),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandRandint, I18n::Message::KhicasRandint),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandChoice, I18n::Message::KhicasChoice),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandRandom, I18n::Message::KhicasRandom, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandUniform, I18n::Message::KhicasUniform)
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandUniform, I18n::Message::KhicasUniform),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportRandom, I18n::Message::KhicasImportRandom, false),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandRandomFunction, I18n::Message::KhicasRandomFunction, false, I18n::Message::KhicasCommandRandomFunctionWithoutArg),
 };
 
 const ToolboxMessageTree CMathModuleChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportCmath, I18n::Message::KhicasImportCmath, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportFromCmath, I18n::Message::KhicasImportFromCmath, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandCmathFunction, I18n::Message::KhicasCmathFunction, false, I18n::Message::KhicasCommandCmathFunctionWithoutArg),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandConstantE, I18n::Message::KhicasConstantE, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandConstantPi, I18n::Message::KhicasConstantPi, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandPhase, I18n::Message::KhicasPhase),
@@ -163,13 +161,13 @@ const ToolboxMessageTree CMathModuleChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandLogComplex, I18n::Message::KhicasLog),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandSqrtComplex, I18n::Message::KhicasSqrt),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandCosComplex, I18n::Message::KhicasCos),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandSinComplex, I18n::Message::KhicasSin)
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandSinComplex, I18n::Message::KhicasSin),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportCmath, I18n::Message::KhicasImportCmath, false),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandCmathFunction, I18n::Message::KhicasCmathFunction, false, I18n::Message::KhicasCommandCmathFunctionWithoutArg),
 };
 
 const ToolboxMessageTree TurtleModuleChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportTurtle, I18n::Message::KhicasImportTurtle, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportFromTurtle, I18n::Message::KhicasImportFromTurtle, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandTurtleFunction, I18n::Message::KhicasTurtleFunction, false, I18n::Message::KhicasCommandTurtleFunctionWithoutArg),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandForward, I18n::Message::KhicasTurtleForward),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandBackward, I18n::Message::KhicasTurtleBackward),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandRight, I18n::Message::KhicasTurtleRight),
@@ -198,7 +196,25 @@ const ToolboxMessageTree TurtleModuleChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandPink, I18n::Message::KhicasTurtlePink, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandOrange, I18n::Message::KhicasTurtleOrange, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandPurple, I18n::Message::KhicasTurtlePurple, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandGrey, I18n::Message::KhicasTurtleGrey, false)
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandGrey, I18n::Message::KhicasTurtleGrey, false),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportTurtle, I18n::Message::KhicasImportTurtle, false),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandTurtleFunction, I18n::Message::KhicasTurtleFunction, false, I18n::Message::KhicasCommandTurtleFunctionWithoutArg),
+};
+
+const ToolboxMessageTree matricesChildren[] = {
+  ToolboxMessageTree::Leaf(I18n::Message::MatrixCommandWithArg, I18n::Message::NewMatrix, false, I18n::Message::MatrixCommand),
+  ToolboxMessageTree::Leaf(I18n::Message::IdentityCommandWithArg, I18n::Message::Identity),
+  ToolboxMessageTree::Leaf(I18n::Message::RandmatrixCommandWithArg, I18n::Message::Randmatrix),
+  ToolboxMessageTree::Leaf(I18n::Message::DimensionCommandWithArg, I18n::Message::Dimension),
+  ToolboxMessageTree::Leaf(I18n::Message::InverseCommandWithArg, I18n::Message::Inverse),
+  ToolboxMessageTree::Leaf(I18n::Message::MatpowCommandWithArg, I18n::Message::Matpow),
+  ToolboxMessageTree::Leaf(I18n::Message::DeterminantCommandWithArg, I18n::Message::Determinant),
+  ToolboxMessageTree::Leaf(I18n::Message::TransposeCommandWithArg, I18n::Message::Transpose),
+  ToolboxMessageTree::Leaf(I18n::Message::TraceCommandWithArg, I18n::Message::Trace),
+  ToolboxMessageTree::Leaf(I18n::Message::RrefCommandWithArg, I18n::Message::Rref),
+  ToolboxMessageTree::Leaf(I18n::Message::KerCommandWithArg, I18n::Message::Ker),
+  ToolboxMessageTree::Leaf(I18n::Message::EigenvalueCommandWithArg, I18n::Message::Eigenvalue),
+  ToolboxMessageTree::Leaf(I18n::Message::EigenvectorCommandWithArg, I18n::Message::Eigenvector),
 };
 
 const ToolboxMessageTree modulesChildren[] = {
@@ -206,6 +222,8 @@ const ToolboxMessageTree modulesChildren[] = {
   ToolboxMessageTree::Node(I18n::Message::KhicasCmathModule, CMathModuleChildren),
   ToolboxMessageTree::Node(I18n::Message::KhicasRandomModule, RandomModuleChildren),
   ToolboxMessageTree::Node(I18n::Message::KhicasTurtleModule, TurtleModuleChildren),
+  ToolboxMessageTree::Node(I18n::Message::Plots, PlotsChildren),
+  ToolboxMessageTree::Node(I18n::Message::Matrices, matricesChildren),
   ToolboxMessageTree::Node(I18n::Message::KhicasKandinskyModule, KandinskyModuleChildren)
 };
 
@@ -346,22 +364,6 @@ const ToolboxMessageTree functionsChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandDebug, I18n::Message::Default)
 };
 
-const ToolboxMessageTree matricesChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::MatrixCommandWithArg, I18n::Message::NewMatrix, false, I18n::Message::MatrixCommand),
-  ToolboxMessageTree::Leaf(I18n::Message::IdentityCommandWithArg, I18n::Message::Identity),
-  ToolboxMessageTree::Leaf(I18n::Message::RandmatrixCommandWithArg, I18n::Message::Randmatrix),
-  ToolboxMessageTree::Leaf(I18n::Message::DimensionCommandWithArg, I18n::Message::Dimension),
-  ToolboxMessageTree::Leaf(I18n::Message::InverseCommandWithArg, I18n::Message::Inverse),
-  ToolboxMessageTree::Leaf(I18n::Message::MatpowCommandWithArg, I18n::Message::Matpow),
-  ToolboxMessageTree::Leaf(I18n::Message::DeterminantCommandWithArg, I18n::Message::Determinant),
-  ToolboxMessageTree::Leaf(I18n::Message::TransposeCommandWithArg, I18n::Message::Transpose),
-  ToolboxMessageTree::Leaf(I18n::Message::TraceCommandWithArg, I18n::Message::Trace),
-  ToolboxMessageTree::Leaf(I18n::Message::RrefCommandWithArg, I18n::Message::Rref),
-  ToolboxMessageTree::Leaf(I18n::Message::KerCommandWithArg, I18n::Message::Ker),
-  ToolboxMessageTree::Leaf(I18n::Message::EigenvalueCommandWithArg, I18n::Message::Eigenvalue),
-  ToolboxMessageTree::Leaf(I18n::Message::EigenvectorCommandWithArg, I18n::Message::Eigenvector),
-};
-
 const ToolboxMessageTree progChildren[] = {
   ToolboxMessageTree::Node(I18n::Message::pythonxcasMenu, pythonxcasChildren),
   ToolboxMessageTree::Node(I18n::Message::Functions, functionsChildren),
@@ -373,10 +375,8 @@ const ToolboxMessageTree progChildren[] = {
 const ToolboxMessageTree menu[] = {
   ToolboxMessageTree::Node(I18n::Message::CAS, CASChildren),
   ToolboxMessageTree::Node(I18n::Message::Prog, progChildren),
-  ToolboxMessageTree::Node(I18n::Message::Plots, PlotsChildren),
-  ToolboxMessageTree::Node(I18n::Message::Catalog, catalogChildren),
-  ToolboxMessageTree::Node(I18n::Message::Matrices, matricesChildren),
   ToolboxMessageTree::Node(I18n::Message::Modules, modulesChildren),
+  ToolboxMessageTree::Node(I18n::Message::Catalog, catalogChildren),
 };
 
 const ToolboxMessageTree toolboxModel = ToolboxMessageTree::Node(I18n::Message::Toolbox, menu);

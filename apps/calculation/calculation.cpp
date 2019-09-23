@@ -76,7 +76,7 @@ void Calculation::setContent(const char * c, Context * context, Expression ansEx
     buf[strlen(out)+7]=0;
     buf[strlen(out)+6]=')';
     out=caseval(buf);
-    // mp_interrupt_char = -1; 
+    // mp_interrupt_char = -1;
     if (strcmp(out,m_exactOutputText)==0 || (m_exactOutputText[0]=='[' && out[0]!='[')){
       bool undef=false;
       int l=strlen(m_exactOutputText);

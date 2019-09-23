@@ -7,19 +7,22 @@ extern "C" {
 #include "port.h"
 
 static KDColor ColorForTuple(mp_obj_t tuple) {
-    size_t len;
-    mp_obj_t * elem;
+  if (MP_OBJ_IS_SMALL_INT(tuple))
+    return MP_OBJ_SMALL_INT_VALUE(tuple);
 
-    mp_obj_get_array(tuple, &len, &elem);
-    if (len != 3) {
-      mp_raise_TypeError("color needs 3 components");
-    }
+  size_t len;
+  mp_obj_t * elem;
 
-    return KDColor::RGB888(
-      mp_obj_get_int(elem[0]),
-      mp_obj_get_int(elem[1]),
-      mp_obj_get_int(elem[2])
-    );
+  mp_obj_get_array(tuple, &len, &elem);
+  if (len != 3) {
+    mp_raise_TypeError("color needs 3 components");
+  }
+  
+  return KDColor::RGB888(
+			 mp_obj_get_int(elem[0]),
+			 mp_obj_get_int(elem[1]),
+			 mp_obj_get_int(elem[2])
+			 );
 }
 
 static mp_obj_t TupleForRGB(uint8_t r, uint8_t g, uint8_t b) {

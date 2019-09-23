@@ -236,7 +236,7 @@ mp_lexer_t * mp_lexer_new_from_file(const char * filename) {
 const char * giac_read_file(const char * filename){
   if (sScriptProvider != nullptr) 
     return sScriptProvider->contentOfScript(filename);
-  return 0;
+  return "undef";
 }
 
 mp_import_stat_t mp_import_stat(const char *path) {
