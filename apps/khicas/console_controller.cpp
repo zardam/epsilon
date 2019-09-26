@@ -10,6 +10,9 @@
 extern "C" {
 #include <stdlib.h>
 }
+#ifdef GIAC_NUMWORKS
+  extern "C" const char * caseval(const char *);
+#endif
 
 namespace Khicas {
 
@@ -406,7 +409,9 @@ void ConsoleController::autoImportScript(Script script, bool force) {
     strlcpy(command+currentChar, k_importCommand2, k_maxImportCommandSize - currentChar);
 
     // Step 2 - Run the command
+    caseval("warn off");
     runAndPrintForCommand(command);
+    caseval("warn on");
   }
   if (!sandboxIsDisplayed() && force) {
     m_selectableTableView.reloadData();

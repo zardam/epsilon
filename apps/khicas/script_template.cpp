@@ -60,9 +60,9 @@ def mandelbrot(X=160,Y=111,Nmax=10):
 #else
 constexpr ScriptTemplate mandelbrotScriptTemplate("mandelbrot.py", "\x01" R"(from math import *
 from kandinsky import *
-# This script draws a Mandelbrot fractal set
-# N_iteration: degree of precision
-def mandelbrot(X=160,Y=111,Nmax=10):
+# Mandelbrot fractal
+# Nmax: precision, s: scale
+def mandelbrot(Nmax=10,s=2,X=160,Y=111):
   w=2.7/X
   h=-1.87/Y
   Y=Y-1
@@ -74,8 +74,8 @@ def mandelbrot(X=160,Y=111,Nmax=10):
         z=z**2+c
         if abs(z)>2:
           break
-      fill_rect(2*x,2*y,2,2,126*j+2079)
-      fill_rect(2*x,2*(Y-y),2,2,126*j+2079)
+      fill_rect(s*x,s*y,s,s,126*j+2079)
+      fill_rect(s*x,s*(Y-y),s,s,126*j+2079)
       c = c+w)");
 #endif
   
