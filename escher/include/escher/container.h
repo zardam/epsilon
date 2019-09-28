@@ -31,6 +31,9 @@ public:
   virtual void run();
   virtual bool dispatchEvent(Ion::Events::Event event) override;
   virtual bool switchTo(App::Snapshot * snapshot);
+
+  constexpr static int k_maxNumberOfApps = 18;
+
 protected:
   virtual Window * window() = 0;
   static App * s_activeApp;

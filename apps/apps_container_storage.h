@@ -2,6 +2,7 @@
 #define APPS_CONTAINER_STORAGE_H
 
 #include "apps_container.h"
+#include "external_app.h"
 
 #ifndef APPS_CONTAINER_SNAPSHOT_DECLARATIONS
 #error Missing snapshot declarations
@@ -27,8 +28,15 @@ private:
     HardwareTest::App m_hardwareTestApp;
     USB::App m_usbApp;
   };
+
+
+  constexpr static int k_numberOfCommonApps = 1+APPS_CONTAINER_SNAPSHOT_COUNT; // Take the Home app into account
+  constexpr static int k_maxNumberOfExternalApps = Container::k_maxNumberOfApps - k_numberOfCommonApps;
+
   Apps m_apps;
   APPS_CONTAINER_SNAPSHOT_DECLARATIONS
+  ExternalApp::Snapshot m_externalAppSnapshots[k_maxNumberOfExternalApps];
+  int m_numberOfExternalApps;
 };
 
 #endif

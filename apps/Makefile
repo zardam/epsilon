@@ -19,6 +19,7 @@ app_src += $(addprefix apps/,\
   battery_view.cpp \
   empty_battery_window.cpp \
   exam_pop_up_controller.cpp \
+  external_app.cpp \
   global_preferences.cpp \
   lock_view.cpp \
   math_toolbox.cpp \
