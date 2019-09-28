@@ -1,4 +1,5 @@
 ion_device_src += $(addprefix ion/src/device/shared/drivers/, \
+  archive.cpp \
   backlight.cpp \
   battery.cpp \
   base64.cpp \
