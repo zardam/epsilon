@@ -17,7 +17,7 @@ public:
   bool setShiftAlphaLockStatus(Ion::Events::ShiftAlphaStatus status);
   void refreshPreferences();
   void reload();
-private:
+  //private:
   constexpr static KDCoordinate k_alphaRightMargin = 5;
   constexpr static KDCoordinate k_examIconWidth = 18;
   constexpr static KDCoordinate k_examIconHeight = 9;

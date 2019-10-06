@@ -59,6 +59,11 @@ void MenuController::didBecomeFirstResponder() {
   if (m_reloadConsoleWhenBecomingFirstResponder) {
     reloadConsole();
   }
+  // BP change: Shell first!
+  if (footer()->selectedButton() != 0) {
+    m_selectableTableView.deselectTable();
+    footer()->setSelectedButton(0);
+  }
   if (footer()->selectedButton() == 0) {
     assert(m_selectableTableView.selectedRow() < 0);
     Container::activeApp()->setFirstResponder(&m_consoleButton);

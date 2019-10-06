@@ -90,6 +90,7 @@ const ToolboxMessageTree MathModuleChildren[] = {
 
 const ToolboxMessageTree KandinskyModuleChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportFromKandinsky, I18n::Message::KhicasImportFromKandinsky, false),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandGetKey, I18n::Message::KhicasGetKey),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandGetPixel, I18n::Message::KhicasGetPixel),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandSetPixel, I18n::Message::KhicasSetPixel),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandColor, I18n::Message::KhicasColor),
@@ -195,6 +196,7 @@ const ToolboxMessageTree solveChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::CsolveCommandWithArg, I18n::Message::CsolveValue),
   ToolboxMessageTree::Leaf(I18n::Message::LinsolveCommandWithArg, I18n::Message::Linsolve),
   ToolboxMessageTree::Leaf(I18n::Message::DesolveCommandWithArg, I18n::Message::DesolveValue),
+  ToolboxMessageTree::Leaf(I18n::Message::PrimeCommandWithArg, I18n::Message::PrimeValue),
   ToolboxMessageTree::Leaf(I18n::Message::RsolveCommandWithArg, I18n::Message::Rsolve),
 };
 

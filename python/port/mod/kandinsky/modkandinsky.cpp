@@ -66,6 +66,12 @@ mp_obj_t modkandinsky_set_pixel(mp_obj_t x, mp_obj_t y, mp_obj_t color) {
   return mp_const_none;
 }
 
+mp_obj_t modkandinsky_Pause(mp_obj_t x) {
+  double d=mp_obj_get_float(x);
+  numworks_wait_1ms(d*1000);
+  return mp_const_none;
+}
+
 #define LCD_WIDTH_PX 320
 #define LCD_HEIGHT_PX 222
 
@@ -173,4 +179,10 @@ void numworks_giac_show_graph(){
   auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
   if (ptr)
     ptr->displaySandbox();
+}
+
+mp_obj_t modkandinsky_get_key() {
+  micropython_port_interrupt_if_needed();
+  int key=getkey(false); // no suspend
+  return mp_obj_new_int(key);
 }

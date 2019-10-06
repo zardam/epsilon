@@ -1,7 +1,14 @@
+#ifdef SIMULATOR
+#include <FL/Fl.H>
+#endif
 #include "port.h"
 
-#include <ion/keyboard.h>
-#include <ion/events.h>
+#include <ion.h>
+#include <kandinsky.h>
+//#include <ion/keyboard.h>
+//#include <ion/events.h>
+#include <poincare/preferences.h>
+#include "../../apps/apps_container.h"
 
 #include <math.h>
 #include <stdint.h>
@@ -90,21 +97,25 @@ void runpythoncode(const char * str){
   
 }
 
+bool khicas_eval=true;
+
 void MicroPython::ExecutionEnvironment::runCode(const char * str,bool khicas_eval_) {
-  static bool khicas_eval=true;
 #if 1
   if (strcmp(str,"python")==0){
     const char msg[]="Python evaluation\n";
     printText(msg,strlen(msg));
     khicas_eval=false;
+    statusline();
     return ;
   }
   if (strcmp(str,"xcas")==0 || strcmp(str,"khicas")==0){
     const char msg[]="KhiCAS evaluation\n";
     printText(msg,strlen(msg));
     khicas_eval=true;
+    statusline();
     return ;
   }
+  statusline();
 #endif
   if (khicas_eval){
     assert(sCurrentExecutionEnvironment == nullptr);
@@ -256,13 +267,148 @@ const char * mp_hal_input(const char * prompt) {
   return sCurrentExecutionEnvironment->inputText(prompt);
 }
 
-void GetKey(int * key){
+void statusline(int mode){
+  AppsContainer::sharedAppsContainer()->reloadTitleBarView();
+  auto ctx=KDIonContext::sharedContext();
+  KDRect save=ctx->m_clippingRect;
+  KDPoint o=ctx->m_origin;
+  ctx->setClippingRect(KDRect(0,0,320,18));
+  ctx->setOrigin(KDPoint(0,0));
+  KDRect rect(0,0,mode==1?320:200,18);
+  KDIonContext::sharedContext()->pushRectUniform(rect,64934 /* Palette::YellowDark*/);
+  const char * text=0;
+  Poincare::Preferences * preferences = Poincare::Preferences::sharedPreferences();
+  if (preferences->angleUnit() == Poincare::Preferences::AngleUnit::Radian)
+    text="rad";
+  else
+    text="deg";
+  // ctx->drawString(text, KDPoint(5,1), KDFont::SmallFont, 0, 63488 /* Palette::Red*/);
+  ctx->drawString(text, KDPoint(5,1), KDFont::SmallFont, 0, 64934);
+  if (khicas_eval)
+    text="KHICAS";
+  else
+    text="PYTHON";
+  ctx->drawString(text, KDPoint(100,1), KDFont::SmallFont, 0, 64934);
+  text="     ";
+  if (Ion::Events::shiftAlphaStatus()==Ion::Events::ShiftAlphaStatus::Shift)
+    text="shift ";
+  else {
+    if (Ion::Events::isAlphaActive()){
+      if (Ion::Events::shiftAlphaStatus()==Ion::Events::ShiftAlphaStatus::AlphaLock)
+	text="alphal";
+      if (Ion::Events::shiftAlphaStatus()==Ion::Events::ShiftAlphaStatus::ShiftAlphaLock)
+	text="ALPHAL";
+      if (Ion::Events::shiftAlphaStatus()==Ion::Events::ShiftAlphaStatus::Alpha)
+	text="1alpha";
+      if (Ion::Events::shiftAlphaStatus()==Ion::Events::ShiftAlphaStatus::ShiftAlpha)
+	text="1ALPHA";
+    }
+  }
+  ctx->drawString(text, KDPoint(248,1), KDFont::SmallFont, 0, 64934 /* Palette::YellowDark*/);
+  ctx->setClippingRect(save);
+  ctx->setOrigin(o);
+}
+
+bool isalphaactive(){
+  return Ion::Events::isAlphaActive();
+}
+
+bool alphawasactive=false;
+
+int getkey_raw(bool allow_suspend){
+  int key=-1;
   for (;;){
     int timeout=10000;
-    Ion::Events::Event e=Ion::Events::getEvent(&timeout);
-    if (e.isKeyboardEvent()){
-      *key=e.id();
+    alphawasactive=Ion::Events::isAlphaActive();
+    Ion::Events::Event event=Ion::Events::getEvent(&timeout);
+    if (event==Ion::Events::Shift || event==Ion::Events::Alpha){
+      statusline();
+      continue;
+    }
+    if (event.isKeyboardEvent()){
+      key=event.id();
+      if (allow_suspend && (key==7 || key==8) ){ // power
+	Ion::Power::suspend(true);
+	AppsContainer::sharedAppsContainer()->reloadTitleBarView();
+	//AppsContainer::sharedAppsContainer()->redrawWindow();
+	statusline(1);
+	//continue;
+      }
+      else
+	statusline();
       break;
     }
   }
+  return key;
+}
+
+const short int translated_keys[]=
+  {
+   // non shifted
+   KEY_CTRL_LEFT,KEY_CTRL_UP,KEY_CTRL_DOWN,KEY_CTRL_RIGHT,KEY_CTRL_OK,KEY_CTRL_EXIT,
+   KEY_CTRL_MENU,KEY_PRGM_ACON,KEY_PRGM_ACON,9,10,11,
+   KEY_CTRL_SHIFT,KEY_CTRL_ALPHA,KEY_CTRL_XTT,KEY_CTRL_VARS,KEY_CTRL_CATALOG,KEY_CTRL_DEL,
+   KEY_CHAR_EXP,KEY_CHAR_LN,KEY_CHAR_LOG,KEY_CHAR_IMGNRY,',',KEY_CHAR_POW,
+   KEY_CHAR_SIN,KEY_CHAR_COS,KEY_CHAR_TAN,KEY_CHAR_PI,KEY_CHAR_ROOT,KEY_CHAR_SQUARE,
+   '7','8','9','(',')',-1,
+   '4','5','6','*','/',-1,
+   '1','2','3','+','-',-1,
+   '0','.',KEY_CHAR_EXPN10,KEY_CHAR_ANS,KEY_CTRL_EXE,-1,
+   // shifted
+   KEY_SHIFT_LEFT,KEY_CTRL_PAGEUP,KEY_CTRL_PAGEDOWN,KEY_SHIFT_RIGHT,KEY_CTRL_OK,KEY_CTRL_EXIT,
+   KEY_CTRL_MENU,KEY_PRGM_ACON,KEY_PRGM_ACON,9,10,11,
+   KEY_CTRL_SHIFT,KEY_CTRL_ALPHA,KEY_CTRL_CUT,KEY_CTRL_CLIP,KEY_CTRL_PASTE,KEY_CTRL_DEL,
+   KEY_CHAR_LBRCKT,KEY_CHAR_RBRCKT,KEY_CHAR_LBRACE,KEY_CHAR_RBRACE,'_',KEY_CHAR_STORE,
+   KEY_CHAR_ASIN,KEY_CHAR_ACOS,KEY_CHAR_ATAN,'=','<','>',
+   '7','8','9','(',')',-1,
+   '4','5','6',KEY_CHAR_FACTOR,'%',-1,
+   '1','2','3',KEY_CHAR_NORMAL,'\\',-1,
+   '0','.',KEY_CHAR_EXPN10,KEY_CHAR_ANS,KEY_CTRL_EXE,-1,
+   // alpha
+   KEY_CTRL_LEFT,KEY_CTRL_UP,KEY_CTRL_DOWN,KEY_CTRL_RIGHT,KEY_CTRL_OK,KEY_CTRL_EXIT,
+   KEY_CTRL_MENU,KEY_PRGM_ACON,KEY_PRGM_ACON,9,10,11,
+   KEY_CTRL_SHIFT,KEY_CTRL_ALPHA,':',';','"',KEY_CTRL_DEL,
+   'a','b','c','d','e','f',
+   'g','h','i','j','k','l',
+   'm','n','o','p','q',-1,
+   'r','s','t','u','v',-1,
+   'w','x','y','z',' ',-1,
+   '?','!',KEY_CHAR_EXPN10,KEY_CHAR_ANS,KEY_CTRL_EXE,-1,
+   // alpha shifted
+   KEY_SHIFT_LEFT,KEY_CTRL_PAGEUP,KEY_CTRL_PAGEDOWN,KEY_SHIFT_RIGHT,KEY_CTRL_OK,KEY_CTRL_EXIT,
+   KEY_CTRL_MENU,KEY_PRGM_ACON,KEY_PRGM_ACON,9,10,11,
+   KEY_CTRL_SHIFT,KEY_CTRL_ALPHA,':',';','\'','%',
+   'A','B','C','D','E','F',
+   'G','H','I','J','K','L',
+   'M','N','O','P','Q',-1,
+   'R','S','T','U','V',-1,
+   'W','X','Y','Z',' ',-1,
+   '?','!',KEY_CHAR_EXPN10,KEY_CHAR_ANS,KEY_CTRL_EXE,-1,
+  };
+
+int getkey(bool allow_suspend){
+  int k=getkey_raw(allow_suspend);
+  // translate
+  return translated_keys[k];
+}
+
+// Casio prototype
+void GetKey(int * key){
+  *key=getkey(true);
+}
+
+
+void numworks_wait_1ms(int ms){
+  for (int i=0;i<ms/128;++i){
+#ifdef SIMULATOR
+    Fl::wait(0.00001);
+#endif
+    Ion::Keyboard::State scan = Ion::Keyboard::scan();
+      // if (scan!=16) std::cerr << scan << '\n';
+    Ion::Keyboard::Key interruptKey = static_cast<Ion::Keyboard::Key>(Ion::Keyboard::Key::Back);
+    if (scan.keyDown(interruptKey))
+      return;
+    Ion::Timing::msleep(128);
+  }
+  Ion::Timing::msleep(ms % 128);  
 }

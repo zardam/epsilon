@@ -24,6 +24,7 @@ def squares(angle=0.5):
     L=L-L*sin(angle*pi/180)
   hideturtle())");
 #else
+#if 1
 constexpr ScriptTemplate squaresScriptTemplate("squares.py", "\x01" R"(from turtle import *
 def polyg1(l=20,n=3):
   for j in range(n):
@@ -35,6 +36,9 @@ def polyg(n=7):
   for j in range(3,n):
     polyg1(30,j)
 )");
+#else
+constexpr ScriptTemplate squaresScriptTemplate("squares.py", "\x01" R"()");
+#endif
 #endif
 
 #if 0

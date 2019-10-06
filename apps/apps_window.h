@@ -15,7 +15,7 @@ public:
   void reloadTitleBarView();
   bool updateAlphaLock();
   void hideTitleBarView(bool hide);
-private:
+  //private:
   int numberOfSubviews() const override;
   void layoutSubviews() override;
   View * subviewAtIndex(int index) override;
