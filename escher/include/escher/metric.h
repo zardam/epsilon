@@ -19,9 +19,9 @@ public:
   constexpr static KDCoordinate TableCellLabelTopMargin = 3;
   constexpr static KDCoordinate TabHeight = 27;
   constexpr static KDCoordinate ScrollStep = 10;
-  constexpr static KDCoordinate PopUpLeftMargin = 32;
-  constexpr static KDCoordinate PopUpRightMargin = 32;
-  constexpr static KDCoordinate PopUpTopMargin = 50;
+  constexpr static KDCoordinate PopUpLeftMargin = 0; // 32;
+  constexpr static KDCoordinate PopUpRightMargin = 0; // 32;
+  constexpr static KDCoordinate PopUpTopMargin = 0; // 50;
   constexpr static KDCoordinate ExamPopUpTopMargin = 27;
   constexpr static KDCoordinate ExamPopUpBottomMargin = 55;
   constexpr static KDCoordinate StoreRowHeight = 50;

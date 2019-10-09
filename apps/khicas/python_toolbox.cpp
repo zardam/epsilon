@@ -6,6 +6,10 @@ extern "C" {
 #include <ctype.h>
 }
 
+#ifdef GIAC_NUMWORKS
+  extern "C" const char * caseval(const char *);
+#endif
+
 namespace Khicas {
 
 const ToolboxMessageTree forLoopChildren[] = {
@@ -446,6 +450,21 @@ PythonToolbox::PythonToolbox() :
 }
 
 bool PythonToolbox::handleEvent(Ion::Events::Event event) {
+  if (event==Ion::Events::Toolbox || event==Ion::Events::Var){
+    // faire comme selectLeaf avec le resultat de caseval("show toolbox")
+    auto ctx=KDIonContext::sharedContext();
+    KDRect save=ctx->m_clippingRect;
+    KDPoint o=ctx->m_origin;
+    ctx->setClippingRect(KDRect(0,18,320,222));
+    ctx->setOrigin(KDPoint(0,18));
+    const char * text=caseval(event==Ion::Events::Toolbox?"toolbox menu":"var menu");
+    ctx->setClippingRect(save);
+    ctx->setOrigin(o);
+    sender()->handleEventWithText(text, true);
+    Container::activeApp()->dismissModalViewController();
+    // FIXME: retracer la fenetre en entier
+    return true;
+  }
   if (Toolbox::handleEvent(event)) {
     return true;
   }

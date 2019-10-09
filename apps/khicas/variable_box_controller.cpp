@@ -9,6 +9,10 @@
 #include <ion/unicode/utf8_helper.h>
 #include <string.h>
 
+#ifdef GIAC_NUMWORKS
+  extern "C" const char * caseval(const char *);
+#endif
+
 namespace Khicas {
 
 VariableBoxController::VariableBoxController(KhicasScriptStore * scriptStore) :
@@ -22,6 +26,21 @@ VariableBoxController::VariableBoxController(KhicasScriptStore * scriptStore) :
 }
 
 bool VariableBoxController::handleEvent(Ion::Events::Event event) {
+  if (event==Ion::Events::Toolbox || event==Ion::Events::Var){
+    // faire comme selectLeaf avec le resultat de caseval("show toolbox")
+    auto ctx=KDIonContext::sharedContext();
+    KDRect save=ctx->m_clippingRect;
+    KDPoint o=ctx->m_origin;
+    ctx->setClippingRect(KDRect(0,18,320,222));
+    ctx->setOrigin(KDPoint(0,18));
+    const char * text=caseval(event==Ion::Events::Toolbox?"toolbox menu":"var menu");
+    ctx->setClippingRect(save);
+    ctx->setOrigin(o);
+    sender()->handleEventWithText(text, true);
+    Container::activeApp()->dismissModalViewController();
+    // FIXME: retracer la fenetre en entier
+    return true;
+  }
   if (event == Ion::Events::Left) {
     return true;
   }

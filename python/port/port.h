@@ -143,7 +143,7 @@ extern bool alphawasactive; // alpha status before getkey
 #define KEY_CTRL_SHIFT      30006
 #define KEY_CTRL_ALPHA      30007
 #define KEY_CTRL_OPTN       30008
-#define KEY_CTRL_VARS       30016
+#define KEY_CTRL_VARS       30030
 #define KEY_CTRL_UP         1
 #define KEY_CTRL_DOWN       2
 #define KEY_CTRL_LEFT       0
