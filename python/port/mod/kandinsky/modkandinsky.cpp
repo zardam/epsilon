@@ -133,15 +133,7 @@ mp_obj_t modkandinsky_draw_string(size_t n_args, const mp_obj_t * args) {
   return mp_const_none;
 }
 
-void numworks_giac_draw_string(int x,int y,int c,int bg,const char * text){
-  auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
-  KDPoint point(x,y);
-  if (ptr)
-    ptr->displaySandbox();
-  KDIonContext::sharedContext()->drawString(text, point, KDFont::LargeFont, c, bg);
-}
-
-void numworks_giac_draw_string_small(int x,int y,int c,int bg,const char * text){
+int numworks_giac_draw_string(int x,int y,int c,int bg,const char * text,bool fake){
   auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
   KDPoint point(x,y);
   if (ptr)
@@ -149,11 +141,28 @@ void numworks_giac_draw_string_small(int x,int y,int c,int bg,const char * text)
   auto ctx=KDIonContext::sharedContext();
   KDRect save=ctx->m_clippingRect;
   KDPoint o=ctx->m_origin;
-  ctx->setClippingRect(KDRect(0,18,320,222));
+  ctx->setClippingRect(KDRect(0,18,320,fake?0:222));
   ctx->setOrigin(KDPoint(0,18));
-  ctx->drawString(text, point, KDFont::SmallFont, c, bg);
+  point=KDIonContext::sharedContext()->drawString(text, point, KDFont::LargeFont, c, bg);
   ctx->setClippingRect(save);
   ctx->setOrigin(o);
+  return point.x();
+}
+
+int numworks_giac_draw_string_small(int x,int y,int c,int bg,const char * text,bool fake){
+  auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
+  KDPoint point(x,y);
+  if (ptr)
+    ptr->displaySandbox();
+  auto ctx=KDIonContext::sharedContext();
+  KDRect save=ctx->m_clippingRect;
+  KDPoint o=ctx->m_origin;
+  ctx->setClippingRect(KDRect(0,18,320,fake?0:222));
+  ctx->setOrigin(KDPoint(0,18));
+  point=ctx->drawString(text, point, KDFont::SmallFont, c, bg);
+  ctx->setClippingRect(save);
+  ctx->setOrigin(o);
+  return point.x();
 }
 
 mp_obj_t modkandinsky_fill_rect(size_t n_args, const mp_obj_t * args) {
