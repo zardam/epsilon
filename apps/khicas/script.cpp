@@ -1,5 +1,5 @@
 #include "script.h"
-#include "khicas_script_store.h"
+#include "script_store.h"
 
 namespace Khicas {
 
@@ -28,7 +28,7 @@ bool Script::DefaultName(char buffer[], size_t bufferSize) {
   while (currentScriptNumber <= k_maxNumberOfDefaultScriptNames) {
     // Change the number in the script name.
     intToText(currentScriptNumber, &buffer[defaultScriptNameLength], bufferSize - defaultScriptNameLength );
-    if (KhicasScriptStore::ScriptNameIsFree(buffer)) {
+    if (ScriptStore::ScriptNameIsFree(buffer)) {
       return true;
     }
     currentScriptNumber++;
@@ -54,7 +54,7 @@ bool Script::nameCompliant(const char * name) {
     return false;
   }
   while (c != UCodePointNull) {
-    if (c == '.' && strcmp(decoder.stringPosition(), KhicasScriptStore::k_scriptExtension) == 0) {
+    if (c == '.' && strcmp(decoder.stringPosition(), ScriptStore::k_scriptExtension) == 0) {
       return true;
     }
     if (!(UTF8Helper::CodePointIsLowerCaseLetter(c) || c == '_' || UTF8Helper::CodePointIsNumber(c))) {

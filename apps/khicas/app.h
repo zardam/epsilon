@@ -6,7 +6,7 @@
 #include "../shared/input_event_handler_delegate_app.h"
 #include "console_controller.h"
 #include "menu_controller.h"
-#include "khicas_script_store.h"
+#include "script_store.h"
 #include "python_toolbox.h"
 #include "variable_box_controller.h"
 
@@ -25,7 +25,7 @@ public:
     Snapshot();
     App * unpack(Container * container) override;
     Descriptor * descriptor() override;
-    KhicasScriptStore * scriptStore();
+    ScriptStore * scriptStore();
 #if EPSILON_GETOPT
     bool lockOnConsole() const;
     void setOpt(const char * name, char * value) override;
@@ -34,7 +34,7 @@ public:
 #if EPSILON_GETOPT
     bool m_lockOnConsole;
 #endif
-    KhicasScriptStore m_scriptStore;
+    ScriptStore m_scriptStore;
   };
   static App * app() {
     return static_cast<App *>(Container::activeApp());

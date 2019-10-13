@@ -6,48 +6,50 @@ extern "C" {
 #include <ctype.h>
 }
 
-#ifdef GIAC_NUMWORKS
-  extern "C" const char * caseval(const char *);
-#endif
-
 namespace Khicas {
 
 const ToolboxMessageTree forLoopChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasWhileLoopWithArg, I18n::Message::Default, false, I18n::Message::KhicasWhileLoop),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasForInRange1ArgLoopWithArg, I18n::Message::Default, false, I18n::Message::KhicasForInRange1ArgLoop),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasForInRange2ArgsLoopWithArg, I18n::Message::Default, false, I18n::Message::KhicasForInRange2ArgsLoop),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasForInRange3ArgsLoopWithArg, I18n::Message::Default, false, I18n::Message::KhicasForInRange3ArgsLoop),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasForInListLoopWithArg, I18n::Message::Default, false, I18n::Message::KhicasForInListLoop),
+  ToolboxMessageTree::Leaf(I18n::Message::ForInRange1ArgLoopWithArg, I18n::Message::Default, false, I18n::Message::ForInRange1ArgLoop),
+  ToolboxMessageTree::Leaf(I18n::Message::ForInRange2ArgsLoopWithArg, I18n::Message::Default, false, I18n::Message::ForInRange2ArgsLoop),
+  ToolboxMessageTree::Leaf(I18n::Message::ForInRange3ArgsLoopWithArg, I18n::Message::Default, false, I18n::Message::ForInRange3ArgsLoop),
+  ToolboxMessageTree::Leaf(I18n::Message::ForInListLoopWithArg, I18n::Message::Default, false, I18n::Message::ForInListLoop)
 };
 
 const ToolboxMessageTree ifStatementChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasIfElseStatementWithArg, I18n::Message::Default, false, I18n::Message::KhicasIfElseStatement),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasIfThenStatementWithArg, I18n::Message::Default, false, I18n::Message::KhicasIfThenStatement),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasIfElifElseStatementWithArg, I18n::Message::Default, false, I18n::Message::KhicasIfElifElseStatement),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasIfAndIfElseStatementWithArg, I18n::Message::Default, false, I18n::Message::KhicasIfAndIfElseStatement),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasIfOrIfElseStatementWithArg, I18n::Message::Default, false, I18n::Message::KhicasIfOrIfElseStatement)
+  ToolboxMessageTree::Leaf(I18n::Message::IfElseStatementWithArg, I18n::Message::Default, false, I18n::Message::IfElseStatement),
+  ToolboxMessageTree::Leaf(I18n::Message::IfThenStatementWithArg, I18n::Message::Default, false, I18n::Message::IfThenStatement),
+  ToolboxMessageTree::Leaf(I18n::Message::IfElifElseStatementWithArg, I18n::Message::Default, false, I18n::Message::IfElifElseStatement),
+  ToolboxMessageTree::Leaf(I18n::Message::IfAndIfElseStatementWithArg, I18n::Message::Default, false, I18n::Message::IfAndIfElseStatement),
+  ToolboxMessageTree::Leaf(I18n::Message::IfOrIfElseStatementWithArg, I18n::Message::Default, false, I18n::Message::IfOrIfElseStatement)
 };
 
-const ToolboxMessageTree pythonxcasChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::selectPythonWithArg, I18n::Message::selectPython),
-  ToolboxMessageTree::Leaf(I18n::Message::selectXcasWithArg, I18n::Message::selectXcas),
+const ToolboxMessageTree whileLoopChildren[] = {
+  ToolboxMessageTree::Leaf(I18n::Message::WhileLoopWithArg, I18n::Message::Default, false, I18n::Message::WhileLoop)
 };
 
 const ToolboxMessageTree conditionsChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasEqualityConditionWithArg, I18n::Message::Default, false, I18n::Message::KhicasEqualityCondition),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasNonEqualityConditionWithArg, I18n::Message::Default, false, I18n::Message::KhicasNonEqualityCondition),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasSuperiorStrictConditionWithArg, I18n::Message::Default, false, I18n::Message::KhicasSuperiorStrictCondition),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasInferiorStrictConditionWithArg, I18n::Message::Default, false, I18n::Message::KhicasInferiorStrictCondition),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasSuperiorConditionWithArg, I18n::Message::Default, false, I18n::Message::KhicasSuperiorCondition),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasInferiorConditionWithArg, I18n::Message::Default, false, I18n::Message::KhicasInferiorCondition),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasConditionAnd, I18n::Message::Default, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasConditionOr, I18n::Message::Default, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasConditionNot, I18n::Message::Default, false)
+  ToolboxMessageTree::Leaf(I18n::Message::EqualityConditionWithArg, I18n::Message::Default, false, I18n::Message::EqualityCondition),
+  ToolboxMessageTree::Leaf(I18n::Message::NonEqualityConditionWithArg, I18n::Message::Default, false, I18n::Message::NonEqualityCondition),
+  ToolboxMessageTree::Leaf(I18n::Message::SuperiorStrictConditionWithArg, I18n::Message::Default, false, I18n::Message::SuperiorStrictCondition),
+  ToolboxMessageTree::Leaf(I18n::Message::InferiorStrictConditionWithArg, I18n::Message::Default, false, I18n::Message::InferiorStrictCondition),
+  ToolboxMessageTree::Leaf(I18n::Message::SuperiorConditionWithArg, I18n::Message::Default, false, I18n::Message::SuperiorCondition),
+  ToolboxMessageTree::Leaf(I18n::Message::InferiorConditionWithArg, I18n::Message::Default, false, I18n::Message::InferiorCondition),
+  ToolboxMessageTree::Leaf(I18n::Message::ConditionAnd, I18n::Message::Default, false),
+  ToolboxMessageTree::Leaf(I18n::Message::ConditionOr, I18n::Message::Default, false),
+  ToolboxMessageTree::Leaf(I18n::Message::ConditionNot, I18n::Message::Default, false)
 };
 
+const ToolboxMessageTree loopsAndTestsChildren[] = {
+  ToolboxMessageTree::Node(I18n::Message::ForLoopMenu, forLoopChildren),
+  ToolboxMessageTree::Node(I18n::Message::IfStatementMenu, ifStatementChildren),
+  ToolboxMessageTree::Node(I18n::Message::WhileLoopMenu, whileLoopChildren),
+  ToolboxMessageTree::Node(I18n::Message::ConditionsMenu, conditionsChildren)
+};
 
 const ToolboxMessageTree MathModuleChildren[] = {
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportMath, I18n::Message::KhicasImportMath, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportFromMath, I18n::Message::KhicasImportFromMath, false),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandMathFunction, I18n::Message::KhicasMathFunction, false, I18n::Message::KhicasCommandMathFunctionWithoutArg),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandConstantE, I18n::Message::KhicasConstantE, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandConstantPi, I18n::Message::KhicasConstantPi, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandSqrt, I18n::Message::KhicasSqrt),
@@ -87,47 +89,37 @@ const ToolboxMessageTree MathModuleChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandErf, I18n::Message::KhicasErf),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandErfc, I18n::Message::KhicasErfc),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandGamma, I18n::Message::KhicasGamma),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandLgamma, I18n::Message::KhicasLgamma),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportMath, I18n::Message::KhicasImportMath, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandMathFunction, I18n::Message::KhicasMathFunction, false, I18n::Message::KhicasCommandMathFunctionWithoutArg),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandLgamma, I18n::Message::KhicasLgamma)
 };
 
 const ToolboxMessageTree KandinskyModuleChildren[] = {
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportKandinsky, I18n::Message::KhicasImportKandinsky, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportFromKandinsky, I18n::Message::KhicasImportFromKandinsky, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandGetKey, I18n::Message::KhicasGetKey),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandKandinskyFunction, I18n::Message::KhicasKandinskyFunction, false, I18n::Message::KhicasCommandKandinskyFunctionWithoutArg),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandGetPixel, I18n::Message::KhicasGetPixel),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandSetPixel, I18n::Message::KhicasSetPixel),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandColor, I18n::Message::KhicasColor),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandDrawString, I18n::Message::KhicasDrawString),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandFillRect, I18n::Message::KhicasFillRect),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportKandinsky, I18n::Message::KhicasImportKandinsky, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandKandinskyFunction, I18n::Message::KhicasKandinskyFunction, false, I18n::Message::KhicasCommandKandinskyFunctionWithoutArg),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandFillRect, I18n::Message::KhicasFillRect)
 };
 
-const ToolboxMessageTree PlotsChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::PlotCommandWithArg, I18n::Message::Plot),
-  ToolboxMessageTree::Leaf(I18n::Message::PlotSeqCommandWithArg, I18n::Message::PlotSeq),
-  ToolboxMessageTree::Leaf(I18n::Message::PlotParamCommandWithArg, I18n::Message::PlotParam),
-  ToolboxMessageTree::Leaf(I18n::Message::PlotPolarCommandWithArg, I18n::Message::PlotPolar),
-  ToolboxMessageTree::Leaf(I18n::Message::PlotFieldCommandWithArg, I18n::Message::PlotField),
-};
-
-  
 const ToolboxMessageTree RandomModuleChildren[] = {
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportRandom, I18n::Message::KhicasImportRandom, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportFromRandom, I18n::Message::KhicasImportFromRandom, false),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandRandomFunction, I18n::Message::KhicasRandomFunction, false, I18n::Message::KhicasCommandRandomFunctionWithoutArg),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandGetrandbits, I18n::Message::KhicasGetrandbits),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandSeed, I18n::Message::KhicasSeed),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandRandrange, I18n::Message::KhicasRandrange),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandRandint, I18n::Message::KhicasRandint),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandChoice, I18n::Message::KhicasChoice),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandRandom, I18n::Message::KhicasRandom, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandUniform, I18n::Message::KhicasUniform),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportRandom, I18n::Message::KhicasImportRandom, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandRandomFunction, I18n::Message::KhicasRandomFunction, false, I18n::Message::KhicasCommandRandomFunctionWithoutArg),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandUniform, I18n::Message::KhicasUniform)
 };
 
 const ToolboxMessageTree CMathModuleChildren[] = {
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportCmath, I18n::Message::KhicasImportCmath, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportFromCmath, I18n::Message::KhicasImportFromCmath, false),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandCmathFunction, I18n::Message::KhicasCmathFunction, false, I18n::Message::KhicasCommandCmathFunctionWithoutArg),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandConstantE, I18n::Message::KhicasConstantE, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandConstantPi, I18n::Message::KhicasConstantPi, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandPhase, I18n::Message::KhicasPhase),
@@ -137,14 +129,13 @@ const ToolboxMessageTree CMathModuleChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandLogComplex, I18n::Message::KhicasLog),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandSqrtComplex, I18n::Message::KhicasSqrt),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandCosComplex, I18n::Message::KhicasCos),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandSinComplex, I18n::Message::KhicasSin),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportCmath, I18n::Message::KhicasImportCmath, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandCmathFunction, I18n::Message::KhicasCmathFunction, false, I18n::Message::KhicasCommandCmathFunctionWithoutArg),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandSinComplex, I18n::Message::KhicasSin)
 };
 
 const ToolboxMessageTree TurtleModuleChildren[] = {
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportTurtle, I18n::Message::KhicasImportTurtle, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportFromTurtle, I18n::Message::KhicasImportFromTurtle, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandReset, I18n::Message::KhicasTurtleReset, false),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandTurtleFunction, I18n::Message::KhicasTurtleFunction, false, I18n::Message::KhicasCommandTurtleFunctionWithoutArg),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandForward, I18n::Message::KhicasTurtleForward),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandBackward, I18n::Message::KhicasTurtleBackward),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandRight, I18n::Message::KhicasTurtleRight),
@@ -159,6 +150,7 @@ const ToolboxMessageTree TurtleModuleChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandPenup, I18n::Message::KhicasTurtlePenup, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandPensize, I18n::Message::KhicasTurtlePensize),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandIsdown, I18n::Message::KhicasTurtleIsdown, false),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandReset, I18n::Message::KhicasTurtleReset, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandShowturtle, I18n::Message::KhicasTurtleShowturtle, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandHideturtle, I18n::Message::KhicasTurtleHideturtle, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandColor, I18n::Message::KhicasTurtleColor, false, I18n::Message::KhicasTurtleCommandColorWithoutArg),
@@ -172,121 +164,15 @@ const ToolboxMessageTree TurtleModuleChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandPink, I18n::Message::KhicasTurtlePink, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandOrange, I18n::Message::KhicasTurtleOrange, false),
   ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandPurple, I18n::Message::KhicasTurtlePurple, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandGrey, I18n::Message::KhicasTurtleGrey, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandImportTurtle, I18n::Message::KhicasImportTurtle, false),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandTurtleFunction, I18n::Message::KhicasTurtleFunction, false, I18n::Message::KhicasCommandTurtleFunctionWithoutArg),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasTurtleCommandGrey, I18n::Message::KhicasTurtleGrey, false)
 };
 
-const ToolboxMessageTree calculChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::DeriveCommandWithArg, I18n::Message::Derive),
-  ToolboxMessageTree::Leaf(I18n::Message::IntegrateCommandWithArg, I18n::Message::Integrate),
-  ToolboxMessageTree::Leaf(I18n::Message::LimitCommandWithArg, I18n::Message::LimitValue),
-  ToolboxMessageTree::Leaf(I18n::Message::InfinityCommandWithArg, I18n::Message::Infinity),
-  ToolboxMessageTree::Leaf(I18n::Message::PtaylCommandWithArg, I18n::Message::PtaylValue),
-  ToolboxMessageTree::Leaf(I18n::Message::SumCommandWithArg, I18n::Message::Sum, false, I18n::Message::SumCommand),
-  ToolboxMessageTree::Leaf(I18n::Message::ProductCommandWithArg, I18n::Message::Product, false, I18n::Message::ProductCommand)
-};
-
-const ToolboxMessageTree algebraChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::NormalCommandWithArg, I18n::Message::NormalValue),
-  ToolboxMessageTree::Leaf(I18n::Message::FactorCommandWithArg, I18n::Message::FactorValue),
-  ToolboxMessageTree::Leaf(I18n::Message::CfactorCommandWithArg, I18n::Message::CfactorValue),
-  ToolboxMessageTree::Leaf(I18n::Message::PartfracCommandWithArg, I18n::Message::PartfracDecomposition),
-  ToolboxMessageTree::Leaf(I18n::Message::SimplifyCommandWithArg, I18n::Message::SimplifyValue),
-};
-
-const ToolboxMessageTree solveChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::SolveCommandWithArg, I18n::Message::SolveValue),
-  ToolboxMessageTree::Leaf(I18n::Message::CsolveCommandWithArg, I18n::Message::CsolveValue),
-  ToolboxMessageTree::Leaf(I18n::Message::LinsolveCommandWithArg, I18n::Message::Linsolve),
-  ToolboxMessageTree::Leaf(I18n::Message::DesolveCommandWithArg, I18n::Message::DesolveValue),
-  ToolboxMessageTree::Leaf(I18n::Message::PrimeCommandWithArg, I18n::Message::PrimeValue),
-  ToolboxMessageTree::Leaf(I18n::Message::RsolveCommandWithArg, I18n::Message::Rsolve),
-};
-
-const ToolboxMessageTree realChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::AbsCommandWithArg, I18n::Message::AbsoluteValue),
-  ToolboxMessageTree::Leaf(I18n::Message::RootCommandWithArg, I18n::Message::NthRoot),
-  ToolboxMessageTree::Leaf(I18n::Message::LogCommandWithArg, I18n::Message::BasedLogarithm),
-  ToolboxMessageTree::Leaf(I18n::Message::ApproxCommandWithArg, I18n::Message::Approx),
-  ToolboxMessageTree::Leaf(I18n::Message::ExactCommandWithArg, I18n::Message::Exact),
-  ToolboxMessageTree::Leaf(I18n::Message::FloorCommandWithArg, I18n::Message::Floor),
-  ToolboxMessageTree::Leaf(I18n::Message::FracCommandWithArg, I18n::Message::FracPart),
-  ToolboxMessageTree::Leaf(I18n::Message::CeilCommandWithArg, I18n::Message::Ceiling),
-  ToolboxMessageTree::Leaf(I18n::Message::RoundCommandWithArg, I18n::Message::Rounding),
-};
-
-const ToolboxMessageTree complexChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::AbsCommandWithArg,I18n::Message::ComplexAbsoluteValue),
-  ToolboxMessageTree::Leaf(I18n::Message::ArgCommandWithArg, I18n::Message::Agument),
-  ToolboxMessageTree::Leaf(I18n::Message::ReCommandWithArg, I18n::Message::RealPart),
-  ToolboxMessageTree::Leaf(I18n::Message::ImCommandWithArg, I18n::Message::ImaginaryPart),
-  ToolboxMessageTree::Leaf(I18n::Message::ConjCommandWithArg, I18n::Message::Conjugate)
-};
-
-const ToolboxMessageTree matricesChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::MatrixCommandWithArg, I18n::Message::NewMatrix, false, I18n::Message::MatrixCommand),
-  ToolboxMessageTree::Leaf(I18n::Message::IdentityCommandWithArg, I18n::Message::Identity),
-  ToolboxMessageTree::Leaf(I18n::Message::RandmatrixCommandWithArg, I18n::Message::Randmatrix),
-  ToolboxMessageTree::Leaf(I18n::Message::DimensionCommandWithArg, I18n::Message::Dimension),
-  ToolboxMessageTree::Leaf(I18n::Message::InverseCommandWithArg, I18n::Message::Inverse),
-  ToolboxMessageTree::Leaf(I18n::Message::MatpowCommandWithArg, I18n::Message::Matpow),
-  ToolboxMessageTree::Leaf(I18n::Message::DeterminantCommandWithArg, I18n::Message::Determinant),
-  ToolboxMessageTree::Leaf(I18n::Message::TransposeCommandWithArg, I18n::Message::Transpose),
-  ToolboxMessageTree::Leaf(I18n::Message::TraceCommandWithArg, I18n::Message::Trace),
-  ToolboxMessageTree::Leaf(I18n::Message::RrefCommandWithArg, I18n::Message::Rref),
-  ToolboxMessageTree::Leaf(I18n::Message::KerCommandWithArg, I18n::Message::Ker),
-  ToolboxMessageTree::Leaf(I18n::Message::CharpolyCommandWithArg, I18n::Message::Charpoly),
-  ToolboxMessageTree::Leaf(I18n::Message::EigenvalueCommandWithArg, I18n::Message::Eigenvalue),
-  ToolboxMessageTree::Leaf(I18n::Message::EigenvectorCommandWithArg, I18n::Message::Eigenvector),
-  ToolboxMessageTree::Leaf(I18n::Message::JordanCommandWithArg, I18n::Message::Jordan),
-};
-
-const ToolboxMessageTree arithmeticChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::GcdCommandWithArg, I18n::Message::GreatCommonDivisor),
-  ToolboxMessageTree::Leaf(I18n::Message::LcmCommandWithArg, I18n::Message::LeastCommonMultiple),
-  ToolboxMessageTree::Leaf(I18n::Message::IfactorCommandWithArg, I18n::Message::PrimeFactorDecomposition),
-  ToolboxMessageTree::Leaf(I18n::Message::IegcdCommandWithArg, I18n::Message::Iegcd),
-  ToolboxMessageTree::Leaf(I18n::Message::RemCommandWithArg, I18n::Message::Remainder),
-  ToolboxMessageTree::Leaf(I18n::Message::QuoCommandWithArg, I18n::Message::Quotient),
-  ToolboxMessageTree::Leaf(I18n::Message::PowmodCommandWithArg, I18n::Message::Powmod)
-};
-
-const ToolboxMessageTree randomAndPredictionChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::RandomCommandWithArg, I18n::Message::RandomFloat),
-  ToolboxMessageTree::Leaf(I18n::Message::RandintCommandWithArg, I18n::Message::RandomInteger),
-  ToolboxMessageTree::Leaf(I18n::Message::RandmatrixCommandWithArg, I18n::Message::Randmatrix),
-  ToolboxMessageTree::Leaf(I18n::Message::Prediction95CommandWithArg, I18n::Message::Prediction95),
-  ToolboxMessageTree::Leaf(I18n::Message::PredictionCommandWithArg, I18n::Message::Prediction),
-  ToolboxMessageTree::Leaf(I18n::Message::ConfidenceCommandWithArg, I18n::Message::Confidence),
-};
-
-const ToolboxMessageTree probabilityChildren[] = {
-  ToolboxMessageTree::Leaf(I18n::Message::FactorialCommandWithArg, I18n::Message::Factorial),
-  ToolboxMessageTree::Leaf(I18n::Message::BinomialCommandWithArg, I18n::Message::Combination),
-  ToolboxMessageTree::Leaf(I18n::Message::PermuteCommandWithArg, I18n::Message::Permutation),
-  ToolboxMessageTree::Leaf(I18n::Message::NormaldCommandWithArg, I18n::Message::Normald),
-};
-  
-const ToolboxMessageTree CASChildren[] = {
-  ToolboxMessageTree::Node(I18n::Message::Algebra, algebraChildren),
-  ToolboxMessageTree::Node(I18n::Message::Calculation, calculChildren),
-  ToolboxMessageTree::Node(I18n::Message::Solve, solveChildren),
-  ToolboxMessageTree::Node(I18n::Message::Plots, PlotsChildren),
-  ToolboxMessageTree::Node(I18n::Message::Matrices, matricesChildren),
-  ToolboxMessageTree::Node(I18n::Message::Arithmetic, arithmeticChildren),
-  ToolboxMessageTree::Node(I18n::Message::RealNumber, realChildren),
-  ToolboxMessageTree::Node(I18n::Message::ComplexNumber, complexChildren),
-  ToolboxMessageTree::Node(I18n::Message::Probability, probabilityChildren),
-  ToolboxMessageTree::Node(I18n::Message::RandomAndPrediction, randomAndPredictionChildren),
-};
-  
 const ToolboxMessageTree modulesChildren[] = {
-  ToolboxMessageTree::Node(I18n::Message::KhicasMathModule, MathModuleChildren),
-  ToolboxMessageTree::Node(I18n::Message::KhicasCmathModule, CMathModuleChildren),
-  ToolboxMessageTree::Node(I18n::Message::KhicasRandomModule, RandomModuleChildren),
-  ToolboxMessageTree::Node(I18n::Message::KhicasTurtleModule, TurtleModuleChildren),
-  ToolboxMessageTree::Node(I18n::Message::KhicasKandinskyModule, KandinskyModuleChildren)
+  ToolboxMessageTree::Node(I18n::Message::MathModule, MathModuleChildren),
+  ToolboxMessageTree::Node(I18n::Message::CmathModule, CMathModuleChildren),
+  ToolboxMessageTree::Node(I18n::Message::RandomModule, RandomModuleChildren),
+  ToolboxMessageTree::Node(I18n::Message::TurtleModule, TurtleModuleChildren),
+  ToolboxMessageTree::Node(I18n::Message::KandinskyModule, KandinskyModuleChildren)
 };
 
 const ToolboxMessageTree catalogChildren[] = {
@@ -422,23 +308,14 @@ const ToolboxMessageTree catalogChildren[] = {
 
 const ToolboxMessageTree functionsChildren[] = {
   ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandDefWithArg, I18n::Message::Default, false, I18n::Message::KhicasCommandDef),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandReturn, I18n::Message::Default),
-  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandDebug, I18n::Message::Default)
-};
-
-const ToolboxMessageTree progChildren[] = {
-  ToolboxMessageTree::Node(I18n::Message::pythonxcasMenu, pythonxcasChildren),
-  ToolboxMessageTree::Node(I18n::Message::Functions, functionsChildren),
-  ToolboxMessageTree::Node(I18n::Message::KhicasForLoopMenu, forLoopChildren),
-  ToolboxMessageTree::Node(I18n::Message::KhicasIfStatementMenu, ifStatementChildren),
-  ToolboxMessageTree::Node(I18n::Message::KhicasConditionsMenu, conditionsChildren),
+  ToolboxMessageTree::Leaf(I18n::Message::KhicasCommandReturn, I18n::Message::Default)
 };
 
 const ToolboxMessageTree menu[] = {
-  ToolboxMessageTree::Node(I18n::Message::CAS, CASChildren),
-  ToolboxMessageTree::Node(I18n::Message::Prog, progChildren),
+  ToolboxMessageTree::Node(I18n::Message::LoopsAndTests, loopsAndTestsChildren),
   ToolboxMessageTree::Node(I18n::Message::Modules, modulesChildren),
   ToolboxMessageTree::Node(I18n::Message::Catalog, catalogChildren),
+  ToolboxMessageTree::Node(I18n::Message::Functions, functionsChildren)
 };
 
 const ToolboxMessageTree toolboxModel = ToolboxMessageTree::Node(I18n::Message::Toolbox, menu);
@@ -450,21 +327,6 @@ PythonToolbox::PythonToolbox() :
 }
 
 bool PythonToolbox::handleEvent(Ion::Events::Event event) {
-  if (event==Ion::Events::Toolbox || event==Ion::Events::Var){
-    // faire comme selectLeaf avec le resultat de caseval("show toolbox")
-    auto ctx=KDIonContext::sharedContext();
-    KDRect save=ctx->m_clippingRect;
-    KDPoint o=ctx->m_origin;
-    ctx->setClippingRect(KDRect(0,18,320,222));
-    ctx->setOrigin(KDPoint(0,18));
-    const char * text=caseval(event==Ion::Events::Toolbox?"toolbox menu":"var menu");
-    ctx->setClippingRect(save);
-    ctx->setOrigin(o);
-    sender()->handleEventWithText(text, true);
-    Container::activeApp()->dismissModalViewController();
-    // FIXME: retracer la fenetre en entier
-    return true;
-  }
   if (Toolbox::handleEvent(event)) {
     return true;
   }
@@ -479,7 +341,7 @@ bool PythonToolbox::handleEvent(Ion::Events::Event event) {
 }
 
 KDCoordinate PythonToolbox::rowHeight(int j) {
-  if (typeAtLocation(0, j) == Toolbox::LeafCellType && m_messageTreeModel->label() == I18n::Message::KhicasIfStatementMenu) {
+  if (typeAtLocation(0, j) == Toolbox::LeafCellType && m_messageTreeModel->label() == I18n::Message::IfStatementMenu) {
       /* To get the exact height needed for each cell, we have to compute its
        * text size, which means scan the text char by char to look for '\n'
        * chars. This is very costly and ruins the speed performance when

@@ -10,9 +10,6 @@
 extern "C" {
 #include <stdlib.h>
 }
-#ifdef GIAC_NUMWORKS
-  extern "C" const char * caseval(const char *);
-#endif
 
 namespace Khicas {
 
@@ -20,7 +17,7 @@ static inline int minInt(int x, int y) { return x < y ? x : y; }
 
 static const char * sStandardPromptText = ">>> ";
 
-ConsoleController::ConsoleController(Responder * parentResponder, App * pythonDelegate, KhicasScriptStore * scriptStore
+ConsoleController::ConsoleController(Responder * parentResponder, App * pythonDelegate, ScriptStore * scriptStore
 #if EPSILON_GETOPT
       , bool lockOnConsole
 #endif
@@ -80,7 +77,7 @@ void ConsoleController::autoImport() {
 void ConsoleController::runAndPrintForCommand(const char * command) {
   m_consoleStore.pushCommand(command, strlen(command));
   assert(m_outputAccumulationBuffer[0] == '\0');
-  runCode(command,true);
+  runCode(command);
   flushOutputAccumulationBufferToStore();
   m_consoleStore.deleteLastLineIfEmpty();
 }
@@ -392,7 +389,7 @@ void ConsoleController::autoImportScript(Script script, bool force) {
   if (script.importationStatus() || force) {
     // Step 1 - Create the command "from scriptName import *".
 
-    assert(strlen(k_importCommand1) + strlen(script.fullName()) - strlen(KhicasScriptStore::k_scriptExtension) - 1 + strlen(k_importCommand2) + 1 <= k_maxImportCommandSize);
+    assert(strlen(k_importCommand1) + strlen(script.fullName()) - strlen(ScriptStore::k_scriptExtension) - 1 + strlen(k_importCommand2) + 1 <= k_maxImportCommandSize);
     char command[k_maxImportCommandSize];
 
     // Copy "from "
@@ -401,7 +398,7 @@ void ConsoleController::autoImportScript(Script script, bool force) {
 
     /* Copy the script name without the extension ".py". The '.' is overwritten
      * by the null terminating char. */
-    int copySizeWithNullTerminatingZero = minInt(k_maxImportCommandSize - currentChar, strlen(scriptName) - strlen(KhicasScriptStore::k_scriptExtension));
+    int copySizeWithNullTerminatingZero = minInt(k_maxImportCommandSize - currentChar, strlen(scriptName) - strlen(ScriptStore::k_scriptExtension));
     strlcpy(command+currentChar, scriptName, copySizeWithNullTerminatingZero);
     currentChar += copySizeWithNullTerminatingZero-1;
 
@@ -409,9 +406,7 @@ void ConsoleController::autoImportScript(Script script, bool force) {
     strlcpy(command+currentChar, k_importCommand2, k_maxImportCommandSize - currentChar);
 
     // Step 2 - Run the command
-    caseval("warn off");
     runAndPrintForCommand(command);
-    caseval("warn on");
   }
   if (!sandboxIsDisplayed() && force) {
     m_selectableTableView.reloadData();

@@ -1,5 +1,5 @@
-#ifndef KHICAS_EDITOR_CONTROLLER_H
-#define KHICAS_EDITOR_CONTROLLER_H
+#ifndef CODE_EDITOR_CONTROLLER_H
+#define CODE_EDITOR_CONTROLLER_H
 
 #include <escher.h>
 #include "script.h"

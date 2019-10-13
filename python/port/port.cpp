@@ -250,6 +250,68 @@ const char * giac_read_file(const char * filename){
   return "undef";
 }
 
+bool giac_write_file(const char * filename,const char * content){
+  Ion::Storage * s=Ion::Storage::sharedStorage();
+  auto res=s->createRecordWithFullName(filename,content,strlen(content)+1);
+  if (res==Ion::Storage::Record::ErrorStatus::NameTaken){
+    auto r=s->recordNamed(filename);
+    Ion::Storage::Record::Data d;
+    d.buffer=content;
+    d.size=strlen(content)+1;
+    return r.setValue(d)==Ion::Storage::Record::ErrorStatus::None;
+  }
+  return res==Ion::Storage::Record::ErrorStatus::None;
+}
+
+int select_item(const char ** ptr,const char * title); // kdisplay.cc
+
+
+#if 1
+int giac_filebrowser(char * filename,const char * extension,const char * title){
+  Ion::Storage * s=Ion::Storage::sharedStorage();
+  int n=s->numberOfRecordsWithExtension("py");
+  if (!n) return 0;
+  const char * filenames[n+1];
+  for (int i=0;i<n;i++){
+    const Ion::Storage::Record & r=s->recordWithExtensionAtIndex("py", i);
+    filenames[i]=r.fullName();
+  }
+  filenames[n]=0;
+  int choix=select_item(filenames,"Scripts");
+  if (choix<0 || choix>=n) return 0;
+  strcpy(filename,filenames[choix]);
+  return choix;
+  // const char * ptr=(const char *)r.value().buffer;
+  /*     
+	 Ion::Storage::Record::Data structure avec 2 membres 
+	 const void * buffer et size_t size
+
+	 Record(const char * fullName = nullptr);
+	 Record(const char * basename, const char * extension);
+	 Data value();
+	 Ion::Storage::Record::ErrorStatus setValue(Ion::Storage::Record::Data);
+	 void destroy(void);
+
+  // Record creation
+  Record::ErrorStatus createRecordWithFullName(const char * fullName, const void * data, size_t size);
+  Record::ErrorStatus createRecordWithExtension(const char * baseName, const char * extension, const void * data, size_t size);
+
+  // Record getters
+  Record recordWithExtensionAtIndex(const char * extension, int index);
+  Record recordNamed(const char * fullName);
+  Record recordBaseNamedWithExtension(const char * baseName, const char * extension);
+  Record recordBaseNamedWithExtensions(const char * baseName, const char * const extension[], size_t numberOfExtensions);
+
+  // Record destruction
+  void destroyAllRecords();
+  void destroyRecordWithBaseNameAndExtension(const char * baseName, const char * extension);
+  void destroyRecordsWithExtension(const char * extension);
+
+
+  */
+}
+#endif
+
 mp_import_stat_t mp_import_stat(const char *path) {
   if (sScriptProvider && sScriptProvider->contentOfScript(path)) {
     return MP_IMPORT_STAT_FILE;

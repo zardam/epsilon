@@ -1,12 +1,12 @@
-#ifndef KHICAS_MENU_CONTROLLER_H
-#define KHICAS_MENU_CONTROLLER_H
+#ifndef CODE_MENU_CONTROLLER_H
+#define CODE_MENU_CONTROLLER_H
 
 #include <escher.h>
 #include "console_controller.h"
 #include "editor_controller.h"
 #include "script_name_cell.h"
 #include "script_parameter_controller.h"
-#include "khicas_script_store.h"
+#include "script_store.h"
 
 namespace Khicas {
 
@@ -14,7 +14,7 @@ class ScriptParameterController;
 
 class MenuController : public ViewController, public TableViewDataSource, public SelectableTableViewDataSource, public SelectableTableViewDelegate, public TextFieldDelegate, public ButtonRowDelegate {
 public:
-  MenuController(Responder * parentResponder, App * pythonDelegate, KhicasScriptStore * scriptStore, ButtonRowController * footer);
+  MenuController(Responder * parentResponder, App * pythonDelegate, ScriptStore * scriptStore, ButtonRowController * footer);
   ConsoleController * consoleController();
   StackViewController * stackViewController();
   void willExitResponderChain(Responder * nextFirstResponder) override;
@@ -64,7 +64,7 @@ public:
     return const_cast<Button *>(&m_consoleButton);
   }
 
-  //private:
+private:
   static constexpr int k_maxNumberOfDisplayableScriptCells = 5; // = 240/50
   static constexpr int k_parametersColumnWidth = 37;
   static constexpr int AddScriptCellType = 0;
@@ -77,7 +77,7 @@ public:
   void numberedDefaultScriptName(char * buffer);
   void updateAddScriptRowDisplay();
   bool privateTextFieldDidAbortEditing(TextField * textField, bool menuControllerStaysInResponderChain);
-  KhicasScriptStore * m_scriptStore;
+  ScriptStore * m_scriptStore;
   ScriptNameCell m_scriptCells[k_maxNumberOfDisplayableScriptCells];
   EvenOddCellWithEllipsis m_scriptParameterCells[k_maxNumberOfDisplayableScriptCells];
   EvenOddMessageTextCell m_addNewScriptCell;

@@ -1,5 +1,5 @@
-#ifndef KHICAS_EDIT_CELL_H
-#define KHICAS_EDIT_CELL_H
+#ifndef CODE_EDIT_CELL_H
+#define CODE_EDIT_CELL_H
 
 #include <escher/responder.h>
 #include <escher/highlight_cell.h>

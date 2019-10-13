@@ -18,7 +18,7 @@ void ScriptNodeCell::ScriptNodeView::setScriptNode(ScriptNode * scriptNode) {
   m_scriptNode = scriptNode;
 }
 
-void ScriptNodeCell::ScriptNodeView::setKhicasScriptStore(KhicasScriptStore * scriptStore) {
+void ScriptNodeCell::ScriptNodeView::setScriptStore(ScriptStore * scriptStore) {
   m_scriptStore = scriptStore;
 }
 
@@ -55,8 +55,8 @@ void ScriptNodeCell::setScriptNode(ScriptNode * scriptNode) {
   reloadCell();
 }
 
-void ScriptNodeCell::setKhicasScriptStore(KhicasScriptStore * scriptStore) {
-  m_scriptNodeView.setKhicasScriptStore(scriptStore);
+void ScriptNodeCell::setScriptStore(ScriptStore * scriptStore) {
+  m_scriptNodeView.setScriptStore(scriptStore);
 }
 
 void ScriptNodeCell::setHighlighted(bool highlight) {

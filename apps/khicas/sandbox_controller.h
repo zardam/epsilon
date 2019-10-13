@@ -1,5 +1,5 @@
-#ifndef KHICAS_SANDBOX_CONTROLLER_H
-#define KHICAS_SANDBOX_CONTROLLER_H
+#ifndef CODE_SANDBOX_CONTROLLER_H
+#define CODE_SANDBOX_CONTROLLER_H
 
 #include <escher/responder.h>
 #include <escher/solid_color_view.h>

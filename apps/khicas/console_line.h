@@ -1,5 +1,5 @@
-#ifndef KHICAS_CONSOLE_LINE_H
-#define KHICAS_CONSOLE_LINE_H
+#ifndef CODE_CONSOLE_LINE_H
+#define CODE_CONSOLE_LINE_H
 
 #include <stddef.h>
 

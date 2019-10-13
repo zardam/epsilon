@@ -35,7 +35,7 @@ App::Descriptor * App::Snapshot::descriptor() {
   return &descriptor;
 }
 
-KhicasScriptStore * App::Snapshot::scriptStore() {
+ScriptStore * App::Snapshot::scriptStore() {
   return &m_scriptStore;
 }
 

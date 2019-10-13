@@ -1,5 +1,5 @@
-#ifndef KHICAS_SCRIPT_TEMPLATE_H
-#define KHICAS_SCRIPT_TEMPLATE_H
+#ifndef CODE_SCRIPT_TEMPLATE_H
+#define CODE_SCRIPT_TEMPLATE_H
 
 namespace Khicas {
 

@@ -1,5 +1,5 @@
-#ifndef KHICAS_SCRIPT_H
-#define KHICAS_SCRIPT_H
+#ifndef CODE_SCRIPT_H
+#define CODE_SCRIPT_H
 
 #include <ion.h>
 

@@ -1,4 +1,4 @@
-#include "khicas_script_store.h"
+#include "script_store.h"
 #include "string.h"
 #include <stddef.h>
 
@@ -9,31 +9,31 @@ extern "C" {
 
 namespace Khicas {
 
-constexpr char KhicasScriptStore::k_scriptExtension[];
+constexpr char ScriptStore::k_scriptExtension[];
 
 
-bool KhicasScriptStore::ScriptNameIsFree(const char * baseName) {
+bool ScriptStore::ScriptNameIsFree(const char * baseName) {
   return Ion::Storage::sharedStorage()->recordBaseNamedWithExtension(baseName, k_scriptExtension).isNull();
 }
 
-KhicasScriptStore::KhicasScriptStore()
+ScriptStore::ScriptStore()
 {
   addScriptFromTemplate(ScriptTemplate::Squares());
   addScriptFromTemplate(ScriptTemplate::Mandelbrot());
   addScriptFromTemplate(ScriptTemplate::Polynomial());
 }
 
-void KhicasScriptStore::deleteAllScripts() {
+void ScriptStore::deleteAllScripts() {
   for (int i = numberOfScripts() - 1; i >= 0; i--) {
     scriptAtIndex(i).destroy();
   }
 }
 
-bool KhicasScriptStore::isFull() {
+bool ScriptStore::isFull() {
   return Ion::Storage::sharedStorage()->availableSize() < k_fullFreeSpaceSizeLimit;
 }
 
-void KhicasScriptStore::scanScriptsForFunctionsAndVariables(void * context, ScanCallback storeFunction, ScanCallback storeVariable) {
+void ScriptStore::scanScriptsForFunctionsAndVariables(void * context, ScanCallback storeFunction, ScanCallback storeVariable) {
   for (int scriptIndex = 0; scriptIndex < numberOfScripts(); scriptIndex++) {
     // Handle lexer or parser errors with nlr.
     nlr_buf_t nlr;
@@ -115,7 +115,7 @@ void KhicasScriptStore::scanScriptsForFunctionsAndVariables(void * context, Scan
   }
 }
 
-const char * KhicasScriptStore::contentOfScript(const char * name) {
+const char * ScriptStore::contentOfScript(const char * name) {
   Script script = scriptNamed(name);
   if (script.isNull()) {
     return nullptr;
@@ -123,7 +123,7 @@ const char * KhicasScriptStore::contentOfScript(const char * name) {
   return script.readContent();
 }
 
-Script::ErrorStatus KhicasScriptStore::addScriptFromTemplate(const ScriptTemplate * scriptTemplate) {
+Script::ErrorStatus ScriptStore::addScriptFromTemplate(const ScriptTemplate * scriptTemplate) {
   size_t valueSize = strlen(scriptTemplate->content())+1+1;// scriptcontent size + 1 char for the importation status
   assert(Script::nameCompliant(scriptTemplate->name()));
   Script::ErrorStatus err = Ion::Storage::sharedStorage()->createRecordWithFullName(scriptTemplate->name(), scriptTemplate->value(), valueSize);
@@ -131,7 +131,7 @@ Script::ErrorStatus KhicasScriptStore::addScriptFromTemplate(const ScriptTemplat
   return err;
 }
 
-const char * KhicasScriptStore::structID(mp_parse_node_struct_t *structNode) {
+const char * ScriptStore::structID(mp_parse_node_struct_t *structNode) {
   // Find the id child node, which stores the struct's name
   size_t childNodesCount = MP_PARSE_NODE_STRUCT_NUM_NODES(structNode);
   if (childNodesCount < 1) {

@@ -1,16 +1,16 @@
-#ifndef KHICAS_VARIABLE_BOX_CONTROLLER_H
-#define KHICAS_VARIABLE_BOX_CONTROLLER_H
+#ifndef CODE_VARIABLE_BOX_CONTROLLER_H
+#define CODE_VARIABLE_BOX_CONTROLLER_H
 
 #include <escher.h>
 #include "script_node.h"
 #include "script_node_cell.h"
-#include "khicas_script_store.h"
+#include "script_store.h"
 
 namespace Khicas {
 
 class VariableBoxController : public NestedMenuController {
 public:
-  VariableBoxController(KhicasScriptStore * scriptStore);
+  VariableBoxController(ScriptStore * scriptStore);
 
   /* Responder */
   bool handleEvent(Ion::Events::Event event) override;
@@ -36,7 +36,7 @@ private:
   void addVariableAtIndex(const char * variableName, int scriptIndex);
   ScriptNode m_scriptNodes[k_maxScriptNodesCount];
   int m_scriptNodesCount;
-  KhicasScriptStore * m_scriptStore;
+  ScriptStore * m_scriptStore;
   ScriptNodeCell m_leafCells[k_maxNumberOfDisplayedRows];
 };
 

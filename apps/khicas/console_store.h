@@ -1,5 +1,5 @@
-#ifndef KHICAS_CONSOLE_STORE_H
-#define KHICAS_CONSOLE_STORE_H
+#ifndef CODE_CONSOLE_STORE_H
+#define CODE_CONSOLE_STORE_H
 
 #include "console_line.h"
 #include <assert.h>
