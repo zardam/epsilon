@@ -28,7 +28,11 @@ App::Snapshot::Snapshot() :
 }
 
 App * App::Snapshot::unpack(Container * container) {
+#ifdef MALLOC_APPS
+  return new App(this);
+#else
   return new (container->currentAppBuffer()) App(this);
+#endif
 }
 
 App::Descriptor * App::Snapshot::descriptor() {

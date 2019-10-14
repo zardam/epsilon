@@ -22,7 +22,11 @@ const Image * App::Descriptor::icon() {
 }
 
 App * App::Snapshot::unpack(Container * container) {
+#ifdef MALLOC_APPS
+  return new App(this);
+#else
   return new (container->currentAppBuffer()) App(this);
+#endif
 }
 
 void App::Snapshot::reset() {

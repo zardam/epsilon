@@ -27,7 +27,9 @@ public:
   Container(Container&& other) = delete;
   Container& operator=(const Container& other) = delete;
   Container& operator=(Container&& other) = delete;
+#ifndef MALLOC_APPS
   virtual void * currentAppBuffer() = 0;
+#endif
   virtual void run();
   virtual bool dispatchEvent(Ion::Events::Event event) override;
   virtual bool switchTo(App::Snapshot * snapshot);

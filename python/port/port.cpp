@@ -9,6 +9,7 @@
 //#include <ion/events.h>
 #include <poincare/preferences.h>
 #include "../../apps/apps_container.h"
+#include "../../apps/global_preferences.h"
 
 #include <math.h>
 #include <stdint.h>
@@ -263,6 +264,11 @@ bool giac_write_file(const char * filename,const char * content){
   return res==Ion::Storage::Record::ErrorStatus::None;
 }
 
+bool file_exists(const char * filename){
+  Ion::Storage * s=Ion::Storage::sharedStorage();
+  return s->isFullNameTaken(filename);
+}
+
 int select_item(const char ** ptr,const char * title); // kdisplay.cc
 
 
@@ -280,7 +286,7 @@ int giac_filebrowser(char * filename,const char * extension,const char * title){
   int choix=select_item(filenames,"Scripts");
   if (choix<0 || choix>=n) return 0;
   strcpy(filename,filenames[choix]);
-  return choix;
+  return choix+1;
   // const char * ptr=(const char *)r.value().buffer;
   /*     
 	 Ion::Storage::Record::Data structure avec 2 membres 
@@ -329,6 +335,26 @@ const char * mp_hal_input(const char * prompt) {
   return sCurrentExecutionEnvironment->inputText(prompt);
 }
 
+void statuslinemsg(const char * msg){
+  AppsContainer::sharedAppsContainer()->reloadTitleBarView();
+  auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
+  if (ptr)
+    ptr->displaySandbox();
+  auto ctx=KDIonContext::sharedContext();
+  KDRect save=ctx->m_clippingRect;
+  KDPoint o=ctx->m_origin;
+  ctx->setClippingRect(KDRect(0,0,280,18));
+  ctx->setOrigin(KDPoint(0,0));
+  KDRect rect(0,0,280,18);
+  KDIonContext::sharedContext()->pushRectUniform(rect,64934 /* Palette::YellowDark*/);
+  if (strlen(msg)>25)
+    ctx->drawString(msg, KDPoint(0,0), KDFont::SmallFont, 0, 64934);
+  else
+    ctx->drawString(msg, KDPoint(0,0), KDFont::LargeFont, 0, 64934);
+  ctx->setClippingRect(save);
+  ctx->setOrigin(o);
+}
+
 void statusline(int mode){
   AppsContainer::sharedAppsContainer()->reloadTitleBarView();
   auto ctx=KDIonContext::sharedContext();
@@ -336,7 +362,7 @@ void statusline(int mode){
   KDPoint o=ctx->m_origin;
   ctx->setClippingRect(KDRect(0,0,320,18));
   ctx->setOrigin(KDPoint(0,0));
-  KDRect rect(0,0,mode==1?320:200,18);
+  KDRect rect(0,0,mode==1?320:280,18);
   KDIonContext::sharedContext()->pushRectUniform(rect,64934 /* Palette::YellowDark*/);
   const char * text=0;
   Poincare::Preferences * preferences = Poincare::Preferences::sharedPreferences();
@@ -367,12 +393,32 @@ void statusline(int mode){
     }
   }
   ctx->drawString(text, KDPoint(248,1), KDFont::SmallFont, 0, 64934 /* Palette::YellowDark*/);
+  if (mode==1){
+    auto c=Ion::Battery::level();
+    if (c==Ion::Battery::Charge::EMPTY)
+      text="empty";
+    if (c==Ion::Battery::Charge::LOW)
+      text="low";
+    if (c==Ion::Battery::Charge::FULL)
+      text="full";
+    ctx->drawString(text, KDPoint(280,1), KDFont::SmallFont, 0, 64934 /* Palette::YellowDark*/);
+  }
   ctx->setClippingRect(save);
   ctx->setOrigin(o);
 }
 
 bool isalphaactive(){
   return Ion::Events::isAlphaActive();
+}
+
+void lock_alpha(){
+  Ion::Events::setShiftAlphaStatus(Ion::Events::ShiftAlphaStatus::AlphaLock);
+  statusline(0);
+}
+
+void reset_kbd(){
+  Ion::Events::setShiftAlphaStatus(Ion::Events::ShiftAlphaStatus::Default);
+  statusline(0);
 }
 
 bool alphawasactive=false;
@@ -391,6 +437,7 @@ int getkey_raw(bool allow_suspend){
       key=event.id();
       if (allow_suspend && (key==7 || key==8) ){ // power
 	Ion::Power::suspend(true);
+	Ion::Backlight::setBrightness(GlobalPreferences::sharedGlobalPreferences()->brightnessLevel());
 	AppsContainer::sharedAppsContainer()->reloadTitleBarView();
 	//AppsContainer::sharedAppsContainer()->redrawWindow();
 	statusline(1);

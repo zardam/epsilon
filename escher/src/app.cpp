@@ -19,7 +19,11 @@ const Image * App::Descriptor::icon() {
 
 void App::Snapshot::pack(App * app) {
   tidy();
+#ifdef MALLOC_APPS
+  delete app;
+#else
   app->~App();
+#endif
   assert(Poincare::TreePool::sharedPool()->numberOfNodes() == 0);
 }
 

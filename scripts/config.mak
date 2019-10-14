@@ -7,7 +7,9 @@ EPSILON_VERSION ?= 11.1.0
 EPSILON_ONBOARDING_APP ?= 0
 # Valid values are "none", "update", "beta"
 EPSILON_BOOT_PROMPT ?= none
-EPSILON_APPS ?= calculation graph code statistics probability solver sequence regression settings
+EPSILON_APPS ?= calculation graph khicas statistics probability solver sequence settings
+#EPSILON_APPS ?= calculation graph khicas statistics probability solver sequence regression settings
+#EPSILON_APPS ?= calculation graph code khicas settings
 EPSILON_I18N ?= en fr es de pt
 EPSILON_GETOPT ?= 0
 MATRICES_ARE_DEFINED ?=1
@@ -23,6 +25,7 @@ ifndef EXE
 endif
 include scripts/toolchain.$(TOOLCHAIN).mak
 
+#SFLAGS += -DMALLOC_APPS
 SFLAGS += -DDEBUG=$(DEBUG)
 SFLAGS += -DEPSILON_ONBOARDING_APP=$(EPSILON_ONBOARDING_APP)
 SFLAGS += -DEPSILON_GETOPT=$(EPSILON_GETOPT)
@@ -42,7 +45,7 @@ SFLAGS += -DESCHER_LOG_EVENTS_BINARY=$(ESCHER_LOG_EVENTS_BINARY)
 # giac
 ifeq ($(PLATFORM),device)
 SFLAGS += -DGIAC_NUMWORKS
-LDFLAGS += -Lgiac-1.5.0/src -Llibtommath-0.39 -lgiac -ltommath
+LDFLAGS += -L../giac-1.5.0/src -L../libtommath-0.39 -lgiac -ltommath 
 endif
 
 ifeq ($(PLATFORM),emscripten)
@@ -51,6 +54,6 @@ LDFLAGS += -O3 -v -s TOTAL_MEMORY=1GB -s LEGACY_GL_EMULATION=1 -s GL_UNSAFE_OPTS
 endif
 
 ifeq ($(PLATFORM),simulator)
-SFLAGS += -DGIAC_NUMWORKS
+SFLAGS += -DGIAC_NUMWORKS -DSIMULATOR
 LDFLAGS += -lgiac
 endif
