@@ -1,8 +1,8 @@
-#ifndef CODE_SCRIPT_NODE_CELL_H
-#define CODE_SCRIPT_NODE_CELL_H
+#ifndef KHICAS_SCRIPT_NODE_CELL_H
+#define KHICAS_SCRIPT_NODE_CELL_H
 
 #include "script_node.h"
-#include "script_store.h"
+#include "khicas_script_store.h"
 #include <escher/table_cell.h>
 #include <kandinsky/coordinate.h>
 
@@ -12,7 +12,7 @@ class ScriptNodeCell : public TableCell {
 public:
   ScriptNodeCell();
   void setScriptNode(ScriptNode * node);
-  void setScriptStore(ScriptStore * scriptStore);
+  void setKhicasScriptStore(KhicasScriptStore * scriptStore);
 
   /* TableCell */
   View * labelView() const override { return const_cast<View *>(static_cast<const View *>(&m_scriptNodeView)); }
@@ -31,7 +31,7 @@ protected:
   public:
     ScriptNodeView();
     void setScriptNode(ScriptNode * scriptNode);
-    void setScriptStore(ScriptStore * scriptStore);
+    void setKhicasScriptStore(KhicasScriptStore * scriptStore);
     void drawRect(KDContext * ctx, KDRect rect) const override;
     virtual KDSize minimalSizeForOptimalDisplay() const override;
     const char * text() const override {
@@ -41,7 +41,7 @@ protected:
     constexpr static const KDFont * k_font = KDFont::SmallFont;
     constexpr static KDCoordinate k_verticalMargin = 7;
     ScriptNode * m_scriptNode;
-    ScriptStore * m_scriptStore;
+    KhicasScriptStore * m_scriptStore;
   };
   ScriptNodeView m_scriptNodeView;
 };

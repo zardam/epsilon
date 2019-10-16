@@ -25,10 +25,10 @@ private:
   GlobalPreferences() :
     m_language(I18n::Language::EN),
     m_examMode(ExamMode::Deactivate),
-#ifdef EPSILON_BOOT_PROMPT
+#if 0 //def EPSILON_BOOT_PROMPT
     m_showPopUp(true),
 #endif
-    m_brightnessLevel(Ion::Backlight::MaxBrightness) {}
+    m_brightnessLevel(Ion::Backlight::MaxBrightness/3) {}
   I18n::Language m_language;
   ExamMode m_examMode;
 #ifdef EPSILON_BOOT_PROMPT

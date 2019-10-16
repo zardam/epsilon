@@ -1,5 +1,5 @@
-#ifndef CODE_CONSOLE_LINE_CELL_H
-#define CODE_CONSOLE_LINE_CELL_H
+#ifndef KHICAS_CONSOLE_LINE_CELL_H
+#define KHICAS_CONSOLE_LINE_CELL_H
 
 #include <escher/highlight_cell.h>
 #include <escher/message_text_view.h>

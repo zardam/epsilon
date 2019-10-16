@@ -7,9 +7,11 @@
 #include <ion/events.h>
 #include <ion/unicode/utf8_decoder.h>
 
+extern "C" const char * caseval(const char *);
+
 namespace Khicas {
 
-MenuController::MenuController(Responder * parentResponder, App * pythonDelegate, ScriptStore * scriptStore, ButtonRowController * footer) :
+MenuController::MenuController(Responder * parentResponder, App * pythonDelegate, KhicasScriptStore * scriptStore, ButtonRowController * footer) :
   ViewController(parentResponder),
   ButtonRowDelegate(nullptr, footer),
   m_scriptStore(scriptStore),
@@ -59,6 +61,11 @@ void MenuController::didBecomeFirstResponder() {
   if (m_reloadConsoleWhenBecomingFirstResponder) {
     reloadConsole();
   }
+  // BP change: Shell first!
+  if (footer()->selectedButton() != 0) {
+    m_selectableTableView.deselectTable();
+    footer()->setSelectedButton(0);
+  }
   if (footer()->selectedButton() == 0) {
     assert(m_selectableTableView.selectedRow() < 0);
     Container::activeApp()->setFirstResponder(&m_consoleButton);
@@ -83,7 +90,20 @@ void MenuController::viewWillAppear() {
 }
 
 bool MenuController::handleEvent(Ion::Events::Event event) {
-  if (event == Ion::Events::Down) {
+  if (event == Ion::Events::Plus){
+    caseval("+");
+    AppsContainer::sharedAppsContainer()->m_window.redraw(true);
+    return true;
+  }
+  if (event == Ion::Events::Multiplication){
+    caseval(".");
+    AppsContainer::sharedAppsContainer()->m_window.redraw(true);
+    return true;
+  }
+  if (event == Ion::Events::Down || event == Ion::Events::Back) {
+    if (footer()->selectedButton() == 0){
+      return false;
+    }
     m_selectableTableView.deselectTable();
     footer()->setSelectedButton(0);
     return true;
@@ -292,8 +312,8 @@ bool MenuController::textFieldDidReceiveEvent(TextField * textField, Ion::Events
   if (event == Ion::Events::Clear && textField->isEditing()) {
     constexpr size_t k_bufferSize = 4;
     char buffer[k_bufferSize] = {'.', 0, 0, 0};
-    assert(k_bufferSize >= 1 + strlen(ScriptStore::k_scriptExtension) + 1);
-    strlcpy(&buffer[1], ScriptStore::k_scriptExtension, strlen(ScriptStore::k_scriptExtension) + 1);
+    assert(k_bufferSize >= 1 + strlen(KhicasScriptStore::k_scriptExtension) + 1);
+    strlcpy(&buffer[1], KhicasScriptStore::k_scriptExtension, strlen(KhicasScriptStore::k_scriptExtension) + 1);
     textField->setText(buffer);
     textField->setCursorLocation(textField->text());
     return true;
@@ -303,10 +323,10 @@ bool MenuController::textFieldDidReceiveEvent(TextField * textField, Ion::Events
 
 bool MenuController::textFieldDidFinishEditing(TextField * textField, const char * text, Ion::Events::Event event) {
   const char * newName;
-  static constexpr int bufferSize = Script::k_defaultScriptNameMaxSize + 1 + ScriptStore::k_scriptExtensionLength; //"script99" + "." + "py"
+  static constexpr int bufferSize = Script::k_defaultScriptNameMaxSize + 1 + KhicasScriptStore::k_scriptExtensionLength; //"script99" + "." + "py"
   char numberedDefaultName[bufferSize];
 
-  if (strlen(text) > 1 + strlen(ScriptStore::k_scriptExtension)) {
+  if (strlen(text) > 1 + strlen(KhicasScriptStore::k_scriptExtension)) {
     newName = text;
   } else {
     // The user entered an empty name. Use a numbered default script name.
@@ -315,7 +335,7 @@ bool MenuController::textFieldDidFinishEditing(TextField * textField, const char
     assert(defaultNameLength < bufferSize);
     assert(UTF8Decoder::CharSizeOfCodePoint('.') == 1);
     numberedDefaultName[defaultNameLength++] = '.';
-    strlcpy(numberedDefaultName + defaultNameLength, ScriptStore::k_scriptExtension, bufferSize - defaultNameLength);
+    strlcpy(numberedDefaultName + defaultNameLength, KhicasScriptStore::k_scriptExtension, bufferSize - defaultNameLength);
     /* If there are already scripts named script1.py, script2.py,... until
      * Script::k_maxNumberOfDefaultScriptNames, we want to write the last tried
      * default name and let the user modify it. */
@@ -352,7 +372,7 @@ bool MenuController::textFieldDidFinishEditing(TextField * textField, const char
 }
 
 bool MenuController::textFieldDidHandleEvent(TextField * textField, bool returnValue, bool textSizeDidChange) {
-  int scriptExtensionLength = 1 + strlen(ScriptStore::k_scriptExtension);
+  int scriptExtensionLength = 1 + strlen(KhicasScriptStore::k_scriptExtension);
   if (textField->isEditing()) {
     const char * maxPointerLocation = textField->text() + textField->draftTextLength() - scriptExtensionLength;
     if (textField->cursorLocation() > maxPointerLocation) {
@@ -397,7 +417,7 @@ bool MenuController::privateTextFieldDidAbortEditing(TextField * textField, bool
    * middle of another setFirstResponder call. */
   Script script = m_scriptStore->scriptAtIndex(m_selectableTableView.selectedRow());
   const char * scriptName = script.fullName();
-  if (strlen(scriptName) <= 1 + strlen(ScriptStore::k_scriptExtension)) {
+  if (strlen(scriptName) <= 1 + strlen(KhicasScriptStore::k_scriptExtension)) {
     // The previous text was an empty name. Use a numbered default script name.
     char numberedDefaultName[Script::k_defaultScriptNameMaxSize];
     bool foundDefaultName = Script::DefaultName(numberedDefaultName, Script::k_defaultScriptNameMaxSize);
@@ -406,7 +426,7 @@ bool MenuController::privateTextFieldDidAbortEditing(TextField * textField, bool
       deleteScript(script);
       return true;
     }
-    Script::ErrorStatus error = script.setBaseNameWithExtension(numberedDefaultName, ScriptStore::k_scriptExtension);
+    Script::ErrorStatus error = script.setBaseNameWithExtension(numberedDefaultName, KhicasScriptStore::k_scriptExtension);
     scriptName = m_scriptStore->scriptAtIndex(m_selectableTableView.selectedRow()).fullName();
     /* Because we use the numbered default name, the name should not be
      * already taken. Plus, the script could be added only if the storage has

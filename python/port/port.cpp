@@ -394,13 +394,17 @@ void statusline(int mode){
   }
   ctx->drawString(text, KDPoint(248,1), KDFont::SmallFont, 0, 64934 /* Palette::YellowDark*/);
   if (mode==1){
-    auto c=Ion::Battery::level();
-    if (c==Ion::Battery::Charge::EMPTY)
-      text="empty";
-    if (c==Ion::Battery::Charge::LOW)
-      text="low";
-    if (c==Ion::Battery::Charge::FULL)
-      text="full";
+    if (Ion::USB::isPlugged())
+      text="charge";
+    else {
+      auto c=Ion::Battery::level();
+      if (c==Ion::Battery::Charge::EMPTY)
+	text="empty";
+      if (c==Ion::Battery::Charge::LOW)
+	text="low";
+      if (c==Ion::Battery::Charge::FULL)
+	text="full";
+    }
     ctx->drawString(text, KDPoint(280,1), KDFont::SmallFont, 0, 64934 /* Palette::YellowDark*/);
   }
   ctx->setClippingRect(save);
@@ -421,6 +425,14 @@ void reset_kbd(){
   statusline(0);
 }
 
+void os_redraw(){
+  AppsContainer::sharedAppsContainer()->m_window.redraw(true);
+}
+
+double millis(){
+  return double(Ion::Timing::millis());
+}
+
 bool alphawasactive=false;
 
 int getkey_raw(bool allow_suspend){
@@ -429,6 +441,62 @@ int getkey_raw(bool allow_suspend){
     int timeout=10000;
     alphawasactive=Ion::Events::isAlphaActive();
     Ion::Events::Event event=Ion::Events::getEvent(&timeout);
+    auto ctx=KDIonContext::sharedContext();
+    KDRect save=ctx->m_clippingRect;
+    KDPoint o=ctx->m_origin;
+    ctx->setClippingRect(KDRect(0,0,320,240));
+    ctx->setOrigin(KDPoint(0,0));
+    KDRect rect(0,0,320,240);
+    if (event == Ion::Events::USBPlug) {
+      KDIonContext::sharedContext()->pushRectUniform(rect,33333);
+      if (Ion::USB::isPlugged()) {
+	if (GlobalPreferences::sharedGlobalPreferences()->examMode() == GlobalPreferences::ExamMode::Activate) {
+	  Ion::LED::setColor(KDColorBlack);
+	  Ion::LED::updateColorWithPlugAndCharge();
+	  GlobalPreferences::sharedGlobalPreferences()->setExamMode(GlobalPreferences::ExamMode::Deactivate);
+	  // displayExamModePopUp(false);
+	} else {
+	  Ion::USB::enable();
+	}
+	Ion::Backlight::setBrightness(GlobalPreferences::sharedGlobalPreferences()->brightnessLevel());
+      } else {
+	Ion::USB::disable();
+      }
+    }
+    if (event == Ion::Events::USBEnumeration || event == Ion::Events::USBPlug || event == Ion::Events::BatteryCharging) {
+      Ion::LED::updateColorWithPlugAndCharge();
+    }
+    if (event == Ion::Events::USBEnumeration
+	) {
+      KDIonContext::sharedContext()->pushRectUniform(rect,64934 /* Palette::YellowDark*/);
+      if (Ion::USB::isPlugged()) {
+	/* Just after a software update, the battery timer does not have time to
+	 * fire before the calculator enters DFU mode. As the DFU mode blocks the
+	 * event loop, we update the battery state "manually" here.
+	 * We do it before switching to USB application to redraw the battery
+	 * pictogram. */
+	// updateBatteryState();
+	KDIonContext::sharedContext()->pushRectUniform(rect,65535);
+	Ion::USB::DFU();
+	KDIonContext::sharedContext()->pushRectUniform(rect,22222);
+	// Update LED when exiting DFU mode
+	Ion::LED::updateColorWithPlugAndCharge();
+      } else {
+	/* Sometimes, the device gets an ENUMDNE interrupts when being unplugged
+	 * from a non-USB communicating host (e.g. a USB charger). The interrupt
+	 * must me cleared: if not the next enumeration attempts will not be
+	 * detected. */
+	Ion::USB::clearEnumerationInterrupt();
+      }
+    } 
+    if (event.isKeyboardEvent()) {
+      // m_backlightDimmingTimer.reset();
+      // m_suspendTimer.reset();
+      Ion::Backlight::setBrightness(GlobalPreferences::sharedGlobalPreferences()->brightnessLevel());
+    }
+    ctx->setClippingRect(save);
+    ctx->setOrigin(o);
+    
     if (event==Ion::Events::Shift || event==Ion::Events::Alpha){
       statusline();
       continue;

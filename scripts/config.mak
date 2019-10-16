@@ -7,7 +7,7 @@ EPSILON_VERSION ?= 11.1.0
 EPSILON_ONBOARDING_APP ?= 0
 # Valid values are "none", "update", "beta"
 EPSILON_BOOT_PROMPT ?= none
-EPSILON_APPS ?= calculation graph khicas statistics probability solver sequence settings
+EPSILON_APPS ?= calculation graph khicas statistics probability solver sequence settings hello
 #EPSILON_APPS ?= calculation graph khicas statistics probability solver sequence regression settings
 #EPSILON_APPS ?= calculation graph code khicas settings
 EPSILON_I18N ?= en fr es de pt

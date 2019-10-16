@@ -1,5 +1,5 @@
-#ifndef CODE_EDITOR_VIEW_H
-#define CODE_EDITOR_VIEW_H
+#ifndef KHICAS_EDITOR_VIEW_H
+#define KHICAS_EDITOR_VIEW_H
 
 #include <escher.h>
 #include "python_text_area.h"

@@ -1,12 +1,12 @@
-#ifndef CODE_SCRIPT_NAME_CELL_H
-#define CODE_SCRIPT_NAME_CELL_H
+#ifndef KHICAS_SCRIPT_NAME_CELL_H
+#define KHICAS_SCRIPT_NAME_CELL_H
 
 #include <escher/even_odd_cell.h>
 #include <escher/metric.h>
 #include <escher/responder.h>
 #include <escher/text_field_delegate.h>
 #include <apps/shared/text_field_with_extension.h>
-#include "script_store.h"
+#include "khicas_script_store.h"
 
 namespace Khicas {
 
@@ -37,7 +37,7 @@ public:
   void didBecomeFirstResponder() override;
 
 private:
-  constexpr static size_t k_extensionLength = 1+ScriptStore::k_scriptExtensionLength; // '.' + "py"
+  constexpr static size_t k_extensionLength = 1+KhicasScriptStore::k_scriptExtensionLength; // '.' + "py"
   constexpr static KDCoordinate k_leftMargin = Metric::CommonLargeMargin;
 
   // View

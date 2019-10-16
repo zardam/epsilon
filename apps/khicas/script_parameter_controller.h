@@ -1,9 +1,9 @@
-#ifndef CODE_SCRIPT_PARAMETER_CONTROLLER_H
-#define CODE_SCRIPT_PARAMETER_CONTROLLER_H
+#ifndef KHICAS_SCRIPT_PARAMETER_CONTROLLER_H
+#define KHICAS_SCRIPT_PARAMETER_CONTROLLER_H
 
 #include <escher.h>
 #include <apps/i18n.h>
-#include "script_store.h"
+#include "khicas_script_store.h"
 
 namespace Khicas {
 
