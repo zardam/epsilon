@@ -134,7 +134,7 @@ extern bool alphawasactive; // alpha status before getkey
 #define KEY_CTRL_NOP        30202
 #define KEY_CTRL_EXE        30201
 #define KEY_CTRL_DEL        30025
-#define KEY_CTRL_AC         30015
+#define KEY_CTRL_AC         30070
 #define KEY_CTRL_FD         30046
 #define KEY_CTRL_UNDO	    30045	
 #define KEY_CTRL_XTT        30001
@@ -155,6 +155,12 @@ extern bool alphawasactive; // alpha status before getkey
 #define KEY_CTRL_F5         30013
 #define KEY_CTRL_F6         30014
 #define KEY_CTRL_F7         30015
+#define KEY_CTRL_F8         30016
+#define KEY_CTRL_F9         30017
+#define KEY_CTRL_F10         30018
+#define KEY_CTRL_F11         30019
+#define KEY_CTRL_F12         30020
+#define KEY_CTRL_F13         30021
 #define KEY_CTRL_F14         30022
 #define KEY_CTRL_CATALOG    30100
 #define KEY_CTRL_CAPTURE    30055

@@ -246,19 +246,31 @@ mp_lexer_t * mp_lexer_new_from_file(const char * filename) {
 }
 
 const char * giac_read_file(const char * filename){
+#if 1
+  Ion::Storage * s=Ion::Storage::sharedStorage();
+  const Ion::Storage::Record r=s->recordNamed(filename);
+  if (r.isNull())
+    return 0;
+  Ion::Storage::Record::Data d=r.value();
+  const char * ptr=(const char *)d.buffer;
+  if (ptr)
+    return ptr+1;
+  else
+    return 0;
+#endif
   if (sScriptProvider != nullptr) 
     return sScriptProvider->contentOfScript(filename);
   return "undef";
 }
 
-bool giac_write_file(const char * filename,const char * content){
+bool giac_write_file(const char * filename,const char * content,size_t len){
   Ion::Storage * s=Ion::Storage::sharedStorage();
   auto res=s->createRecordWithFullName(filename,content,strlen(content)+1);
   if (res==Ion::Storage::Record::ErrorStatus::NameTaken){
     auto r=s->recordNamed(filename);
     Ion::Storage::Record::Data d;
     d.buffer=content;
-    d.size=strlen(content)+1;
+    d.size=(len?len:strlen(content))+1;
     return r.setValue(d)==Ion::Storage::Record::ErrorStatus::None;
   }
   return res==Ion::Storage::Record::ErrorStatus::None;
@@ -269,17 +281,26 @@ bool file_exists(const char * filename){
   return s->isFullNameTaken(filename);
 }
 
+bool erase_file(const char * filename){
+  Ion::Storage * s=Ion::Storage::sharedStorage();
+  auto r= s->recordNamed(filename);
+  if (r.isNull())
+    return false;
+  r.destroy();
+  return true;
+}
+
 int select_item(const char ** ptr,const char * title); // kdisplay.cc
 
 
 #if 1
 int giac_filebrowser(char * filename,const char * extension,const char * title){
   Ion::Storage * s=Ion::Storage::sharedStorage();
-  int n=s->numberOfRecordsWithExtension("py");
+  int n=s->numberOfRecordsWithExtension(extension);
   if (!n) return 0;
   const char * filenames[n+1];
   for (int i=0;i<n;i++){
-    const Ion::Storage::Record & r=s->recordWithExtensionAtIndex("py", i);
+    const Ion::Storage::Record & r=s->recordWithExtensionAtIndex(extension, i);
     filenames[i]=r.fullName();
   }
   filenames[n]=0;
@@ -288,7 +309,7 @@ int giac_filebrowser(char * filename,const char * extension,const char * title){
   strcpy(filename,filenames[choix]);
   return choix+1;
   // const char * ptr=(const char *)r.value().buffer;
-  /*     
+  /*     storage.h
 	 Ion::Storage::Record::Data structure avec 2 membres 
 	 const void * buffer et size_t size
 
@@ -534,13 +555,13 @@ const short int translated_keys[]=
    // shifted
    KEY_SHIFT_LEFT,KEY_CTRL_PAGEUP,KEY_CTRL_PAGEDOWN,KEY_SHIFT_RIGHT,KEY_CTRL_OK,KEY_CTRL_EXIT,
    KEY_CTRL_MENU,KEY_PRGM_ACON,KEY_PRGM_ACON,9,10,11,
-   KEY_CTRL_SHIFT,KEY_CTRL_ALPHA,KEY_CTRL_CUT,KEY_CTRL_CLIP,KEY_CTRL_PASTE,KEY_CTRL_DEL,
+   KEY_CTRL_SHIFT,KEY_CTRL_ALPHA,KEY_CTRL_CUT,KEY_CTRL_CLIP,KEY_CTRL_PASTE,KEY_CTRL_AC,
    KEY_CHAR_LBRCKT,KEY_CHAR_RBRCKT,KEY_CHAR_LBRACE,KEY_CHAR_RBRACE,'_',KEY_CHAR_STORE,
    KEY_CHAR_ASIN,KEY_CHAR_ACOS,KEY_CHAR_ATAN,'=','<','>',
-   '7','8','9','(',')',-1,
-   '4','5','6',KEY_CHAR_FACTOR,'%',-1,
-   '1','2','3',KEY_CHAR_NORMAL,'\\',-1,
-   '0','.',KEY_CHAR_EXPN10,KEY_CHAR_ANS,KEY_CTRL_EXE,-1,
+   KEY_CTRL_F7,KEY_CTRL_F8,KEY_CTRL_F9,'(',')',-1,
+   KEY_CTRL_F4,KEY_CTRL_F5,KEY_CTRL_F6,KEY_CHAR_FACTOR,'%',-1,
+   KEY_CTRL_F1,KEY_CTRL_F2,KEY_CTRL_F3,KEY_CHAR_NORMAL,'\\',-1,
+   KEY_CTRL_F10,'.',KEY_CHAR_EXPN10,KEY_CHAR_ANS,KEY_CTRL_EXE,-1,
    // alpha
    KEY_CTRL_LEFT,KEY_CTRL_UP,KEY_CTRL_DOWN,KEY_CTRL_RIGHT,KEY_CTRL_OK,KEY_CTRL_EXIT,
    KEY_CTRL_MENU,KEY_PRGM_ACON,KEY_PRGM_ACON,9,10,11,

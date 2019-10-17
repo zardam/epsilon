@@ -143,6 +143,16 @@ constexpr Event shiftplus = Event::ShiftKey(Keyboard::Key::Plus);
 constexpr Event shiftfois = Event::ShiftKey(Keyboard::Key::Multiplication);
 constexpr Event shiftdiv = Event::ShiftKey(Keyboard::Key::Division);
 constexpr Event shiftminus = Event::ShiftKey(Keyboard::Key::Minus);
+constexpr Event shift1 = Event::ShiftKey(Keyboard::Key::One);
+constexpr Event shift2 = Event::ShiftKey(Keyboard::Key::Two);
+constexpr Event shift3 = Event::ShiftKey(Keyboard::Key::Three);
+constexpr Event shift4 = Event::ShiftKey(Keyboard::Key::Four);
+constexpr Event shift5 = Event::ShiftKey(Keyboard::Key::Five);
+constexpr Event shift6 = Event::ShiftKey(Keyboard::Key::Six);
+constexpr Event shift7 = Event::ShiftKey(Keyboard::Key::Seven);
+constexpr Event shift8 = Event::ShiftKey(Keyboard::Key::Eight);
+constexpr Event shift9 = Event::ShiftKey(Keyboard::Key::Nine);
+constexpr Event shift0 = Event::ShiftKey(Keyboard::Key::Zero);
 
 // Alpha
 
