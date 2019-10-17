@@ -273,7 +273,9 @@ bool giac_write_file(const char * filename,const char * content,size_t len){
     d.size=(len?len:strlen(content))+1;
     return r.setValue(d)==Ion::Storage::Record::ErrorStatus::None;
   }
-  return res==Ion::Storage::Record::ErrorStatus::None;
+  if (res==Ion::Storage::Record::ErrorStatus::None)
+    return giac_write_file(filename,content,len);
+  return false;
 }
 
 bool file_exists(const char * filename){
@@ -352,8 +354,9 @@ void mp_hal_stdout_tx_strn_cooked(const char * str, size_t len) {
 }
 
 const char * mp_hal_input(const char * prompt) {
-  assert(sCurrentExecutionEnvironment != nullptr);
-  return sCurrentExecutionEnvironment->inputText(prompt);
+  if (sCurrentExecutionEnvironment != nullptr)
+    return sCurrentExecutionEnvironment->inputText(prompt);
+  return 0;
 }
 
 void statuslinemsg(const char * msg){
@@ -466,10 +469,11 @@ int getkey_raw(bool allow_suspend){
     KDRect save=ctx->m_clippingRect;
     KDPoint o=ctx->m_origin;
     ctx->setClippingRect(KDRect(0,0,320,240));
-    ctx->setOrigin(KDPoint(0,0));
-    KDRect rect(0,0,320,240);
+    ctx->setOrigin(KDPoint(0,18));
+    KDRect rect(90,63,140,75);
     if (event == Ion::Events::USBPlug) {
-      KDIonContext::sharedContext()->pushRectUniform(rect,33333);
+      statusline();
+      // KDIonContext::sharedContext()->pushRectUniform(rect,33333);
       if (Ion::USB::isPlugged()) {
 	if (GlobalPreferences::sharedGlobalPreferences()->examMode() == GlobalPreferences::ExamMode::Activate) {
 	  Ion::LED::setColor(KDColorBlack);
@@ -497,9 +501,14 @@ int getkey_raw(bool allow_suspend){
 	 * We do it before switching to USB application to redraw the battery
 	 * pictogram. */
 	// updateBatteryState();
-	KDIonContext::sharedContext()->pushRectUniform(rect,65535);
-	Ion::USB::DFU();
 	KDIonContext::sharedContext()->pushRectUniform(rect,22222);
+	auto ctx=KDIonContext::sharedContext();
+	ctx->drawString("Connecte!", KDPoint(100,60), KDFont::LargeFont, 65535, 0);
+	ctx->drawString("DFU mode", KDPoint(100,78), KDFont::LargeFont, 65535, 0);
+	ctx->drawString("Back quitte", KDPoint(100,96), KDFont::LargeFont, 65535, 0);
+	Ion::USB::DFU();
+	KDIonContext::sharedContext()->pushRectUniform(rect,44444);
+	ctx->drawString("Deconnecte!", KDPoint(100,78), KDFont::LargeFont, 65535, 0);
 	// Update LED when exiting DFU mode
 	Ion::LED::updateColorWithPlugAndCharge();
       } else {
@@ -524,6 +533,8 @@ int getkey_raw(bool allow_suspend){
     }
     if (event.isKeyboardEvent()){
       key=event.id();
+      if (key==17 || key==4 || key==5 || key==52)
+	reset_kbd();
       if (allow_suspend && (key==7 || key==8) ){ // power
 	Ion::Power::suspend(true);
 	Ion::Backlight::setBrightness(GlobalPreferences::sharedGlobalPreferences()->brightnessLevel());
@@ -546,7 +557,7 @@ const short int translated_keys[]=
    KEY_CTRL_LEFT,KEY_CTRL_UP,KEY_CTRL_DOWN,KEY_CTRL_RIGHT,KEY_CTRL_OK,KEY_CTRL_EXIT,
    KEY_CTRL_MENU,KEY_PRGM_ACON,KEY_PRGM_ACON,9,10,11,
    KEY_CTRL_SHIFT,KEY_CTRL_ALPHA,KEY_CTRL_XTT,KEY_CTRL_VARS,KEY_CTRL_CATALOG,KEY_CTRL_DEL,
-   KEY_CHAR_EXP,KEY_CHAR_LN,KEY_CHAR_LOG,KEY_CHAR_IMGNRY,',',KEY_CHAR_POW,
+   KEY_CHAR_EXPN,KEY_CHAR_LN,KEY_CHAR_LOG,KEY_CHAR_IMGNRY,',',KEY_CHAR_POW,
    KEY_CHAR_SIN,KEY_CHAR_COS,KEY_CHAR_TAN,KEY_CHAR_PI,KEY_CHAR_ROOT,KEY_CHAR_SQUARE,
    '7','8','9','(',')',-1,
    '4','5','6','*','/',-1,
