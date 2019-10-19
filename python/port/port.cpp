@@ -98,10 +98,14 @@ void runpythoncode(const char * str){
   
 }
 
+#ifdef GIAC_LINKED
 bool khicas_eval=true;
+#else
+bool khicas_eval=false;
+#endif
 
 void MicroPython::ExecutionEnvironment::runCode(const char * str,bool khicas_eval_) {
-#if 1
+#ifdef GIAC_LINKED
   if (strcmp(str,"python")==0){
     const char msg[]="Python evaluation\n";
     printText(msg,strlen(msg));
@@ -245,7 +249,7 @@ mp_lexer_t * mp_lexer_new_from_file(const char * filename) {
   }
 }
 
-const char * giac_read_file(const char * filename){
+const char * read_file(const char * filename){
 #if 1
   Ion::Storage * s=Ion::Storage::sharedStorage();
   const Ion::Storage::Record r=s->recordNamed(filename);
@@ -263,7 +267,7 @@ const char * giac_read_file(const char * filename){
   return "undef";
 }
 
-bool giac_write_file(const char * filename,const char * content,size_t len){
+bool write_file(const char * filename,const char * content,size_t len){
   Ion::Storage * s=Ion::Storage::sharedStorage();
   auto res=s->createRecordWithFullName(filename,content,strlen(content)+1);
   if (res==Ion::Storage::Record::ErrorStatus::NameTaken){
@@ -274,7 +278,7 @@ bool giac_write_file(const char * filename,const char * content,size_t len){
     return r.setValue(d)==Ion::Storage::Record::ErrorStatus::None;
   }
   if (res==Ion::Storage::Record::ErrorStatus::None)
-    return giac_write_file(filename,content,len);
+    return write_file(filename,content,len);
   return false;
 }
 
@@ -396,10 +400,14 @@ void statusline(int mode){
     text="deg";
   // ctx->drawString(text, KDPoint(5,1), KDFont::SmallFont, 0, 63488 /* Palette::Red*/);
   ctx->drawString(text, KDPoint(5,1), KDFont::SmallFont, 0, 64934);
+#ifdef GIAC_LINKED
   if (khicas_eval)
     text="KHICAS";
   else
     text="PYTHON";
+#else
+  text="KHICAS";
+#endif
   ctx->drawString(text, KDPoint(100,1), KDFont::SmallFont, 0, 64934);
   text="     ";
   if (Ion::Events::shiftAlphaStatus()==Ion::Events::ShiftAlphaStatus::Shift)

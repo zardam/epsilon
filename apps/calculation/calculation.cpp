@@ -53,7 +53,7 @@ void Calculation::reset() {
 
 void Calculation::setContent(const char * c, Context * context, Expression ansExpression) {
   reset();
-#ifdef GIAC_NUMWORKS  
+#ifdef GIAC_LINKED
   Preferences * preferences = Preferences::sharedPreferences();
   if (preferences->angleUnit() == Preferences::AngleUnit::Radian){
     Preferences * preferences = Preferences::sharedPreferences();

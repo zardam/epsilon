@@ -75,7 +75,7 @@ mp_obj_t modkandinsky_Pause(mp_obj_t x) {
 #define LCD_WIDTH_PX 320
 #define LCD_HEIGHT_PX 222
 
-void numworks_giac_set_pixel(int x, int y, int color) {
+void numworks_set_pixel(int x, int y, int color) {
   auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
   if (ptr) ptr->displaySandbox();
   KDColor c(color);
@@ -90,7 +90,7 @@ void numworks_giac_set_pixel(int x, int y, int color) {
 #endif
 }
 
-void numworks_giac_fill_rect(int x,int y,int w,int h,int c){
+void numworks_fill_rect(int x,int y,int w,int h,int c){
   KDColor color = c;
   auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
   if (ptr) ptr->displaySandbox();
@@ -117,7 +117,7 @@ void numworks_giac_fill_rect(int x,int y,int w,int h,int c){
 #endif
 }
 
-int numworks_giac_get_pixel(int x, int y) {
+int numworks_get_pixel(int x, int y) {
   KDPoint point(x,y);
   KDColor c = KDIonContext::sharedContext()->getPixel(point);
   return c;
@@ -133,7 +133,7 @@ mp_obj_t modkandinsky_draw_string(size_t n_args, const mp_obj_t * args) {
   return mp_const_none;
 }
 
-int numworks_giac_draw_string(int x,int y,int c,int bg,const char * text,bool fake){
+int numworks_draw_string(int x,int y,int c,int bg,const char * text,bool fake){
   auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
   KDPoint point(x,y);
   if (ptr)
@@ -149,7 +149,7 @@ int numworks_giac_draw_string(int x,int y,int c,int bg,const char * text,bool fa
   return point.x();
 }
 
-int numworks_giac_draw_string_small(int x,int y,int c,int bg,const char * text,bool fake){
+int numworks_draw_string_small(int x,int y,int c,int bg,const char * text,bool fake){
   auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
   KDPoint point(x,y);
   if (ptr)
@@ -178,13 +178,13 @@ mp_obj_t modkandinsky_fill_rect(size_t n_args, const mp_obj_t * args) {
   return mp_const_none;
 }
 
-void numworks_giac_hide_graph(){
+void numworks_hide_graph(){
   auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
   if (ptr)
     ptr->hideSandbox();
 }
 
-void numworks_giac_show_graph(){
+void numworks_show_graph(){
   auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
   if (ptr)
     ptr->displaySandbox();

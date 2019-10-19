@@ -36,14 +36,36 @@ void registerScriptProvider(ScriptProvider * s);
 
 };
 
-void GetKey(int * key);
+/* 
+   basic SDK for direct control of the calculator like in KhiCAS 
+ */
 int getkey_raw(bool allow_suspend); // Numworks scan code
 int getkey(bool allow_suspend); // transformed
-void statusline(int mode=0);
-void numworks_wait_1ms(int ms);
-void numworks_giac_fill_rect(int x,int y,int w,int h,int c);
+void GetKey(int * key); // Casio like
 bool isalphaactive();
 extern bool alphawasactive; // alpha status before getkey
+void lock_alpha();
+void reset_kbd();
+void statusline(int mode=0); // display status line
+void statuslinemsg(const char * msg); // display a message in statusline
+void numworks_fill_rect(int x,int y,int w,int h,int c); // y=0 is automatically translated by 18 for statusline
+void numworks_set_pixel(int x,int y,int c);
+int numworks_get_pixel(int x,int y);
+/* draw_string returns new x position, use fake=true to compute without drawing */
+int numworks_draw_string(int x,int y,int c,int bg,const char * s,bool fake=false);
+int numworks_draw_string_small(int x,int y,int c,int bg,const char * s,bool fake=false);
+void os_redraw(); // call this if you need to redraw the calc with the Numworks OS
+// scriptstore
+bool file_exists(const char * filename);
+bool erase_file(const char * filename);
+const char * read_file(const char * filename);
+bool write_file(const char * filename,const char * s,size_t len=0);
+int giac_filebrowser(char * filename,const char * extension,const char * title);
+void numworks_wait_1ms(int ms);
+double millis();
+// Khicas menu selection
+int select_item(const char ** ptr,const char * title);
+
 
 // Character codes
 #define KEY_CHAR_0          0x30

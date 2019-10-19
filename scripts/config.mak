@@ -7,9 +7,9 @@ EPSILON_VERSION ?= 11.1.0
 EPSILON_ONBOARDING_APP ?= 0
 # Valid values are "none", "update", "beta"
 EPSILON_BOOT_PROMPT ?= none
-EPSILON_APPS ?= calculation graph khicas statistics probability solver sequence settings hello
-#EPSILON_APPS ?= calculation graph khicas statistics probability solver sequence regression settings
-#EPSILON_APPS ?= calculation graph code khicas settings
+#EPSILON_APPS ?= hello calculation graph khicas statistics probability solver sequence settings # check that SFLAGS += -DGIAC_LINKED is active
+EPSILON_APPS ?= calculation graph code statistics probability solver sequence hello settings # check that SFLAGS += -DGIAC_LINKED is inactive
+# regression disabled, requires too much RAM
 EPSILON_I18N ?= en fr es de pt
 EPSILON_GETOPT ?= 0
 MATRICES_ARE_DEFINED ?=1
@@ -43,6 +43,7 @@ SFLAGS += -DMATRICES_ARE_DEFINED=$(MATRICES_ARE_DEFINED)
 SFLAGS += -DESCHER_LOG_EVENTS_BINARY=$(ESCHER_LOG_EVENTS_BINARY)
 
 # giac
+#SFLAGS += -DGIAC_LINKED
 ifeq ($(PLATFORM),device)
 SFLAGS += -DGIAC_NUMWORKS
 LDFLAGS += -Lgiac-1.5.0/src -Llibtommath-0.39 -lgiac -ltommath 
