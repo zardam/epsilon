@@ -153,6 +153,10 @@ constexpr Event shift7 = Event::ShiftKey(Keyboard::Key::Seven);
 constexpr Event shift8 = Event::ShiftKey(Keyboard::Key::Eight);
 constexpr Event shift9 = Event::ShiftKey(Keyboard::Key::Nine);
 constexpr Event shift0 = Event::ShiftKey(Keyboard::Key::Zero);
+constexpr Event shiftdot = Event::ShiftKey(Keyboard::Key::Dot);
+constexpr Event shiftee = Event::ShiftKey(Keyboard::Key::EE);
+constexpr Event shiftlp = Event::ShiftKey(Keyboard::Key::LeftParenthesis);
+constexpr Event shiftrp = Event::ShiftKey(Keyboard::Key::RightParenthesis);
 
 // Alpha
 
