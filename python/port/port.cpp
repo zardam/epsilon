@@ -503,8 +503,8 @@ int getkey_raw(bool allow_suspend){
 	// updateBatteryState();
 	KDIonContext::sharedContext()->pushRectUniform(rect,22222);
 	auto ctx=KDIonContext::sharedContext();
-	ctx->drawString("Connecte!", KDPoint(100,60), KDFont::LargeFont, 65535, 0);
-	ctx->drawString("DFU mode", KDPoint(100,78), KDFont::LargeFont, 65535, 0);
+	ctx->drawString("Connecte ! ", KDPoint(100,60), KDFont::LargeFont, 65535, 0);
+	ctx->drawString(" DFU mode  ", KDPoint(100,78), KDFont::LargeFont, 65535, 0);
 	ctx->drawString("Back quitte", KDPoint(100,96), KDFont::LargeFont, 65535, 0);
 	Ion::USB::DFU();
 	KDIonContext::sharedContext()->pushRectUniform(rect,44444);
