@@ -63,6 +63,7 @@ bool write_file(const char * filename,const char * s,size_t len=0);
 int giac_filebrowser(char * filename,const char * extension,const char * title);
 void numworks_wait_1ms(int ms);
 double millis();
+extern int time_init; // shift for the clock
 // Khicas menu selection
 int select_item(const char ** ptr,const char * title);
 

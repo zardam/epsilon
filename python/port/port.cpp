@@ -371,7 +371,7 @@ void statuslinemsg(const char * msg){
   auto ctx=KDIonContext::sharedContext();
   KDRect save=ctx->m_clippingRect;
   KDPoint o=ctx->m_origin;
-  ctx->setClippingRect(KDRect(0,0,280,18));
+  ctx->setClippingRect(KDRect(0,0,280,18)); 
   ctx->setOrigin(KDPoint(0,0));
   KDRect rect(0,0,280,18);
   KDIonContext::sharedContext()->pushRectUniform(rect,64934 /* Palette::YellowDark*/);
@@ -383,6 +383,12 @@ void statuslinemsg(const char * msg){
   ctx->setOrigin(o);
 }
 
+#ifdef SIMULATOR
+#define TICKS_PER_MINUTE 60000
+#else
+#define TICKS_PER_MINUTE 11862
+#endif
+int time_shift=0; // set it via time() command in KhiCAS
 void statusline(int mode){
   AppsContainer::sharedAppsContainer()->reloadTitleBarView();
   auto ctx=KDIonContext::sharedContext();
@@ -409,6 +415,20 @@ void statusline(int mode){
   text="KHICAS";
 #endif
   ctx->drawString(text, KDPoint(100,1), KDFont::SmallFont, 0, 64934);
+#ifdef GIAC_SHOWTIME
+  int d=(Ion::Timing::millis()/TICKS_PER_MINUTE +time_shift) % (24*60); // minutes
+  char buf[32]={0,0,0,0};
+  int h=d/60;
+  buf[0]='0'+h/10;
+  buf[1]='0'+(h%10);
+  buf[2]=':';
+  ctx->drawString(buf, KDPoint(148,1), KDFont::SmallFont, 0, 64934);
+  int mn=d%60;
+  buf[0]='0'+mn/10;
+  buf[1]='0'+(mn%10);
+  buf[2]=0;
+  ctx->drawString(buf, KDPoint(168,1), KDFont::SmallFont, 0, 64934);
+#endif
   text="     ";
   if (Ion::Events::shiftAlphaStatus()==Ion::Events::ShiftAlphaStatus::Shift)
     text="shift ";
@@ -424,18 +444,18 @@ void statusline(int mode){
 	text="1ALPHA";
     }
   }
-  ctx->drawString(text, KDPoint(248,1), KDFont::SmallFont, 0, 64934 /* Palette::YellowDark*/);
+  ctx->drawString(text, KDPoint(232,1), KDFont::SmallFont, 0, 64934 /* Palette::YellowDark*/);
   if (mode==1){
     if (Ion::USB::isPlugged())
       text="charge";
     else {
       auto c=Ion::Battery::level();
       if (c==Ion::Battery::Charge::EMPTY)
-	text="empty";
+	text="empty ";
       if (c==Ion::Battery::Charge::LOW)
-	text="low";
+	text="low   ";
       if (c==Ion::Battery::Charge::FULL)
-	text="full";
+	text="full  ";
     }
     ctx->drawString(text, KDPoint(280,1), KDFont::SmallFont, 0, 64934 /* Palette::YellowDark*/);
   }
@@ -462,13 +482,14 @@ void os_redraw(){
 }
 
 double millis(){
-  return double(Ion::Timing::millis());
+  return double(Ion::Timing::millis()*60000.0/TICKS_PER_MINUTE);
 }
 
 bool alphawasactive=false;
 
 int getkey_raw(bool allow_suspend){
   int key=-1;
+  size_t t1=Ion::Timing::millis();
   for (;;){
     int timeout=10000;
     alphawasactive=Ion::Events::isAlphaActive();
@@ -479,6 +500,15 @@ int getkey_raw(bool allow_suspend){
     ctx->setClippingRect(KDRect(0,0,320,240));
     ctx->setOrigin(KDPoint(0,18));
     KDRect rect(90,63,140,75);
+    if (event==Ion::Events::None){
+      size_t t2=Ion::Timing::millis();
+      if (t2-t1>2*TICKS_PER_MINUTE){
+	// KDIonContext::sharedContext()->pushRectUniform(rect,64934 /* Palette::YellowDark*/);
+	event=Ion::Events::OnOff;
+      }
+    }
+    else
+      t1=Ion::Timing::millis();
     if (event == Ion::Events::USBPlug) {
       statusline();
       // KDIonContext::sharedContext()->pushRectUniform(rect,33333);
@@ -511,12 +541,16 @@ int getkey_raw(bool allow_suspend){
 	// updateBatteryState();
 	KDIonContext::sharedContext()->pushRectUniform(rect,22222);
 	auto ctx=KDIonContext::sharedContext();
-	ctx->drawString("Connecte ! ", KDPoint(100,60), KDFont::LargeFont, 65535, 0);
-	ctx->drawString(" DFU mode  ", KDPoint(100,78), KDFont::LargeFont, 65535, 0);
-	ctx->drawString("Back quitte", KDPoint(100,96), KDFont::LargeFont, 65535, 0);
+	int y=58;
+	ctx->drawString("Connecte ! ", KDPoint(100,y), KDFont::LargeFont, 65535, 0);
+	y+=18;
+	ctx->drawString(" DFU mode  ", KDPoint(100,y), KDFont::LargeFont, 65535, 0);
+	y+=18;
+	ctx->drawString("Back quitte", KDPoint(100,y), KDFont::LargeFont, 65535, 0);
+	y-=18;
 	Ion::USB::DFU();
 	KDIonContext::sharedContext()->pushRectUniform(rect,44444);
-	ctx->drawString("Deconnecte!", KDPoint(100,78), KDFont::LargeFont, 65535, 0);
+	ctx->drawString("Deconnecte!", KDPoint(100,y), KDFont::LargeFont, 65535, 0);
 	// Update LED when exiting DFU mode
 	Ion::LED::updateColorWithPlugAndCharge();
       } else {
