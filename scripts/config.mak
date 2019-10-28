@@ -8,7 +8,7 @@ EPSILON_ONBOARDING_APP ?= 0
 # Valid values are "none", "update", "beta"
 EPSILON_BOOT_PROMPT ?= none
 #EPSILON_APPS ?= hello calculation graph khicas statistics probability solver sequence settings # check that SFLAGS += -DGIAC_LINKED is active
-EPSILON_APPS ?= calculation graph code statistics probability solver sequence hello settings # check that SFLAGS += -DGIAC_LINKED is inactive
+EPSILON_APPS ?= hello graph code statistics probability solver sequence calculation settings # check that SFLAGS += -DGIAC_LINKED is inactive
 # regression disabled, requires too much RAM
 EPSILON_I18N ?= en fr es de pt
 EPSILON_GETOPT ?= 0
@@ -45,8 +45,11 @@ SFLAGS += -DESCHER_LOG_EVENTS_BINARY=$(ESCHER_LOG_EVENTS_BINARY)
 # giac
 #SFLAGS += -DGIAC_LINKED
 ifeq ($(PLATFORM),device)
-SFLAGS += -DGIAC_NUMWORKS
-LDFLAGS += -Lgiac-1.5.0/src -Llibtommath-0.39 -lgiac -ltommath 
+SFLAGS += -DGIAC_NUMWORKS -DDEVICE
+# next line for building with tommath (spares about 14K)
+LDFLAGS += -Lgiac-1.5.0/src -Llibtommath-0.39 -lgiac -ltommath
+# next line for building with MPFI/MPFR/GMP
+#LDFLAGS += -Lgiac-1.5.0/src -Llib -lgiac -lmpfi -lmpfr -lgmp
 endif
 
 ifeq ($(PLATFORM),emscripten)

@@ -1,6 +1,7 @@
 #ifdef SIMULATOR
 #include <FL/Fl.H>
 #endif
+#include <unistd.h>
 #include "port.h"
 
 #include <ion.h>
@@ -387,6 +388,8 @@ void statuslinemsg(const char * msg){
 #define TICKS_PER_MINUTE 60000
 #else
 #define TICKS_PER_MINUTE 11862
+extern const void * _stack_start;
+extern const void * _heap_start;
 #endif
 int time_shift=0; // set it via time() command in KhiCAS
 void statusline(int mode){
@@ -414,7 +417,32 @@ void statusline(int mode){
 #else
   text="KHICAS";
 #endif
-  ctx->drawString(text, KDPoint(100,1), KDFont::SmallFont, 0, 64934);
+  ctx->drawString(text, KDPoint(70,1), KDFont::SmallFont, 0, 64934);
+  char bufheap[16];
+  size_t heap=(size_t) sbrk(0);
+#if 0 //ndef SIMULATOR
+  heap=(size_t)_stack_start - heap;
+  // heap=heap-(size_t)_heap_start;
+#endif
+  int x;
+  x=(heap&0xf0000000)>>28;
+  bufheap[0]=(x>9?'a'+(x-10):'0'+x);
+  x=(heap&0xf000000)>>24;
+  bufheap[1]=(x>9?'a'+(x-10):'0'+x);
+  x=(heap&0xf00000)>>20;
+  bufheap[2]=(x>9?'a'+(x-10):'0'+x);
+  x=(heap&0xf0000)>>16;
+  bufheap[3]=(x>9?'a'+(x-10):'0'+x);
+  x=(heap&0xf000)>>12;
+  bufheap[4]=(x>9?'a'+(x-10):'0'+x);
+  x=(heap&0xf00)>>8;
+  bufheap[5]=(x>9?'a'+(x-10):'0'+x);
+  x=(heap&0xf0)>>4;
+  bufheap[6]=(x>9?'a'+(x-10):'0'+x);
+  x=(heap&0xf);
+  bufheap[7]=(x>9?'a'+(x-10):'0'+x);
+  bufheap[8]=0;
+  ctx->drawString(bufheap,KDPoint(130,1),KDFont::SmallFont, 0, 64934);
 #ifdef GIAC_SHOWTIME
   int d=(Ion::Timing::millis()/TICKS_PER_MINUTE +time_shift) % (24*60); // minutes
   char buf[32]={0,0,0,0};
