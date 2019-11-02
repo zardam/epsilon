@@ -26,7 +26,12 @@ else
 LDFLAGS += -Wl,--gc-sections
 endif
 
+ifeq ($(USE_LIBA),1)
 LDFLAGS += $(SFLAGS) -lgcc -Wl,-T,$(LDSCRIPT)
+else
+SFLAGS += -D_DEFAULT_SOURCE -DNDEBUG
+LDFLAGS += $(SFLAGS) -nostartfiles -lc -lstdc++ -lm -lgcc -lnosys -specs=nano.specs -Wl,-T,$(LDSCRIPT)
+endif
 
 # To debug linker scripts, add the following line
 # LDFLAGS += -Wl,-M

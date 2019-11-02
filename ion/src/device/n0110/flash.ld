@@ -62,8 +62,15 @@ SECTIONS {
     . = ALIGN(4);
     *(.text.start)
     *(.text.abort)
+    *(.text.unlikely.abort)
     *(.text.isr_systick)
     *(.text.__assert)
+
+    *libc_nano.a:(.text)
+    *libc_nano.a:(.text.*)
+    *libnosys.a:(.text)
+    *libnosys.a:(.text.*)
+
     *(.text.memcpy)
     *(.text.memset)
     /*
@@ -85,6 +92,7 @@ SECTIONS {
     *(.text._ZN3Ion6Device13ExternalFlash*)
     *(.text._ZN3Ion6Device5Cache*)
     *(.text._ZN3Ion6Timing6usleepEj)
+    *(.text._ZN3Ion6Timing6usleepEm)
 
     /* 'abort' dependencies */
     *(.text._ZN3Ion6Device5Reset4coreEv)
@@ -113,6 +121,23 @@ SECTIONS {
     *(.rodata._ZN3Ion6Device4RegsL5GPIOAE)
     *(.rodata._ZN3Ion6Device4RegsL5GPIOBE)
     *(.rodata._ZN3Ion6Device5Board4initEv.str1.4)
+    *(.rodata._ZZNV3Ion6Device4Regs6CORTEX4VTOR7setVTOREPvE19__PRETTY_FUNCTION__)
+    *(.rodata._ZZN3Ion6Device13ExternalFlash11EraseSectorEiE19__PRETTY_FUNCTION__)
+    *(.rodata._ZZNV3Ion6Device4Regs8RegisterImE11getBitRangeEhhE19__PRETTY_FUNCTION__)
+    *(.rodata._ZZNV3Ion6Device4Regs3TIMINS1_8RegisterItEEE4CCMR6setOCMEiNS6_3OCMEE19__PRETTY_FUNCTION__)
+    *(.rodata._ZZNV3Ion6Device4Regs8RegisterImE11getBitRangeEhhE19__PRETTY_FUNCTION__.*)
+    *(.rodata._ZZN3Ion6Device13ExternalFlashL17send_command_fullENS0_4Regs7QUADSPI3CCR14FunctionalModeENS4_13OperatingModeENS1_7CommandEPhmjhS8_jE19__PRETTY_FUNCTION__)
+    *(.rodata.start.str1.1)
+    *(.rodata._ZN3Ion6Device5Board4initEv.str1.1)
+    *(.rodata._ZN3Ion6Device5Board4initEv.str1.1)
+    *(.rodata._ZNV3Ion6Device4Regs8RegisterImE11getBitRangeEhh.str1.1)
+    *(.rodata._ZNV3Ion6Device4Regs3TIMINS1_8RegisterItEEE4CCMR6setOCMEiNS6_3OCME.str1.1)
+
+    *libc_nano.a:(.rodata)
+    *libc_nano.a:(.rodata.*)
+    *libnosys.a:(.rodata)
+    *libnosys.a:(.rodata.*)
+
   } >INTERNAL_FLASH
 
   /* External flash memory */
@@ -174,6 +199,7 @@ SECTIONS {
 
   .heap : {
     _heap_start = .;
+    end = _heap_start;
     /* Note: We don't increment "." here, we set it. */
     . = (ORIGIN(SRAM) + LENGTH(SRAM) - STACK_SIZE);
     _heap_end = .;

@@ -34,12 +34,14 @@ ion_device_dfu_xip_src += ion/src/device/shared/usb/dfu_xip.cpp
 ion_device_dfu_xip_src += $(usb_src)
 
 # Sources required to execute DFU in RAM
+ifeq ($(USE_LIBA),1)
 dfu_src += liba/src/assert.c
 dfu_src += liba/src/strlen.c
 dfu_src += liba/src/strlcpy.c
 dfu_src += liba/src/memset.c
 dfu_src += liba/src/memcpy.c
 dfu_src += libaxx/src/cxxabi/pure_virtual.cpp
+endif
 dfu_src += ion/src/device/shared/usb/boot.cpp
 dfu_src += ion/src/device/$(MODEL)/drivers/board.cpp
 dfu_src += ion/src/device/$(MODEL)/drivers/cache.cpp
@@ -66,7 +68,6 @@ dfu_src += $(addprefix ion/src/device/shared/drivers/, \
   usb.cpp \
   wakeup.cpp \
 )
-
 $(BUILD_DIR)/ion/src/device/shared/usb/dfu.elf: LDSCRIPT = ion/src/device/shared/usb/dfu.ld
 $(BUILD_DIR)/ion/src/device/shared/usb/dfu.elf: $(call object_for,$(usb_src) $(dfu_src))
 

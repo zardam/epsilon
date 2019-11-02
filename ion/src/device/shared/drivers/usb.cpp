@@ -1,6 +1,7 @@
 #include "usb.h"
 #include <ion/usb.h>
 #include <drivers/config/usb.h>
+#include <stdlib.h>
 
 namespace Ion {
 namespace USB {
@@ -56,8 +57,6 @@ static inline void DEBUGTOGGLE() {
   bool state = GPIOC.ODR()->get(11);
   GPIOC.ODR()->set(11, !state);
 }
-
-#include <stdlib.h>
 
 void initGPIO() {
 

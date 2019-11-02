@@ -64,6 +64,14 @@ SECTIONS {
     _bss_section_end_ram = .;
   } >RAM_BUFFER
 
+  .heap : {
+    _heap_start = .;
+    end = _heap_start;
+    /* Note: We don't increment "." here, we set it. */
+    . = (ORIGIN(RAM_BUFFER) + LENGTH(RAM_BUFFER) - STACK_SIZE);
+    _heap_end = .;
+  } >RAM_BUFFER
+
   .stack : {
     . = ALIGN(8);
     _stack_end = .;
