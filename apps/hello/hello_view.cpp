@@ -18,10 +18,10 @@ void HelloView::drawRect(KDContext * ctx, KDRect rect) const {
   ctx->drawString("   KhiCAS 1.5.0, (c) 2019 par", KDPoint(0,y)); y+=18;
   ctx->drawString("B. Parisse et R. De Graeve", KDPoint(0,y)); y+=18;
   ctx->drawString("Licence GNU GPL version 2", KDPoint(0,y)); y+=18;
-  y += 18;
+  ctx->drawString("Table periodique par M. Friess", KDPoint(0,y)); y+=18;
   ctx->drawString("   Remerciements a Damien", KDPoint(0,y)); y+=18;
   ctx->drawString("Nicolet, Jean-Baptiste Boric,", KDPoint(0,y)); y+=18;
-  ctx->drawString("M4x1m3 et a l'equipe tiplanet", KDPoint(0,y)); y+=18;
+  ctx->drawString("M. Friess et a l'equipe tiplanet", KDPoint(0,y)); y+=18;
   ctx->drawString("pour l'aide apportee au portage", KDPoint(0,y)); y+=18;
   ctx->drawString("de Khicas sur Numworks.", KDPoint(0,y)); y+=18;
 

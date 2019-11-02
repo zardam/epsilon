@@ -104,6 +104,7 @@ int select_item(const char ** ptr,const char * title);
 #define KEY_CHAR_EQUAL      0x3d
 #define KEY_CHAR_PI         0xd0
 #define KEY_CHAR_ANS        0xc0
+#define KEY_SHIFT_ANS        0xc1
 #define KEY_CHAR_LBRCKT     0x5b
 #define KEY_CHAR_RBRCKT     0x5d
 #define KEY_CHAR_LBRACE     0x7b

@@ -47,9 +47,9 @@ SFLAGS += -DESCHER_LOG_EVENTS_BINARY=$(ESCHER_LOG_EVENTS_BINARY)
 ifeq ($(PLATFORM),device)
 SFLAGS += -DGIAC_NUMWORKS -DDEVICE
 # next line for building with tommath (spares about 14K)
-LDFLAGS += -Lgiac-1.5.0/src -Llibtommath-0.39 -lgiac -ltommath
+#LDFLAGS += -L../giac-1.5.0/src -L../libtommath-0.39 -lgiac -ltommath
 # next line for building with MPFI/MPFR/GMP
-#LDFLAGS += -Lgiac-1.5.0/src -Llib -lgiac -lmpfi -lmpfr -lgmp
+LDFLAGS += -L../giac-1.5.0/src -L../lib -lgiac -lmpfi -lmpfr -lgmp
 endif
 
 ifeq ($(PLATFORM),emscripten)
