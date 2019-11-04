@@ -76,24 +76,27 @@ mp_obj_t modkandinsky_Pause(mp_obj_t x) {
 #define LCD_HEIGHT_PX 222
 
 void numworks_set_pixel(int x, int y, int color) {
-  auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
-  if (ptr) ptr->displaySandbox();
-  KDColor c(color);
-#if 1
   if (x<0 || x>=LCD_WIDTH_PX || y<0 || y>=LCD_HEIGHT_PX)
     return;
+  auto ctx=KDIonContext::sharedContext();
+  KDRect save=ctx->m_clippingRect;
+  KDPoint o=ctx->m_origin;
+  ctx->setClippingRect(KDRect(0,0,320,240));
+  ctx->setOrigin(KDPoint(0,0));
+  KDColor c(color);
   KDPoint point(x,y+18);
   KDIonContext::sharedContext()->pushRect(KDRect(point, 1, 1), &c);
-#else
-  KDPoint point(x,y);
-  KDIonContext::sharedContext()->setPixel(point,c);
-#endif
+  ctx->setClippingRect(save);
+  ctx->setOrigin(o);  
 }
 
 void numworks_fill_rect(int x,int y,int w,int h,int c){
   KDColor color = c;
-  auto ptr=MicroPython::ExecutionEnvironment::currentExecutionEnvironment();
-  if (ptr) ptr->displaySandbox();
+  auto ctx=KDIonContext::sharedContext();
+  KDRect save=ctx->m_clippingRect;
+  KDPoint o=ctx->m_origin;
+  ctx->setClippingRect(KDRect(0,0,320,240));
+  ctx->setOrigin(KDPoint(0,0));
 #if 1
   if (x<0){
     w += x;
@@ -115,6 +118,8 @@ void numworks_fill_rect(int x,int y,int w,int h,int c){
   KDRect rect(x,y,w,h); 
   KDIonContext::sharedContext()->fillRect(rect, color);
 #endif
+  ctx->setClippingRect(save);
+  ctx->setOrigin(o);  
 }
 
 int numworks_get_pixel(int x, int y) {
