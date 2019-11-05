@@ -1,6 +1,7 @@
 #include <drivers/board.h>
 #include <drivers/console.h>
 #include <drivers/config/clocks.h>
+#include <drivers/external_flash.h>
 #include <regs/regs.h>
 #include <ion.h>
 #include <ion/src/device/bench/bench.h>
@@ -39,6 +40,8 @@ void init() {
     GPIO(g).MODER()->set(0xFFFFFFFF); // All to "Analog"
     GPIO(g).PUPDR()->set(0x00000000); // All to "None"
   }
+
+  ExternalFlash::init();
 }
 
 void initClocks() {

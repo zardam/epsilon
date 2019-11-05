@@ -567,6 +567,12 @@ def main():
         action="store_true",
         default=False
     )
+    parser.add_argument(
+        "-e", "--exit",
+        help="exit DFU",
+        action="store_true",
+        default=False
+    )
     args = parser.parse_args()
 
     __verbose = args.verbose
@@ -576,6 +582,11 @@ def main():
         return
 
     init()
+
+    if args.exit:
+        print("Exiting DFU...")
+        exit_dfu()
+        return
 
     if args.mass_erase:
         print ("Mass erase...")

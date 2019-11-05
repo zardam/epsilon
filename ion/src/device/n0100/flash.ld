@@ -11,6 +11,7 @@
 MEMORY {
   FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 1024K
   SRAM (rw) : ORIGIN = 0x20000000, LENGTH = 256K
+  EXTERNAL_FLASH (rx) : ORIGIN = 0x90000000, LENGTH = 8M
 }
 
 STACK_SIZE = 32K;
@@ -56,6 +57,12 @@ SECTIONS {
     *(.rodata.*)
   } >FLASH
 
+  .ARM.exidx : {
+    __exidx_start = .;
+     *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+    __exidx_end = .;
+  } >FLASH
+
   .data : {
     /* The data section is written to Flash but linked as if it were in RAM.
      *
@@ -96,6 +103,7 @@ SECTIONS {
 
   .heap : {
     _heap_start = .;
+    end = _heap_start;
     /* Note: We don't increment "." here, we set it. */
     . = (ORIGIN(SRAM) + LENGTH(SRAM) - STACK_SIZE);
     _heap_end = .;

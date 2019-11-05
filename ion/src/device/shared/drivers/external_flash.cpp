@@ -95,7 +95,7 @@ public:
 };
 
 static constexpr QUADSPI::CCR::OperatingMode DefaultOperatingMode = QUADSPI::CCR::OperatingMode::Quad;
-static constexpr int ClockFrequencyDivisor = 2;
+static constexpr int ClockFrequencyDivisor = Clocks::Config::AHBFrequency / 96;
 static constexpr bool ajustNumberOfDummyCycles = Clocks::Config::AHBFrequency > (80 * ClockFrequencyDivisor);
 static constexpr int FastReadDummyCycles = (DefaultOperatingMode == QUADSPI::CCR::OperatingMode::Quad && ajustNumberOfDummyCycles) ? 4 : 2;
 
