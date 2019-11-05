@@ -5,6 +5,10 @@ extern "C" {
 #include <assert.h>
 }
 
+#ifdef GIAC_NUMWORKS
+  extern "C" const char * caseval(const char *);
+#endif
+
 namespace Home {
 
 Controller::ContentView::ContentView(Controller * controller, SelectableTableViewDataSource * selectionDataSource) :
@@ -55,6 +59,11 @@ Controller::Controller(Responder * parentResponder, SelectableTableViewDataSourc
 }
 
 bool Controller::handleEvent(Ion::Events::Event event) {
+  if (event==Ion::Events::Home){
+    caseval("*");
+    AppsContainer::sharedAppsContainer()->m_window.redraw(true);
+    return true;
+  }
   if (event == Ion::Events::OK || event == Ion::Events::EXE) {
     AppsContainer * container = AppsContainer::sharedAppsContainer();
     bool switched = container->switchTo(container->appSnapshotAtIndex(selectionDataSource()->selectedRow()*k_numberOfColumns+selectionDataSource()->selectedColumn()+1));

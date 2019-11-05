@@ -5,7 +5,7 @@ DEBUG ?= 0
 
 EPSILON_VERSION ?= 12.1.0
 # Valid values are "none", "update", "beta"
-EPSILON_APPS ?= calculation graph code statistics probability solver sequence regression settings
+EPSILON_APPS ?= hello graph code statistics probability solver sequence calculation settings
 EPSILON_I18N ?= en fr es de pt
 EPSILON_GETOPT ?= 0
 ESCHER_LOG_EVENTS_BINARY ?= 0

@@ -62,7 +62,7 @@ SECTIONS {
     . = ALIGN(4);
     *(.text.start)
     *(.text.abort)
-    *(.text.unlikely.abort)
+    /* *(.text.unlikely.abort) */
     *(.text.isr_systick)
     *(.text.__assert)
 
@@ -159,6 +159,12 @@ SECTIONS {
     _init_array_end = .;
   } >INTERNAL_FLASH
 
+  .ARM.exidx : {
+    __exidx_start = .;
+     *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+    __exidx_end = .;
+  } >INTERNAL_FLASH
+
   .data : {
     /* The data section is written to Flash but linked as if it were in RAM.
      *
@@ -214,7 +220,7 @@ SECTIONS {
   } >SRAM
 }
 
-NOCROSSREFS_TO(.text.external .text.internal);
+/* NOCROSSREFS_TO(.text.external .text.internal); */
 NOCROSSREFS_TO(.rodata.external .text.internal);
 NOCROSSREFS_TO(.text.external .rodata.internal);
 NOCROSSREFS_TO(.rodata.external .rodata.internal);

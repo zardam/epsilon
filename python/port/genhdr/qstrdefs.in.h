@@ -22,6 +22,8 @@ Q(draw_string)
 Q(fill_rect)
 Q(get_pixel)
 Q(set_pixel)
+Q(get_key)
+Q(Pause)
 
 // Turtle QSTRs
 Q(turtle)

@@ -1,8 +1,12 @@
 #include "helpers.h"
 #include <ion.h>
+#ifdef SIMULATOR
+#include <FL/Fl.H>
+#endif
 extern "C" {
 #include "mphalport.h"
 }
+#include <iostream>
 
 bool micropython_port_vm_hook_loop() {
   /* This function is called very frequently by the MicroPython engine. We grab
@@ -46,3 +50,4 @@ bool micropython_port_interrupt_if_needed() {
 int micropython_port_random() {
   return Ion::random();
 }
+

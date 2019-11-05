@@ -12,6 +12,7 @@ public:
   AppsContainerStorage();
   int numberOfApps() override;
   App::Snapshot * appSnapshotAtIndex(int index) override;
+#ifndef MALLOC_APPS
   void * currentAppBuffer() override { return &m_apps; };
 private:
   union Apps {
@@ -28,6 +29,7 @@ private:
     USB::App m_usbApp;
   };
   Apps m_apps;
+#endif
   APPS_CONTAINER_SNAPSHOT_DECLARATIONS
 };
 
