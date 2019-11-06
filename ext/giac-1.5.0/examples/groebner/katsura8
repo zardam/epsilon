@@ -1,0 +1,13 @@
+kat8:=[ -1+2*x8+2*x7+2*x6+2*x5+2*x4+2*x3+2*x2+x1, -x1+2*x8^2+2*x7^2+2*x6^2+2*x5^2+2*x4^2+2*x3^2+2*x2^2+x1^2, -x2+2*x8*x7+2*x7*x6+2*x6*x5+2*x5*x4+2*x4*x3+2*x3*x2+2*x2*x1, -x3+2*x8*x6+2*x7*x5+2*x6*x4+2*x5*x3+2*x4*x2+2*x3*x1+x2^2, -x4+2*x8*x5+2*x7*x4+2*x6*x3+2*x5*x2+2*x4*x1+2*x3*x2, -x5+2*x8*x4+2*x7*x3+2*x6*x2+2*x5*x1+2*x4*x2+x3^2, -x6+2*x8*x3+2*x7*x2+2*x6*x1+2*x5*x2+2*x4*x3, -x7+2*x8*x2+2*x7*x1+2*x6*x2+2*x5*x3+x4^2];
+//G:=gbasis(kat8,indets(kat8),revlex);
+//print("katsura 7 cocoa "+time(J:=gbasis(kat8,indets(kat8),revlex)));
+//print("giac "+time(H:=gbasis(kat8,indets(kat8),revlex,with_cocoa=false)));
+proba_epsilon:=1e-7;
+print("giac chinrem "+time(L:=gbasis(kat8,[x1,x2,x3,x4,x5,x6,x7,x8],revlex,irem)));
+proba_epsilon:=1e-15;
+print("giac chinrem "+time(L:=gbasis(kat8,[x1,x2,x3,x4,x5,x6,x7,x8],revlex,irem)));
+//normal(H[size(H)-1]+L[size(L)-1]) 
+write("Hkat8",L);
+proba_epsilon:=0;
+time(L1:=gbasis(kat8,[x1,x2,x3,x4,x5,x6,x7,x8],revlex));
+time(gbasis(kat8,[x1,x2,x3,x4,x5,x6,x7,x8],revlex,modular_check));

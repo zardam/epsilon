@@ -1,0 +1,434 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casexo.css">
+<TITLE>Des calculs de différentes sommes</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casexo024.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo026.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc367">Chapitre 25</A>  Des calculs de différentes sommes</H1><H2 CLASS="section"><A NAME="toc137"></A><A NAME="htoc368">25.1</A>  La fonction <TT>sum</TT> de <TT>Xcas</TT></H2><P>
+Cette fonction permet de calculer :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+la somme d’une liste ou d’une séquence<BR>
+<TT>sum(n$(n=1..5))=sum(n$(n=5..1))=15</TT>, 
+</LI><LI CLASS="li-itemize">une somme ayant une primitive discréte. Par exemple<BR>
+<TT>sum(n,n=1..5)=15</TT> mais <TT>sum(n,n=5..1)=-9=-sum(n,n=2..4)</TT> et<BR>
+<TT>sum(n,n)=(n</TT><CODE><TT>^</TT></CODE><TT>2-n)/2=F(n)</TT> qui est la primitive discréte de <TT>n</TT>
+(<TT>sum(n,n=1..5)=F(5+1)-F(1)</TT>),
+</LI><LI CLASS="li-itemize">d’autres sommes en particulier de sommes avec un pas (quand il y a un 
+pas le pas est le 5ième argument et il n’y a pas de différence entre 
+<TT>sum(xpr,n,a,b,2)=sum(xpr,n,b,a,2)</TT>. Par exemple<BR>
+<TT>sum(n,n,1,5,2)=sum(n,n,5,1,2)=sum(n,n,1,5,-2)=sum(n,n,5,1,-2)=9</TT>
+</LI></UL><P>
+Voici quelques exercices...</P><H2 CLASS="section"><A NAME="toc138"></A><A NAME="htoc369">25.2</A>  Calcul de ∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I><SUP><I>p</I></SUP> pour <I>p</I>=1,2,3</H2><H3 CLASS="subsection"><A NAME="htoc370">25.2.1</A>  Calcul de <I>s</I><SUB>1</SUB>(<I>n</I>)=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I>)</H3><P>
+On a :<BR>
+2*<I>s</I><SUB>1</SUB>=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I>)+∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>n</I>+1−<I>k</I>)=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>n</I>+1)=<I>n</I>(<I>n</I>+1)<BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>s</I><SUB>0</SUB>(<I>n</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I>(<I>n</I>+1)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On peut aussi remarquer que :<BR>
+<I>p</I>(<I>p</I>+1)/2−(<I>p</I>−1)<I>p</I>/2=<I>p</I><BR>
+On dit que le polynôme <I>x</I>(<I>x</I>−1)/2 est la primitive discrète du polynôme
+<I>x</I>
+On a donc :<BR>
+2<I>s</I><SUB>1</SUB>=∑<SUB><I>p</I>=1</SUB><SUP><I>n</I></SUP>2<I>p</I>=∑<SUB><I>p</I>=1</SUB><SUP><I>n</I></SUP>(<I>p</I>(<I>p</I>+1)−(<I>p</I>−1)<I>p</I>)=<I>n</I>(<I>n</I>+1)<BR>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>sum(k,k=1..n)</TT><BR>
+On obtient :<BR>
+<TT>(n*(n+1))/2</TT>
+<B>Remarque</B><BR>
+On peut en déduire le calcul de <I>s</I>=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>(2<I>k</I>−1)).<BR>
+On a en effet :<BR>
+<I>s</I>=2∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I>−<I>n</I>=<I>n</I>*(<I>n</I>+1)−<I>n</I>=<I>n</I><SUP>2</SUP><BR>
+On aurait aussi pu remarquer que :<BR>
+2<I>p</I>−1=(<I>p</I>+1)(<I>p</I>−1)−<I>p</I>(<I>p</I>−2)<BR>
+Donc que la primitive discète du polynôme
+2<I>x</I>−1 est le polynôme <I>x</I>(<I>x</I>−2).<BR>
+On a donc :<BR>
+<I>s</I>=∑<SUB><I>p</I>=1</SUB><SUP><I>n</I></SUP>2<I>p</I>−1=∑<SUB><I>p</I>=1</SUB><SUP><I>n</I></SUP>(<I>p</I><SUP>2</SUP>−(<I>p</I>−1)<SUP>2</SUP>)=<I>n</I><SUP>2</SUP><BR>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>normal(sum(2k-1,k=1..n))</TT><BR>
+On obtient :<BR>
+<TT>n</TT><CODE><TT>^</TT></CODE><TT>2</TT></P><H3 CLASS="subsection"><A NAME="htoc371">25.2.2</A>  Calcul de <I>s</I><SUB>2</SUB>(<I>n</I>)=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I><SUP>2</SUP></H3><P>
+On a :<BR>
+1<SUP>3</SUP>=1<BR>
+2<SUP>3</SUP>=1<SUP>3</SUP>+3*1<SUP>2</SUP>+3*1+1<BR>
+....<BR>
+<I>k</I><SUP>3</SUP>=(<I>k</I>−1)<SUP>3</SUP>+3*(<I>k</I>−1)<SUP>2</SUP>+3*(<I>k</I>−1)+1<BR>
+(<I>k</I>+1)<SUP>2</SUP>=<I>k</I><SUP>3</SUP>+3*<I>k</I><SUP>2</SUP>+3*<I>k</I>+1<BR>
+....<BR>
+<I>n</I><SUP>3</SUP>=(<I>n</I>−1)<SUP>3</SUP>+3*(<I>n</I>−1)<SUP>2</SUP>+3*(<I>n</I>−1)+1<BR>
+(<I>n</I>+1)<SUP>3</SUP>=<I>n</I><SUP>3</SUP>+3*<I>n</I><SUP>2</SUP>+3*<I>n</I>+1<BR>
+En sommant tous les termes :<BR>
+(<I>n</I>+1)<SUP>3</SUP>=3*∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I><SUP>2</SUP>+3∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I>+<I>n</I>=3<I>s</I><SUB>2</SUB>+3<I>n</I>(<I>n</I>+1)/2+<I>n</I>+1<BR>
+Donc :<BR>
+3<I>s</I><SUB>2</SUB>(<I>n</I>)=(<I>n</I>+1)((<I>n</I>+1)<SUP>2</SUP>−3<I>n</I>/2−<I>n</I>−1)=(<I>n</I>+1)(2<I>n</I><SUP>2</SUP>+<I>n</I>)/2
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>s</I><SUB>2</SUB>(<I>n</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I>(<I>n</I>+1)(2*<I>n</I>+1)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">6</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On peut aussi remarquer que :<BR>
+<I>p</I>(<I>p</I>+1)*(2<I>p</I>+1)/6−(<I>p</I>−1)*<I>p</I>*(2<I>p</I>−1)/6=<I>p</I><SUP>2</SUP><BR>
+Donc que la primitive discète du polynôme
+<I>x</I><SUP>2</SUP> est le polynôme <I>x</I>(<I>x</I>−1)(2<I>x</I>−1)/6.<BR>
+On a donc :<BR>
+6<I>s</I><SUB>2</SUB>=∑<SUB><I>p</I>=1</SUB><SUP><I>n</I></SUP>6<I>p</I><SUP>2</SUP>=∑<SUB><I>p</I>=1</SUB><SUP><I>n</I></SUP>(<I>p</I>(<I>p</I>+1)(2<I>p</I>+1)−(<I>p</I>−1)<I>p</I>(2<I>p</I>−1))=<I>n</I>(<I>n</I>+1)(2*<I>n</I>+1)<BR>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>factor(sum(k</TT><CODE><TT>^</TT></CODE><TT>2,k=1..n))</TT><BR>
+On obtient :<BR>
+<TT>n*(n+1)*(2*n+1)/6</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc372">25.2.3</A>  Calcul de <I>s</I><SUB>3</SUB>(<I>n</I>)=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I><SUP>3</SUP></H3><P>
+On a :<BR>
+1<SUP>4</SUP>=1<BR>
+2<SUP>4</SUP>=1<SUP>4</SUP>+4*1<SUP>3</SUP>+6*1<SUP>2</SUP>+4+1<BR>
+....<BR>
+<I>k</I><SUP>4</SUP>=(<I>k</I>−1)<SUP>4</SUP>+4*(<I>k</I>−1)<SUP>3</SUP>+6*(<I>k</I>−1)<SUP>2</SUP>+4*(<I>k</I>−1)+1<BR>
+(<I>k</I>+1)<SUP>4</SUP>=<I>k</I><SUP>4</SUP>+4*<I>k</I><SUP>3</SUP>+6*<I>k</I><SUP>2</SUP>+4*<I>k</I>+1<BR>
+....<BR>
+(<I>n</I>+1)<SUP>4</SUP>=<I>n</I><SUP>4</SUP>+4*<I>n</I><SUP>3</SUP>+6<I>n</I><SUP>2</SUP>+4*<I>n</I>+1<BR>
+Donc :<BR>
+(<I>n</I>+1)<SUP>4</SUP>=<I>n</I><SUP>4</SUP>+4<I>s</I><SUB>3</SUB>(<I>n</I>)+6<I>s</I><SUB>2</SUB>(<I>n</I>)+4<I>s</I><SUB>1</SUB>(<I>n</I>)+<I>n</I>
+Donc :
+4<I>s</I><SUB>3</SUB>(<I>n</I>)= (<I>n</I>+1)<SUP>4</SUP>−<I>n</I>*(<I>n</I>+1)*(2*<I>n</I>+1)−2<I>n</I>(<I>n</I>+1)−<I>n</I>−1=(<I>n</I>+1)((<I>n</I>+1)<SUP>3</SUP>−<I>n</I>(2*<I>n</I>+1)−2<I>n</I>−1)<BR>
+4<I>s</I><SUB>3</SUB>(<I>n</I>)=(<I>n</I>+1)<SUP>2</SUP>((<I>n</I>+1)<SUP>2</SUP>−(2*<I>n</I>+1))=(<I>n</I>+1)<SUP>2</SUP><I>n</I><SUP>2</SUP>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>s</I><SUB>3</SUB>(<I>n</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I><SUP>2</SUP>(<I>n</I>+1)<SUP>2</SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On peut aussi remarquer que :<BR>
+<I>p</I><SUP>2</SUP>*(<I>p</I>+1)<SUP>2</SUP>/4−(<I>p</I>−1)<SUP>2</SUP>*<I>p</I><SUP>2</SUP>/4=<I>p</I><SUP>3</SUP><BR>
+Donc la primitive discète du polynôme
+<I>x</I><SUP>3</SUP> est le polynôme (<I>x</I>−1)<SUP>2</SUP><I>x</I><SUP>2</SUP>/4.<BR>
+On a donc :<BR>
+4<I>s</I><SUB>3</SUB>=∑<SUB><I>p</I>=1</SUB><SUP><I>n</I></SUP>4<I>p</I><SUP>3</SUP>=∑<SUB><I>p</I>=1</SUB><SUP><I>n</I></SUP>(<I>p</I><SUP>2</SUP>(<I>p</I>+1)<SUP>2</SUP>−(<I>p</I>−1)<SUP>2</SUP><I>p</I><SUP>2</SUP>)=<I>n</I><SUP>2</SUP>(<I>n</I>+1)<SUP>2</SUP><BR>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>factor(sum(k</TT><CODE><TT>^</TT></CODE><TT>3,k=1..n))</TT><BR>
+On obtient :<BR>
+<TT>(n</TT><CODE><TT>^</TT></CODE><TT>2*(n+1)</TT><CODE><TT>^</TT></CODE><TT>2)/4</TT>
+</P><H2 CLASS="section"><A NAME="toc139"></A><A NAME="htoc373">25.3</A>  Primitive discrète d’un polynôme</H2><H3 CLASS="subsection"><A NAME="htoc374">25.3.1</A>  Comment trouver la primitive discrète d’un polynôme</H3><P>
+Soit <I>P</I> un polynôme de degré <I>d</I>.<BR>
+On veut calculer pour tout entier <I>n</I> ∈ ℕ les sommes :
+ ∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP><I>P</I>(<I>k</I>)<BR>
+On cherche donc une primitive discrète de <I>P</I> c’est à dire une fonction <I>f</I>
+telle qu’on ait pour tout <I>x</I> ∈ ℝ <I>f</I>(<I>x</I>+1)−<I>f</I>(<I>x</I>)=<I>P</I>(<I>x</I>).<BR>
+Cela entraine que pour tout entier <I>n</I> ∈ ℕ on a :<BR>
+ <I>f</I>(<I>n</I>+1)−<I>f</I>(0)=∑<SUB><I>k</I>=<I>p</I></SUB><SUP><I>n</I></SUP><I>P</I>(<I>k</I>).<BR>
+Donc pour tout entier <I>n</I> ∈ ℕ on doit avoir  <I>f</I>(<I>n</I>+1)−<I>f</I>(<I>n</I>)=<I>P</I>(<I>n</I>)
+On cherche si <I>P</I> a comme primitive discrète un polynôme <I>Q</I>.
+Si c’est le cas le polynôme <I>Q</I> doit vérifier : 
+<I>Q</I>(<I>x</I>+1)−<I>Q</I>(<I>x</I>)=<I>P</I>(<I>x</I>) avec <I>P</I> un polynôme de degré <I>d</I> donc <I>Q</I> est défini 
+à une constante près et est de degré <I>d</I>+1. Donc <I>Q</I> est 
+entièrement défini par <I>d</I>+2 valeurs qui sont par exemple :<BR>
+<I>Q</I>(0)=0=<I>q</I><SUB>0</SUB>
+<I>Q</I>(1)=<I>P</I>(0)=<I>q</I><SUB>1</SUB><BR>
+<I>Q</I>(2)=<I>P</I>(0)+<I>P</I>(1)=<I>q</I><SUB>2</SUB><BR>
+<I>Q</I>(3)=<I>P</I>(0)+<I>P</I>(1)+<I>P</I>(2)=<I>q</I><SUB>3</SUB><BR>
+.....<BR>
+<I>Q</I>(<I>d</I>+1)=<I>P</I>(0)+<I>P</I>(1)+...+<I>P</I>(<I>d</I>)=<I>q</I><SUB><I>d</I>+1</SUB><BR>
+On calcule <I>q</I><SUB>0</SUB>,<I>q</I><SUB>1</SUB>...,<I>q</I><SUB><I>d</I>+1</SUB> et on définit <I>Q</I> comme étant le polynôme
+d’interpolation de Lagrange des points (<I>k</I>,<I>p</I><SUB><I>k</I></SUB>) pour <I>k</I>=0..<I>d</I>+1.<BR>
+Soit <I>R</I> le polynôme définit par <I>R</I>(<I>x</I>)=<I>Q</I>(<I>x</I>+1)−<I>Q</I>(<I>x</I>).<BR>
+Puisque <I>Q</I> est de degré <I>d</I>+1, on en déduit que <I>R</I> est de degré <I>d</I>.<BR>
+Comme  <I>Q</I>(<I>k</I>+1)−<I>Q</I>(<I>k</I>)=<I>P</I>(<I>k</I>) pour <I>k</I>=0..<I>d</I>, on a :<BR>
+<I>R</I>(<I>k</I>)=<I>P</I>(<I>k</I>) pour <I>k</I>=0..<I>d</I>.<BR>
+<I>R</I> et <I>P</I> ont même degré <I>d</I> et ils sont égaux en <I>d</I>+1 valeurs donc :<BR>
+pour tout <I>x</I> ∈ ℝ on a <I>P</I>(<I>x</I>)=<I>R</I>(<I>x</I>)=<I>Q</I>(<I>x</I>+1)−<I>Q</I>(<I>x</I>).<BR>
+Donc <I>Q</I> est bien une primitive discrète de <I>P</I>.</P><H3 CLASS="subsection"><A NAME="htoc375">25.3.2</A>  Reprenons les exemples précédents</H3><P>
+Cherchons la primitive discrète de <I>P</I>(<I>x</I>)=<I>x</I><BR>
+La primitive discrète de <I>P</I>(<I>x</I>)=<I>x</I> est égale au
+polynôme de d’interpolation de Lagrange des points :<BR>
+(0,0), (1,0), (2,1).<BR>
+On tape :<BR>
+<TT>factor(lagrange([0,1,2],[0,0,1]))</TT><BR>
+On obtient :<BR>
+<TT>(x*(x-1))/2x</TT><BR>
+Cherchons la primitive discrète de <I>P</I>(<I>x</I>)=2*<I>x</I>−1<BR>
+La primitive discrète de <I>P</I>(<I>x</I>)=<I>x</I><SUP>2</SUP> est égale au
+polynôme de d’interpolation de Lagrange des points :<BR>
+(0,0), (1,−1), (2,0).<BR>
+On tape :<BR>
+<TT>factor(lagrange([0,1,2],[0,-1,0]))</TT><BR>
+On obtient :<BR>
+<TT>x*(x-2)</TT><BR>
+Cherchons la primitive discrète de <I>P</I>(<I>x</I>)=<I>x</I><SUP>2</SUP>.<BR>
+La primitive discrète de <I>P</I>(<I>x</I>)=<I>x</I><SUP>2</SUP> est égale au polynôme de 
+d’interpolation de Lagrange des points :<BR>
+(0,0), (1,0), (2,1), (3,5).<BR>
+On tape :<BR>
+<TT>factor(lagrange([0,1,2,3],[0,0,1,5]))</TT><BR>
+On obtient :<BR>
+<TT>(x*(x-1)*(2*x-1))/6</TT><BR>
+Cherchons la primitive discrète de <I>P</I>(<I>x</I>)=<I>x</I><SUP>3</SUP>.<BR>
+La primitive discrète de <I>P</I>(<I>x</I>)=<I>x</I><SUP>3</SUP> est égale au polynôme de 
+d’interpolation de Lagrange des points :<BR>
+(0,0), (1,0), (2,1), (3,9), (4,36).<BR>
+On tape :<BR>
+<TT>factor(lagrange([0,1,2,3,4],[0,0,1,9,36]))</TT><BR>
+On obtient :<BR>
+<TT>(x</TT><CODE><TT>^</TT></CODE><TT>2*(x-1)</TT><CODE><TT>^</TT></CODE><TT>2)/4</TT>
+Cherchons la primitive discrète de <I>P</I>(<I>x</I>)=<I>x</I><SUP>4</SUP>.<BR>
+La primitive discrète de <I>P</I>(<I>x</I>)=<I>x</I><SUP>4</SUP> est égale au polynôme de 
+d’interpolation de Lagrange des points :<BR>
+(0,0), (1,0), (2,1), (3,17), (4,98), (5,354).<BR>
+On tape :<BR>
+<TT>factor(lagrange([0,1,2,3,4,5],[0,0,1,17,98,354]))</TT><BR>
+On obtient :<BR>
+<TT>(x*(x-1)*(2*x-1)*(3*x</TT><CODE><TT>^</TT></CODE><TT>2-3*x-1))/30</TT><BR>
+On en déduit le calcul de <I>s</I><SUB>4</SUB>(<I>n</I>)=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I><SUP>4</SUP> :<BR>
+On tape :<BR>
+<TT>factor(subst((x*(x-1)*(2*x-1)*(3*x</TT><CODE><TT>^</TT></CODE><TT>2-3*x-1))/30,x=n+1))</TT><BR>
+On obtient :<BR>
+<TT>(n*(n+1)*(2*n+1)*(3*n</TT><CODE><TT>^</TT></CODE><TT>2+3*n-1))/30</TT><BR>
+<I>s</I><SUB>4</SUB>(<I>n</I>)=<I>n</I>*(<I>n</I>+1)*(2*<I>n</I>+1)*(3*<I>n</I><SUP>2</SUP>+3*<I>n</I>−1)/30
+Ou on tape :<BR>
+<TT>factor(sum(k</TT><CODE><TT>^</TT></CODE><TT>4,k=1..n))</TT><BR>
+On obtient :<BR>
+<TT>(n*(n+1)*(2*n+1)*(3*n</TT><CODE><TT>^</TT></CODE><TT>2+3*n-1))/30</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc376">25.3.3</A>  Exercice</H3><P>
+Calculer   ∑<SUB><I>k</I>=4</SUB><SUP>10</SUP><I>k</I><SUP>2</SUP>+2*<I>k</I>−1 
+et   ∑<SUB><I>k</I>=4+√<SPAN style="text-decoration:overline">2</SPAN></SUB><SUP>10+√<SPAN style="text-decoration:overline">2</SPAN></SUP><I>k</I><SUP>2</SUP>+2*<I>k</I>−1<BR>
+Cherchons la primitive discrète de <I>P</I>(<I>x</I>)=<I>x</I><SUP>2</SUP>+2<I>x</I>−1.<BR>
+La primitive discrète de <I>P</I>(<I>x</I>)=<I>x</I><SUP>2</SUP>+2<I>x</I>−1 est égale au polynôme de 
+d’interpolation de Lagrange des points :<BR>
+(0,0), (1,−1), (2,1), (3,8).<BR>
+On tape :<BR>
+<TT>factor(lagrange([0,1,2,3],[0,-1,1,8]))</TT><BR>
+On obtient :<BR>
+<TT>(x*(2*x</TT><CODE><TT>^</TT></CODE><TT>2+3*x-11))/6</TT><BR>
+On tape :<BR>
+<TT>f(x):=(x*(2*x</TT><CODE><TT>^</TT></CODE><TT>2+3*x-11))/6</TT><BR>
+Ou on tape directement pour définir <TT>f</TT> :<BR>
+<TT>f:=unapply(factor(lagrange([0,1,2,3],[0,-1,1,8])),x)</TT><BR>
+On tape :<BR>
+<TT>f(11)-f(4)</TT><BR>
+On obtient :<BR>
+<TT>462</TT><BR>
+On vérifie :<BR>
+On tape :<BR>
+<TT>sum(k</TT><CODE><TT>^</TT></CODE><TT>2+2*k-1,k=4..10)</TT><BR>
+On obtient :<BR>
+<TT>462</TT><BR>
+On tape :<BR>
+<TT>normal(f(11+sqrt(2))-f(4+sqrt(2)))</TT><BR>
+On obtient :<BR>
+<TT>112*sqrt(2)+476</TT><BR>
+On vérifie :<BR>
+On tape :<BR>
+<TT>normal(sum(k</TT><CODE><TT>^</TT></CODE><TT>2+2*k-1,k=4+sqrt(2)..10+sqrt(2)))</TT><BR>
+On obtient :<BR>
+<TT>112*sqrt(2)+476</TT></P><H2 CLASS="section"><A NAME="toc140"></A><A NAME="htoc377">25.4</A>  Calcul de ∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP><I>k</I><SUP><I>p</I></SUP>comb(<I>n</I>,<I>k</I>) pour <I>p</I>=0,1,2,3</H2><H3 CLASS="subsection"><A NAME="htoc378">25.4.1</A>  Calcul de <I>s</I><SUB>0</SUB>(<I>n</I>)=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP>comb(<I>n</I>,<I>k</I>)</H3><P>
+On sait que :<BR>
+(<I>a</I>+<I>b</I>)<SUP><I>n</I></SUP>=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP>comb(<I>n</I>,<I>k</I>)<I>a</I><SUP><I>k</I></SUP><I>b</I><SUP><I>n</I>−<I>k</I></SUP><BR>
+donc<BR>
+<I>s</I><SUB>0</SUB>(<I>n</I>)=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP>comb(<I>n</I>,<I>k</I>)=(1+1)<SUP><I>n</I></SUP>=2<SUP><I>n</I></SUP><BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>s</I><SUB>0</SUB>(<I>n</I>)=2<SUP><I>n</I></SUP></TD></TR>
+</TABLE><P>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>sum(comb(n,k),k=0..n)</TT><BR>
+On obtient :<BR>
+<TT>2</TT><CODE><TT>^</TT></CODE><TT>n</TT></P><H3 CLASS="subsection"><A NAME="htoc379">25.4.2</A>  Calcul de <I>s</I><SUB>1</SUB>(<I>n</I>)=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP><I>k</I>*comb(<I>n</I>,<I>k</I>)</H3><P>
+On sait que :<BR>
+comb(<I>n</I>,<I>k</I>)=<I>n</I>!/<I>k</I>!(<I>n</I>−<I>k</I>)!<BR>
+Donc :<BR>
+<I>k</I>*comb(<I>n</I>,<I>k</I>)=<I>n</I>*comb(<I>n</I>−1,<I>k</I>−1)<BR>
+On a :<BR>
+<I>s</I><SUB>1</SUB>(<I>n</I>)=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP><I>k</I>*comb(<I>n</I>,<I>k</I>)=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I>*comb(<I>n</I>,<I>k</I>)=<BR>
+<I>n</I>*∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>comb(<I>n</I>−1,<I>k</I>−1)=<I>n</I>*∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP>comb(<I>n</I>−1,<I>k</I>)=<I>n</I>*2<SUP><I>n</I>−1</SUP><BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>s</I><SUB>1</SUB>(<I>n</I>)=<I>n</I>*2<SUP><I>n</I>−1</SUP></TD></TR>
+</TABLE><P>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>sum(k*comb(n,k),k=0..n)</TT><BR>
+On obtient :<BR>
+<TT>n*2</TT><CODE><TT>^</TT></CODE><TT>(n-1)</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc380">25.4.3</A>  Calcul de <I>s</I><SUB>2</SUB>(<I>n</I>)=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP><I>k</I><SUP>2</SUP>*comb(<I>n</I>,<I>k</I>)</H3><P>
+On sait que :<BR>
+comb(<I>n</I>,<I>k</I>)=<I>n</I>!/<I>k</I>!(<I>n</I>−<I>k</I>)! et<BR>
+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP><I>k</I>*comb(<I>n</I>,<I>k</I>)=<I>n</I>*2<SUP><I>n</I>−1</SUP><BR>
+Donc :<BR>
+<I>k</I><SUP>2</SUP>*comb(<I>n</I>,<I>k</I>)=<I>n</I>*<I>k</I>*comb(<I>n</I>−1,<I>k</I>−1)
+On a :<BR>
+<I>s</I><SUB>2</SUB>(<I>n</I>)=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP><I>k</I><SUP>2</SUP>*comb(<I>n</I>,<I>k</I>)=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I><SUP>2</SUP>*comb(<I>n</I>,<I>k</I>)=<BR>
+<I>n</I>*∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I>*comb(<I>n</I>−1,<I>k</I>−1)=<I>n</I>*∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP>(<I>k</I>+1)*comb(<I>n</I>−1,<I>k</I>)=<BR>
+<I>n</I>*∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP><I>k</I>*comb(<I>n</I>−1,<I>k</I>)+<I>n</I>*∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP>comb(<I>n</I>−1,<I>k</I>)=<BR>
+<I>n</I>*(<I>n</I>−1)*2<SUP><I>n</I>−2</SUP>+<I>n</I>*2<SUP><I>n</I>−1</SUP>=<I>n</I>(<I>n</I>+1)2<SUP><I>n</I>−2</SUP>=<I>n</I>(<I>s</I><SUB>(</SUB><I>n</I>−1)+<I>s</I><SUB>0</SUB>(<I>n</I>−1))<BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>s</I><SUB>2</SUB>(<I>n</I>)=<I>n</I>(<I>n</I>+1)2<SUP><I>n</I>−2</SUP></TD></TR>
+</TABLE><P>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>s2:=sum(k</TT><CODE><TT>^</TT></CODE><TT>2*comb(n,k),k=0..n)</TT><BR>
+<TT>factor(subst(s2,2</TT><CODE><TT>^</TT></CODE><TT>(n-1),2*2</TT><CODE><TT>^</TT></CODE><TT>(n-2)))</TT>
+On obtient :<BR>
+<TT>n*(n+1)*2</TT><CODE><TT>^</TT></CODE><TT>(n-2)</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc381">25.4.4</A>  Calcul de ∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP><I>k</I><SUP>3</SUP>*comb(<I>n</I>,<I>k</I>)</H3><P>
+On sait que :<BR>
+comb(<I>n</I>,<I>k</I>)=<I>n</I>!/<I>k</I>!(<I>n</I>−<I>k</I>)! et<BR>
+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP><I>k</I><SUP>2</SUP>*comb(<I>n</I>,<I>k</I>)=<I>n</I>(<I>n</I>+1)2<SUP><I>n</I>−2</SUP><BR>
+Donc :<BR>
+<I>s</I><SUB>3</SUB>(<I>n</I>)=<I>k</I><SUP>3</SUP>*comb(<I>n</I>,<I>k</I>)=<I>n</I>*<I>k</I><SUP>2</SUP>*comb(<I>n</I>−1,<I>k</I>−1)
+On a :<BR>
+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP><I>k</I><SUP>3</SUP>*comb(<I>n</I>,<I>k</I>)=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I><SUP>3</SUP>*comb(<I>n</I>,<I>k</I>)=<BR>
+<I>n</I>*∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><I>k</I><SUP>2</SUP>*comb(<I>n</I>−1,<I>k</I>−1)=<I>n</I>*∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP>(<I>k</I>+1)<SUP>2</SUP>*comb(<I>n</I>−1,<I>k</I>)=<BR>
+<I>n</I>(<I>s</I><SUB>2</SUB>(<I>n</I>−1)+2*<I>s</I><SUB>1</SUB>(<I>n</I>−1)+<I>s</I><SUB>0</SUB>(<I>n</I>−1))=<BR>
+<I>n</I>(<I>n</I>(<I>n</I>−1)*2<SUP><I>n</I>−3</SUP>+2(<I>n</I>−1)2<SUP><I>n</I>−2</SUP>+2<SUP><I>n</I>−1</SUP>)=<I>n</I>(<I>n</I>(<I>n</I>−1)+4(<I>n</I>−1)+4)2<SUP><I>n</I>−3</SUP>=<I>n</I><SUP>2</SUP>(<I>n</I>+3)2<SUP><I>n</I>−3</SUP><BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>s</I><SUB>3</SUB>(<I>n</I>)=<I>n</I><SUP>2</SUP>(<I>n</I>+3)2<SUP><I>n</I>−3</SUP></TD></TR>
+</TABLE><P>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>s3:=sum(k</TT><CODE><TT>^</TT></CODE><TT>3*comb(n,k),k=0..n)</TT><BR>
+<TT>factor(subst(subst(s3,2</TT><CODE><TT>^</TT></CODE><TT>(n-2),2</TT><CODE><TT>^</TT></CODE><TT>(n-3)*2),2</TT><CODE><TT>^</TT></CODE><TT>(n-1),2</TT><CODE><TT>^</TT></CODE><TT>(n-3)*4))</TT><BR>
+On obtient :<BR>
+<TT>n</TT><CODE><TT>^</TT></CODE><TT>2*(n+3)*2</TT><CODE><TT>^</TT></CODE><TT>(n-3)</TT>
+</P><H2 CLASS="section"><A NAME="toc141"></A><A NAME="htoc382">25.5</A>  Calcul de ∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/<I>f</I>(<I>k</I>)</H2><H3 CLASS="subsection"><A NAME="htoc383">25.5.1</A>  Calcul de ∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/<I>k</I>(<I>k</I>+1)</H3><P>
+On remarque que :<BR>
+1/<I>k</I>(<I>k</I>+1)=1/<I>k</I>−1/<I>k</I>+1<BR>
+Donc que :<BR>
+<I>s</I>=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/<I>k</I>(<I>k</I>+1)=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/<I>k</I>−1/<I>k</I>+1=1−1/<I>n</I>+1=<I>n</I>/<I>n</I>+1<BR>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>normal(sum(1/(k*(k+1)),k=1..n))</TT><BR>
+On obtient :<BR>
+<TT>n/(n+1)</TT></P><H3 CLASS="subsection"><A NAME="htoc384">25.5.2</A>  Calcul de <I>s</I>=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/(2<I>k</I>−1)(2<I>k</I>+1)</H3><P>
+On remarque que :<BR>
+2/(2<I>k</I>−1)(2<I>k</I>+1)=1/2<I>k</I>−1−1/2<I>k</I>+1<BR>
+Donc que :<BR>
+2<I>s</I>=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/(2<I>k</I>−1)(2<I>k</I>+1)=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/2<I>k</I>−1−1/2<I>k</I>+1=1−1/2<I>n</I>+1=2<I>n</I>/2<I>n</I>+1<BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>s</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2<I>n</I>+1</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>normal(sum(1/((2k-1)*(2k+1)),k=1..n))</TT><BR>
+On obtient :<BR>
+<TT>n/(2n+1)</TT></P><H3 CLASS="subsection"><A NAME="htoc385">25.5.3</A>  Calcul de ∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/<I>k</I>(<I>k</I>+2)</H3><P>
+On remarque que :<BR>
+2/(<I>k</I>)(<I>k</I>+2)=1/<I>k</I>−1/<I>k</I>+2<BR>
+Donc que :<BR>
+ 2<I>s</I>=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/<I>k</I>(<I>k</I>+2)=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/<I>k</I>−1/<I>k</I>+2=∑<SUB><I>p</I>=1</SUB><SUP><I>n</I></SUP>1/<I>p</I>−∑<SUB><I>p</I>=3</SUB><SUP><I>n</I>+2</SUP>1/<I>p</I>=1+1/2−1/<I>n</I>+1−1/<I>n</I>+2=3*<I>n</I><SUP>2</SUP>+5*<I>n</I>/2*<I>n</I><SUP>2</SUP>+6*<I>n</I>+4<BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>s</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">3*<I>n</I><SUP>2</SUP>+5*<I>n</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4*<I>n</I><SUP>2</SUP>+12*<I>n</I>+8</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>normal(sum(1/(k*(k+2)),k=1..n))</TT><BR>
+On obtient :<BR>
+<TT>(3*n</TT><CODE><TT>^</TT></CODE><TT>2+5*n)/(4*n</TT><CODE><TT>^</TT></CODE><TT>2+12*n+8)</TT></P><H3 CLASS="subsection"><A NAME="htoc386">25.5.4</A>  Calcul de ∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/<I>k</I>(<I>k</I>+1)(<I>k</I>+2)</H3><P>
+On tape :
+<TT>partfrac(1/(k*(k+1)*(k+2)),k)</TT><BR>
+On obtient :<BR>
+<TT>1/(k*2)-1/(k+1)+1/((k+2)*2)</TT><BR>
+Donc :<BR>
+2*<I>s</I>=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/<I>k</I>−1/(<I>k</I>+1)−(1/(<I>k</I>+1)−1/(<I>k</I>+2))=<BR>
+∑<SUB><I>p</I>=1</SUB><SUP><I>n</I></SUP>1/<I>p</I>−1/(<I>p</I>+1)−∑<SUB><I>k</I>=2</SUB><SUP><I>n</I>+1</SUP>1/<I>p</I>−1/(<I>p</I>+1)=<BR>
+2<I>s</I>=1−1/2−1/<I>n</I>+1+1/(<I>n</I>+2)=(<I>n</I><SUP>2</SUP>+3*<I>n</I>)/(2*<I>n</I><SUP>2</SUP>+6*<I>n</I>+4)
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>s</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I><SUP>2</SUP>+3*<I>n</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4*<I>n</I><SUP>2</SUP>+12*<I>n</I>+8</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>normal(sum(1/(k*(k+2)),k=1..n))</TT><BR>
+On obtient :<BR>
+<TT>(n</TT><CODE><TT>^</TT></CODE><TT>2+3*n)/(4*n</TT><CODE><TT>^</TT></CODE><TT>2+12*n+8)</TT>)</P><H2 CLASS="section"><A NAME="toc142"></A><A NAME="htoc387">25.6</A>  Des calculs de sommes avec un programme</H2><P>
+On veut savoir si la convergence d’une série est lente ou rapide, par exemple 
+savoir combien il faut de termes pour que
+∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/<I>k</I>&gt;10.<BR>
+On peut taper :<BR>
+<TT>sum(1./n,n=1..20000)</TT><BR>
+On obtient :<BR>
+<TT>0.1048072821722932757281444e2</TT><BR>
+ou faire un calcul exact plus long :<BR>
+<TT>s:=sum(1/n,n=1..20000)</TT><BR>
+On obtient :<BR>
+<TT>Integer_too_large_for_display/Integer_too_large_for_display</TT>
+On tape alors :<BR>
+<TT>evalf(s)</TT><BR>
+On obtient :<BR>
+<TT>0.1048072821722932757281444e2</TT>
+On veut voir l’incidence qu’il y a sur la précision et sur le temmps 
+d’exécution selon que l’on commence à faire la somme par le plus petit 
+indice ou par le plus grand indice ou faire la somme avec une procédure 
+récursive.<BR>
+On suppose <I>a</I>≤ <I>b</I> sinon on échange <I>a</I> et <I>b</I>.
+</P><PRE CLASS="verbatim">//som1 fait la somme de a jusque b 
+som1(u,a,b):={
+local k,c,s;
+si b&lt;a alors c:=b;b:=a;a:=c;fsi;
+s:=0;
+pour k de a jusque b faire
+s:=s+u(k);
+fpour;
+return s;
+}
+:;
+//som2 fait la somme de b jusque a
+som2(u,a,b):={
+local k,c,s;
+si b&lt;a alors c:=b;b:=a;a:=c;fsi;
+s:=0;
+pour k de b jusque a pas -1 faire
+s:=s+u(k);
+fpour;
+return s;
+}
+:;
+//som3 fait la somme recusivement en partageant en 2
+som3(u,a,b):={
+local k,c,s;
+si a&gt;b alors return som3(u,b,a); fsi;
+si a==b alors return u(a); fsi;
+si b==a+1 alors return u(a)+u(b); fsi; 
+c:=floor((a+b)/2);
+return som3(u,a,c)+som3(u,c+1,b);
+}:;
+</PRE><P>On pose :<BR>
+<TT>u(n):=1/n</TT><BR>
+et<BR>
+<TT>v(n):=1./n</TT></P><P>Pour faire des calculs exacts, on tape :<BR>
+<TT>evalf(som1(u,1,100000))</TT> (Evaluation time: 22.6)<BR>
+<TT>evalf(som2(u,1,100000))</TT> (Evaluation time: 33.24)<BR>
+<TT>evalf(som3(u,1,100000))</TT> (Evaluation time: 29.92)<BR>
+On obtient avec 24 digits :<BR>
+<TT>0.1209014612986342794736320e2</TT><BR>
+Le résultat est bien sûr le même car les calculs sont faits de façon
+exacte et seule la réponse est donnée de façon approchée. <TT>som1</TT> est plus rapide car on ajoute au début des fractions qui 
+ont un petit dénominateur, <TT>som2</TT> est plus lente car on ajoute au 
+toujours des fractions qui ont un grand dénominateur et <TT>som3</TT> est 
+intermédiaire mais plutot plus lente car on fait appel à <TT>som3(u,c+1,b)</TT>
+où on ajoute des fractions qui ont un grand dénominateur à
+<TT>som3(u,a,c)</TT> qui elle aussi comporte des termes ayant un grand 
+dénominateur.</P><P>Pour faire des calculs approchés, on tape :<BR>
+<TT>som1(v,1,100000)</TT><BR>
+On obtient avec 24 digits (Evaluation time: 7.14) :<BR>
+<TT>0.1209014612986342794736311e2</TT><BR>
+<TT>som2(v,1,100000)</TT><BR>
+On obtient avec 24 digits (Evaluation time: 7.16) :<BR>
+<TT>0.1209014612986342794736294e2</TT><BR>
+<TT>som3(v,1,100000)</TT><BR>
+On obtient avec 24 digits (Evaluation time: 30.74) :<BR>
+<TT>0.1209014612986342794736320e2</TT><BR>
+La procédure récursive est nettement plus longue à exécuter mais par 
+contre elle donne un meilleur résultat.
+</P>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casexo024.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo026.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

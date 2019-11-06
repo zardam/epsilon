@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Les différences entre :=, =&lt; et copy</title>
+</head>
+<body >
+<a href="cascmd_fr847.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr849.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1032" class="subsection">9.4.15  Les différences entre <span style="font-family:monospace">:=</span>, <span style="font-family:monospace">=&lt;</span> et <span style="font-family:monospace">copy</span></h3>
+<p><a id="hevea_default1543"></a><a id="hevea_default1544"></a><a id="hevea_default1545"></a><a id="sec:diffaffectation"></a>
+Attention, <span style="font-family:monospace">:=</span> et <span style="font-family:monospace">=&lt;</span> ne sont pas équivalents car <span style="font-family:monospace">=&lt;</span> modifie
+lélément d’une liste ou matrice par référence.</p><p>L’affectation <span style="font-family:monospace">=&lt;</span> ne diffère de <span style="font-family:monospace">:=</span> que si on modifie un 
+élément d’une liste (ou matrice) contenue dans une variable, par exemple si 
+<span style="font-family:monospace">A</span> contient la liste <span style="font-family:monospace">[0,1,2,3,4]</span> i.e. si on a tapé 
+<span style="font-family:monospace">A:=[0,1,2,3,4]</span> et que l’on
+veut modifier la valeur de <span style="font-family:monospace">A[3]</span> et changer <span style="font-family:monospace">3</span> en <span style="font-family:monospace">33</span>, on peut 
+écrire dans ce cas, <span style="font-family:monospace">A[3]:=33</span> ou <span style="font-family:monospace">A[3] =&lt; 33</span> mais ces deux 
+instructions sont différentes. 
+En effet <span style="font-family:monospace">A</span> pointe vers une liste car <span style="font-family:monospace">A:=[0,1,2,3,4]</span>, et 
+<span style="font-family:monospace">A[3] =&lt; 33</span> modifie cette liste en la liste <span style="font-family:monospace">[0,1,2,33,4]</span>, ainsi 
+toutes les variables de 
+<span style="font-family:monospace">Xcas</span> qui pointent vers cette liste seront modifiées. Alors qu’avec
+<span style="font-family:monospace">A[3]:=33</span> la liste est dupliquée, la copie est modifiée et <span style="font-family:monospace">A</span> 
+pointe vers la copie. Il faut donc utiliser <span style="font-family:monospace">=&lt;</span> avec précautions car 
+tous les objets pointant sur cette liste (ou matrice) 
+seront modifiés.<br>
+</p><ul class="itemize"><li class="li-itemize"> 
+On tape :
+<div class="center"><span style="font-family:monospace">A:=[0,1,2,3,4]</span></div>
+<div class="center"><span style="font-family:monospace">B:=A</span></div>
+<div class="center"><span style="font-family:monospace">A[3]=&lt;33</span></div>
+<div class="center"><span style="font-family:monospace">A,B</span></div>
+ou :
+<div class="center"><span style="font-family:monospace">A:=[0,1,2,3,4]</span></div>
+<div class="center"><span style="font-family:monospace">B:=A</span></div>
+<div class="center"><span style="font-family:monospace">B[3]=&lt;33</span></div>
+<div class="center"><span style="font-family:monospace">A,B</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[0,1,2,33,4],[0,1,2,33,4]</span></div>
+En effet la liste <span style="font-family:monospace">[0,1,2,3,4]</span> a été modifiée par
+l’instruction <span style="font-family:monospace">A[3]=&lt;33</span> (ou par <span style="font-family:monospace">B[3]=&lt;33</span>) en la liste
+<span style="font-family:monospace">[0,1,2,33,4]</span>. Les listes <span style="font-family:monospace">A</span> et <span style="font-family:monospace">B</span> 
+pointent sur cette liste donc <span style="font-family:monospace">A</span> et <span style="font-family:monospace">B</span> sont modifiées toutes les 
+deux.
+</li><li class="li-itemize">On tape :
+<div class="center"><span style="font-family:monospace">A:=[0,1,2,3,4]</span></div>
+<div class="center"><span style="font-family:monospace">B:=A</span></div>
+<div class="center"><span style="font-family:monospace">A[3]:=33</span></div>
+<div class="center"><span style="font-family:monospace">A,B</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[0,1,2,33,4],[0,1,2,3,4]</span></div>
+car <span style="font-family:monospace">A[3]:=33</span> fait une copie de la liste <span style="font-family:monospace">[0,1,2,3,4]</span> et modifie 
+cette copie en <span style="font-family:monospace">[0,1,2,33,4]</span> puis <span style="font-family:monospace">A</span> pointe sur cette copie et cela ne modifie pas <span style="font-family:monospace">B</span>.
+On tape :
+<div class="center"><span style="font-family:monospace">A:=[0,1,2,3,4]</span></div>
+<div class="center"><span style="font-family:monospace">B:=A</span></div>
+<div class="center"><span style="font-family:monospace">B[3]:=33</span></div>
+<div class="center"><span style="font-family:monospace">A,B</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[0,1,2,3,4],[0,1,2,33,4]</span></div>
+car <span style="font-family:monospace">B[3]:=33</span> fait une copie de la liste <span style="font-family:monospace">[0,1,2,3,4]</span> et modifie 
+cette copie en <span style="font-family:monospace">[0,1,2,33,4]</span> puis <span style="font-family:monospace">B</span> pointe sur cette copie et cela ne modifie pas <span style="font-family:monospace">A</span>.
+</li><li class="li-itemize">On tape :
+<div class="center"><span style="font-family:monospace">A:=[0,1,2,3,4]</span></div>
+<div class="center"><span style="font-family:monospace">B:=copy(A)</span></div>
+Puis, si on tape :
+<div class="center"><span style="font-family:monospace">A[3]=&lt;33</span></div>
+<div class="center"><span style="font-family:monospace">A,B</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[0,1,2,33,4],[0,1,2,3,4]</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">A:=[0,1,2,3,4]</span></div>
+<div class="center"><span style="font-family:monospace">B:=copy(A)</span></div>
+<div class="center"><span style="font-family:monospace">B[3]=&lt;33</span></div>
+<div class="center"><span style="font-family:monospace">A,B</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[0,1,2,3,4],[0,1,2,33,4]</span></div>
+En effet <span style="font-family:monospace">B</span> pointe sur la copie de <span style="font-family:monospace">A</span>, donc une modifiucation par 
+référence de <span style="font-family:monospace">A[3]</span> (resp<span style="font-family:monospace">B[3]</span>) ne modifie pas <span style="font-family:monospace">B</span> (resp 
+<span style="font-family:monospace">A</span>). 
+</li></ul>
+<hr>
+<a href="cascmd_fr847.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr849.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

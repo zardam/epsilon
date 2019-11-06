@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>if statements: if, then, else, end, elif</title>
+</head>
+<body >
+<a href="cascmd_en795.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en797.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1024" class="subsection">11.3.1  <span style="font-family:monospace">if</span> statements: <span style="font-family:monospace">if, then, else, end, elif</span></h3>
+<p>
+<a id="hevea_default1406"></a><a id="hevea_default1407"></a><a id="hevea_default1408"></a><a id="hevea_default1409"></a><a id="hevea_default1410"></a></p><p>The <span style="font-family:monospace">Xcas</span> language has different ways of writing
+<span style="font-family:monospace">if…then</span> statements (see section <a href="cascmd_en059.html#subsec%3Apiecewise">4.7.2</a>). The
+standard version of the <span style="font-family:monospace">if…then</span> statement consists of
+the <span style="font-family:monospace">if</span> keyword, followed by a boolean expression (see section
+<a href="index.html#sec%3Aboolean">5.2</a> in parentheses, followed by a statement block which
+will be executed if the boolean is true.</p><p>As an example, if the variables <span style="font-family:monospace">a</span> and <span style="font-family:monospace">b</span> have the
+values <span style="font-family:monospace">3</span> and <span style="font-family:monospace">2</span>, respectively, and you enter
+</p><div class="center">
+<span style="font-family:monospace">if (a &gt; b) { a := a + 5; b := a - b;}</span>
+</div><p>
+then since <span style="font-family:monospace">a &gt; b</span> will evaluate to true, the variable
+<span style="font-family:monospace">a</span> will be reset to <span style="font-family:monospace">8</span> and <span style="font-family:monospace">b</span> will be reset
+to the value <span style="font-family:monospace">6</span>. </p><p>An <span style="font-family:monospace">if</span> statement can include a block of statements to execute
+when the boolean is false by putting it at the end following the
+<span style="font-family:monospace">else</span> keyword. For example, if the variable
+<span style="font-family:monospace">val</span> has a real value, then the statement
+</p><div class="center">
+<span style="font-family:monospace">if (val &gt; 0) {abs := val;} else {abs := -1*val; } </span>
+</div><p>
+will set <span style="font-family:monospace">abs</span> to the same value as <span style="font-family:monospace">val</span> if
+<span style="font-family:monospace">val</span> is positive and it will set <span style="font-family:monospace">abs</span> to negative the
+value of <span style="font-family:monospace">val</span> otherwise.</p><p>An alternate way to write an <span style="font-family:monospace">if</span> statement is to
+enclose the code block in <span style="font-family:monospace">then</span> and
+<span style="font-family:monospace">end</span> instead of braces; if the variable <span style="font-family:monospace">a</span>
+is equal to <span style="font-family:monospace">3</span>, then 
+</p><div class="center">
+<span style="font-family:monospace">if (a &gt; 1) then a := a + 5; end</span>
+</div><p>
+will reset <span style="font-family:monospace">a</span> to <span style="font-family:monospace">8</span>. 
+An <span style="font-family:monospace">else</span> block can be included by putting the else statements
+after <span style="font-family:monospace">else</span> and before the <span style="font-family:monospace">end</span>. For example, with
+<span style="font-family:monospace">a</span> having the value <span style="font-family:monospace">8</span> as above, 
+</p><div class="center">
+<span style="font-family:monospace">if (a &gt; 10) then a := a + 10; else a := a - 5; end</span>
+</div><p>
+will reset <span style="font-family:monospace">a</span> to the value <span style="font-family:monospace">3</span>. 
+This
+can also be written:
+</p><div class="center">
+<span style="font-family:monospace">si (a &gt; 10) alors a := a + 10; sinon a := a - 5; fsi</span>
+</div><p>Several <span style="font-family:monospace">if</span> statements can be nested; for example, the statement
+</p><div class="center">
+<span style="font-family:monospace">if (a &gt; 1) then a := 1; else if (a &lt; 0) then a := 0; else a :=
+0.5; end; end</span>
+</div><p>
+A simpler way is to replace the <span style="font-family:monospace">else if</span> by <span style="font-family:monospace">elif</span>; the
+above statement can be written
+</p><div class="center">
+<span style="font-family:monospace">if (a &gt; 1) then a := 1; elif (a &lt; 0) then a := 0; else a :=
+0.5; end</span>
+</div><p>
+In general, such a combination can be written
+</p><pre class="verbatim">  if (boolean 1) then
+  block 1;
+  elif (boolean 2) then
+  block 2;
+  ... 
+  elif (boolean n) then
+  block n;
+  else
+  last block;
+  end
+</pre><p>
+(where the last <span style="font-family:monospace">else</span> is optional.)
+For example, if you want to define a function <span style="font-style:italic">f</span> by
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>) =
+</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎪<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:left;white-space:nowrap" >   8</td><td style="text-align:left;white-space:nowrap" >if  <span style="font-style:italic">x</span> &gt; 8</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" >   4</td><td style="text-align:left;white-space:nowrap" >if  4 &lt; <span style="font-style:italic">x</span> ≤ 8</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" >   2</td><td style="text-align:left;white-space:nowrap" >if  2 &lt; <span style="font-style:italic">x</span> ≤ 4</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" >   1</td><td style="text-align:left;white-space:nowrap" >if  0 &lt; <span style="font-style:italic">x</span> ≤ 2</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" >   0</td><td style="text-align:left;white-space:nowrap" >if  <span style="font-style:italic">x</span> ≤ 0
+</td></tr>
+</table></td></tr>
+</table></td></tr>
+</table><p>
+you can enter
+</p><pre class="verbatim">  f(x) := {
+  if (x &gt; 8) then
+    return 8;
+  elif (x &gt; 4) then
+    return 4;
+  elif (x &gt; 2) then
+    return 2;
+  elif (x &gt; 0) then
+    return 1;
+  else
+    return 0;
+  end;
+  }
+</pre>
+<hr>
+<a href="cascmd_en795.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en797.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

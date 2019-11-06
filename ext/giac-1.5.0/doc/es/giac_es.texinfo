@@ -1,0 +1,1110 @@
+\input texinfo   @c -*-texinfo-*-
+@c %**start of header
+@setfilename giac_es.info
+@settitle Giac API
+@comment Carleos 20020729 for Debian packaging added:
+@dircategory Math
+@direntry
+* Giac en castellano: (giac_es).         Programa de calculo simbolico por Bernard Parisse
+@end direntry
+@documentlanguage es
+@documentencoding ISO-8859-1
+@c %**end of header
+
+@setchapternewpage odd
+
+@titlepage
+@sp 10
+@comment The title is printed in a large font.
+@center @titlefont{Giac/Xcas}
+
+@c The following two commands start the copyright page.
+@page
+@vskip 0pt plus 1filll
+Copyright @copyright{} 2001 B. Parisse, Institut Fourier
+Spanish Translation by J.Manrique Lopez, ETSIG
+Last revision 02/07/2002
+@end titlepage
+
+@node Top, Instalación, , (dir)
+@comment node-name, next,previous, up
+
+Giac es una librería en C++ con tipos para manipulaciones algebraicas.
+Xcas es una GUI (Interface Gráfica) unida a Giac que permite las funcionalidades 
+de un Sistema de Algebra Computerizada (CAS).
+
+@menu
+* Instalación::      Cómo instalar giac/cas/xcas
+* Xcas::             Describe la interface de usuario de xcas
+* Giac::             Cómo programar en C++ usando giac
+* Ejemplos::         Algunos ejemplos de script para xcas y programacion en C++ usando giac
+* Indice de conceptos:: Indice
+@end menu
+
+@node Instalación, Xcas, Top, Top
+@chapter Instalando giac
+@menu
+* Binarios::         Instalando sólo los binarios de xcas
+* Requerimientos::   librerías y programas que necesitas
+* Opciones::         librerías opcionales que mejoran el funcionamiento de giac
+* Configuración::    Opciones para el script de configuración del shell
+* Compilación::      Compilación de giac
+* Problemas::        Algunos trucos si tienes problemas
+@end menu
+
+@node Binarios, Requerimientos, Instalación, Instalación
+@section Instalando los binarios
+Si quieres usar @code{xcas/giac} como cualquier otro CAS y tu Sistema Operativo es
+Intel x86 GNU/Linux o Intel StrongARM GNU/Linux o Windows 9x, entonces
+no te tienes que preocupar de la compilación. En vez de ello, puedes instalar
+binarios precompilados:
+@itemize
+@item x86 GNU/Linux como usuario normal: 
+@uref{ftp://fourier.ujf-grenoble.fr/pub/hp48/xcas_user.tgz}
+
+Descomprime el archivo con
+@command{tar xvfz xcas_user.tgz}
+
+después
+@command{cd xcas}
+
+y
+@command{./xcas}
+@item x86 GNU/Linux si tienes acceso como root:
+@uref{ftp://fourier.ujf-grenoble.fr/pub/hp48/xcas_root.tgz}
+Descomprime el archivo desde el directorio @code{/} 
+@item ARM GNU/Linux:
+@uref{ftp://fourier.ujf-grenoble.fr/pub/hp48/xcas_ipaq.tgz}
+@item Windows 9x:
+@uref{ftp://fourier.ujf-grenoble.fr/pub/hp48/xcas.zip}
+
+Ejecuta @code{xcas} desde el directorio donde descomprimiste @code{xcas}.
+@end itemize
+
+@node Requerimientos, Opciones, Binarios, Instalación
+@section Requerimientos
+Necesitas un compilador de C++ que entienda la norma C++ ANSI 3. Por
+ejemplo @code{gcc} versión 2.95 o superior, funcionará. Además, debes
+comprobar que tienes instalada la librería GMP GNU Math Precision.
+Si no está instalada, debes compilar e instalar la fuente:
+está disponible en cualquier mirror ftp de GNU, mira en
+@uref{http://www.gnu.org} para mas detalles. Si estás usando GNU/Linux,
+la librería GMP es muy probable que esté instalada, pero las cabeceras
+puede que no, busca un paquete llamado algo así como @code{gmp-devel}.
+
+@node Opciones, Configuración, Requerimientos, Instalación
+@section Opciones
+@enumerate
+@item Si quieres funciones numéricas deberías instalar la Gnu Scientific 
+Library, disponible en @uref{http://sources.redhat.com/gsl}
+@item Si quieres usar NTL para algunas operaciones polinómicas (actualmente
+factorización), consigue la versión >= 5.2 en @uref{http://www.shoup.net}. Además
+comprueba que configuraste con permiso namespace(esto no está por defecto)
+y GMP permitido (no está por defecto, pero tampoco es obligatorio)
+Si no estás seguro de tu instalación vete al directorio del NTL y teclea
+@smallexample
+ make clean
+ ./configure NTL_GMP_LIP=on NTL_STD_CXX=on
+ make
+ make install
+@end smallexample
+@item Si quieres funciones aritméticas avanzadas, consigue PARI en
+@uref{http://www.parigp-home.de}.
+Si te planteas usar PARI SIN NTL entonces DEBES HACER LOS
+SIGUIENTES CAMBIOS en el directorio fuente de PARI:
+@itemize 
+@item Archivo @code{src/basemath/polarit2.c}: quita la palabra
+@code{static} de la declaración:
+@smallexample
+  static GEN 
+  combine_factors(...)
+@end smallexample
+@item Archivo @code{src/headers/paridecl.h}: Añade la línea
+
+@code{GEN     combine_factors(GEN a, GEN famod, GEN p, long klim, long hint);}
+
+en la sección @code{* polarit2.c} 
+@item Recompila (@command{make all}) y reinstala PARI (@code{make install}) 
+y comprueba que la librería @code{libpari.a} ha sido actualizada o copiala explicitamente
+desde el directorio @code{O<your_os>} 
+@item Cambia en @code{/usr/local/include/pari/pariinl.h} @code{labs} 
+por @code{std::abs} si no podrías tener errores con el compilador.
+@end itemize
+Comprueba en el directorio src, el fichero pari.cc que la memoria reservada
+a la pila de PARI se ajusta a tus necesidades (por defecto son 10MB de RAM) o modifica:
+@code{  long pari_mem_size=10000000;}
+
+@item Si quieres tener GUI (Interface Gráfica de Usuario), comprueba que tienes FLTK 1.0 (o FLNX) 
+instalado (disponible en @uref{http://www.fltk.org}). Además puedes obtener 
+modificaciones del FLTK 1.0.11 desde 
+@uref{http://www-fourier.ujf-grenoble.fr/~parisse/fltkpar.tgz}
+esto añade auto-selección de parentesis. 
+ATENCION: Actualmente @code{xcas} no funciona con FLTK 1.1.
+Para el editor de matrices / hoja de cálculo, necesitarás además FLVW 
+@uref{http://flvw.sourceforge.net/}
+
+
+@item TeXmacs ofrece interface para giac. Puedes obtener TeXmacs en
+ @uref{http://www.texmacs.org}.
+Después de instalar giac, ejecuta texmacs y usa Insert->Session->giac.
+
+@end enumerate
+
+@node Configuración, Compilación, Opciones, Instalación
+@section Opciones de configuración
+El script del shell @code{./configure } reconoce las siguientes opciones:
+@enumerate
+@item --enable-debug
+  Permite imprimir vectores y añade codigo de depuración
+@item --enable-fltk
+  Soporte para GUI 
+@item --enable-gsl
+  Usa la librería Gnu Scientific Library para coma flotante (p.e. funciones especiales ..)
+@item --enable-sscl
+  Permite la inclusión de código para algoritmos semi-clásicos (producto Moyal, ...)
+  No disponible aún
+@item --enable-ntl
+  Permite la inclusión de código NTL
+@item --enable-pari
+  Permite la inclusión de código PARI
+@end enumerate
+
+Estas opciones pueden ser desactivadas usando @code{--disable-option-name} en lugar de
+@code{--enable-option-name}. Por defecto @code{configure} usará estas opciones
+si las librerías están disponibles en tu sistema.
+
+Para binarios de gran velocidad, antes de ejecutar @code{configure} haz (con bash 
+como shell)
+
+@command{$ export CXXFLAGS="-O3 -fexpensive-optimizations -malign-loops=2 -malign-jumps=2 -malign-functions=2"}
+
+o (con tcsh como shell)
+
+@command{$ setenv CXXFLAGS "-O3 -fexpensive-optimizations -malign-loops=2 -malign-jumps=2 -malign-functions=2"}
+
+
+
+@node Compilación, Problemas, Configuración, Instalación
+@section Compilación
+Como con cualquier software GNU autoconfigurable, puedes teclear:
+
+@command{ ./configure }
+
+[añade opciones necesarias: prueba @command{./configure -help} para obtener mas información]
+
+@command{ make }
+
+@command{ make check }
+
+[pasa a ser root si es necesario]
+
+@command{ make install }
+
+Trucos:
+@itemize
+@item Si tienes permiso de escritura en @code{/usr/local/}, 
+FLTK y GSL instalados y no quieres capacidad de depuración, puedes teclear
+
+@command{ ./inst}
+
+@item Si tienes FLTK y GSL instalados y quieres capacidad de depuración, teclea
+
+@command{ ./setup}
+
+[hazte root]
+
+@command{ make install}
+
+@item Si no quieres optimización, cambia la variable de entorno
+@env{CXXFLAGS} a @code{-g} antes de ejecutar configure, con tcsh
+@command{ setenv CXXFLAGS -g}, con bash @command{export CXXFLAGS=-g}.
+
+@item Si quieres construir xcas para el procesador ARM con la distribución 
+de Linux Familiar (p.e. para un iPaq @uref{http://www.handhelds.org})
+asumiendo que tienes instalado skiff toolchain y FLTK. Comprueba
+que  @code{config.h} define HAVE_LIBFLTK y no define
+HAVE_LIBGSL y HAVE_LIBGSLCBLAS a menos que tengas estas librerías también, entonces
+
+@command{ make -f Makefile.ipaq}
+
+Nótese que nunca he conseguido construirlo con optimización para el iPaq.
+
+@item Si quieres el cas sólo en línea de comandos, ejecuta
+
+ @command{ ./configure --disable-gui}
+
+ @command{ make }
+
+@item Windows
+
+Puedes compilar la versión librería de giac bajo Unix.
+O asumiendo que tengas las herramientas cygwin, gmp y FLTK instaladas (mira en 
+@uref{http://sources.redhat.com/cygwin} para cygwin, ejecuta cygwin,
+vete al directorio @code{src} y ejecuta
+
+@command{ make -f Makefile.win}
+
+Después de esto, puedes ejecutar @code{xcas.exe} de forma independiente, 
+@code{/usr/bin/cygwin1.dll} proporcionada ha sido copiada en el path (p.e. en el mismo
+directorio que @code{xcas.exe})
+@end itemize
+
+
+@node Problemas, , Compilación, Instalación
+@section Problemas
+@itemize
+@item Si compruebas giac después de la compilación con @code{make check},
+por favor nota que la respuesta asume que PARI y NTL no están permitidos (enabled).
+Si no obtendrás algunos errores porque la factorización no 
+devolverá los factores en el mismo orden.
+@item Optimización requiere mucha memoria para compilar. Si estás bajo
+de memoria edita @code{src/Makefile} y si es necesario cambia la línea :
+
+@code{CXXFLAGS = -g -O2}
+por :
+
+@code{CXXFLAGS = -g}
+@item Ha sido imposible compilar FLTK con gcc 3. Instala  2.95 o 2.96
+o reconfigura sin soporte FLTK o compila solo la versión de línea de comandos
+de giac
+@item Si tienes un error como
+
+@command{autoheader: Symbol 'CONSTANT_DEBUG_SUPPORT' is not covered by ...}
+
+ejecuta
+
+@command{autoheader --localdir=.}
+@item Si obtienes un error compilando @code{modpoly.cc}, es casi seguro 
+porque compilaste sin NTL namespaces. Recompílalo (vease sección)
+@item Si obtienes un error de unión sobre combine_factors no encontrados en
+@code{modfactor.o} será porque no modificaste PARI correctamente u
+olvidaste reinstalar las librerías de PARI (vease sección)
+@item La compilación con Cygwin de Giac con PARI 2.1.1 requiere que hagas 
+algun trabajo manual. No he podido compilar la versión dinámica de la librería PARI.
+Por lo tanto tuve que hacer la instalación a mano
+@smallexample
+cp libpari.a /usr/local/lib
+mkdir /usr/local/include/pari
+cp src/headers/*.h /usr/local/include/pari 
+cp Ocygwin/*.h /usr/local/include/pari 
+@end smallexample
+Entonces obtuve un error compilando @code{pari.cc} que desapareción comentando
+la línea causante en la cabecera @code{/usr/local/include/pari/paricom.h}
+Después de esto todo fué correctamente.
+@end itemize
+
+@node Xcas, Giac, Instalación, Top
+@chapter Usando xcas, una interface de usuario con giac
+@code{xcas} es una interface de usuario con giac que es similar a una calculadora.
+Una interface de línea de comandos llamada @code{cas} también está disponible.
+
+@menu
+* Interface::     
+* CAS::
+* Geometría::
+* Scripting::
+@end menu
+
+@node Interface, CAS, ,Xcas
+@section La interface
+Puedes usar, pero no lo necesitas, un teclado puesto que esta interface 
+está diseñada para ser usada también en PDA. Usa el botón verde cambio para obtener
+los botones del teclado.
+
+La ventana está compuesta de izquierda a derecha y de arriba a abajo por:
+@enumerate
+@item La barra principal de menús
+@item El historial o ventana gráfica
+@item La barra de herramientas del historial y el menu de Edición/dibujo
+@item la línea de comandos
+@item La barra de menús por teclas (como en las calculadoras gráficas HP4x)
+@item Ayuda en línea
+@item Botones tipo calculadora a la derecha
+@end enumerate
+
+La interface se asemeja a las avanzadas calculadoras gráficas (TI89, TI92,
+HP49G en modo algebraico): escribes un comando en la línea de comandos
+con la ayuda del teclado y/o los botones, ayuda en línea y menús.
+Entonces pulsando Enter se evaluará tu expresión y devolverá el
+resultado al área del historial. Si un comando devuelve un objeto gráfico
+la ventana historial será reemplazada por la ventana gráfica. Puedes
+cambiar de ventana historial a gráfica usando el botón @code{Geo}
+en la barra de menús por teclas.
+
+La ayuda en línea da una breve descripción de todos los comandos del CAS
+con ejemplos que pueden ser pegados en la línea de comandos. Está disponible 
+por defecto en @code{xcas} o con el comando @code{aide} desde shell.
+
+Imprimir requiere una instalación operativa de @code{LaTeX} con @code{pstricks}.
+
+@node CAS, Geometría, Interface, Xcas
+@section Comandos del sistema de álgebra computerizado
+Una lista de comandos del CAS.
+@menu
+* Menú matemáticas::
+* Aritmética::
+* Menú del CAS::
+* Algebra lineal::
+@end menu
+
+@node Menú matemáticas, Aritmética, , CAS
+@subsection Comandos matemáticos básicos 
+
+@node Aritmética, Menú del CAS, Menú matemáticas, CAS
+@subsection Aritmética de enteros y polinómios
+Los comandos  @code{gcd}y @code{lcm} se aplican a ambos tipos de argumentos: 
+devuelven el máximo común divisor o el mínimo común múltiplo.
+Otros comandos aritméticos deben comenzar con la letra @code{i} si quieres usarlos
+con enteros, si no los argumentos serán considerados como polinómios constantes.
+@menu
+* Aritmética de enteros::
+* Aritmética de polinómios::
+@end menu
+
+@node Aritmética de enteros, Aritmética de polinómios, , Aritmética
+@subsubsection Fucniones artiméticas de enteros
+@menu
+* División::      División euclídea
+* Mcd::             Mcd, Mcm, Mcd extendido, restos chinos
+* Primalidad::     Test de primalidad, factorización, característica de Euler 
+* Otros enteros:: Jacobi, símbolo de Legendre ...
+@end menu
+
+@node División, Mcd, , Aritmética de enteros
+@subsubsection División euclídea entera
+Dados dos enteros  @code{a} y  @code{b}, la división euclídea entera
+está definida por la igualdad :
+@example
+a=b*q+r
+@end example
+donde normalmente  @code{r} se coge entre  0 y @code{b-1}, o
+en la representación simétrica , entre @code{-b/2} y @code{b/2}.
+Las funciones  @code{iquo(a,b)} y  @code{irem(a,b)} devuelven respectivamente
+@code{q} y @code{r}, o @code{iquorem(a,b)} devueltas ambas como un vector.
+La función @code{smod(a,b)} devolverá @code{r} usando el convenio de resto 
+simétrico.
+
+@node Mcd, Primalidad, División, Aritmética de enteros
+@subsubsection Mcd de enteros
+la función @code{gcd(a,b)} devuelve el máximo común divisor (Mcd)
+@code{d} de dos enteros @code{a} y  @code{b}. Si necesitas dos enteros 
+@code{u} y @code{v} tales que:
+@example
+a*u+b*v=d
+@end example
+puedes usar en su lugar @code{egcd(a,b)} , devolverá  @code{[u,v,d]}.
+
+El comando  @code{ichinrem([a,n],[b,m])} donde @code{n} y @code{m}
+son primos devolverá un vector @code{[c,n*m]} tal que
+@code{c=a (mod n)} y  @code{c=b (mod m)}.
+
+@node Primalidad, Otros enteros, Mcd, Aritmética de enteros
+@subsubsection Primalidad y factorización
+La función @code{is_prime(a)} devolverá 0 si @code{a} no es primo.
+Devolverá 2 si @code{a} es seguro primo, y 1 si @code{a}
+es pseudo-primo. Si has compilado @code{xcas} con soporte PARI,
+obtendrás un certificado de primo en su lugar (véase documentación de PARI
+para más información).
+
+Los comandos  @code{nextprime(a)} y  @code{prevprime(a)} devolverán
+el siguiente o anterior (pseudo-)primo, de un entero @code{a} dado.
+
+La función @code{ifactor(a)} devuelve la factorización de @code{a}.
+Es una buena idea compilar con soporte PARI si tienes planeado factorizar
+enteros relativamente grandes (con factores primos de mas de 20 dígitos).
+
+@node Otros enteros, , Primalidad, Aritmética de enteros
+@subsubsection Otras funciones enteras (Legendre, Jacobi, ...)
+Funciones de enteras adicionales provistas por  @code{xcas} son
+@itemize
+@item @code{jacobi(a,b)}
+y  @code{legendre(a,b)}, véase la documentación de  GMP para más detalles.
+@item @code{pa2b2(p)} devuelve  @code{[a,b]} tal que @code{p=a*a+b*b}
+si @code{p=1 (mod 4)} es primo.
+@end itemize
+
+@node Aritmética de polinómios, , Aritmética de enteros, Aritmética
+@subsubsection Funciones aritméticas de polinómios
+Los polinómios tienen dos representaciones: representación simbólica o
+por un vector de coeficientes. En la representación simbólica puedes
+añadir el nombre de la variable como parámetro adicional a las funciones
+que uses, si no la variable por defecto será la usada. Para la representación
+por vector, es recomendable usar el delimitador correcto @code{poly1[}
+en lugar de @code{[} con  lo que las operaciones habituales (suma,..)
+se comportarán correctamente (no como si fuesen vectores o matrices).
+@enumerate
+@item @code{quo(a,b)} @code{rem(a,b)} y @code{quorem(a,b)}
+devuelven respectivamente los polinómios @code{q}, @code{r} y  @code{[q,r]}
+tales que  @code{a=b*q+r} y @code{degree(r)<degree(b)}
+@item @code{gcd(a,b)} devuelve el máximo común divisor de dos polinómios
+@item @code{egcd(a,b)} es el algorítmo Mcd eclídeo extendido, al igual que para 
+enteros devuelve una lista de 3 polinómomios  @code{u,v,d} tales que  @code{au+bv=d}.
+@item @code{chinrem} devuelve el resto chino para polinómios escritos como listas.
+Los 2 argumentos son dos listas hechas de polinómios módulo otro polinomio
+ (donde los polinómios módulo son primos entre ellos). 
+La respuesta es el polinómio módulo producto de los polinómios módulo
+que reduce a los originales polinómios módulo los originales polinómios módulo
+@item @code{cyclotomic} toma un entero n como argumento y devuelve el polinómio
+ciclotómico n-ésimo.
+@end enumerate
+
+@node Menú del CAS, Algebra lineal, Aritmética, CAS
+@subsection Algebra, calculo, ...
+@menu
+* Reescribiendo::
+* Diferenciales e integrales::
+* Limites y series::
+* Resolviendo ecuaciones::
+* Otras funciones del cas::
+@end menu
+
+@node Reescribiendo, Diferenciales e integrales, , Menú del CAS
+@subsubsection Reescribiendo expresiones
+El comando @code{normal} reescribe una fracción racional como una relación
+entre dos polinómios coprimos. Si una expresión no es racional, primero es
+racionalizada sustituyendo las expresiones transcendentales (p.e.
+@code{sin(x)} ) por un identificador temporal. Expresiones algebraicas
+(p.e. @code{sqrt(x)}) también son  normalizadas.
+
+El comando @code{factor} factoriza polinómios. Como antes, expresiones
+no polinómicas son racionalizadas primero. Puedes elegir la variable
+básica respecto a la cual el polinómio será factorizado añadiendola como
+segundo argumento a  @code{factor}.
+
+La función @code{texpand} es usada para expandir expresiones
+transcendentales como @code{exp(x+y)=exp(x)*exp(y)} o reglas similares
+para funciones  trigonométricas. La función  @code{tlin} realiza
+la operación inversa para funciones trigonométricas , tal y como la función
+@code{lin} lo hace para las exponenciales.
+
+La función  @code{halftan} reescribe expresiones trigonométricas
+en términos de la tangente del ángulo mitad. La función  @code{hyp2exp}
+reescribe funciones hiperbólicas en términos exponenciales.
+
+@node Diferenciales e integrales, Limites y series, Reescribiendo, Menú del CAS
+@subsubsection Derivación, integración
+La instrucción para diferenciación es @code{diff(expression,variable)}.
+La antiderivada indefinida se obtiene usando
+@code{integrate(expression,variable)}. Si necesitas integración definida
+entre los límites @code{a} y @code{b}, escoge
+@code{integrate(expression,variable,a,b)} para integración exacta
+o @code{romberg(expression,variable,a,b)} para integración numérica.
+
+Un ejemplo de integración definida son los coeficientes de Fourier de funciones
+periódicas. Son obtenidos usando @code{fourier_an} y @code{fourier_bn}
+para coeficientes trigonométricos o usando @code{fourier_cn} para 
+coeficientes exponenciales complejos.
+
+Algunas antiderivadas discretas pueden ser obtenidas usando
+@code{sum(variable,expression)} .
+
+@node Limites y series, Resolviendo ecuaciones, Diferenciales e integrales, Menú del CAS
+@subsubsection Límites, desarrollos en serie.
+Para un límite la sintásis es
+@code{limit(expression,variable,limitpoint[,direction])}.
+Para un desarrollo en serie
+@code{series(expression,variable,limitpoint,order[,direction])}.
+La implementación en @code{giac} de @code{limit} y @code{series} está
+basada en el algorítmo mrv.
+
+@node Resolviendo ecuaciones, Otras funciones del cas, Limites y series, Menú del CAS
+@subsection Resolviendo ecuaciones
+Usando @code{solve(expression,variable)} se busca la solución exacta
+de ecuaciones polinómicas. Usa @code{newton} para soulciones
+numéricas (de un mayor rango de ecuaciones).
+
+@node Otras funciones del cas, , Resolviendo ecuaciones, Menú del CAS
+
+@node Algebra lineal , , Menú del CAS, CAS
+@subsection Algebra lineal
+Las operacions aritméticas sobre matrices y vectorse se hacen usando los operadores
+habituales. El producto escalar de 2 vectores se obtiene usando el operador  @code{*}.
+
+La eliminación Gaussiana sobre una matriz  (Gauss-Bareiss) se desarrolla
+usando  @code{rref(m)}. El núcleo de una aplicación lineal de matriz m
+se obtiene con  @code{ker(m)}. Un sistema de ecuaciones lineales (escrito
+simbólicamente como un vector) puede ser resuelto con
+@code{linsolve([equations],[variables])}.
+
+El determinante de una  matriz puede ser obtenido usando dos algorítmos,
+o bien  Gauss-Bareiss usando  @code{det(m)}, o calculando los menores
+@code{det_minor(m)}. Realmente, un último método está disponible usando
+el cálculo de los coeficientes constantes del polinómio característico usando
+el algorítmo Fadeev-Leverrier.
+
+El polinómio característico de una matriz puede ser calculado por el algorítmo de
+Fadeev-Leverrier usando  @code{pcar(m)}. Para matrices con los coeficientes en
+un campo finito, @code{pcar_hessenberg(m)} es una mejor opción  (complejidad 
+@code{O(n^3)} donde @code{n} es el tamaño de la matriz).
+
+Los valores propios y los vectores propios son calculados usando respectivamente
+@code{egvl(m)} y @code{egv(m)}. La forma normal de Jordan se obtiene usando
+@code{jordan(m)}.
+
+La formas cuadráticas  (escritas simbólicamente) pueden ser reducidas a sumas
+y diferencias de cuadrados usando  @code{gauss(expression,[variables])}.
+
+Hay algún soporte para isometrías: @code{mkisom} puede ser usado para 
+hacer una isometría  desde sus propios elementos y @code{isom(m)} devuelve
+los elementos propios de una isometría.
+
+@node Geometría, Scripting, CAS, Xcas
+@section Geometría
+Como cualquier otro objeto, puedes crear objetos geométricos usando la
+línea de comandos. Adicionalmente, si la ventana gráfica está activa (clicka
+en el botón  @code{Geo} si es  necesario), puedes crear puntos y
+segmentos con el ratón (o el lápiz apuntador) o mover un objeto geométrico.
+Para crear un punto,simplemente clicka. Para crear una línea, pulsa cualquier botón
+del ratón, mueve el ratón y suelta el botón en el segundo punto.
+Para mover un objeto, primero selecciónalo clickando cerca de él. La línea de comandos
+deberá mostrar el nombre del objeto. Puedes moverlo pulsando el ratón 
+cerca del objeto y moviéndolo. Suelta el botón del ratón en la posición
+final. Puedes cancelar un movimiento soltando el ratón fuera de la ventana
+gráfica. Como en cualquier paquete de geometría dinámica. todos los objetos dependientes
+de un objeto, se moverán cuando muevas dicho objeto.
+
+Para imprimir el gráfico actual, puedes usar la instrucción @code{graph2tex()} 
+o bien, sin argumentos (entonces el código @code{LaTeX} será insertado en su lugar
+en el historial) o con una cadena de texto conteniendo el nombre
+del fichero donde se guardará una versión aislada del gráfico, por ejemplo
+@code{graph2tex("figure.tex")} creará un fichero llamado @code{figure.tex}
+que podrás compilar con @code{latex figure.tex}.
+
+@node Scripting, , Geometría, Xcas
+@section El lenguaje script de xcas
+Xcas y el programa cas proveen un lenguaje interpretado similar a
+otros populares lenguajes de programación de CAS. Este lenguaje scrip está
+disponible en 3 formas: sintáxis similar a C (por defecto) o en modo compatibilidad
+para programas simples de Maple o Mupad. Describiremos sólo la sintáxis similar a C.
+Las instrucciones deben acabar con punto y coma @code{;}. Los grupos de 
+instrucciones pueden ser combinados usando llaves, como en C.
+
+@menu
+* Modo del lenguaje::
+* Datos::
+* Bucles y condicionales::
+* Funciones::
+@end menu
+
+@node Modo del lenguaje, Datos, , Scripting
+@section Selección del modo del lenguage
+El comando @code{maple_mode(0)} o @code{maple_mode(1)} o 
+@code{maple_mode(2)} puede ser usado para cambiar la forma del lenguaje
+respectivamente entre modo similar-C a similar-Maple o similar-Mupad. Nótese que este
+comando tiene efecto sólo cuando la sesión actual del interprete finaliza
+lo que significa cuando el siguiente comando sea procesado en modo interactivo o
+al finalizar el fichero de proceso por lotes actual, por lo tanto no deberías comenzar un script 
+con este comando. En modo de proceso por lotes puedes cambiar el modo activando la 
+variable de entorno @code{MAPLE_MODE}, por ejemplo con
+tcsh: @command{setenv MAPLE_MODE 1} 
+o con bash @command{export MAPLE_MODE=1}
+cambiará a lenguaje similar a Maple. O puedes ejecutar @code{maplec} o
+@code{mupadc} en vez de @code{cas}. Adicionalmente puedes introducir 
+el comando @code{maple_mode(1)} en el @code{.xcasrc} de tu directorio raíz
+para cambiar el comportamiento por defecto. O dentro de @code{xcas} puedes ejecutar
+el comando @code{Import} del menú @code{File} y seleccionar la forma.
+El comando @code{Export} puede ser usado para traducir el nivel actual
+del historial dentro de @code{xcas} a un fichero, o el comando @code{View as} 
+del menú @code{Edit} para traducirlo a la ventana de salida de la ayuda.
+
+@node Datos, Bucles y condicionales, Modo del lenguaje, Scripting
+@section Datos
+El lenguaje acepta variables locales y globales, variables no son tecleadas.
+Las variables globales no necesitan ser declaradas, las locales deben ser declaradas
+al principio de una función por la palabra clave @code{local} seguido de  
+los nombres de las variables locales separados por comas @code{,} con punto y coma 
+final @code{;}
+
+El signo de asiganción es @code{:=} como en CAS populares y distinto a C.
+Otras operaciones (p.e. @{+ - * /@}) y llamadas a funciones son hechos como en C 
+o como en una sesión interactiva.
+Como en C, para comprobar igualdad se usa @code{==}. El signo de igual simple @code{=}
+se usa para devolver una ecuación (esta ecuación será comprobada como un test
+sólo en algunas situaciones donde una ecuación no es esperada).
+Las otras cláusulas de test son @code{!=} para distinto, @code{< <= > >=} para
+comparaciones de valores relaes. Puedes combinar tests con  @code{&&} o @code{and},
+y @code{||} o @code{or}. La negación booleana es @code{!} o @code{not}.
+
+@node Bucles y condicionales, Funciones, Datos, Scripting
+La palabra clave para bucles es como en C
+
+@command{for (inicializacion;mientras_condition;incremento)@{ bloque_bucle @}}
+
+Puedes romper un bucle dentro de la iteración con @code{break;}. 
+Puedes saltar immediatamente a la siguiente iteración con @code{continue;}.
+
+Las palabras clave para condicionales son como en C
+
+@command{if (condicion) @{ bloque_si_cierto @} [ else @{ bloque_si_falso @} ]}
+
+Adicionalmente, la selección múltiple es traducida como en C
+
+@command{swith (variable)@{ case (valor_1): ... break; default: ... ; @} }
+
+@node Funciones, , Bucles y condicionales, Scripting
+Las funciones son declaradas e implementadas juntas de esta manera
+
+@command{nombre_funcion(parametros):=@{ definicion @}}
+
+Los parámetros son como variables locales con una inicialización adicional
+de los valores de los parámetros dentro de la función.
+
+El @code{return(valor_retorno)} debe ser usado pra devolver el valor
+de la función.
+
+No es posible pasar argumentos por referencia, sólo por valor.
+
+Una vez que una función es definida, un fichero llamado @code{nombre_funcion.cas}
+es generado en el directorio actual. Una buena idea es agrupar
+definiciones de funciones correspondientes con el mismo tema en un fichero
+llamado con una extensión @code{.cc} (de esta manera la identación similar a C
+ocurre automáticamente cuando editas el fichero con tu editor favorito) y
+"compila" este fichero con
+@command{cas ccnombrefichero.cc}
+o dentro de @code{xcas} con el comando @code{Run file} del menú @code{Files}. 
+
+Una vez que una función está definida, si modificas el correspondiente fichero @code{.cas}, 
+no afectará a la definición de la función correspondiente durante la 
+sesión actual.
+
+@node Giac, Ejemplos, Xcas, Top
+En este capítulo primero describiremos el tipo de dato genérico de giac,
+la clase @code{gen}. Después describiremos los tipos de datos más importantes
+que @code{gen} cubre (polinómios, vectores, objetos simbólicos
+y funciones unarias de gen). En este punto, el lector debería ser
+capaz de programar usando @code{giac}, por lo tanto describimos como integrar
+código a @code{giac} por inclusión en la librería o como una librería
+ejecutable separada (llamada módulo). el último punto describe
+como puedes añadir nuevos objetos matemáticos, p.e. quaternas,
+dentro del tipo @code{gen}.
+
+@menu
+* C++::                             Por qué escogimos C++
+* Gen::                             La clase genérica usada en todo giac
+* Polinómios::                      Polinómios.
+* Vectores y matrices::             Vectores y matrices.
+* Simbólicos::                      Simbólicos.
+* Funciones unarias::               Funciones que toman un gen y devuelven un gen
+* Haciendo una funcion libreria:: Añade funcionalidades a giac
+* Haciendo modulos::                Añade funciones cargables dinámicamente a giac
+* Datos definidos por usuario::  Define your own data inside giac
+@end menu
+
+@node C++, Gen, , Giac
+Giac usa el lenguaje C++ porque es más fácil escribir operaciones
+algebraicas usando operadores habituales, por ejemplo @code{a+b*x} es más fácil
+de entender y modificar que @code{add(a,mul(b,x))}, pero no es necesario
+que aprendas programación orientada a objetos. De hecho, es más una
+librería de C usando características de C++ que facilitan la programación easier (como las
+secuencias I/O y la librería de plantillas estandard). De todos modos necesitarás 
+un compilador de C++ reciente, p.e. @code{gcc} versión 2.95 o posterior.
+
+
+@node Gen, Polinómios, C++, Giac
+@chapter La clase gen
+@cindex gen
+
+@code{gen} es la clase usada para representar objetos matemáticos
+(@code{#include <giac/gen.h>}). Es una unión en C, hecha bien de obejtos ``directos'' 
+como @code{int} o @code{double}
+o de punteros al montón de objetos afectados que están referenciados.
+La reserva de memoria la realiza la propia librería (salvo
+tipos de objetos definidos por el usuario). Puedes comprobar
+el tipo actual de una variable de tipo @code{gen}, p.e. @code{gen e;}, 
+usando su campo @code{type} (p.e. @code{if (e.type==...)}). Este
+campo @code{type} de un @code{gen} es un @code{int}. 
+
+El @code{gen} podría ser~:
+@enumerate
+@item un entero inmediato (@code{e.type==_INT_})
+@item un real (double) (@code{e.type==_REAL})
+@item un entero de precision arbitraria (@code{e.type==_ZINT})
+@item un número complejo (@code{e.type==_CINT}), un puntero a
+dos objetos de tipo @code{gen} la parte real y la parte imaginaria
+@item un nombre global (@code{e.type==_IDNT}), con un puntero a un
+tipo @code{identificateur} 
+@item un objeto simbólico (@code{e.type==_SYMB}), con un puntero a
+tipo @code{symbolic} 
+@item un objeto vector (de hecho es una lista) (@code{e.type==_VECT}), 
+con un puntero a un tipo @code{vecteur} 
+@item un objeto función (@code{e.type==_FUNC}),
+con un puntero a un tipo @code{unary_function_ptr} 
+@end enumerate
+
+Otros tipos están disponibles (p.e. un puntero a un objeto @code{gen_user}
+que puedes derivar para hacer tus propias clases, o números de coma flotante
+con precision arbitraria que serán implementados más tarde), para una descripción 
+completa mira en @code{giac/gen.h} (si tienes instalado @code{giac} 
+la ruta a los ficheros incluidos es @code{/usr/local/include/giac} a menos que
+invalide la que está por defecto, si no lo instalas, la ruta es la ruta al
+directorio @code{src} de la distribución del código fuente).
+
+Si quieres acceder al tipo subyacente, despues de comprobar que el tipo
+es correcto, puedes hacer lo siguiente:
+@enumerate
+@item para un entero inmediato: @code{int i=e.val;}
+@item para un real (double): @code{double d=e._DOUBLE_val;}
+@item para enteros de precisión arbitraria: @code{mpz_t * m=e._ZINTptr;}
+@item para números complejos: @code{gen realpart=*e._CINTptr; }
+@item para identificadores: @code{identificateur i=*e._IDNTptr; }
+@item para simbólicos: @code{symbolic s=*e._SYMBptr;}
+@item para compuestos: @code{vecteur v=*e._VECTptr;}
+@item para objetos función: @code{unary_function_ptr u=*e._FUNCptr}
+@end enumerate
+
+Además del @code{type} principal, cada @code{gen} tiene @code{subtype} (subtipo).
+Este subtipo se usa algunas veces para seleccionar diferentes comportamientos, p.e.
+añadiendo una constante a un vector podría añadir la constante a todos los términos 
+para algunos obejtos geométricos representados usando vectores, sólo a los términos
+de la diagonal de la matriz cuadrada, o al último término de polinómios densos.
+Mira en @code{giac/dispatch.h} la descripción de los subtipos.
+
+@node Polinómios, Vectores y matrices, Gen, Giac
+@cindex Polinómios
+@section Polinómios
+Polinómios están disponibles como: 
+@itemize
+@item polinómios multivariables escasos @code{polynome}, los
+ficheros de cabecera son @code{gausspol.h} y @code{poly.h}
+@item polinómios univariables densos: @code{poly1} o alias @code{modpoly} 
+usado para polinómios univariables modulares. El tipo usado es el mismo
+que para vectores y matrices.
+Los ficheros de cabecera son @code{giac/polygauss.h} y @code{giac/modpoly.h}.
+@end itemize
+
+Un @code{gen} puede ser un polinómio si su campo @code{type} es
+respectivamente @code{_POLY} (escaso) o @code{_VECT} (denso).
+Las funciones de conversión a y de la representación simbólica 
+respecto a nombres globales son declaradas en @code{giac/sym2poly.cc}.
+
+@node Vectores y matrices, Simbólicos, Polinómios, Giac
+@cindex Vectores
+@cindex Matrices
+@section Vectores y matrices
+El tipo usado para vectores y matrices es el mismo, es un
+@code{std::vector<gen>} (a menos que lo tengas configurado con
+@code{--enable-debug}). El fichero cabecera es @code{giac/vecteur.h}.
+Un @code{gen} puede ser un vector si su campo @code{type} es
+@code{_VECT}.
+
+@node Simbólicos, Funciones unarias, Vectores y matrices, Giac
+@cindex Simbólicos
+@section Simbólicos
+Los objetos simbólicos son árboles. El @code{sommet} es una @code{unary_function_ptr}
+(una clase apuntando a una función). El @code{feuille} es también 
+un @code{gen} atómico (para un función con un argumento) o un compuesto
+(@code{feuille.type==_VECT}) para una función con más de un argumento
+(estas funciones aparecen por lo tanto como una función con un argumento el cual
+es la lista de todos sus argumentos).
+
+@node Funciones unarias, Haciendo una funcion libreria, Simbólicos, Giac
+@cindex Funciones unarias
+@section Funciones unarias
+En la librería giac, cada función es vista como un función que coge un
+argumento y devuelve un argumento. Si una función debiese tener más de un 
+argumento, metemos estos argumentos en un vector. 
+
+Los ficheros @code{usual.cc/.h} dan ejemplos de declaraciones p.ej. para 
+funciones exponenciales y trigonométricas. Las funciones unarias tienen
+los siguientes miembros~:
+@itemize
+@item una función que coge un @code{gen} y devuelve un @code{gen}
+que hace todo el trabajo
+@item derivadas parciales de esa función si existen
+@item un desarrollo en serie especial de Taylor si es necesario (vease p.ej. @code{taylor_asin}).
+Éste es siempre el caso si tu función está definida en infinito.
+Notese que esta función 
+es ejecutada al inicio así que puedes incluir código en ella por
+ejemplo para añadir tu función al paso de preproceso simbólico del
+algorítmo @code{limit/series} .
+@item una cadena de texto identificadora para imprimir. Si quieres que el intérprete 
+reconozca tu función, debes añadir una línea en @code{input_lexer.ll}
+(mira por ejemplo @code{"sin"}) o debes registrarla (mira más abajo).
+@item dos funciones especial de impresión si la impresión normal (impresión normal
+significa imprimir el nombre de la función seguido por el argumento(s) entre paréntesis) 
+no es la forma correcta de imprimirla. Un puntero nulo significa que se usa impresión
+normal.
+@end itemize
+Una vez que la @code{unaria_funcion_unaria} está definida, debes construtir
+un @code{unaria_funcion_ptr} para poder usar lo simbólicos internos.
+
+Podrías dar un argumento opcional para especificar un comportamiento para la evaluación
+de argumentos (citando). En este caso, podrías dar un segundo argumento opcional
+para registrar tu función dinámicamente en la lista de nombre de funciones
+reconozidas por el intérprete. Asegúrate de unir el fichero objeto de forma
+que la inicialización occurre despues de inicializarse @code{input_lexer.ll},
+esto significa que debes poner tu fichero objeto antes de @code{input_lexer.o}
+cuando unas (mira por ejemplo la posición de @code{moyal.o} en
+el fichero @code{Makefile.am} , @code{moyal}
+es un ejemplo de registro dinámico).
+
+Tienes, por supuesto, la opción de declarar el nombre de la función
+estáticamente en el fichero @code{input_lexer.ll}.
+
+Siempre debes declarar una función estáticamente si no sigue
+la sintáxis estándar para una función.
+
+@node Haciendo una funcion libreria, Haciendo modulos, Funciones unarias, Giac
+Aquí está un ejemplo de una función unible dinámicamente llamada
+@code{example} que requiere 2 argumentos y devuelve la suma dividida
+por el producto si los argumentos son enteros o se devuelve a si misma en otro caso.
+La cabecera en C++ de @code{example.h} sería algo así
+@example
+#ifndef __EXAMPLE_H
+#define __EXAMPLE_H
+#include <giac/gen.h>
+#include <giac/unary.h>
+
+#ifndef NO_NAMESPACE_GIAC
+namespace giac @{
+#endif // ndef NO_NAMESPACE_GIAC
+
+  gen example(const gen & a,const gen & b);
+  gen _example(const gen & args);
+  extern unary_function_ptr at_example ;
+
+#ifndef NO_NAMESPACE_GIAC
+@} // namespace giac
+#endif // ndef NO_NAMESPACE_GIAC
+#endif // __EXAMPLE_H
+@end example
+
+El código en C++ sería algo como:
+@example
+using namespace std;
+#include <giac/giac.h>
+#include "example.h"
+
+#ifndef NO_NAMESPACE_GIAC
+namespace giac @{
+#endif // ndef NO_NAMESPACE_GIAC
+
+  gen example(const gen & a,const gen & b)@{
+    if (is_integer(a) && is_integer(b))
+      return (a+b)/(a*b);
+    return symbolic(at_example,makevecteur(a,b));
+  @}
+
+  gen _example(const gen & args)@{
+    if ( (args.type!=_VECT) || (args._VECTptr->size()!=2) )
+      setsizeerr(); // type checking : args must be a vector of size 2
+    vecteur & v=*args._VECTptr;
+    return example(v[0],v[1]);
+  @}
+  const string _example_s("example");
+  unary_function_unary __example(&_example,_example_s);
+  unary_function_ptr at_example (&__example,0,true);
+
+#ifndef NO_NAMESPACE_GIAC
+@}
+#endif // ndef NO_NAMESPACE_GIAC
+@end example
+
+Compílalo con
+@example
+c++ -g -c example.cc 
+@end example
+
+Para probar tu código, podrías escribir el siguiente @code{test.cc} programa
+@example
+#include "example.h"
+ 
+using namespace std;
+using namespace giac;
+ 
+int main()@{
+  gen args;
+  cout << "Enter argument of example function";
+  cin >> args;
+  cout << "Result: " << _example(args) << endl;
+@}
+@end example
+Compílalo con el comando
+@example
+c++ -g example.o test.cc -lgiac -lgmp
+@end example
+Podrías necesitar unirlo a otras librerías p.ej.
+@code{-lreadline -lhistory -lcurses} dependiendo de tu instalación.
+Entonces ejecuta @code{a.out}. En este punto probarías con p.ej. @code{[1,2]}.
+
+Puedes depurar tu programa como siempre, p.ej. con
+@code{gdb a.out}, es recomendable crear un fichero @code{.gdbinit}
+en el directorio actual de forma que puedas usar el comando @code{v}
+para imprimir datos de giac, el fichero @code{.gdbinit} podría contener :
+@example
+echo Defining v as print command for giac types\n
+define v
+print ($arg0).dbgprint()
+end
+@end example
+
+Cuando tu función esté comprobada, puedes añadirla a la librería. Edita
+el fichero @code{Makefile.am} del subdirectorio @code{src} 
+de @code{giac} : simplemente añade @code{example.cc} antes de @code{input_lexer.cc} 
+en la línea @code{libgiac_la_SOURCES} y añade @code{example.h} en la línea
+@code{giacinclude_HEADERS} .
+
+Para reconstruir la librería vete al directorio @code{giac} y escribe
+@code{automake; make}
+
+Si quieres compartir tu función(es) con otras personas, debes
+ponerle licencia GPL (porque estará unida a código GPL).
+Añade la cabecera GPL a los ficheros, y envíalos al e-mail de contribuciones de @code{giac},
+actualmente @code{mailto:parisse@@fourier.ujf-grenoble.fr}
+@example
+/*
+ *  Copyright (C) 2002 Your name
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+@end example
+
+@node Haciendo modulos, Datos definidos por usuario,  Haciendo una funcion libreria, Giac
+Otra forma de compartir tu código podría ser construir una librería dinámica
+que puede ser cargada en tiempo de ejecución usando las facilidades de @code{<dlfcns.h>}.
+ATENCION: los módulos no funcionan con binarios estáticos. Asegúrate
+de tener binarios dinámicos (situación por defecto cuando compilas giac,
+pero el paquete @code{xcas} distribuido como binario está construido estático para
+evitar librerías incompatibles).
+
+Definamos una función llamada  @code{mydll} en el fichero @code{mydll.cc} como
+este :
+@example
+#include <giac/giac.h>
+
+#ifndef NO_NAMESPACE_GIAC
+namespace giac @{
+#endif // ndef NO_NAMESPACE_GIAC
+
+  const string _mydll_s("mydll");
+  gen _mydll(const gen & args)@{
+    return sin(ln(args));
+  @}
+  unary_function_unary __mydll(&giac::_mydll,_mydll_s);
+  unary_function_ptr at_mydll (&__mydll,0,true); // auto-register
+
+#ifndef NO_NAMESPACE_GIAC
+@} // namespace giac
+#endif // ndef NO_NAMESPACE_GIAC
+@end example
+
+Compílalo como esto
+@example
+c++ -fPIC -DPIC -g -c mydll.cc -o mydll.lo 
+cc -shared  mydll.lo  -lc  -Wl,-soname -Wl,libmydll.so.0 -o libmydll.so.0.0.0
+rm -f libmydll.so.0 && ln -s libmydll.so.0.0.0 libmydll.so.0
+rm -f libmydll.so && ln -s libmydll.so.0.0.0 libmydll.so
+@end example
+
+La librería es cargable en tiempo de ejecución de una seseión usando el comando
+@code{insmod("libmydll.so")} asumiendo que está guardada en un directorio disponible
+desde @code{LD_LIBRARY_PATH} o en @code{/etc/ld.so.conf} si no
+debes poner la ruta al fichero librería (comenzando con @code{./} si
+está en el directorio actual).
+
+Una forma de comprobar tu código es añadir la línea siguiente en tu
+fichero @code{~/.xcasrc}  :
+@example
+insmod("ruta_a_libmydll/libmydll.so");
+@end example
+donde cambias  @code{ruta_a_libmydll.so} por la ruta real a
+@code{libmydll.so} por ejemplo @code{/home/joe} si tu nombre de conexión (login) es
+@code{joe} y @code{mydll} está en tu directorio home.
+Entonces si estás usando como editor @code{emacs} , pon como primera línea del
+fichero @code{mydll.cc}
+@example
+// -*- mode:C++ ; compile-command: "g++ -I.. -fPIC -DPIC -g -c mydll.cc -o mydll.lo && ln -sf mydll.lo mydll.o && gcc -shared mydll.lo -lc  -Wl,-soname -Wl,libmydll.so.0 -o libmydll.so.0.0.0 && ln -sf libmydll.so.0.0.0 libmydll.so.0 && ln -sf libmydll.so.0.0.0 libmydll.so" -*-
+@end example
+Ahora puedes compilarlo con @code{Compile} del menú @code{Tools}
+y el código resultante es cargado automaticamente cuando comienzas una nueva
+sesión con @code{xcas} o @code{cas} que hace que comprobar sea más ligero.
+
+@node Datos definidos por usuario, , Haciendo modulos, Giac
+@cindex  Datos definidos por usuarios
+@section  Datos definidos por usuario
+La clase @code{gen_user} puede ser derivada de forma que puedes incluir 
+tus propios datos en @code{gen}. Mira la declaración de @code{gen_user}
+en el fichero @code{gen.h} y en el ejemplo de las quaternas
+en los ficheros @code{quater.h} y @code{quater.cc}.
+
+@node Ejemplos, Indice de conceptos, Giac, Top
+@chapter Algunso ejemplos de programas en C++ usando giac
+
+@menu
+* Primer ejemplo::     
+@end menu
+
+@node Primer ejemplo, , , Ejemplos
+@chapter Un primer ejemplo
+Teclea el texto siguiente con tu editor favorito
+
+@smallexample
+#include <giac/giac.h>
+using namespace std;
+using namespace giac;
+
+int main()@{
+  gen e(string("x^2-1"));
+  cout << factor(e) << endl;
+@}
+@end smallexample
+
+guárdalo como p.ej. @code{tryit.cc} y compílalo con
+
+@command{c++ -g tryit.cc -lgiac -lgmp}
+
+Si obitenes símbolos sin resolver, entonces puede que @code{readline} esté activada
+y debas compilarlo como
+
+@command{c++ -g tryit.cc -lgiac -lgmp -lreadline -lcurses}
+
+Ahora puedes ejecutar @code{a.out} que imprimirá la factorización de 
+@code{x^2-1}.
+ 
+También puedes ejecutar el programa paso a paso usando gdb. 
+Recomendamos que copies el fichero @code{.gdbinit} del directorio @code{src}
+de la distribución giac, porque permite usar
+@code{v nombrevar} para imprimir la variable @code{nombrevar} de tipo @code{gen}.
+
+Algunas explicaciones del código: 
+@itemize
+@item la directiva @code{#include <giac/giac.h>}
+incluye todas las cabeceras de giac (lo que incluye algunas cabeceras
+de STL como @code{string} o @code{vector}). 
+@item la directiva @code{using namespace}
+no es obligatoria, si no la usas, necesitas modificar
+algo del código, p.ej. usa @code{std::string} en vez de @code{string}
+o @code{giac::gen} en lugar de @code{gen}. 
+@item Variables del tipo @code{gen}
+pueden ser construidas a partir de cadenas (usando el intérprete), a partir de algunos tipos de C
+(como @code{int} o @code{double}), a partir de tipos de STL
+@code{std::complex<double>} o a partir de secuencias (usando el intérprete).
+@item Operaciones como @code{+, -, *} están definidas en el tipo @code{gen}
+pero la división no está redefinida para evitar confusión entre enteros
+(usa @code{iquo}) y división de double (reales) en C (usa @code{rdiv}). Para potencias, 
+usa @code{pow} como de constumbre.
+@end itemize
+
+@node Indice de conceptos,    ,  Ejemplos, Top
+@comment node-name,    next,  previous, up
+@unnumbered Concept Index
+
+@printindex cp
+
+@contents
+@bye
+
+
+

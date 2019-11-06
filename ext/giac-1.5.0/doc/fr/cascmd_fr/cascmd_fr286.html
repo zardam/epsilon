@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Valeurs d’une suite récurrente ou d’un système de suites récurrentes : seqsolve</title>
+</head>
+<body >
+<a href="cascmd_fr285.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr287.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec366" class="subsection">6.15.2  Valeurs d’une suite récurrente ou d’un système de suites récurrentes : <span style="font-family:monospace">seqsolve</span></h3>
+<p><a id="hevea_default477"></a><a id="sec:seqsolve"></a>
+Voir aussi <span style="font-family:monospace">rsolve</span> <a href="cascmd_fr287.html#sec%3Arsolve">6.15.3</a>.<br>
+<span style="font-family:monospace">seqsolve</span> a comme argument l’expression ou la liste des expressions qui 
+défini(ssen)t une/des relation(s) de récurrence, par exemple 
+<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">n</span>) si la relation de récurrence est <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>=<span style="font-style:italic">f</span>(<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>,<span style="font-style:italic">n</span>) (resp <span style="font-style:italic">g</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">n</span>)
+si la relation de récurrence est <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+2</sub>=<span style="font-style:italic">g</span>(<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>,<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>,<span style="font-style:italic">n</span>)=<span style="font-style:italic">g</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">n</span>)), 
+le nom des variables utilisées (par exemple [<span style="font-style:italic">x</span>,<span style="font-style:italic">n</span>] (resp [<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">n</span>])) et les 
+valeurs de départ de la suite : par exemple <span style="font-style:italic">a</span> si <span style="font-style:italic">u</span><sub>0</sub>=<span style="font-style:italic">a</span> (resp [<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>] si
+<span style="font-style:italic">u</span><sub>0</sub>=<span style="font-style:italic">a</span> et <span style="font-style:italic">u</span><sub>1</sub>=<span style="font-style:italic">b</span>).</p><p>La relation de récurrence doit comporter une partie homogène
+linéaire, la partie non homogène doit être une combinaison
+linéaire de produit de polynôme en <span style="font-style:italic">n</span> par une suite
+géométrique en <span style="font-style:italic">n</span>.
+<span style="font-family:monospace">seqsolve</span> renvoie alors la valeur de la suite en fonctions de <span style="font-style:italic">n</span>.</p><p><span style="font-weight:bold">Exemples</span> :
+</p><ul class="itemize"><li class="li-itemize">
+Valeurs de la suite <span style="font-style:italic">u</span><sub>0</sub>=3,  <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>=2<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>+<span style="font-style:italic">n</span><br>
+On tape : 
+<div class="center"><span style="font-family:monospace">seqsolve(2x+n,[x,n],3)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">-n-1+4*2^n</span></div>
+On peut aussi taper rsolve(u(n+1)=2*u(n)+n,u(n),u(0)=3) (cf<a href="cascmd_fr287.html#sec%3Arsolve">6.15.3</a>)
+</li><li class="li-itemize">Valeurs de la suite <span style="font-style:italic">u</span><sub>0</sub>=3,  <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>=2<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>+<span style="font-style:italic">n</span>3<sup><span style="font-style:italic">n</span></sup><br>
+On tape : 
+<div class="center"><span style="font-family:monospace">seqsolve(2x+n*3^n,[x,n],3)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(n-3)*3^n+6*2^n</span></div> 
+</li><li class="li-itemize">Valeurs de la suite <span style="font-style:italic">u</span><sub>0</sub>=0,<span style="font-style:italic">u</span><sub>1</sub>=1,  <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>=<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>+<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>−1</sub> pour <span style="font-style:italic">n</span>&gt;0.<br>
+On tape : 
+<div class="center"><span style="font-family:monospace">seqsolve(x+y,[x,y,n],[0,1])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(5+sqrt(5))/10*((sqrt(5)+1)/2)^(n-1)+ (5-(sqrt(5)))/10*((-sqrt(5)+1)/2)^(n-1)</span></div></li><li class="li-itemize">Valeurs de la suite <span style="font-style:italic">u</span><sub>0</sub>=0,<span style="font-style:italic">u</span><sub>1</sub>=1,  <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+2</sub>=2*<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>+<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>+<span style="font-style:italic">n</span>+1 pour <span style="font-style:italic">n</span>&gt;0.<br>
+À la main, on trouve <span style="font-style:italic">u</span><sub>2</sub>=3, <span style="font-style:italic">u</span><sub>3</sub>=9 <span style="font-style:italic">u</span><sub>4</sub>=24 etc...<br>
+On tape : 
+<div class="center"><span style="font-family:monospace">seqsolve(x+2y+n+1,[x,y,n],[0,1])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(-4*n-3*(-(sqrt(2)-1))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n*sqrt(2)+2*(-(sqrt(2)-1))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n+3*(sqrt(2)+1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n*sqrt(2)+2*(sqrt(2)+1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n-4)/8</span></div>
+On vérifie pour <span style="font-family:monospace">n:=4</span> on obtient bien <span style="font-family:monospace">24</span><br>
+Ou on tape car on a <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>=2<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>+<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>+<span style="font-style:italic">n</span> et <span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span>+1</sub>=<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> (donc <span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>=<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>−1</sub>)
+avec <span style="font-style:italic">u</span><sub>0</sub>=0 et <span style="font-style:italic">u</span><sub>1</sub>=2<span style="font-style:italic">u</span><sub>0</sub>+<span style="font-style:italic">v</span><sub>0</sub>+0=1 donc <span style="font-style:italic">v</span><sub>0</sub>=1: 
+<div class="center"><span style="font-family:monospace">seqsolve([2x+y+n,x],[x,y,n],[0,1]) </span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[(-1)/2-(-2-3*sqrt(2))/8*(sqrt(2)+1)^n-
+(-2+3*sqrt(2))/8*(-sqrt(2)+1)^n-1/2*n,
+-(-4+sqrt(2))/8*(sqrt(2)+1)^n-
+(-4-sqrt(2))/8*(-sqrt(2)+1)^n-1/2*n]</span></div>
+On vérifie pour <span style="font-family:monospace">n:=4</span> on obtient bien <span style="font-family:monospace">24</span>
+</li><li class="li-itemize">Valeurs de la suite <span style="font-style:italic">u</span><sub>0</sub>=0,<span style="font-style:italic">v</span><sub>0</sub>=1,  <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>=<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>+2<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>,<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span>+1</sub>=<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>+<span style="font-style:italic">n</span>+1 pour <span style="font-style:italic">n</span>&gt;0.<br>
+On tape : 
+<div class="center"><span style="font-family:monospace">seqsolve([x+2*y,n+1+x],[x,y,n],[0,1])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[(-2*n-(-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n+2</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n*4-3)/2,((-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n+2*2</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n-1)/2]</span></div>
+</li><li class="li-itemize">Valeurs de la suite <span style="font-style:italic">u</span><sub>0</sub>=0,<span style="font-style:italic">v</span><sub>0</sub>=1,  <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>=<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>+2<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>+<span style="font-style:italic">n</span>+1,<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span>+1</sub>=<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> pour <span style="font-style:italic">n</span>&gt;0.<br>
+On tape : 
+<div class="center"><span style="font-family:monospace">seqsolve([x+2*y+n+1,x],[x,y,n],[0,1])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[(-2*n-(-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n*3+2</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n*8-5)/4,(-2*n+(-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n*3+2</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n*4-3)/4]</span></div>
+</li><li class="li-itemize">Valeurs de la suite <span style="font-style:italic">u</span><sub>0</sub>=0,<span style="font-style:italic">v</span><sub>0</sub>=1,  <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>=<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>+<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>, <span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span>+1</sub>=<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>−<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub> pour <span style="font-style:italic">n</span>&gt;0.<br>
+On tape : 
+<div class="center"><span style="font-family:monospace">seqsolve([x+y,x-y],[x,y,n],[0,1])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[(-4*n-3*(-(sqrt(2)-1))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n*sqrt(2)+ 2*(-(sqrt(2)-1))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n+ 3*(sqrt(2)+1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n*sqrt(2)+ 2*(sqrt(2)+1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n-4)/8,</span></div>
+<div class="center"><span style="font-family:monospace">(-4*n+(-(sqrt(2)-1))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n*sqrt(2)+ 4*(-(sqrt(2)-1))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n-(sqrt(2)+ 1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n*sqrt(2)+ 4*(sqrt(2)+1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n)/8]</span></div> </li><li class="li-itemize">Valeurs de la suite <span style="font-style:italic">u</span><sub>0</sub>=2,<span style="font-style:italic">v</span><sub>0</sub>=0,  <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>=4*<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>+<span style="font-style:italic">n</span>+1, <span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span>+1</sub>=<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>, pour <span style="font-style:italic">n</span>&gt;0.<br>
+On tape : 
+<div class="center"><span style="font-family:monospace">seqsolve([4y+n+1,x],[x,y,n],[2,0])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[(-8)/9+2*2^n-(-8)/9*(-1)^n*2^n-1/3*n,<br>
+(-5)/9+2^n-4/9*(-1)^n*2^n-1/3*n]</span></div> 
+</li></ul>
+<hr>
+<a href="cascmd_fr285.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr287.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

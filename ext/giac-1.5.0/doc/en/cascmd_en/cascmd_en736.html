@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Kernel density estimation : kernel_density, kde</title>
+</head>
+<body >
+<a href="cascmd_en735.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en737.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec946" class="subsection">8.4.22  Kernel density estimation : <span style="font-family:monospace">kernel_density</span><a id="hevea_default1295"></a>, <span style="font-family:monospace">kde</span><a id="hevea_default1296"></a></h3>
+<p>
+<span style="font-family:monospace">kernel_density</span> (alias : <span style="font-family:monospace">kde</span>) accepts a list of samples <span style="font-style:italic">L</span>=[<span style="font-style:italic">X</span><sub>1</sub>,<span style="font-style:italic">X</span><sub>2</sub>,…,<span style="font-style:italic">X</span><sub><span style="font-style:italic">n</span></sub>] and optionally a sequence of options. It performs kernel density estimation<sup><a id="text5" href="cascmd_en745.html#note5">1</a></sup> (KDE), optionally restricted to an interval [<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>], to obtain an estimate f of the (unknown) probability density function <span style="font-style:italic">f</span> from which the samples are drawn, defined by :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><a id="eq:kde1"></a>
+f(<span style="font-style:italic">x</span>)=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">n</span> <span style="font-style:italic">h</span></td></tr>
+</table></td><td class="dcell"> </td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">n</span></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-size:xx-large">∑</span></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">i</span>=1</td></tr>
+</table></td><td class="dcell"><span style="font-style:italic">K</span></td><td class="dcell">⎛<br>
+⎜<br>
+⎜<br>
+⎝</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span>−<span style="font-style:italic">X</span><sub><span style="font-style:italic">i</span></sub></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">h</span></td></tr>
+</table></td><td class="dcell">⎞<br>
+⎟<br>
+⎟<br>
+⎠</td><td class="dcell">,
+    (1)</td></tr>
+</table><p>
+where <span style="font-style:italic">K</span> is the Gaussian kernel <span style="font-style:italic">K</span>(<span style="font-style:italic">u</span>)=1/√<span style="text-decoration:overline">2 π</span> exp(−1/2 <span style="font-style:italic">u</span><sup>2</sup>) and <span style="font-style:italic">h</span> is the positive real parameter called the <em>bandwidth</em>.</p><p>The supported options are listed below.
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">output=&lt;type&gt;</span> or <span style="font-family:monospace">Output=&lt;type&gt;</span> : specifies the form of the return value f, where <span style="font-family:monospace">&lt;type&gt;</span> may be
+<ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">exact</span> : f is returned as the sum of Gaussian kernels, i.e. as the right side of (<a href="#eq%3Akde1">1</a>), which is usable only when the number of samples is relatively small (up to few hundreds),
+</li><li class="li-itemize"><span style="font-family:monospace">piecewise</span> : f is returned as a piecewise expression obtained by the spline interpolation of the specified degree (by default, the interpolation is linear) on the interval [<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>] segmented to the specified number of bins,
+</li><li class="li-itemize"><span style="font-family:monospace">list</span> (the default) : f is returned in discrete form, as a list of values f(<span style="font-style:italic">a</span>+<span style="font-style:italic">k</span> <span style="font-style:italic">b</span>−<span style="font-style:italic">a</span>/<span style="font-style:italic">M</span>−1) for <span style="font-style:italic">k</span>=0,1,…,<span style="font-style:italic">M</span>, where <span style="font-style:italic">M</span> is the number of bins.
+</li></ul>
+</li><li class="li-itemize"><span style="font-family:monospace">bandwidth=&lt;value&gt;</span> : specifies the bandwidth. <span style="font-family:monospace">&lt;value&gt;</span> may be
+<ul class="itemize"><li class="li-itemize">
+a positive real number <span style="font-style:italic">h</span>,
+</li><li class="li-itemize"><span style="font-family:monospace">select</span> (the default) : bandwidth is selected using a direct plug-in method,
+</li><li class="li-itemize"><span style="font-family:monospace">gauss</span> or <span style="font-family:monospace">normal</span> or <span style="font-family:monospace">normald</span> : the Silverman’s rule of thumb is used for selecting bandwidth (this method is fast but the results are close to optimal ones only when <span style="font-style:italic">f</span> is approximately normal).
+</li></ul>
+</li><li class="li-itemize"><span style="font-family:monospace">bins=&lt;posint&gt;</span> (by default 100) : the number of bins for simplifying the input data. Only the number if samples in each bin is stored. Bins represent the elements of an equidistant segmentation of the interval <span style="font-style:italic">S</span> on which KDE is performed. This allows evaluating kernel summations using convolution when <span style="font-family:monospace">output</span> is set to <span style="font-family:monospace">piecewise</span> or <span style="font-family:monospace">list</span>, which significantly lowers the computational burden for large values of <span style="font-style:italic">n</span> (say, few hundreds or more). If <span style="font-family:monospace">output</span> is set to <span style="font-family:monospace">exact</span>, this option is ignored.
+</li><li class="li-itemize"><span style="font-family:monospace">[range=]a..b</span> or <span style="font-family:monospace">range=[a,b]</span> or <span style="font-family:monospace">x=a..b</span> : the interval [<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>] on which KDE is performed. If an identifier <span style="font-style:italic">x</span> is specified, it is used as the variable of the output. If the range endpoints are not specified, they are set to <span style="font-style:italic">a</span>=min<sub>1≤ <span style="font-style:italic">i</span>≤ <span style="font-style:italic">n</span></sub> <span style="font-style:italic">X</span><sub><span style="font-style:italic">i</span></sub>−3 <span style="font-style:italic">h</span> and <span style="font-style:italic">b</span>=max<sub>1≤ <span style="font-style:italic">i</span>≤ <span style="font-style:italic">n</span></sub><span style="font-style:italic">X</span><sub><span style="font-style:italic">i</span></sub>+3 <span style="font-style:italic">h</span> (unless <span style="font-family:monospace">output</span> is set to <span style="font-family:monospace">exact</span>, in which case this option is ignored).
+</li><li class="li-itemize"><span style="font-family:monospace">interp=&lt;posint&gt;</span> (by default 1) : the degree of the spline interpolation, ignored unless <span style="font-family:monospace">output</span> is set to <span style="font-family:monospace">piecewise</span>.
+</li><li class="li-itemize"><span style="font-family:monospace">spline=&lt;posint&gt;</span> : sets <span style="font-family:monospace">option</span> to <span style="font-family:monospace">piecewise</span> and <span style="font-family:monospace">interp</span> to <span style="font-family:monospace">&lt;posint&gt;</span>.
+</li><li class="li-itemize"><span style="font-family:monospace">eval=x0</span> : only the value f(<span style="font-style:italic">x</span><sub>0</sub>) is returned (this cannot be used with <span style="font-family:monospace">output</span> set to <span style="font-family:monospace">list</span>).
+</li><li class="li-itemize">an unassigned identifier <span style="font-family:monospace">x</span> (by default <span style="font-style:italic">x</span>) : the variable of the output.
+</li><li class="li-itemize"><span style="font-family:monospace">exact</span> : the same as <span style="font-family:monospace">output=exact</span>.
+</li><li class="li-itemize"><span style="font-family:monospace">piecewise</span> : the same as <span style="font-family:monospace">output=piecewise</span>.
+</li></ul>
+<h5 id="sec947" class="paragraph">Examples.</h5>
+<p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">kernel_density([1,2,3,2],bandwidth=1/4,exact)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">0.4*(exp(-8*(x-3)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)+2*exp(-8*(x-2)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)+exp(-8*(x-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2))
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">f:=unapply(normald(4,1,x)/2+normald(7,1/2,x)/2,x); plot(f(x),x=0..10)
+</span></div><p>
+Output :
+</p><div class="center">
+<img src="cascmd_en055.png">
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">X:=randvar(f,range=0..10,1000):; S:=sample(X,1000):; F:=kernel_density(S,piecewise):; plot([F,f(x)],x=0..10, display=[line_width_2+blue,line_width_1+black])
+</span></div><p>
+Output :
+</p><div class="center">
+<img src="cascmd_en056.png">
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">kernel_density(S,bins=50,spline=3,eval=4.75)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">0.14655478136
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">time(kernel_density(sample(X,1e5),piecewise))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">"Done",[0.17,0.1653323]
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">S:=sample(X,5000):; sqrt(int((f(x)-kde(S,piecewise))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">,x=0..10))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">0.0269841239243
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">S:=sample(X,25000):; sqrt(int((f(x)-kde(S,bins=150,piecewise))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x=0..10))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">0.0144212781377
+</span></div>
+<hr>
+<a href="cascmd_en735.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en737.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Éliminer une (ou des) variable(s) dans une liste d’équations : eliminate</title>
+</head>
+<body >
+<a href="cascmd_fr281.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr283.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec361" class="subsection">6.14.25  Éliminer une (ou des) variable(s) dans une liste d’équations : <span style="font-family:monospace">eliminate</span></h3>
+<p><a id="hevea_default472"></a>
+<span style="font-family:monospace">eliminate</span> permet d’éliminer une ou plusieurs variables dans une liste 
+d’équations algébriques, équations algébriques qui sont verifiées par
+plusieurs variables.<br>
+<span style="font-family:monospace">eliminate</span> a 2 arguments :<br>
+une liste d’équations <span style="font-family:monospace">L1</span> et<br>
+la variable ou la liste des variables à éliminer.<br>
+<span style="font-family:monospace">eliminate</span> renvoie la liste <span style="font-family:monospace">L2</span> des équations qui sont vérifiées
+par les variables non éliminées et pour lesquelles <span style="font-family:monospace">=0</span> est sous 
+entendu.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">eliminate([x=v0*t,y=y0-g*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2],t)</span></div><p> 
+On obtient si la variable <span style="font-family:monospace">t</span> n’est pas affectée et si les autres 
+variables ne sont pas affectées (si les autres variables sont affectées, elles sont remplacées par leur valeurs ce qui modifie le résultat) :
+</p><div class="center"><span style="font-family:monospace">[x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*g-v0</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*y0+v0</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*y]</span></div><p> 
+On tape :
+</p><div class="center"><span style="font-family:monospace">eliminate([x=2*t,y=1-10*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,z=x+y-t],t)</span></div><p> 
+On obtient si la variable <span style="font-family:monospace">t</span> n’est pas affectée et si les 
+variables <span style="font-family:monospace">x,y,z</span> ne sont pas affectées :
+</p><div class="center"><span style="font-family:monospace">[x+2*y-2*z,-10*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+20*y*z-y-10*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1]</span></div><p> 
+On tape :
+</p><div class="center"><span style="font-family:monospace">eliminate([x+y+z+t-2,x*y*t=1,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2=z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2],[x,z])</span></div><p> 
+On obtient si les variables <span style="font-family:monospace">x</span> et <span style="font-family:monospace">z</span> ne sont pas affectées et si 
+les autres variables ne sont pas affectées (si les autres variables sont 
+affectées, elles sont remplacées par leur valeurs ce qui modifie le 
+résultat) :
+</p><div class="center"><span style="font-family:monospace">[y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*t+2*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-4*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*t-4*y*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+4*y*t+2*y+2*t-4]</span></div><p> 
+<span style="font-weight:bold">Attention</span> <br>
+Si la réponse est <span style="font-family:monospace">[1]</span> ou <span style="font-family:monospace">[-1]</span>, cela veut dire que
+la ou les variables ne peuvent pas être élinminées.<br>
+Si la réponse est <span style="font-family:monospace">[]</span>, cela veut dire que certaines équations 
+déterminent les valeurs des variables à éliminer et que ces valeurs 
+vérifient toutes les équations.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">x:=2;y:=-5</span></div><div class="center"><span style="font-family:monospace">eliminate([x=2*t,y=1-10*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2],t)</span></div><p> 
+On obtient si la variable <span style="font-family:monospace">t</span> n’est pas affectée :
+</p><div class="center"><span style="font-family:monospace">[1]</span></div><p> 
+On ne peut donc pas éliminer <span style="font-family:monospace">t</span> des deux équations :<br>
+2=2<span style="font-style:italic">t</span>,−5=1−10<span style="font-style:italic">t</span><sup>2</sup>.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">x:=2;y:=-9</span></div><div class="center"><span style="font-family:monospace">eliminate([x=2*t,y=1-10*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2],t)</span></div><p> 
+On obtient si la variable <span style="font-family:monospace">t</span> n’est pas affectée :
+</p><div class="center"><span style="font-family:monospace">[]</span></div><p> 
+En effet la première équation :<br>
+2=2<span style="font-style:italic">t</span> donne <span style="font-style:italic">t</span>=1 et <span style="font-style:italic">t</span>=1 vérifie la deuxième équation −9=1−10<span style="font-style:italic">t</span><sup>2</sup>.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">x:=2;y:=-9</span></div><div class="center"><span style="font-family:monospace">eliminate([x=2*t,y=1-10*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,z=x+y-t],t)</span></div><p> 
+On obtient si la variable <span style="font-family:monospace">t</span> n’est pas affectée :
+</p><div class="center"><span style="font-family:monospace">[z+8]</span></div><p> 
+En effet la première équation :<br>
+2=2<span style="font-style:italic">t</span> donne <span style="font-style:italic">t</span>=1, <span style="font-style:italic">t</span>=1 vérifie la deuxième équation −9=1−10<span style="font-style:italic">t</span><sup>2</sup> et il
+reste la troisième équation <span style="font-style:italic">z</span>=2−9−1=−8 soit <span style="font-style:italic">z</span>+8=0.</p>
+<hr>
+<a href="cascmd_fr281.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr283.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

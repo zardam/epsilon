@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Résolution d’équations : solve resoudre</title>
+</head>
+<body >
+<a href="cascmd_fr689.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr691.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec844" class="subsection">6.62.6  Résolution d’équations : <span style="font-family:monospace">solve resoudre</span></h3>
+<p><a id="hevea_default1257"></a><a id="hevea_default1258"></a>
+<span style="font-family:monospace">solve</span> permet de résoudre une équation 
+ou un système d’équations polynômiales.<br>
+<span style="font-family:monospace">solve</span> a 1 ou 2 arguments qui sont une expression <span style="font-style:italic">xpr</span> en <span style="font-style:italic">x</span> ou une 
+expression <span style="font-style:italic">xpr</span> d’une variable <span style="font-style:italic">var</span> et le nom de cette variable <span style="font-style:italic">var</span>.<br>
+<span style="font-family:monospace">solve</span> resout <span style="font-style:italic">xpr</span>=0 l’inconnue étant <span style="font-style:italic">x</span> ou <span style="font-style:italic">var</span>
+<span style="font-weight:bold">Attention</span><br>
+La deuxième variable peut spécifier un intervalle par exemple <span style="font-style:italic">x</span>=<span style="font-style:italic">a</span>..<span style="font-style:italic">b</span> pour
+n’avoir que les solutions dans l’intervalle [<span style="font-style:italic">a</span>;<span style="font-style:italic">b</span>] <span style="font-weight:bold">mais</span> dans ce cas les 
+solutions seront numériques et <span style="font-family:monospace">solve</span> est alors identique à 
+<span style="font-family:monospace">fsolve</span>, par exemple :<br>
+<span style="font-family:monospace">solve(t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2,t=0..2)</span> ou <span style="font-family:monospace">fsolve(t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2,t=0..2)</span> renvoie 
+<span style="font-family:monospace">[1.41421356237]</span> alors que <span style="font-family:monospace">solve(t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2,t)</span> renvoie 
+<span style="font-family:monospace">[-(sqrt(2)),sqrt(2)]</span>.
+</p><ul class="itemize"><li class="li-itemize">
+Résolution d’une équation<br>
+<span style="font-family:monospace">solve</span> a comme arguments une équation entre deux 
+expressions (ou une expression et dans ce cas <span style="font-family:monospace">=0</span> est sous-entendu), 
+et le nom d’une variable (par défaut <span style="font-family:monospace">x</span>).<br>
+<span style="font-family:monospace">solve</span> résout cette équation.
+</li><li class="li-itemize">Résolution d’un système d’équations polynômiales<br>
+Soit <span style="font-family:monospace">solve</span> a comme arguments deux vecteurs : le vecteur des équations 
+polynômiales et le vecteur contenant le nom des variables.<br>
+<span style="font-family:monospace">solve</span> résout ce système d’équations polynômiales.
+</li></ul><p>
+<span style="font-weight:bold">Attention</span><br>
+Par défaut, <span style="font-family:monospace">solve</span> ne renvoie que les solutions réelles : pour avoir 
+les solutions complexes il faut être en mode complexe c’est à dire avoir 
+coché <span style="font-family:monospace">Complexe</span> dans la configuration du cas.<br>
+De plus,
+</p><ul class="itemize"><li class="li-itemize">
+pour les équations comportant un dénominateur, <span style="font-family:monospace">solve</span> ne tient 
+pas compte du dénominateur et renvoie les solutions du numérateur.<br>
+Par exemple <span style="font-family:monospace">solve(ln(abs(x-2))/ln(x))</span> renvoie <span style="font-family:monospace">[1,3]</span> ou<br>
+<span style="font-family:monospace">solve((x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2x)/x)</span> renvoie <span style="font-family:monospace">[0,2]</span>,
+</li><li class="li-itemize">pour les équations trigonométriques, <span style="font-family:monospace">solve</span> ne renvoie que 
+les solutions principales : pour avoir toutes les solutions il faut avoir 
+coché <span style="font-family:monospace">All_trig_sol</span> dans la configuration du cas.
+</li></ul><p>
+<span style="font-weight:bold">Exemples</span> :<br>
+</p><ul class="itemize"><li class="li-itemize">
+Résoudre <span style="font-style:italic">x</span><sup>4</sup>−1=3
+On tape :
+<div class="center"><span style="font-family:monospace">solve(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4-1=3)</span></div>
+On obtient en mode réel :
+<div class="center"><span style="font-family:monospace">[sqrt(2),-(sqrt(2))]</span></div>
+On obtient en mode complexe :
+<div class="center"><span style="font-family:monospace">[sqrt(2),-(sqrt(2)),(i)*sqrt(2),-((i)*sqrt(2))]</span></div>
+</li><li class="li-itemize">Résoudre exp(<span style="font-style:italic">x</span>)=2 <br>
+On tape :
+<div class="center"><span style="font-family:monospace">solve(exp(x)=2)</span></div>
+On obtient en mode réel :
+<div class="center"><span style="font-family:monospace">[log(2)]</span></div>
+</li><li class="li-itemize">Résoudre en <span style="font-style:italic">x</span>,<span style="font-style:italic">y</span> le système <span style="font-style:italic">x</span>+<span style="font-style:italic">y</span>=1,<span style="font-style:italic">x</span>−<span style="font-style:italic">y</span>=0:<br>
+ On tape :
+<div class="center"><span style="font-family:monospace">solve([x+y=1,x-y],[x,y])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[1/2,1/2]] </span></div>
+</li><li class="li-itemize">Résoudre en <span style="font-style:italic">x</span>,<span style="font-style:italic">y</span> le système <span style="font-style:italic">x</span><sup>2</sup>+<span style="font-style:italic">y</span>=2,<span style="font-style:italic">x</span>+<span style="font-style:italic">y</span><sup>2</sup>=2<br>
+On tape :
+<div class="center"><span style="font-family:monospace">solve([x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+y=2,x+y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2=2],[x,y])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[-2,-2],[1,1],[(-sqrt(5)+1)/2,(1+sqrt(5))/2],</span></div>
+<div class="center"><span style="font-family:monospace">[(sqrt(5)+1)/2,(1-sqrt(5))/2]] </span></div>
+</li><li class="li-itemize">Résoudre en <span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span> le système <span style="font-style:italic">x</span><sup>2</sup>−<span style="font-style:italic">y</span><sup>2</sup>=0,<span style="font-style:italic">x</span><sup>2</sup>−<span style="font-style:italic">z</span><sup>2</sup>=0:<br>
+On tape :
+<div class="center"><span style="font-family:monospace">solve([x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2=0,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2=0],[x,y,z])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[x,x,x],[x,-x,-x],[x,-x,x],[x,x,-x]]</span></div>
+</li><li class="li-itemize">Résoudre cos(2*<span style="font-style:italic">x</span>)=1/2<br>
+On tape :
+<div class="center"><span style="font-family:monospace">solve(cos(2*x)=1/2)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[pi/6,(-pi)/6]</span></div>
+On obtient en ayant coché <span style="font-family:monospace">All_trig_sol</span> :
+<div class="center"><span style="font-family:monospace">[(6*pi*n_0+pi)/6,(6*pi*n_0-pi)/6]</span></div>
+</li></ul><p>
+<span style="font-weight:bold">Remarque</span> Pour pouvoir par exemple trouver l’intersection d’une droite 
+(donnée par son équation paramétrique) et un plan on peut mettre les 
+équations sous la forme d’une liste contenant une liste.<br>
+<span style="font-weight:bold">Exemple</span> : Trouver l’intersection de la droite <span style="font-style:italic">D</span> d’équation 
+paramétrique [<span style="font-style:italic">y</span>−<span style="font-style:italic">z</span>=0,<span style="font-style:italic">z</span>−<span style="font-style:italic">x</span>=0,<span style="font-style:italic">x</span>−<span style="font-style:italic">y</span>=0] et du plan <span style="font-style:italic">P</span> d’équation <span style="font-style:italic">x</span>−1+<span style="font-style:italic">y</span>+<span style="font-style:italic">z</span>=0.<br>
+On tape
+</p><div class="center"><span style="font-family:monospace">solve([[y-z=0,z-x=0,x-y=0],x-1+y+z=0],[x,y,z])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1/3,1/3,1/3]]</span></div><p>
+<span style="font-weight:bold">Remarque</span><br>
+Différence entre <span style="font-family:monospace">solve</span> et <span style="font-family:monospace">csolve</span> :
+En mode complexe <span style="font-family:monospace">solve</span> renvoie le même résultat que <span style="font-family:monospace">csolve</span> 
+(pour <span style="font-family:monospace">csolve</span> que l’on soit en mode complexe ou réel cela importe peu).
+Ainsi, si on ne veut pas que le résultat dépende du mode, pour avoir les 
+solutions complexes il est préférable d’utiliser <span style="font-family:monospace">csolve</span>.<br>
+On tape en mode réel :
+</p><div class="center"><span style="font-family:monospace">solve(re(r*exp(-(i)*t))-1,r) </span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[1/(cos(t))]</span></div><p>
+car en mode réel l’inconnue <span style="font-family:monospace">r</span> est considérée comme un nombre
+réel.<br>
+On tape en mode complexe :
+</p><div class="center"><span style="font-family:monospace">solve(re(r*exp(-(i)*t))-1,r) </span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[‘ x‘+(i)*1/(sin(t))*(-‘ x‘*cos(t)+1)]</span></div><p>
+car en mode complexe, l’expression contient <span style="font-family:monospace">i</span> donc l’inconnue <span style="font-family:monospace">r</span> 
+est considérée comme un nombre complexe. La solution complexe est :<br>
+<span style="font-family:monospace">‘ x‘+(i)*1/(sin(t))*(-‘ x‘*cos(t)+1)</span> (la partie réelle de <span style="font-family:monospace">r</span> vaut
+<span style="font-family:monospace">‘ x‘</span> qui est un nombre rèel quelconque et la partie imaginaire de 
+<span style="font-family:monospace">r</span> est fonction de <span style="font-family:monospace">‘ x‘</span>).<br>
+On tape en mode complexe ou réel:
+</p><div class="center"><span style="font-family:monospace">csolve(re(r*exp(-(i)*t))-1,r) </span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[‘ x‘+(i)*1/(sin(t))*(-‘ x‘*cos(t)+1)]</span></div><p>
+car avec <span style="font-family:monospace">csolve</span>, l’inconnue <span style="font-family:monospace">r</span> est toujours considérée comme un 
+nombre complexe.
+</p>
+<hr>
+<a href="cascmd_fr689.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr691.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

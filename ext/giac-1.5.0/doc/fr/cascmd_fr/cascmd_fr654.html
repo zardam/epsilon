@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Forme normale de Hermite : ihermite</title>
+</head>
+<body >
+<a href="cascmd_fr653.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr655.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec803" class="subsection">6.57.13  Forme normale de Hermite : <span style="font-family:monospace">ihermite</span></h3>
+<p><a id="hevea_default1207"></a>
+<span style="font-family:monospace">ihermite</span> a comme argument une matrice à coefficient dans 
+ℤ.<br>
+<span style="font-family:monospace">ihermite</span> renvoie les matrices <span style="font-family:monospace">B</span> et <span style="font-family:monospace">U</span> tels que <span style="font-family:monospace">B</span> 
+est inversible dans ℤ, <span style="font-family:monospace">U</span> est triangulaire supérieure et 
+vérifie : <span style="font-family:monospace">U=B*A</span>.<br>
+Pour faire cela on effectue la réduction sous forme échelonnée (de type 
+Gauss) d’une matrice d’entiers en utilisant uniquement des opérations
+de lignes inversibles dans les entiers, en d’autres termes si <span style="font-family:monospace">A</span>
+est la matrice de départ, on calcule une matrice <span style="font-family:monospace">B</span> inversible dans 
+ℤ et une matrice <span style="font-family:monospace">U</span> triangulaire supérieure telles que
+<span style="font-family:monospace">U = B*A</span>.<br>
+De plus les coefficients au-dessus de la diagonale de <span style="font-family:monospace">A</span> sont en module
+inférieurs au pivot de la colonne divisé par 2. Puisque <span style="font-family:monospace">det(B) = 1</span>,
+on passe aussi de <span style="font-family:monospace">U</span> à <span style="font-family:monospace">A</span> uniquement avec des
+manipulations de ligne à coefficients entiers.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">A:=[[9,-36,30],[-36,192,-180],[30,-180,180]];B,U:=ihermite(A)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[9,-36,30],[-36,192,-180],[30,-180,180]], [[13,9,7],[6,4,3],[20,15,12]],[[3,0,30],[0,12,0],[0,0,60]]</span></div><p>
+On vérifie :
+</p><div class="center"><span style="font-family:monospace">det(B),B*A</span></div><p>
+renvoie :
+</p><div class="center"><span style="font-family:monospace">1,[[3,0,30],[0,12,0],[0,0,60]]</span></div><p><span style="font-weight:bold">Application: Calcul d’une Z-base d’un noyau</span><br>
+Soit <span style="font-family:monospace">M</span> la matrice dont on cherche le noyau. <br>
+Soit <span style="font-family:monospace">A,U:=ihermite(transpose(M))</span>.<br>
+On a <span style="font-family:monospace">U=A*transpose(M)</span> donc <span style="font-family:monospace">transpose(U)=M*transpose(A)</span>.<br>
+Les colonnes nulles de <span style="font-family:monospace">transpose(U)</span> correspondent donc aux colonnes 
+de <span style="font-family:monospace">transpose(A)</span> qui sont dans <span style="font-family:monospace">Ker(M)</span>. Ainsi, les lignes nulles de 
+<span style="font-family:monospace">U</span> correspondent aux lignes de <span style="font-family:monospace">A</span> qui sont dans <span style="font-family:monospace">Ker(M)</span>.<br>
+ <span style="font-weight:bold">Exemple</span><br>
+Si <span style="font-family:monospace">M:=[[1,4,7],[2,5,8],[3,6,9]]</span><br>
+<span style="font-family:monospace">A,U:=ihermite(tran(M))</span> renvoie :<br>
+<span style="font-family:monospace">A:=[[-3,1,0],[4,-1,0],[-1,2,-1]]</span> et <br>
+<span style="font-family:monospace">U:=[[1,-1,-3],[0,3,6],[0,0,0]]</span><br>
+<span style="font-family:monospace">U[2]=[0,0,0]</span> donc une base de <span style="font-family:monospace">Ker(M)</span> est composée de 
+<span style="font-family:monospace">A[2]=[-1,2,-1]</span>.<br>
+On vérifie que l’a bien <span style="font-family:monospace">M*A[2]=[0,0,0]</span>.</p>
+<hr>
+<a href="cascmd_fr653.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr655.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

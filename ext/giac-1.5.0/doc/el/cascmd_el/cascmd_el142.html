@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Ανάπτυγμα υπερβατικών και τριγωνομετρικών παραστάσεων :  texpand tExpand</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el141.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el143.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc163">1.20.1</A>  Ανάπτυγμα υπερβατικών και τριγωνομετρικών παραστάσεων : <TT> texpand tExpand</TT></H3><P><A NAME="@default270"></A><A NAME="@default271"></A>
+	
+<TT>texpand</TT> ή 	
+<TT>tExpand</TT> παίρνει ως όρισμα μια
+παράσταση που περιέχει υπερβατικές ή τριγωνομετρικές συναρτήσεις.<BR>
+	
+<TT>texpand</TT> ή 	
+<TT>tExpand</TT> αναπτύσσει αυτές τις συναρτήσεις. Είναι σαν να καλούνται ταυτόχρονα οι
+	
+<TT>expexpand</TT>, 	
+<TT>lnexpand</TT> και 	
+<TT>trigexpand</TT>, όπου
+για παράδειγμα, η ln(<I>x</I><SUP><I>n</I></SUP>) γίνεται <I>n</I>ln(<I>x</I>), η exp(<I>nx</I>) 
+γίνεται exp(<I>x</I>)<SUP><I>n</I></SUP>, και η sin(2<I>x</I>) γίνεται 2sin(<I>x</I>)cos(<I>x</I>)...<BR>
+<B>Παραδείγματα</B> :<BR>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Αναπτύξτε την cos(<I>x</I>+<I>y</I>).<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>texpand(cos(x+y))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>cos(x)*cos(y)-sin(x)*sin(y)</TT></DIV>
+</LI><LI CLASS="li-enumerate">Αναπτύξτε την cos(3<I>x</I>).<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>texpand(cos(3*x))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>4*(cos(x))</TT><CODE><TT>^</TT></CODE><TT> 3-3*cos(x)</TT></DIV>
+</LI><LI CLASS="li-enumerate">Αναπτύξτε την  sin(3*<I>x</I>)+sin(7*<I>x</I>)/sin(5*<I>x</I>).<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>texpand((sin(3*x)+sin(7*x))/sin(5*x))</TT></DIV>
+Έξοδος
+<DIV CLASS="center">	
+<TT>(4*(cos(x))</TT><CODE><TT>^</TT></CODE><TT>2-1)*(sin(x)/(16*(cos(x))</TT><CODE><TT>^</TT></CODE><TT>4- 12*(cos(x))</TT><CODE><TT>^</TT></CODE><TT>2+1))/sin(x)+(64*(cos(x))</TT><CODE><TT>^</TT></CODE><TT>6- 80*(cos(x))</TT><CODE><TT>^</TT></CODE><TT>4+24*(cos(x))</TT><CODE><TT>^</TT></CODE><TT>2-1)*sin(x)/ (16*(cos(x))</TT><CODE><TT>^</TT></CODE><TT>4-12*(cos(x))</TT><CODE><TT>^</TT></CODE><TT>2+1)/sin(x)</TT></DIV>
+Έξοδος, μετά από απλοποίηση με την 	
+<TT>normal(ans())</TT> :
+<DIV CLASS="center">	
+<TT>4*(cos(x))</TT><CODE><TT>^</TT></CODE><TT>2-2</TT></DIV>
+</LI></OL></LI><LI CLASS="li-itemize"><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Αναπτύξτε την exp(<I>x</I>+<I>y</I>).<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>texpand(exp(x+y))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>exp(x)*exp(y)</TT></DIV>
+</LI><LI CLASS="li-enumerate">Αναπτύξτε την ln(<I>x</I>× <I>y</I>).<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>texpand(log(x*y))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>log(x)+log(y)</TT></DIV>
+</LI><LI CLASS="li-enumerate">Αναπτύξτε την ln(<I>x</I><SUP><I>n</I></SUP>).<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>texpand(ln(x</TT><CODE><TT>^</TT></CODE><TT>n))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>n*ln(x)</TT></DIV>
+</LI><LI CLASS="li-enumerate">Αναπτύξτε την ln((<I>e</I>2)+exp(2*ln(2))+<I>exp</I>(ln(3)+ln(2))).<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>texpand(log(e</TT><CODE><TT>^</TT></CODE><TT>2)+exp(2*log(2))+exp(log(3)+log(2)))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>6+3*2</TT></DIV>
+Ή εισάγετε :
+<DIV CLASS="center">	
+<TT>texpand(log(e</TT><CODE><TT>^</TT></CODE><TT>2)+exp(2*log(2)))+ lncollect(exp(log(3)+log(2)))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>12</TT></DIV>
+</LI></OL>
+</LI><LI CLASS="li-itemize">Αναπτύξτε την exp(<I>x</I>+<I>y</I>)+cos(<I>x</I>+<I>y</I>)+ln(3<I>x</I>2).<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>texpand(exp(x+y)+cos(x+y)+ln(3*x</TT><CODE><TT>^</TT></CODE><TT>2))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>cos(x)*cos(y)-sin(x)*sin(y)+exp(x)*exp(y)+ ln(3)+2*ln(x)</TT></DIV>
+</LI></UL><HR>
+<A HREF="cascmd_el141.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el143.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

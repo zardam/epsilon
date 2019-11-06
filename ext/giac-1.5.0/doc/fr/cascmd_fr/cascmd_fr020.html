@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Configuration du Cas</title>
+</head>
+<body >
+<a href="cascmd_fr019.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr021.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec34" class="subsection">1.6.1  Configuration du Cas</h3>
+<p><a id="sec:configcas"></a><a id="hevea_default10"></a>
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">Prog style</span> si on veut programmer en un autre langage : on peut 
+choisir <span style="font-family:monospace">maple</span>, <span style="font-family:monospace">mupad</span> ou <span style="font-family:monospace">ti89/92</span>,
+</li><li class="li-itemize"><span style="font-family:monospace">eval</span> : nombre maximum d’évaluations récursives en mode 
+interactif.<br>
+Par exemple, si on exécute dans l’ordre <code>a:=b+1</code> et <code>b:=5</code> puis on 
+évalue <code>a</code>, la valeur renvoyée sera <code>b+1</code> si <code>eval</code> vaut 1 et <code>6</code> si <code>eval</code> est plus grand que 1.
+</li><li class="li-itemize"><span style="font-family:monospace">prog</span> : comme ci-dessus mais lorsqu’un programme est exécuté. On 
+utilise en principe le niveau 1 d’évaluation à l’intérieur d’un programme.
+</li><li class="li-itemize"><span style="font-family:monospace">recurs</span> pour déterminer le nombre maximum d’appels récursifs :
+par defaut c’est 50. Il n’y a pas de limite imposée par l’interface de 
+<span style="font-family:monospace">Xcas</span>, par contre si on met une borne trop élevée, c’est la pile du 
+programme qui risque de déborder en provoquant un segmentation fault. 
+Le moment où cela se produit dépend de la fonction, car la pile est aussi 
+utilisée pour les appels récursifs des fonctions C++ de giac,
+</li><li class="li-itemize"><span style="font-family:monospace">debug</span> : affiche des informations intermédiaires (en bleu) sur les 
+algorithmes utilisés par giac en fonction du niveau (0 = pas d’info).
+</li><li class="li-itemize"><span style="font-family:monospace">maxiter</span> : nombre maximal d’itérations pour la méthode de Newton
+</li><li class="li-itemize"><span style="font-family:monospace">Flottants</span> on peut choisr <span style="font-family:monospace">Standard Scientific Engineer</span> pour que l’affichage des nombres décimaux se fasse selon :
+<ul class="itemize"><li class="li-itemize">
+la notation standard : <span style="font-family:monospace">150.12</span> sera noté <span style="font-family:monospace">150.12</span>,
+</li><li class="li-itemize">la notation scientifique : <span style="font-family:monospace">150.12</span> sera noté <span style="font-family:monospace">1.501200000000e+02</span>,
+</li><li class="li-itemize">la notation des ingénieurs : <span style="font-family:monospace">150.12</span> sera noté <span style="font-family:monospace">150.12e0</span>,
+</li></ul>
+</li><li class="li-itemize"><span style="font-family:monospace">Chiffres</span> pour détérminer le nombre de chiffres 
+significatifs. Si on choisit moins de 14 chiffres, les calculs sont quand 
+même faits avec 14 chiffres mais l’affichage n’en montre que ce que l’on 
+demande.
+</li><li class="li-itemize"><span style="font-family:monospace">epsilon</span> détermine la valeur de <span style="font-family:monospace">epsilon</span> utilisée dans 
+<span style="font-family:monospace">epsilon2zero</span>,
+</li><li class="li-itemize"><span style="font-family:monospace">proba</span> : si cette valeur est non nulle, Giac peut utiliser des 
+algorithmes non déterministes et renvoyer une réponse qui a alors une 
+probabilité d’être fausse inférieure à la valeur doée. C’est par exemple 
+le cas pour le calcul du déterminant d’une grande matrice à coefficients 
+entiers.
+</li><li class="li-itemize"><span style="font-family:monospace">approx</span> on coche cette case si on veut travailler en mode 
+numérique : si cette case n’est pas cochée on travaille en mode exact ou 
+formel. Lorsqu’on travaille en mode exact on peut avoir une évaluation 
+numérique en tapant sur la touche num ou en utilisant la commande <span style="font-family:monospace">evalf</span>
+ou encore en mettant des nombres decimaux (par exemple 1.0/2=0.5 alors que 1/2 
+est inchangé),
+</li><li class="li-itemize"><span style="font-family:monospace">autosimplify</span> pour effectuer une autosimplification. Il n’y a pas de 
+liste pour l’autosimplification parce qu’on peut mettre n’importe quelle 
+fonction, même si évidemment mettre <span style="font-family:monospace">sin</span> n’a aucun intérêt, mais 
+<span style="font-family:monospace">factor</span> ou <span style="font-family:monospace">partfrac</span> pourrait en avoir un. Il y a 3 niveaux de 
+simplification prédéfinis 0 (nop), 1 (regroup) ou 2 pour simplify, et donc 
+on peut mettre juste un nombre de 0 à 2. 
+</li><li class="li-itemize"><span style="font-family:monospace">taches</span> pour faire du parallelisme, dans le futur..., 
+</li><li class="li-itemize"><span style="font-family:monospace">Base (Entiers)</span> pour travailler en base 10, 16 ou 8, 
+</li><li class="li-itemize"><span style="font-family:monospace">radian</span> est l’unité d’angle si cette case est cochée, sinon 
+l’unité d’angle est le degré,
+</li><li class="li-itemize"><span style="font-family:monospace">Complexe</span> on coche cette case pour travailler en mode complexe : si 
+cette case n’est pas cochée on travaille en mode réel. Certaines commandes 
+cependant sont indépendante du mode choisi comme <span style="font-family:monospace">cpartfrac</span>, 
+<span style="font-family:monospace">csolve</span> ou <span style="font-family:monospace">cFactor</span>,
+</li><li class="li-itemize"><span style="font-family:monospace">Variables_complexes</span> on coche cette case pour travailler avec des 
+variables formelles complexes : si cette case n’est pas cochée les variables 
+formelles sont réelles (si la variable <span style="font-family:monospace">a</span> n’est pas 
+affectée <span style="font-family:monospace">re(a)=conj(a)=a</span> et <span style="font-family:monospace">im(a)=0</span>). Mais attention dans 
+<span style="font-family:monospace">csolve</span> l’inconnue est toujours considérée comme une variable formelle
+complexe et dans <span style="font-family:monospace">solve</span> l’inconnue est considérée comme une variable 
+formelle complexe seulement si l’equation à résoudre contient <span style="font-family:monospace">i</span> ou 
+bien si on est en mode complexe,
+</li><li class="li-itemize"><span style="font-family:monospace">puissance croissante</span> pour que l’affichage des polynômes se fasse 
+selon les puissances croissantes ou décroissantesaprès l’utilisation de 
+commandes comme <span style="font-family:monospace">normal</span> ou <span style="font-family:monospace">simplify</span>,
+</li><li class="li-itemize"><span style="font-family:monospace">All_trig_sol</span> : renvoie toutes les solutions d’une équation 
+trigonométrique (par exemple <code>solve(cos(x)=0)</code>) à l’aide de variables 
+entières ou seulement les solutions principales,
+</li><li class="li-itemize"><span style="font-family:monospace">Sqrt</span> : si <span style="font-family:monospace">Sqrt</span> est coché, <span style="font-family:monospace">factor</span> factorise les 
+polynômes du second degré, même si les facteurs ne sont pas dans le corps 
+de base des coefficients.
+</li><li class="li-itemize"><span style="font-family:monospace">Appliquer</span> pour avoir cette configuration,
+</li><li class="li-itemize"><span style="font-family:monospace">Sauver</span> pour avoir cette configuration par défaut,
+</li><li class="li-itemize"><span style="font-family:monospace">Annuler</span> pour revenir à l’ancienne configuration.
+</li></ul>
+<hr>
+<a href="cascmd_fr019.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr021.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

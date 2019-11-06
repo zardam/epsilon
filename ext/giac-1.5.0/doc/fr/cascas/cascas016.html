@@ -1,0 +1,360 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>Les jeux</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascas015.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas017.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc263">Chapitre 16</A>  Les jeux</H1><H2 CLASS="section"><A NAME="toc91"></A><A NAME="htoc264">16.1</A>  Un jeu</H2><P>
+On considère le jeu suivant :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Le joueur tire au hasard un nombre entre 1 et 10. Ce nombre est son gain,
+il peut le garder et la partie est finie.
+</LI><LI CLASS="li-itemize">Le joueur peut choisir d’abandonner ce gain et de recommencer. Il lui est
+permis de tirer ainsi au plus 5 fois et son gain est le résultat du dernier 
+tirage lorsqu’il a abandonné les gains des 4 tirages précédents.
+</LI></UL><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Écrire un programme qui réalise ce jeu, 
+</LI><LI CLASS="li-enumerate">Le joueur choisit 4 nombres <I>n</I><SUB>1</SUB>,<I>n</I><SUB>2</SUB>,<I>n</I><SUB>3</SUB>,<I>n</I><SUB>4</SUB> compris entre 1 et 10 et 
+choisit comme stratégie de garder son gain du <I>j</I>ième essai si celui-ci est
+supérieur ou égal à <I>n</I><SUB><I>j</I></SUB> sinon il recommence (si <I>n</I><SUB>1</SUB>=9, <I>n</I><SUB>2</SUB>=8, <I>n</I><SUB>3</SUB>=6, <I>n</I><SUB>4</SUB>=5 avec le tirage 2,7,8, le gain est 8 mais avec le tirage 8,7,5,4,2 le gain est 2).<BR>
+Il joue 100 parties selon cette stratégie avec les mêmes <I>n</I><SUB><I>j</I></SUB>.
+Écrire un programme donnant la moyenne des gains obtenus. A vous de jouer !.
+</LI></OL><PRE CLASS="verbatim">jeu1():={
+ //repondre o pour dire oui
+ local j,g,rep;
+ pour j de 1 jusque 4 faire
+   g:=alea(10)+1;afficher(g);
+   lis_phrase(rep);
+   si rep=="o" alors retourne g; fsi;
+ fpour;
+ retourne alea(10)+1;
+}:;
+</PRE><P><TT>jeu2</TT> a comme paramètre <TT>L</TT> qui est la séquence <I>n</I><SUB>1</SUB>,<I>n</I><SUB>2</SUB>,<I>n</I><SUB>3</SUB>,<I>n</I><SUB>4</SUB>
+puis <I>LL</I> est la suite <I>n</I><SUB>1</SUB>,<I>n</I><SUB>2</SUB>,<I>n</I><SUB>3</SUB>,<I>n</I><SUB>4</SUB>,0 de façon à ce que <I>LL</I>[<I>j</I>] 
+soit définie pour <I>j</I>=0..4 (<I>LL</I>[0]=<I>n</I><SUB>1</SUB>).<BR>
+<TT>jeu102</TT> est la moyenne des gains de 100 parties faites avec <TT>jeu2</TT>.
+</P><PRE CLASS="verbatim">jeu2(L):={
+ local j,g,LL;
+ LL:=L,0;
+ pour j de 0 jusque 4 faire
+   g:=alea(10)+1;afficher(g);
+   si g&gt;=LL[j] alors break fsi;
+ fpour;
+ retourne g;
+}:;
+jeu102(L):={
+ local g,j;
+ g:=0;
+ pour j de 1 jusque 100 faire
+   g:=g+jeu2(L);
+ fpour;
+ retourne evalf(g/100);
+}:;
+</PRE><P>À vous de trouver la meilleure stratégie !
+</P><H2 CLASS="section"><A NAME="toc92"></A><A NAME="htoc265">16.2</A>  Le Master-Mind</H2><H3 CLASS="subsection"><A NAME="htoc266">16.2.1</A>  La règle du jeu</H3><P>
+L’ordinateur sera ici le codificateur : il choisit une combinaison de 4 
+couleurs, différentes ou non, parmi les 6 disponibles numérotées de 0 
+à 5 (noir, rouge, vert, jaune, bleu, magenta). Par exemple (0,5,2,5)<BR>
+Le joueur doit essayer de deviner la combinaison choisit en donnant une
+proposition. Par exemple (5,4,2,1).<BR>
+Le codificateur donne alors son verdict en donnant 1 marqueur noir par couleur 
+se trouvant à la bonne place et un marqueur blanc par couleur trouvée mais 
+ne se trouvant pas à la bonne place. Avec l’exemple il répond 1N et 1B.<BR>
+Le joueur peut faire au plus <I>nc</I> propositions (en général <I>nc</I>=10).<BR>
+<B>Variante</B> On peut permettre une septième couleur de numéro 6 (cyan)
+mais le codificateur ne peut pas choisir la combinaison (6,6,6,6). 
+</P><H3 CLASS="subsection"><A NAME="htoc267">16.2.2</A>  Le programme du Master-Mind</H3><PRE CLASS="verbatim">masterm(nc):={
+local L,R,R0,n,j,N,B,a;
+L:=[alea(6)$(j=1..4)];
+n:=0;
+while (n&lt;nc) {
+saisir(R);
+R:=[R];n:=n+1;R0:=R;
+N:=0;B:=0;j:=0;
+pour j de 0 jusque 3 faire 
+a:=R[j];si a==L[j] alors N:=N+1; fsi;
+fpour;
+if (N==4) alors return "gagne en "+n+" coups";fsi;
+while (0&lt;=size(R)-1){
+a:=R[0];B:=B+min(count_eq(a,R),count_eq(a,L));
+R:=remove(a,R);j:=j+1;
+};
+afficher(R0+", "+N+" N, "+(B-N)+" B");
+}
+return ("perdu " , L); 
+}:;
+</PRE><H3 CLASS="subsection"><A NAME="htoc268">16.2.3</A>  Le programme de la variante du Master-Mind</H3><P>
+Il faut vérifier que la liste choisie n’est pas (6,6,6,6) avec la 
+fonction :<BR>
+<TT>nonconst(L,6)</TT> ci dessous :
+</P><PRE CLASS="verbatim">nonconst(L,a):={
+local j,n:=size(L);
+pour j de 0 jusque n-1 faire
+si L[j]!=a alors return 1 fsi;
+fpour;
+return 0;
+}
+:;
+mastervariante(nc):={
+local L,R,R0,n,j,N,B,a;
+repeter L:=[alea(7)$(j=1..4)]; jusqua nonconst(L,6);
+n:=0;
+while (n&lt;nc) {
+saisir(R);
+R:=[R];n:=n+1;R0:=R;
+N:=0;B:=0;j:=0;
+pour j de 0 jusque 3 faire 
+a:=R[j];si a==L[j] alors N:=N+1; fsi;
+fpour;
+if (N==4) alors return "gagne en "+n+" coups";fsi;
+while (0&lt;=size(R)-1){
+a:=R[0];B:=B+min(count_eq(a,R),count_eq(a,L));
+R:=remove(a,R);j:=j+1;
+};
+afficher(R0+", "+N+" N, "+(B-N)+" B");
+}
+return ("perdu " , L); 
+}
+:;
+</PRE><H3 CLASS="subsection"><A NAME="htoc269">16.2.4</A>  Le mastermind avec les couleurs</H3><P>
+Le joueur devra maintenant taper les couleurs (ou juste sa première lettre)
+qu’il choisit (entourée de ‘<TT>"</TT>). On tape pour transformer la liste des 
+couleurs en la liste de leur code.
+</P><PRE CLASS="verbatim">conv(L):={
+  local d,j,R;
+  d:=size(L);
+  R:=makelist(0,1,d);
+  pour j de 0 jusque d-1 faire 
+   if L[j][0]=="n" or L[j][0]=="N" alors R[j]:=0;elif
+    L[j][0]=="r" or L[j][0]=="R" alors R[j]:=1;elif
+     L[j][0]=="v" or L[j][0]=="V" alors R[j]:=2;elif
+      L[j][0]=="j" or L[j][0]=="J" alors R[j]:=3;elif
+       L[j][0]=="b" or L[j][0]=="B" alors R[j]:=4;elif
+        L[j][0]=="m" or L[j][0]=="M" alors R[j]:=5;end;
+  fpour;
+  return R;
+}:;
+</PRE><P>On tape pour transformer une liste de code couleur en des carrés de couleur, 
+suivi de disques noir ou blanc qui donnent le résultat de l’essai. 
+</P><PRE CLASS="verbatim">L2C(l,n,N,B):={
+local d,j,C;
+C:=NULL;
+d:=size(l);
+pour j de 0 jusque d-1 faire
+C:=C,affichage(carre(-5+j/4+(5-n/4)*i,-5+(j+1)/4+(5-n/4)*i),
+                                               l[j]+rempli);
+fpour;
+pour j de 1 jusque N faire
+C:=C,affichage(cercle(-5+(d)/4+j/4+(5-n/4+1/8)*i,0.1),rempli);
+fpour;
+pour j de 1 jusque B faire
+C:=C,cercle(-5+(d+N+j)/4+(5-n/4+1/8)*i,0.08);
+fpour;
+return C;
+}
+:;
+</PRE><P>Dans le programme <TT>mastermind(nc)</TT>, le joueur devra taper une chaine de 4 
+lettres sans les guillemets (<TT>"</TT>) qui sont les initiales des noms des 
+couleurs par exemple <TT>rvnn</TT> si vous péférez taper une liste de 
+caractères par exemple <TT>"r","v","n","n"</TT> il faut décommenter 
+<TT>saisir(R); R:=conv([R]);</TT> et commenter la ligne
+suivante. Le programme remplacera une lettre non valide par <TT>"n"</TT>.
+On tape si Le joueur peut faire au plus <I>nc</I> propositions :
+</P><PRE CLASS="verbatim">mastermind(nc):={
+local L,R,R0,n,j,N,B,a;
+print("jeu du mastermind");
+print("taper 4 couleurs parmi NRVJBM par ex RVNB");
+gl_x=-5.3.2;
+gl_y=-2..5.3;
+ClrGraph();DispG();
+L:=[alea(6)$(j=1..4)];
+n:=0;
+while (n&lt;nc) {
+//saisir(R); R:=conv([R]);
+repeter saisir_chaine("4 couleurs parmi NRJVBM, ex. RRBJ",R); jusqua size(R)==4;
+R:=conv(R);
+n:=n+1;R0:=R;
+N:=0;B:=0;j:=0;
+pour j de 0 jusque 3 faire 
+a:=R[j];si a==L[j] alors N:=N+1; fsi;
+fpour;
+si (N==4) alors 
+L2C(R0,n,4,0),L2C(L,n+2,0,0);DispG();
+return afficher("gagne en "+n+" coups");
+fsi;
+while (0&lt;=size(R)-1){
+a:=R[0];B:=B+min(count_eq(a,R),count_eq(a,L));
+R:=remove(a,R);j:=j+1;
+};
+B:=B-N;
+L2C(R0,n,N,B);DispG();
+}
+L2C(L,n+2,0,0);
+return afficher(("perdu " , L));
+}:;
+</PRE><P>A vous de programmer la variante avec les couleurs !
+</P><H2 CLASS="section"><A NAME="toc93"></A><A NAME="htoc270">16.3</A>  Les 4 dés du jeu de Win</H2><P>
+On considère les 4 dés suivants :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+les faces du dé <TT>A</TT> ont comme points : <TT>0,0,4,4,4,4</TT>, 
+</LI><LI CLASS="li-itemize">les faces du dé <TT>B</TT> ont comme points : <TT>1,1,1,5,5,5</TT>,
+</LI><LI CLASS="li-itemize">les faces du dé <TT>C</TT> ont comme points : <TT>2,2,2,2,6,6</TT>,
+</LI><LI CLASS="li-itemize">les faces du dé <TT>D</TT> ont comme points : <TT>3,3,3,3,3,3</TT>,
+</LI></UL><P>
+La partie se compose de 12 lancers.<BR>
+Pour une partie, chacun des joueurs choisit un dé. À chaque lancer, celui
+qui a le meilleur score marque 1 point. La partie se compose de 12 lancers.<BR>
+On veut simuler ce jeu pour que l’on puisse jouer contre l’ordinateur.
+L’ordinateur tire au hasard un dé, vous donne son choix, puis vous
+choisisez un dé parmi les 3 dés qui restent. Puis vous jouez....<BR>
+Quel dé faut-il choisir pour gagner contre l’ordinateur ?<BR>
+
+On se reportera à la section <A HREF="cascas009.html#sec:win">9.3</A> pour voir l’analyse du jeu.<BR>
+On utilise les listes A,B,C,D pour representer chaque dé, et pour jouer,
+on tape : 
+</P><PRE CLASS="verbatim">jeuwin():={
+local deo,dem,po,pm,scoro,j,A,B,C,D;
+deo:=char(rand(4)+65);
+print("j'ai choisi le de "+ deo);
+A:=[0,0,4,4,4,4];
+B:=[1,1,1,5,5,5];
+C:=[2,2,2,2,6,6];
+D:=[3,3,3,3,3,3];
+deo:=expr(deo);
+repeter saisir("votre choix",dem);
+jusqua dem!=deo;
+scoro:=0;
+for (j:=0;j&lt;12;j++){
+po:=deo[rand(6)];
+pm:=dem[rand(6)];
+print(po,pm);
+if (po&gt;pm) scoro:=scoro+1;
+}
+return [scoro,12-scoro];
+}
+:;
+</PRE><P>Ma stratégie :<BR>
+Si l’ordinateur choisit le dé A, je choisis le dé B,<BR>
+Si l’ordinateur choisit le dé B, je choisis le dé C,<BR>
+Si l’ordinateur choisit le dé C, je choisis le dé D,<BR>
+Si l’ordinateur choisit le dé D, je choisis le dé A,<BR>
+on tape <TT>jeuwins()</TT> qui joue selon cette stratégie.<BR>
+Pour connaitre le score de <I>n</I> parties selon cette stratégie, on tape 
+<TT>jeuxwin(n)</TT> :
+</P><PRE CLASS="verbatim">jeuwins():={
+local deo,dem,po,pm,scoro,j,A,B,C,D;
+A:=[0,0,4,4,4,4];
+B:=[1,1,1,5,5,5];
+C:=[2,2,2,2,6,6];
+D:=[3,3,3,3,3,3];
+deo:=rand(4);
+dem:=irem(deo+1,4); 
+scoro:=0;
+deo:=expr(char(deo+65));
+dem:=expr(char(dem+65));
+for (j:=0;j&lt;12;j++){
+po:=deo[rand(6)];
+pm:=dem[rand(6)];
+if (po&gt;pm) scoro:=scoro+1;
+}
+return [scoro,12-scoro];
+}
+:;
+jeuxwin(n):={
+local scoro,j;
+scoro:=0;
+pour j de 1 jusque n faire 
+scoro:=scoro+jeuwins()[0];
+fpour;
+return [scoro,12*n-scoro];
+}:;
+</PRE><P>On tape :<BR>
+<TT>jeuxwin(200)</TT><BR>
+On obtient :<BR>
+<TT>[836,1564]</TT><BR>
+0n a 836/2400.,1564/2400.∼ 0.348333333333,0.651666666667 soit environ 
+1/3,2/3.
+</P><H2 CLASS="section"><A NAME="toc94"></A><A NAME="htoc271">16.4</A>  Un jeu de cartes</H2><P>
+Un joueur reçoit 4 cartes d’un jeu de 32 cartes. 
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+si il a un carré il reçoit 5082 euros
+</LI><LI CLASS="li-itemize">si il a un brelan (3 cartes de même hauteur) il reçoit 50 euros
+</LI><LI CLASS="li-itemize">si il a deux paires il reçoit 45 euros
+</LI><LI CLASS="li-itemize">si il a une paire il reçoit 5082 euros
+</LI><LI CLASS="li-itemize">sinon il doit payer 10 euros
+</LI></UL><P>
+Ce jeu est-il équitable ?<BR>
+Faire un programme qui permet de faire <I>n</I> parties de ce jeu.</P><P>Il y a <TT>comb(32,4)=35960</TT> mains possibles.<BR>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+IL y a <TT>comb(8,1)=8</TT> possibilités d’avoir un carré.<BR>
+La probabilité d’avoir un carré est donc : <TT>8/35960=1/4495</TT>
+</LI><LI CLASS="li-itemize">IL y a <TT>comb(8,1)*comb(4,3)*comb(28,1)=896</TT> possibilités d’avoir 
+un brelan.<BR>
+La probabilité d’avoir un brelan est donc : <TT>896/35960=112/4495</TT>
+</LI><LI CLASS="li-itemize">IL y a <TT>comb(8,1)*comb(4,2)*comb(7,1)*comb(4,2)/2=1008</TT> 
+possibilités d’avoir deux paires.<BR>
+La probabilité d’avoir deux paires est donc :<TT>1008/35960=126/4495</TT>
+</LI><LI CLASS="li-itemize">IL y a <TT>comb(8,1)*comb(4,2)*comb(28,1)*comb(24,1)/2=16128</TT> (ou encore <TT>comb(8,1)*comb(4,2)*(comb(28,2)-comb(7,1)*comb(4,2))=16128</TT>) possibilités d’avoir une paire.<BR>
+La probabilité d’avoir une paire est donc :<TT>16128/35960=2016/4495</TT>
+</LI><LI CLASS="li-itemize">On utilise la probabilité complémentaire de ne pas avoir ni carré,
+ni brelan, ni paires : <TT>1-(1+112+126+2016)/4495=448/899</TT>
+</LI></UL><P>
+Le jeu est équitable si l’espérance de gain est nulle.<BR>
+ On tape :<BR>
+<TT>(5082+112*50+126*45+3*2016)/4495-10*448/899</TT><BR>
+On obtient <TT>0</TT><BR>
+Le jeu est donc équitable.<BR>
+On tape le programme en representant une carte par un nombre de 0 à 31
+0..7 pour les trèfles, 8..15 pour les carreaux, 16..23 pour les cœurs et
+24..31 pour les piques. On tire au hasard 4 nombres <I>a</I>,<I>b</I>,<I>c</I>,<I>d</I> différents 
+parmi 0..31 (<TT>hasard(4,0..31)</TT>), on aura un carré si :<BR>
+<TT>irem(a,8)==irem(b,8)==irem(c,8)==irem(d,8)</TT>
+</P><PRE CLASS="verbatim">cartes(n):={
+  local j,s,a,b,c,d,na,nb,nc,L;
+  s:=0;
+  pour j de 1 jusque n faire
+    a,b,c,d:= irem(hasard(4,0,31),8);
+    L:=[a,b,c,d];
+    //print(L);
+    na:=count(x-&gt;x==a,L);
+    nb:=count(x-&gt;x==b,L);
+    nc:=count(x-&gt;x==c,L);
+    if na==4 alors s:=s+5082; elif
+      na==3 or nb==3 alors s:=s+50; elif
+        na==2 and nb==2 and nc==2 alors s:=s+45; elif
+          na==1 and nb==1 and nc==1 alors s:=s-10; 
+           else 
+            s:=s+3;
+          end;
+        fpour;
+        return s;}
+      :;
+</PRE><P>On fait le graphe des gains pour <I>p</I> parties de <I>n</I> tirages.
+</P><PRE CLASS="verbatim">gain(p,n):={
+local G,k,s,c;
+G:=NULL;
+s:=0
+pour k de 1 jusque p faire
+c:=cartes(n);
+//print(c);
+G:=G,point(k,c);
+s:=s+c;
+fpour;
+print (evalf(s/(p*n)));
+return G;
+}:;
+</PRE><HR>
+<A HREF="cascas015.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas017.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

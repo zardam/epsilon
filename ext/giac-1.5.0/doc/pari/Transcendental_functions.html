@@ -1,0 +1,883 @@
+<HTML>
+<HEAD>
+  <TITLE>
+    Catalogue of GP/PARI Functions: Transcendental functions
+  </TITLE>
+
+  <META NAME="author"       CONTENT="Nils-Peter Skoruppa">
+  <META NAME="created"      CONTENT="Sat Mar 22 18:13:28 2014">
+  <META NAME="author-email" CONTENT="skoruppa@math.uni-siegen.de">
+  <META NAME="keywords"     CONTENT="PARI, GP, DOC">
+  <link rel="stylesheet" href="/pari.css">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+
+<h3 align=center>Transcendental functions</h3>
+
+<a name="^"></a>
+<h4>^</h4>
+<p> The expression x{<code>^</code>}n is powering.
+If the exponent is an integer, then exact operations are performed using
+binary (left-shift) powering techniques. In particular, in this case x
+cannot be a vector or matrix unless it is a square matrix (invertible
+if the exponent is negative). If x is a p-adic number, its
+precision will increase if v_p(n) &#62; 0. Powering a binary quadratic form
+(types <code>t_QFI</code> and <code>t_QFR</code>) returns a reduced representative of the
+class, provided the input is reduced. In particular, x{<code>^</code>}1 is
+identical to x.</p>
+<p>
+PARI is able to rewrite the multiplication x * x of two <em>identical</em>
+objects as x^2, or <code>sqr</code>(x). Here, identical means the operands are
+two different labels referencing the same chunk of memory; no equality test
+is performed. This is no longer true when more than two arguments are
+involved.</p>
+<p>
+If the exponent is not of type integer, this is treated as a transcendental
+function (see Section [<b>Label: se:trans</b>]), and in particular has the effect of
+componentwise powering on vector or matrices.</p>
+<p>
+As an exception, if the exponent is a rational number p/q and x an
+integer modulo a prime or a p-adic number, return a solution y of
+y^q = x^p if it exists. Currently, q must not have large prime factors.
+Beware that</p>
+<p>
+<pre class="code">  ? Mod(7,19)^(1/2)
+  %1 = Mod(11, 19) /* is any square root */
+  ? sqrt(Mod(7,19))
+  %2 = Mod(8, 19)  /* is the smallest square root */
+  ? Mod(7,19)^(3/5)
+  %3 = Mod(1, 19)
+  ? %3^(5/3)
+  %4 = Mod(1, 19)  /* Mod(7,19) is just another cubic root */
+</pre></p>
+<p></p>
+<p>
+If the exponent is a negative integer, an inverse must be computed.
+For non-invertible <code>t_INTMOD</code>, this will fail and implicitly exhibit a
+non trivial factor of the modulus:</p>
+<p>
+<pre class="code">  ? Mod(4,6)^(-1)
+    ***   at top-level: Mod(4,6)^(-1)
+    ***                         ^-----
+    *** _^_: impossible inverse modulo: Mod(2, 6).
+</pre></p>
+<p>
+(Here, a factor 2 is obtained directly. In general, take the gcd of the
+representative and the modulus.) This is most useful when performing
+complicated operations modulo an integer N whose factorization is
+unknown. Either the computation succeeds and all is well, or a factor d
+is discovered and the computation may be restarted modulo d or N/d.</p>
+<p>
+For non-invertible <code>t_POLMOD</code>, this will fail without exhibiting a
+factor.</p>
+<p>
+<pre class="code">  ? Mod(x^2, x^3-x)^(-1)
+    ***   at top-level: Mod(x^2,x^3-x)^(-1)
+    ***                               ^-----
+    *** _^_: non-invertible polynomial in RgXQ_inv.
+  ? a = Mod(3,4)*y^3 + Mod(1,4); b = y^6+y^5+y^4+y^3+y^2+y+1;
+  ? Mod(a, b)^(-1);
+    ***   at top-level: Mod(a,b)^(-1)
+    ***                         ^-----
+    *** _^_: impossible inverse modulo: Mod(0, 4).
+</pre></p>
+<p>
+In fact the latter polynomial is invertible, but the algorithm used
+(subresultant) assumes the base ring is a domain. If it is not the case,
+as here for <b>Z</b>/4<b>Z</b>, a result will be correct but chances are an error
+will occur first. In this specific case, one should work with 2-adics.
+In general, one can try the following approach</p>
+<p>
+<pre class="code">  ? inversemod(a, b) =
+  { my(m);
+    m = polsylvestermatrix(polrecip(a), polrecip(b));
+    m = matinverseimage(m, matid(#m)[,1]);
+    Polrev( vecextract(m, Str("..", poldegree(b))), variable(b) )
+  }
+  ? inversemod(a,b)
+  %2 = Mod(2,4)*y^5 + Mod(3,4)*y^3 + Mod(1,4)*y^2 + Mod(3,4)*y + Mod(2,4)
+</pre></p>
+<p>
+This is not guaranteed to work either since it must invert pivots. See
+Section [<b>Label: se:linear_algebra</b>].</p>
+<p>
+The library syntax is <code>GEN <b>gpow</b>(GEN x, GEN n, long prec)</code>
+for x{<code>^</code>}n.</p>
+<p></p>
+
+<hr></hr>
+<a name="Catalan"></a>
+<h4>Catalan</h4>
+<p></p>
+<p>Catalan's constant G = <font color=#FF0000>sum</font>_{n &#62;= 0}((-1)^n)/((2n+1)^2) = 0.91596....
+Note that <code>Catalan</code> is one of the few reserved names which cannot be
+used for user variables.</p>
+<p>
+The library syntax is <code>GEN <b>mpcatalan</b>(long prec)</code>.</p>
+
+<hr></hr>
+<a name="Euler"></a>
+<h4>Euler</h4>
+<p></p>
+<p>Euler's constant <font color=#FF0000>gamma</font> = 0.57721.... Note that
+<code>Euler</code> is one of the few reserved names which cannot be used for
+user variables.</p>
+<p>
+The library syntax is <code>GEN <b>mpeuler</b>(long prec)</code>.</p>
+
+<hr></hr>
+<a name="I"></a>
+<h4>I</h4>
+<p></p>
+<p>The complex number sqrt{-1}.</p>
+<p>
+The library syntax is <code>GEN <b>gen_I</b>()</code>.</p>
+
+<hr></hr>
+<a name="Pi"></a>
+<h4>Pi</h4>
+<p></p>
+<p>The constant <font color=#FF0000>Pi</font> (3.14159...). Note that <code>Pi</code> is one of the few
+reserved names which cannot be used for user variables.</p>
+<p>
+The library syntax is <code>GEN <b>mppi</b>(long prec)</code>.</p>
+
+<hr></hr>
+<a name="abs"></a>
+<h4>abs(x)</h4>
+<p></p>
+<p>Absolute value of x (modulus if x is complex).
+Rational functions are not allowed. Contrary to most transcendental
+functions, an exact argument is <em>not</em> converted to a real number before
+applying <code>abs</code> and an exact result is returned if possible.</p>
+<p>
+<pre class="code">  ? abs(-1)
+  %1 = 1
+  ? abs(3/7 + 4/7*I)
+  %2 = 5/7
+  ? abs(1 + I)
+  %3 = 1.414213562373095048801688724
+</pre></p>
+<p>
+If x is a polynomial, returns -x if the leading coefficient is
+real and negative else returns x. For a power series, the constant
+coefficient is considered instead.</p>
+<p>
+The library syntax is <code>GEN <b>gabs</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="acos"></a>
+<h4>acos(x)</h4>
+<p></p>
+<p>Principal branch of {cos}^{-1}(x) = -i log (x + isqrt{1-x^2}).
+In particular, {Re(acos}(x)) belongs to [0,<font color=#FF0000>Pi</font>] and if x belongs to <b>R</b> and |x| &#62; 1,
+then {acos}(x) is complex. The branch cut is in two pieces:
+]- oo ,-1] , continuous with quadrant II, and [1,+ oo [, continuous
+with quadrant IV. We have {acos}(x) = <font color=#FF0000>Pi</font>/2 - {asin}(x) for all
+x.</p>
+<p>
+The library syntax is <code>GEN <b>gacos</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="acosh"></a>
+<h4>acosh(x)</h4>
+<p></p>
+<p>Principal branch of {cosh}^{-1}(x) = 2
+ log(sqrt{(x+1)/2} + sqrt{(x-1)/2}). In particular,
+{Re}({acosh}(x)) <code>&#62;=</code> 0 and
+{In}({acosh}(x)) belongs to ]-<font color=#FF0000>Pi</font>,<font color=#FF0000>Pi</font>]0; if x belongs to <b>R</b> and x &#60; 1, then
+{acosh}(x) is complex.</p>
+<p>
+The library syntax is <code>GEN <b>gacosh</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="agm"></a>
+<h4>agm(x,y)</h4>
+<p></p>
+<p>Arithmetic-geometric mean of x and y. In the
+case of complex or negative numbers, the optimal AGM is returned
+(the largest in absolute value over all choices of the signs of the square
+roots).  p-adic or power series arguments are also allowed. Note that
+a p-adic agm exists only if x/y is congruent to 1 modulo p (modulo
+16 for p = 2). x and y cannot both be vectors or matrices.</p>
+<p>
+The library syntax is <code>GEN <b>agm</b>(GEN x, GEN y, long prec)</code>.</p>
+
+<hr></hr>
+<a name="arg"></a>
+<h4>arg(x)</h4>
+<p></p>
+<p>Argument of the complex number x, such that -<font color=#FF0000>Pi</font> &#60; {arg}(x) <code>&#60;=</code> <font color=#FF0000>Pi</font>.</p>
+<p>
+The library syntax is <code>GEN <b>garg</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="asin"></a>
+<h4>asin(x)</h4>
+<p></p>
+<p>Principal branch of {sin}^{-1}(x) = -i log(ix + sqrt{1 - x^2}).
+In particular, {Re(asin}(x)) belongs to [-<font color=#FF0000>Pi</font>/2,<font color=#FF0000>Pi</font>/2] and if x belongs to <b>R</b> and
+|x| &#62; 1 then {asin}(x) is complex. The branch cut is in two pieces:
+]- oo ,-1], continuous with quadrant II, and [1,+ oo [ continuous
+with quadrant IV. The function satisfies i {asin}(x) = 
+{asinh}(ix).</p>
+<p>
+The library syntax is <code>GEN <b>gasin</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="asinh"></a>
+<h4>asinh(x)</h4>
+<p></p>
+<p>Principal branch of {sinh}^{-1}(x) = log(x + sqrt{1+x^2}). In
+particular {Im(asinh}(x)) belongs to [-<font color=#FF0000>Pi</font>/2,<font color=#FF0000>Pi</font>/2].
+The branch cut is in two pieces: [-i oo ,-i],  continuous with quadrant III
+and [i,+i oo [ continuous with quadrant I.</p>
+<p>
+The library syntax is <code>GEN <b>gasinh</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="atan"></a>
+<h4>atan(x)</h4>
+<p></p>
+<p>Principal branch of {tan}^{-1}(x) = log ((1+ix)/(1-ix)) /
+2i. In particular the real part of {atan}(x)) belongs to
+]-<font color=#FF0000>Pi</font>/2,<font color=#FF0000>Pi</font>/2[.
+The branch cut is in two pieces:
+]-i oo ,-i[, continuous with quadrant IV, and ]i,+i  oo [ continuous
+with quadrant II. The function satisfies i {atan}(x) = 
+-i{atanh}(ix) for all x != &#177; i.</p>
+<p>
+The library syntax is <code>GEN <b>gatan</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="atanh"></a>
+<h4>atanh(x)</h4>
+<p></p>
+<p>Principal branch of {tanh}^{-1}(x) = log ((1+x)/(1-x)) / 2. In
+particular the imaginary part of {atanh}(x) belongs to
+[-<font color=#FF0000>Pi</font>/2,<font color=#FF0000>Pi</font>/2]; if x belongs to <b>R</b> and |x| &#62; 1 then {atanh}(x) is complex.</p>
+<p>
+The library syntax is <code>GEN <b>gatanh</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="bernfrac"></a>
+<h4>bernfrac(x)</h4>
+<p></p>
+<p>Bernoulli number B_x,
+where B_0 = 1, B_1 = -1/2, B_2 = 1/6,..., expressed as a rational number.
+The argument x should be of type integer.</p>
+<p>
+The library syntax is <code>GEN <b>bernfrac</b>(long x)</code>.</p>
+
+<hr></hr>
+<a name="bernpol"></a>
+<h4>bernpol(n, {v = 'x})</h4>
+<p></p>
+<p>Bernoulli polynomial B_n in variable v.</p>
+<p>
+<pre class="code">  ? bernpol(1)
+  %1 = x - 1/2
+  ? bernpol(3)
+  %2 = x^3 - 3/2*x^2 + 1/2*x
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>bernpol</b>(long n, long v = -1)</code>, where <code>v </code> is a variable number.</p>
+
+<hr></hr>
+<a name="bernreal"></a>
+<h4>bernreal(x)</h4>
+<p></p>
+<p>Bernoulli number
+B_x, as <code>bernfrac</code>, but B_x is returned as a real number
+(with the current precision).</p>
+<p>
+The library syntax is <code>GEN <b>bernreal</b>(long x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="bernvec"></a>
+<h4>bernvec(x)</h4>
+<p></p>
+<p>Creates a vector containing, as rational numbers,
+the Bernoulli numbers B_0, B_2,..., B_{2x}.
+This routine is obsolete. Use <code>bernfrac</code> instead each time you need a
+Bernoulli number in exact form.</p>
+<p>
+<b>Note.</b> This routine is implemented using repeated independent
+calls to <code>bernfrac</code>, which is faster than the standard recursion in exact
+arithmetic. It is only kept for backward compatibility: it is not faster than
+individual calls to <code>bernfrac</code>, its output uses a lot of memory space,
+and coping with the index shift is awkward.</p>
+<p>
+The library syntax is <code>GEN <b>bernvec</b>(long x)</code>.</p>
+
+<hr></hr>
+<a name="besselh1"></a>
+<h4>besselh1(<em>nu</em>,x)</h4>
+<p></p>
+<p>H^1-Bessel function of index <em>nu</em> and argument x.</p>
+<p>
+The library syntax is <code>GEN <b>hbessel1</b>(GEN nu, GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="besselh2"></a>
+<h4>besselh2(<em>nu</em>,x)</h4>
+<p></p>
+<p>H^2-Bessel function of index <em>nu</em> and argument x.</p>
+<p>
+The library syntax is <code>GEN <b>hbessel2</b>(GEN nu, GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="besseli"></a>
+<h4>besseli(<em>nu</em>,x)</h4>
+<p></p>
+<p>I-Bessel function of index <em>nu</em> and
+argument x. If x converts to a power series, the initial factor
+(x/2)^<font color=#FF0000>nu</font>/<font color=#FF0000>Gamma</font>(<font color=#FF0000>nu</font>+1) is omitted (since it cannot be represented in PARI
+when <font color=#FF0000>nu</font> is not integral).</p>
+<p>
+The library syntax is <code>GEN <b>ibessel</b>(GEN nu, GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="besselj"></a>
+<h4>besselj(<em>nu</em>,x)</h4>
+<p></p>
+<p>J-Bessel function of index <em>nu</em> and
+argument x. If x converts to a power series, the initial factor
+(x/2)^<font color=#FF0000>nu</font>/<font color=#FF0000>Gamma</font>(<font color=#FF0000>nu</font>+1) is omitted (since it cannot be represented in PARI
+when <font color=#FF0000>nu</font> is not integral).</p>
+<p>
+The library syntax is <code>GEN <b>jbessel</b>(GEN nu, GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="besseljh"></a>
+<h4>besseljh(n,x)</h4>
+<p></p>
+<p>J-Bessel function of half integral index.
+More precisely, <code>besseljh</code>(n,x) computes J_{n+1/2}(x) where n
+must be of type integer, and x is any element of <b>C</b>. In the
+present version <b>2.7.0</b>, this function is not very accurate when x is small.</p>
+<p>
+The library syntax is <code>GEN <b>jbesselh</b>(GEN n, GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="besselk"></a>
+<h4>besselk(<em>nu</em>,x)</h4>
+<p></p>
+<p>K-Bessel function of index <em>nu</em> and argument x.</p>
+<p>
+The library syntax is <code>GEN <b>kbessel</b>(GEN nu, GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="besseln"></a>
+<h4>besseln(<em>nu</em>,x)</h4>
+<p></p>
+<p>N-Bessel function of index <em>nu</em> and argument x.</p>
+<p>
+The library syntax is <code>GEN <b>nbessel</b>(GEN nu, GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="cos"></a>
+<h4>cos(x)</h4>
+<p></p>
+<p>Cosine of x.</p>
+<p>
+The library syntax is <code>GEN <b>gcos</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="cosh"></a>
+<h4>cosh(x)</h4>
+<p></p>
+<p>Hyperbolic cosine of x.</p>
+<p>
+The library syntax is <code>GEN <b>gcosh</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="cotan"></a>
+<h4>cotan(x)</h4>
+<p></p>
+<p>Cotangent of x.</p>
+<p>
+The library syntax is <code>GEN <b>gcotan</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="dilog"></a>
+<h4>dilog(x)</h4>
+<p></p>
+<p>Principal branch of the dilogarithm of x,
+i.e.&nbsp;analytic continuation of the power series log_2(x) = <font color=#FF0000>sum</font>_{n <code>&#62;=</code> 1}x^n/n^2.</p>
+<p>
+The library syntax is <code>GEN <b>dilog</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="eint1"></a>
+<h4>eint1(x,{n})</h4>
+<p></p>
+<p>Exponential integral <font color=#FF0000>int</font>_x^ oo (e^{-t})/(t)dt = 
+<code>incgam</code>(0, x), where the latter expression extends the function
+definition from real x &#62; 0 to all complex x != 0.</p>
+<p>
+If n is present, we must have x &#62; 0; the function returns the
+n-dimensional vector [<code>eint1</code>(x),...,<code>eint1</code>(nx)]. Contrary to
+other transcendental functions, and to the default case (n omitted), the
+values are correct up to a bounded <em>absolute</em>, rather than relative,
+error 10^-n, where n is <code>precision</code>(x) if x is a <code>t_REAL</code>
+and defaults to <code>realprecision</code> otherwise. (In the most important
+application, to the computation of L-functions via approximate functional
+equations, those values appear as weights in long sums and small individual
+relative errors are less useful than controlling the absolute error.) This is
+faster than repeatedly calling <code>eint1(i * x)</code>, but less precise.</p>
+<p>
+The library syntax is <code>GEN <b>veceint1</b>(GEN x, GEN n = NULL, long prec)</code>.
+Also available is <code>GEN <b>eint1</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="erfc"></a>
+<h4>erfc(x)</h4>
+<p></p>
+<p>Complementary error function, analytic continuation of
+(2/sqrt<font color=#FF0000>Pi</font>)<font color=#FF0000>int</font>_x^ oo e^{-t^2}dt = <code>incgam</code>(1/2,x^2)/sqrt<font color=#FF0000>Pi</font>,
+where the latter expression extends the function definition from real x to
+all complex x != 0.</p>
+<p>
+The library syntax is <code>GEN <b>gerfc</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="eta"></a>
+<h4>eta(z,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Variants of Dedekind's <font color=#FF0000>eta</font> function.
+If <em>flag</em> = 0, return <font color=#FF0000>prod</font>_{n = 1}^ oo (1-q^n), where q depends on x
+in the following way:</p>
+<p>
+<b>*</b> q = e^{2i<font color=#FF0000>Pi</font> x} if x is a <em>complex number</em> (which must then
+have positive imaginary part); notice that the factor q^{1/24} is
+missing!</p>
+<p>
+<b>*</b> q = x if x is a <code>t_PADIC</code>, or can be converted to a
+<em>power series</em> (which must then have positive valuation).</p>
+<p>
+If <em>flag</em> is non-zero, x is converted to a complex number and we return the
+true <font color=#FF0000>eta</font> function, q^{1/24}<font color=#FF0000>prod</font>_{n = 1}^ oo (1-q^n),
+where q = e^{2i<font color=#FF0000>Pi</font> x}.</p>
+<p>
+The library syntax is <code>GEN <b>eta0</b>(GEN z, long flag, long prec)</code>.</p>
+<p>
+Also available is <code>GEN <b>trueeta</b>(GEN x, long prec)</code> (<em>flag</em> = 1).</p>
+
+<hr></hr>
+<a name="exp"></a>
+<h4>exp(x)</h4>
+<p></p>
+<p>Exponential of x.
+p-adic arguments with positive valuation are accepted.</p>
+<p>
+The library syntax is <code>GEN <b>gexp</b>(GEN x, long prec)</code>.
+For a <code>t_PADIC</code> x, the function
+<code>GEN <b>Qp_exp</b>(GEN x)</code> is also available.</p>
+
+<hr></hr>
+<a name="expm1"></a>
+<h4>expm1(x)</h4>
+<p></p>
+<p>Return exp(x)-1, computed in a way that is also accurate
+when the real part of x is near 0. Only accept real or complex arguments.
+A naive direct computation would suffer from catastrophic cancellation;
+PARI's direct computation of exp(x) alleviates this well known problem at
+the expense of computing exp(x) to a higher accuracy when x is small.
+Using <code>expm1</code> is recommanded instead:</p>
+<p>
+<pre class="code">  ? default(realprecision, 10000); x = 1e-100;
+  ? a = expm1(x);
+  time = 4 ms.
+  ? b = exp(x)-1;
+  time = 28 ms.
+  ? default(realprecision, 10040); x = 1e-100;
+  ? c = expm1(x);  \\ reference point
+  ? abs(a-c)/c  \\ relative error in expm1(x)
+  %7 = 0.E-10017
+  ? abs(b-c)/c  \\ relative error in exp(x)-1
+  %8 = 1.7907031188259675794 E-9919
+</pre>
+As the example above shows, when x is near 0,
+<code>expm1</code> is both faster and more accurate than <code>exp(x)-1</code>.</p>
+<p>
+The library syntax is <code>GEN <b>gexpm1</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="gamma"></a>
+<h4>gamma(s)</h4>
+<p></p>
+<p>For s a complex number, evaluates Euler's gamma
+function 
+<font color=#FF0000>Gamma</font>(s) = <font color=#FF0000>int</font>_0^ oo t^{s-1}exp(-t)dt.
+Error if s is a non-positive integer, where <font color=#FF0000>Gamma</font> has a pole.</p>
+<p>
+For s a <code>t_PADIC</code>, evaluates the Morita gamma function at s, that
+is the unique continuous p-adic function on the p-adic integers
+extending <font color=#FF0000>Gamma</font>_p(k) = (-1)^k <font color=#FF0000>prod</font>_{j &#60; k}'j, where the prime means that p
+does not divide j.</p>
+<p>
+<pre class="code">  ? gamma(1/4 + O(5^10))
+  %1= 1 + 4*5 + 3*5^4 + 5^6 + 5^7 + 4*5^9 + O(5^10)
+  ? algdep(%,4)
+  %2 = x^4 + 4*x^2 + 5
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>ggamma</b>(GEN s, long prec)</code>.
+For a <code>t_PADIC</code> x, the function <code>GEN <b>Qp_gamma</b>(GEN x)</code> is
+also available.</p>
+
+<hr></hr>
+<a name="gammah"></a>
+<h4>gammah(x)</h4>
+<p></p>
+<p>Gamma function evaluated at the argument x+1/2.</p>
+<p>
+The library syntax is <code>GEN <b>ggammah</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="hyperu"></a>
+<h4>hyperu(a,b,x)</h4>
+<p></p>
+<p>U-confluent hypergeometric function with
+parameters a and b. The parameters a and b can be complex but
+the present implementation requires x to be positive.</p>
+<p>
+The library syntax is <code>GEN <b>hyperu</b>(GEN a, GEN b, GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="incgam"></a>
+<h4>incgam(s,x,{g})</h4>
+<p></p>
+<p>Incomplete gamma function <font color=#FF0000>int</font>_x^ oo e^{-t}t^{s-1}dt, extended by
+analytic continuation to all complex x, s not both 0. The relative error
+is bounded in terms of the precision of s (the accuracy of x is ignored
+when determining the output precision). When g is given, assume that
+g = <font color=#FF0000>Gamma</font>(s). For small |x|, this will speed up the computation.</p>
+<p>
+The library syntax is <code>GEN <b>incgam0</b>(GEN s, GEN x, GEN g = NULL, long prec)</code>.
+Also available is <code>GEN <b>incgam</b>(GEN s, GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="incgamc"></a>
+<h4>incgamc(s,x)</h4>
+<p></p>
+<p>Complementary incomplete gamma function.
+The arguments x and s are complex numbers such that s is not a pole of
+<font color=#FF0000>Gamma</font> and |x|/(|s|+1) is not much larger than 1 (otherwise the
+convergence is very slow). The result returned is <font color=#FF0000>int</font>_0^x
+e^{-t}t^{s-1}dt.</p>
+<p>
+The library syntax is <code>GEN <b>incgamc</b>(GEN s, GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="lambertw"></a>
+<h4>lambertw(y)</h4>
+<p></p>
+<p>Lambert W function, solution of the implicit equation xe^x = y,
+for y &#62; 0.</p>
+<p>
+The library syntax is <code>GEN <b>glambertW</b>(GEN y, long prec)</code>.</p>
+
+<hr></hr>
+<a name="lngamma"></a>
+<h4>lngamma(x)</h4>
+<p></p>
+<p>Principal branch of the logarithm of the gamma function of x. This
+function is analytic on the complex plane with non-positive integers
+removed, and can have much larger arguments than <code>gamma</code> itself.</p>
+<p>
+For x a power series such that x(0) is not a pole of <code>gamma</code>,
+compute the Taylor expansion. (PARI only knows about regular power series
+and can't include logarithmic terms.)</p>
+<p>
+<pre class="code">  ? lngamma(1+x+O(x^2))
+  %1 = -0.57721566490153286060651209008240243104*x + O(x^2)
+  ? lngamma(x+O(x^2))
+   ***   at top-level: lngamma(x+O(x^2))
+   ***                 ^-----------------
+   *** lngamma: domain error in lngamma: valuation != 0
+  ? lngamma(-1+x+O(x^2))
+   *** lngamma: Warning: normalizing a series with 0 leading term.
+   ***   at top-level: lngamma(-1+x+O(x^2))
+   ***                 ^--------------------
+   *** lngamma: domain error in intformal: residue(series, pole) != 0
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>glngamma</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="log"></a>
+<h4>log(x)</h4>
+<p></p>
+<p>Principal branch of the natural logarithm of
+x belongs to <b>C</b>^*, i.e.&nbsp;such that {Im(log}(x)) belongs to  ]-<font color=#FF0000>Pi</font>,<font color=#FF0000>Pi</font>].
+The branch cut lies
+along the negative real axis, continuous with quadrant 2, i.e.&nbsp;such that
+lim_{b\to 0^+} log (a+bi) = log a for a belongs to <b>R</b>^*. The result is complex
+(with imaginary part equal to <font color=#FF0000>Pi</font>) if x belongs to <b>R</b> and x &#60; 0. In general,
+the algorithm uses the formula
+log(x)  ~  (<font color=#FF0000>Pi</font>)/(2{agm}(1, 4/s)) - m log 2, 
+if s = x 2^m is large enough. (The result is exact to B bits provided
+s &#62; 2^{B/2}.) At low accuracies, the series expansion near 1 is used.</p>
+<p>
+p-adic arguments are also accepted for x, with the convention that
+log(p) = 0. Hence in particular exp(log(x))/x is not in general equal to
+1 but to a (p-1)-th root of unity (or &#177;1 if p = 2) times a power of p.</p>
+<p>
+The library syntax is <code>GEN <b>glog</b>(GEN x, long prec)</code>.
+For a <code>t_PADIC</code> x, the function
+<code>GEN <b>Qp_log</b>(GEN x)</code> is also available.</p>
+
+<hr></hr>
+<a name="polylog"></a>
+<h4>polylog(m,x,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>One of the different polylogarithms, depending on <em>flag</em>:</p>
+<p>
+If <em>flag</em> = 0 or is omitted: m-th polylogarithm of x, i.e.&nbsp;analytic
+continuation of the power series {Li}_m(x) = <font color=#FF0000>sum</font>_{n <code>&#62;=</code> 1}x^n/n^m
+(x &#60; 1). Uses the functional equation linking the values at x and 1/x
+to restrict to the case |x| <code>&#60;=</code> 1, then the power series when
+|x|^2 <code>&#60;=</code> 1/2, and the power series expansion in log(x) otherwise.</p>
+<p>
+Using <em>flag</em>, computes a modified m-th polylogarithm of x.
+We use Zagier's notations; let Re_m denote Re or Im depending
+on whether m is odd or even:</p>
+<p>
+If <em>flag</em> = 1: compute ~ D_m(x), defined for |x| <code>&#60;=</code> 1 by
+Re_m(<font color=#FF0000>sum</font>_{k = 0}^{m-1} ((-log|x|)^k)/(k!){Li}_{m-k}(x)
++((-log|x|)^{m-1})/(m!)log|1-x|).</p>
+<p>
+If <em>flag</em> = 2: compute D_m(x), defined for |x| <code>&#60;=</code> 1 by
+Re_m(<font color=#FF0000>sum</font>_{k = 0}^{m-1}((-log|x|)^k)/(k!){Li}_{m-k}(x)
+-(1)/(2)((-log|x|)^m)/(m!)).</p>
+<p>
+If <em>flag</em> = 3: compute P_m(x), defined for |x| <code>&#60;=</code> 1 by
+Re_m(<font color=#FF0000>sum</font>_{k = 0}^{m-1}(2^kB_k)/(k!)(log|x|)^k{Li}_{m-k}(x)
+-(2^{m-1}B_m)/(m!)(log|x|)^m).</p>
+<p>
+These three functions satisfy the functional equation
+f_m(1/x) = (-1)^{m-1}f_m(x).</p>
+<p>
+The library syntax is <code>GEN <b>polylog0</b>(long m, GEN x, long flag, long prec)</code>.
+Also available is
+<code>GEN <b>gpolylog</b>(long m, GEN x, long prec)</code> (<em>flag</em> = 0).</p>
+
+<hr></hr>
+<a name="psi"></a>
+<h4>psi(x)</h4>
+<p></p>
+<p>The <font color=#FF0000>psi</font>-function of x, i.e.&nbsp;the logarithmic derivative
+<font color=#FF0000>Gamma</font>'(x)/<font color=#FF0000>Gamma</font>(x).</p>
+<p>
+The library syntax is <code>GEN <b>gpsi</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="sin"></a>
+<h4>sin(x)</h4>
+<p></p>
+<p>Sine of x.</p>
+<p>
+The library syntax is <code>GEN <b>gsin</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="sinh"></a>
+<h4>sinh(x)</h4>
+<p></p>
+<p>Hyperbolic sine of x.</p>
+<p>
+The library syntax is <code>GEN <b>gsinh</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="sqr"></a>
+<h4>sqr(x)</h4>
+<p></p>
+<p>Square of x. This operation is not completely
+straightforward, i.e.&nbsp;identical to x * x, since it can usually be
+computed more efficiently (roughly one-half of the elementary
+multiplications can be saved). Also, squaring a 2-adic number increases
+its precision. For example,</p>
+<p>
+<pre class="code">  ? (1 + O(2^4))^2
+  %1 = 1 + O(2^5)
+  ? (1 + O(2^4)) * (1 + O(2^4))
+  %2 = 1 + O(2^4)
+</pre></p>
+<p>
+Note that this function is also called whenever one multiplies two objects
+which are known to be <em>identical</em>, e.g.&nbsp;they are the value of the same
+variable, or we are computing a power.</p>
+<p>
+<pre class="code">  ? x = (1 + O(2^4)); x * x
+  %3 = 1 + O(2^5)
+  ? (1 + O(2^4))^4
+  %4 = 1 + O(2^6)
+</pre></p>
+<p>
+(note the difference between <code>%2</code> and <code>%3</code> above).</p>
+<p>
+The library syntax is <code>GEN <b>gsqr</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="sqrt"></a>
+<h4>sqrt(x)</h4>
+<p></p>
+<p>Principal branch of the square root of x, defined as sqrt{x} = 
+exp(log x / 2). In particular, we have
+{Arg}({sqrt}(x)) belongs to  ]-<font color=#FF0000>Pi</font>/2, <font color=#FF0000>Pi</font>/2], and if x belongs to <b>R</b> and x &#60; 0,
+then the result is complex with positive imaginary part.</p>
+<p>
+Intmod a prime p, <code>t_PADIC</code> and <code>t_FFELT</code> are allowed as arguments. In
+the first 2 cases (<code>t_INTMOD</code>, <code>t_PADIC</code>), the square root (if it
+exists) which is returned is the one whose first p-adic digit is in the
+interval [0,p/2]. For other arguments, the result is undefined.</p>
+<p>
+The library syntax is <code>GEN <b>gsqrt</b>(GEN x, long prec)</code>.
+For a <code>t_PADIC</code> x, the function
+<code>GEN <b>Qp_sqrt</b>(GEN x)</code> is also available.</p>
+
+<hr></hr>
+<a name="sqrtn"></a>
+<h4>sqrtn(x,n,{&amp;z})</h4>
+<p></p>
+<p>Principal branch of the nth root of x,
+i.e.&nbsp;such that {Arg}({sqrt}(x)) belongs to  ]-<font color=#FF0000>Pi</font>/n, <font color=#FF0000>Pi</font>/n]. Intmod
+a prime and p-adics are allowed as arguments.</p>
+<p>
+If z is present, it is set to a suitable root of unity allowing to
+recover all the other roots. If it was not possible, z is
+set to zero. In the case this argument is present and no square root exist,
+0 is returned instead or raising an error.</p>
+<p>
+<pre class="code">  ? sqrtn(Mod(2,7), 2)
+  %1 = Mod(4, 7)
+  ? sqrtn(Mod(2,7), 2, &amp;z); z
+  %2 = Mod(6, 7)
+  ? sqrtn(Mod(2,7), 3)
+    ***   at top-level: sqrtn(Mod(2,7),3)
+    ***                 ^-----------------
+    *** sqrtn: nth-root does not exist in gsqrtn.
+  ? sqrtn(Mod(2,7), 3,  &amp;z)
+  %2 = 0
+  ? z
+  %3 = 0
+</pre></p>
+<p></p>
+<p>
+The following script computes all roots in all possible cases:</p>
+<p>
+<pre class="code">  sqrtnall(x,n)=
+  { my(V,r,z,r2);
+    r = sqrtn(x,n, &amp;z);
+    if (!z, error("Impossible case in sqrtn"));
+    if (type(x) == "t_INTMOD" || type(x)=="t_PADIC",
+      r2 = r*z; n = 1;
+      while (r2!=r, r2*=z;n++));
+    V = vector(n); V[1] = r;
+    for(i=2, n, V[i] = V[i-1]*z);
+    V
+  }
+  addhelp(sqrtnall,"sqrtnall(x,n):compute the vector of nth-roots of x");
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>gsqrtn</b>(GEN x, GEN n, GEN *z = NULL, long prec)</code>.
+If x is a <code>t_PADIC</code>, the function
+<code>GEN <b>Qp_sqrt</b>(GEN x, GEN n, GEN *z)</code> is also available.</p>
+
+<hr></hr>
+<a name="tan"></a>
+<h4>tan(x)</h4>
+<p></p>
+<p>Tangent of x.</p>
+<p>
+The library syntax is <code>GEN <b>gtan</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="tanh"></a>
+<h4>tanh(x)</h4>
+<p></p>
+<p>Hyperbolic tangent of x.</p>
+<p>
+The library syntax is <code>GEN <b>gtanh</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="teichmuller"></a>
+<h4>teichmuller(x)</h4>
+<p></p>
+<p>Teichm&uuml;ller character of the p-adic number x, i.e. the unique
+(p-1)-th root of unity congruent to x / p^{v_p(x)} modulo p.</p>
+<p>
+The library syntax is <code>GEN <b>teich</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="theta"></a>
+<h4>theta(q,z)</h4>
+<p></p>
+<p>Jacobi sine theta-function
+ <font color=#FF0000>theta</font>_1(z, q) = 2q^{1/4} <font color=#FF0000>sum</font>_{n <code>&#62;=</code> 0} (-1)^n q^{n(n+1)} sin((2n+1)z).</p>
+<p>
+The library syntax is <code>GEN <b>theta</b>(GEN q, GEN z, long prec)</code>.</p>
+
+<hr></hr>
+<a name="thetanullk"></a>
+<h4>thetanullk(q,k)</h4>
+<p></p>
+<p>k-th derivative at z = 0 of <code>theta</code>(q,z).</p>
+<p>
+The library syntax is <code>GEN <b>thetanullk</b>(GEN q, long k, long prec)</code>.</p>
+<p>
+<code>GEN <b>vecthetanullk</b>(GEN q, long k, long prec)</code> returns the vector
+of all (d^i<font color=#FF0000>theta</font>)/(dz^i)(q,0) for all odd i = 1, 3,..., 2k-1.
+<code>GEN <b>vecthetanullk_tau</b>(GEN tau, long k, long prec)</code> returns
+<code>vecthetanullk_tau</code> at q = exp(2i<font color=#FF0000>Pi</font> <code>tau</code>).</p>
+
+<hr></hr>
+<a name="weber"></a>
+<h4>weber(x,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>One of Weber's three f functions.
+If <em>flag</em> = 0, returns
+f(x) = exp(-i<font color=#FF0000>Pi</font>/24).<font color=#FF0000>eta</font>((x+1)/2)/<font color=#FF0000>eta</font>(x)   {such that}  
+j = (f^{24}-16)^3/f^{24},
+where j is the elliptic j-invariant  (see the function <code>ellj</code>).
+If <em>flag</em> = 1, returns
+f_1(x) = <font color=#FF0000>eta</font>(x/2)/<font color=#FF0000>eta</font>(x)  {such that}  
+j = (f_1^{24}+16)^3/f_1^{24}.
+Finally, if <em>flag</em> = 2, returns
+f_2(x) = sqrt{2}<font color=#FF0000>eta</font>(2x)/<font color=#FF0000>eta</font>(x)  {such that}  
+j = (f_2^{24}+16)^3/f_2^{24}.
+Note the identities f^8 = f_1^8+f_2^8 and ff_1f_2 = sqrt2.</p>
+<p>
+The library syntax is <code>GEN <b>weber0</b>(GEN x, long flag, long prec)</code>.
+Also available are <code>GEN <b>weberf</b>(GEN x, long prec)</code>,
+<code>GEN <b>weberf1</b>(GEN x, long prec)</code> and <code>GEN <b>weberf2</b>(GEN x, long prec)</code>.</p>
+
+<hr></hr>
+<a name="zeta"></a>
+<h4>zeta(s)</h4>
+<p></p>
+<p>For s a complex number, Riemann's zeta
+function  <font color=#FF0000>zeta</font>(s) = <font color=#FF0000>sum</font>_{n <code>&#62;=</code> 1}n^{-s},
+computed using the Euler-Maclaurin summation formula, except
+when s is of type integer, in which case it is computed using
+Bernoulli numbers for s <code>&#60;=</code> 0 or s &#62; 0 and
+even, and using modular forms for s &#62; 0 and odd.</p>
+<p>
+For s a p-adic number, Kubota-Leopoldt zeta function at s, that
+is the unique continuous p-adic function on the p-adic integers
+that interpolates the values of (1 - p^{-k}) <font color=#FF0000>zeta</font>(k) at negative
+integers k such that k = 1 (mod p-1) (resp. k is odd) if
+p is odd (resp. p = 2).</p>
+<p>
+The library syntax is <code>GEN <b>gzeta</b>(GEN s, long prec)</code>.</p>
+<p></p>
+
+<hr></hr>
+
+</BODY>
+</HTML>

@@ -1,0 +1,1123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cassim.css">
+<TITLE>Exemples d’exercies utilisant le tableur</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cassim004.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cassim006.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc143">Chapitre 5</A>  Exemples d’exercies utilisant le tableur</H1><H2 CLASS="section"><A NAME="toc40"></A><A NAME="htoc144">5.1</A>  <I>PGCD</I></H2><P> <A NAME="sec:pgcd"></A>
+</P><H3 CLASS="subsection"><A NAME="htoc145">5.1.1</A>  L’algorithme d’Euclide</H3><P>
+Voici la description de cet algorithme pour obtenir le pgcd de deux entiers <I>a</I> et <I>b</I> :<BR>
+on effectue des divisions euclidiennes successives :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>a</I> =</TD><TD ALIGN=center NOWRAP><I>b</I> × <I>q</I><SUB>1</SUB>+<I>r</I><SUB>1</SUB></TD><TD ALIGN=left NOWRAP>0 ≤ <I>r</I><SUB>1</SUB> &lt; <I>b</I> </TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>b</I>  =</TD><TD ALIGN=center NOWRAP><I>r</I><SUB>1</SUB> × <I>q</I><SUB>2</SUB>+<I>r</I><SUB>2</SUB></TD><TD ALIGN=left NOWRAP>0 ≤ <I>r</I><SUB>2</SUB> &lt; <I>r</I><SUB>1</SUB> </TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>r</I><SUB>1</SUB>  =</TD><TD ALIGN=center NOWRAP><I>r</I><SUB>2</SUB> × <I>q</I><SUB>3</SUB>+<I>r</I><SUB>3</SUB></TD><TD ALIGN=left NOWRAP>0 ≤ <I>r</I><SUB>3</SUB> &lt; <I>r</I><SUB>2</SUB> </TD></TR>
+<TR><TD ALIGN=right NOWRAP>.......</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Après un nombre fini d’étapes (au plus b), il existe un entier <I>n</I> tel que : 
+<I>r</I><SUB><I>n</I></SUB> = 0.<BR>
+on a alors :<BR>
+<I>PGCD</I>(<I>a</I>,<I>b</I> )= <I>PGCD</I>(<I>b</I>,<I>r</I><SUB>1</SUB>) =....<I>PGCD</I>(<I>r</I><SUB><I>n</I>−1</SUB>,<I>r</I><SUB><I>n</I></SUB>) = <I>PGCD</I>(<I>r</I><SUB><I>n</I>−1</SUB>,0)<BR>
+donc<BR>
+<I>PGCD</I>(<I>a</I>,<I>b</I> ) = <I>r</I><SUB><I>n</I>−1</SUB>
+</P><H3 CLASS="subsection"><A NAME="htoc146">5.1.2</A>  Une mise en œuvre simple</H3><P>
+On effectue une commande en appuyant sur <TT>enter</TT>, si on 
+appuie à nouveau sur <TT>enter</TT> <TT>Xcas</TT> exécute à nouveau la 
+même commande puisque cette commande reste inscrite dans la ligne des
+commandes.<BR>
+Les différentes commandes et réponses sont numérotées à partir de 
+<TT>0</TT>.<BR>
+Les réponses sont alors <TT>ans(0), ans(1)</TT> etc ... La 
+dernière réponse peut aussi être désignée par <TT>ans()</TT> ou 
+par <TT>ans(-1)</TT>, et l’avant dernière réponse peut être désignée par <TT>ans(-2)</TT> etc...<BR>
+ Pour calculer <I>PGCD</I>(78,56), on tape :<BR>
+<TT>78 enter</TT> puis <TT>56 enter</TT> puis,<BR>
+<TT>irem(ans(-2),ans()) enter</TT><BR>
+On obtient <TT>22</TT> (car 22 est le reste de la division de 78 par 56)<BR>
+puis <TT>enter</TT> <TT>enter</TT> <TT>enter</TT> etc...et cela nous permet d’obtenir la suite des restes.
+</P><H3 CLASS="subsection"><A NAME="htoc147">5.1.3</A>  La suite des restes avec le tableur</H3><P>
+Voici une mise en œuvre de l’algorithme d’Euclide avec un tableur.<BR>
+À l’aide d’un tableur que l’on obtient avec le raccourci clavier <TT>Alt+t</TT>,
+on écrit la suite des restes.
+Si l’on veut déterminer le PGCD(78,56), on définit la suite des restes dans 
+la colonne <TT>A</TT> par :<BR>
+On met <TT>78</TT> dans <TT>A0</TT><BR>
+On met <TT>56</TT> dans <TT>A1</TT><BR>
+On met <TT>=irem(A0,A1)</TT> dans <TT>A2</TT><BR>
+puis on utilisee le menu du tableur <TT>Edit</TT> puis <TT>Remplir</TT> et 
+<TT>Copier vers le bas</TT>, lorsque <TT>A2</TT> est en surbrillance et l’on a ainsi 
+la suite des restes des divisions successives dans la colonne <TT>A</TT>.<BR>
+Le dernier reste non nul <TT>2</TT> est donc le pgcd de 78 et de 56.
+</P><H2 CLASS="section"><A NAME="toc41"></A><A NAME="htoc148">5.2</A>  Identité de Bézout</H2><P>
+L’algorithme d’Euclide permet aussi de trouver un couple <I>u</I>, <I>v</I> vérifiant :<BR>
+ <I>au</I> + <I>bv</I>= <I>PGCD</I>(<I>a</I>,<I>b</I>) 
+</P><H3 CLASS="subsection"><A NAME="htoc149">5.2.1</A>  Avec le tableur</H3><P>
+On pose <I>a</I>=<I>r</I><SUB>0</SUB> et <I>b</I>=<I>r</I><SUB>1</SUB>, et on définit, dans la colonne <TT>A</TT>, "la 
+suites des restes" <I>r</I><SUB><I>n</I></SUB> :
+pour <I>n</I> ≥ 2, <I>r</I><SUB><I>n</I>−2</SUB>=<I>q</I><SUB><I>n</I></SUB><I>r</I><SUB><I>n</I>−1</SUB>+<I>r</I><SUB><I>n</I></SUB> avec <I>r</I><SUB><I>n</I></SUB>&lt;<I>r</I><SUB><I>n</I>−1</SUB>.<BR>
+Puis on définit, dans les colonnes <TT>B</TT> et <TT>C</TT>, deux suites <I>u</I><SUB><I>n</I></SUB> et <I>v</I><SUB><I>n</I></SUB> de 
+façon qu’à chaque étape on ait :
+<I>r</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB><I>a</I>+<I>v</I><SUB><I>n</I></SUB><I>b</I> pour <I>n</I> ≥ 0.<BR>
+Puisque <I>r</I><SUB>0</SUB>=<I>a</I> on a : <I>u</I><SUB>0</SUB>=1 et <I>v</I><SUB>0</SUB>=0<BR>
+Puisque <I>r</I><SUB>1</SUB>=<I>b</I> on a : <I>u</I><SUB>1</SUB>=0 et <I>v</I><SUB>1</SUB>=1<BR>
+Puisque <I>r</I><SUB><I>n</I></SUB>=<I>r</I><SUB><I>n</I>−2</SUB>−<I>q</I><SUB><I>n</I></SUB><I>r</I><SUB><I>n</I>−1</SUB> pour <I>n</I> ≥ 2,
+<I>u</I><SUB><I>n</I></SUB> et <I>v</I><SUB><I>n</I></SUB> vérifient la même relation de 
+récurrence pour <I>n</I> ≥ 2 à savoir :<BR>
+ <I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>−2</SUB>−<I>q</I><SUB><I>n</I></SUB><I>u</I><SUB><I>n</I>−1</SUB>  et <I>v</I><SUB><I>n</I></SUB>=<I>v</I><SUB><I>n</I>−2</SUB>−<I>q</I><SUB><I>n</I></SUB><I>v</I><SUB><I>n</I>−1</SUB>  avec<BR>
+<I>q</I><SUB><I>n</I></SUB>= quotient entier de <I>r</I><SUB><I>n</I>−2</SUB> par <I>r</I><SUB><I>n</I>−1</SUB> pour <I>n</I> ≥ 2.<BR>
+On a au début :<BR>
+<TT>A0</TT> vaut <I>r</I><SUB>0</SUB>=<I>a</I> et <TT>A1</TT> vaut <I>r</I><SUB>1</SUB>=<I>b</I>,<BR>
+<TT>B0</TT> vaut <I>u</I><SUB>0</SUB>=1 et <TT>B1</TT> vaut <I>u</I><SUB>1</SUB>=0 puisque <I>a</I>=1*<I>a</I>+0*<I>b</I>,<BR>
+<TT>C0</TT> vaut <I>v</I><SUB>0</SUB>=0 et <TT>C1</TT> vaut <I>v</I><SUB>1</SUB>=1 puisque <I>b</I>=0*<I>a</I>+1*<I>b</I>.<BR>
+Dans la colonne <TT>A</TT> on veut avoir la suite 
+des restes et dans les colonnes <TT>B</TT> et <TT>C</TT>
+les suites <TT>u</TT> et <TT>v</TT> qui seront les coefficients de <TT>a</TT> et <TT>b</TT> pour avoir sur chaque ligne <TT>n</TT> du tableur :
+<TT>An=aBn+bCn</TT>.<BR>
+Pour cela on a besoin de la suite des quotients <I>q</I><SUB><I>n</I></SUB>= (quotient entier de 
+<I>r</I><SUB><I>n</I>−2</SUB> par <I>r</I><SUB><I>n</I>−1</SUB> pour <I>n</I> ≥ 2) que l’on met dans la colonne
+<TT>D</TT> (<TT>D2=iquo(A0,A1)</TT> puis on tape sur <TT>remplir</TT>
+et <TT>vers le bas</TT>, lorsque 
+<TT>D2</TT> est en surbrillance).<BR>
+Les lignes <I>l</I><SUB><I>n</I></SUB> des colonnes <TT>A, B, C</TT> vérifient la même relation de 
+récurrence :<BR>
+<I>l</I><SUB><I>n</I></SUB>=<I>l</I><SUB><I>n</I>−2</SUB>−<I>q</I><SUB><I>n</I></SUB><I>l</I><SUB><I>n</I>−1</SUB><BR>
+On definit donc :<BR>
+<TT>A0</TT> par <TT>a </TT><BR>
+<TT>A1</TT> par <TT>b</TT><BR>
+<TT>A2</TT> par <TT>=irem(A0,A1)</TT><BR>
+puis on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>A2</TT> est en 
+surbrillance et on obtient la suite des restes des divisions successives.<BR>
+<TT>B0</TT> par <TT>1</TT><BR>
+<TT>B1</TT> par <TT>0</TT><BR>
+<TT>B2</TT> par <TT>=B0-D2*B1</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>B2</TT> est en
+surbrillance et on obtiendra la suite des "<I>u</I>" lorsqu’on aura rempli la 
+colonne <TT>D</TT>.<BR>
+<TT>C0</TT> par <TT>0</TT><BR>
+<TT>C1</TT> par <TT>1</TT><BR>
+<TT>C2</TT> par <TT>=C0-D2*C1</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>C2</TT> est en 
+surbrillance et on obtiendra la suite des "<I>v</I>" lorsqu’on aura rempli la 
+colonne <TT>D</TT>.<BR>
+<TT>D0</TT> par <TT>0</TT><BR>
+<TT>D1</TT> par <TT>0</TT><BR>
+<TT>D2</TT> par <TT>=iquo(A0,A1)</TT><BR>
+(en fait <TT>D0</TT> et <TT>D1</TT> ne servent pas)<BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>D2</TT> est 
+en surbrillance,
+pour avoir la suite des quotients des divisions successives.<BR>
+Le tableur va alors afficher les valeurs de ces différentes suites et sur la 
+ligne du dernier reste non nul on pourra lire les coefficients de l’identité 
+de Bézout.<BR>
+Pour l’exemple <I>a</I>=78 et <I>b</I>=56, on trouve :<BR>
+- sur la ligne <TT>6</TT> : <TT>A6=0</TT> et,<BR>
+- sur la ligne <TT>5</TT> : <TT>A5=2</TT>, <TT>B5=-5</TT>, <TT>C5=7</TT> (et <TT>D5=1</TT>),<BR>
+ce qui signifie que :<BR>
+<TT>2=-5*78+7*56</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc150">5.2.2</A>  Les pas de Louis</H3><P><A NAME="@default41"></A><A NAME="@default42"></A><A NAME="@default43"></A>
+Louis marche sur la bordure du trottoir, comptant les fois où une de ses 
+semelles chevauche un joint entre deux blocs (si son talon est tangent il 
+chevauche le joint, mais si la pointe est tangente il ne chevauche pas).<BR>
+Le trottoir comporte 150 blocs d’un mètre (il n’y a pas de joint au debut ni
+à la fin du trottoir).<BR>
+Son pas est de 61 cm et ses semelles mesurent 21 cm et les joints n’ont pas 
+d’épaisseur.<BR>
+Combien de fois Louis marche-t-il sur un joint?<BR>
+
+<B>Réponse</B><BR>
+Il y a 149 joints.<BR>
+Il faut tout d’abord voir qu’au <I>p</I>-ième pas les semelles de Louis sont entre
+(<I>p</I>*61) cm et (<I>p</I>*61+21) cm.
+Ses semelles couperont le <I>n</I>-ième joint si :<BR>
+100*<I>n</I>=<I>p</I><SUB><I>n</I></SUB>*61+<I>r</I><SUB><I>n</I></SUB> avec 0 ≤ <I>r</I><SUB><I>n</I></SUB>&lt;21<BR>
+On va donc dans un premier temps écrire la suite des restes <I>r</I><SUB><I>n</I></SUB> à l’aide
+du tableur.<BR>
+On definit donc :<BR>
+<TT>A0</TT> par <TT>0</TT><BR>
+<TT>A1</TT> par <TT>=A0+1</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>A1</TT> est en 
+surbrillance,
+pour avoir la suite des entiers 0,1, etc...<BR>
+<TT>B0</TT> par <TT>0</TT><BR>
+<TT>B</TT> par <TT>1=irem(100*A1,61)</TT><BR>
+puis on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>B1</TT> est en 
+surbrillance,
+pour avoir la suite des restes <I>r</I><SUB><I>n</I></SUB>.<BR>
+Bien sûr il n’est pas facile de compter les restes inférieurs à 21.<BR>
+On va donc définir une colonne qui fera ce comptage.<BR>
+On definit donc :<BR>
+<TT>C0</TT> par <TT>0</TT><BR>
+<TT>C1</TT> par <TT>=ifte(B1&lt;21,C0+1,C0)</TT><BR>
+La réponse au problème est donc la valeur de <TT>C149</TT> et on trouve 
+<TT>51</TT>.<BR>
+ Louis marche donc 51 fois sur un joint.</P><P>On peut aussi utiliser la commande <TT>count</TT> (ou la commande 
+<TT>count_inf</TT>) qui compte les éléments
+du tableur pour lesquels une fonction booléenne est vraie :<BR>
+On tape, par exemple dans <TT>D0</TT> :<BR>
+<TT>count(x-&gt;x&lt;21,B1:B149)</TT><BR>
+ou on tape dans <TT>D0</TT> :<BR>
+<TT>count_inf(21,B1:B149)</TT><BR>
+On prend en compte les cellules <TT>B1:B149</TT>, car il n’y a pas de joints au 
+début, ni à la fin.<BR>
+On obtient dans <TT>D0</TT> : <TT>51</TT>.</P><P>On peut aussi écrire un petit programme dont voici l’algorithme :
+</P><PRE CLASS="verbatim">louis nbloc
+0 -&gt; k
+pour n de 1 a nbloc-1 faire
+si (n*100 mod 61 &lt;21) alors k+1 -&gt; k 
+fsi
+fpour
+afficher k
+</PRE><P>qui se traduit en langage <TT>Xcas</TT> par :
+</P><PRE CLASS="verbatim">louis(nbloc):={
+k:=0;
+for (n:=1;n&lt;nbloc:n++){
+if (irem(n*100,61)&lt;21) k:= k+1; 
+}
+return k;
+}
+</PRE><P>Puis, on tape <TT>louis(150)</TT><BR>
+et on obtient <TT>51</TT>.
+</P><H2 CLASS="section"><A NAME="toc42"></A><A NAME="htoc151">5.3</A>  Accélération de convergence vers π<SUP>2</SUP>/6</H2><P> <A NAME="sec:serie"></A>
+On considère la série de terme général 1/<I>n</I><SUP>2</SUP>, et
+on souhaite déterminer une valeur approchée de sa somme pour <I>n</I> allant
+de 1 à l’infini.<BR>
+On rappelle que la valeur exacte de cette somme est égale à π<SUP>2</SUP>/6 : 
+pour cela on développe en séries de Fourier la fonction <I>f</I> qui est 
+2π-périodique et est égale à <I>x</I><SUP>2</SUP> sur [−π, π].<BR>
+On a :<BR>
+ <I>f</I>(<I>x</I>)=<I>x</I><SUP>2</SUP>=π<SUP>2</SUP>/3+4*∑<SUB><I>n</I>=1</SUB><SUP>∞</SUP>(−1)<SUP><I>n</I></SUP>/<I>n</I><SUP>2</SUP>cos<I>nx</I>  pour 
+ <I>x</I> ∈ [−π, π]<BR>
+Pour <I>x</I>=π on obtient :
+ ∑<SUB><I>n</I>=1</SUB><SUP>∞</SUP>1/<I>n</I><SUP>2</SUP>=π<SUP>2</SUP>/6.
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Déterminer à l’aide de <TT>Xcas</TT> une valeur approchée de
+π<SUP>2</SUP>/6 puis de:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD></TR>
+</TABLE>
+pour <I>n</I>=10, <I>n</I>=100 et <I>n</I>=1000.<BR>
+Définir et observer dans le tableur la suite récurrente :<BR>
+<TT><I>u</I></TT><SUB><TT>1</TT></SUB><TT>=1</TT><BR>
+<TT><I>u</I></TT><SUB><TT>2</TT></SUB><TT>=1+1/4</TT><BR>
+<TT><I>u</I></TT><SUB><TT><I>n</I></TT></SUB><TT>=<I>u</I></TT><SUB><TT><I>n</I>-1</TT></SUB><TT>+1/<I>n</I></TT><SUP><TT>2</TT></SUP>  pour <I>n</I>&gt;1.<BR>
+<B>Réponse</B> :<BR>
+On cherche une valeur approchée de π<SUP>2</SUP>/6 et on tape :<BR>
+<TT>evalf(pi</TT><CODE><TT>^</TT></CODE><TT>2/6)</TT><BR>
+On obtient :<BR>
+<TT>1.64493406685</TT><BR>
+On tape :<BR>
+<TT>evalf(sum(1/j</TT><CODE><TT>^</TT></CODE><TT>2,j,1,10))</TT><BR>
+On obtient :<BR>
+<TT>1.54976773117</TT><BR>
+On tape :<BR>
+<TT>evalf(sum(1/j</TT><CODE><TT>^</TT></CODE><TT>2,j,1,100))</TT><BR>
+On obtient :<BR>
+<TT>1.63498390018</TT><BR>
+On tape :<BR>
+<TT>evalf(sum(1/j</TT><CODE><TT>^</TT></CODE><TT>2,j,1,1000))</TT><BR>
+On obtient :<BR>
+<TT>1.64393456668</TT><BR>
+Puis on ouvre un tableur (avec <TT>Alt+t</TT>) et on tape :<BR>
+ dans <TT>A0</TT> : <TT>0</TT><BR>
+ dans <TT>A1</TT> : <TT>=A0+1</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>A1</TT> est en 
+surbrillance,
+pour avoir la suite des entiers 0,1, etc...<BR>
+On tape :<BR>
+dans <TT>B0</TT> : <TT>0</TT><BR>
+dans <TT>B1</TT> : <TT>=B0+1/A1</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>B1</TT> est en 
+surbrillance,
+pour avoir la suite des valeurs exactes de <I>u</I><SUB><I>n</I></SUB>.<BR>
+On tape :<BR>
+dans <TT>C0</TT> : <TT>=evalf(B0)</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>C0</TT> est en
+surbrillance,
+pour avoir la suite des valeurs approchées de <I>u</I><SUB><I>n</I></SUB>.<BR>
+</LI><LI CLASS="li-enumerate">Comparer ces valeurs à la valeur approchée de π<SUP>2</SUP>/6 : donner
+le nombre de décimales exactes pour les 3 valeurs de <I>n</I>.</LI><LI CLASS="li-enumerate">On souhaite accélérer la convergence des sommes partielles.
+On va donc déterminer un encadrement de ∑<SUB><I>j</I>=<I>n</I>+1</SUB><SUP>∞</SUP>1/<I>j</I><SUP>2</SUP>
+à l’aide de l’intégrale de la fonction 1/<I>x</I><SUP>2</SUP>.
+Montrer que:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>n</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dx</I>  ≤ </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=<I>n</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> ≤ </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>dx</I> </TD></TR>
+</TABLE></LI><LI CLASS="li-enumerate">En déduire que:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">0 ≤ </TD><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> +
+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎟<BR>
+⎠</TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π<SUP>2</SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">6</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+≤ </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I>(<I>n</I>+1)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">  </TD></TR>
+</TABLE></LI><LI CLASS="li-enumerate">Calculer 1/<I>n</I>+ ∑<SUB><I>j</I>=1</SUB><SUP><I>n</I></SUP> 1/<I>j</I><SUP>2</SUP> pour <I>n</I>=10, <I>n</I>=100
+et <I>n</I>=1000 et déterminer le nombre de décimales exactes pour ces
+3 valeurs de <I>n</I>, justifier ce nombre de décimales pour <I>n</I>=10,
+<I>n</I>=100 et  <I>n</I>=1000.<P>Avec le tableur, il suffira d’ajouter 1/<I>n</I>  à la colonne où se 
+trouve <I>u</I><SUB><I>n</I></SUB>.<BR>
+</P></LI><LI CLASS="li-enumerate">Montrer que pour <I>k</I>≥ 2 on a :<BR>
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2<I>k</I>(<I>k</I>+1)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2(<I>k</I>+1)(<I>k</I>+2)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2(<I>k</I>−1)<I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2<I>k</I>(<I>k</I>+1)</TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+En déduire que :<BR>
+<I>w</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>+1/(<I>n</I>+1)+1/2/(<I>n</I>+1)/(<I>n</I>+2) converge vers π<SUP>2</SUP>/6 et que l’on a :<BR>
+0&lt;π<SUP>2</SUP>/6−<I>w</I><SUB><I>n</I></SUB>&lt;1/<I>n</I><SUP>3</SUP>
+</LI></OL><P><B>Réponse</B> :<BR>
+On tape :<BR>
+<TT>normal(1/k</TT><CODE><TT>^</TT></CODE><TT>2-1/k+1/(k+1)-1/2/k/(k+1)+1/2/(k+1)/(k+2))</TT><BR>
+On obtient :<BR>
+<TT>2/(k</TT><CODE><TT>^</TT></CODE><TT>4+3*k</TT><CODE><TT>^</TT></CODE><TT>3+2*k</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On tape :<BR>
+<TT>normal(1/(k</TT><CODE><TT>^</TT></CODE><TT>2)-1/k+1/(k+1)-1/2/k/(k-1)+1/2/(k+1)/k)</TT><BR>
+On obtient :<BR>
+<TT>-1/(k</TT><CODE><TT>^</TT></CODE><TT>4-k</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+</P><H2 CLASS="section"><A NAME="toc43"></A><A NAME="htoc152">5.4</A>  ln(2)</H2><P> <A NAME="sec:ln2"></A>
+Il s’agit ici d’obtenir un encadrement de ln(2) en utilisant
+des méthodes numériques approchées de calcul de l’intégrale:
+ <I>I</I>= ∫<SUB>0</SUB><SUP>1</SUP> 1/1+<I>x</I>  <I>dx</I>
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Tracer le graphe de la fonction <I>f</I> définie par
+<I>f</I>(<I>x</I>)=1/(1+<I>x</I>) entre 0 et 1, la corde qui relie les points d’abscisses 0 et 1 
+et la tangente au point d’abscisse 1/2.<BR>
+<B>Réponse</B> :<BR>
+On change l’initialisation de la fenêtre graphique avec le bouton rouge 
+<TT>geo</TT>.
+On prend :<BR>
+<TT>X-=WX-=-0.1</TT>
+<TT>X+=WX+=1.1</TT><BR>
+<TT>Y-=WY-=0.4</TT>
+<TT>Y+=WY+=1.1</TT><BR>
+On tape :<BR>
+<TT>f(x):=1/(1+x)</TT><BR>
+<TT>G:=plotfunc(1/(1+x),x)</TT><BR>
+<TT>segment(i*f(0),1+i*f(1))</TT><BR>
+<TT>tangent(G,1/2)</TT>
+</LI><LI CLASS="li-enumerate">On subdivise l’intervalle [0,1] en <I>n</I> parties et on encadre 
+l’intégrale par la méthode des rectangles inférieurs et supérieurs.<BR>
+Montrez que:
+<I>u</I><SUB><I>n</I></SUB> &lt;<I>I</I>&lt; <I>v</I><SUB><I>n</I></SUB> avec pour <I>n</I>≥ 1 :<BR>
+<I>u</I><SUB><I>n</I></SUB>=1/(<I>n</I>+1)+1/(<I>n</I>+2)+...+1/(<I>n</I>+<I>n</I>) et<BR>
+<I>v</I><SUB><I>n</I></SUB>= 1/<I>n</I>+1/(<I>n</I>+1)+...+1/(<I>n</I>+<I>n</I>−1).<BR>
+Calculer <I>u</I><SUB><I>n</I></SUB> et <I>v</I><SUB><I>n</I></SUB> pour n=10, 100, 1000.<BR>
+<B>Réponse</B> :<BR>
+Avec le tableur on écrit la suite récurrente :<BR>
+<I>u</I><SUB>1</SUB>=1/2<BR>
+<I>u</I><SUB>2</SUB>=1/3+1/4<BR>
+<I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>−1</SUB>+1/((2<I>n</I>−1)*2<I>n</I>) pour <I>n</I>&gt; 1 et<BR>
+<I>v</I><SUB>1</SUB>=1<BR>
+<I>v</I><SUB>1</SUB>=1/2+1/3<BR>
+<I>v</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>+1/(2<I>n</I>) pour <I>n</I>≥ 1<BR>
+pour cela on tape :<BR>
+<TT>0</TT> dans <TT>A0</TT><BR>
+<TT>=A0+1</TT> dans <TT>A1</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>A1</TT> est en surbrillance,
+pour avoir la suite des entiers 0,1, etc...<BR>
+On tape :<BR>
+<TT>0</TT> dans <TT>B0</TT><BR>
+<TT>1/2</TT> dans <TT>B1</TT><BR>
+<TT>=B1+1/((2*A2-1)*2*A2)</TT> dans <TT>B2</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>B2</TT> est en surbrillance,
+pour avoir la suite des valeurs exactes de <I>u</I><SUB><I>n</I></SUB>.<BR>
+On tape :<BR>
+<TT>=evalf(B0)</TT> dans <TT>C0</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>,lorsque <TT>C0</TT> est en surbrillance,
+pour avoir la suite des valeurs approchées de <I>u</I><SUB><I>n</I></SUB>.<BR>
+On tape :<BR>
+<TT>0</TT> dans <TT>D0</TT><BR>
+<TT>=B1+1/(2*A1)</TT> dans <TT>D1</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>D1</TT> est en surbrillance,
+pour avoir la suite des valeurs exactes de <I>v</I><SUB><I>n</I></SUB>.<BR>
+On tape :<BR>
+<TT>=evalf(D0)</TT> dans <TT>E0</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>E0</TT> est en surbrillance,
+pour avoir la suite des valeurs approchées de <I>v</I><SUB><I>n</I></SUB>.</LI><LI CLASS="li-enumerate">On subdivise l’intervalle [0,1] en <I>n</I> parties et on
+applique la méthode du point milieu et la méthode des trapèzes.
+On obtient ainsi deux suites <I>w</I><SUB><I>n</I></SUB> et <I>t</I><SUB><I>n</I></SUB>.<BR>
+Montrez que:
+<I>w</I><SUB><I>n</I></SUB>= ∑<SUB><I>j</I>=0</SUB><SUP><I>n</I>−1</SUP> 1/<I>n</I>+<I>j</I>+1/2
+et que <I>t</I><SUB><I>n</I></SUB>=(<I>u</I><SUB><I>n</I></SUB>+<I>v</I><SUB><I>n</I></SUB>)/2.<BR>
+Calculer <I>w</I><SUB><I>n</I></SUB> et <I>t</I><SUB><I>n</I></SUB> pour  <I>n</I>=10, 100, 1000.<BR>
+<B>Réponse</B> :<BR>
+Le rectangle de base [<I>j</I>/<I>n</I>;(<I>j</I>+1)/<I>n</I>] au point milieu d’abscisse (2<I>j</I>+1)/2<I>n</I> 
+a pour surface :<BR>
+ 1/<I>n</I>*1/1+(2<I>j</I>+1)/2<I>n</I>=2/2<I>n</I>+2<I>j</I>+1=1/<I>n</I>+<I>j</I>+1/2<BR>
+Le trapèze de base [<I>j</I>/<I>n</I>;(<I>j</I>+1)/<I>n</I>] a pour surface :<BR>
+ 1/2<I>n</I>*(1/1+<I>j</I>/<I>n</I>+1/1+(<I>j</I>+1)/<I>n</I>)=1/2(1/<I>n</I>+<I>j</I>+1/<I>n</I>+<I>j</I>+1)<BR>
+
+Avec le tableur, on écrit les suites récurrentes :<BR>
+<I>w</I><SUB>0</SUB>=2/3<BR>
+<I>w</I><SUB>1</SUB>=2/5+2/7<BR>
+<I>w</I><SUB><I>n</I></SUB>=<I>w</I><SUB><I>n</I>−1</SUB>+1/((2<I>n</I>−1/2)*(2<I>n</I>−3/2)(<I>n</I>−1/2)) et<BR>
+<I>t</I><SUB>0</SUB>=3/4<BR>
+<I>t</I><SUB>1</SUB>=1/3+3/8<BR>
+<I>t</I><SUB><I>n</I></SUB>=(<I>u</I><SUB><I>n</I></SUB>+<I>v</I><SUB><I>n</I></SUB>)/2
+pour cela on tape :<BR>
+<TT>0</TT> dans <TT>F0</TT><BR>
+<TT>2/3</TT> dans <TT>F1</TT><BR>
+<TT>=F1+1/(2*A2-1/2)+1/(2*A2-3/2)-1/(A2-1/2)</TT> dans<TT>F2</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>F2</TT> est en 
+surbrillance,
+pour avoir la suite des valeurs exactes de <I>w</I><SUB><I>n</I></SUB>.<BR>
+<TT><I>G</I>0=<I>evalf</I>(<I>F</I>0)</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>G0</TT> est en surbrillance,
+pour avoir la suite des valeurs approchées de <I>w</I><SUB><I>n</I></SUB>.<BR>
+On tape :<BR>
+<TT>0</TT> dans <TT>H0</TT><BR>
+<TT>=(B1+D1)/2</TT> dans <TT>H1</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>H1</TT> est en surbrillance,
+pour avoir la suite des valeurs exactes de <I>t</I><SUB><I>n</I></SUB>.<BR>
+<TT>=evalf(H0)</TT> dans <TT>I0</TT><BR>
+puis, on tape sur <TT>remplir</TT> et <TT>vers le bas</TT>, lorsque <TT>I0</TT> est en surbrillance,
+pour avoir la suite des valeurs approchées de <I>t</I><SUB><I>n</I></SUB>.<BR>
+On trouve pour <I>n</I>=10 :<BR>
+<I>u</I><SUB>10</SUB>=155685007/232792560 ≃ 0.668771403175<BR>
+<I>v</I><SUB>10</SUB>=33464927/46558512 ≃ 0.718771403175<BR>
+<I>w</I><SUB>10</SUB>=358143560536/516924483075 ≃ 0.69283536041<BR>
+<I>t</I><SUB>10</SUB>=161504821/232792560 ≃ 0.693771403175<BR>
+</LI><LI CLASS="li-enumerate">Vérifiez que la fonction <I>f</I> est convexe
+en montrant que <I>f</I>′′&gt;0.<BR>
+On admettra les propriétés suivantes des fonctions convexes :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+le segment reliant (<I>x</I><SUB>1</SUB>,<I>f</I>(<I>x</I><SUB>1</SUB>)) à (<I>x</I><SUB>2</SUB>,<I>f</I>(<I>x</I><SUB>2</SUB>) (<I>x</I><SUB>1</SUB>&lt;<I>x</I><SUB>2</SUB>)
+est au-dessus de la courbe représentative de <I>f</I> entre <I>x</I><SUB>1</SUB> et <I>x</I><SUB>2</SUB>.
+</LI><LI CLASS="li-itemize">la tangente en un point de la courbe est en-dessous de la
+courbe représentative de <I>f</I>.
+</LI></UL>
+</LI><LI CLASS="li-enumerate">En comparant graphiquement des aires,
+montrez que :<BR>
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>t</I><SUB><I>n</I></SUB>≥ </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>f</I>(<I>x</I>)  <I>dx</I> </TD></TR>
+</TABLE>.
+</LI><LI CLASS="li-enumerate">On considère une subdivision [<I>j</I>/<I>n</I>,<I>j</I>+1/<I>n</I>].
+Tracer sur cet intervalle la courbe de <I>f</I> et la tangente de <I>f</I>
+au point milieu de l’intervalle. Par une comparaison graphique d’aires
+(aire sous la tangente=aire du rectangle) montrez que :<BR>
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>w</I><SUB><I>n</I></SUB> ≤ </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>f</I>(<I>x</I>) <I>dx</I> </TD></TR>
+</TABLE>
+</LI><LI CLASS="li-enumerate">Indiquez
+le nombre de décimales exactes obtenues lorsque l’on approche ln(2) à 
+l’aide de <I>u</I><SUB><I>n</I></SUB>,<I>v</I><SUB><I>n</I></SUB>,<I>w</I><SUB><I>n</I></SUB>,<I>t</I><SUB><I>n</I></SUB> pour <I>n</I>=10, <I>n</I>=100, <I>n</I>=1000.<P>Montrez qu’en général <I>u</I><SUB><I>n</I></SUB>
+et <I>v</I><SUB><I>n</I></SUB> donnent un encadrement d’ordre 1/<I>n</I> de ln(2), et que
+<I>w</I><SUB><I>n</I></SUB> et <I>t</I><SUB><I>n</I></SUB> donnent un encadrement d’ordre 1/<I>n</I><SUP>2</SUP> de ln(2).
+</P></LI></OL><H2 CLASS="section"><A NAME="toc44"></A><A NAME="htoc153">5.5</A>  L’algorithme de Héron avec Xcas</H2><H3 CLASS="subsection"><A NAME="htoc154">5.5.1</A>  Les fonctions de <TT>Xcas</TT> utilisées</H3><P>
+Voici les fonctions de <TT>Xcas</TT> qui vous seront utiles dans ce TP.<BR>
+<TT>ans()</TT> renvoie la dernière réponse obtenue.<BR>
+<TT>numer</TT> renvoie le numérateur de la fraction <TT>n/d</TT>, ainsi <TT>numer(n/d)</TT> vaut <TT>n</TT> et 
+<TT>denom</TT> renvoie le dénominateur de la fraction <TT>n/d</TT>, ainsi <TT>denom(n/d)</TT> vaut <TT>d</TT>.<BR>
+<TT>evalf(a)</TT> évalue <TT>a</TT> à l’aide d’un nombre flottant comportant 
+12 chiffres significatifs (sauf si on a changé ce nombre dans la 
+configuration du <TT>cas</TT> obtenu avec le bouton rouge <TT>cas</TT>).<BR>
+<TT>iquo(a,b)</TT> calcule le quotient entier <TT>q</TT> de <TT>a</TT> par <TT>b</TT> 
+(<TT>a=b*q+r</TT> avec <TT>0</TT><TT>≤</TT><TT> r &lt;b</TT>).<BR>
+<TT>f(x):=exprx</TT> où <TT>exprx</TT> représente une expression de <TT>x</TT> 
+permettant de définir la fonction <TT>f</TT>.<BR>
+<TT>plotseq(f(x),x=a,n)</TT> permet de visualiser les <TT>n</TT> premiers termes de 
+la suite définie par <I>u</I><SUB>0</SUB>=<I>a</I> et <I>u</I><SUB><I>n</I>+1</SUB>=<I>f</I>(<I>u</I><SUB><I>n</I></SUB>) pour <I>n</I> ≥ 0 (il faut 
+penser à changer la fenêtre de visualisation bouton rouge <TT>geo</TT>).
+</P><H3 CLASS="subsection"><A NAME="htoc155">5.5.2</A>  Le problème : valeur approchée de √<SPAN style="text-decoration:overline">7</SPAN></H3><P>
+On considère la suite récurrente définie par :<BR>
+<I>u</I><SUB>0</SUB>=3 et   <I>u</I><SUB><I>n</I>+1</SUB>=1/2(<I>u</I><SUB><I>n</I></SUB>+7/<I>u</I><SUB><I>n</I></SUB>) pour <I>n</I> ≥ 0.<BR>
+0/ Définir la fonction <I>f</I> pour que <I>u</I><SUB><I>n</I>+1</SUB>=<I>f</I>(<I>u</I><SUB><I>n</I></SUB>) pour <I>n</I> ≥ 0.<BR>
+1/ Calculer les 5 premiers termes de la suite <I>u</I> et donner une valeur 
+approchée de <I>u</I><SUB>5</SUB>. On pourra utiliser <TT>f(ans())</TT> qui applique <TT>f</TT> 
+à la dernière réponse.<BR>
+2/ Visualiser les cinq premiers termes de la suite <I>u</I> et trouver une bonne
+fenêtre de visualisation.<BR>
+3/ Ouvrir un tableur avec le raccourci clavier <TT>Alt+t</TT> et mettre :<BR>
+dans la colonne <TT>A</TT> les valeurs de <I>n</I>,<BR>
+dans la colonne <TT>B</TT> les valeurs de <I>u</I><SUB><I>n</I></SUB>,<BR>
+dans la colonne <TT>C</TT> les valeurs du numérateur <I>c</I><SUB><I>n</I></SUB> de <I>u</I><SUB><I>n</I></SUB>,<BR>
+dans la colonne <TT>D</TT> les valeurs du dénominateur <I>d</I><SUB><I>n</I></SUB> de <I>u</I><SUB><I>n</I></SUB>,<BR>
+dans la colonne <TT>E</TT> les valeurs du quotient exact de <I>c</I><SUB><I>n</I></SUB>*10<SUP>12</SUP> par 
+<I>d</I><SUB><I>n</I></SUB>,<BR>
+dans la colonne <TT>F</TT> les valeurs approchées de <I>u</I><SUB><I>n</I></SUB> données par 
+<TT>evalf</TT>.<BR>
+Que représente la colonne <TT>E</TT> ?<BR>
+Observez les différentes colonnes et notez vos observations.<BR>
+4/ On veut montrer que la suite <I>u</I><SUB><I>n</I></SUB> est convergente.<BR>
+- montrer que la suite <I>u</I> est définie et que <I>u</I><SUB><I>n</I></SUB>&gt;√<SPAN style="text-decoration:overline">7</SPAN> 
+pour tout <I>n</I> ≥ 0,<BR>
+- en déduire que le signe de <I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB> est indépendant de <I>n</I>,<BR>
+- montrer que la suite <I>u</I> est décroissante et converge vers √<SPAN style="text-decoration:overline">7</SPAN>,<BR>
+5/ On pose <I>e</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>−√<SPAN style="text-decoration:overline">7</SPAN>. Montrer que √<SPAN style="text-decoration:overline">7</SPAN>&gt;5/2 et en déduire que 
+<I>e</I><SUB>0</SUB>&lt;0.5.<BR>
+Montrer que  <I>e</I><SUB><I>n</I></SUB>=<I>e</I><SUB><I>n</I>−1</SUB><SUP>2</SUP>/2*<I>u</I><SUB><I>n</I>−1</SUB> pour tout <I>n</I> ≥ 1.<BR>
+En déduire que  <I>e</I><SUB><I>n</I></SUB> &lt; 5*(<I>e</I><SUB><I>n</I>−1</SUB>/5)<SUP>2</SUP> &lt; 5*(<I>e</I><SUB>0</SUB>/5)<SUP>2<SUP><I>n</I></SUP></SUP>&lt;
+5*(0.1)<SUP>2<SUP><I>n</I></SUP></SUP> pour tout <I>n</I> ≥ 1.<BR>
+Quelle erreur fait-on lorsqu’on prend <I>u</I><SUB>5</SUB> comme valeur approchée de 
+√<SPAN style="text-decoration:overline">7</SPAN> ? (on montrera que <I>e</I><SUB>5</SUB>=(<I>u</I><SUB>5</SUB><SUP>2</SUP>−7)/(<I>u</I><SUB>5</SUB>+√<SPAN style="text-decoration:overline">7</SPAN>)&lt;(<I>u</I><SUB>5</SUB><SUP>2</SUP>−7)/5).<BR>
+Donner les 20 premières décimales de √<SPAN style="text-decoration:overline">7</SPAN>.
+</P><H3 CLASS="subsection"><A NAME="htoc156">5.5.3</A>  Correction</H3><P>
+0/ On tape :
+<TT>f(x):=1/2*(x+7/x)</TT><BR>
+1/ Dans une ligne de commande on tape :
+<TT>3</TT> puis,
+<TT>f(ans())</TT> cela va afficher la valeur exacte de <I>u</I><SUB>1</SUB>, on valide à 
+nouveau <TT>f(ans())</TT> on obtient <I>u</I><SUB>2</SUB> etc...<BR>
+On obtient :<BR>
+  <I>u</I><SUB>1</SUB>=8/3),<BR>
+  <I>u</I><SUB>2</SUB>=127/48),<BR>
+  <I>u</I><SUB>3</SUB>=32257/12192,<BR>
+  <I>u</I><SUB>4</SUB>=2081028097/786554688.<BR>
+  <I>u</I><SUB>5</SUB>=8661355881006882817/3273684811110137472 
+Quand on a la valeur exacte de <I>u</I><SUB>5</SUB> pour avoir la 
+valeur approchée on sélectionne la réponse avec la souris, puis utilise 
+<TT>evalf</TT> du menu <TT>Calc</TT><TT>▸</TT><TT>Numérique</TT>.<BR>
+On obtient :<BR>
+<TT>2.64575131106</TT><BR>
+2/ On tape : <TT>plotseq(f(x),x=3,5)</TT> avec par exemple comme fenêtre :<BR>
+[2.5;3]× [2.5;2.7]<BR>
+3/ Dans <TT>A0</TT> on tape <TT>0</TT> et dans <TT>A1</TT> on tape <TT>=<I>A</I>0+1</TT>, puis 
+dans le menu <TT>Edit</TT>, on choisit <TT>Remplir</TT> et <TT>Copier vers le bas</TT>
+quand <TT>A1</TT> est en surbrillance.<BR>
+ Dans <TT>B0</TT> on tape 3 et dans <TT>B1</TT> on tape <TT>=f(B0)</TT>, puis 
+dans le menu <TT>Edit</TT>, on choisit <TT>Remplir</TT> et <TT>Copier vers le bas</TT>, 
+quand <TT>B1</TT> est en surbrillance.<BR>
+Dans <TT>C0</TT> on tape <TT>=numer(B0)</TT>, puis dans le menu <TT>Edit</TT>, on 
+choisit <TT>Remplir</TT> et <TT>Copier vers le bas</TT>, quand <TT>C0</TT> est en 
+surbrillance.<BR>
+Dans <TT>D0</TT> on tape <TT>=denom(B0)</TT>, puis dans le menu <TT>Edit</TT>, on 
+choisit <TT>Remplir</TT> et <TT>Copier vers le bas</TT>, quand 
+<TT>D0</TT> est en surbrillance.<BR>
+Dans <TT>E0</TT> on tape <TT>=iquo(C0*10</TT><CODE><TT>^</TT></CODE><TT>12,D0)</TT>, puis dans le menu 
+<TT>Edit</TT>, on choisit <TT>Remplir</TT> et <TT>Copier vers le bas</TT>,
+quand <TT>E0</TT> est en surbrillance.<BR>
+Dans <TT>F0</TT> on tape <TT>=evalf(B0)</TT>, puis dans le menu <TT>Edit</TT>, on 
+choisit <TT>Remplir</TT> et <TT>Copier vers le bas</TT>, quand 
+<TT>F0</TT> est en surbrillance.<BR>
+La colonne <TT>E</TT> contient la partie entière de 10<SUP>12</SUP> *<I>u</I><SUB><I>n</I></SUB>. On est donc 
+capable de voir la partie entière de <I>u</I><SUB><I>n</I></SUB> et de ses 12 premières 
+décimales. En remplacant 12 par 22 on verra donc les 22 premières 
+décimales de <I>u</I><SUB><I>n</I></SUB>.<BR>
+4/ <I>u</I><SUB>0</SUB>&gt;0 donc <I>u</I><SUB>1</SUB> est défini et <I>u</I><SUB>1</SUB>&gt;0 et par récurrence 
+<I>u</I><SUB><I>n</I></SUB> est défini et <I>u</I><SUB><I>n</I></SUB>&gt;0 pour tout <I>n</I> ≥ 0.<BR>
+Si <I>u</I><SUB><I>n</I></SUB> converge vers <I>l</I>, <I>l</I> vérifie :
+2*<I>l</I>=<I>l</I>+7/<I>l</I> donc <I>l</I><SUP>2</SUP>=7.<BR>
+Donc si la limite existe ce ne peut être que √<SPAN style="text-decoration:overline">7</SPAN> puisque <I>u</I><SUB><I>n</I></SUB>&gt;0 
+pour tout <I>n</I> ≥ 0.<BR>
+On a <I>f</I> croissante sur [√<SPAN style="text-decoration:overline">7</SPAN> +∞[ et <I>f</I>(√<SPAN style="text-decoration:overline">7</SPAN>)=√<SPAN style="text-decoration:overline">7</SPAN>
+donc puisque :<BR>
+<I>u</I><SUB>0</SUB>=3&gt;√<SPAN style="text-decoration:overline">7</SPAN> par récurrence <I>u</I><SUB><I>n</I></SUB>&gt;√<SPAN style="text-decoration:overline">7</SPAN> pour tout <I>n</I> ≥ 0.<BR>
+On a <I>f</I> croissante sur [√<SPAN style="text-decoration:overline">7</SPAN> +∞[ et <I>u</I><SUB><I>n</I></SUB>&gt;√<SPAN style="text-decoration:overline">7</SPAN> pour tout 
+<I>n</I> ≥ 0
+donc puisque :<BR>
+<I>u</I><SUB>0</SUB>=3&gt;<I>u</I><SUB>1</SUB>=8/3 on obtient par récurrence <I>u</I><SUB><I>n</I></SUB>&gt;<I>u</I><SUB><I>n</I>+1</SUB> pour tout <I>n</I> ≥ 0.<BR>
+Ou bien on forme la différence :<BR>
+<I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB>=1/2(<I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>n</I>−1</SUB>−7(<I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>n</I>−1</SUB>)/(<I>u</I><SUB><I>n</I></SUB>*<I>u</I><SUB><I>n</I>−1</SUB>))=<BR>
+(<I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>n</I>−1</SUB>)*1/2*(<I>u</I><SUB><I>n</I></SUB>*<I>u</I><SUB><I>n</I>−1</SUB>−7)/(<I>u</I><SUB><I>n</I></SUB>*<I>u</I><SUB><I>n</I>−1</SUB>)<BR>
+(<I>u</I><SUB><I>n</I></SUB>*<I>u</I><SUB><I>n</I>−1</SUB>−7)&gt; 0 puisque <I>u</I><SUB><I>n</I></SUB>&gt;√<SPAN style="text-decoration:overline">7</SPAN> pour tout <I>n</I> ≥ 0 et <I>u</I><SUB><I>n</I></SUB>*<I>u</I><SUB><I>n</I>−1</SUB>&gt;0 donc<BR>
+ <I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB> a le même signe que <I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>n</I>−1</SUB> pour tout <I>n</I> ≥ 1<BR>
+<I>u</I><SUB>1</SUB>−<I>u</I><SUB>0</SUB>&lt;0 donc la suite <I>u</I> est décroissante.<BR>
+<I>u</I> est décroissante et minorée par √<SPAN style="text-decoration:overline">7</SPAN> donc <I>u</I> est convergente.<BR>
+On a vu que si <I>u</I> est convergente, sa limite est √<SPAN style="text-decoration:overline">7</SPAN>, donc <I>u</I> converge vers √<SPAN style="text-decoration:overline">7</SPAN>.<BR>
+5/ 5<SUP>2</SUP>=25 &lt; 7*2<SUP>2</SUP>=28 donc 5/2&lt;√<SPAN style="text-decoration:overline">7</SPAN>&lt;<I>u</I><SUB>0</SUB>=3 et <I>e</I><SUB>0</SUB>=<I>u</I><SUB>0</SUB>−√<SPAN style="text-decoration:overline">7</SPAN>&lt;1/2<BR>
+<I>e</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>−√<SPAN style="text-decoration:overline">7</SPAN>=1/2*(<I>u</I><SUB><I>n</I>−1</SUB><SUP>2</SUP>+7−2*√<SPAN style="text-decoration:overline">7</SPAN>*<I>u</I><SUB><I>n</I>−1</SUB>)/<I>u</I><SUB><I>n</I>−1</SUB>)=<I>e</I><SUB><I>n</I>−1</SUB><SUP>2</SUP>/2*<I>u</I><SUB><I>n</I>−1</SUB>.<BR>
+On sait que 5/2&lt;√<SPAN style="text-decoration:overline">7</SPAN>&lt;<I>u</I><SUB><I>n</I></SUB> donc <I>e</I><SUB><I>n</I></SUB>&lt;5*(<I>e</I><SUB><I>n</I>−1</SUB>/5)<SUP>2</SUP> et par
+récurrence :<BR>
+<I>e</I><SUB><I>n</I></SUB>&lt;5*(<I>e</I><SUB>0</SUB>/5)<SUP>2<SUP><I>n</I></SUP></SUP>&lt;5*(1/10)<SUP>2<SUP><I>n</I></SUP></SUP>
+pour tout <I>n</I> ≥ 1.<BR>
+Donc <I>e</I><SUB>5</SUB>&lt;5*(1/10)<SUP>32</SUP>=5*10<SUP>−32</SUP> est une majoration de l’erreur à 
+priori.<BR>
+ Comme <I>e</I><SUB>5</SUB>=(<I>u</I><SUB>5</SUB><SUP>2</SUP>−7)/(<I>u</I><SUB>5</SUB>+√<SPAN style="text-decoration:overline">7</SPAN>)&lt;(<I>u</I><SUB>5</SUB><SUP>2</SUP>−7)/5, on fait le calcul
+de (<I>u</I><SUB>5</SUB><SUP>2</SUP>−7)/5 et on trouve <I>e</I><SUB>5</SUB>&lt;2*10<SUP>−38</SUP> .<BR>
+Puisque :<BR>
+ <I>e</I><SUB>4</SUB>&lt;<TT>evalf(((2081028097/786554688)</TT><CODE><TT>^</TT></CODE><TT>2-7)/5)</TT>&lt;4*10<SUP>−19</SUP>,<BR>
+ pour avoir un encadrement de √<SPAN style="text-decoration:overline">7</SPAN> à 10<SUP>−20</SUP> près, il faut calculer <I>u</I><SUB>5</SUB> avec 21 décimales.<BR>
+On obtient :
+<I>u</I><SUB>5</SUB>−10<SUP>−25</SUP>&lt;<I>u</I><SUB>5</SUB>−<I>e</I><SUB>5</SUB>=√<SPAN style="text-decoration:overline">7</SPAN>&lt;<I>u</I><SUB>5</SUB> et<BR>
+ 2.645751311064590590501&lt;<I>u</I><SUB>5</SUB>&lt;2.645751311064590590502 donc<BR>
+2.645751311064590590500&lt;√<SPAN style="text-decoration:overline">7</SPAN>&lt;2.645751311064590590502</P><H2 CLASS="section"><A NAME="toc45"></A><A NAME="htoc157">5.6</A>  Suites adjacentes et convergence de 
+ ∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> (−1)<SUP><I>k</I></SUP>/2<I>k</I>+1</H2><H3 CLASS="subsection"><A NAME="htoc158">5.6.1</A>  Les fonctions de <TT>Xcas</TT> utilisées</H3><P>
+Voici les fonctions de <TT>Xcas</TT> qui vous seront utiles dans ce TP.<BR>
+<TT>normal(expr)</TT> renvoie l’expression <TT>expr</TT> simplifiée.<BR>
+<TT>evalf(a)</TT> évalue <TT>a</TT> à l’aide d’un nombre comportant 
+12 chiffres significatifs, sauf si on a changé <TT>Chiffres</TT> dans la configuration du <TT>cas</TT> (<SPAN CLASS="textboxed"><TT>cas</TT></SPAN><SPAN CLASS="textboxed"> en rouge</SPAN>).<BR>
+Si <TT>exprx</TT> est une expression de <TT>x</TT>,</P><P><TT>f(x):=exprx</TT> définit la fonction <TT>f</TT> de variable <TT>x</TT> 
+(<I>x</I> ⊢→<SUP><FONT SIZE=2><I>f</I></FONT></SUP> <I>exprx</I>),</P><P><TT>subst(exprx,x,2)</TT> remplace <TT>x</TT> par 2 dans <TT>exprx</TT> et</P><P><TT>derive(exprx,x)</TT> calcule la dérivée de <TT>exprx</TT> par rapport à 
+<TT>x</TT>.
+</P><H3 CLASS="subsection"><A NAME="htoc159">5.6.2</A>  <I>u</I> et <I>v</I> sont deux suites ajacentes de limite  π/4</H3><P>
+I/ On considère les suites <I>u</I> et <I>v</I> définies par :<BR>
+ <I>u</I><SUB>0</SUB>=1−1/3 et   <I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>−1</SUB>+1/4<I>n</I>+1−1/4<I>n</I>+3 pour <I>n</I> ≥ 1.<BR>
+ <I>v</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>+1/4<I>n</I>+3 pour <I>n</I> ≥ 0.<BR>
+1/ Calculer les 6 premiers termes de la suite <I>u</I> et donner une valeur 
+approchée de <I>u</I><SUB>6</SUB> (on pourra utiliser un tableur que l’on obtient avec le 
+raccourci clavier <TT>Alt+t</TT>.<BR>
+2/ Calculer les 6 premiers termes de la suite <I>v</I> et donner une valeur 
+approchée de <I>v</I><SUB>6</SUB> (on pourra utiliser le tableur).<BR>
+3/ Montrer que les suites <I>u</I> et <I>v</I> sont adjacentes.</P><P>II/ 
+On considère la suite de fonctions <I>f</I><SUB><I>n</I></SUB> de [0,π/2[ dand ℝ définie par :<BR>
+<I>f</I><SUB>0</SUB>(<I>x</I>)=<I>x</I>−tan(<I>x</I>) et  
+ <I>f</I><SUB><I>n</I></SUB>(<I>x</I>)=<I>f</I><SUB><I>n</I>−1</SUB>(<I>x</I>)−(−1)<SUP><I>n</I></SUP>/2<I>n</I>+1tan(<I>x</I>)<SUP>2<I>n</I>+1</SUP> pour <I>n</I> ≥ 1.<BR>
+0/ Calculer <I>f</I><SUB><I>n</I></SUB>(0) pour tout <I>n</I> ≥ 0.<BR>
+1/ Ouvrir le tableur et faites afficher dans les colonnes :<BR>
+les valeurs de <I>n</I>, les valeurs de <I>f</I><SUB><I>n</I></SUB>(<I>x</I>) et les valeurs de <I>f</I>′<SUB><I>n</I></SUB>(<I>x</I>),<BR>
+En observant ces colonnes, déterminer une expression simplifiée de la dérivée de <I>f</I><SUB><I>n</I></SUB>. Prouver votre conjecture.<BR>
+2/ En déduire que pour <I>p</I> ≥ 0 :<BR>
+- la fonction <I>f</I><SUB>2<I>p</I>+1</SUB> est croissante sur [0,π/2[.<BR>
+- la fonction <I>f</I><SUB>2<I>p</I></SUB> est décroissante sur [0,π/2[.<BR>
+3/ Calculer pour <I>p</I> ≥ 0,  <I>f</I><SUB>2<I>p</I></SUB>(π/4) et
+ <I>f</I><SUB>2<I>p</I>+1</SUB>(π/4) en fonction de <I>u</I><SUB><I>p</I></SUB> et de <I>v</I><SUB><I>p</I></SUB> 
+(on pourra utiliser le tableur pour déterminer la formule, puis on fera 
+une démonstration).</P><P>III/ 1/ Montrer que la limite de <I>u</I> et de <I>v</I> est égale à π/4
+( on étudiera le signe de <I>f</I><SUB>2<I>p</I></SUB>(π/4) et de 
+<I>f</I><SUB>2<I>p</I>+1</SUB>(π/4)).<BR>
+2/ Donner un encadrement de π/4.<BR>
+Quelle erreur fait-on lorsqu’on prend 4*<I>u</I><SUB>6</SUB> comme valeur approchée de 
+π ?<BR>
+3/ Trouver une valeur de <I>n</I> pour que 4*<I>u</I><SUB><I>n</I></SUB> et 4*<I>v</I><SUB><I>n</I></SUB> donnent un encadrement de π de diamètre inférieur à 10<SUP>−3</SUP>.
+</P><H3 CLASS="subsection"><A NAME="htoc160">5.6.3</A>  Correction</H3><P>I/ Dans <TT>A0</TT> on tape 0 et dans <TT>A1</TT> on tape <TT>=A0+1</TT> puis dans
+le menu <TT>Edit</TT> du tableur, on choisit <TT>Remplir</TT> et 
+<TT>Copier vers le bas</TT>, quand <TT>A1</TT> est en surbrillance.<BR>
+ Dans <TT>B0</TT> on tape :<BR>
+<TT>2/3</TT> (ou <TT>=evalf(2/3)</TT> et,<BR>
+ dans <TT>B1</TT> on tape :<BR>
+<TT>=B0+1/(4*A1+1)-1/(4*A1+3)</TT><BR>
+puis dans le menu <TT>Edit</TT>, on choisit 
+<TT>Remplir</TT> et <TT>Copier vers le bas</TT>, quand <TT>B1</TT> est en 
+surbrillance.<BR>
+Dans <TT>C0</TT> on tape :<BR>
+<TT>=B0+1/(4*A0+3)</TT><BR>
+puis dans le menu <TT>Edit</TT> du tableur, on choisit <TT>Remplir</TT> et 
+<TT>Copier vers le bas</TT>, quand <TT>C0</TT> est en surbrillance.<BR>
+La suite <I>u</I> est croissante car <I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>n</I>−1</SUB>=1/4<I>n</I>+1−1/4<I>n</I>+3&gt;0 pour <I>n</I> ≥ 1.<BR>
+La suite <I>v</I> est décroissante car <I>v</I><SUB><I>n</I></SUB>−<I>v</I><SUB><I>n</I>−1</SUB>=1/4<I>n</I>+1−1/4<I>n</I>−1&lt;0 pour <I>n</I> ≥ 1.<BR>
+Donc <I>v</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>n</I></SUB>=1/(4*<I>n</I>+3) tend vers 0 quand n tend vers l’infini.<BR>
+Les suites <I>u</I> et <I>v</I> sont donc adjacentes.</P><P>II/<BR>
+0/ <I>f</I><SUB><I>n</I></SUB>(0)=0 pour tout <I>n</I> ≥ 0.<BR>
+1/ Dans <TT>A0</TT> on tape <TT>0</TT> et dans <TT>A1</TT> on tape <TT>=A0+1</TT>
+puis, dans le menu <TT>Edit</TT> du tableur, on choisit <TT>Remplir</TT> et 
+<TT>Copier vers le bas</TT>, quand <TT>A1</TT> est en surbrillance.<BR>
+Dans <TT>D0</TT> on tape <TT>=x-tan(x)</TT> et<BR>
+dans <TT>D1</TT> on tape 
+<TT>=D0-(-1)</TT><CODE><TT>^</TT></CODE><TT>(A1)*tan(x)</TT><CODE><TT>^</TT></CODE><TT>(2*A1+1)/(2*A1+1)</TT>
+puis, dans le menu <TT>Edit</TT> du tableur, on choisit <TT>Remplir</TT> et 
+<TT>Copier vers le bas</TT>, quand <TT>B1</TT> est en surbrillance.<BR>
+Dans <TT>E0</TT> on tape <TT>=normal(derive(D0,x))</TT> puis, dans le menu 
+<TT>Edit</TT>, on choisit <TT>Remplir</TT> et <TT>Copier vers le bas</TT>, quand 
+<TT>E0</TT> est en surbrillance.<BR>
+On remarque que l’on a <I>f</I><SUB><I>n</I></SUB>′(<I>x</I>)=(−1)<SUP><I>n</I>+1</SUP>*tan(<I>x</I>)<SUP>2<I>n</I>+2</SUP>.<BR>
+On le montre en faisant le calcul :<BR>
+ <I>f</I><SUB><I>n</I></SUB>(<I>x</I>)=<I>x</I>−tan(<I>x</I>)+1/3tan(<I>x</I>)<SUP>3</SUP>+...−(−1)<SUP><I>n</I></SUP>/2<I>n</I>+1tan(<I>x</I>)<SUP>2<I>n</I>+1</SUP><BR>
+<I>f</I><SUB><I>n</I></SUB>′(<I>x</I>)=1−(1+tan(<I>x</I>)<SUP>2</SUP>)*(1−tan(<I>x</I>)<SUP>2</SUP>+...+(−1)<SUP><I>n</I></SUP>tan(<I>x</I>)<SUP>2<I>n</I></SUP>)<BR>
+On reconnait la somme d’une série géométrique de raison : −tan(<I>x</I>)<SUP>2</SUP>.<BR>
+ <I>f</I><SUB><I>n</I></SUB>′(<I>x</I>)=1−(1+tan(<I>x</I>)<SUP>2</SUP>)*1−(−tan(<I>x</I>)<SUP>2</SUP>)<SUP><I>n</I>+1</SUP>/1+tan(<I>x</I>)<SUP>2</SUP>=(−1)<SUP><I>n</I>+1</SUP>tan(<I>x</I>)<SUP>2<I>n</I>+2</SUP><BR>
+2/ La fonction <I>f</I><SUB>2<I>p</I></SUB> a une dérivée negative pour tout <I>p</I> ≥ 0, donc 
+<I>f</I><SUB>2<I>p</I></SUB> est décroissante. En particulier <I>f</I><SUB>2<I>p</I></SUB>(0)=0&gt;<I>f</I><SUB>2<I>p</I></SUB>(π/4).<BR>
+La fonction <I>f</I><SUB>2<I>p</I>+1</SUB> a une dérivée positive pour tout <I>p</I> ≥ 0, donc 
+<I>f</I><SUB>2<I>p</I>+1</SUB> est croissante. En particulier <I>f</I><SUB>2<I>p</I>+1</SUB>(0)=0&lt;<I>f</I><SUB>2<I>p</I>+1</SUB>(π/4).<BR>
+3/ Dans <TT>F0</TT> on tape <TT>=subst(D0,x,pi/4)</TT> puis, dans le menu <TT>Edit</TT>,
+on choisit bouton <TT>Remplir</TT> et <TT>Copier vers le bas</TT>, quand <TT>E0</TT> 
+est en surbrillance.<BR>
+<I>f</I><SUB>2<I>p</I></SUB>(π/4)=π/4−<I>v</I><SUB><I>p</I></SUB> et <I>f</I><SUB>2<I>p</I>+1</SUB>(π/4)=π/4−<I>u</I><SUB><I>p</I></SUB>.</P><P>III/
+1/ On a donc pour tout <I>p</I> ≥ 0 :<BR>
+<I>f</I><SUB>2<I>p</I>+1</SUB>(π/4)=π/4−<I>u</I><SUB><I>p</I></SUB>&gt;0 et <I>f</I><SUB>2<I>p</I></SUB>(π/4)=π/4−<I>v</I><SUB><I>p</I></SUB>&lt;0<BR>
+les suites <I>u</I> et <I>v</I> sont donc adjacentes et convergentes vers π/4.<BR>
+2/ Donc pour tout <I>p</I> ≥ 0 : <I>u</I><SUB><I>p</I></SUB>&lt;π/4&lt;<I>v</I><SUB><I>p</I></SUB>.<BR>
+On a donc 4*<I>u</I><SUB>6</SUB>&lt;π&lt;4*<I>v</I><SUB>6</SUB>=4*<I>u</I><SUB>6</SUB>+4/27.<BR>
+3/ Pour avoir :<BR>
+ 4*<I>u</I><SUB><I>n</I></SUB>&lt;π&lt;4*<I>v</I><SUB><I>n</I></SUB>=4*<I>u</I><SUB><I>n</I></SUB>+4/4*<I>n</I>+3 ≤ 4*<I>u</I><SUB><I>n</I></SUB>+10<SUP>−3</SUP>,<BR>
+il faut prendre comme <I>n</I> un entier qui vérifie 4*<I>n</I>+3 ≥ 4000, soit <I>n</I> ≥ 1000.<BR>
+Donc <I>u</I><SUB>1000</SUB> et <I>v</I><SUB>1000</SUB> donnent un encadrement de π de diamètre ≤ 10<SUP>−3</SUP>.</P><H3 CLASS="subsection"><A NAME="htoc161">5.6.4</A>  Accélération de convergence</H3><P>
+On considère toujours les suites <I>u</I> et <I>v</I> définies par :<BR>
+ <I>u</I><SUB>0</SUB>=1−1/3 et   <I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>−1</SUB>+1/4<I>n</I>+1−1/4<I>n</I>+3 pour <I>n</I> ≥ 1.<BR>
+ <I>v</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>+1/4<I>n</I>+3 pour <I>n</I> ≥ 0.<BR>
+1/ Montrer que, pour <I>p</I>&gt;0, </P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>−1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)</TD></TR>
+</TABLE><P>2/ En déduire que, pour <I>n</I>&gt;<I>p</I>&gt;0, </P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>n</I>+5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)&lt;<I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>p</I>−1</SUB>&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>−1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>n</I>+3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)</TD></TR>
+</TABLE><P> et en déduire un encadrement de <I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>p</I></SUB></P><P>3/ En faisant tendre <I>n</I> vers +∞, montrer que </P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2(4<I>p</I>+5)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">≤ </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−<I>u</I><SUB><I>p</I></SUB>≤</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2(4<I>p</I>+3)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>4/ On pose  <I>w</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>+1/2(4<I>n</I>+5) et 
+ <I>t</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>+1/2(4<I>n</I>+3).<BR>
+En utilisant le tableur, montrer que <I>w</I><SUB><I>n</I></SUB> et <I>t</I><SUB><I>n</I></SUB> sont deux suites adjacentes qui convergent vers  π/4 plus rapidement que <I>u</I><SUB><I>n</I></SUB> et <I>v</I><SUB><I>n</I></SUB>.
+Trouver une valeur de <I>n</I> pour que 4<I>w</I><SUB><I>n</I></SUB> et 4<I>t</I><SUB><I>n</I></SUB> donnent un encadrement de π de diamètre inférieur à 10<SUP>−3</SUP>.<BR>
+
+<B>Correction et prolongement</B><BR>
+ <I>u</I><SUB>10</SUB>=∑<SUB><I>k</I>=0</SUB><SUP>10</SUP> 1/4<I>k</I>+1−1/4<I>k</I>+3=∑<SUB><I>k</I>=0</SUB><SUP>10</SUP> 2/(4<I>k</I>+1)(4<I>k</I>+3)<BR>
+On encadre les termes de la série :<BR>
+ ∑<SUB><I>k</I>=0</SUB><SUP>10</SUP> 2/(4<I>k</I>+1)(4<I>k</I>+3)<BR>
+ 1/2(1/4<I>k</I>+1−1/4<I>k</I>+5)&lt;2/(4<I>k</I>+1)(4<I>k</I>+3)&lt;1/2(1/4<I>k</I>−1−1/4<I>k</I>+3)
+donc<BR>
+ 1/2(1/4<I>p</I>+1−1/4<I>n</I>+5)&lt;<I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>p</I>−1</SUB>&lt;1/2(1/4<I>p</I>−1−1/4<I>n</I>+3).<BR>
+On a :<BR>
+  <I>w</I><SUB>10</SUB>= <I>u</I><SUB>10</SUB>+1/2(4<I>k</I>+5)=1/2+∑<SUB><I>k</I>=0</SUB><SUP>10</SUP> 4/(4<I>k</I>+1)(4<I>k</I>+3)(4<I>k</I>+5)<BR>
+On peut continuer le même processus en encadrant les termes de la série :<BR>
+ ∑<SUB><I>k</I>=0</SUB><SUP>10</SUP> 4/(4<I>k</I>+1)(4<I>k</I>+3)(4<I>k</I>+5).<BR>
+On a :<BR>
+ 4/(4<I>k</I>+1)(4<I>k</I>+5)(4<I>k</I>+9)&lt;4/(4<I>k</I>+1)(4<I>k</I>+3)(4<I>k</I>+5)&lt;4/(4<I>k</I>−3)(4<I>k</I>+1)(4<I>k</I>+5)<BR>
+donc<BR>
+ 1/2(1/(4<I>k</I>+1)(4<I>k</I>+5)−1/(4<I>k</I>+5)(4<I>k</I>+9))&lt;4/(4<I>k</I>+1)(4<I>k</I>+3)(4<I>k</I>+5)&lt;<BR>
+ 1/2(1/(4<I>k</I>−3)(4<I>k</I>+1)−1/(4<I>k</I>+1)(4<I>k</I>+5))<BR>
+On a donc comme précédemment :<BR>
+ 1/2(1/(4<I>p</I>+1)(4<I>p</I>+5)−1/(4<I>n</I>+5)(4<I>n</I>+9))&lt;<I>w</I><SUB><I>n</I></SUB>−<I>w</I><SUB><I>p</I>−1</SUB>&lt;<BR>
+ 1/2(1/(4<I>p</I>−3)(4<I>p</I>+1)−1/(4<I>n</I>+1)(4<I>n</I>+5))<BR>
+On pose donc :<BR>
+ <I>s</I><SUB>10</SUB>= <I>w</I><SUB>10</SUB>+1/2(4<I>k</I>+5)(4<I>k</I>+9)<BR>
+ <I>s</I><SUB>10</SUB>=3/5+∑<SUB><I>k</I>=0</SUB><SUP>10</SUP> 24/(4<I>k</I>+1)(4<I>k</I>+3)(4<I>k</I>+5)(4<I>k</I>+9)<BR>
+On peut continuer le même processus en encadrant les termes de la série :<BR>
+ ∑<SUB><I>k</I>=0</SUB><SUP>10</SUP> 24/(4<I>k</I>+1)(4<I>k</I>+3)(4<I>k</I>+5)(4<I>k</I>+9)<BR>
+et on pose :<BR>
+ <I>r</I><SUB>10</SUB>= <I>s</I><SUB>10</SUB>+2/(4<I>k</I>+5)(4<I>k</I>+9)*(4<I>k</I>+13)<BR>
+ <I>r</I><SUB>10</SUB>=29/45+∑<SUB><I>k</I>=0</SUB><SUP>10</SUP> 240/(4<I>k</I>+1)(4<I>k</I>+3)(4<I>k</I>+5)(4<I>k</I>+9)(4<I>k</I>+13)<BR>
+On tape pour avoir la valeur approchée de π/4 :<BR>
+<TT>evalf(pi/4)</TT><BR>
+On obtient :<BR>
+<TT>0.785398163397</TT><BR>
+On tape pour avoir la valeur approchée de <I>u</I><SUB>10</SUB> :<BR>
+<TT>sum(2.0/((4*k+1)*(4*k+3)),k,0,10)</TT><BR>
+On obtient :<BR>
+<TT>0.774040381616</TT><BR>
+On tape pour avoir la valeur approchée de <I>w</I><SUB>10</SUB> :<BR>
+<TT>sum(2/((4*k+1)*(4*k+3)),k,0,10)+1.0/(2*45)</TT><BR>
+On obtient :<BR>
+<TT>0.785151492727</TT><BR>
+Ou on tape pour avoir la valeur approchée de <I>w</I><SUB>10</SUB> :<BR>
+<TT>sum(4/((4*k+1)*(4*k+3)*(4*k+5)),k,0,10)+0.5</TT><BR>
+On obtient :<BR>
+<TT>0.785151492727</TT><BR>
+On tape pour avoir la valeur approchée de <I>s</I><SUB>10</SUB> :<BR>
+<TT>sum(4/((4*k+1)*(4*k+3)*(4*k+5)),k,0,10)+
+1.0/2+1/(2*45*49)</TT><BR>
+On obtient :<BR>
+<TT>0.785378250097</TT><BR>
+Ou on tape pour avoir la valeur approchée de <I>s</I><SUB>10</SUB> :<BR>
+<TT>sum(24/((4*k+1)*(4*k+3)*(4*k+5)*(4*k+9)),k,0,10)+0.6</TT><BR>
+On obtient :<BR>
+<TT>0.785378250097</TT><BR>
+On tape pour avoir la valeur approchée de <I>r</I><SUB>10</SUB> :<BR>
+<TT>sum(24/((4*k+1)*(4*k+3)*(4*k+5)*(4*k+9)),k,0,10)+<BR>
+0.6+2/(45*49*53)</TT><BR>
+On obtient :<BR>
+<TT>0.78539536386</TT><BR>
+Ou on tape pour avoir la valeur approchée de <I>r</I><SUB>10</SUB> :<BR>
+<TT>sum(240/((4*k+1)*(4*k+3)*(4*k+5)*(4*k+9)*(4*k+13)),k,0,10)
++29.0/45</TT><BR>
+On obtient :<BR>
+<TT>0.78539536386</TT><BR>
+On a pour la dernière somme 5 décimales exactes de π/4 :<BR>
+|<I>l</I>−<I>z</I><SUB>10</SUB>|&lt;2(1/(41*45*49)−1/(45*49*53))&lt;5.1* 10<SUP>−6</SUP>
+</P><H3 CLASS="subsection"><A NAME="htoc162">5.6.5</A>  Comparaison avec une intégrale</H3><P>
+Soit pour <I>t</I> ∈ [0;+∞[ la fonction  <I>h</I>(<I>t</I>)=1/4<I>t</I>+1−1/4<I>t</I>+3.</P><P>1/ Calculer pour <I>k</I>∈ ℕ
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left"><I>k</I>+1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>h</I>(<I>t</I>)  <I>dt</I></TD></TR>
+</TABLE><P>2/ Montrer que pour <I>k</I>∈ ℕ
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left"><I>k</I>+1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>h</I>(<I>t</I>) <I>dt</I>&lt;<I>h</I>(<I>k</I>)&lt;</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left"><I>k</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>k</I>−1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>h</I>(<I>t</I>) <I>dt</I></TD></TR>
+</TABLE><P>3/ En déduire que
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(ln(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">4<I>n</I>+5</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>n</I>+7</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)−ln(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+5</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+7</TD></TR>
+</TABLE></TD><TD CLASS="dcell">))&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=<I>p</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>h</I>(<I>k</I>)&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(ln(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">4<I>n</I>+1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>n</I>+3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)−ln(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">))</TD></TR>
+</TABLE><P>4/ En faisant tendre <I>n</I> vers +∞, montrer que 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD CLASS="dcell">ln(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+7</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)≤ </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−<I>u</I><SUB><I>p</I></SUB>≤</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD CLASS="dcell">ln(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+3</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>p</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)</TD></TR>
+</TABLE><P>5/ On pose  <I>s</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>+1/4ln(4<I>p</I>+7/4<I>p</I>+5) et  <I>z</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>+1/4ln(4<I>p</I>+3/4<I>p</I>+1).
+En utilisant le tableur, montrer que <I>s</I><SUB><I>n</I></SUB> et <I>z</I><SUB><I>n</I></SUB> sont deux suites adjacentes qui convergent vers  π/4 plus rapidement que <I>u</I><SUB><I>n</I></SUB> et <I>v</I><SUB><I>n</I></SUB>.
+Trouver une valeur de <I>n</I> pour que 4<I>s</I><SUB><I>n</I></SUB> et 4<I>z</I><SUB><I>n</I></SUB> donnent un encadrement de π de diamètre inférieur à 10<SUP>−3</SUP>.</P><H3 CLASS="subsection"><A NAME="htoc163">5.6.6</A>  Prolongement avec la formule d’Euler-Mac Laurin</H3><P>
+<B>La formule d’Euler-Mac Laurin à l’ordre 4</B>
+On suppose la fonction <I>g</I> suffisamment dérivable et on pose
+<I>I</I><SUB>0</SUB>=∫<SUB>0</SUB><SUP>1</SUP> <I>g</I>(<I>t</I>) <I>dt</I>.
+On va intégrer cette intégrale par partie, pour cela on définit le polynôme <I>P</I><SUB>1</SUB>(<I>x</I>) tel que :
+<I>P</I><SUB>1</SUB>′(<I>x</I>)=1 et ∫<SUB>0</SUB><SUP>1</SUP> <I>P</I><SUB>1</SUB>(<I>t</I>) <I>dt</I>=0 donc <I>P</I><SUB>1</SUB>(<I>x</I>)=<I>x</I>−1/2.<BR>
+<I>P</I><SUB>1</SUB>(<I>x</I>) est une fonction impaire en (<I>x</I>−1/2) et on a <I>P</I><SUB>1</SUB>(1)=−<I>P</I><SUB>1</SUB>(0)=1/2.<BR>
+On a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>I</I><SUB>0</SUB>=</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>g</I>(<I>t</I>) <I>P</I><SUB>1</SUB>′(<I>t</I>) <I>dt</I>=<I>P</I><SUB>1</SUB>(1)<I>g</I>(1)−<I>P</I><SUB>1</SUB>(0)<I>g</I>(0)−</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>g</I>′(<I>t</I>) <I>P</I><SUB>1</SUB>(<I>t</I>) <I>dt</I></TD></TR>
+</TABLE><P> 
+On continue, en définissant <I>P</I><SUB>2</SUB>(<I>x</I>) tel que :<BR>
+<I>P</I><SUB>2</SUB>′(<I>x</I>)=<I>P</I><SUB>1</SUB>(<I>x</I>) et ∫<SUB>0</SUB><SUP>1</SUP> <I>P</I><SUB>2</SUB>(<I>t</I>) <I>dt</I>=0 donc <I>P</I><SUB>2</SUB>(<I>x</I>)=1/2(<I>x</I>−1/2)<SUP>2</SUP>−1/24.<BR>
+<I>P</I><SUB>2</SUB>(<I>x</I>) est une fonction paire en (<I>x</I>−1/2) et on a <I>P</I><SUB>2</SUB>(1)=<I>P</I><SUB>2</SUB>(0)=1/12.<BR>
+On a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>g</I>′(<I>t</I>) <I>P</I><SUB>2</SUB>′(<I>t</I>) <I>dt</I>=<I>P</I><SUB>2</SUB>(1)<I>g</I>′(1)−<I>P</I><SUB>2</SUB>(0)<I>g</I>′(0)−</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>g</I>″(<I>t</I>) <I>P</I><SUB>2</SUB>(<I>t</I>) <I>dt</I></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>I</I><SUB>0</SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>g</I>(1)+<I>g</I>(0)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>g</I>′(1)−<I>g</I>′(0)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">12</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>g</I>″(<I>t</I>) <I>P</I><SUB>2</SUB>(<I>t</I>) <I>dt</I></TD></TR>
+</TABLE><P>
+On recommence en définissant :<BR>
+ <I>P</I><SUB>3</SUB>′(<I>x</I>)=<I>P</I><SUB>2</SUB>(<I>x</I>) et ∫<SUB>0</SUB><SUP>1</SUP> <I>P</I><SUB>3</SUB>(<I>t</I>) <I>dt</I>=0.<BR>
+On a :
+<I>P</I><SUB>3</SUB>(<I>x</I>)=1/6(<I>x</I>−1/2)<SUP>3</SUP>−1/24(<I>x</I>−1/2) en effet <I>P</I><SUB>3</SUB>(<I>x</I>) est une primitive de 
+<I>P</I><SUB>2</SUB>(<I>x</I>) qui est impaire en (<I>x</I>−1/2).<BR>
+On en déduit que :<BR>
+ <I>P</I><SUB>3</SUB>(1)=−<I>P</I><SUB>3</SUB>(0) et puisque ∫<SUB>0</SUB><SUP>1</SUP><I>P</I><SUB>2</SUB>(<I>t</I>)=0 on a :<BR>
+ <I>P</I><SUB>3</SUB>(1)=<I>P</I><SUB>3</SUB>(0) donc <I>P</I><SUB>3</SUB>(1)=−<I>P</I><SUB>3</SUB>(0)=0.<BR>
+Ceci se généralise dans la suite pour <I>k</I>&gt;0 on a :<BR>
+<I>P</I><SUB>2*<I>k</I>+1</SUB>(1)=<I>P</I><SUB>2*<I>k</I>+1</SUB>(0)=0.<BR>
+On a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>g</I>″(<I>t</I>) <I>P</I><SUB>3</SUB>′(<I>t</I>) <I>dt</I>=<I>P</I><SUB>3</SUB>(1)<I>g</I>″(1)−<I>P</I><SUB>3</SUB>(0)<I>g</I>″(0)−</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>g</I>‴(<I>t</I>) <I>P</I><SUB>3</SUB>(<I>t</I>) <I>dt</I></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>I</I><SUB>0</SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>g</I>(1)+<I>g</I>(0)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>g</I>′(1)−<I>g</I>′(0)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">12</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>g</I>‴(<I>t</I>) <I>P</I><SUB>3</SUB>(<I>t</I>) <I>dt</I></TD></TR>
+</TABLE><P>
+En définissant <I>P</I><SUB>4</SUB>(<I>x</I>) tel que :<BR>
+<I>P</I><SUB>4</SUB>′(<I>x</I>)=<I>P</I><SUB>3</SUB>(<I>x</I>) et ∫<SUB>0</SUB><SUP>1</SUP> <I>P</I><SUB>4</SUB>(<I>t</I>) <I>dt</I>=0, <I>P</I><SUB>4</SUB>(<I>x</I>) est donc une fonction paire en (<I>x</I>−1/2) et on a 
+<I>P</I><SUB>4</SUB>(<I>x</I>)=1/24(<I>x</I>−1/2)<SUP>4</SUP>−1/48(<I>x</I>−1/2)<SUP>2</SUP>+7/5760.<BR>
+On a <I>P</I><SUB>4</SUB>(1)=<I>P</I><SUB>4</SUB>(0)=−1/720.<BR>
+Donc la formule d’Euler-MacLaurin à l’ordre 4 est :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>g</I>(<I>t</I>) <I>dt</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>g</I>(1)+<I>g</I>(0)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>g</I>′(1)−<I>g</I>′(0)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">12</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>g</I>‴(1)−<I>g</I>‴(0)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">720</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>g</I><SUP>(4)</SUP>(<I>t</I>) <I>P</I><SUB>4</SUB>(<I>t</I>) <I>dt</I></TD></TR>
+</TABLE><P>
+puisque  <I>P</I><SUB>5</SUB>(0)= <I>P</I><SUB>5</SUB>(1)=0, on a 
+∫<SUB>0</SUB><SUP>1</SUP> <I>g</I><SUP>(4)</SUP>(<I>t</I>) <I>P</I><SUB>4</SUB>(<I>t</I>) <I>dt</I>=−∫<SUB>0</SUB><SUP>1</SUP> <I>g</I><SUP>(5)</SUP>(<I>t</I>) <I>P</I><SUB>5</SUB>(<I>t</I>) <I>dt</I>.<BR>
+Donc on a aussi :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>g</I>(<I>t</I>) <I>dt</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>g</I>(1)+<I>g</I>(0)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>g</I>′(1)−<I>g</I>′(0)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">12</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>g</I>‴(1)−<I>g</I>‴(0)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">720</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>g</I><SUP>(5)</SUP>(<I>t</I>) <I>P</I><SUB>5</SUB>(<I>t</I>) <I>dt</I></TD></TR>
+</TABLE><P>
+<B>Remarque</B><BR>
+On peut montrer que le polynôme <I>P</I><SUB><I>k</I></SUB>(<I>x</I>)=<I>B</I><SUB><I>k</I></SUB>(<I>x</I>)/<I>k</I>! où <I>B</I><SUB><I>k</I></SUB>(<I>x</I>) est le 
+<I>k</I>-ième polynôme de Bernoulli, il est solution de :<BR>
+<I>B</I><SUB><I>k</I></SUB>(<I>x</I>+1)−<I>B</I><SUB><I>k</I></SUB>(<I>x</I>)=<I>kx</I><SUP><I>k</I>−1</SUP>, et il vérifie :<BR>
+ <I>te</I><SUP><I>xt</I></SUP>/<I>e</I><SUP><I>t</I></SUP>−1=∑<SUB><I>n</I>=0</SUB><SUP>∞</SUP><I>B</I><SUB><I>n</I></SUB>(<I>x</I>)<I>t</I><SUP><I>n</I></SUP>/<I>n</I>!.<BR>
+Le <I>k</I>-ième nombre de Bernouilli (c’est la commande <TT>bernoulli(k)</TT> de 
+<TT>Xcas</TT>) est la valeur du <I>k</I>-ième polynôme de Bernoulli en zéro.<BR>
+<B>La formule d’Euler-Mac Laurin plus générale à l’ordre </B><B><I>r</I></B><B>.</B>
+On a :<BR>
+∫<SUB><I>p</I></SUB><SUP><I>q</I></SUP> <I>f</I>(<I>t</I>)<I>dt</I>=1/2(<I>f</I>(<I>p</I>)+<I>f</I>(<I>q</I>))+∑<SUB><I>n</I>=<I>p</I>+1</SUB><SUP><I>q</I>−1</SUP><I>f</I>(<I>n</I>)+
+∑<SUB><I>k</I>=2</SUB><SUP><I>r</I></SUP>(−1)<SUP><I>k</I></SUP>/<I>k</I>!<I>bernouilli</I>(<I>k</I>)(<I>f</I><SUP>(<I>k</I>−1)</SUP>(<I>p</I>)−<I>f</I><SUP>(<I>k</I>−1)</SUP>(<I>q</I>))+
+∫<SUB>0</SUB><SUP>1</SUP> ∑<SUB><I>n</I>=<I>p</I>+1</SUB><SUP><I>q</I></SUP>(−1)<SUP><I>r</I></SUP><I>f</I>(<I>u</I>+<I>n</I>−1)<I>B</I><SUB><I>r</I></SUB>(<I>u</I>)/<I>r</I>!<I>du</I></P><P><SPAN CLASS="textboxed"><B>Comparaison de </B></SPAN><SPAN CLASS="textboxed"><B> ∑</B></SPAN><SUB><SPAN CLASS="textboxed"><B><I>k</I>=<I>p</I>+1</B></SPAN></SUB><SUP><SPAN CLASS="textboxed"><B><I>n</I></B></SPAN></SUP><SPAN CLASS="textboxed"><B><I>f</I>(<I>k</I>)</B></SPAN><SPAN CLASS="textboxed"><B> avec </B></SPAN><SPAN CLASS="textboxed"><B>∫</B></SPAN><SUB><SPAN CLASS="textboxed"><B><I>p</I></B></SPAN></SUB><SUP><SPAN CLASS="textboxed"><B><I>n</I></B></SPAN></SUP><SPAN CLASS="textboxed"><B> <I>f</I>(<I>t</I>)  <I>dt</I></B></SPAN></P><P>On a ∑<SUB><I>k</I>=<I>p</I>+1</SUB><SUP><I>n</I></SUP><I>f</I>(<I>k</I>)−∫<SUB><I>p</I></SUB><SUP><I>n</I></SUP> <I>f</I>(<I>t</I>)  <I>dt</I>=∑<SUB><I>k</I>=<I>p</I>+1</SUB><SUP><I>n</I></SUP>∫<SUB><I>k</I>−1</SUB><SUP><I>k</I></SUP>(<I>f</I>(<I>k</I>)− <I>f</I>(<I>t</I>))  <I>dt</I>.<BR>
+On se ramène à l’intervalle [0;1] en posant <I>u</I>+<I>k</I>−1=<I>t</I> :<BR>
+∫<SUB><I>k</I>−1</SUB><SUP><I>k</I></SUP>(<I>f</I>(<I>k</I>)− <I>f</I>(<I>t</I>))  <I>dt</I>=∫<SUB>0</SUB><SUP>1</SUP>(<I>f</I>(<I>k</I>)− <I>f</I>(<I>u</I>+<I>k</I>−1))  <I>du</I><BR>
+puis on applique la formule d’Euler-Mac Laurin à 
+<I>g</I>(<I>u</I>)=<I>f</I>(<I>k</I>)− <I>f</I>(<I>u</I>+<I>k</I>−1) (<I>g</I>(1)=0, <I>g</I>(0)=<I>f</I>(<I>k</I>)−<I>f</I>(<I>k</I>−1), <I>g</I>′(<I>u</I>)=−<I>f</I>′(<I>u</I>+<I>k</I>−1)....) :<BR>
+ ∫<SUB>0</SUB><SUP>1</SUP>(<I>f</I>(<I>k</I>)− <I>f</I>(<I>u</I>+<I>k</I>−1))  <I>du</I>=<I>f</I>(<I>k</I>)−<I>f</I>(<I>k</I>−1)/2+<I>f</I>′(<I>k</I>)−<I>f</I>′(<I>k</I>−1)/12<BR>
+−<I>f</I>‴(<I>k</I>)−<I>f</I>‴(<I>k</I>−1)/720+∫<SUB>0</SUB><SUP>1</SUP> <I>f</I><SUP>(4)</SUP>(<I>u</I>+<I>k</I>−1) <I>P</I><SUB>4</SUB>(<I>u</I>) <I>du</I><BR>
+donc<BR>
+ ∑<SUB><I>k</I>=<I>p</I>+1</SUB><SUP><I>n</I></SUP>∫<SUB>0</SUB><SUP>1</SUP>(<I>f</I>(<I>k</I>)− <I>f</I>(<I>u</I>+<I>k</I>−1))  <I>du</I>=<I>f</I>(<I>n</I>)−<I>f</I>(<I>p</I>)/2+<I>f</I>′(<I>n</I>)−<I>f</I>′(<I>p</I>)/12−<I>f</I>‴(<I>n</I>)−<I>f</I>‴(<I>p</I>)/720+<BR>
+                 ∫<SUB>0</SUB><SUP>1</SUP> ∑<SUB><I>k</I>=<I>p</I>+1</SUB><SUP><I>n</I></SUP><I>f</I><SUP>(4)</SUP>(<I>u</I>+<I>k</I>−1) <I>P</I><SUB>4</SUB>(<I>u</I>) <I>du</I><BR>
+On trouve :<BR>
+<I>P</I><SUB>0</SUB>=1<BR>
+<I>P</I><SUB>1</SUB>=<I>x</I>−1/2<BR>
+<I>P</I><SUB>2</SUB>=<I>x</I><SUP>2</SUP>/2−<I>x</I>/2+1/12<BR>
+<I>P</I><SUB>3</SUB>=<I>x</I><SUP>3</SUP>/6−<I>x</I><SUP>2</SUP>/4+<I>x</I>/12<BR>
+<I>P</I><SUB>4</SUB>=<I>x</I><SUP>4</SUP>/24−<I>x</I><SUP>3</SUP>/12+<I>x</I><SUP>2</SUP>/24−1/720<BR>
+<I>P</I><SUB>5</SUB>=<I>x</I><SUP>5</SUP>/120−<I>x</I><SUP>4</SUP>/48+<I>x</I><SUP>3</SUP>/72−<I>x</I>/720<BR>
+<I>P</I><SUB>6</SUB>=<I>x</I><SUP>6</SUP>/720−<I>x</I><SUP>5</SUP>/240+<I>x</I><SUP>4</SUP>/288−<I>x</I><SUP>2</SUP>/1440+1/30240<BR>
+car <TT>int(x</TT><CODE><TT>^</TT></CODE><TT>6/720-x</TT><CODE><TT>^</TT></CODE><TT>5/240+x</TT><CODE><TT>^</TT></CODE><TT>4/288-x</TT><CODE><TT>^</TT></CODE><TT>2/1440,x,0,1)=-1/30240</TT><BR>
+
+<SPAN CLASS="textboxed"><B>Application à </B></SPAN><SPAN CLASS="textboxed"><B> <I>f</I>(<I>t</I>)=</B></SPAN><SPAN CLASS="textboxed"><B>1/4<I>t</I>+1</B></SPAN><SPAN CLASS="textboxed"><B>−</B></SPAN><SPAN CLASS="textboxed"><B>1/4<I>t</I>+3</B></SPAN><BR>
+La série de terme général  <I>u</I><SUB><I>n</I></SUB>=<I>f</I>(<I>n</I>)=2/(4<I>n</I>+1)(4<I>n</I>+3)  est convergente et,<BR>
+ ∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>f</I>(<I>k</I>)=π/4=<I>l</I> , on a :<BR>
+ <I>f</I>′<I>tt</I>)=−4/(4<I>t</I>+1)<SUP>2</SUP>+4/(4<I>t</I>+3)<SUP>2</SUP><BR>
+ <I>f</I>″(<I>t</I>)=32/(4<I>t</I>+1)<SUP>3</SUP>−32/(4<I>t</I>+3)<SUP>3</SUP><BR>
+ <I>f</I>‴(<I>t</I>)=−384/(4<I>t</I>+1)<SUP>4</SUP>+384/(4<I>t</I>+3)<SUP>4</SUP><BR>
+ <I>f</I><SUP>(4)</SUP>(<I>t</I>)=6144/(4<I>t</I>+1)<SUP>5</SUP>−6144/(4<I>t</I>+3)<SUP>5</SUP><BR>
+ <I>f</I><SUP>(5)</SUP>(<I>t</I>)=−6144*20/(4<I>t</I>+1)<SUP>6</SUP>+6144*20/(4<I>t</I>+3)<SUP>6</SUP><BR>
+On remarque au passage que <I>f</I><SUP>(5)</SUP> est négative et croissante et que :<BR>
+pour <I>k</I>≥ <I>p</I>+1 on a 0&lt;|<I>f</I><SUP>(5)</SUP>(<I>k</I>)|&lt;<I>C</I>/<I>p</I><SUP>6</SUP>.<BR>
+On calcule :<BR>
+ ∫<SUB><I>p</I></SUB><SUP><I>n</I></SUP> <I>f</I>(<I>t</I>)  <I>dt</I>=1/4(ln(4<I>n</I>+1)−ln(4<I>n</I>+3)−(ln(4<I>p</I>+1)−ln(4<I>p</I>+3)))<BR>
+en faisant tendre <I>n</I> vers +∞ on a :<BR>
+∑<SUB><I>k</I>=<I>p</I>+1</SUB><SUP>∞</SUP><I>f</I>(<I>k</I>)=<I>l</I>−∑<SUB><I>k</I>=0</SUB><SUP><I>p</I></SUP> <I>f</I>(<I>k</I>) donc<BR>
+ <I>l</I>=∑<SUB><I>k</I>=0</SUB><SUP><I>p</I></SUP> <I>f</I>(<I>k</I>)+∫<SUB><I>p</I></SUB><SUP>∞</SUP><I>f</I>(<I>t</I>)  <I>dt</I>−<I>f</I>(<I>p</I>)/2−<I>f</I>′(<I>p</I>)/12+<I>f</I>‴(<I>p</I>)/720−<BR>
+       ∑<SUB><I>k</I>=<I>p</I>+1</SUB><SUP><I>n</I></SUP>∫<SUB>0</SUB><SUP>1</SUP> <I>f</I><SUP>(5)</SUP>(<I>u</I>+<I>k</I>−1) <I>P</I><SUB>5</SUB>(<I>u</I>) <I>du</I><BR>
+ <I>l</I>=∑<SUB><I>k</I>=0</SUB><SUP><I>p</I></SUP> 1/4<I>k</I>+1−1/4<I>k</I>+3+1/4(ln(1+2/4<I>p</I>+1)−5
+1/(4<I>p</I>+1)(4<I>p</I>+3)+1/3(1/(4<I>p</I>+1)<SUP>2</SUP>−1/(4<I>p</I>+3)<SUP>2</SUP>)−8/15(1/(4<I>p</I>+1)<SUP>4</SUP>−1/(4<I>p</I>+3)<SUP>4</SUP>)−∑<SUB><I>k</I>=<I>p</I>+1</SUB><SUP>∞</SUP>∫<SUB>0</SUB><SUP>1</SUP> <I>f</I><SUP>(5)</SUP>(<I>u</I>+<I>k</I>−1) <I>P</I><SUB>5</SUB>(<I>u</I>) <I>du</I>.<BR>
+et on a :<BR>
+ |∑<SUB><I>k</I>=<I>p</I>+1</SUB><SUP>∞</SUP>∫<SUB>0</SUB><SUP>1</SUP> <I>f</I><SUP>(4)</SUP>(<I>u</I>+<I>k</I>−1) <I>P</I><SUB>4</SUB>(<I>u</I>) <I>du</I>|≤ ∑<SUB><I>k</I>=<I>p</I>+1</SUB><SUP>∞</SUP>|<I>f</I><SUP>(5</SUP>(<I>k</I>−1)|∫<SUB>0</SUB><SUP>1</SUP> |<I>P</I><SUB>5</SUB>(<I>u</I>)| <I>du</I>|&lt;<I>Cste</I>/<I>p</I><SUP>5</SUP><BR>
+En effet on a :<BR>
+∑<SUB><I>k</I>=<I>p</I>+1</SUB><SUP>∞</SUP>|<I>f</I><SUP>(5</SUP>(<I>k</I>−1)|&lt;<I>C</I>∑<SUB><I>k</I>=<I>p</I>+1</SUB><SUP>∞</SUP>1/<I>p</I><SUP>6</SUP>&lt;<I>Cste</I>/<I>p</I><SUP>5</SUP><BR>
+car on compare le reste de la série ∑<SUB><I>k</I>=<I>p</I>+1</SUB><SUP>∞</SUP>1/<I>p</I><SUP>6</SUP> 
+avec l’intégrale ∫<SUB><I>p</I></SUB><SUP>∞</SUP>1/<I>t</I><SUP>6</SUP><I>dt</I>=1/(5<I>p</I><SUP>5</SUP>)
+On a donc le développement asymptotique <I>z</I><SUB><I>p</I></SUB> à l’ordre 5 de l:<BR>
+ <I>l</I>=π/4 ≃ <I>z</I><SUB><I>p</I></SUB>=<I>u</I><SUB><I>p</I></SUB>+1/4ln(1+2/4*<I>p</I>+1)−1/(4*<I>p</I>+1)(4*<I>p</I>+3)+1/3*(1/(4*<I>p</I>+1)<SUP>2</SUP>−1/(4*<I>p</I>+3)<SUP>2</SUP>)−8/15*(1/(4*<I>p</I>+1)<SUP>4</SUP>−1/(4*<I>p</I>+3)<SUP>4</SUP>)<BR>
+
+On peut faire un développement limité à l’ordre 5 :<BR>
+1/4ln(1+2/4*<I>p</I>+1) lorsque <I>p</I> tend vers +∞.<BR>
+En posant <I>x</I>=1/(4<I>p</I>+1), on tape :
+</P><DIV CLASS="center"><TT>series(1/4*log(1+2*x),x=0,5)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>2/4*x+1/-2*x</TT><CODE><TT>^</TT></CODE><TT>2+8/3/4*x</TT><CODE><TT>^</TT></CODE><TT>3-x</TT><CODE><TT>^</TT></CODE><TT>4+32/5/4*x</TT><CODE><TT>^</TT></CODE><TT>5+ x</TT><CODE><TT>^</TT></CODE><TT>6*order_size(x)</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>sum(2/((4*k+1)*(4.0*k+3)),k,0,10)+subst(2/4*x+1/-2*x</TT><CODE><TT>^</TT></CODE><TT>2+ 8/3/4*x</TT><CODE><TT>^</TT></CODE><TT>3-x</TT><CODE><TT>^</TT></CODE><TT>4+32/5/4*x</TT><CODE><TT>^</TT></CODE><TT>5,x,1.0/41)+ subst(-1/((4*p+1)*(4*p+3))+ 1/3*(1/(4*p+1)</TT><CODE><TT>^</TT></CODE><TT>2- 1/(4*p+3)</TT><CODE><TT>^</TT></CODE><TT>2)-8/15*(1/(4*p+1)</TT><CODE><TT>^</TT></CODE><TT>4-1/(4*p+3)</TT><CODE><TT>^</TT></CODE><TT>4),p,10.0)</TT></DIV><P>
+On obtient :</P><DIV CLASS="center"><TT>0.785398163726</TT></DIV><P>
+On peut aussi faire un développement asymptotique (<I>p</I> tend vers +∞) à l’ordre 5 de :<BR>
+1/4*ln(1+2/(4<I>p</I>+1))−1/((4<I>p</I>+1)(4<I>p</I>+3))+1/3*(1/(4<I>p</I>+1)<SUP>2</SUP>−1/(4<I>p</I>+3)<SUP>2</SUP>)−<BR>
+8/15*(1/(4<I>p</I>+1)<SUP>4</SUP>−1/(4<I>p</I>+3)<SUP>4</SUP>)<BR>
+En posant <I>x</I>=1/(4<I>p</I>+1), on tape :
+</P><DIV CLASS="center"><TT>series(1/4*log(1+2x)-x/(1/x+2)+1/3*(x</TT><CODE><TT>^</TT></CODE><TT>2-1/(1/x+2)</TT><CODE><TT>^</TT></CODE><TT>2)-</TT></DIV><DIV CLASS="center"><TT>8/15*(x</TT><CODE><TT>^</TT></CODE><TT>4-1/(1/x+2)</TT><CODE><TT>^</TT></CODE><TT>4),x=0,5)</TT></DIV><P>
+On obtient :</P><DIV CLASS="center"><TT>2/4*x+-3/2*x</TT><CODE><TT>^</TT></CODE><TT>2+4*x</TT><CODE><TT>^</TT></CODE><TT>3-9*x</TT><CODE><TT>^</TT></CODE><TT>4+16*x</TT><CODE><TT>^</TT></CODE><TT>5+x</TT><CODE><TT>^</TT></CODE><TT>6*order_size(x)</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>sum(2/((4*k+1)*(4*k+3)),k,0,10)+</TT></DIV><DIV CLASS="center"><TT>subst(2/4*x+-3/2*x</TT><CODE><TT>^</TT></CODE><TT>2+4*x</TT><CODE><TT>^</TT></CODE><TT>3-9*x</TT><CODE><TT>^</TT></CODE><TT>4+16*x</TT><CODE><TT>^</TT></CODE><TT>5,x=1.0/41)</TT></DIV><P>
+On obtient :</P><DIV CLASS="center"><TT>0.785398168153</TT></DIV><P>Sans faire un développement limité de 1/4ln(1+2/4*<I>p</I>+1) lorsque <I>p</I> tend vers +∞ on tape et on obtient :
+</P><PRE CLASS="verbatim">sum(2/((4*k+1)*(4*k+3)),k,0,10)+1.0/4*log(1+2/41)
+0.785947393863
+
+sum(2/((4*k+1)*(4*k+3)),k,0,10)+1/4*log(1+2/41)-1.0/(41*43)
+0.785380178889
+
+sum(2/((4*k+1)*(4*k+3)),k,0,10)+1/4*log(1+2/41)-1.0/(41*43)+
+8*21/3/(41^2*43^2)
+0.785398195927
+
+sum(2/((4*k+1)*(4*k+3)),k,0,10)+1/4*log(1+2/41)-1.0/(41*43)+
+8*21/3/(41^2*43^2)-8/15*(1/41^4-1/43^4)
+0.785398163187
+</PRE><P>On rappelle que <TT>evalf(pi/4)=0.785398163397</TT><BR>
+On a donc pour la dernière somme 9 décimales exactes de π/4 ...</P><HR>
+<A HREF="cassim004.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cassim006.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

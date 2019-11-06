@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casgeo.css">
+<TITLE>Le théorème de 1968</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casgeo002.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo004.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc89">Chapitre 3</A>  Le théorème de 1968</H1><H2 CLASS="section"><A NAME="toc27"></A><A NAME="htoc90">3.1</A>  Le théorème</H2><P>
+Soit un triangle quelconque <I>ABC</I>.
+On construit sur les côtés du triangle <I>ABC</I> les carrés directs
+<I>CBDE</I>, <I>ACGF</I> et <I>BAKH</I>, puis les parallélogrammes <I>DBHJ</I> et <I>GCEL</I>.<BR>
+
+</P><DIV CLASS="center"><IMG SRC="casgeo039.png"></DIV><P><B>Remarque</B> : si <I>ABC</I> est direct les carrés sont à l’extérieur du 
+triangle.<BR>
+On a la propriété suivante :
+Le triangle <I>AJL</I> est isocèle rectangle direct.</P><H2 CLASS="section"><A NAME="toc28"></A><A NAME="htoc91">3.2</A>  La figure</H2><P>
+Pour faire la figure, on tape les instructions suivantes qui se trouvent 
+dans le fichier 
+<TT>th1968.xws</TT> : 
+</P><PRE CLASS="verbatim">A:=point(-4,-1);
+B:=point(-2,-1);
+C:=point(-3.5,0);
+triangle(A,B,C);
+carre(B,A,K,H);
+carre(C,B,D,E);
+carre(A,C,G,F);
+J:=H+D-B;
+polygone(D,B,H,J,affichage=bleu);
+L:=E+G-C:;legend(L,"L",quadrant2;
+polygone(C,G,L,E,affichage=bleu);
+triangle(A,J,L,affichage=rouge);
+</PRE><H2 CLASS="section"><A NAME="toc29"></A><A NAME="htoc92">3.3</A>  Une démonstration géométrique</H2><P>
+On suppose que le triangle <I>ABC</I> est direct car la figure est plus lisible.<BR>
+On fait des constructions supplémentaires et on tape :
+</P><PRE CLASS="verbatim">B1:=translation(B-H,B);
+B2:=translation(C-B,B1);
+segment(B1,B);
+segment(B1,L);
+segment(B1,D);
+segment(C,L);
+</PRE><DIV CLASS="center"><IMG SRC="casgeo040.png"></DIV><P>On remarque que <TT>B2</TT> est confondu avec <TT>L</TT> puisque
+les triangles <TT>B1BD</TT> et <TT>LCE</TT> sont égaux au triangle 
+<TT>ABC</TT> en effet :<BR>
+- le triangle <TT>B1BD</TT> est le transformé du triangle <TT>ABC</TT>
+par rotation de centre <TT>B</TT> et d’angle <TT>-pi/2</TT>, et<BR>
+- le triangle <TT>LCE</TT> est le transformé du triangle <TT>ABC</TT>
+par la composition de la rotation de centre <TT>C</TT> et d’angle <TT>-pi/2</TT> 
+et de la translation de vecteur <TT>E-C</TT>.<BR>
+La rotation de centre <TT>A</TT> et d’angle <TT>pi/2</TT> transforme
+<TT>H</TT> en <TT>B1</TT> et <TT>HJ</TT> en <TT>B1B2</TT>.<BR>
+Donc la rotation de centre <TT>A</TT> et d’angle <TT>pi/2</TT> transforme <TT>J</TT> en <TT>B2</TT>.<BR>
+Donc, puisque <TT>B2</TT> est confondu avec <TT>L</TT>, la rotation de centre 
+<TT>A</TT> et d’angle <TT>pi/2</TT> transforme <TT>J</TT> en <TT>L</TT><BR>
+Donc le triangle <TT>AJL</TT> est isocèle rectangle direct.</P><H2 CLASS="section"><A NAME="toc30"></A><A NAME="htoc93">3.4</A>  Une démonstration avec les complexes</H2><P>
+Soit <TT>a=affixe(A), b=affixe(B), c=affixe(C)</TT><BR>
+On a :<BR>
+<TT>j=affixe(J)=b+i*(a-b)-i*(c-b)=b+i(a-c)</TT><BR>
+<TT>l=affixe(L)=c+i*(b-c)-i*(a-c)=c+i(b-a)</TT><BR>
+On a donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>l</I>−<I>a</I>=<I>c</I>−<I>a</I>+<I>i</I>*(<I>b</I>−<I>a</I>)=<I>i</I><SUP>2</SUP>*(<I>a</I>−<I>c</I>)+<I>i</I>*(<I>b</I>−<I>a</I>)=<I>i</I>*(<I>b</I>−<I>a</I>+<I>i</I>(<I>a</I>−<I>c</I>))=<I>i</I>*(<I>j</I>−<I>a</I>)</TD></TR>
+</TABLE><P>
+L’égalité <TT>l-a=i*(j-a)</TT> prouve que <TT>L</TT> se déduit de <TT>J</TT>
+par la rotation de centre <TT>A</TT> et d’angle <TT>pi/2</TT>.
+</P><H2 CLASS="section"><A NAME="toc31"></A><A NAME="htoc94">3.5</A>  La démonstration du théorème avec <TT>Xcas</TT></H2><P>
+On suppose que le point <TT>A</TT> est à l’origine du repère et que 
+le point <TT>B</TT> est le point d’affixe 2.
+Le point <TT>C</TT> a comme affixe <I>a</I>+<I>ib</I>, avec <I>a</I> et <I>b</I> quelconques.<BR>
+Pour faire la figure on suppose que <I>a</I>=−1 et que <I>b</I>=−1.<BR>
+On tape les instructions suivantes qui se trouvent dans le fichier 
+<TT>th1968d.xws</TT> :
+</P><PRE CLASS="verbatim">assume(a=-3.5);
+assume(b=0);
+A:=point(-4,-1);
+B:=point(-2,-1);
+C:=point(a,b);
+T1:=couleur(carre(B,A,K,H),vert);
+T2:=couleur(carre(C,B,D,E),vert);
+T3:=couleur(carre(A,C,G,F),vert);
+J:=H+(D-B); 
+P1:=couleur(polygone(D,B,H,J),rouge);
+L:=E+(G-C);
+P2:=couleur(polygone(L,E,C,G),rouge);
+p:=normal((affixe(J)-affixe(A))/(affixe(L)-affixe(A)));
+normal(longueur2(A,L)-longueur2(A,J));
+normal(angle(A,J,L));
+</PRE><P>On obtient <TT>-i</TT>, <TT>0</TT> et <TT>pi/2</TT> comme résultats des 3 dernières 
+commandes :
+</P><DIV CLASS="center"><IMG SRC="casgeo041.png"></DIV>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casgeo002.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo004.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

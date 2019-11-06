@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Polygonal paths: polygonplot
+ligne_polygonale
+linear_interpolate 
+listplot plotlist</title>
+</head>
+<body >
+<a href="cascmd_en698.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en700.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec856" class="subsection">8.2.3  Polygonal paths: <span style="font-family:monospace">polygonplot</span><a id="hevea_default1185"></a>
+<span style="font-family:monospace">ligne_polygonale</span><a id="hevea_default1186"></a>
+<span style="font-family:monospace">linear_interpolate</span><a id="hevea_default1187"></a> 
+<span style="font-family:monospace">listplot</span><a id="hevea_default1188"></a> <span style="font-family:monospace">plotlist</span><a id="hevea_default1189"></a></h3>
+<p>You can draw a polygonal path with either <span style="font-family:monospace">polygonplot</span> or
+<span style="font-family:monospace">listplot</span>. </p><p>Given a list of points (a two-column matrix) or two lists (the <span style="font-style:italic">x</span>
+coordinates and the <span style="font-style:italic">y</span>-coordinates), the <span style="font-family:monospace">polygonplot</span> (or
+<span style="font-family:monospace">polygonscatterplot</span>) command
+will draw the polygonal path through the points, from left to right
+(so the points are automatically ordered by increasing
+<span style="font-style:italic">x</span>-coordinates). If you enter
+</p><div class="center">
+<span style="font-family:monospace">polygonplot([0,1,2,3,4],[0,1,4,9,16])
+</span></div><p>
+or
+</p><div class="center">
+<span style="font-family:monospace">polygonplot([[0,0],[1,1],[2,4],[3,9],[4,16]])
+</span></div><p>
+or even
+</p><div class="center">
+<span style="font-family:monospace">polygonplot([[2,4],[0,0],[3,9],[1,1],[4,16]])
+</span></div><p>
+you will get
+</p><div class="center">
+<img src="cascmd_en044.png">
+</div><p>If you give <span style="font-family:monospace">polygonplot</span> a single list of numbers, then they will
+be taken to be the <span style="font-style:italic">y</span>-coordinates and the <span style="font-style:italic">x</span>-coordinates will be
+assumed to be integers starting at 0. If you enter
+</p><div class="center">
+<span style="font-family:monospace">polygonplot([0,1,4,9,16])
+</span></div><p>If you want to get coordinates on the polygonal path, you can use the
+<span style="font-family:monospace">linear_interpolate</span> command. This command takes four
+arguments; a two-row matrix consisting of the <span style="font-style:italic">x</span>-coordinates and the
+<span style="font-style:italic">y</span>-coordinates, <span style="font-style:italic">x</span><sub><span style="font-style:italic">min</span></sub>, the minimum value of <span style="font-style:italic">x</span> that you are
+interested in, <span style="font-style:italic">x</span><sub><span style="font-style:italic">max</span></sub>, the maximum value of <span style="font-style:italic">x</span>, and
+<span style="font-style:italic">x</span><sub><span style="font-style:italic">step</span></sub>, the step size you want. (The values of <span style="font-style:italic">x</span><sub><span style="font-style:italic">min</span></sub>
+and <span style="font-style:italic">x</span><sub><span style="font-style:italic">max</span></sub> must be between the smallest and largest
+<span style="font-style:italic">x</span>-coordinates of the points.) You will get a matrix with
+two rows, the first row will be 
+[<span style="font-style:italic">x</span><sub><span style="font-style:italic">min</span></sub>, <span style="font-style:italic">x</span><sub><span style="font-style:italic">min</span></sub>+<span style="font-style:italic">x</span><sub><span style="font-style:italic">step</span></sub>, <span style="font-style:italic">x</span><sub><span style="font-style:italic">min</span></sub>+2<span style="font-style:italic">x</span><sub><span style="font-style:italic">step</span></sub>,...,<span style="font-style:italic">x</span><sub><span style="font-style:italic">max</span></sub>]
+and the second row will be the corresponding <span style="font-style:italic">y</span>-coordinates of the
+points on the polygonal path. For example, if you enter
+</p><div class="center">
+<span style="font-family:monospace">linear_interpolate([[1,2,6,9],[3,4,6,12]],2,7,1)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">[[2.0,3.0,4.0,5.0,6.0,7.0],[4.0,4.5,5.0,5.5,6.0,8.0]]
+</span></div><p>If you want to draw a polygonal path through points in an order
+determined by you, you can use the <span style="font-family:monospace">listplot</span> (or
+<span style="font-family:monospace">plotlist</span>) command. If you give <span style="font-family:monospace">listplot</span> a list of
+points, then you will get a polygonal path through the points in the
+order given by the list. If you enter
+</p><div class="center">
+<span style="font-family:monospace">listplot([[2,4],[0,0],[3,9],[1,1],[4,16]]) 
+</span></div><p>
+you will get
+</p><div class="center">
+<img src="cascmd_en045.png">
+</div><p>As with <span style="font-family:monospace">polygonplot</span>, if you give <span style="font-family:monospace">listplot</span> a single
+list of numbers, then they will be taken to be the <span style="font-style:italic">y</span>-coordinates and
+the <span style="font-style:italic">x</span>-coordinates will be assumed to be integers starting at 0.
+If you enter 
+</p><div class="center">
+<span style="font-family:monospace">listplot([0,1,4,9,16])
+</span></div><p>
+you will get the same graph that you got with <span style="font-family:monospace">polygonplot</span>.
+However, unlike <span style="font-family:monospace">polygonplot</span>, the <span style="font-family:monospace">listplot</span> command
+can’t be given two lists of numbers as arguments.</p>
+<hr>
+<a href="cascmd_en698.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en700.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

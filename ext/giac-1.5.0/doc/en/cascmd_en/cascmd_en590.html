@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>The operator norm of a matrix: matrix_norm, l1norm,
+l2norm, norm, specnorm,
+linfnorm</title>
+</head>
+<body >
+<a href="cascmd_en589.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en591.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec708" class="subsection">5.54.6  The operator norm of a matrix: <span style="font-family:monospace">matrix_norm, l1norm,
+l2norm, norm, specnorm,
+linfnorm</span></h3>
+<p><a id="hevea_default925"></a><a id="hevea_default926"></a><a id="hevea_default927"></a>
+<a id="hevea_default928"></a><a id="hevea_default929"></a></p><p>The <span style="font-family:monospace">matrix_norm</span> command takes two arguments,
+a matrix <span style="font-family:monospace">A</span> and a second argument of 
+either <span style="font-family:monospace">1</span>, <span style="font-family:monospace">2</span> or <span style="font-family:monospace">inf</span>.<br>
+<span style="font-family:monospace">matrix_norm</span> returns the operator norm of the operator
+associated to the matrix. (See the reminder below for a discussion of
+operator norms.) The operator norm will be relative to the ℓ<sub>1</sub>,
+ℓ<sub>2</sub> or ℓ<sub>∞</sub> norm on ℝ<sup><span style="font-style:italic">n</span></sup>, depending on the second
+argument.
+Note that<br>
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">matrix_norm(A,1)</span> is the same as 
+<span style="font-family:monospace">l1norm(A)</span> and <span style="font-family:monospace">colnorm(A)</span>.
+</li><li class="li-itemize"><span style="font-family:monospace">matrix_norm(A,2)</span> is the same as <span style="font-family:monospace">l2norm(A)</span>
+and <span style="font-family:monospace">max(SVL(A))</span>.
+</li><li class="li-itemize"><span style="font-family:monospace">matrix_norm(A,inf)</span> is the same as <span style="font-family:monospace">linfnorm(A)</span> and
+<span style="font-family:monospace">rownorm(A)</span>.
+</li></ul><p>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">B := [[1,2,3],[3,-9,6],[4,5,6]]
+</span></div><p>
+then:
+</p><div class="center">
+<span style="font-family:monospace">matrix_norm(B,1)
+</span></div><p>
+or:
+</p><div class="center">
+<span style="font-family:monospace">l1norm(B)
+</span></div><p>
+or:
+</p><div class="center">
+<span style="font-family:monospace">colNorm(B)
+</span></div><p>
+Output:
+</p><div class="center">
+<span style="font-family:monospace">16
+</span></div><p>
+since max(1+3+4, 2+9+5, 3+6+6)=16.</p><p>Input:
+</p><div class="center">
+<span style="font-family:monospace">matrix_norm(B,2)
+</span></div><p>
+or:
+</p><div class="center">
+<span style="font-family:monospace">l2norm(B)
+</span></div><p>
+or:
+</p><div class="center">
+<span style="font-family:monospace">max(SVL(B))
+</span></div><p>
+Output:
+</p><div class="center">
+<span style="font-family:monospace">11.2449175989 
+</span></div><p>Input:
+</p><div class="center">
+<span style="font-family:monospace">matrix_norm(B,inf)
+</span></div><p>
+or:
+</p><div class="center">
+<span style="font-family:monospace">linfnorm(B)
+</span></div><p>
+or:
+</p><div class="center">
+<span style="font-family:monospace">rowNorm(B)
+</span></div><p>
+Output:
+</p><div class="center">
+<span style="font-family:monospace">18
+</span></div><p>
+since max(1+2+3, 3+9+6, 4+5+6)=18.</p><p><span style="font-family:monospace">Reminder:</span><br>
+In mathematics, particularly functional analysis, a linear function
+between two normed spaces <span style="font-style:italic">f</span>:<span style="font-style:italic">E</span> → <span style="font-style:italic">F</span> is continuous exactly when there
+is a number <span style="font-style:italic">K</span> such that ||<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)||<sub><span style="font-style:italic">F</span></sub> ≤ <span style="font-style:italic">K</span> ||<span style="font-style:italic">x</span>|| for all <span style="font-style:italic">x</span> in <span style="font-style:italic">E</span>.
+For this reason, they are also called bounded linear functions. The
+infimum of all such <span style="font-style:italic">K</span> is defined to be the operator norm of <span style="font-style:italic">f</span>, and
+it depends on the norms of <span style="font-style:italic">E</span> and <span style="font-style:italic">F</span>. There are other
+characterizations of the operator norm of <span style="font-style:italic">f</span>, such as the supremum of
+||<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)||<sub><span style="font-style:italic">F</span></sub> over all <span style="font-style:italic">x</span> in <span style="font-style:italic">E</span> with ||<span style="font-style:italic">x</span>||<sub><span style="font-style:italic">E</span></sub> ≤ 1.</p><p>If <span style="font-style:italic">E</span> and <span style="font-style:italic">F</span> are finite dimensional, then any linear function
+<span style="font-style:italic">f</span>:<span style="font-style:italic">E</span>→ <span style="font-style:italic">F</span> will be bounded.</p><p>Any <span style="font-style:italic">m</span>× <span style="font-style:italic">n</span> matrix <span style="font-family:monospace">A</span> = (<span style="font-style:italic">a</span><sub><span style="font-style:italic">jk</span></sub>) corresponds to a linear
+function <span style="font-style:italic">f</span>:ℝ<sup><span style="font-style:italic">n</span></sup> → ℝ<sup><span style="font-style:italic">m</span></sup> defined by <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>) = <span style="font-style:italic">Ax</span>. We will refer to
+the operator norm of <span style="font-style:italic">f</span> as the operator norm of <span style="font-style:italic">A</span>.
+</p><ul class="itemize"><li class="li-itemize">
+If ℝ<sup><span style="font-style:italic">n</span></sup> and ℝ<sup><span style="font-style:italic">m</span></sup> both have the ℓ<sub>1</sub> norm,
+namely for <span style="font-style:italic">x</span> = (<span style="font-style:italic">x</span><sub>1</sub>,<span style="font-style:italic">x</span><sub>2</sub>,…) the norm is ||<span style="font-style:italic">x</span>|| =
+∑<sub><span style="font-style:italic">j</span></sub> |<span style="font-style:italic">x</span><sub><span style="font-style:italic">j</span></sub>|, the operator norm of <span style="font-style:italic">A</span> is 
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:center">max</td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">k</span></td></tr>
+</table></td><td class="dcell"> (</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-size:xx-large">∑</span></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">j</span></td></tr>
+</table></td><td class="dcell"> |<span style="font-style:italic">a</span><sub><span style="font-style:italic">jk</span></sub>|,</td></tr>
+</table>
+which is given by <span style="font-family:monospace">matrix_norm(A,1)</span> and
+<span style="font-family:monospace">colnorm(A)</span>.</li><li class="li-itemize">If ℝ<sup><span style="font-style:italic">n</span></sup> and ℝ<sup><span style="font-style:italic">m</span></sup> both have the ℓ<sub>2</sub> norm,
+namely for <span style="font-style:italic">x</span> = (<span style="font-style:italic">x</span><sub>1</sub>,<span style="font-style:italic">x</span><sub>2</sub>,…) the norm is ||<span style="font-style:italic">x</span>|| =
+√<span style="text-decoration:overline">∑</span><sub><span style="text-decoration:overline"><span style="font-style:italic">j</span></span></sub><span style="text-decoration:overline"> </span><span style="text-decoration:overline"><span style="font-style:italic">x</span></span><sub><span style="text-decoration:overline"><span style="font-style:italic">j</span></span></sub><sup><span style="text-decoration:overline">2</span></sup> (the usual Euclidean norm), the operator norm
+of <span style="font-style:italic">A</span> is the largest eigenvalue of <span style="font-style:italic">f</span><sup>*</sup>∘ <span style="font-style:italic">f</span>, where <span style="font-style:italic">f</span><sup>*</sup> is the
+transpose of <span style="font-style:italic">f</span>, and so the largest singular value of <span style="font-style:italic">f</span>, which is
+given by <span style="font-family:monospace">matrix_norm(A,2)</span>, <span style="font-family:monospace">l2norm(A)</span>, and
+<span style="font-family:monospace">max(SVL(A))</span>.</li><li class="li-itemize">If ℝ<sup><span style="font-style:italic">n</span></sup> and ℝ<sup><span style="font-style:italic">m</span></sup> both have the ℓ<sub>∞</sub> norm,
+namely for <span style="font-style:italic">x</span> = (<span style="font-style:italic">x</span><sub>1</sub>,<span style="font-style:italic">x</span><sub>2</sub>,…) the norm is |<span style="font-style:italic">x</span>| =
+max<sub><span style="font-style:italic">j</span></sub> |<span style="font-style:italic">x</span><sub><span style="font-style:italic">j</span></sub>|, the operator norm of <span style="font-style:italic">A</span> is 
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:center">max</td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">j</span></td></tr>
+</table></td><td class="dcell"> (</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-size:xx-large">∑</span></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">k</span></td></tr>
+</table></td><td class="dcell"> |<span style="font-style:italic">a</span><sub><span style="font-style:italic">jk</span></sub>|,</td></tr>
+</table>
+which is given by <span style="font-family:monospace">matrix_norm(A,inf)</span> and
+<span style="font-family:monospace">rownorm(A)</span>.
+</li></ul>
+<hr>
+<a href="cascmd_en589.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en591.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

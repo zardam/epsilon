@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Gröbner basis : gbasis</title>
+</head>
+<body >
+<a href="cascmd_en377.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en379.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec457" class="subsection">5.32.1  Gröbner basis : <span style="font-family:monospace">gbasis</span></h3>
+<p><a id="hevea_default611"></a>
+<a id="sec:gbasis"></a>
+<span style="font-family:monospace">gbasis</span> takes at least two arguments
+</p><ul class="itemize"><li class="li-itemize">
+a vector of multivariate polynomials 
+</li><li class="li-itemize">a vector of variables names,
+</li></ul><p>
+Optional arguments may be used to specify the ordering and
+algorithms. By default, the ordering is lexicographic (with respect to the
+list of variable names ordering)
+and the polynomials are written in decreasing power orders with
+respect to this order. 
+For example, the output will be like 
+...+<span style="font-style:italic">x</span><sup>2</sup> <span style="font-style:italic">y</span><sup>4</sup> <span style="font-style:italic">z</span><sup>3</sup>+<span style="font-style:italic">x</span><sup>2</sup> <span style="font-style:italic">y</span><sup>3</sup> <span style="font-style:italic">z</span><sup>4</sup>+... if the second argument is [<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>] because
+(2,4,3)&gt;(2,3,4) but the output would be like
+...+<span style="font-style:italic">x</span><sup>2</sup> <span style="font-style:italic">y</span><sup>3</sup><span style="font-style:italic">z</span><sup>4</sup>+<span style="font-style:italic">x</span><sup>2</sup> <span style="font-style:italic">y</span><sup>4</sup> <span style="font-style:italic">z</span><sup>3</sup>+... if the second argument is [<span style="font-style:italic">x</span>,<span style="font-style:italic">z</span>,<span style="font-style:italic">y</span>].<br>
+<span style="font-family:monospace">gbasis</span> returns a Gröbner basis of the polynomial ideal spanned
+by these polynomials.</p><p><span style="font-weight:bold">Property</span><br>
+If <span style="font-style:italic">I</span> is an ideal and if (<span style="font-style:italic">G</span><sub><span style="font-style:italic">k</span></sub>)<sub><span style="font-style:italic">k</span> ∈ <span style="font-style:italic">K</span></sub> is a Gröbner basis of this 
+ideal <span style="font-style:italic">I</span> then, if <span style="font-style:italic">F</span> is a non-zero polynomial in <span style="font-style:italic">I</span>, the greatest monomial 
+of <span style="font-style:italic">F</span> is divisible by the greatest monomial of one of the <span style="font-style:italic">G</span><sub><span style="font-style:italic">k</span></sub>.
+In other words, if you do an euclidean division of <span style="font-style:italic">F</span>≠ 0 
+by the corresponding <span style="font-style:italic">G</span><sub><span style="font-style:italic">k</span></sub>, take the remainder of this division, do
+again the same and so on, at some point you get a null remainder.</p><p>Input :
+</p><div class="center"><span style="font-family:monospace">gbasis([2*x*y-y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2*x*y],[x,y])</span>
+</div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">[4*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+-4*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,2*x*y-y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,-(3*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3)]</span>
+</div><p>As indicated above, <span style="font-family:monospace">gbasis</span> may have more than 2 arguments :
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">plex</span> (lexicographic only), <span style="font-family:monospace">tdeg</span> (total degree then
+lexicographic order),
+<span style="font-family:monospace">revlex</span> (total degree then inverse lexicographic order), to
+specify an order on the monomials 
+(<span style="font-family:monospace">plex</span> is the order by default),
+</li><li class="li-itemize"><span style="font-family:monospace">with_cocoa=true</span> or <span style="font-family:monospace">with_cocoa=false</span>, if you want to use
+the <span style="font-family:monospace">CoCoA</span> library to compute the Gröbner basis (recommended,
+requires that <span style="font-family:monospace">CoCoA</span> support compiled in)</li><li class="li-itemize"><span style="font-family:monospace">with_f5=true</span> or <span style="font-family:monospace">with_f5=false</span> for using the F5 algorithm
+of the <span style="font-family:monospace">CoCoA</span> library .
+In this case the specified order is not used (the polynomials are 
+homogenized).
+</li></ul><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">gbasis([x1+x2+x3,x1*x2+x1*x3+x2*x3,x1*x2*x3-1], [x1,x2,x3],tdeg,with_cocoa=false)</span>
+</div><p>
+Output
+</p><div class="center">
+<code>[x3^3-1,-x2^2-x2*x3-x3^2,x1+x2+x3]</code>
+</div>
+<hr>
+<a href="cascmd_en377.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en379.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

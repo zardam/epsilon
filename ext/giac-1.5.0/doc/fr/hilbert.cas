@@ -1,0 +1,48 @@
+//courbe de hilbert par exemple hilg(-2,0,4)
+//ou hild(0,2,4) ou berg(2,2-2*i,4) ou berd(2,2-2*i,4)
+hilg(x,y,n):={
+local u,v,a,b;
+u:=(y-x)/2;
+v:=u*i;
+if (n==0) segment(x,y);
+else {
+hild(x,x+v,n-1);
+hilg(x+v,x+v+u,n-1);
+a:=berg(x+v+u,x+u,n-1);
+b:=berd(a,a+u,n-1);
+}
+};
+hild(x,y,n):={
+local u,v,a,b;
+u:=(y-x)/2;
+v:=u*i;
+if (n==0) segment(x,y);
+else {
+hilg(x,x-v,n-1);
+hild(x-v,x-v+u,n-1);
+b:=berd(x-v+u,x+u,n-1);
+a:=berg(b,b+u,n-1);
+}
+};
+berg(x,y,n):={
+local u,v,b;
+v:=(x-y)/2;
+u:=-v*i;
+if (n==0) {segment(x,y);return y;}
+hild(x,x+v,n-1);
+hilg(x+v,x+v+u,n-1);
+b:=berg(x+v+u,x+u,n-1);
+hild(b,b-v,n-1);
+return(b-v);
+};
+berd(x,y,n):={
+local u,v,a;
+v:=(x-y)/2;
+u:=-v*i;
+if (n==0) {segment(x,y);return y;}
+hilg(x,x+v,n-1);
+hild(x+v,x+v-u,n-1);
+a:=berd(x+v-u,x-u,n-1);
+hilg(a,a-v,n-1);
+return a-v;
+};

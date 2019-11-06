@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Point sur un objet géométrique : element</title>
+</head>
+<body >
+<a href="cascmd_fr914.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr916.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1117" class="subsection">10.8.15  Point sur un objet géométrique : <span style="font-family:monospace">element</span></h3>
+<p><a id="hevea_default1797"></a>
+<span style="font-family:monospace">element</span> peut avoir différents types d’arguments :
+</p><ul class="itemize"><li class="li-itemize">
+un intervalle <span style="font-style:italic">a</span>..<span style="font-style:italic">b</span> et deux réels la valeur et le pas (par défaut la
+valeur vaut (<span style="font-style:italic">a</span>+<span style="font-style:italic">b</span>)/2 et le pas (<span style="font-style:italic">b</span>−<span style="font-style:italic">a</span>)/100), par exemple, 
+<span style="font-family:monospace">t:=element(0..pi)</span> ou 
+<span style="font-family:monospace">t:=element(0..pi,pi/2)</span> ou
+<span style="font-family:monospace">t:=element(0..pi,pi/2,pi/100.0)</span> 
+signifie que <span style="font-family:monospace">t</span> peut prendre une valeur quelconque de l’intervalle 
+[0;π] et le deuxième argument π/2 donne la valeur qui définit 
+<span style="font-family:monospace">t</span> : cela a pour effet d’avoir en haut et à droite un curseur noté 
+<span style="font-family:monospace">t</span> que l’on peut faire bouger à la souris de 0 à π, avec à 
+gauche de ce curseur un nombre égal à la valeur de <span style="font-family:monospace">t</span> du curseur.
+</li><li class="li-itemize">un objet géométrique et un réel (par défaut ce réel vaut 
+1/2), par exemple, <span style="font-family:monospace">A:=element(cercle(0,2),1)</span> signifie que <span style="font-family:monospace">A</span> se 
+trouve sur le cercle de centre 0 et de rayon 2 et a comme affixe 2*exp(<span style="font-style:italic">i</span>) 
+(car 2*exp(<span style="font-style:italic">i</span>*<span style="font-style:italic">t</span>) est l’équation paramétrique du cercle(0,2) et le 
+deuxième argument 1 donne la valeur du paramètre <span style="font-style:italic">t</span> pour définir 
+<span style="font-family:monospace">A</span>). Par exemple, <span style="font-family:monospace">A:=element(cercle(0,1))</span> signifie que <span style="font-family:monospace">A</span> se 
+trouve sur le cercle de centre 0 et de rayon 1, le point <span style="font-family:monospace">A</span> sera tracé
+en prenant <span style="font-style:italic">t</span>=1/2 comme valeur du paramètre de l’équation 
+paramétrique de l’objet géométrique (ici <span style="font-family:monospace">affixe(A)</span>=
+2*exp(<span style="font-style:italic">i</span>/2)). Lorsque ensuite on déplacera <span style="font-family:monospace">A</span> avec la souris, 
+<span style="font-family:monospace">A</span> se déplacera sur l’objet géométrique.</li><li class="li-itemize">un objet géométrique et un nom de variable (par exemple <span style="font-family:monospace">t</span>)
+défini auparavant par la commande <span style="font-family:monospace">element</span> : par exemple 
+<span style="font-family:monospace">t:=element(0..pi)</span>. Si on tape <span style="font-family:monospace">A:=element(cercle(0,2),t)</span>, alors
+<span style="font-style:italic">t</span> est la variable de paramétrage de l’obget géométrique défini par 
+le premier argument, c’est à dire que <span style="font-family:monospace">A</span> se trouve sur le cercle de 
+centre 0 et de rayon 2 et que <span style="font-family:monospace">A</span> a comme affixe 2*exp(<span style="font-style:italic">i</span>*<span style="font-style:italic">t</span>), car 
+2*exp(<span style="font-style:italic">i</span>*<span style="font-style:italic">t</span>) est l’équation paramétrique du cercle(0,2). Il est donc 
+obligatoire dans ce cas de définir auparavant le deuxième argument (ici 
+<span style="font-family:monospace">t</span>) comme étant l’élément d’un intervalle.<br>
+On tape par exemple:<br>
+<div class="center"><span style="font-family:monospace">t:=element(0..pi)</span></div>
+puis
+<div class="center"><span style="font-family:monospace">A:=element(cercle(0,2),t)</span></div>
+cela a pour effet d’avoir en haut et à droite un curseur noté <span style="font-family:monospace">t</span> que 
+l’on peut faire bouger à la souris de 0 à π, avec à gauche de ce 
+curseur un nombre égal à la valeur de <span style="font-family:monospace">t</span> du curseur. Ce curseur permet
+de faire bouger le point <span style="font-family:monospace">A</span> sur le demi-cercle supérieur du cercle de 
+centre 0 et de rayon 1 (car 0≤ <span style="font-style:italic">t</span> ≤ π) et cela sans tracer ce 
+demi-cercle.
+On tape par exemple:<br>
+<div class="center"><span style="font-family:monospace">A:=point(1);B:=point(2+i)</span></div>
+<div class="center"><span style="font-family:monospace">t:=element(0..2)</span></div>
+puis
+<div class="center"><span style="font-family:monospace">M:=element(droite(A,B),t)</span></div>
+<span style="font-family:monospace">M</span> est un point de la droite <span style="font-family:monospace">AB</span> et on a <span style="font-family:monospace">M=A+t*(B-A)</span>
+c’est à dire <span style="font-family:monospace">M=(1-t)*A+t*B</span>
+pout parcourir le segment <span style="font-family:monospace">AB</span> , il faut mettre <span style="font-family:monospace">t:=element(0..1)</span> ou 
+encore <span style="font-family:monospace">M:=element(segment(A,B),t)</span> qui aura pour effet de laisser <span style="font-family:monospace">M</span> 
+en <span style="font-family:monospace">A</span> si <span style="font-family:monospace">t&lt;0</span> et de laisser <span style="font-family:monospace">M</span> en <span style="font-family:monospace">B</span> si <span style="font-family:monospace">t&gt;1</span>.
+</li><li class="li-itemize">une ligne polygonale <span style="font-family:monospace">LP</span> et <span style="font-family:monospace">[floor(t),frac(t)]</span> avec <span style="font-family:monospace">t</span>
+défini auparavant par la commande <span style="font-family:monospace">element</span> : par exemple 
+<span style="font-family:monospace">t:=element(0..5)</span> si <span style="font-family:monospace">LP</span> a 5 côtés.<br>
+Les côtés de la ligne polygonale <span style="font-family:monospace">LP</span> ont comme numèro : 0,1....<br>
+Si par exemple <span style="font-family:monospace">LP</span> a 5 côtés et a pour sommets 
+<span style="font-family:monospace">A(0),...A(4),A(5)=A(0)</span>,
+on tapera :<br>
+<span style="font-family:monospace">t:=element(0..5)</span><br>
+<span style="font-family:monospace">M:=element(LP,[floor(t),frac(t)])</span><br>
+Ainsi selon les valeurs de <span style="font-family:monospace">t</span>, <span style="font-family:monospace">M</span> va parcourir les 5 côtés de 
+<span style="font-family:monospace">LP</span> : <span style="font-family:monospace">M</span> sera situé sur le côté de numéro <span style="font-family:monospace">n=floor(t)</span>
+et on aura <span style="font-family:monospace">M=frac(t)*A(n)+(1-frac(t))*A(n+1)</span>.<br>
+Par exemple :
+<pre class="verbatim">A:=point(0);
+B:=point(4);
+C:=point(4*i);
+t:=element(0..3);
+T:=triangle(A,B,C);
+M:=element(T,[floor(t),frac(t)]);
+</pre>
+</li></ul><p>
+<span style="font-weight:bold">Attention</span>
+Si à un point <span style="font-style:italic">M</span> d’affixe <span style="font-style:italic">m</span>, défini comme élément d’une courbe <span style="font-style:italic">C</span>,
+on ajoute un complexe <span style="font-style:italic">a</span>, cela définit un point <span style="font-style:italic">N</span> de la courbe <span style="font-style:italic">C</span> qui est
+le projeté du point d’affixe <span style="font-style:italic">m</span>+<span style="font-style:italic">a</span> sur <span style="font-style:italic">C</span>.<br>
+Par contre si un point <span style="font-style:italic">M</span> d’affixe <span style="font-style:italic">m</span>, défini comme élément d’une 
+courbe <span style="font-style:italic">C</span>, on ajoute un point <span style="font-style:italic">A</span> d’affixe <span style="font-style:italic">a</span>, cela définit un point <span style="font-style:italic">P</span>
+d’affixe <span style="font-style:italic">m</span>+<span style="font-style:italic">a</span>
+Par exemple, étant donné 3 points <span style="font-style:italic">M</span>,<span style="font-style:italic">A</span>,<span style="font-style:italic">B</span>, si on veut définir le point 
+<span style="font-family:monospace">N</span> vérifiant par exemple : <span style="font-style:italic">MN</span>=<span style="font-style:italic">AB</span>, 
+on peut taper : <span style="font-family:monospace">N:=M+(B-A)</span> à condition que <span style="font-style:italic">M</span> ne soit pas défini 
+comme élément d’une courbe <span style="font-style:italic">C</span>.
+En effet si on a tapé <span style="font-family:monospace">M:=element(C)</span> il faut définir <span style="font-style:italic">N</span> en tapant :
+<span style="font-family:monospace">N:=affixe(M)+B-A</span> ou <span style="font-family:monospace">N:=M+B-A</span> (sans parenthèses) car 
+<span style="font-family:monospace">N:=M+B-A</span> est interprété en <span style="font-family:monospace">N:=(M+B)-A</span> car il n’y a pas de 
+règle de priorité entre <span style="font-family:monospace">+</span> et <span style="font-family:monospace">-</span> alors que <br>
+ <span style="font-family:monospace">M+(B-A)</span> renvoie un élément de la courbe <span style="font-style:italic">C</span> qui est le projeté de
+<span style="font-style:italic">N</span> sur <span style="font-style:italic">C</span>. <br>
+On a donc, si on tape :<br>
+<span style="font-family:monospace">A:=point(-2,2);B:=point(1,3);C:=cercle(0,1);</span><br>
+<span style="font-family:monospace">M:=element(C);N:=affixe(M)+B-A</span>;(ou <span style="font-family:monospace">N:=M+B-A</span>;) <span style="font-family:monospace">N</span> n’est pas sur
+la courbe <span style="font-family:monospace">C</span><br>
+si on tape :<br>
+<span style="font-family:monospace">P:=M+(B-A)</span> (ou P:=projection(C,N);) <span style="font-family:monospace">P</span> est sur la courbe <span style="font-family:monospace">C</span><br>
+
+</p>
+<hr>
+<a href="cascmd_fr914.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr916.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

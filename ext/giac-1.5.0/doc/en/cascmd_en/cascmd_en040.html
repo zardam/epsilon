@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Export to presentation or content MathML : export_mathml</title>
+</head>
+<body >
+<a href="cascmd_en039.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en041.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec57" class="subsection">3.7.6  Export to presentation or content MathML : <span style="font-family:monospace">export_mathml</span><a id="hevea_default21"></a></h3>
+<p>
+The command <span style="font-family:monospace">export_mathml</span> accepts one or two arguments: an expression and optionally the symbol <span style="font-family:monospace">content</span> or <span style="font-family:monospace">display</span>. If <span style="font-family:monospace">content</span> is specified, it converts the expression to content MathML, while for <span style="font-family:monospace">display</span> it converts it to presentation MathML. If the second argument is omitted, the return value contains both presentation and content MathML within a <span style="font-family:monospace">semantics</span> block. The return value in each case is a string containing a single <span style="font-family:monospace">math</span> block.</p><p>For example, input :
+</p><div class="center">
+	<span style="font-family:monospace">xml_print(export_mathml(a+2*b))
+</span></div><p>
+Output :
+</p><pre class="verbatim">&lt;math xmlns='http://www.w3.org/1998/Math/MathML'&gt;
+  &lt;semantics&gt;
+    &lt;mrow xref='id5'&gt;
+      &lt;mi xref='id1'&gt;a&lt;/mi&gt;
+      &lt;mo&gt;+&lt;/mo&gt;
+      &lt;mrow xref='id4'&gt;
+        &lt;mn xref='id2'&gt;2&lt;/mn&gt;
+        &lt;mo&gt;&amp;it;&lt;/mo&gt;
+        &lt;mi xref='id3'&gt;b&lt;/mi&gt;
+      &lt;/mrow&gt;
+    &lt;/mrow&gt;
+    &lt;annotation-xml encoding='MathML-Content'&gt;
+      &lt;apply id='id5'&gt;
+        &lt;plus/&gt;
+        &lt;ci id='id1'&gt;a&lt;/ci&gt;
+        &lt;apply id='id4'&gt;
+          &lt;times/&gt;
+          &lt;cn id='id2' type='integer'&gt;2&lt;/cn&gt;
+          &lt;ci id='id3'&gt;b&lt;/ci&gt;
+        &lt;/apply&gt;
+      &lt;/apply&gt;
+    &lt;/annotation-xml&gt;
+    &lt;annotation encoding='Giac'&gt;a+2*b&lt;/annotation&gt;
+  &lt;/semantics&gt;
+&lt;/math&gt;
+</pre><p>
+Input :
+</p><div class="center">
+	<span style="font-family:monospace">xml_print(export_mathml(a+2*b,content))
+</span></div><p>
+Output :
+</p><pre class="verbatim">&lt;math xmlns='http://www.w3.org/1998/Math/MathML'&gt;
+  &lt;apply id='id5'&gt;
+    &lt;plus/&gt;
+    &lt;ci id='id1'&gt;a&lt;/ci&gt;
+    &lt;apply id='id4'&gt;
+      &lt;times/&gt;
+      &lt;cn id='id2' type='integer'&gt;2&lt;/cn&gt;
+      &lt;ci id='id3'&gt;b&lt;/ci&gt;
+    &lt;/apply&gt;
+  &lt;/apply&gt;
+&lt;/math&gt;
+</pre><p>
+Input :
+</p><div class="center">
+	<span style="font-family:monospace">xml_print(export_mathml(a+2*b,display))
+</span></div><p>
+Output :
+</p><pre class="verbatim">&lt;math xmlns='http://www.w3.org/1998/Math/MathML'&gt;
+  &lt;mrow&gt;
+    &lt;mi&gt;a&lt;/mi&gt;
+    &lt;mo&gt;+&lt;/mo&gt;
+    &lt;mrow&gt;
+      &lt;mn&gt;2&lt;/mn&gt;
+      &lt;mo&gt;&amp;it;&lt;/mo&gt;
+      &lt;mi&gt;b&lt;/mi&gt;
+    &lt;/mrow&gt;
+  &lt;/mrow&gt;
+&lt;/math&gt;
+</pre>
+<hr>
+<a href="cascmd_en039.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en041.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

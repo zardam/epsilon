@@ -1,0 +1,313 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casgeo.css">
+<TITLE>Le théorème de Napoléon</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casgeo003.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo005.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc95">Chapitre 4</A>  Le théorème de Napoléon</H1><H2 CLASS="section"><A NAME="toc32"></A><A NAME="htoc96">4.1</A>  Le théorème</H2><P>
+Soit un triangle quelconque <I>ABC</I>.<BR>
+On construit à l’extérieur du triangle <I>ABC</I> les triangles équilatèraux
+<I>BAD</I>, <I>CBE</I> et <I>ACF</I> qui ont pour centre de gravité : <I>G</I>1, <I>G</I>2 et <I>G</I>3.<BR>
+On a les propriétés suivantes :<BR>
+Le triangle <I>G</I>1<I>G</I>2<I>G</I>3 est équilatéral et a même centre de gravité que 
+le triangle <I>ABC</I>.<BR>
+Les droites <I>AE</I>, <I>DC</I>, <I>BF</I> sont concourantes en un point <I>T</I> qui s’appelle le
+point de Torricelli.<BR>
+Le point <I>T</I> est aussi le point de concours des cercles circonscrits aux 
+triangles <I>BAD</I>, <I>CBE</I> et <I>ACF</I>.</P><H2 CLASS="section"><A NAME="toc33"></A><A NAME="htoc97">4.2</A>  La figure</H2><P><IMG SRC="casgeo042.png"><BR>
+
+Pour faire cette figure, on tape dans un éditeur de programme : 
+</P><PRE CLASS="verbatim">A:=point(-2.,-1.,'affichage'=0);
+B:=point(2.,-1,'affichage'=0);
+C:=point(1.,2,'affichage'=0);
+triangle_equilateral(B,A,D);
+triangle_equilateral(C,B,E);
+triangle_equilateral(A,C,F);
+segment(A,E,affichage=2);
+segment(C,D,affichage=2);
+segment(B,F,affichage=2+ligne_tiret);
+T:=inter_droite(droite(A,E),droite(C,D),affichage=2+
+                 epaisseur_point_2);
+circonscrit(A,B,D);
+circonscrit(C,B,E);
+G1:=isobarycentre(A,B,D);
+G2:=isobarycentre(C,B,E);
+G3:=isobarycentre(A,C,F);
+G:=isobarycentre(A,C,B,affichage=quadrant2);
+triangle(A,B,C,affichage=1);
+triangle(G1,G2,G3,affichage=4);
+</PRE><H2 CLASS="section"><A NAME="toc34"></A><A NAME="htoc98">4.3</A>  Les démonstrations géométriques</H2><H3 CLASS="subsection"><A NAME="htoc99">4.3.1</A>  Avec les cercles circonscrits à <I>BAD</I>, <I>CBE</I> et <I>ACF</I></H3><P>
+On trace les cercles <I>C</I><SUB>1</SUB>, <I>C</I><SUB>2</SUB> et <I>C</I><SUB>3</SUB> circonscrits aux triangles <I>ADB</I>, 
+<I>BEC</I> et <I>CFA</I> de centres respectifs <I>G</I><SUB>1</SUB>, <I>G</I><SUB>2</SUB> et <I>G</I><SUB>3</SUB>.<BR>
+Pour faire la figure, on tape :
+</P><PRE CLASS="verbatim">A:=point(-2.,-1.,'affichage'=0);
+B:=point(2.,-1,'affichage'=0);
+C:=point(1.,2,'affichage'=0);
+D:=rotation(B,pi/3,A);
+E:=rotation(C,pi/3,B);
+F:=rotation(A,pi/3,C);
+C1:=circonscrit(A,B,D,affichage=2);
+C2:=circonscrit(C,B,E,affichage=2);
+C3:=circonscrit(C,A,F,affichage=2+ligne_tiret);
+G1:=isobarycentre(A,B,D);
+G2:=isobarycentre(C,B,E);
+G3:=isobarycentre(A,C,F);
+G:=isobarycentre(A,C,B,affichage=quadrant2);
+triangle(A,B,C,affichage=1);
+triangle(G1,G2,G3,affichage=4);
+T:=inter(C1,C2,affichage=2+epaisseur_point_2)[1];
+angle(D,B,A,"");
+angle(T,B,A,"");
+angle(T,C,B,"");
+angle(E,C,B,"");
+</PRE><P><IMG SRC="casgeo043.png"><BR>
+
+Montrons que ces trois cercles sont concourants en un point <I>T</I>.<BR>
+Soit <I>T</I> le point d’intersection de <I>C</I><SUB>1</SUB> et <I>C</I><SUB>2</SUB>, on a :<BR>
+<I>BDA</I>=π/3.<BR>
+Comme l’angle <I>BTA</I> intercepte le même arc <I>BA</I> que l’angle 
+<I>BDA</I> de <I>C</I><SUB>1</SUB> on a :<BR>
+<I>BTA</I>=π/3 ou <I>BTA</I>=2π/3 de même :<BR>
+<I>BTC</I>=π/3 ou <I>BTC</I>=2π/3 donc :<BR>
+soit <I>CTA</I>=<I>BTC</I>+<I>BTA</I> si <I>TB</I> est entre <I>TC</I> et <I>TA</I><BR>
+soit <I>CTA</I>=|<I>BTC</I>−<I>BTA</I>| sinon.<BR>
+Donc 
+<I>CTA</I>=π/3 ou <I>CTA</I>=2π/3 et donc
+<I>CAFT</I> sont cocycliques.<BR>
+On a donc montré que <I>T</I> se trouve sur <I>C</I>3.<BR>
+Comme <I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB> (resp <I>G</I><SUB>1</SUB><I>G</I><SUB>3</SUB> ou <I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB>) est perpendiculaire à <I>BT</I> (resp à <I>AT</I> ou à <I>CT</I>) et que 
+<I>G</I><SUB>2</SUB><I>G</I><SUB>1</SUB><I>G</I><SUB>3</SUB>+<I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB>+<I>G</I><SUB>1</SUB><I>G</I><SUB>3</SUB><I>G</I><SUB>2</SUB>=π on a :<BR>
+<I>G</I><SUB>2</SUB><I>G</I><SUB>1</SUB><I>G</I><SUB>3</SUB>=<I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB>=<I>G</I><SUB>1</SUB><I>G</I><SUB>3</SUB><I>G</I><SUB>2</SUB>=π/3<BR>
+ce qui prouve que le triangle <I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB> est équilatèral. </P><H3 CLASS="subsection"><A NAME="htoc100">4.3.2</A>  Avec <I>G</I><SUB>4</SUB> le symétrique de <I>G</I><SUB>1</SUB> par rapport à <I>AB</I></H3><P>
+Soit <I>G</I><SUB>4</SUB> le symétrique de <I>G</I><SUB>1</SUB> par rapport à <I>AB</I>.<BR>
+
+<IMG SRC="casgeo044.png"><BR>
+
+Pour faire cette figure, on tape dans un éditeur de programme : 
+</P><PRE CLASS="verbatim">A:=point(-2.,-1.,'affichage'=0);
+B:=point(2.,-1,'affichage'=0);
+C:=point(1.,2,'affichage'=0);
+D:=rotation(B,pi/3.,A);
+E:=rotation(C,pi/3.,B);
+F:=rotation(A,pi/3.,C);
+G1:=isobarycentre(A,B,D);
+G2:=isobarycentre(C,B,E);
+G3:=isobarycentre(A,C,F);
+G4:=symetrie(droite(A,B),G1);
+G:=isobarycentre(A,C,B,affichage=quadrant2);
+triangle(A,B,C,affichage=1);
+triangle(G1,G2,G3,affichage=4);
+segment(A,G1);
+segment(A,G3);
+segment(G4,G3);
+segment(G4,G2);
+segment(C,G2);
+segment(C,G3);
+segment(B,G4);
+segment(A,G4);
+segment(B,G2);
+segment(B,G1);
+segment(G4,G1);
+segment(A,F,affichage=1+ligne_tiret);
+segment(C,F,affichage=1+ligne_tiret);
+segment(C,E,affichage=1+ligne_tiret);
+segment(E,B,affichage=1+ligne_tiret);
+segment(B,D,affichage=1+ligne_tiret);
+segment(A,D,affichage=1+ligne_tiret);
+</PRE><P>Les triangles <I>AG</I><SUB>4</SUB><I>G</I><SUB>3</SUB> et <I>G</I><SUB>4</SUB><I>BG</I><SUB>2</SUB> sont égaux et sont des triangles 
+semblables à <I>ABC</I> en effet :<BR>
+le quadrilatère <I>AG</I><SUB>1</SUB><I>BG</I><SUB>4</SUB> est un losange d’angle <I>A</I>=π/3 
+(4 cotés égaux à la diagonale <I>G</I><SUB>1</SUB><I>G</I><SUB>4</SUB>), donc<BR>
+l’angle <I>G</I><SUB>4</SUB><I>AG</I><SUB>3</SUB> est égale à l’angle <I>BAC</I>,<BR>
+<I>AG</I><SUB>4</SUB>=<I>AG</I><SUB>1</SUB>=<I>BG</I><SUB>1</SUB>=<I>BG</I><SUB>4</SUB>=<I>AB</I>/√<SPAN style="text-decoration:overline">3</SPAN>,<BR>
+<I>AG</I><SUB>3</SUB>=<I>CG</I><SUB>3</SUB>=<I>AC</I>/√<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+Le triangle <I>AG</I><SUB>4</SUB><I>G</I><SUB>3</SUB> est donc semblable au triangle <I>ABC</I> avec comme rapport 
+de similitude 1/√<SPAN style="text-decoration:overline">(</SPAN>3).<BR>
+De même l’angle <I>G</I><SUB>4</SUB><I>BG</I><SUB>2</SUB> est égale à l’angle <I>ABC</I> 
+et,<BR>
+ <I>BG</I><SUB>2</SUB>=<I>CG</I><SUB>2</SUB>=<I>BC</I>/√<SPAN style="text-decoration:overline">3</SPAN><BR>
+donc le triangle <I>G</I><SUB>4</SUB><I>BG</I><SUB>2</SUB> est semblable au triangle <I>ABC</I> avec comme rapport 
+de similitude 1/√<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+On en déduit que :<BR>
+<I>BG</I><SUB>2</SUB>=<I>G</I><SUB>4</SUB><I>G</I><SUB>3</SUB> et <I>AG</I><SUB>2</SUB>=<I>G</I><SUB>4</SUB><I>G</I><SUB>2</SUB> et donc que le quadrilatère <I>G</I><SUB>2</SUB><I>CG</I><SUB>3</SUB><I>G</I><SUB>4</SUB> est 
+un parallélogramme.<BR>
+Les triangles <I>G</I><SUB>1</SUB><I>G</I><SUB>4</SUB><I>G</I><SUB>3</SUB> et <I>G</I><SUB>1</SUB><I>BG</I><SUB>2</SUB> sont donc égaux (l’angle 
+<I>G</I><SUB>3</SUB><I>G</I><SUB>4</SUB><I>G</I><SUB>1</SUB>=<I>CBA</I>+<I>pi</I>/3=<I>G</I><SUB>2</SUB><I>BG</I><SUB>1</SUB>) et ces deux 
+triangles se déduisent l’un de l’autre par une rotaion de centre <I>G</I><SUB>1</SUB> et 
+d’anble π/3 donc<BR>
+<I>G</I><SUB>1</SUB><I>G</I><SUB>3</SUB>=<I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB> et l’angle <I>G</I><SUB>2</SUB><I>G</I><SUB>1</SUB><I>G</I><SUB>3</SUB>=π/3.<BR>
+L’isobarycentre de <I>A</I>,<I>B</I>,<I>C</I> est aussi l’isobarycentre de <I>G</I><SUB>1</SUB>,<I>G</I><SUB>4</SUB>,<I>C</I> car le
+quadrilatère <I>AG</I><SUB>1</SUB><I>BG</I><SUB>4</SUB> est un losange.<BR>
+L’isobarycentre de <I>G</I><SUB>1</SUB>,<I>G</I><SUB>4</SUB>,<I>C</I> est aussi l’isobarycentre de <I>G</I><SUB>1</SUB>,<I>G</I><SUB>2</SUB>,<I>G</I><SUB>3</SUB> car 
+le quadrilatère <I>CG</I><SUB>3</SUB><I>G</I><SUB>4</SUB><I>G</I><SUB>2</SUB> est un parallélogramme.<BR>
+Donc <I>ABC</I> et <I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB> ont même centre de gravitè.<BR>
+
+</P><H3 CLASS="subsection"><A NAME="htoc101">4.3.3</A>  Avec les symétriques de <I>G</I><SUB>1</SUB> (resp de <I>G</I><SUB>2</SUB>) par rapport à <I>AB</I> (resp à <I>BE</I>)</H3><H4 CLASS="subsubsection">L’énoncé</H4><P>
+Soit <I>ABC</I> un triangle quelconque. On construit à l’extérieur du triangle 
+<I>ABC</I> les triangles équilatèraux : <I>ABD</I>, <I>BCE</I> et <I>ACF</I>.<BR>
+1/ Montrer que <I>AE</I>=<I>BF</I>=<I>CD</I>.<BR>
+2/ Montrer que <I>AE</I>, <I>BF</I> et <I>CD</I> sont concourantes.<BR>
+3/ Théorème de Napoléon :<BR>
+On note <I>G</I><SUB>1</SUB>, <I>G</I><SUB>2</SUB> et <I>G</I><SUB>3</SUB> les centres de gravité des triangles 
+<I>ABD</I>, <I>BCE</I> et <I>ACF</I>.<BR>
+Montrer que le triangle <I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB> est équilatèral.<BR>
+
+</P><H4 CLASS="subsubsection">La solution</H4><PRE CLASS="verbatim">A:=point(-2.,-1.,'affichage'=0);
+B:=point(2.,-1,'affichage'=0);
+C:=point(0.,1.5,'affichage'=0);
+D:=rotation(B,pi/3.,A);
+E:=rotation(C,pi/3.,B);
+F:=rotation(A,pi/3.,C);
+segment(A,E,affichage=2);
+segment(C,D,affichage=2);
+segment(B,F,affichage=2+ligne_tiret);
+T:=inter_droite(droite(A,E),droite(C,D),affichage=2+
+                 epaisseur_point_2);
+G1:=isobarycentre(A,B,D);
+G2:=isobarycentre(C,B,E);
+G3:=isobarycentre(A,C,F);
+G:=isobarycentre(A,C,B,affichage=quadrant2);
+triangle(A,B,C,affichage=1);
+triangle(G1,G2,G3,affichage=4);
+angle(B,D,A,"");
+angle(B,C,E,"");
+angle(C,E,B,"");
+angle(C,A,F,"");
+vecteur(B,G1,affichage=1)
+vecteur(B,A,affichage=1);
+vecteur(B,D,affichage=1);
+vecteur(B,B+3*(G1-B),affichage=1);
+vecteur(B,G2,affichage=6)
+vecteur(B,E,affichage=6);
+vecteur(B,C,affichage=6);
+vecteur(B,B+3*(G2-B),affichage=6);
+N:=rotation(C,pi/3.,T);
+</PRE><P><IMG SRC="casgeo045.png"><BR>
+
+On suppose le triangle <I>ABC</I> direct.<BR>
+1/ La rotation de centre <I>B</I> et d’angle −π/3 transforme :<BR>
+<I>D</I> en <I>A</I> et <I>C</I> en <I>E</I> donc:<BR>
+ <I>DC</I>=<I>AE</I> et 
+(<I>DC</I>,<I>AE</I>)=−π/3.<BR>
+De même la rotation de centre <I>C</I> et d’angle −π/3 transforme :<BR>
+<I>E</I> en <I>B</I> et <I>A</I> en <I>F</I> donc :<BR>
+ <I>AE</I>=<I>FB</I> et 
+(<I>EA</I>,<I>BF</I>)=−π/3.<BR>
+On montre, en utilisant les vecteurs, que <I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB> est équilatèral, 
+on a :<BR>
+<I>BG</I><SUB>1</SUB>=1/3(<I>BD</I>+<I>BA</I>)
+et
+<I>BG</I><SUB>2</SUB>=1/3(<I>BE</I>+<I>BC</I>)<BR>
+<I>CG</I><SUB>2</SUB>=1/3(<I>CE</I>+<I>CB</I>)
+et
+<I>CG</I><SUB>3</SUB>=1/3(<I>CF</I>+<I>CA</I>)<BR>
+donc<BR>
+<I>G</I><SUB>2</SUB><I>G</I><SUB>1</SUB>=1/3(<I>EA</I>+<I>CD</I>)
+et<BR>
+<I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB>=1/3(<I>BF</I>+<I>EA</I>)<BR>
+<I>BF</I> (resp <I>EA</I>) est le transformé de 
+<I>EA</I> (resp <I>CD</I>) par une rotation d’angle 
+−π/3 donc <I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB> est le transformé de 
+<I>G</I><SUB>2</SUB><I>G</I><SUB>1</SUB> par une rotation d’angle −π/3 donc le triangle 
+<I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB> est équilatèral.<BR>
+2/ Soit <I>T</I> le point d’intersection de <I>AE</I> et de <I>CD</I>. D’après la 
+première question :
+(<I>TC</I>,<I>TE</I>)=(<I>DC</I>,<I>AE</I>)=−π/3.<BR>
+On construit alors le point <I>N</I> sur <I>AE</I> pour que le triangle <I>TCN</I> soit 
+équlatéral et donc (<I>CN</I>,<I>CT</I>)=−π/3. 
+Ainsi, la rotation de centre <I>C</I> et d’angle −π/3 transforme <I>AE</I> en <I>FB</I>
+et le point <I>N</I> de <I>AE</I> en le point <I>T</I> de <I>BF</I> donc <I>BF</I> passe par <I>T</I>.<BR>
+3/ Autre démonstration de <I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB> est équilatèral.
+On construit :<BR>
+<I>G</I><SUB>4</SUB> le symétrique de <I>G</I><SUB>1</SUB> par rapport à <I>AB</I>,<BR>
+<I>G</I><SUB>5</SUB> le symétrique de <I>G</I><SUB>2</SUB> par rapport à <I>BE</I>,<BR>
+donc les triangles <I>AG</I><SUB>1</SUB><I>G</I><SUB>4</SUB>, <I>BG</I><SUB>1</SUB><I>G</I><SUB>4</SUB>, <I>BG</I><SUB>2</SUB><I>G</I><SUB>5</SUB> sont équilatéraux.<BR>
+La rotation de centre <I>B</I> et d’angle −π/3 transforme :<BR>
+<I>G</I><SUB>1</SUB> en <I>G</I><SUB>4</SUB> et <I>G</I><SUB>2</SUB> en <I>G</I><SUB>5</SUB> donc <I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB>=<I>G</I><SUB>4</SUB><I>G</I><SUB>5</SUB> et 
+(<I>G</I><SUB>2</SUB><I>G</I><SUB>1</SUB>,<I>G</I><SUB>5</SUB><I>G</I><SUB>4</SUB>)=−π/3.<BR>
+On va montrer que le quadrilatère 
+<I>G</I><SUB>3</SUB><I>G</I><SUB>2</SUB><I>G</I><SUB>5</SUB><I>G</I><SUB>4</SUB> est un parallélogramme et on aura ainsi montrer que le triangle <I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB> est équilatèral puisque :<BR>
+<I>G</I><SUB>3</SUB><I>G</I><SUB>2</SUB>=<I>G</I><SUB>4</SUB><I>G</I><SUB>5</SUB>=<I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB> et 
+(<I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB>,<I>G</I><SUB>5</SUB><I>G</I><SUB>4</SUB>)=0 donc 
+(<I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB>,<I>G</I><SUB>2</SUB><I>G</I><SUB>1</SUB>)=π/3.<BR>
+Les triangles <I>AG</I><SUB>4</SUB><I>G</I><SUB>3</SUB> et <I>G</I><SUB>4</SUB><I>BG</I><SUB>2</SUB> sont semblables au triangle <I>ABC</I> 
+(même angle <I>A</I> (resp <I>B</I>) et deux cotés proportionnels) et 
+comme <I>AG</I><SUB>4</SUB>=<I>G</I><SUB>4</SUB><I>B</I>, les triangles <I>AG</I><SUB>4</SUB><I>G</I><SUB>3</SUB> et <I>G</I><SUB>4</SUB><I>BG</I><SUB>2</SUB> sont égaux.
+Donc <I>G</I><SUB>3</SUB><I>G</I><SUB>4</SUB>=<I>BG</I><SUB>2</SUB>=<I>BG</I><SUB>5</SUB>=<I>G</I><SUB>2</SUB><I>G</I><SUB>5</SUB>.<BR>
+On a :<BR>
+(<I>G</I><SUB>4</SUB><I>B</I>,<I>G</I><SUB>4</SUB><I>G</I><SUB>3</SUB>)=(<I>G</I><SUB>4</SUB><I>A</I>,<I>G</I><SUB>4</SUB><I>G</I><SUB>3</SUB>)+2π/3=(<I>BG</I><SUB>4</SUB>,<I>BG</I><SUB>2</SUB>)+2π/3=<BR>
+(<I>BG</I><SUB>4</SUB>,<I>BE</I>)+2π/3−π/6=(<I>BG</I><SUB>4</SUB>,<I>BE</I>)+π/2.<BR>
+Donc <I>G</I><SUB>3</SUB><I>G</I><SUB>4</SUB> est paralléle à <I>G</I><SUB>2</SUB><I>G</I><SUB>5</SUB> puisque ces deux droites sont perpendiculaires à <I>BE</I>. On a ainsi montrer que le quadrilatère 
+<I>G</I><SUB>3</SUB><I>G</I><SUB>2</SUB><I>G</I><SUB>5</SUB><I>G</I><SUB>4</SUB> est un parallélogramme, ce qui termine la démonstration. 
+</P><H3 CLASS="subsection"><A NAME="htoc102">4.3.4</A>  Avec les nombres complexes</H3><P>
+Soient <I>a</I>,<I>b</I>,<I>c</I>,<I>g</I><SUB>1</SUB>,<I>g</I><SUB>2</SUB>,<I>g</I><SUB>2</SUB> les affixes de <I>A</I>,<I>B</I>,<I>C</I>,<I>G</I><SUB>1</SUB>,<I>G</I><SUB>2</SUB>,<I>G</I><SUB>3</SUB> on a :<BR>
+si le triangle <I>ADB</I> est de sens direct, <I>A</I> se déduit de <I>B</I> dans la rotation de centre <I>g</I><SUB>1</SUB> 
+et d’angle 2*π/3 donc puisque <I>j</I>=<I>e</I><SUP><I>i</I>2π/3</SUP>:<BR>
+<I>a</I>−<I>g</I><SUB>1</SUB>=<I>j</I>*(<I>b</I>−<I>g</I><SUB>1</SUB>)<BR>
+de même si les triangles <I>BEC</I> et <I>CFA</I> sont de sens direct on a :<BR>
+<I>b</I>−<I>g</I><SUB>2</SUB>=<I>j</I>*(<I>c</I>−<I>g</I><SUB>2</SUB>)<BR>
+<I>c</I>−<I>g</I><SUB>3</SUB>=<I>j</I>*(<I>a</I>−<I>g</I><SUB>3</SUB>)<BR>
+On en déduit que :<BR>
+(1−<I>j</I>)<I>g</I><SUB>1</SUB>=<I>a</I>−<I>jb</I> et<BR>
+(1−<I>j</I>)<I>g</I><SUB>2</SUB>=<I>b</I>−<I>jc</I> et<BR>
+(1−<I>j</I>)<I>g</I><SUB>3</SUB>=<I>c</I>−<I>ja</I> donc<BR>
+(1−<I>j</I>)(<I>g</I><SUB>1</SUB>−<I>g</I><SUB>2</SUB>)=<I>a</I>−<I>b</I>(1+<I>j</I>)+<I>jc</I>=<I>a</I>+<I>jc</I>+<I>j</I><SUP>2</SUP><I>b</I> puisque 1+<I>j</I>+<I>j</I><SUP>2</SUP>=0 et<BR>
+(1−<I>j</I>)(<I>g</I><SUB>2</SUB>−<I>g</I><SUB>3</SUB>)=<I>b</I>−<I>c</I>(1+<I>j</I>)+<I>ja</I>=<I>j</I>(<I>a</I>+<I>jc</I>+<I>j</I><SUP>2</SUP><I>b</I>) puisque <I>j</I><SUP>3</SUP>=1 donc<BR>
+(1−<I>j</I>)(<I>g</I><SUB>2</SUB>−<I>g</I><SUB>3</SUB>)=<I>j</I>(1−<I>j</I>)(<I>g</I><SUB>1</SUB>−<I>g</I><SUB>2</SUB>) et après division par <I>j</I>−1 on a<BR>
+<I>g</I><SUB>2</SUB>−<I>g</I><SUB>3</SUB>=<I>j</I>(<I>g</I><SUB>1</SUB>−<I>g</I><SUB>2</SUB>) et<BR>
+ cette égalité prouve que le triangle <I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB>
+est équilatèral.<BR>
+On a de plus :<BR>
+(1−<I>j</I>)<I>g</I><SUB>1</SUB>+(1−<I>j</I>)<I>g</I><SUB>2</SUB>+(1−<I>j</I>)<I>g</I><SUB>3</SUB>=<I>a</I>−<I>jb</I>+<I>b</I>−<I>jc</I>+<I>c</I>−<I>ja</I>=(1−<I>j</I>)(<I>a</I>+<I>b</I>+<I>c</I>) donc<BR>
+(<I>a</I>+<I>b</I>+<I>c</I>)/3=(<I>g</I><SUB>1</SUB>+<I>g</I><SUB>2</SUB>+<I>g</I><SUB>3</SUB>)/3 ce qui veut dire que les triangles <I>ABC</I> et 
+<I>G</I><SUB>1</SUB><I>G</I><SUB>2</SUB><I>G</I><SUB>3</SUB> ont même centre de gravité.
+</P><H2 CLASS="section"><A NAME="toc35"></A><A NAME="htoc103">4.4</A>  La démonstration du théorème avec <TT>Xcas</TT></H2><P>
+On suppose que le point <TT>A</TT> est à l’origine du repère et que 
+le point <TT>B</TT> est le point d’affixe 2.
+Le point <TT>C</TT> a comme affixe <I>a</I>+<I>ib</I>, avec <I>a</I> et <I>b</I> quelconques.<BR>
+Pour faire la figure on suppose que <I>a</I>=−1 et que <I>b</I>=−1.<BR>
+On tape les instructions suivantes qui se trouvent dans le fichier 
+<TT>napoleon</TT> :
+</P><PRE CLASS="verbatim">assume(a=0);
+assume(b=1.5);
+A:=point(-2,-1);
+B:=point(2,-2);
+C:=point(a,b);
+T1:=couleur(triangle_equilateral(B,A),vert);
+T2:=couleur(triangle_equilateral(C,B),vert);
+T3:=couleur(triangle_equilateral(A,C),vert);
+couleur(circonscrit(T1),vert);
+couleur(circonscrit(T2),vert);
+couleur(circonscrit(T3),vert);
+AB:=segment(A,B);
+AC:=segment(A,C);
+CB:=segment(C,B);
+G1:=normal(isobarycentre(T1));
+G2:=normal(isobarycentre(T2));
+G3:=normal(isobarycentre(T3));
+G1G2:=couleur(segment(G1,G2),rouge);
+G2G3:=couleur(segment(G2,G3),rouge);
+G3G1:=couleur(segment(G3,G1),rouge);
+normal(longueur2(G1,G2)-longueur2(G2,G3));
+normal(longueur2(G1,G3)-longueur2(G3,G2));
+</PRE><P><IMG SRC="casgeo046.png"><BR>
+
+On obtient la figure et comme réponses :<BR>
+<TT>0</TT> à <TT>normal(longueur2(G1,G2)-longueur2(G2,G3));</TT>,<BR>
+<TT>0</TT> à <TT>normal(longueur2(G1,G2)-longueur2(G1,G3));</TT>,<BR>
+ce qui prouve que le triangle <I>G</I>1<I>G</I>2<I>G</I>3 est équilatèral.
+</P>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casgeo003.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo005.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,729 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="castor.css">
+<TITLE>Les commandes primitives de la Tortue</TITLE>
+</HEAD>
+<BODY >
+<A HREF="castor001.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="castor003.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc9">Chapitre 1</A>  Les commandes primitives de la Tortue</H1><H2 CLASS="section"><A NAME="toc7"></A><A NAME="htoc10">1.1</A>  Pour commencer</H2><P><A NAME="sec:init"></A>
+<TT>Alt+d</TT> fait apparaître l’écran <TT>dessin tortue</TT>, de positionner
+la tortue au pixel de coordonnées [100,100], de la diriger selon le cap 0 et
+de travailler en degrés pour toutes les commandes concernant la tortue et 
+cela même si on a coché <TT>radian</TT> dans la configuration du <TT>cas</TT> 
+(bouton qui rappelle la cofiguration choisie <TT>Config : exact...</TT>).</P><P>Le point [0,0] se trouve en bas à gauche, l’axe des <I>y</I> est dirigé vers le
+haut et le cap 0 est dirigé selon l’axe des <I>x</I>.<BR>
+ Les unités sont les pixels et la dimension de l’écran dépend de 
+votre ordinateur (en plein écran le mien est de 270 × 240).<BR>
+Le cap de la tortue est exprimé en degrés et ses valeurs sont celles du 
+cercle trigonométrique : ces valeurs sont interprétées modulo 360.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>Alt+d</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>l’écran de dessin avec la tortue au pixel de coordonnées
+[100,100], avec le cap 0</TT></DIV><P>
+On utilise ensuite les primitives qui permettent de déplacer la tortue et 
+qui gérent son crayon.</P><H2 CLASS="section"><A NAME="toc8"></A><A NAME="htoc11">1.2</A>  La tortue et sa représentation</H2><P>
+Après chaque commande la position d’arrivée de la tortue est 
+représentée par un petit triangle isocèle de base 10 et de hauteur 17. 
+Ce petit triangle ne fait pas partie du dessin, il bouge selon les 
+instructions et peut être caché avec la commande <TT>cache_tortue</TT>
+ou rendu visible avec la commande <TT>montre_tortue</TT>.
+Si on veut dessiner la tortue pour montrer les positions intermédiaires 
+ocupées par la tortue sur le dessin on tape :
+</P><PRE CLASS="verbatim">des_tor():={
+cache_tortue;
+tourne_gauche;
+avance 5;
+tourne_droite(180-180/pi*atan(3.4));
+avance(sqrt(25+17^2));
+tourne_droite(180-2*180/pi*atan(1/3.4));
+avance(sqrt(25+17^2));
+tourne_droite(180-180/pi*atan(3.4));
+avance 5;tourne_droite;
+montre_tortue;
+}:;
+</PRE><H3 CLASS="subsection"><A NAME="htoc12">1.2.1</A>  Pour voir la tortue : <TT>montre_tortue</TT></H3><P><A NAME="@default0"></A>
+<TT>montre_tortue</TT> n’a pas d’argument.<BR>
+<TT>montre_tortue</TT> montre la tortue.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>montre_tortue</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>montre_tortue()</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>On voit la tortue</TT></DIV><H3 CLASS="subsection"><A NAME="htoc13">1.2.2</A>  Pour cacher la tortue : <TT>cache_tortue</TT></H3><P><A NAME="@default1"></A>
+<TT>cache_tortue</TT> n’a pas d’argument.<BR>
+<TT>cache_tortue</TT> cache la tortue.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>cache_tortue</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>cache_tortue()</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>On ne voit plus la tortue</TT></DIV><H3 CLASS="subsection"><A NAME="htoc14">1.2.3</A>  Pour représenter la tortue selon un triangle vide ou plein :<BR>
+<TT>dessine_tortue</TT></H3><P><A NAME="@default2"></A>
+<TT>dessine_tortue</TT> a comme argument 0 ou 1 (par défaut 1).<BR>
+<TT>dessine_tortue 0</TT> permet de dessiner le petit triangle représentant la
+tortue.<BR>
+<TT>dessine_tortue </TT> ou <TT>dessine_tortue 1</TT> permet de dessiner le petit triangle représentant la
+tortue en forme pleine.<BR>
+<TT>dessine_tortue</TT> peut permettre de matérialiser les positions 
+intermédiaires ocupées par la tortue, en particulier de marquer sur le 
+dessin la position de départ de la tortue avec <TT>dessine_tortue 1</TT> et sa 
+position d’arrivée avec <TT>dessine_tortue 0</TT>.<BR>
+En effet lorsqu’on écrit une procédure qui réalise un dessin tortue,
+il est important de noter sur le dessin la position de départ et la position
+d’arrivée de la tortue pour pouvoir réutiliser correctement cette 
+procédure. C’est pourquoi lorsqu’on traduit par un dessin ce que fait une 
+procédure graphique, on 
+représente la position de départ de la tortue par un triangle plein et
+la position d’arrivée de la tortue par un triangle non plein.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>dessine_tortue</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>dessine_tortue 1</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>On voit la tortue sous la forme d’un petit triangle plein</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>dessine_tortue 0</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>On dessine la tortue sous la forme d’un petit triangle</TT></DIV><P><B>Remarque</B><BR>
+Les dessins associés à une procédure seront faits en utilisant un 
+<TT>dessine_tortue</TT> au départ : ainsi le triangle plein représente la
+position de la tortue au départ et 
+le triangle "vide" représente la tortue à l’arrivée.
+Si la tortue revient à son point de départ, on dit que la procédure est 
+transparente : sur le dessin on ne verra donc que le triangle plein 
+représentant la position de la tortue au départ et à l’arrivée.
+</P><H2 CLASS="section"><A NAME="toc9"></A><A NAME="htoc15">1.3</A>  La barre de boutons de l’écran <TT>Tortue</TT></H2><P>
+On trouve dans la barre de boutons de l’écran <TT>Tortue</TT> les principales
+primitives existantes de la tortue et un Menu <TT>M</TT>.<BR>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Le Menu <TT>M</TT> permet d’avoir un maillage c’est à dire d’avoir un 
+écran dont le fond est soit quadrillé à points (<TT>quadrillage</TT>), soit 
+triangulé à points (<TT>triangle</TT>), soit sans maillage (<TT>aucun</TT>).<BR>
+Ce menu permet aussi d’imprimer l’écran <TT>Tortue</TT> 
+et de le transformer soit en un fichier <TT>.eps, .jpg, .pdf, .png</TT>
+(<TT>Previsualisation avec EPS et PNG</TT>), soit
+en un fichier LaTex (<TT>Previsualiser avec Latex</TT>). 
+</LI><LI CLASS="li-itemize">Les primitives sont désignées soit
+par leurs deux premières lettres, soit par les initiales des mots composant 
+les primitives comportant un souligné (<TT>_</TT>).<BR>
+On trouve :<BR>
+<TT>av</TT> pour <TT>avance</TT><BR>
+<TT>re</TT> pour <TT>recule</TT><BR>
+<TT>td</TT> pour <TT>tourne_droite</TT><BR>
+<TT>tg</TT> pour <TT>tourne_gauche</TT><BR>
+<TT>pc</TT> pour <TT>pas_de_cote</TT><BR>
+<TT>sa</TT> pour <TT>saute</TT><BR>
+<TT>cr</TT> pour <TT>crayon</TT><BR>
+<TT>ro</TT> pour <TT>rond</TT><BR>
+<TT>di</TT> pour <TT>disque</TT><BR>
+<TT>rp</TT> pour <TT>rectangle_plein</TT><BR>
+<TT>tp</TT> pour <TT>triangle_plein</TT><BR>
+<TT>ec</TT> pour <TT>ecris</TT><BR>
+<TT>sg</TT> pour <TT>signe</TT><BR>
+<TT>ef</TT> pour <TT>efface</TT><BR>
+Lorsqu’on appuie sur <TT>av</TT>, la commande <TT>avance</TT> s’inscrit dans la 
+ligne de commandes : cette barre de boutons permet donc de saisir les 
+commandes plus facilement. On appuie sue <TT>Entree</TT> et la tortue avance de 10 pas.<BR>
+Lorsqu’on appuie sur <TT>cr</TT>, on fait apparaitre la palette des couleurs
+lorsqu’on clique par exemple sur la couleur 123, la commande <TT>crayon 123</TT> 
+s’inscrit dans la ligne de commandes puis, on appuie sur <TT>Entree</TT> et la 
+tortue change sa couleur.<BR>
+Si on veut juste avoir le code d’une couleur, on peut aussi utiliser le menu 
+<TT>M-&gt;Couleur</TT>.
+</LI></UL><P>
+Il faut aussi savoir que la touche tabulation de votre clavier 
+(⇆) permet de compléter ce qui se trouve dans la
+ligne de commandes en les différentes instructions de <TT>Xcas</TT>.<BR>
+Par exemple on tape :<BR>
+</P><DIV CLASS="center"><TT>pas </TT><TT>⇆</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>L’index de l’aide s’ouvre à pas. On sélectionne </TT><TT>pas_de_cote</TT><TT> et on appuie sur entree</TT></DIV><H2 CLASS="section"><A NAME="toc10"></A><A NAME="htoc16">1.4</A>  Les primitives de déplacement</H2><P>
+Les commandes de cette section permettent de manipuler la tortue et son crayon.</P><H3 CLASS="subsection"><A NAME="htoc17">1.4.1</A>  Pour avancer : <TT>avance</TT></H3><P><A NAME="@default3"></A>
+<TT>avance</TT> a comme argument un réel <TT>a</TT> 
+(ou aucun argument).<BR>
+<TT>avance a</TT> fait avancer la tortue de <TT>a</TT> pas (par défaut 
+<TT>a=10</TT>).<BR>
+On tape :
+</P><DIV CLASS="center"><TT>avance</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>avance 10</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>avance(10)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue avance de 10 pas</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>avance 30</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>avance(30)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue avance de 30 pas</TT></DIV><P>
+<B>Remarque</B><BR>
+<TT>avance -30</TT> est identique à <TT>recule 30</TT>.</P><H3 CLASS="subsection"><A NAME="htoc18">1.4.2</A>  Pour reculer : <TT>recule</TT></H3><P><A NAME="@default4"></A>
+<TT>recule</TT> a comme argument un réel <TT>a</TT> (ou aucun argument).<BR>
+<TT>recule a</TT> fait reculer la tortue de <TT>a</TT> pas (par défaut <TT>a=10</TT>).<BR>
+On tape :
+</P><DIV CLASS="center"><TT>recule</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>recule 10</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>recule(10)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue recule de 10 pas</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>recule 30</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>recule(30)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue recule de 30 pas</TT></DIV><P>
+<B>Remarque</B><BR>
+<TT>recule -30</TT> est identique à <TT>avance 30</TT>.</P><H3 CLASS="subsection"><A NAME="htoc19">1.4.3</A>  Pour effacer un trait ou pour revenir au début : <TT>efface</TT></H3><P><A NAME="@default5"></A>
+<TT>efface</TT> admet un ou aucun argument.<BR>
+Lorsque <TT>efface</TT> n’a pas d’argument.<BR>
+<TT>efface</TT> efface l’écran et remet la tortue dans la position qu’elle avait
+lorsque on a démarré :la tortue a un crayon noir baissé est au pixel de 
+coordonnées [100,100], avec un cap 0.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>efface</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>efface()</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>la tortue au pixel de coordonnées [100,100], avec le cap 0</TT></DIV><P>
+Lorsque <TT>efface</TT> a un argument, <TT>efface</TT> fait reculer la tortue en
+effaçant, puis remet le crayon en noir.
+On tape :
+</P><DIV CLASS="center"><TT>avance 50</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>efface 20</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>la tortue a un crayon noir et n’a avancé que de 30 pas</TT></DIV><P>
+<B>Remarque</B><BR>
+<TT>efface(a)</TT> réalise la suite d’instructions :<BR>
+<TT>crayon(gomme);recule(a);crayon(noir)</TT></P><H3 CLASS="subsection"><A NAME="htoc20">1.4.4</A>  Pour tourner à droite : <TT>tourne_droite</TT></H3><P><A NAME="@default6"></A>
+<TT>tourne_droite</TT> a comme argument un réel <TT>a</TT> (ou aucun 
+argument).<BR>
+<TT>tourne_droite a</TT> fait tourner (sans déplacement) la tortue à droite 
+de <TT>a</TT> degrés (par défaut <TT>a=90</TT>).<BR>
+On tape :
+</P><DIV CLASS="center"><TT>tourne_droite</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>tourne_droite 90</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>tourne_droite(90)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue a tourné à droite de 90 degrés</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>tourne_droite 30</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>tourne_droite(30)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue a tourné à droite de 30 degrés</TT></DIV><P>
+<B>Remarque</B><BR>
+<TT>tourne_droite -30</TT> est identique à <TT>tourne_gauche 30</TT>.</P><H3 CLASS="subsection"><A NAME="htoc21">1.4.5</A>  Pour tourner à gauche : <TT>tourne_gauche</TT></H3><P><A NAME="@default7"></A>
+<TT>tourne_gauche</TT> a comme argument un réel <TT>a</TT> 
+(ou aucun argument).<BR>
+<TT>tourne_gauche a</TT> fait tourner (sans déplacement) la tortue à gauche 
+de <TT>a</TT> degrés (par défaut <TT>a=90</TT>).<BR>
+On tape :
+</P><DIV CLASS="center"><TT>tourne_gauche</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>tourne_gauche 90</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>tourne_gauche(90)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue a tourné à gauche de 90 degrés</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>tourne_gauche 30</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>tourne_gauche(30)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue a tourné à gauche de 30 degrés</TT></DIV><P>
+<B>Remarque</B><BR>
+<TT>tourne_gauche -30</TT> est identique à <TT>tourne_droite 30</TT>.</P><H3 CLASS="subsection"><A NAME="htoc22">1.4.6</A>  Pour avancer ou reculer sans tracer : <TT>saute</TT></H3><P><A NAME="@default8"></A>
+<TT>saute</TT> a comme argument un réel <TT>a</TT> (ou aucun argument).<BR>
+<TT>saute a</TT> fait avancer la tortue de <TT>a</TT> pas, sans laisser de traces et 
+sans changer de cap (par défaut <TT>a=10</TT>).<BR>
+Si <TT>a</TT> est négatif la tortue recule de <TT>-a</TT> pas, sans laisser de 
+traces.<BR>
+<TT>saute 20</TT> est identique à :<BR>
+<TT>leve_crayon,avance 20; baisse_crayon;</TT>.<BR>
+<TT>saute -20</TT> est identique à :<BR>
+<TT>leve_crayon,recule 20; baisse_crayon;</TT>.<BR>
+<B>Remarque</B><BR>
+Après un <TT>saute</TT> on est en <TT>baisse_crayon</TT>.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>saute</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>saute 10</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>saute(10)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue a avancé de 10 pas sans laisser de traces et sa position est marquée par un point</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>saute 20</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>saute(20)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue a avancé de 20 pas sans laisser de traces et sa position est marquée par un point</TT></DIV><P>
+<B>Attention</B><BR>
+<TT>saute 20; saute 20; saute 20;</TT> n’est pas identique à <TT>saute 60</TT> car
+à chaque saut la tortue laisse une trace !</P><H3 CLASS="subsection"><A NAME="htoc23">1.4.7</A>  Pour faire un bond à droite ou à gauche sans tracer : <TT>pas_de_cote</TT></H3><P><A NAME="@default9"></A>
+<TT>pas_de_cote</TT> a comme argument un réel <TT>a</TT>
+(ou aucun argument).<BR>
+Si <TT>a</TT> est positif <TT>pas_de_cote a</TT> fait faire un bond de <TT>a</TT> pas 
+à gauche de la tortue sans laisser de traces et sans changer de cap 
+(par défaut <TT>a=10</TT>).<BR>
+Si <TT>a</TT> est négatif <TT>pas_de_cote a</TT> fait faire un bond de <TT>-a</TT> 
+pas à droite de la tortue sans laisser de traces et sans changer de cap.<BR>
+<TT>pas_de_cote 20</TT> est identique à :<BR>
+<TT>leve_crayon,tourne_gauche,avance 20,baisse_crayon,tourne_droite</TT>.<BR>
+<B>Remarque</B><BR>
+Après un <TT>pas_de_cote</TT> on est en <TT>baisse_crayon</TT>.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>pas_de_cote</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>pas_de_cote 10</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>pas_de_cote(10)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue a fait 10 pas sur le coté gauche sans laisser de
+traces et sa position est marquée par un point</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>pas_de_cote -20</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>pas_de_cote(-20)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue a fait 20 pas sur le coté droit sans laisser de 
+traces mais sa position est marquée par un point</TT></DIV><P>
+<B>Attention</B><BR>
+<TT>pas_de_cote 20; pas_de_cote 20; pas_de_cote 20;</TT> n’est pas identique
+à <TT>pas_de_cote 60</TT> car à chaque bond la tortue laisse une trace !</P><H3 CLASS="subsection"><A NAME="htoc24">1.4.8</A>  Pour faire un point</H3><P><A NAME="@default10"></A>
+Il n’y a pas de commande spécifique pour faire un point,
+il suffit d’être en <TT>baisse_crayon</TT>.<BR>
+Ainsi, <TT>baisse_crayon</TT> dessine un point là où se trouve la tortue.</P><H3 CLASS="subsection"><A NAME="htoc25">1.4.9</A>  Pour faire un cercle ou un arc de cercle: <TT>rond</TT></H3><P><A NAME="@default11"></A>
+<TT>rond</TT> a comme argument 1,2 ou 3 arguments.<BR>
+Si <TT>rond</TT> a 1 argument : un nombre réel <TT>r</TT> (+/- le rayon).<BR>
+<TT>rond r</TT> dessine le cercle de rayon <TT>|r|</TT> tangent à la tortue :
+la tortue trace le cercle :<BR>
+ si <TT>r&gt;0</TT> en le parcourant dans le sens direct et<BR>
+ si <TT>r&lt;0</TT> en le parcourant dans le sens indirect.<BR>
+La position d’arrivée de la tortue est la même que sa postion de départ.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>rond 20</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>rond(20)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Le dessin du cercle de rayon 20, tangent à la tortue qui indique le sens +</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>rond -20</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>rond(-20)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Le dessin du cercle de rayon 20, tangent à la tortue qui indique le sens -</TT></DIV><P>
+Si <TT>rond</TT> a 2 arguments : un nombre réel <TT>r</TT> (+/- le rayon) et la 
+mesure d’un angle en degrés <TT>a</TT>.<BR>
+<TT>rond(r,a)</TT> dessine l’arc de cercle tangent à la tortue, de rayon 
+<TT>|r|</TT> et de mesure <TT>signe(r)*a</TT> modulo 360 degrés compris entre la 
+postion de départ et la position d’arrivée de la tortue.<BR>
+À l’arrivée :<BR>
+si <TT>r&gt;0</TT> la tortue a tourné à gauche de <TT>a</TT> modulo 360 
+degrés c’est à dire  : si 
+<TT>360&gt;a&gt;0</TT> la tortue a tourné à gauche de <TT>a</TT> degrés ou à gauche
+de <TT>a+360</TT> degrés si <TT>-360&lt;a&lt;0</TT> par
+rapport à sa postion de départ et<BR>
+si <TT>r&lt;0</TT>, la tortue a tourné à droite de <TT>a</TT> modulo 360 
+degrés c’est à dire  : 
+si <TT>360&gt;a&gt;0</TT> la tortue a tourné à droite de <TT>a</TT> degrés ou a 
+tourné à droite de <TT>a+360</TT> degrés si <TT>-360&lt;a&lt;0</TT> par rapport à 
+sa postion de départ.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>rond(20,90)</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>rond(20,-270)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Le dessin d’un quart de cercle tangent à la tortue et de rayon 20 et la tortue a tourné à gauche de 90 degrés</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>rond(-20,90)</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>rond(-20,-270)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Le dessin d’un quart de cercle tangent à la tortue et de rayon 20 et la tortue a tourné à droite de 90 degrés</TT></DIV><P>
+Si <TT>rond</TT> a 3 arguments : un nombre réel <TT>r</TT> (+/- le rayon) et les 
+mesures de 2 angles en degrés <TT>a1</TT> et <TT>a2</TT>.<BR>
+<TT>rond(r,a1,a2)</TT> dessine l’arc de cercle <TT>A1A2</TT> tangent à la tortue, 
+de rayon <TT>|r|</TT> et de mesure <TT>a2-a1</TT> modulo 360. Le point <TT>A1</TT> (resp <TT>A2</TT>) est le point défini à partir de la postion de départ de la tortue, par 
+<TT>rond(r,a1);</TT> (resp <TT>rond(r,a2);</TT>) :<BR>
+pour définir <TT>A1</TT> (resp <TT>A2</TT>) la tortue a tourné à gauche si 
+<TT>r&gt;0</TT> (ou à droite si <TT>r&lt;0</TT> ) de <TT>a1</TT> modulo 360 (resp <TT>a2</TT> 
+modulo 360) degrés par rapport à sa postion de départ.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>rond(20,10,100)</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>rond(20,-350,-260)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Le dessin d’un quart de cercle tangent à la tortue et de rayon 20 et décalé de 10 degrés par rapport à la position-départ de la tortue et la tortue a tourné à gauche de 100 degrés.</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>rond(-20,10,100)</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>rond(-20,10,-260)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Le dessin d’un quart de cercle tangent à la tortue et de rayon 20 et décalé de 10 degrés par rapport à la position-départ de la tortue et la tortue a tourné à droite de 100 degrés.</TT></DIV><P>
+<B>Remarque</B><BR>
+<TT>rond(20,10,100)</TT> est équivalent à :<BR>
+<TT>leve_crayon;</TT><TT>rond(20,10);</TT><TT>baisse_crayon;</TT><TT>rond(20,(100-10))</TT></P><H2 CLASS="section"><A NAME="toc11"></A><A NAME="htoc26">1.5</A>  La gestion du crayon</H2><P>
+Les commandes de cette section permettent de manipuler le crayon.</P><H3 CLASS="subsection"><A NAME="htoc27">1.5.1</A>  Les couleurs du crayon : <TT>crayon</TT></H3><P><A NAME="@default12"></A>
+Les couleurs sont codées par un entier allant de 0 à 255 (au delà de 255 
+la couleur est noire) mais cela peut dépendre de votre configuration...<BR>
+Les principales couleurs se trouvent dans le sous_menu <TT>Crayon</TT>,
+par exemple <TT>crayon rouge</TT>.<BR>
+Les codes des différentes couleurs sont :<BR>
+<TT>noir</TT> a pour code 0,<BR>
+<TT>rouge</TT> a pour code 1,<BR>
+<TT>vert</TT> a pour code 2,<BR>
+<TT>jaune</TT> a pour code 3,<BR>
+<TT>bleu</TT> a pour code 4,<BR>
+<TT>magenta</TT> a pour code 5,<BR>
+<TT>cyan</TT> a pour code 6,<BR>
+<TT>blanc</TT> a pour code 7,<BR>
+puis on a les dégradés des couleurs précédentes.<BR>
+Il faut savoir que le fond de l’écran graphique est blanc de code 7 et que
+cette couleur est appelée <TT>gomme</TT>. Donc <TT>gomme</TT> (la couleur du le
+fond de l’écran) a pour code 7.<BR>
+On peut voir les différentes couleurs disponibles en appuyant sur <TT>cr</TT> de
+la barre des boutons, il suffit alors cliquer sur la couleur desirée de code 
+<TT>n</TT> pour que <TT>crayon n</TT> s’inscrive dans la ligne de commande.<BR>
+Ou bien on tape :
+</P><PRE CLASS="verbatim">efface;
+cache_tortue;
+pour n de 0 jusque 88 faire 
+   rectangle_plein(3,10);
+   avance(3);
+   crayon(n);
+fpour;
+saute(-267);pas_de_cote(-20);
+pour n de 89 jusque 177 faire 
+   rectangle_plein(3,10);
+   avance(3);
+   crayon(n);
+fpour;
+saute(-267);pas_de_cote(-20);
+pour n de 178 jusque 255 faire 
+   rectangle_plein(3,10);
+   avance(3);
+   crayon(n);
+fpour;
+</PRE><P>ou encore en une seule ligne avec un <TT>pour</TT> :<BR>
+</P><PRE CLASS="verbatim">efface;
+cache\_tortue;
+pour n de 0 jusque 256 faire 
+rectangle_plein(1,10);
+avance(1);
+crayon(n);
+fpour;
+</PRE><P>On obtient ainsi la palette des couleurs.</P><H3 CLASS="subsection"><A NAME="htoc28">1.5.2</A>  Pour changer la couleur du crayon : <TT>crayon</TT></H3><P><A NAME="@default13"></A><A NAME="sec:fcrayon"></A>
+<TT>crayon</TT> a comme argument une couleur ou un entier représentant 
+cette couleur ou aucun argument.<BR>
+Quand <TT>crayon</TT> n’a pas d’argument, <TT>crayon</TT> renvoie la couleur du 
+crayon (cf <A HREF="#sec:crayon">1.6.1</A>).<BR>
+Quand <TT>crayon</TT> a un argument, <TT>crayon</TT> change la couleur du crayon.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>crayon rouge</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>crayon(rouge)</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>crayon 1</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>crayon(1)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>le tracé suivant sera en rouge</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>crayon vert</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>crayon 2</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>le tracé suivant sera en vert</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>crayon gomme</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>crayon 7</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>le tracé suivant sera selon la couleur du fond donc, en baisse_crayon, la tortue gomme les traits qui sont sur son passage</TT></DIV><H3 CLASS="subsection"><A NAME="htoc29">1.5.3</A>  Pour ne pas laisser de traces : <TT>leve_crayon</TT></H3><P><A NAME="@default14"></A>
+<TT>leve_crayon</TT> n’a pas d’argument.<BR>
+<TT>leve_crayon</TT> permet de faire bouger la tortue sans qu’elle laisse des 
+traces lors de ses déplacements.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>leve_crayon</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>leve_crayon()</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue a 2 couleurs et se déplace sans traces</TT></DIV><H3 CLASS="subsection"><A NAME="htoc30">1.5.4</A>  Pour dessiner : <TT>baisse_crayon</TT></H3><P><A NAME="@default15"></A>
+<TT>baisse_crayon</TT> n’a pas d’argument.<BR>
+<TT>baisse_crayon</TT> permet de faire bouger la tortue pour qu’elle laisse des 
+traces lors de ses déplacements.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>baisse_crayon</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>baisse_crayon()</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>La tortue a la couleur du crayon et se déplacera en laissant des traces</TT></DIV><DIV CLASS="center"><TT>Un point sera dessiné à l’endroit de la tortue</TT></DIV><H2 CLASS="section"><A NAME="toc12"></A><A NAME="htoc31">1.6</A>  Les états de la tortue</H2><H3 CLASS="subsection"><A NAME="htoc32">1.6.1</A>  Pour connaitre la couleur du crayon : <TT>crayon</TT></H3><P><A NAME="@default16"></A><A NAME="sec:crayon"></A>
+<TT>crayon</TT> n’a pas d’argument ou a comme argument une couleur.<BR>
+Lorsque <TT>crayon</TT> a un argument, <TT>crayon</TT> fixe la couleur du crayon de la tortue selon l’argument (cf <A HREF="#sec:fcrayon">1.5.2</A>).<BR>
+Lorsque <TT>crayon</TT> n’a pas d’argument, <TT>crayon</TT> renvoie la 
+couleur du crayon même si celui-ci est levé.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>crayon</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>rouge</TT></DIV><H3 CLASS="subsection"><A NAME="htoc33">1.6.2</A>  Pour connaitre la position de la tortue : <TT>position</TT></H3><P><A NAME="@default17"></A><A NAME="sec:position"></A>
+<TT>position</TT> n’a pas d’argument ou a comme argument un vecteur de 
+coordonnées.<BR>
+ Lorsque <TT>position</TT> a un argument, <TT>position</TT> fixe la position de la 
+tortue selon l’argument (cf <A HREF="#sec:fposition">1.7.1</A>).<BR>
+Lorsque <TT>position</TT> n’a pas d’argument, <TT>position</TT> renvoie la position 
+de la tortue.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>position</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>position()</TT></DIV><P>
+On obtient par exemple comme réponse :
+</P><DIV CLASS="center"><TT>[180.0,150.0]</TT></DIV><H3 CLASS="subsection"><A NAME="htoc34">1.6.3</A>  Pour connaitre le cap de la tortue : <TT>cap</TT></H3><P><A NAME="@default18"></A><A NAME="sec:cap"></A>
+<TT>cap</TT> n’a pas d’argument ou a comme argument un réel.<BR>
+ Lorsque <TT>cap</TT> a un argument, <TT>cap</TT> fixe le cap de la tortue selon 
+l’argument (cf <A HREF="#sec:fcap">1.7.2</A>).<BR>
+Lorsque <TT>cap</TT> n’a pas d’argument, <TT>cap</TT> renvoie le cap de la tortue 
+c’est à dire la mesure en degrés de de l’angle 
+<I>O</I><I>x</I>,<I>M</I><I>A</I> (la tortue est sous la forme d’un petit
+triangle <I>ABC</I> isocèle de sommet <I>A</I> et <I>M</I> est le milieu de <I>BC</I>).<BR>
+On tape :
+</P><DIV CLASS="center"><TT>cap</TT></DIV><P>
+On obtient par exemple comme réponse :
+</P><DIV CLASS="center"><TT>180.0</TT></DIV><H2 CLASS="section"><A NAME="toc13"></A><A NAME="htoc35">1.7</A>  Pour déplacer la tortue à l’aide des coordonnées</H2><P>
+Les commandes de cette section permettent de mettre la tortue selon des 
+coordonnées et un cap.<BR>
+L’origine [0,0] du système de coordonnées cartésiennes se trouve en bas 
+et à gauche de l’écran, et l’axe des <I>y</I> est dirigé vers le haut. 
+L’unité est le pixel et la dimension de l’écran dépend de votre 
+ordinateur.<BR>
+Le cap de la tortue est exprimé en degrés et ses valeurs sont celles du 
+cercle trigonométrique : ces valeurs sont interprétées modulo 360. 
+Le cap 0 est dirigé selon l’axe des x.</P><H3 CLASS="subsection"><A NAME="htoc36">1.7.1</A>  Pour fixer sa position : <TT>position</TT></H3><P><A NAME="@default19"></A><A NAME="sec:fposition"></A>
+<TT>position</TT> n’a pas d’argument ou a comme argument un vecteur de 
+coordonnées.<BR>
+Lorsque <TT>position</TT> n’a pas d’argument, <TT>position</TT> renvoie la position
+de la tortue (cf <A HREF="#sec:position">1.6.2</A>).<BR>
+ Lorsque <TT>position</TT> a un argument, <TT>position</TT> fixe la position de la tortue selon l’argument.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>position [180,150]</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>position([180,150])</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>la tortue a la position [180,150], sans changer son cap</TT></DIV><H3 CLASS="subsection"><A NAME="htoc37">1.7.2</A>  Pour fixer son cap : <TT>cap</TT></H3><P><A NAME="@default20"></A><A NAME="sec:fcap"></A>
+<TT>cap</TT> n’a pas d’argument ou a comme argument un réel.<BR>
+ Lorsque <TT>cap</TT> n’a pas d’argument, <TT>cap</TT> renvoie le cap de la tortue
+(cf <A HREF="#sec:cap">1.6.3</A>).<BR>
+Lorsque <TT>cap</TT> a un argument, <TT>cap</TT> fixe le cap de la tortue selon 
+l’argument.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>cap 180</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>cap(180)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>la tortue est dirigée selon l’axe des x négatifs, sans changer sa position</TT></DIV><H3 CLASS="subsection"><A NAME="htoc38">1.7.3</A>  Pour diriger la tête de la tortue vers un point : <TT>vers</TT></H3><P><A NAME="@default21"></A>
+<TT>vers</TT> a 1 argument qui est la liste formée par les 
+coordonnées du point ou 2 arguments qui sont les coordonnées du point.<BR>
+<TT>vers</TT> fixe le cap de la tortue selon la direction donnée par 
+l’argument.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>vers(0,0)</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>vers [0,0]</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>vers([0,0])</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>la tortue est dirigée selon le point [0,0] qui est le point en bas et à gauche de l’écran</TT></DIV><H2 CLASS="section"><A NAME="toc14"></A><A NAME="htoc39">1.8</A>  Les figures pleines</H2><P>
+Les commandes de cette section permettent de dessiner des figures pleines.</P><H3 CLASS="subsection"><A NAME="htoc40">1.8.1</A>  Pour dessiner un disque ou un secteur angulaire : <TT>disque</TT></H3><P><A NAME="@default22"></A>
+<TT>disque</TT> a 1,2 ou 3 arguments.<BR>
+<TT>disque</TT> a les mêmes arguments que <TT>rond</TT> mais dessine le cercle 
+plein.<BR>
+Si <TT>disque</TT> a comme argument un nombre réel <TT>r</TT>.<BR>
+<TT>disque(r)</TT> dessine un disque tangent à la position de la tortue, de 
+rayon <TT>|r|</TT> et de couleur la couleur du crayon. La tortue indique le 
+sens de parcours du bord du disque : ce sens est positif si <TT>r&gt;0</TT> et 
+négatif si <TT>r&lt;0</TT>.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>disque 20</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>disque(20)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>On obtient un disque de rayon 20, tangent à la position de la tortue et situé à gauche de la position de la tortue.</TT></DIV><P>
+Si <TT>disque</TT> a 2 arguments un nombre réel <TT>r</TT> et la 
+mesure d’un angle en degrés <TT>a</TT>.<BR>
+<TT>disque(r,a)</TT> dessine de la couleur du crayon, un secteur angulaire
+tangent à la position de la tortue, de rayon <TT>|r|</TT>, d’angle <TT>a</TT>, 
+compris entre la postion de départ et la position d’arrivée de la tortue.<BR>
+La tortue au départ indique le 
+sens de parcours du bord du disque : ce sens est positif si <TT>r&gt;0</TT> et 
+négatif si <TT>r&lt;0</TT>.<BR>
+À l’arrivée la tortue a tourné de <TT>a</TT> degrés par rapport à sa 
+postion de départ, à gauche, si <TT>r&gt;0</TT> et, à droite, si <TT>r&lt;0</TT>.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>disque(20,90)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>On obtient un quart de disque situéà gauche de la tortue, tangent à la tortue, de rayon 20 et la tortue a tourné à gauche de 90 degrés</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>disque(-20,90)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>On obtient un quart de disque situéà droite de la tortue, tangent à la tortue, de rayon 20 et la tortue a tourné à droite de 90 degrés</TT></DIV><P>
+Si <TT>disque</TT> a 3 arguments un nombre réel <TT>r</TT> (le rayon) et les 
+mesures <TT>a1</TT> et <TT>a2</TT> de 2 angles en degrés .<BR>
+<TT>disque(r,a1,a2)</TT> dessine un secteur angulaire tangent à la 
+tortue, de rayon <TT>|r|</TT> et d’angle <TT>a2-a1</TT> commençant à <TT>a1</TT> 
+degrés par rapport à la position de la tortue.<BR>
+La tortue au départ indique le 
+sens de parcours du bord du disque : ce sens est positif si <TT>r&gt;0</TT> et 
+négatif si <TT>r&lt;0</TT>.<BR>
+À l’arrivée la tortue a tourné de <TT>a2</TT> degrés par rapport à sa 
+postion de départ, à gauche, si <TT>r&gt;0</TT> et, à droite, si <TT>r&lt;0</TT>.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>disque(20,10,100)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>On obtient un quart de disque situéà gauche de la tortue, tangent à la position de la tortue, de rayon 20 et commencant à 10 
+degrés par rapport à la position de départ de la tortue.</TT></DIV><P>
+<B>Remarque</B>
+Pour dessiner un disque de rayon <TT>r</TT> et de centre la tortue on peut définir :<BR>
+<TT>disque_centre(r):=<BR>
+avance(r);tourne_gauche; disque(r);tourne_droite; recule(r)</TT>
+Pour dessiner un secteur d’angle <TT>a</TT> de rayon <TT>r</TT> et de centre la tortue on peut définir :<BR>
+<TT>secteur_centre(r,a):=<BR>
+avance(r);tourne_gauche; disque(r,a);tourne_droite; recule(r)</TT>
+Pour dessiner un secteur d’angle <TT>a1</TT> et <TT>a2</TT>, de rayon <TT>r</TT> et
+de centre la tortue on peut définir :<BR>
+<TT>secteurs_centre(r,a1,a2):=<BR>
+avance(r);tourne_gauche; disque(r,a1,a2);tourne_droite; recule(r)</TT></P><H3 CLASS="subsection"><A NAME="htoc41">1.8.2</A>  Pour dessiner un rectangle plein : <TT>rectangle_plein</TT></H3><P><A NAME="@default23"></A>
+<TT>rectangle_plein</TT> a comme argument 1 ou 2 nombres réels.<BR>
+Si il n’y a qu’un argument <TT>a</TT> <TT>rectangle_plein(a)</TT> dessine un carré
+plein de coté <TT>a</TT> et si il y a 2 arguments <TT>a</TT> et <TT>b</TT>,
+<TT>rectangle_plein(a,b)</TT> 
+dessine un rectangle plein de cotés <TT>a</TT> et <TT>b</TT>.<BR>
+Le carré ou le rectangle sont situés à gauche de la tortue : la tortue 
+décrit le contour dans le sens direct et remplit la figure décrite.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>rectangle_plein 20</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>rectangle_plein(20)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>dessine un carré plein de coté 20 à gauche de la tortue</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>rectangle_plein(20,20,50)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>dessine un losange plein de côtés 20, 
+délimitant un angle de 50 degrés à gauche de la tortue</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>rectangle_plein(20,40)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>dessine un rectangle plein de cotés 20 et 40 à gauche de la tortue</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>rectangle_plein(20,40,-50)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>dessine un parallélogramme plein de côtés 20 et 40, délimitant un angle de 50 degrés, à droite de la tortue</TT></DIV><H3 CLASS="subsection"><A NAME="htoc42">1.8.3</A>  Pour dessiner un triangle plein : <TT>triangle_plein</TT></H3><P><A NAME="@default24"></A>
+<TT>triangle_plein</TT> a comme argument 1 2 ou 3 nombres réels.<BR>
+ Si il y a un seul argument <TT>a</TT>, <TT>triangle_plein</TT> dessine un triangle 
+équilatéral plein de coté <TT>a</TT>.<BR>
+ Si il y a deux arguments <TT>a</TT> et <TT>b</TT>, <TT>triangle_plein</TT> dessine 
+un triangle rectangle plein de cotés <TT>a</TT> et <TT>b</TT>.<BR>
+ Si il y a trois arguments <TT>a</TT>, <TT>b</TT> et <TT>t</TT>, <TT>triangle_plein</TT> 
+dessine un triangle plein de cotés <TT>a</TT> et <TT>b</TT> et formant un angle 
+de <TT>t</TT> degrés.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>triangle_plein 20</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>triangle_plein(20)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Un triangle équilatéral plein de cotés 20 à gauche de la tortue</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>triangle_plein(20,40)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Un triangle rectangle plein de cotés 20 et 40 à gauche de la tortue</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>triangle_plein(20,40,60)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Un triangle plein de cotés 20 et 40 formant un angle de 60 degrés à gauche de la tortue</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>tortue():={<BR>
+triangle_plein(17,5);tourne_droite;<BR>
+triangle_plein(5,17);
+tourne_gauche;}</TT>
+</DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Un triangle plein qui dessine la tortue</TT></DIV><H3 CLASS="subsection"><A NAME="htoc43">1.8.4</A>  Pour remplir un polygone que l’on vient de tracer : <TT>polygone_rempli</TT></H3><P><A NAME="@default25"></A>
+<TT>polygone_rempli</TT> a comme argument un entier négatif <TT>-n</TT>
+strictement inférieur à -1.<BR>
+<TT>polygone_rempli -n</TT> recherche les <TT>n</TT> positions précédentes de 
+la tortue qui doivent former un polygone qui sera ensuite rempli.<BR>
+Dans la pratique, on fait tracer à la tortue un polygone puis on compte le
+nombre d’instructions <TT>n</TT> utilisées pour faire ce polygone, puis on tape :<BR>
+<TT>polygone_rempli -n</TT>.<BR>
+<B>Attention</B><BR>
+<TT>tourne_droite</TT> ou <TT>tourne_gauche</TT> compte pour une position.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>avance 40; tourne_gauche 120; avance 40; tourne_gauche 120; avance 40; polygone_rempli -5</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Le dessin d’un triangle équilatéral plein de cotés 40</TT></DIV><P>
+<B>Attention</B> La tortue ici n’est pas revenue à sa position initiale.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>repete(3,avance 50,tourne_gauche 120);<BR>
+polygone_rempli -6</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Le dessin d’un triangle équilatéral plein de cotés 50</TT></DIV><P>
+<B>Attention</B> La tortue ici est revenue à sa position initiale.</P><H2 CLASS="section"><A NAME="toc15"></A><A NAME="htoc44">1.9</A>  Pour écrire sur l’écran dessin tortue</H2><H3 CLASS="subsection"><A NAME="htoc45">1.9.1</A>  Pour écrire une chaîne de caractères sur l’écran dessin tortue : <TT>ecris</TT></H3><P><A NAME="@default26"></A>
+<TT>ecris</TT> a 1,2 ou 4 arguments qui sont :<BR>
+une chaîne de caractères, la taille de la fonte (par défaut 14), et 
+les coordonnées du point où l’on veut écrire (par défaut ce sera là 
+où se trouve la tortue).<BR>
+Il faut noter que la chaîne de caractères peut s’écrire avec ou sans 
+les <TT>"</TT>.<BR>
+<B>Attention</B><BR>
+La commande <TT>ecris</TT> ne change pas la position de la tortue.<BR>
+On tape :<BR>
+</P><DIV CLASS="center"><TT>ecris("bonjour")</TT></DIV><P>
+Ou on tape :<BR>
+</P><DIV CLASS="center"><TT>ecris(bonjour)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>bonjour s’écrit là où se trouve la tortue avec la fonte 14</TT></DIV><P>
+On tape :<BR>
+</P><DIV CLASS="center"><TT>ecris("bonjour",20)</TT></DIV><P>
+Ou on tape :<BR>
+</P><DIV CLASS="center"><TT>ecris(bonjour,20)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>bonjour s’écrit là où se trouve la tortue avec la fonte 20</TT></DIV><P>
+On tape :<BR>
+</P><DIV CLASS="center"><TT>ecris("bonjour",20,30,10)</TT></DIV><P>
+Ou on tape :<BR>
+</P><DIV CLASS="center"><TT>ecris(bonjour,20,30,10)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>bonjour s’écrit à la place du point [30,10] avec la fonte 20 et la tortue là où elle était avant </TT><TT>ecris</TT><TT>.</TT></DIV><H3 CLASS="subsection"><A NAME="htoc46">1.9.2</A>  Pour signer un dessin sur l’écran dessin tortue : <TT>signe</TT></H3><P><A NAME="@default27"></A>
+<TT>signe</TT> a un argument qui une chaîne de caractères.<BR>
+<TT>signe</TT> écris la chaîne de caractères à la place du point 
+[10,10] avec la fonte 20.<BR>
+Il faut noter que la chaîne de caractères peut s’écrire avec ou sans 
+les <TT>"</TT>.<BR>
+On a donc :<BR>
+<TT>signe("Thomas")</TT>=<TT>ecris("Thomas",20,10,10)</TT>.<BR>
+On tape :<BR>
+</P><DIV CLASS="center"><TT>signe("Thomas")</TT></DIV><P>
+Ou on tape
+</P><DIV CLASS="center"><TT>signe(Thomas)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Thomas s’écrit en [10,-10] avec la fonte 20 et la tortue là où elle était avant </TT><TT>signe</TT><TT>.</TT></DIV><HR>
+<A HREF="castor001.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="castor003.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

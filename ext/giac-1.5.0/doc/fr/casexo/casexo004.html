@@ -1,0 +1,1030 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casexo.css">
+<TITLE>Arithmétique en terminale scientifique</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casexo003.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo005.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc25">Chapitre 4</A>  Arithmétique en terminale scientifique</H1><H2 CLASS="section"><A NAME="toc8"></A><A NAME="htoc26">4.1</A>  Énoncé sur la partie entière</H2><P>
+Montrer que la partie entière de <I>a</I>=(3+√<SPAN style="text-decoration:overline">5</SPAN>)<SUP><I>n</I></SUP> est un entier impair 
+quelque soit l’entier <I>n</I> dans ℕ. 
+</P><H3 CLASS="subsection"><A NAME="htoc27">4.1.1</A>  Cherchons avec <TT>Xcas</TT></H3><P>
+On peut faire des essais dans le tableur.<BR>
+Dans A0 on met 1<BR>
+Dans A1 on met =A0*(3+sqrt(5))<BR>
+Dans B0 on met =floor(A0)<BR>
+Dans B1 on met =floor(B1)<BR>
+Puis on remplit vers le bas.<BR>
+Dans cet exercice il faut penser à associer à
+(3+√<SPAN style="text-decoration:overline">5</SPAN>)<SUP><I>n</I></SUP> sa quantité conjuguée (3−√<SPAN style="text-decoration:overline">5</SPAN>)<SUP><I>n</I></SUP>.<BR>
+Dans C0 on met 1<BR>
+Dans C1 on met =C0*(3-sqrt(5))<BR>
+Dans D0 on met =floor(A0+C0)<BR>
+Dans D1 on met =C0*(3-sqrt(5))<BR>
+Puis on remplit vers le bas.
+</P><H3 CLASS="subsection"><A NAME="htoc28">4.1.2</A>  La démonstration</H3><P>
+On remarque que :<BR>
+<I>b</I>=(3+√<SPAN style="text-decoration:overline">5</SPAN>)<SUP><I>n</I></SUP>+(3−√<SPAN style="text-decoration:overline">5</SPAN>)<SUP><I>n</I></SUP> est un entier pair (d’après la formule du
+binôme) et que 0&lt;(3−√<SPAN style="text-decoration:overline">5</SPAN>)<SUP><I>n</I></SUP>&lt;1.<BR>
+On a donc <I>a</I>&lt;<I>b</I>&lt;<I>a</I>+1, ou encore <I>b</I>−1&lt;<I>a</I>&lt;<I>b</I> avec <I>b</I> un entier pair.<BR>
+Cela prouve que la partie entière de <I>a</I>=(3+√<SPAN style="text-decoration:overline">5</SPAN>)<SUP><I>n</I></SUP> est <I>b</I>−1
+qui est un entier impair.
+</P><H2 CLASS="section"><A NAME="toc9"></A><A NAME="htoc29">4.2</A>  Énoncés sur le nombre de diviseurs d’un entier</H2><H3 CLASS="subsection"><A NAME="htoc30">4.2.1</A>  L’énoncé 1</H3><P>
+Quel est, parmi les entiers naturels de 1 à 2005, celui qui admet le plus
+de diviseurs ? Quel est ce nombre de diviseurs ?
+</P><H3 CLASS="subsection"><A NAME="htoc31">4.2.2</A>  Réponse avec <TT>Xcas</TT></H3><P>
+On tape :<BR>
+<TT>2*3*5*7</TT><BR>
+On obtient :<BR>
+<TT>210</TT><BR>
+On tape :<BR>
+<TT>2*3*5*7*11</TT><BR>
+On obtient :<BR>
+<TT>2310</TT><BR>
+Cela nous dit que le nombre est de la forme :<BR>
+2<SUP><I>a</I></SUP>*3<SUP><I>b</I></SUP>*5<SUP><I>c</I></SUP>*7<SUP><I>d</I></SUP> avec <I>a</I> ≥ <I>b</I> ≥ <I>c</I> ≥ <I>d</I> ≥ 0<BR>
+et alors son nombre de diviseurs est :<BR>
+(<I>a</I>+1)(<I>b</I>+1)(<I>c</I>+1)(<I>d</I>+1)<BR>
+On peut maintenant faire une recherche systématique :<BR>
+Il semble qu’il faut supposer que <I>d</I> ≠ 0 car avec
+- <I>b</I>=0,<I>c</I>=0, <I>d</I>=0 on ne peut avoir que 2<SUP>1</SUP>0 qui n’a que 11 diviseurs,<BR>
+- <I>c</I>=0,<I>d</I>=0 (<I>a</I>+1)(<I>b</I>+1)<BR>
+vaut 20 pour <I>a</I>=9 et <I>b</I>=1 (2<SUP>9</SUP>*3=1536)<BR>
+vaut 28 pour <I>a</I>=6 et <I>b</I>=3 (2<SUP>6</SUP>*3<SUP>3</SUP>=1728)<BR>
+- <I>d</I>=0 (<I>a</I>+1)(<I>b</I>+1)(<I>c</I>+1)<BR>
+vaut 32 pour <I>a</I>=7, <I>b</I>=1 et <I>c</I>=1 (2<SUP>7</SUP>*3*5=1920)<BR>
+vaut 36 pour <I>a</I>=5, <I>b</I>=2 et <I>c</I>=1 (2<SUP>5</SUP>*3<SUP>2</SUP>*5=1444)<BR>
+- si <I>d</I> ≠ 0<BR>
+On tape :<BR>
+<TT>210*6</TT><BR>
+On obtient :<BR>
+<TT>1260</TT><BR>
+et 1260 admet 3*3*2*2=36 diviseurs ou on tape :<BR>
+<TT>size(idivis(1260))</TT><BR>
+On obtient :<BR>
+<TT>36</TT><BR>
+On tape :<BR>
+<TT>210*8</TT><BR>
+On obtient :<BR>
+<TT>1680</TT><BR>
+et 1680 admet 5*2*2*2=40 diviseurs ou on tape :<BR>
+<TT>size(idivis(1680))</TT><BR>
+On obtient :<BR>
+<TT>40</TT><BR>
+On fait une recherche systématique :<BR>
+2<SUP>10</SUP>=1024 a 11 diviseurs,<BR>
+2<SUP>9</SUP>*3=1536 a 20 diviseurs,<BR>
+2<SUP>7</SUP>*3<SUP>2</SUP>=1116 a 24 diviseurs,<BR>
+2<SUP>6</SUP>*3<SUP>3</SUP>=1728 a 28 diviseurs,<BR>
+2<SUP>4</SUP>*3<SUP>4</SUP>=1296 a 25 diviseurs,<BR>
+2<SUP>7</SUP>*3*5=1920 a 32 diviseurs,<BR>
+2<SUP>5</SUP>*3<SUP>2</SUP>*5=1440 a 24 diviseurs,<BR>
+2<SUP>4</SUP>*3*5*7=1680 a 40 diviseurs.
+</P><H3 CLASS="subsection"><A NAME="htoc32">4.2.3</A>  L’énoncé 2</H3><P>
+1/ Trouver le plus petit nombre entier <I>n</I> qui admet exactement 50 
+diviseurs.<BR>
+2/ Existe-t-il un entier <I>m</I> qui soit inférieur à <I>n</I> et qui admette plus 
+de 50 diviseurs ?
+</P><H3 CLASS="subsection"><A NAME="htoc33">4.2.4</A>  Réponse avec <TT>Xcas</TT></H3><P>
+On sait que si <I>n</I>=<I>a</I><SUP><I>p</I></SUP>*<I>b</I><SUP><I>q</I></SUP>*<I>c</I><SUP><I>r</I></SUP> le nombre de diviseurs de <I>n</I> est 
+(<I>p</I>+1)(<I>q</I>+1)(<I>r</I>+1).<BR>
+On a :<BR>
+<TT>50=1*50=2*25=10*5=2*5*5</TT> 
+1/ On cherche le plus petit nombre entier qui admet exactement 50 diviseurs, 
+donc les candidats sont :<BR>
+2<SUP>49</SUP><BR>
+2<SUP>24</SUP>*3<BR>
+2<SUP>9</SUP>*3<SUP>4</SUP><BR>
+2<SUP>4</SUP>*3<SUP>4</SUP>*5<BR>
+C’est donc 6480=2<SUP>4</SUP>*3<SUP>4</SUP>*5<BR>
+On tape :<BR>
+<TT>size(idivis(6480))</TT><BR>
+On obtient :<BR>
+<TT>50</TT><BR>
+2/ On doit avoir :<BR>
+<I>m</I>&lt;2<SUP>4</SUP>*3<SUP>4</SUP>*5 donc pour qu’il est plus que 50 diviseurs il faut que <I>m</I> soit de
+la forme <I>m</I>=2<SUP><I>p</I></SUP>*3<SUP><I>q</I></SUP>*5<SUP><I>r</I></SUP>*7<SUP><I>s</I></SUP> avec <I>p</I>&lt;=4,<I>q</I>&lt;4,<I>r</I>=1,<I>s</I>=1 et 4(<I>p</I>+1)(<I>q</I>+1)&gt;50.<BR>
+Essayons <I>p</I>=4,<I>q</I>=2, on a 4(<I>p</I>+1)(<I>q</I>+1)=60&gt;50 et <I>m</I>=2<SUP>4</SUP>*3<SUP>2</SUP>*5*7=5040.<BR>
+Donc <I>m</I>= répond à la question.
+</P><H3 CLASS="subsection"><A NAME="htoc34">4.2.5</A>  L’énoncé 3</H3><P>
+Soit une séquence <TT>L</TT> d’objets. On prend 3 objets parmi cette séquence
+<TT>L</TT>. Écrire un programme <TT>triplets</TT> qui renvoie la séquence de 
+dimension <TT>comb(size(L),3)</TT> constituée par les 3 objets obtenus.<BR>
+<B>Application numérique</B>
+<TT>L</TT> est la liste des diviseurs de <I>n</I>=12.</P><P>Soit un entier <TT>n</TT>. On cherche 3 diviseurs différents <TT>n1,n2,n3</TT> de 
+<TT>n</TT>, tels que <TT>n1+n2+n3</TT> soit aussi un diviseur de <TT>n</TT>.<BR>
+Modifier le programme précédent en <TT>solutions</TT> pour obtenir toutes les 
+solutions.<BR>
+<B>Application numérique</B>
+<I>n</I>=12<BR>
+<I>n</I>=60<BR>
+<I>n</I>=6279<BR>
+On tape :
+</P><PRE CLASS="verbatim">triplets(L):={
+  local LR,LT,j,k,l,s;
+  LR:=NULL;
+  LT:=NULL;
+  s:=size(L)-1;
+  pour j de 0 jusque s-2 faire
+    pour k de j+1 jusque s-1 faire
+      pour l de k+1 jusque s faire
+        LT:=LT,[L[j],L[k],L[l]];
+      fpour;
+    fpour;
+  fpour;
+  retourne LT;
+}:;
+</PRE><P>On tape pour <I>n</I>=12 :<BR>
+<TT>LT:=triplets(idivis(12));size(LT);comb(3);comb(6,3)</TT><BR>
+On obtient :<BR>
+<TT>[1,2,3],[1,2,4],[1,2,6],[1,2,12],[1,3,4],[1,3,6],[1,3,12],</TT><BR>
+<TT>[1,4,6],[1,4,12],[1,6,12],[2,3,4],[2,3,6],[2,3,12],[2,4,6],</TT><BR>
+<TT>[2,4,12],[2,6,12],[3,4,6],[3,4,12],[3,6,12],[4,6,12],20,20</TT><BR>
+On tape :
+</P><PRE CLASS="verbatim">solutions(n):={
+  local LR,LT,L,j,k,l,s;
+  LR:=NULL;
+  LT:=NULL;
+  L:=idivis(n);
+  s:=size(L)-1;
+  pour j de 0 jusque s-2 faire
+    pour k de j+1 jusque s-1 faire
+      pour l de k+1 jusque s faire
+        LT:=LT,[L[j],L[k],L[l]];
+      fpour;
+    fpour;
+  fpour;
+  s:=size(LT)-1;
+  pour j de 0 jusque s faire
+    si irem(n,sum(LT[j]))==0 alors
+      LR:=LR,LT[j];
+    fsi;
+  fpour;
+  retourne LR;
+}:;
+</PRE><P>On tape pour <I>n</I>=12 :<BR>
+<TT>LS:=solutions(12);size(LS)</TT><BR>
+On obtient 2 solutions (sur les 20 triplets):<BR>
+<TT>[1,2,3],[2,4,6],2</TT><BR>
+On tape pour <I>n</I>=60 :<BR>
+<TT>LS:=solutions(60);size(LS)</TT><BR>
+On obtient 20 solutions (sur les 220 triplets):<BR>
+<TT>[1,2,3],[1,2,12],[1,3,6],[1,4,5],[1,4,10],[1,4,15],[1,5,6],</TT><BR>
+<TT>[2,3,5],[2,3,10],[2,3,15],[2,4,6],[2,6,12],[3,4,5],[3,5,12],</TT><BR>
+<TT>[3,12,15],[4,5,6],[4,6,10],[4,6,20],[5,10,15],[10,20,30],20</TT><BR>
+On tape pour <I>n</I>=6279 :<BR>
+<TT>LS:=solutions(6279);size(LS)</TT><BR>
+On obtient 9 solutions (sur les 560 triplets):<BR>
+<TT>[1,7,13],[1,21,69],[1,69,91],[3,7,13],[3,13,23],[3,23,273],</TT><BR>
+<TT>[7,23,39],[21,91,161],[23,161,299],9</TT></P><H2 CLASS="section"><A NAME="toc10"></A><A NAME="htoc35">4.3</A>  Énoncés sur l’identité de Bézout</H2><H3 CLASS="subsection"><A NAME="htoc36">4.3.1</A>  L’énoncé 1</H3><P>
+Quel est le plus petit nombre entier avec lequel il faut multiplier 49 pour 
+obtenir un nombre se terminant par 999999999 (9 neufs) ?</P><P><B>Réponse niveau primaire</B><BR>
+On peut faire une multiplication à trous :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">49*.........=..999999999</TD></TR>
+</TABLE><P>
+On trouve :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">49*693877551=33999999999</TD></TR>
+</TABLE><P>
+<B>Réponse niveau collège</B><BR>
+On a 9999999999=10<SUP>9</SUP>−1 et le résultat de la multiplication doit être de 
+la forme <I>n</I>*10<SUP>9</SUP>+10<SUP>9</SUP>−1 avec 0≤ <I>n</I>&lt;49 (ou de la forme <I>p</I>*10<SUP>9</SUP>−1)
+avec 0&lt; <I>p</I> ≤ 49.<BR>
+On utilise le tableur en cherchant <I>n</I> pour que :
+<I>n</I>*10<SUP>9</SUP>+10<SUP>9</SUP>−1 soit divisible par 49.<BR>
+On utilisera les commandes <TT>irem(a,b)</TT> et <TT>iquo(a,b)</TT> qui renvoient 
+respectivement le reste et le quotient de la division euclidienne de <TT>a</TT> 
+par <TT>b</TT>.<BR>
+Pour cela on met dans la première colonne les nombres de 0 à 48, puis dans 
+la deuxième colonne les nombres <I>n</I>*10<SUP>9</SUP>+10<SUP>9</SUP>−1 pour <I>n</I> de 0 à 48.
+Dans la troisième colonne on calcule le reste de la division de la deuxième
+colonne par 49 et on trouve que pour <I>n</I>=33 ce reste est nul.
+Il reste à calculer <TT>iquo(33*10</TT><CODE><TT>^</TT></CODE><TT>9+10</TT><CODE><TT>^</TT></CODE><TT>9-1,49)</TT> et on 
+trouve :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">693877551</TD></TR>
+</TABLE><P> 
+Mais cette méthode est très couteuse !
+On peut aller un peu plus vite (surtout si on veut faire les calculs à la 
+main) en remarquant que 10=3 mod7 et que 100=2 mod49 donc :<BR>
+10<SUP>3</SUP>=−1 mod7<BR>
+10<SUP>6</SUP>=1 mod7<BR>
+10<SUP>9</SUP>=−1 mod7<BR>
+10<SUP>8</SUP>=2<SUP>4</SUP>=16 mod49<BR>
+10<SUP>9</SUP>=13 mod49<BR>
+13*−7=7 mod49<BR>
+On cherche <I>a</I> tel que <I>a</I>*10<SUP>9</SUP>=49*<I>k</I>+1=7*<I>p</I>+1.<BR>
+donc −<I>a</I>=1 mod7 et 13*<I>a</I>=1 mod49<BR>
+Si <I>a</I>=48 on a 13*<I>a</I>=−13=36 mod49<BR>
+Si <I>a</I>=41 on a 13*<I>a</I>=13*−1+13*−7=−13+7=−6 mod49<BR>
+Si <I>a</I>=34 on a 13*<I>a</I>=13*−1+13*−7+13*−7=1 mod49<BR>
+Donc 34*10<SUP>9</SUP>=1 mod49<BR>
+Il reste à calculer <TT>iquo(34*10</TT><CODE><TT>^</TT></CODE><TT>9-1,49)</TT> et on 
+trouve :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">693877551</TD></TR>
+</TABLE><P> 
+<B>Réponse niveau TS</B><BR>
+On a : 999999999+1=10<SUP>9</SUP>.<BR>
+On cherche <I>p</I> pour avoir : <I>p</I>*49=<I>a</I>*10<SUP>9</SUP>−1 c’est à dire 
+1=<I>a</I>*10<SUP>9</SUP>−<I>p</I>*49.</P><P>Avec <TT>Xcas</TT> on tape :<BR>
+<TT>bezout_entiers(49,10</TT><CODE><TT>^</TT></CODE><TT>9)</TT><BR>
+On obtient :<BR>
+<TT>[306122449,-15,1]</TT><BR>
+Donc :<BR>
+49*306122449−15*10<SUP>9</SUP>=1
+et puisque 49*10<SUP>9</SUP>−49*10<SUP>9</SUP>=0, on a :<BR>
+49*(10<SUP>9</SUP>−306122449)+(15−49)*10<SUP>9</SUP>=−1.<BR>
+Puisque 10<SUP>9</SUP>−306122449=693877551 et (49−15)=34, on a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">49*693877551=34*10<SUP>9</SUP>−1=33999999999</TD></TR>
+</TABLE><P>
+Pour faire les calculs à la main on écrit :<BR>
+10<SUP>9</SUP>=13 mod49<BR>
+donc on écrit les 2 premières équations :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">0*13+1*49=49</TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">1*13+0*49=13</TD></TR>
+</TABLE><P>
+puisque 49=3*13+10 on soustrait 3 fois l’équation 2 à l’équation 1 et
+on obtient l’équation 3 :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">−3*13+1*49=10</TD></TR>
+</TABLE><P>
+puisque 13=1*10+3 on soustrait l’équation 3 à l’équation 2 et
+on obtient l’équation 4 :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">4*13−1*49=3</TD></TR>
+</TABLE><P>
+puisque 10=3*3+1 on soustrait 3 fois l’équation 4 à l’équation 3 et
+on obtient l’idendité de Bézout :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">−15*13+4*49=1</TD></TR>
+</TABLE><P>
+On a −15=34 mod49 et 10<SUP>9</SUP>=13 mod49 donc
+34*10<SUP>9</SUP>−1 est divisible par 49.<BR>
+Il reste à calculer <TT>iquo(34*10</TT><CODE><TT>^</TT></CODE><TT>9-1,49)</TT> et on 
+trouve :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">693877551</TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc37">4.3.2</A>  L’énoncé 2</H3><P>
+Résoudre en nombres entiers :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">13<I>x</I>+5<I>y</I>=1</TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">5<I>x</I>+13<I>y</I>=6</TD></TR>
+</TABLE><P>Avec <TT>Xcas</TT> on tape :<BR>
+<TT>bezout_entiers(13,5)</TT><BR>
+On obtient :<BR>
+<TT>[2,-5,1]</TT><BR>
+Donc 2*13−5*5=1.<BR>
+et puisque <I>k</I>*13*5−<I>k</I>*13*5=0, on a :
+13*(2+5<I>k</I>)−(5+13<I>k</I>)*5=1.<BR>
+13<I>x</I>+5<I>y</I>=1 a donc comme solutions <I>x</I>=2+5<I>k</I>,<I>y</I>=−5−13<I>k</I> avec <I>k</I> dans ℤ.<BR>
+En multipliant l’égalité 13*(2+5<I>k</I>)−(5+13<I>k</I>)*5=1 par 6 on a :<BR>
+13*(12+30<I>k</I>)−(30+78<I>k</I>)*5=6<BR>
+5<I>x</I>+13<I>y</I>=6 a donc comme solutions <I>x</I>=−30−78<I>k</I>,<I>y</I>=12+30<I>k</I> avec <I>k</I> dans ℤ.</P><H2 CLASS="section"><A NAME="toc11"></A><A NAME="htoc38">4.4</A>  Énoncés sur des nombres de ℤ/<I>p</I>ℤ</H2><H3 CLASS="subsection"><A NAME="htoc39">4.4.1</A>  L’énoncé 1</H3><P>
+Trouver les 2 derniers chiffres de 19969<SUP>19969</SUP>.</P><P>Ici, on est sûr que le dernier chiffre est 9, puisque 19969 est un nombre 
+impair.<BR>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>powmod(19969,19969,100)</TT>
+On obtient : <TT>29</TT><BR>
+On peut aussi taper mais le calcul est inefficace :<BR>
+<TT>irem(19969</TT><CODE><TT>^</TT></CODE><TT>19969,100)</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc40">4.4.2</A>  L’énoncé 2</H3><P>
+Trouver les 2 derniers chiffres de 19996<SUP>19996</SUP>.</P><P>Ici, on est sûr que le dernier chiffre est 6.<BR>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>powmod(19996,19996,100)</TT>
+On obtient : <TT>96</TT><BR>
+On peut aussi taper directement pour vérifier :<BR>
+<TT>irem(19996</TT><CODE><TT>^</TT></CODE><TT>19996,100)</TT></P><H2 CLASS="section"><A NAME="toc12"></A><A NAME="htoc41">4.5</A>  <B>TP</B> sur l’indicatrice d’Euler</H2><H3 CLASS="subsection"><A NAME="htoc42">4.5.1</A>  L’énoncé</H3><P>
+<B>Bijection entre </B><B>ℚ</B><B> ∩ [0,1]</B><B> et </B><B>ℕ</B><BR>
+On construit une bijection <I>f</I> entre les rationnels de [0,1] et ℕ, 
+pour cela :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+on ordonne les rationnels de [0,1] de la façon suivante :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">0,1,</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">,</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">,</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">,</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD CLASS="dcell">,</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD CLASS="dcell">,</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD CLASS="dcell">,
+...</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">...</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I>−1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">,...</TD></TR>
+</TABLE>
+</LI><LI CLASS="li-itemize">on supprime les fractions non irréductibles et on obtient une suite 
+<I>L</I>.
+</LI></UL><P>
+La fonction <I>f</I> attribue à un rationnel de [0,1] son rang dans la 
+suite <I>L</I>, on a : 
+<I>f</I>(0)=0, <I>f</I>(1)=1, <I>f</I>(1/2)=<I>f</I>(2/4)=2, <I>f</I>(1/3)=3...,
+ <I>f</I>(3/4)=6,...,   <I>f</I>(1/5)=7....
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Déterminer le nombre d’éléments de <I>L</I> qui a comme dénominateur
+23 (resp 24, 25...30), à l’aide de l’indicatrice d’Euler,
+</LI><LI CLASS="li-enumerate">Déterminer <I>f</I>(1/7) puis <I>f</I>(1/30), <I>f</I>(13/30)
+et <I>f</I>(29/30),
+</LI><LI CLASS="li-enumerate">Écrire un programme qui etant donné deux entiers <I>a</I> et <I>b</I> (<I>a</I>&lt;<I>b</I>) 
+renvoie la liste des entiers plus petit que <I>a</I> qui sont premiers avec <I>b</I>, 
+</LI><LI CLASS="li-enumerate">Écrire un programme qui définit la fonction <I>f</I> ayant pour variable
+une fraction <I>r</I> de [0,1],
+</LI><LI CLASS="li-enumerate">Écrire un programme qui pour <I>n</I>&gt;0 trace les points 
+de coordonnées <I>a</I>/<I>b</I>,<I>f</I>(<I>a</I>/<I>b</I>) avec <I>b</I> ≤ <I>n</I>. Afficher
+les points de coordonnées <I>a</I>/<I>b</I>,<I>f</I>(<I>a</I>/<I>b</I>) avec <I>b</I>&lt;=32
+</LI><LI CLASS="li-enumerate">Amusez vous à tracer ces points avec une couleur qui varie selon la 
+valeur <I>a</I> de <I>a</I>/<I>b</I>.....
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc43">4.5.2</A>  Le corrigé avec <TT>Xcas</TT></H3><P>
+On utilise la fonction <TT>euler</TT> de <TT>Xcas</TT> qui est l’indicatrice d’Euler 
+c’est à dire <TT>euler(n)</TT> renvoie le nombre d’entiers inférieurs à 
+<TT>n</TT> qui sont premiers avec <TT>n</TT> 
+(<TT>euler(n)=card({p&lt;n,gcd(n,p)=1})</TT>).
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Le nombre d’éléments de <I>L</I> qui a comme dénominateur 23 est 
+le nombre d’entiers inférieur à 23 qui sont premiers avec 23 c’est donc
+<TT>euler(23)</TT>.<BR>
+On tape :
+<DIV CLASS="center"><TT>euler([23,24,25,26,27,28,29,30])</TT></DIV>
+On obtient :
+<DIV CLASS="center"><TT>[22,8,20,12,18,12,28,8]</TT></DIV>
+On a :<BR>
+<I>f</I>(1/5) est <TT>euler(1)+euler(2)+...+euler(4)+1</TT><BR>
+On vérifie, on sait que <I>f</I>(1/5)=7 et 
+<TT>sum(euler(n),n,1,4)+1</TT> vaut bien 7.<BR>
+On a :<BR>
+<I>f</I>(1/7) est <TT>euler(1)+euler(2)+...+euler(6)+1</TT> donc on tape :
+<DIV CLASS="center"><TT>sum(euler(n),n,1,6)+1</TT></DIV>
+On obtient <I>f</I>(1/7) :
+<DIV CLASS="center"><TT>13</TT></DIV>
+On tape :
+<DIV CLASS="center"><TT>sum(euler(n),n,1,29)+1</TT></DIV>
+On obtient <I>f</I>(1/30):
+<DIV CLASS="center"><TT>271</TT></DIV>
+Pour avoir <I>f</I>(13/30), il faut 
+avoir le cardinal des entiers <I>p</I>&gt;1 qui sont premiers avec 30 et inférieurs 
+ou égaux à 13. Les nombres premiers inférieurs ou 
+égaux à 13 sont 2,3,5,7,11,13 et <TT>ifactor(30)=2*3*5</TT>
+Donc <I>f</I>(13/30)=<I>f</I>(1/30)+3=274.<BR>
+Puisque 29/30 est le plus grand élément de dénominateur 30, 
+pour avoir <I>f</I>(29/30), on tape :
+<DIV CLASS="center"><TT>sum(euler(n),n,1,30)</TT></DIV>
+On obtient la valeur de <I>f</I>(29/30) :
+<DIV CLASS="center"><TT>278</TT></DIV>
+On sait que <TT>euler(30)=8</TT> et les 8 entiers inférieurs ou 
+égaux à 30 qui sont premiers avec 30 sont :
+<TT>1,7,11,13,17,19,23,29</TT>.
+</LI><LI CLASS="li-enumerate">On peut aussi 
+écrire un petit programme qui renvoie la liste des entiers
+plus petit que <I>a</I> et premier avec <I>b</I> :
+<PRE CLASS="verbatim">Lppapremb(a,b):={
+local L,k;
+L:=NULL;
+for (k:=1;k&lt;=a;k:=k+1){
+if (gcd(k,b)==1) {
+L:=L,k;
+}
+}
+return [L];
+}:;
+</PRE>On tape :
+<DIV CLASS="center"><TT>sum(euler(n),n,1,29)+size(Lppapremb(1,30))</TT></DIV>
+On obtient <TT>f(1/30)</TT> :
+<DIV CLASS="center"><TT>271</TT></DIV>
+On tape :
+<DIV CLASS="center"><TT>sum(euler(n),n,1,29)+size(Lppapremb(13,30))</TT></DIV>
+On obtient <TT>f(13/30)</TT> :
+<DIV CLASS="center"><TT>274</TT></DIV>
+On tape :
+<DIV CLASS="center"><TT>sum(euler(n),n,1,29)+size(Lppapremb(29,30))</TT></DIV>
+On obtient <TT>f(29/30)</TT>:
+<DIV CLASS="center"><TT>278</TT></DIV>
+</LI><LI CLASS="li-enumerate">Pour avoir la valeur de <I>f</I>(<I>a</I>/<I>b</I>) il suffit connaitre la longueur <I>s</I> de la 
+liste des entiers plus petit que <I>a</I> et premier avec <I>b</I> .<BR>
+On utilise les fonction <TT>numer</TT> (resp <TT>denom</TT>)
+qui renvoie le numerateur (resp dénominateur) de la fracton simplifiée.<BR>
+On tape :
+<PRE CLASS="verbatim">f(r):={
+local s,k,a,b;
+a:=numer(r);
+b:=denom(r);
+s:=0;
+for (k:=1;k&lt;=a;k:=k+1){
+if (gcd(k,b)==1) {s:=s+1;}
+}
+return sum(euler(n),n,1,b-1)+s;
+}:;
+</PRE>On tape :
+<DIV CLASS="center"><TT>f(1,30)</TT></DIV>
+On obtient <TT>f(1/30)</TT> :
+<DIV CLASS="center"><TT>271</TT></DIV>
+On vérifie en tapant :<BR>
+<TT>1+sum(euler(k),k=0..29)</TT> et on obtient bien <TT>271</TT><BR>
+On tape :
+<DIV CLASS="center"><TT>f(13,30)</TT></DIV>
+On obtient <TT>f(13/30)</TT> :
+<DIV CLASS="center"><TT>274</TT></DIV>
+On tape :
+<DIV CLASS="center"><TT>f(29,30)</TT></DIV>
+On obtient <TT>f(29/30)</TT> :
+<DIV CLASS="center"><TT>278</TT></DIV>
+On vérifie en tapant :<BR>
+<TT>sum(euler(k),k=0..30)</TT> et on obtient bien <TT>278</TT><BR>
+On tape :
+<DIV CLASS="center"><TT>f(31,32)</TT></DIV>
+On obtient <TT>f(31/32)</TT>:
+<DIV CLASS="center"><TT>324</TT></DIV>
+On tape :
+<DIV CLASS="center"><TT>f(39,40)</TT></DIV>
+On obtient :
+<DIV CLASS="center"><TT>490</TT></DIV>
+</LI><LI CLASS="li-enumerate">Pour tracer les points 
+de coordonnées <I>a</I>/<I>b</I>,<I>f</I>(<I>a</I>/<I>b</I>),
+on ne se sert pas de la fonction <I>f</I> mais on calcule sa valeur au fur et à 
+mesure et on la met dans la variable <TT>valf</TT> : à chaque étape 
+<TT>valf</TT> augmente de <TT>1</TT>.
+<PRE CLASS="verbatim">tracef(n):={
+local L,a,b,valf;
+L:=point(0),point(1);
+valf:=1;
+for (b:=2;b&lt;=n;b:=b+1){
+for (a:=1;a&lt;b;a:=a+1){
+  if (gcd(a,b)==1) {
+    valf:=valf+1;
+    L:=L,point(evalf(a/b)+i*valf);
+  }
+}
+}
+return affichage(L,rouge+point_point+
+epaisseur_point_2);
+}:;
+</PRE>On tape :
+<DIV CLASS="center"><TT>tracef(40)</TT></DIV>
+On obtient :
+<DIV CLASS="center"><SPAN CLASS="textboxed"><IMG SRC="casexo006.png"></SPAN></DIV><B>Remarque</B>
+Si on tape 
+<PRE CLASS="verbatim">tracer(n):={
+  local L,a,b;
+  L:=point(0),point(1);
+  for (b:=2;b&lt;n;b:=b+1){
+    for (a:=1;a&lt;b;a:=a+1){
+      if (gcd(a,b)==1){L:=L,point(evalf(a/b)+i*f(a/b));}
+    }
+  }
+  return affichage(L,rouge+point_point+
+  epaisseur_point_2);
+}:;
+</PRE>Le temps de réponse est beaucoup plus long car le programme calcule à 
+chaque ètape <TT>f(a/b)</TT> sans tenir compte des valeurs de <TT>f</TT> 
+calculées auparavant. Le temps mis pour faire 
+<TT>tracer(100)</TT> est de 160.02s alors que celui de
+<TT>tracef(100)</TT> est de 3.52s.<BR>
+On peut encore diminuer le temps de calcul en stockant par référence 
+(avec <TT>=&lt;</TT> au lieu de <TT>:=</TT>) les 
+points dans la liste <TT>L</TT>. Pour cela il faut connaitre la longueur <TT>s</TT>
+de la liste <TT>L</TT> qui est <TT>f((n-1)/n)</TT>.<BR>
+On tape :
+<PRE CLASS="verbatim">tracerf(n):={
+  local L,a,b,valf,s,j;
+  s:=f((n-1)/n);
+  L:=makelist(0,1,s);
+  L[0]=&lt;point(0);
+  L[1]=&lt;point(1);
+  valf:=1;
+  j:=2;
+  for (b:=2;b&lt;=n;b:=b+1){
+    for (a:=1;a&lt;b;a:=a+1){
+      if (gcd(a,b)==1) {
+        valf:=valf+1;
+        L[j]=&lt;point(evalf(a/b)+i*valf);
+        j:=j+1;
+      }
+    }
+  }
+  return affichage(L,rouge+point_point+
+  epaisseur_point_2);
+}:;
+</PRE>On tape :
+<DIV CLASS="center"><TT>tracerf(100)</TT></DIV>
+On obtient en 0.89s :
+<DIV CLASS="center"><SPAN CLASS="textboxed"><IMG SRC="casexo007.png"></SPAN></DIV>
+</LI><LI CLASS="li-enumerate">On met un peu de couleur ....<BR>
+ On tape :
+<PRE CLASS="verbatim">tracerfc(n):={
+  local L,a,b,valf,s,j;
+  s:=f((n-1)/n);
+  L:=makelist(0,1,s);
+  L[0]=&lt;point(0);
+  L[1]=&lt;point(1);L:=point(0),point(1);
+  valf:=1;j:=2
+  for (b:=2;b&lt;=n;b:=b+1){
+    for (a:=1;a&lt;b;a:=a+1){
+      if (gcd(a,b)==1) {
+        valf:=valf+1;
+        L[j]=&lt;point(evalf(a/b)+i*valf,affichage=
+        irem(a,7)+point_point+epaisseur_point_2);
+        j:=j+1;
+      }
+    }
+  }
+  return L;
+}:;
+</PRE>On tape :
+<DIV CLASS="center"><TT>tracerfc(100)</TT></DIV>
+On obtient en 0.84s :
+<DIV CLASS="center"><SPAN CLASS="textboxed"><IMG SRC="casexo008.png"></SPAN></DIV>
+On remarque que les points (1/(<I>n</I>+1),<I>f</I>(1/(<I>n</I>+1))) et les points 
+((<I>n</I>−1)/<I>n</I>,<I>f</I>((<I>n</I>−1)/<I>n</I>)) semblent être sur des courbes symétriques par rapport
+à <I>x</I>=1/2, cela s’explique puisque <I>f</I>((<I>n</I>−1)/<I>n</I>)+1=<I>f</I>(1/(<I>n</I>+1)).
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc44">4.5.3</A>  Prolongement du <B>TP</B> sur l’indicatrice d’Euler</H3><P>
+<B>Approximation d’un nuage de points</B><BR>
+La fonction <I>f</I> est la bijection entre ℚ ∩ [0,1] et ℕ qui a èté 
+définie dans le <B>TP</B> précédent.
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+À l’aide du tableur tracer le nuage de points de coordonnèes :
+ 1/<I>n</I>,<I>f</I>(1/<I>n</I>) où <I>f</I> est la fonction définie 
+précédement. On rappelle que l’on a :<BR>
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)=1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell">Φ(<I>k</I>)  pour  <I>n</I>∈ ℕ<SUP>*</SUP></TD></TR>
+</TABLE>
+où Φ est la fonction d’Euler.
+</LI><LI CLASS="li-enumerate">On se demande si ces points sont sur une courbe identifiable. Dans le 
+livre d’Hardy and Wright d’introduction à la théorie des nombres, il est 
+dit que  ∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP>Φ(<I>k</I>)≃ 3<I>n</I><SUP>2</SUP>/π<SUP>2</SUP> pour 
+<I>n</I> grand. Vérifier ce résultat en utilisant une régression convenable.
+</LI><LI CLASS="li-enumerate">Faites une simulation pour vérifier que si on tire au hasard deux 
+entiers et qu’avec ces 2 entiers on forme une fraction de ]0;1], la 
+probabilité d’obtenir une fraction irréductible est égale à 6/π<SUP>2</SUP>.
+</LI><LI CLASS="li-enumerate">Faites une simulation pour vérifier que si on tire au hasard deux 
+entiers la probabilité d’obtenir deux entiers premiers entre eux est égale 
+à 6/π<SUP>2</SUP>.
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc45">4.5.4</A>  Corrigé du prolongement du <B>TP</B> sur l’indicatrice d’Euler</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On ouvre le tableur avec par exemple 100 lignes.
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+dans la colonne <TT>A</TT>, on met la suite des nombres
+entiers 1,2....,
+</LI><LI CLASS="li-itemize">dans la colonne <TT>B</TT>, on met l’inverse de ces nombres.
+Pour cela on met dans <TT>B0</TT> : <TT>1</TT> et dans <TT>B1</TT> : <TT>=$B$0/A1</TT> ou 
+plus simplement <TT>=1/A1</TT>.<BR>
+Puis on copie cette formule vers le bas.
+</LI><LI CLASS="li-itemize">dans la colonne <TT>C</TT>, on met dans <TT>C0</TT> : <TT>1</TT>, 
+dans <TT>C1</TT> : <TT>=euler(A0)+C0</TT> et dans <TT>C2</TT> : <TT>=euler(A1)+C1</TT>. 
+Puis on copie cette formule vers le bas. 
+</LI></UL> 
+On sélectionne les 2 colonnes <TT>B</TT> et <TT>C</TT>, puis dans le menu 
+<TT>Maths-&gt;2-d stats</TT> on choisit <TT>nuage de points</TT> la plage de cellule est alors : <TT>B0:C99</TT> et la cellule cible <TT>D0</TT> si on a coché 
+<TT>Graphe</TT> et décoché <TT>Paysage</TT> dans la configuration du tableur.<BR>
+On obtient :
+<DIV CLASS="center"><SPAN CLASS="textboxed"><IMG SRC="casexo009.png"></SPAN></DIV>
+</LI><LI CLASS="li-enumerate">On modifie <TT>B0</TT> en <TT>1.0</TT> pour avoir des nombres approchés dans 
+la colonne <TT>B</TT>. Puis on sélectionne les 2 colonnes <TT>B</TT> et <TT>C</TT>, 
+puis dans le menu <TT>Maths-&gt;Regressions</TT> on choisit <TT>Puissance</TT> la plage 
+de cellule est alors : <TT>B40:C99</TT> et la cellule cible <TT>D1</TT> (on a coché 
+<TT>Graphe</TT> et décoché <TT>Paysage</TT> dans la configuration du tableur), 
+puis on modifie <TT>D1</TT> en :<BR>
+<TT>=power_regression_plot(matrix(50,2,(B50):(C99)),color=rouge)</TT> et on 
+obtient en rouge :
+<DIV CLASS="center"><SPAN CLASS="textboxed"><IMG SRC="casexo010.png"></SPAN></DIV>
+</LI><LI CLASS="li-enumerate">on met dans <TT>D2</TT> <TT>=(M:=matrix(60,2,(B40):(C99)))</TT>.<BR>
+Puis on tape : 
+<TT>=power_regression(M)</TT><BR>
+On obtient :
+<TT>-2.01348683765,0.283029041082</TT><BR>
+ 
+Ce qui veut dire que <I>y</I>=0.283029041082*<I>x</I><SUP>−</SUP>2.01348683765 approche la courbe 
+<I>y</I>=<I>f</I>(<I>x</I>), c’est à dire que <I>f</I>(1/<I>n</I>)≃ 0.283029041082*<I>n</I><SUP>2.01348683765</SUP>.<BR>
+On tape : <TT>evalf(3/pi</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient : <TT>0.303963550927</TT>
+</LI><LI CLASS="li-enumerate">On écrit tout d’abord le programme :
+<PRE CLASS="verbatim">fractirred0(n,p):={
+  local a,b,j,k;
+  randseed;
+  k:=0;
+  pour j de 1 jusque p faire
+  a:=rand(n)+1;
+  b:=rand(n)+1;
+  si gcd(a,b)==1 alors k:=k+1;fsi;
+  fpour;
+  retourne evalf(k/p),evalf(6/pi^2);
+}:;
+</PRE>On tape :<BR>
+<TT>fractirred0(100000,1000000)</TT><BR>
+On obtient :<BR>
+<TT>0.607658,0.607927101854</TT><BR>
+On tape :<BR>
+<TT>fractirred0(1000000,1000000)</TT><BR>
+On obtient :<BR>
+<TT>0.607544,0.607927101854</TT><BR>
+On tape :<BR>
+<TT>fractirred0(2</TT><CODE><TT>^</TT></CODE><TT>31,10</TT><CODE><TT>^</TT></CODE><TT>6)</TT><BR>
+On obtient :<BR>
+<TT>0.607876,0.607927101854</TT><BR>
+Mais ce programme n’est pas correct car pour le couple (<I>a</I>,<I>b</I>) peut prendre 
+<I>n</I><SUP>2</SUP> valeurs alors que les fractions <I>a</I>/<I>b</I> ∈ ]0;1] avec <I>b</I>≤ <I>n</I> sont au 
+nombre de <I>n</I>(<I>n</I>+1)/2.<BR>
+<PRE CLASS="verbatim">fractirred1(n,p):={
+  local a,b,j,k;
+  randseed;
+  k:=0;
+  pour j de 1 jusque p faire
+  b:=rand(n)+1;
+  repeter a:=rand(n)+1;jusqua a&lt;=b;
+  si gcd(a,b)==1 alors k:=k+1;fsi;
+  fpour;
+  retourne evalf(k/p),evalf(6/pi^2);
+}:;
+</PRE>On tape :<BR>
+<TT>fractirred1(10000,10000)</TT><BR>
+On obtient :<BR>
+<TT>0.6065,0.607927101854</TT><BR>
+Mais l’exécution rique d’être longue car si on a tirer pour <I>b</I> 0 ou 1, 
+trouver un <I>a</I> plus petit risque de prendre du temps !!!! 
+Pour faire un programme plus "rigoureux", on va numéroter les fractions sans 
+enlever les fractions réductibles (par ex le rang de 2/2 est 3 et celui de 2/6
+est 17) puis tirer au hasard un nombre dans 
+(1,2,...<I>n</I>(<I>n</I>+1)/2) et chercher la fraction ayant ce rang comme valeur.<BR>
+On tape :<BR>
+<PRE CLASS="verbatim">randfract(n):= {
+  local r,a,p,q;
+  a:=n*(n+1)/2;
+  r:=rand(a)+1;
+  q:=floor((-1+sqrt(8*r+1))/2);
+  p:=r-q*(q+1)/2;
+  retourne p,q;
+}:;
+fractirred(n,p):={
+  local a,b,j,k;
+  randseed;
+  k:=0;
+  pour j de 1 jusque p faire
+  a,b:=randfract(n);
+  si gcd(a,b)==1 alors k:=k+1;fsi;
+  fpour;
+  retourne evalf(k/p),evalf(6/pi^2);
+}:;
+</PRE>On tape :<BR>
+<TT>fractirred(1000,10000)</TT><BR>
+On obtient :<BR>
+<TT>0.6059,0.607927101854</TT><BR>
+On tape :<BR>
+<TT>fractirred(60000,100000)</TT><BR>
+On obtient :<BR>
+<TT>0.60509,0.607927101854</TT><BR>
+<B>Remarque</B>
+Calculons la probabilité d’avoir une fraction irréductible parmi toutes 
+les fractions de ]0;1] qui ont un dénominateur <I>d</I>≤ <I>n</I>.<BR>
+Le nombre total de ces fractions est <I>n</I>(<I>n</I>+1)/2, en effet il y a :<BR>
+1 fraction de dénominateur 1,<BR>
+2 fractions de dénominateur 2,..<BR>
+<I>n</I> fractions de dénominateur <I>n</I><BR>
+donc en tout <I>n</I>(<I>n</I>+1)/2 fractions de ]0;1] de dénominateur <I>d</I>≤ <I>n</I>,<BR>
+Le nombre des fractions irréductibles parmi ces fractions est 
+∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP><TT>euler</TT>(<I>k</I>), en effet il y a :<BR>
+<TT>euler(1)=1</TT> fraction irréductible de dénominateur 1,<BR>
+<TT>euler(2)=1</TT> fraction irréductible de dénominateur 2,..<BR>
+<TT>euler(n)</TT> fractions irréductibles de dénominateur <I>n</I><BR>
+donc en tout <TT>euler(1)+euler(2)+..+euler(n)</TT> fractions irréductibles de 
+dénominateur <I>d</I>≤ <I>n</I>.<BR>
+On tape :<BR>
+<TT>2*sum(euler(k),k=1..1000)/(1000</TT><CODE><TT>^</TT></CODE><TT>2+1000.)</TT><BR>
+On obtient :
+<TT>0.607776223776</TT><BR>
+On tape :<BR>
+<TT>2*sum(euler(k),k=1..10000)/(10000</TT><CODE><TT>^</TT></CODE><TT>2+10000.)</TT><BR>
+On obtient :
+<TT>0.607888931107</TT><BR>
+Si on suppose que <I>n</I> est grand et que l’on a montré que 
+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP>Φ(<I>k</I>)≃ 3<I>n</I><SUP>2</SUP>/π<SUP>2</SUP>, la probabilité d’avoir une
+fraction irréductible parmi toutes 
+les fractions de [0;1] qui ont un dénominateur <I>d</I>≤ <I>n</I> est :<BR>
+∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP> <I>euler</I>(<I>k</I>)≃ 2*3*(<I>n</I>+1)<SUP>2</SUP>/π<SUP>2</SUP>*<I>n</I>*(<I>n</I>+1)=6*(<I>n</I>+1)/<I>n</I>π<SUP>2</SUP>.
+Cette probabilité tend donc vers 6/π<SUP>2</SUP> quand <I>n</I> tend vers 
+l’infini.<BR>
+<B>Idée pour montrer que si on tire au hasard 2 nombres entiers, la 
+probabilité d’obtenir deux entiers premiers entre eux est égale à 
+</B><B>6/π</B><SUP><B>2</B></SUP><BR>
+Cette propriété résulte du fait que π<SUP>2</SUP>/6 est la somme de la 
+série de terme général <I>u</I><SUB><I>n</I></SUB>=1/<I>n</I><SUP>2</SUP> i.e.
+∑<SUB><I>n</I>=1</SUB><SUP>+∞</SUP>1/<I>n</I><SUP>2</SUP>=π<SUP>2</SUP>/6.<BR>
+ En effet, soit <I>p</I> un nombre premier.<BR>
+La probabilité pour qu’un entier pris au hasard soit divisible par <I>p</I> (i.e. 
+multiple de <I>p</I>) est égale à 1/<I>p</I> (la probabilité
+pour qu’un entier pris au hasard soit divisible pair est égale à 
+1/2, la probabilité pour qu’un entier pris au hasard soit 
+divisible par 3 est égale à 1/3...)<BR>
+La probabilité pour que deux entiers pris au hasard soient tous les deux 
+divisibles par <I>p</I> est égale à 1/<I>p</I><SUP>2</SUP>.<BR>
+Donc la probabilité pour que le pgcd de deux entiers pris au 
+hasard ne soit pas divisible par <I>p</I> est égale à 1−1/<I>p</I><SUP>2</SUP>.<BR>
+Donc, si <I>NP</I> est l’ensemble des nombres premiers, la probabilité pour que le 
+pgcd de deux entiers pris au hasard soit égal à 1 (i.e. divisible par aucun 
+nombre premier) est égale à Π<SUB><I>p</I>∈ <I>NP</I></SUB>(1−1/<I>p</I><SUP>2</SUP>).<BR>
+Il faut maintenant écrire autrement Π<SUB><I>p</I>∈ <I>NP</I></SUB>(1−1/<I>p</I><SUP>2</SUP>) ou 
+plutôt son inverse Π<SUB><I>p</I>∈ <I>NP</I></SUB>1/1−1/<I>p</I><SUP>2</SUP>.<BR>
+On sait que 1/1−<I>t</I><SUP>2</SUP>=∑<SUB><I>n</I>=0</SUB><SUP>+∞</SUP><I>t</I><SUP>2<I>n</I></SUP> donc
+1/1−1/<I>p</I><SUP>2</SUP>=∑<SUB><I>n</I>=0</SUB><SUP>+∞</SUP>1/<I>p</I><SUP>2<I>n</I></SUP>.<BR>
+Finallement Π<SUB><I>p</I>∈ <I>NP</I></SUB>1/1−1/<I>p</I><SUP>2</SUP>=Π<SUB><I>p</I>∈ <I>NP</I></SUB>∑<SUB><I>n</I>=0</SUB><SUP>+∞</SUP>1/<I>p</I><SUP>2<I>n</I></SUP><BR>
+Comme les nombres entiers sont le produit de nombres premiers une certaine 
+puissance, on a :<BR>
+Π<SUB><I>p</I>∈ <I>NP</I></SUB>1/1−1/<I>p</I><SUP>2</SUP>=Π<SUB><I>p</I>∈ <I>NP</I></SUB>∑<SUB><I>n</I>=0</SUB><SUP>+∞</SUP>1/<I>p</I><SUP>2<I>n</I></SUP> =∑<SUB><I>k</I>=0</SUB><SUP>+∞</SUP>1/<I>k</I><SUP>2</SUP>=π<SUP>2</SUP>/6.<BR>
+Ainsi Π<SUB><I>p</I>∈ <I>NP</I></SUB>(1−1/<I>p</I><SUP>2</SUP>)=6/π<SUP>2</SUP>
+</LI></OL><H2 CLASS="section"><A NAME="toc13"></A><A NAME="htoc46">4.6</A>  Le problème de Joseph Bertrand (1822-1900)</H2><P>
+Soit un cercle de rayon <I>R</I>. On appelle corde type les cordes de longueur 
+<I>a</I>=<I>R</I>√<SPAN style="text-decoration:overline">3</SPAN>. La longueur des cordes types est égale à la longueur des 
+côtés des triangles équilatéraux inscrits dans ce cercle. Le problème
+de Joseph Bertrand est :<BR>
+quelle est la probabilité pour qu’une corde prise au hasard soit plus grande 
+qu’une corde type ?<BR>
+Écrire un programme qui simule le choix d’une corde prise au hasard dans un 
+cercle de rayon 1 lorsque :
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On prend 2 points au hasard sur le cercle pour déterminer une corde,
+</LI><LI CLASS="li-enumerate">On prend 1 point au hasard sur le cercle et une direction au hasard ce 
+qui déterminera une corde.
+</LI><LI CLASS="li-enumerate">On prend 1 point défini au hasard par ses coordonnées cartésiennes 
+dans le cercle. Ce point déterminera le milieu de 
+la corde (et donc la corde),
+</LI><LI CLASS="li-enumerate">On compare les cordes qui ont la même direction : pour cela, pour
+chaque direction <I>d</I>, on prend un réel <I>r</I> au hasard entre 
+−<I>R</I> et <I>R</I> et cela défini 1 point sur le rayon orthogonal à <I>d</I>. Ce point 
+déterminera le milieu de la corde (et donc la corde). 
+</LI></OL><P>
+Puis expliquez les résultats obtenus.<BR>
+
+<B>Les programmes avec Xcas</B><BR>
+Une corde type <I>AB</I> d’un cercle de rayon 1 a pour longueur √<SPAN style="text-decoration:overline">3</SPAN> et son 
+angle au centre vaut 2π/3 i.e si <I>a</I> est l’argument de l’affixe de <I>A</I> et 
+<I>b</I> est l’argument de l’affixe de <I>B</I>.
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On prend 2 points <I>A</I> et <I>B</I> au hasard sur le cercle pour déterminer 
+une corde. Ces 2 points seront déterminés par leur arguments <I>a</I> et <I>b</I> 
+choisis au hasard entre −π0 et π. Ces deux points définissent une 
+corde de longueur supérieure à √<SPAN style="text-decoration:overline">3</SPAN> si<BR>
+<I>l</I>=<I>AB</I><SUP>2</SUP>=abs(exp(<I>i</I>*<I>a</I>)−exp(<I>i</I>*<I>b</I>))<SUP>2</SUP>=2−2cos(<I>a</I>−<I>b</I>)&gt; 3 ou si<BR>
+2π/3&lt;|<I>a</I>−<I>b</I>|&lt;4π/3.
+Cela donne les 2 programmes <TT>simulber10</TT> et <TT>simulber11</TT>.
+Le programme <TT>simulber10</TT> étant plus rapide puisqu’il nécessite qu’un 
+seul test.<BR>
+On tape :
+<PRE CLASS="verbatim">simulber10(n):={
+  local j,a,b,l,s;
+  s:=0;
+  pour j de 1 jusque n faire
+  a:=rand(-pi,pi);
+  b:=rand(-pi,pi);
+  l:=2-2*cos(a-b);
+  si l&gt;3 alors s:=s+1; fsi;
+  fpour;
+  retourne s,n,evalf(s/n);
+}:;
+simulber11(n):={
+  local j,a,b,c,s;
+  s:=0;
+  pour j de 1 jusque n faire
+  a:=rand(-pi,pi);
+  b:=rand(-pi,pi);
+  c:=abs(a-b);
+  si c&gt;2*pi/3 et c&lt;4*pi/3 alors s:=s+1; fsi;
+  fpour;
+  retourne s,n,evalf(s/n);
+}:;
+</PRE>On tape :
+<TT>simulber10(100000) </TT><BR>
+On obtient : <TT>33315,100000,0.33315</TT><BR>
+On tape :
+<TT>simulber11(100000) </TT><BR>
+On obtient : <TT>33410,100000,0.3341</TT><BR>
+Dans ces 2 programmes ce qui compte c’est la valeur de |<I>b</I>−<I>a</I>| qui est un 
+nombre entre 0 et 2π. Il y a donc une chance sur trois pour que ce nombre 
+soit compris entre 2π/3 et 4π/3.
+</LI><LI CLASS="li-enumerate">On prend 1 point <I>A</I> au hasard sur le cercle et une direction <I>d</I> au 
+hasard pour déterminer une corde. Le point <I>A</I> sera déterminé par son 
+argument <I>a</I> choisi au hasard entre −π et π et la direction <I>D</I> par son
+angle <I>d</I> avec l’axe des <I>x</I> que l’on choisit au hasard entre 0 et π. 
+Ce point et la direction définissent une corde <I>AB</I> de longueur supérieure 
+à √<SPAN style="text-decoration:overline">3</SPAN> si (<I>a</I>+<I>b</I>)/2=π/2−<I>d</I> (c’est à dire <I>b</I>=π+2<I>d</I>−<I>a</I>).<BR>
+ On tape :
+<PRE CLASS="verbatim">simulber2(n):={
+  local j,a,b,d,l,s;
+  s:=0;
+  pour j de 1 jusque n faire
+  a:=rand(-pi,pi);
+  d:=rand(0,pi);
+  b:=pi+2*d-a;
+  l:=2-2*cos(a-b);
+  si l&gt;3 alors s:=s+1; fsi
+  fpour
+  retourne s,n,evalf(s/n);
+}:;
+</PRE>On tape :
+<TT>simulber2(100000)</TT><BR>
+On obtient : <TT>33264,100000,0.33264</TT><BR>
+On a le même résultat qu’en 1, puisque c’est pratiquement le même 
+programme.
+</LI><LI CLASS="li-enumerate">On définit au hasard dans le cercle le milieu de la corde par ses 
+coordonnées cartésiennes.
+<PRE CLASS="verbatim">simulber3(n):={
+  local j,a,b,c,l,s;
+  s:=0;
+  pour j de 1 jusque n faire
+  repeter
+  a:=rand(-1,1);
+  b:=rand(-1,1);
+  jusqua a^2+b^2&lt;1;
+  l:=4*(1-a^2-b^2);
+  si l&gt;3 alors s:=s+1; fsi;
+  fpour;
+  retourne s,n,evalf(s/n);
+}:;
+</PRE>On peut remplacer 
+<TT>l:=4*(1-a</TT><CODE><TT>^</TT></CODE><TT>2-b</TT><CODE><TT>^</TT></CODE><TT>2);si l&gt;3 alors s:=s+1; fsi;</TT> par<BR>
+<TT>l:=a</TT><CODE><TT>^</TT></CODE><TT>2+b</TT><CODE><TT>^</TT></CODE><TT>2;si l&lt;1/4 alors s:=s+1; fsi;</TT><BR>
+On tape :
+<TT>simulber3(100000)</TT><BR>
+On obtient : <TT>25039,100000,0.25039</TT><BR>
+Le cercle de rayon 1/2 a comme surface π/4 et celui de rayon 1 a comme 
+surface π. La probabilité de se trouver dans le cercle de rayon 1/2 est 
+donc de 1/4.<BR>
+<B>Attention</B> Si on écrit :
+<PRE CLASS="verbatim">simulber30(n):={
+  local j,a,b,c,l,s;
+  s:=0;
+  pour j de 1 jusque n faire
+  a:=alea(-1,1);
+  c:=sqrt(1-a^2);
+  b:=alea(-c,c);
+  l:=4*(1-a^2-b^2);
+  si l&gt;3 alors s:=s+1; fsi;
+  fpour;
+  retourne s,n,evalf(s/n);
+}:;
+</PRE>le programme n’est pas correct car dans ce programme <I>a</I> et <I>b</I> ne sont pas 
+indépendants (voir la remarque du <A HREF="casexo013.html#sec:buffon">13.13</A>).<BR>
+On tape :
+<TT>simulber30(100000)</TT><BR>
+On obtient : <TT>20311,100000,0.20311</TT>
+On fait le calcul de la probabilité avec ce programme.<BR>
+La probabilité d’avoir : <I>a</I>&lt;<I>x</I>&lt;<I>a</I>+<I>da</I> et <I>b</I>&lt;<I>y</I>&lt;<I>db</I> est :
+<I>da</I>*<I>db</I>/<I>aire</I>(<I>S</I>) avec <I>S</I>={(<I>x</I>,<I>y</I>) <I>a</I>&lt;<I>x</I>&lt;<I>a</I>+<I>da</I>,0&lt;<I>y</I>&lt;√<SPAN style="text-decoration:overline">1−<I>a</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>}.<BR>
+On obtient si cos(<I>t</I><SUB>1</SUB>)=<I>a</I> et cos(<I>t</I><SUB>2</SUB>)=<I>a</I>+<I>da</I>: avec <I>dt</I>=−<I>da</I>/√<SPAN style="text-decoration:overline">1−<I>a</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><BR>
+<I>aire</I>(<I>S</I>)=2(<I>t</I><SUB>1</SUB>−<I>t</I><SUB>2</SUB>)+sin(2<I>t</I><SUB>2</SUB>)−sin(2<I>t</I><SUB>1</SUB>)=2<I>dt</I>(cos(2<I>t</I><SUB>1</SUB>)−1)=4<I>da</I>√<SPAN style="text-decoration:overline">1−<I>a</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>
+donc <I>db</I>=1/(4√<SPAN style="text-decoration:overline">1−<I>a</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>)<BR>
+On a :<BR>
+∫<SUB>0</SUB><SUP>1</SUP>√<SPAN style="text-decoration:overline">(</SPAN>1−<I>x</I><SUP>2</SUP>)/√<SPAN style="text-decoration:overline">(</SPAN>1−<I>x</I><SUP>2</SUP>)<I>dx</I>=1 donc la probbilité d’être
+dans le cercle de rayon 1/2 est :<BR>
+∫<SUB>0</SUB><SUP>1/2</SUP>√<SPAN style="text-decoration:overline">(</SPAN>1/4−<I>x</I><SUP>2</SUP>)/√<SPAN style="text-decoration:overline">(</SPAN>1−<I>x</I><SUP>2</SUP>)<I>dx</I>
+0n tape 
+<TT>romberg(sqrt((1/4-x</TT><CODE><TT>^</TT></CODE><TT>2))/sqrt((1-x</TT><CODE><TT>^</TT></CODE><TT>2)),x=0..1/2)</TT><BR>
+On obtient (avec 7 digits) : <TT>0.20315486</TT></LI><LI CLASS="li-enumerate">On définit au hasard un nombre réel <I>r</I> entre −<I>R</I> et <I>R</I>. la longueur
+<I>l</I> de la corde de direction <I>d</I> et dont la distance au centre est 
+<I>r</I> est : <I>l</I>=2√<SPAN style="text-decoration:overline">1−<I>r</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP> et <I>l</I> ne dépend pas de la direction. Donc pour 
+une direction donnée la probabilité cherchée ne dépend pas de la 
+direction.<BR>
+ On tape (dans le programme <I>R</I>=1 et<I>l</I> est le carré de la longueur de la corde) :
+<PRE CLASS="verbatim">simulber4(n):={
+  local j,r,l,s;
+  s:=0;
+  pour j de 1 jusque n faire
+  r:=rand(-1,1);
+  l:=4*(1-r^2);
+  si l&gt;3 alors s:=s+1; fsi
+  fpour
+  retourne s,n,evalf(s/n);
+}:;
+</PRE>On tape :
+<TT>simulber4(100000)</TT><BR>
+On obtient : <TT>49993,100000,0.49993</TT><BR>
+En effet, on a <I>l</I>=<I>AB</I><SUP>2</SUP>=4*(1−<I>r</I><SUP>2</SUP>) et donc les conditions <I>l</I>&gt;3 et 0&lt;<I>r</I>&lt;1/2 
+sont équivalentes.<BR>
+Donc pour une direction donnée la probabilité cherchée est 1/2 et elle
+ne dépend pas de la direction.œn en conclut que par rapport à la corde type,
+il y a autant de cordes longues que de cordes courtes.
+<B>Remarque</B><BR>
+Lorsqu’on définit au hasard dans le cercle le milieu <I>M</I> de la corde par ses 
+coordonnées polaires <I>r</I>,<I>t</I> (i.e. l’affixe de <I>M</I> est <I>m</I>=<I>r</I>exp(<I>it</I>)).
+Pour cela on choisit un réel <I>r</I> au hasard entre 
+−<I>R</I> et <I>R</I> et un angle <I>t</I> réel au hasard entre 0 et π ce qui 
+déterminera le point <I>r</I> exp(<I>it</I>).<BR>
+On tape :
+<PRE CLASS="verbatim">simulber40(n):={
+  local j,r,t,m,l,s;
+  s:=0;
+  pour j de 1 jusque n faire
+  r:=rand(-1,1);
+  t:=rand(0,pi);
+  m:=r*exp(i*t);
+  l:=4*(1-r^2);
+  si l&gt;3 alors s:=s+1; fsi
+  fpour
+  retourne s,n,evalf(s/n);
+}:;
+</PRE>On tape :
+<TT>simulber40(100000)</TT><BR>
+On obtient : <TT>50068,100000,0.50068</TT><BR>
+En effet, on voit que la valeur de <I>t</I> ne sert pas et que <I>l</I>=<I>AB</I><SUP>2</SUP> ne 
+dépend que de <I>r</I>. Les conditions <I>l</I>&gt;3 et 0&lt;<I>r</I>&lt;1/2 sont équivalentes. 
+Donc la probabilité cherchée est encre 1/2.<BR>
+<B>Question</B> Pourquoi selon que l’on choisit le milieu de la corde avec ses 
+coordonnées cartésiennes ou avec ses coordonnées polaire la probabilité
+passe de 1/4 à 1/2 ?<BR>
+Il faut comprendre que :
+<PRE CLASS="verbatim">r:=rand(-1,1);
+t:=rand(0,pi);
+M:=point(r*exp(i*t));
+</PRE>ne définit pas des points équirépartis dans le cercle de centre 0 et de 
+rayon 1.<BR>
+Il y a plus de points proche du centre que sur la périphérie (voir la remarque du <A HREF="casexo013.html#sec:buffon">13.13</A>).
+</LI></OL><H2 CLASS="section"><A NAME="toc14"></A><A NAME="htoc47">4.7</A>  Un exercice sur les congruences et les restes chinois</H2><H3 CLASS="subsection"><A NAME="htoc48">4.7.1</A>  L’énoncé</H3><P>
+Trouver un nombre entier <I>n</I> vérifiant 4&lt;<I>n</I>&lt;<I>N</I> vérifiant :<BR>
+<I>n</I> est divisible par 2<BR>
+<I>n</I>−1 est divisible par 3<BR>
+<I>n</I>−2 est divisible par 5<BR>
+<I>n</I>−3 est divisible par 7<BR>
+<I>n</I>−4 est divisible par 11</P><H3 CLASS="subsection"><A NAME="htoc49">4.7.2</A>  Solution avec <TT>Xcas</TT> et les restes chinois</H3><P>
+On utilise la commande <TT>ichinrem</TT>.<BR>
+On tape :<BR>
+<TT>ichinrem([0%2,1%3,2%5,3%7,4%11]))</TT><BR>
+On obtient :
+<TT>-788 % 2310</TT><BR>
+On veut que 0&lt;<I>n</I>&lt;<I>N</I> donc :<BR>
+<I>n</I>=(2310−788)+2310*<I>k</I>=1522+2310*<I>k</I> avec <I>k</I>≤ iquo((<I>N</I>−1522),2310)
+donc si <I>N</I>=10000 on tape :<BR>
+<TT>iquo((10000-1522),2310)</TT><BR>
+On obtient :<BR>
+<TT>3</TT><BR>
+On tape :<BR>
+<TT>(1522+2310*k)$(k=0..3)</TT><BR>
+On obtient :<BR>
+<TT>1522,3832,6142,8452</TT></P><H3 CLASS="subsection"><A NAME="htoc50">4.7.3</A>  Solution avec <TT>Xcas</TT> et l’identité de Bézout</H3><P>
+On utilise la commande <TT>iabcuv</TT> qui étant donné trois entiers
+<TT>a,b,c</TT> renvoie une liste de deux entiers 
+relatifs <TT>[u,v]</TT> vérifiant <TT>a*u+b*v=c</TT>.<BR>
+<B>Remarque</B> 
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Si deux entiers 
+relatifs <I>u</I>,<I>v</I> vérifie <I>au</I>+<I>bv</I>=<I>c</I> alors on a aussi :<BR>
+ <I>a</I>(<I>u</I>+<I>kb</I>)+<I>b</I>(<I>v</I>−<I>ka</I>)=<I>c</I> pour tout <I>k</I> ∈ ℤ.
+</LI><LI CLASS="li-itemize"><TT>iabcuv</TT> est une généralisation de l’identité de Bézout
+(commande <TT>iegcd</TT>). On a en effet :
+<TT>iegcd(a,b)</TT> renvoie une liste de trois entiers <TT>[u,v,d]</TT> 
+vérifiant <TT>a*u+b*v=d=gcd(a,b)</TT> (où <TT>gcd(a,b)</TT> est
+le pgcd de <TT>a</TT> et <TT>b</TT>).<BR>
+ Donc pour que <TT>iabcuv</TT> ait une solution il faut et il 
+suffit que <TT>c</TT> soit un multiple du pgcd de <TT>a</TT> et <TT>b</TT>.
+Donc <TT>iabcuv</TT> a toujours une solution si <TT>a</TT> et <TT>b</TT> sont premiers 
+entre eux.
+</LI></UL><P>
+On cherche <I>n</I> vérifiant :<BR>
+<I>n</I> est un multiple de 2 et aussi un multiple de 3 plus 1.<BR>
+Donc on a : <I>n</I>=2<I>p</I>=3<I>q</I>+1 avec <I>p</I>∈ ℤ et <I>q</I>∈ ℤ.<BR>
+c’est à dire 2<I>p</I>−3<I>q</I>=1.<BR>
+On tape : <TT>iabcuv(2,3,1)</TT><BR>
+On obtient : <TT>[-1,1]</TT><BR>
+Donc <I>n</I>=2*(−1+3<I>k</I>)=−2 % 6.<BR>
+De plus <I>n</I> est un multiple de 5 plus 2.<BR>
+Donc on a : <I>n</I>=5<I>r</I>+2=−2+6<I>k</I> avec <I>r</I>∈ ℤ et <I>k</I>∈ ℤ.<BR>
+c’est à dire 6<I>k</I>−5<I>r</I>=4.<BR>
+On tape : <TT>iabcuv(6,5,4)</TT><BR>
+On obtient : <TT>[-1,2]</TT><BR>
+Donc <I>n</I>=6*(−1+5<I>k</I>)−2=−8 %  30.<BR>
+De plus <I>n</I> est un multiple de 7 plus 3.<BR>
+Donc on a : <I>n</I>=7<I>j</I>+3=−8+30<I>k</I> avec <I>j</I>∈ ℤ et <I>k</I>∈ ℤ.<BR>
+c’est à dire 30<I>k</I>−7<I>j</I>=11.<BR>
+On tape : <TT>iabcuv(30,7,11)</TT><BR>
+On obtient : <TT>[2,-7]</TT><BR>
+Donc <I>n</I>=30*(2+7<I>k</I>)−8=52 % 210.<BR>
+De plus <I>n</I> est un multiple de 11 plus 4.<BR>
+Donc on a : <I>n</I>=11<I>m</I>+4=52+210<I>k</I> avec <I>m</I>∈ ℤ et <I>k</I>∈ ℤ.<BR>
+c’est à dire 11<I>m</I>−210<I>k</I>=48.<BR>
+On tape : <TT>iabcuv(11,210,64)</TT><BR>
+On obtient : <TT>[-72,4]</TT><BR>
+Donc <I>n</I>=11*(−72+210<I>k</I>)+4=−788 % 2310.<BR>
+On tape : <TT>(-788+k*2310)$ (k=1..4)</TT><BR>
+On obtient : <TT>1522,3832,6142,8452</TT>
+</P>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casexo003.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo005.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>Les fractions continues et π</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascas002.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas004.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc63">Chapitre 3</A>  Les fractions continues et π</H1><H2 CLASS="section"><A NAME="toc21"></A><A NAME="htoc64">3.1</A>  Développement en fractions continues de π</H2><P>
+Avec <TT>Xcas</TT> si on tape :<BR>
+<TT>evalf(pi,21)</TT><BR>
+On obtient :<BR>
+<TT>3.141592653589793238462</TT><BR>
+Une valeur approchée par excès de π par un rationnel est : 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">22</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">7</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On a 22/7≃ 3.14285714286 ce qui fait 2 décimales exactes et<BR>
+<TT>evalf(22/7-pi)</TT> renvoie <TT>0.00126448926721</TT><BR>
+Donc 0&lt;22/7−0.0013&lt;π&lt;22/7 et 0&lt;22/7−π&lt;1.310<SUP>−3</SUP><BR>
+
+Une autre valeur approchée par excès de π par un rationnel est : 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">355</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">113</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On a 355/113≃ 3.14159292035 ce qui fait 6 décimales exactes et<BR>
+<TT>evalf(355/113-pi)</TT> renvoie <TT>2.66764118351e-07</TT><BR>
+Donc 0&lt;355/113−2.67<I>e</I>−07&lt;π&lt;355/113<BR>
+Une valeur approchée par défaut de π par un rationnel est : 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">333</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">106</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On a 333/106≃ 3.14150943396 ce qui fait 4 décimales exactes 
+et<BR>
+<TT>evalf(pi-333/106)</TT> renvoie <TT>8.32196276406e-05</TT><BR>
+Donc </P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">333</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">106</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&lt;π&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">333</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">106</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+8.33<I>e</I>−05</TD></TR>
+</TABLE><P>
+Ces approximations proviennent du développement en fractions continues de 
+π.<BR>
+On tape :<BR>
+<TT>dfc(pi)</TT><BR>
+On obtient :<BR>
+<TT>[3,7,15,1,292,1,1]</TT><BR>
+On tape :<BR>
+<TT>dfc2f([3,7])</TT><BR>
+On obtient 3+1/7 :<BR>
+<TT>22/7</TT><BR>
+On tape :<BR>
+<TT>dfc2f([3,7,15])</TT><BR>
+On obtient 3+1/(7+1/15):<BR>
+<TT>333/106</TT><BR>
+On tape :<BR>
+<TT>dfc2f([3,7,15,1])</TT><BR>
+On obtient 3+1/(7+1/(15+1)) :<BR>
+<TT>355/113</TT><BR>
+</P><H2 CLASS="section"><A NAME="toc22"></A><A NAME="htoc65">3.2</A>  construction d’un carré ayant pour aire 22/7</H2><P>
+Ce carré a pour coté : √<SPAN style="text-decoration:overline">22</SPAN>/√<SPAN style="text-decoration:overline">7</SPAN>.<BR>
+On a :<BR>
+22=5<SUP>2</SUP>−3 et 7=2<SUP>2</SUP>+3<BR>
+Donc :<BR>
+√<SPAN style="text-decoration:overline">22</SPAN> est le 2ième côté de l’angle droit d’un triangle 
+rectangle dont l’hypoténuse a pour longueur 5 et un côté de l’angle droit
+a pour longueur √<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+√<SPAN style="text-decoration:overline">7</SPAN> est la longueur de l’hypoténuse d’un triangle rectangle dont les
+côtés de l’angle droit ont pour longueur 2 et √<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">triangle_equilateral(1,3,C):;
+C:=C;
+A:=point(-1);B:=point(1);
+l:=normal(longueur(A,C));
+D:=point(4);
+segment(A,D);
+c:=cercle(A,D);
+F:=inter(c,cercle(A,l/2),C);
+normal(longueur2(F,D));
+normal(longueur2(D,C));
+G:=D+(C-D)/longueur(C,D);
+normal(longueur2(D,G));
+H:=normal(inter_unique(segment(D,F),parallele(G,droite(F,C))));
+normal(longueur(H,D));
+segment(F,D),segment(D,C);
+carre(D,H,K,L,affichage=1);
+</PRE><P>On obtient l’aire du carré rouge approche par excèsà 1.310<SUP>−3</SUP> 
+l’aire du cercle rouge de diamètre <I>AB</I>:<BR>
+<IMG SRC="cascas012.png"><BR>
+On a :<BR>
+<TT>normal(longueur(A,C));</TT> renvoie <TT>2*sqrt(3)</TT><BR>
+<TT>normal(longueur2(F,D)</TT> renvoie <TT>22</TT><BR>
+<TT>normal(longueur2(D,C));</TT> renvoie <TT>7</TT><BR>
+<TT>normal(longueur2(D,G))</TT> renvoie <TT>1</TT><BR>
+<TT>normal(longueur(H,D));</TT> renvoie <TT>(sqrt(154))/7</TT><BR>
+<TT>normal(longueur2(H,D));</TT> renvoie <TT>22/7</TT><BR>
+<TT>aire(carre(D,H))</TT> renvoie <TT>22/7</TT>
+</P><H2 CLASS="section"><A NAME="toc23"></A><A NAME="htoc66">3.3</A>  Construction par Ramanujan d’un carré d’aire 355/113</H2><P>
+En 1913 Ramanujan proposa la construction d’un carré ayant pour aire celle
+d’un cercle de rayon 1 avec une erreur de 1.47*10<SUP>−5</SUP>.<BR>
+Ce carré a pour coté : √<SPAN style="text-decoration:overline">355</SPAN>/√<SPAN style="text-decoration:overline">1</SPAN>13.<BR>
+On a :<BR>
+355=18<SUP>2</SUP>+31 et 113=12<SUP>2</SUP>−31<BR>
+355/9<SUP>2</SUP>=4+31/9<SUP>2</SUP> et 113/6<SUP>2</SUP>=4−31/6<SUP>2</SUP><BR>
+Il reste a construire √<SPAN style="text-decoration:overline">31</SPAN>.<BR>
+On a :<BR>
+31=6<SUP>2</SUP>−5<BR>
+Voici la construction de ce carré faite par Ramanujan.<BR>
+Soit le cercle <I>c</I> de centre <I>O</I> et de diamètre <I>PR</I>=2.<BR>
+Avec <TT>Xcas</TT>, on prend :<BR>
+<TT>O:=point(0);P:=point(-1);R:=point(1);</TT><BR>
+<TT>H:=point(-1/2);T:=point(2/3);</TT><BR>
+Le cercle <I>c</I> passe par le point <TT>Q:=point(2/3+i*sqrt(5)/3);</TT><BR>
+On a <TT>RS=QT=sqrt(5)/3</TT><BR>
+On définit les projections <I>M</I> et <I>N</I> respectives <I>M</I> et <I>N</I> de <I>O</I> et <I>T</I>
+sur <I>PS</I>.<BR>
+On définit :<BR>
+<TT>L:=point(-1-i*longueur(M,N));</TT><BR>
+<TT>K</TT> sur le cercle <I>c</I> tel que <I>PK</I>=<I>PM</I><BR>
+<TT>C</TT> sur le segment <I>RK</I> tel que <I>RC</I>=<I>RH</I>=3/2
+<TT>D</TT> sur le segment <I>RL</I> tel que <I>CD</I>//<I>KL</I><BR>
+Le carré de côté <I>RD</I> a alors pour côté :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=0 CELLPADDING=0><TR><TD ALIGN="right"><DIV CLASS="vbar" STYLE="height:2em;"></DIV></TD></TR>
+<TR><TD><FONT SIZE=7>√</FONT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">355</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">113</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Avec <TT>Xcas</TT>, ontape :
+</P><PRE CLASS="verbatim">O:=point(0);
+P:=point(-1);
+R:=point(1);
+H:=point(-1/2);
+T:=point(2/3);
+c:=cercle(O,1,affichage=4+epaisseur_ligne_2);
+Q:=point(2/3+i*sqrt(5)/3);
+S:=inter_unique(c,cercle(R,sqrt(5)/3),Q);
+s:=segment(P,S);
+M:=projection(s,O);
+N:=projection(s,T);
+L:=point(-1-i*longueur(M,N));
+K:=inter_unique(c,cercle(P,longueur(P,M)),L);
+C:=inter_unique(droite(R,K),cercle(R,3/2),K);
+D:=inter_unique(droite(L,R),parallele(C,droite(L,K)));
+carre(D,R,affichage=1+epaisseur_ligne_2);
+segment(P,L);
+segment(R,S);
+segment(R,L);
+segment(R,K);
+segment(L,K);
+segment(D,C);
+segment(O,M);
+segment(T,N);
+cercle(P,longueur(M,P),affichage=ligne_tiret_point);
+cercle(R,3/2,affichage=ligne_tiret_point);
+</PRE><P>On tape :<BR>
+<TT>evalf(aire(carre(D,R)))</TT><BR>
+On obtient :<BR>
+<TT>3.14157798199</TT><BR>
+On tape :<BR>
+<TT>evalf(pi-aire(carre(D,R)))</TT><BR>
+On obtient :<BR>
+<TT>1.46716034237e-05</TT><BR>
+
+On obtient la figure :<BR>
+<IMG SRC="cascas013.png"></P><P><B>Calcul de </B><B><I>RD</I></B><SUP><B>2</B></SUP><BR>
+On a :<BR>
+<I>RS</I><SUP>2</SUP>=5/9<BR>
+<I>PS</I><SUP>2</SUP>=4−5/9=31/9<BR>
+<I>PK</I><SUP>2</SUP>=<I>PM</I><SUP>2</SUP>=<I>PS</I><SUP>2</SUP>/4=31/36<BR>
+<I>PL</I><SUP>2</SUP>=<I>MN</I><SUP>2</SUP>=<I>PS</I><SUP>2</SUP>/9=31/81<BR>
+<I>RK</I><SUP>2</SUP>=4−<I>PK</I><SUP>2</SUP>=113/36<BR>
+<I>RL</I><SUP>2</SUP>=4+<I>PL</I><SUP>2</SUP>=355/81<BR>
+<I>RC</I><SUP>2</SUP>=<I>RH</I><SUP>2</SUP>=9/4<BR>
+<I>RD</I><SUP>2</SUP>/<I>RL</I><SUP>2</SUP>=<I>R</I><SUP>2</SUP><I>C</I>/<I>RK</I><SUP>2</SUP>=81/113<BR>
+Donc <I>RD</I><SUP>2</SUP>=355/113</P><H2 CLASS="section"><A NAME="toc24"></A><A NAME="htoc67">3.4</A>  Une valeur approchée de π par (9<SUP>2</SUP>+19<SUP>2</SUP>/22)<SUP>(</SUP>1/4)</H2><P>
+On tape :<BR>
+<TT>A:=(9</TT><CODE><TT>^</TT></CODE><TT>2+19</TT><CODE><TT>^</TT></CODE><TT>2/22)</TT><CODE><TT>^</TT></CODE><TT>(1/4)</TT><BR>
+<TT>evalf(A)</TT><BR>
+On obtient :<BR>
+<TT>3.14159265258</TT><BR>
+On tape :
+<TT>evalf(pi)</TT><BR>
+On obtient :
+<TT>3.14159265359</TT><BR>
+On tape :<BR>
+<TT>evalf(pi-A)</TT><BR>
+On obtient :<BR>
+<TT>1.00715169538e-09</TT></P><H2 CLASS="section"><A NAME="toc25"></A><A NAME="htoc68">3.5</A>  Un nombre quasi-entier : (ln(5280<SUP>3</SUP>*(236674+30303*√<SPAN style="text-decoration:overline">61</SPAN>)<SUP>3</SUP>+744)/π)<SUP>2</SUP></H2><P>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>A:=ln(5280</TT><CODE><TT>^</TT></CODE><TT>3*((236674+30303*sqrt(61))</TT><CODE><TT>^</TT></CODE><TT>(3))+744)</TT><BR>
+<TT>evalf((A/pi)</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient :<BR>
+<TT>427.0</TT><BR>
+On tape :<BR>
+<TT>evalf((A/pi)</TT><CODE><TT>^</TT></CODE><TT>2,52)</TT><BR>
+On obtient :<BR>
+<TT>0.4270000000000000000000000000000000000000000000000000e3</TT><BR>
+On tape :<BR>
+<TT>evalf((A/pi)</TT><CODE><TT>^</TT></CODE><TT>2,55)</TT><BR>
+On obtient :<BR>
+<TT>0.4270000000000000000000000000000000000000000000000000106e3</TT><BR>
+
+</P><HR>
+<A HREF="cascas002.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas004.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

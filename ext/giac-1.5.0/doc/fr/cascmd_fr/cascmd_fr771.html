@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Fonction de répartition inverse de la loi binomiale négative : negbinomial_icdf</title>
+</head>
+<body >
+<a href="cascmd_fr770.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr772.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec949" class="subsection">8.4.6  Fonction de répartition inverse de la loi binomiale négative : <span style="font-family:monospace">negbinomial_icdf</span></h3>
+<p><a id="hevea_default1399"></a>
+Lorsqu’une variable aléatoire <span style="font-style:italic">X</span> suit une loi binomiale négative
+<span style="color:red"><span style="font-style:italic">N</span></span><span style="font-style:italic">eg</span><span style="color:red"><span style="font-style:italic">B</span></span><span style="font-style:italic">in</span>(<span style="font-style:italic">n</span>,<span style="font-style:italic">p</span>), lorsqu’on a 
+<span style="font-family:monospace">negbinomial_icdf(n,p,x)=h</span> c’est que <br>
+<span style="font-style:italic">Proba</span>(<span style="font-style:italic">X</span> ≤ <span style="font-style:italic">h</span>)=<span style="font-style:italic">x</span>=<span style="font-family:monospace">negbinomial_cdf(n,p,h)</span>.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">negbinomial_icdf(4,0.5,0.9)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">8</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">negbinomial_icdf(2,0.3,0.95)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">12</span></div><p>
+<span style="font-weight:bold">Les programmes naifs pour calculer les fonctiond précédentes</span><br>
+</p><pre class="verbatim">negbino(n,p,k):=comb(-n,k)*p^n*(p-1)^k;
+negbin(n,p,k):=comb(n+k-1,k)*p^n*(1-p)^k;
+negbi(n,p,k):=(n+k-1)!/k!/(n-1)!*p^n*(1-p)^k;
+negbino_cdf(n,p,x):=sum(negbi(n,p,k),k=0..floor(x));
+negbino_icdf(n,p,x):={
+ local k:=0;
+ tantque negbino_cd(n,p,k)&lt;x faire
+   k:=k+1;
+   ftantque;
+   return k;
+   }:;
+</pre>
+<hr>
+<a href="cascmd_fr770.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr772.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

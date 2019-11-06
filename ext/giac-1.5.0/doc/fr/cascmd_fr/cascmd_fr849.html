@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Les instructions copy et =&lt; dans un programme </title>
+</head>
+<body >
+<a href="cascmd_fr848.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr850.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1033" class="subsection">9.4.16  Les instructions <span style="font-family:monospace">copy</span> et <span style="font-family:monospace">=&lt;</span> dans un programme </h3>
+<p><a id="hevea_default1546"></a><a id="hevea_default1547"></a><a id="sec:copie"></a>
+<span style="font-family:monospace">=&lt;</span> est surtout utile quand on fait beaucoup de 
+modifications dans une liste ou matrice
+de grande taille, par exemple dans un programme.
+Mais attention, il faudra utiliser <span style="font-family:monospace">copy</span> lors de 
+l’initialisation des variables listes ou matrices qui seront modifiées avec 
+<span style="font-family:monospace">=&lt;</span> pour que les modifications se fassent sur la copie.<br>
+Voir aussi <a href="cascmd_fr066.html#sec%3Aprogref">2.5.3</a> et <a href="cascmd_fr848.html#sec%3Adiffaffectation">9.4.15</a>.<br>
+<span style="font-weight:bold">Attention</span><br>
+Dans un programme si on met :
+</p><pre class="verbatim">local a;
+a:=[0,1,2,3,4];
+...
+a[3] =&lt; 33;
+</pre><p>
+Cela modifie le programme lui-même et la ligne 
+<span style="font-family:monospace">a:=[0,1,2,3,4];</span> est remplacée par <span style="font-family:monospace">a:=[0,1,2,33,4];</span> dans
+le programme compilé.<br>
+Donc dans un programme il faut écrire :
+</p><pre class="verbatim">local a;
+a:=copy([0,1,2,3,4]);
+...
+a[3] =&lt; 33;
+</pre><p>
+ou
+</p><pre class="verbatim">local a,c;
+c:=[0,1,2,3,4];
+a:=copy(c);
+...
+a[3] =&lt; 33;
+</pre><p>
+pour que ce soit la copie de <span style="font-family:monospace">[0,1,2,3,4]</span> qui soit modifiée et non 
+la liste <span style="font-family:monospace">[0,1,2,3,4]</span> elle-même.</p><p><span style="font-weight:bold">Remarque</span><br>
+On peut aussi utiliser les commandes <span style="font-family:monospace">makelist</span>, <span style="font-family:monospace">seq</span>, <span style="font-family:monospace">range</span> ou
+<span style="font-family:monospace">$</span>,
+par exemple :<br>
+<span style="font-family:monospace">a:=makelist(n,n,0,4);</span>
+ou<br>
+<span style="font-family:monospace">a:=[n$(n=0..4)];</span>
+ou<br>
+<span style="font-family:monospace">a:=range(5);</span>
+puis<br>
+<span style="font-family:monospace">a[3] =&lt; 33;</span>
+car <span style="font-family:monospace">makelist(n,n,0,4)</span> ou <span style="font-family:monospace">[n$(n=0..4)]</span> est une liste qui va
+se créer à chaque exécution du programme.</p><p><span style="font-weight:bold">Exemple</span><br>
+On veut écrire un programme qui renvoie les nombres entiers inférieurs ou 
+égaux à <span style="font-style:italic">n</span> et dont la somme des chiffres (en base 10) vaut 5.
+On tape :
+</p><pre class="verbatim">somme5(n):={
+local L,j,k;
+L:=seq(0,0);
+k:=0;
+for(j:=0;j&lt;=n;j++){
+if (sum(convert(j,base,10))==5){
+L[k]=&lt;j;
+k:=k+1;
+}
+}
+return L;
+}:;
+</pre><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">somme5(50)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">5,14,23,32,41,50</span></div><p>Dans cet exemple, il faut bien comprendre et faire l’initialisation de <span style="font-family:monospace">L</span> 
+correctement.<br>
+Dans ce programme, on a choisit d’avoir le résultat sous la forme d’une 
+séquence, et on a initialisé <span style="font-family:monospace">L</span> avec <span style="font-family:monospace">L:=seq(0,0)</span>.
+Si on avait mis <span style="font-family:monospace">L:=NULL</span>, le programme n’aurait pas fonctionné
+correctement ! En effet, si on tape :
+</p><pre class="verbatim">fauxsom5(n):={
+local L,j,k;
+L:=NULL;
+k:=0;
+for(j:=0;j&lt;=n;j++){
+if (sum(convert(j,base,10))==5){
+L[k]=&lt;j;
+k:=k+1;
+}
+}
+return L;
+}:;
+</pre><p> 
+puis :
+</p><div class="center"><span style="font-family:monospace">fauxsom5(30)</span></div><p>
+on obtient :
+</p><div class="center"><span style="font-family:monospace">5,14,23,32,41,50</span></div><p>
+Cela semble juste..... 
+Mais, lors de l’exécution de <span style="font-family:monospace">fauxsom5(50)</span>, au départ <span style="font-family:monospace">L</span> pointe 
+sur la séquence <span style="font-family:monospace">NULL</span>, puis cette séquence <span style="font-family:monospace">NULL</span> est modifiée 
+et devient à la fin du programme <span style="font-family:monospace">5,14,23,32,41,50</span> et le programme, si 
+on ne le recompile pas, a lui aussi été modifié est est devenu 
+</p><pre class="verbatim">fauxsom5(n):={
+local L,j,k;
+L:=5,14,23,32,41,50;
+k:=0;
+for(j:=0;j&lt;=n;j++){
+if (sum(convert(j,base,10))==5){
+L[k]=&lt;j;
+k:=k+1;
+}
+}
+return L;
+}:;
+</pre><p> 
+Si on tape maintenant :
+</p><div class="center"><span style="font-family:monospace">fauxsom5(30)</span></div><p>
+On obtient une séquence trop longue :
+</p><div class="center"><span style="font-family:monospace">5,14,23,32,41,50</span></div><p>
+alors que si on tape :
+</p><div class="center"><span style="font-family:monospace">somme5(30)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">5,14,23</span></div><p>
+<span style="font-weight:bold">Régle</span><br>
+Dans un programme, si on veut utiliser <span style="font-family:monospace">=&lt;</span>
+pour modifier une liste <span style="font-family:monospace">L</span> ou une séquence <span style="font-family:monospace">LL</span>, il faut
+faire attention à l’initialisation.<br>
+Par exemple, pour initialiser 
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">L</span> à la liste vide, on tape :<br>
+<span style="font-family:monospace">L:=[seq(0,0)]</span> ou <span style="font-family:monospace">L:=[0$0]</span> ou <span style="font-family:monospace">L:=copy([])</span> car 
+<span style="font-family:monospace">[seq(0,0)]</span> ou <span style="font-family:monospace">[0$0]</span> 
+désigne une liste qui va se créer à chaque exécution du programme.
+</li><li class="li-itemize"><span style="font-family:monospace">LL</span> à la séquence <span style="font-family:monospace">NULL</span>, on tape :<br>
+<span style="font-family:monospace">LL:=seq(0,0)]</span> ou <span style="font-family:monospace">LL:=0$0</span> ou <span style="font-family:monospace">LL:=copy(NULL)</span> car 
+<span style="font-family:monospace">seq(0,0)</span> ou <span style="font-family:monospace">0$0</span> désigne une séquence qui va se créer à 
+chaque exécution du programme.
+</li></ul><p>
+Il faut donc utiliser <span style="font-family:monospace">=&lt;</span> avec précautions car tous les objets pointant 
+sur cette matrice seront modifiés. </p>
+<hr>
+<a href="cascmd_fr848.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr850.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

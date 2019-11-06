@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{amsfonts}
+\begin{document}
+\title{Groupes de permutations}
+\author{Reneé De Graeve}
+
+\section{Les théorèmes} \label{sec:theo}
+Soit  ${\tt J_n=[0,1..n-1]}$.
+Une permutation {\tt p} de {\tt n} éléments est une application bijective de 
+${\tt J_n}$ dans lui m\^eme et induit une application ${\tt \pi_p}$ de  
+${\tt \mathbb Z^n}$ dans lui m\^eme (${\tt \pi_p(x_i)=x_{p(i)}}$).\\
+Les permutations forment un groupe pour la composition des applications.\\
+Un cycle {\tt c} est une permutation telle qu'il existe un enter  
+$k \ (0 \leq k \leq n-1)$ vérifiant :\\
+pour $j=0...k-1 \ \ c(a_j)=a_{j+1}$ et $c(a_k)=a_0$\\
+pour $j=k+1...n-1 \ \ c(a_j)=a_j$\\
+$k$ est appelé l'ordre du cycle $c$ ($c^k=id$).\\
+Un cycle d'ordre $k$ est aussi appelé une permutation circulaire d'ordre $k$.\\
+Une transposition $t$ est un cycle d'ordre 2 ($t^2=id$).\\
+
+Théorème 1\\
+Toute permutation peut s'exprimer comme produit de cycles disjoints.\\ 
+L'ordre d'une permutation est le plus petit commun multiple $k$ des ordres 
+des cycles disjoints obtenus ($p^k=id$).\\
+
+Théorème 2\\
+Toute permutation peut s'exprimer comme produit de transpositions.\\
+\section{Notations} \label{sec:notationperm}
+Une permutation {\tt p} sera notée :\\
+{\tt [p(0),p(1),...,p(n-1)]}\\
+Un cycle d'ordre {\tt c} $k$ sera noté :\\
+${\tt [a_0,a_1,...,a_k]}$ si ${\tt c(a_0)=a_1...c(a_k)=a_0}$\\
+Attention :\\
+{\tt [0,2,1]} représente la permutation {\tt p} telle que :\\
+{\tt p(0)=0, p(1)=2, p(2)=1}\\
+ mais représente aussi le cycle {\tt c} tel que :\\
+{\tt c(0)=2, c(2)=1, c(1)=0}
+\section{Exercices} \label{sec:exoperm}
+
+{\tt Exercice 1}\\
+Exprimer les permutations suivantes comme produit de cycles disjoints et 
+déterminer leurs signatures, leurs ordres  et leurs inverses:\\
+{\tt [1,2,0]}\\
+{\tt [2,0,1]}\\
+{\tt [2,1,0]}\\
+{\tt [1,2,0,3]}\\
+{\tt [1,0,3,2]}\\
+{\tt [2,1,3,0]}\\
+{\tt [2,4,5,0,1,3]}\\
+{\tt [5,0,4,2,3,1]}\\
+{\tt [5,3,4,6,2,0,1]}\\
+
+Exercice 2\\
+Ecrire les produits de cycles suivants sous la forme :\\
+1/ d'une permutation\\
+2/ d'un produit de cycles disjoints\\
+{\tt [[0,1,2,3,4],[0,4,5],[1,3,5]]}\\
+{\tt [[0,1,2,3],[1,2,3,4],[2,3,4,0]]}\\
+{\tt [[0,1],[1,2],[2,3],[3,4],[4,0]]}\\
+{\tt [[1,5][4,5],[5,6]]}\\
+
+Exercice 3\\
+Calculer $p^{1000}$ pour les permutations $p$ suivantes :\\
+{\tt [2,5,7,8,3,4,1,0,6]}\\
+{\tt [2,5,0,3,1,4]}\\
+
+Exercice 4\\
+D\'eterminer le groupe engendr\'e par les permutations suivantes :\\
+{\tt [2,1,0,3]}\\
+{\tt [3,1,2,0]}\\
+
+\section{Corrections des exercices} \label{sec:corexoperm}
+Exercice 1\\
+Exercice 2\\
+On tape :\\
+{\tt cl:=[[0,1,2,3,4],[0,4,5],[1,3,5]] }\\
+On tape :\\
+{\tt cycles2permu(cl)}\\
+On obtient :\\
+{\tt [0,4,3,1,5,2]}\\
+Exercice 3\\
+On tape :\\
+{\tt permu2cycles([2,5,7,8,3,4,1,0,6])}\\
+On obtient :\\
+{\tt [[0,2,7],[1,5,4,3,8,6]]}\\
+On tape :\\
+{\tt p:=[2,5,7,8,3,4,1,0,6]}\\
+$p$ est décomposable en un cycle d''orde 3 et un cycle d'ordre 6, $p$ est donc d'ordre 6 ({\tt lcm(3,6)=6}).\\
+Donc $p^6=id$. On a {\tt irem(1000,6)=4} donc :\\
+$p^{1000}=p^4$\\
+On tape :\\
+{\tt p2:=p1op2(p,p)}\\
+ {\tt p4:=p1op2(p2,p2)}\\
+On obtient :\\
+{\tt [2,8,7,5,1,6,3,0,4]}\\
+Donc $p^{1000}=p^4=  [2,8,7,5,1,6,3,0,4]$\\
+On vérifie que $p^6=id$ :\\
+{\tt p6:=p1op2(p2,p4)}
+On obtient bien :\\
+{\tt [0,1,2,3,4,5,6,7,8]}\\
+
+On tape :\\
+{\tt permu2cycles([2,5,0,3,1,4])}\\
+On obtient :\\
+{\tt [[0,2],[1,5,4]]}\\
+On tape :\\
+{\tt p:=[2,5,0,3,1,4]}\\
+$p$ est décomposable en un cycle d''orde 2 et un cycle d'ordre 3, $p$ est donc d'ordre 6 ({\tt lcm(2,3)=6}).\\
+Donc $p^6=id$. On a {\tt irem(1000,6)=4} donc :\\
+$p^{1000}=p^4$\\
+On tape :\_
+{\tt p2:=p1op2(p,p)}\\
+ {\tt p4:=p1op2(p2,p2)}\\
+On obtient :\\
+{\tt [0,5,2,3,1,4]}\\
+Donc $p^{1000}=p^4=[0,5,2,3,1,4]$\\
+On vérifie que $p^6=id$ :\\
+{\tt p6:=p1op2(p2,p4)}
+On obtient bien :\\
+{\tt [0,1,2,3,4,5]}\\
+Exercice 4\\
+On tape :\\
+{\tt groupermu([2,1,0,3],[3,1,2,0])}\\
+On obtient :\\
+{\tt [[2,1,0,3],[3,1,2,0],[0,1,2,3],[2,1,3,0],[3,1,0,2],[0,1,3,2]]}\\
+qui sont :\\
+{\tt a,b,a*a,b*a,a*b,a*b*a} avec {\tt a:=[2,1,0,3] b:=[3,1,2,0]}
+On peut v\'erifier par exemple que :\\
+{\tt a*b*a=p1op2(a,p1op2(b,a))=b*a*b=p1op2(b,p1op2(a,b))=[0,1,3,2]}
+\end{document}

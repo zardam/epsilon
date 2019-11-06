@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Animation d’une séquence d’objets graphiques :animation</title>
+</head>
+<body >
+<a href="cascmd_fr103.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr105.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec156" class="subsection">3.24.3  Animation d’une séquence d’objets graphiques :<span style="font-family:monospace">animation</span></h3>
+<p><a id="hevea_default188"></a>
+<span style="font-family:monospace">animation</span> permet de dessiner chaque objet d’une suite d’objets 
+graphiques avec un temps d’affichage donné. En général les objets de la 
+suite dépendent d’un paramètre, il faut alors créer une suite en faisant 
+varier ce paramètre.<br>
+<span style="font-family:monospace">animation</span> a comme paramètre une séquence d’objets graphiques.<br>
+<span style="font-weight:bold">Remarque</span> <br>
+Si on veut que dans l’animation plusieurs objets graphiques soient affichès 
+en même temps, il faut mettre ces objets dans une liste, par exemple :<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">plotfunc(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2);animation([point(1),segment(1,1+i), point(1+i)],droite(y=2*x-1))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">le graphe de </span><span style="font-style:italic">y</span>=<span style="font-style:italic">x</span><sup>2</sup><span style="font-family:monospace"> puis une animation de 2 objets (le premier objet est 2 points et un segment et le deuxième une droite)</span></div><p> 
+<span style="font-weight:bold">Attention</span> <br>
+Pour définir la séquence d’objets graphiques avec <span style="font-family:monospace">seq</span> on peut quoter 
+ou ne pas quoter la commande dessinant l’objet graphique.<br>
+On peut aussi spécifier le pas de la séquence si on utilise 5 arguments 
+pour <span style="font-family:monospace">seq</span> : l’objet graphique, le nom du paramètre, sa valeur 
+minimum, sa valeur maximum et le pas.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotfunc(cos(a*x),x),a,0,10))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La suite des différentes représentations de la courbe définies par </span><span style="font-style:italic">y</span>=cos(<span style="font-style:italic">ax</span>)<span style="font-family:monospace">, pour </span><span style="font-style:italic">a</span>=0,1,2..10</div><p>
+On tape :
+</p><div class="center">
+<span style="font-family:monospace">animation(seq(plotfunc(cos(a*x),x),a,0,10,0.5))</span><br>
+ou<br>
+<span style="font-family:monospace">animation(seq(plotfunc(cos(a*x),x),a=0..10,0.5))</span>
+</div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La suite des différentes représentations de la courbe définies par </span><span style="font-style:italic">y</span>=cos(<span style="font-style:italic">ax</span>)<span style="font-family:monospace">, pour </span><span style="font-style:italic">a</span>=0,0.5,1,1.5..10<span style="font-family:monospace"> </span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotfunc([cos(a*x),sin(a*x)],x=0..2*pi/a), a,1,10))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La suite des différentes représentations des 2 courbes définies par </span><span style="font-style:italic">y</span>=cos(<span style="font-style:italic">ax</span>)<span style="font-family:monospace"> et </span><span style="font-style:italic">y</span>=sin(<span style="font-style:italic">ax</span>)<span style="font-family:monospace">, pour </span><span style="font-style:italic">a</span>=1..10<span style="font-family:monospace"> et pour </span><span style="font-style:italic">x</span>=0..2π/<span style="font-style:italic">a</span><span style="font-family:monospace"> </span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotparam([cos(a*t),sin(a*t)], t=0..2*pi),a,1,10))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La suite des différentes représentations des courbes définies paramétriquement par </span><span style="font-style:italic">x</span>=cos(<span style="font-style:italic">at</span>)<span style="font-family:monospace"> et </span><span style="font-style:italic">y</span>=sin(<span style="font-style:italic">at</span>)<span style="font-family:monospace">, pour </span><span style="font-style:italic">a</span>=1..10<span style="font-family:monospace"> et pour </span><span style="font-style:italic">t</span>=0..2π<span style="font-family:monospace"> </span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotparam([sin(t),sin(a*t)], t,0,2*pi,tstep=0.01),a,1,10))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La suite des différentes représentations des courbes paramétrées définies par </span><span style="font-style:italic">x</span>=sin(<span style="font-style:italic">t</span>),<span style="font-style:italic">y</span>=sin(<span style="font-style:italic">at</span>)<span style="font-family:monospace">, pour </span><span style="font-style:italic">a</span>=0..10<span style="font-family:monospace"> et </span><span style="font-style:italic">t</span>=0..2π</div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotpolar(1-a*0.01*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2, t,0,5*pi,tstep=0.01),a,1,10))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La suite des différentes représentations des courbes polaires définies par </span>ρ=1−<span style="font-style:italic">a</span>*0.01*<span style="font-style:italic">t</span><sup>2</sup><span style="font-family:monospace">, pour </span><span style="font-style:italic">a</span>=0..10<span style="font-family:monospace"> et </span><span style="font-style:italic">t</span>=0..5π</div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">plotfield(sin(x*y),[x,y]); animation(seq(plotode(sin(x*y),[x,y],[0,a]),a,-4,4,0.5))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">Le champ des tangentes de y’=sin(xy) et la suite des différentes courbes intégrales passant par le point </span>(0;<span style="font-style:italic">a</span>)<span style="font-family:monospace"> pour </span><span style="font-style:italic">a</span><span style="font-family:monospace">=-4,-3.5...3.5,4</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">animation(seq(affichage(carre(0,1+i*a),rempli),a,-5,5))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La suite des différents carrés définis par les points 0 et 1+i*</span><span style="font-style:italic">a</span><span style="font-family:monospace"> pour </span><span style="font-style:italic">a</span>=−5..5</div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">animation(seq(droite([0,0,0],[1,1,a]),a,-5,5))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La suite des différentes droites définies par les points [0,0,0] et [1,1,</span><span style="font-style:italic">a</span><span style="font-family:monospace">] pour </span><span style="font-style:italic">a</span>=−5..5</div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotfunc(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">a,[x,y]), a=1..3))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La suite des différentes représentations 3-d des surfaces définies par </span><span style="font-style:italic">x</span><sup>2</sup>−<span style="font-style:italic">y</span><sup><span style="font-style:italic">a</span></sup><span style="font-family:monospace">, pour </span><span style="font-style:italic">a</span>=1..3<span style="font-family:monospace"> avec les couleurs de l’arc en ciel</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotfunc((x+i*y)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">a,[x,y], affichage=rempli),a=1..10))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La suite des différentes représentations "4D" des surfaces définies par </span>(<span style="font-style:italic">x</span>+<span style="font-style:italic">i</span>*<span style="font-style:italic">y</span>)<sup><span style="font-style:italic">a</span></sup><span style="font-family:monospace">, pour </span><span style="font-style:italic">a</span>=0..10<span style="font-family:monospace"> avec les couleurs de l’arc en ciel</span></div><p><span style="font-weight:bold">Remarque</span>
+0n peut construire la séquence avec un programme, par exemple on 
+veut dessiner les segments de longueur 1,√<span style="text-decoration:overline">2</span>...√<span style="text-decoration:overline">2</span>0 construit avec 
+un triangle rectangle de côtés 1 et le segment précédent.<br>
+Voici ce programme (bien mettre <span style="font-family:monospace">c:=evalf(..)</span> pour que les calculs soient 
+approchés sinon le temps de calcul est trop long) :
+</p><pre class="verbatim">essai(n):={
+local a,b,c,j,aa,bb,L;
+a:=1;
+b:=1;
+L:=[point(1)];
+for(j:=1;j&lt;=n;j++){
+L:=append(L,point(a+i*b));
+c:=evalf(sqrt(a^2+b^2));
+aa:=a;
+bb:=b;
+a:=aa-bb/c;
+b:=bb+aa/c;
+}
+L;
+}
+</pre><p>
+Puis on tape :
+</p><div class="center"><span style="font-family:monospace">animation(essai(20))</span></div><p>
+On voit, en boucle, chaque point, l’un après l’autre, avec un temps 
+d’affichage plus ou moins grand selon la valeur de <span style="font-family:monospace">animate</span> de <span style="font-family:monospace">cfg</span>.<br>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">L:=essai(20); s:=segment(0,L[k])$(k=0..20)</span></div><p>
+On voit les 21 segments. <br>
+Puis on tape :
+</p><div class="center"><span style="font-family:monospace">animation(s)</span></div><p>
+On voit, en boucle, chaque segment, l’un apres l’autre avec un temps 
+d’affichage plus ou moins grand selon la valeur de <span style="font-family:monospace">animate</span> de <span style="font-family:monospace">cfg</span>.</p>
+<hr>
+<a href="cascmd_fr103.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr105.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

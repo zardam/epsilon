@@ -1,0 +1,1218 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Exercices de combinatoire</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casrouge008.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge010.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc264">Chapitre 9</A>  Exercices de combinatoire</H1><H2 CLASS="section"><A NAME="toc72"></A><A NAME="htoc265">9.1</A>  Fonction partage ou nombre de partitions de <I>n</I>∈ ℕ</H2><H3 CLASS="subsection"><A NAME="htoc266">9.1.1</A>  L’énoncé</H3><P>
+<B>Définition</B><BR>
+Un partition de <I>n</I>∈ ℕ est une suite de nombres entiers :
+λ<SUB>1</SUB>≥ λ<SUB>2</SUB>≥ ...λ<SUB><I>m</I></SUB>&gt;0 tels que :
+∑<SUB><I>j</I>=1</SUB><SUP><I>m</I></SUP>λ<SUB><I>j</I></SUB> =<I>n</I>.<BR>
+On note <I>p</I>(<I>n</I>) la fonction partage de <I>n</I> : c’est le nombre de partitions 
+distinctes de <I>n</I>∈ ℕ et on convient que p(0)=1.<BR>
+<B>Exemples</B><BR>
+<I>p</I>(5)=7 car les 7 partitions distinctes de 5 sont :<BR>
+1+1+1+1+1=5<BR>
+2+1+1+1=5<BR>
+2+2+1=5<BR>
+3+1+1=5<BR>
+3+2=5<BR>
+4+1=5<BR>
+5=5<BR>
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Chercher à la main : <I>p</I>(1),<I>p</I>(2),<I>p</I>(3),<I>p</I>(4),<I>p</I>(5),<I>p</I>(6),<I>p</I>(7)
+</LI><LI CLASS="li-enumerate">Écrire un programme qui renvoie les valeurs de 
+<I>p</I>(0),<I>p</I>(1),<I>p</I>(2),<I>p</I>(3)..<I>p</I>(<I>n</I>)
+</LI><LI CLASS="li-enumerate">Montrer ce que Euler a remarqué à savoir que le développement en 
+séries tronqué à l’ordre <I>n</I> de :
+∏<SUB><I>j</I>=1</SUB><SUP><I>n</I></SUP>1/1−<I>x</I><SUP><I>j</I></SUP> vaut ∑<SUB><I>j</I>=1</SUB><SUP><I>n</I></SUP><I>p</I>(<I>j</I>)<I>x</I><SUP><I>j</I></SUP>.
+</LI><LI CLASS="li-enumerate">Écrire un programme qui renvoie les coefficients du développement en 
+séries tronqué à l’ordre <I>n</I> de :
+∏<SUB><I>j</I>=1</SUB><SUP><I>n</I></SUP>1/1−<I>x</I><SUP><I>j</I></SUP> 
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc267">9.1.2</A>  La solution</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On trouve :<BR>
+<I>p</I>(0)=1, <I>p</I>(1)=1, <I>p</I>(2)=2, <I>p</I>(3)=3, <I>p</I>(4)=5, <I>p</I>(5)=7, <I>p</I>(6)=11, <I>p</I>(7)=15
+</LI><LI CLASS="li-enumerate">Soit <I>A</I> une matrice triangulaire inférieure tel que :<BR>
+si <I>k</I>≤ <I>j</I>, <I>A</I>[<I>j</I>,<I>k</I>] represente le nombre de partitions de <I>j</I> tel que
+λ<SUB>1</SUB>=<I>k</I>≥ λ<SUB>2</SUB>≥ ...λ<SUB><I>m</I></SUB>&gt;0.
+<B>Sur l’exemple</B><BR>
+<I>p</I>(5)=7 car les 7 partitions distinctes de 5 sont :<BR>
+1+1+1+1+1=5 donc <I>A</I>[5,1]=1<BR>
+2+1+1+1=5<BR>
+2+2+1=5 donc <I>A</I>[5,2]=2<BR>
+3+1+1=5<BR>
+3+2=5 donc <I>A</I>[5,3]=2<BR>
+4+1=5 donc <I>A</I>[5,4]=1<BR>
+5=5 donc <I>A</I>[5,5]=1<BR>
+On a alors <I>p</I>(<I>j</I>)=∑<SUB><I>k</I>=0</SUB><SUP><I>j</I></SUP><I>A</I>[<I>j</I>,<I>k</I>].<BR>
+On remarque donc :<BR>
+<I>A</I>[0,0]=1 et <I>A</I>[<I>j</I>,0]=0 (car λ<SUB><I>m</I></SUB>&gt;0 sauf pour <I>j</I>=0 puisque <I>p</I>(0)=1)<BR>
+<I>A</I>[<I>j</I>,<I>j</I>]=1 puisque <I>j</I>=<I>j</I><BR>
+<I>A</I>[<I>j</I>,1]=<I>A</I>[<I>j</I>−1,1]=1 puisque <I>j</I>=<I>j</I>−1+1=<I>j</I>−2+1+1=1+1...+1<BR>
+<I>A</I>[<I>j</I>,2]=<I>A</I>[<I>j</I>−2,1]+<I>A</I>[<I>j</I>−2,2] puisque <I>j</I>=2+1+1+...=2+2+....<BR>
+<I>A</I>[<I>j</I>,3]=<I>A</I>[<I>j</I>−3,1]+<I>A</I>[<I>j</I>−3,2]+<I>A</I>[<I>j</I>−3,3] puisque <I>j</I>=3+1+1+...1=3+2+....=3+3+....<BR>
+etc...<BR>
+<I>A</I>[<I>j</I>,<I>j</I>−1]=<I>A</I>[<I>j</I>−1,<I>j</I>−1]=1 puisque <I>j</I>=(<I>j</I>−1)+1<BR>
+ou encore :<BR>
+les coefficients d’indice 0 de toutes les lignes sont nuls et<BR>
+
+pour <I>k</I>=1..<I>n</I> le coefficient d’indice <I>k</I> de la n-ième ligne est 
+obtenu en faisant la somme des coefficients d’indice 0..<I>k</I> de la <I>n</I>−<I>k</I>-ième
+ligne c’est à dire :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>A</I>[<I>n</I>,<I>k</I>]=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>k</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>A</I>[<I>n</I>−<I>k</I>,<I>j</I>]  et  </TD></TR>
+</TABLE>
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>A</I>[<I>n</I>,<I>n</I>]=1   et  <I>A</I>[<I>n</I>,0]=0  si  <I>n</I>&gt;0</TD></TR>
+</TABLE>
+Voici l’illustration pour <I>n</I>=5 avec<BR>
+<I>k</I>=2, on a 5=0+1+4 :<BR>
+<I>k</I>=3, on a 8=0+1+3+4 :<BR>
+<I>k</I>=4, on a 9=0+1+3+3+2 :<BR>
+....
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD CLASS="dcell">| </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD CLASS="dcell">|</TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD CLASS="dcell">|</TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD CLASS="dcell">|</TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD CLASS="dcell">|</TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD CLASS="dcell">|</TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>3</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>3</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD CLASS="dcell">|</TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>3</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>4</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD CLASS="dcell">|</TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>4</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD CLASS="dcell">|</TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+</TABLE></TD><TD CLASS="dcell">|</TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>9</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎠</TD></TR>
+</TABLE>
+On va faire un programme qui va calculer les coefficients de la matrice <I>A</I>.<P>On tape :
+</P><PRE CLASS="verbatim">partitions(n):={
+  local A,j,k,m,S;
+  A:=idn(n+1);
+  pour j de 2 jusque n faire
+    pour k de 1 jusque j-1 faire
+      S:=0;
+      pour m de 1 jusque k faire
+        S:=S+A[j-k,m];
+      fpour;
+      A[j,k]:=S;
+    fpour;
+  fpour;
+  retourne A;
+}:;
+</PRE><P>On tape :
+<TT>A:=partitions(10)</TT><BR>
+On obtient : 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>9</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎠</TD></TR>
+</TABLE><P>
+On tape :
+<TT>sum(A[k])$(k=0..10)</TT><BR>
+On obtient : <TT>1,1,2,3,5,7,11,15,22,30,42</TT></P><P>On peut faire un autre programme qui renverra la matrice <I>B</I> qui sera tel que :
+si <I>k</I>≤ <I>j</I>, <I>A</I>[<I>j</I>,<I>k</I>] represente le nombre de partitions de <I>j</I> tel que
+<I>k</I>&gt;=λ<SUB>1</SUB>≥ λ<SUB>2</SUB>≥ ...λ<SUB><I>m</I></SUB>&gt;0.
+Autrement dit les lignes de <I>B</I> sont les sommes partielles des lignes de <I>A</I> :
+<I>B</I>[<I>j</I>,<I>k</I>]=∑<SUB><I>m</I>=0</SUB><SUP><I>k</I></SUP><I>A</I>[<I>j</I>,<I>m</I>]
+donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>B</I>[<I>j</I>,<I>k</I>]=<I>B</I>[<I>j</I>−<I>k</I>,<I>k</I>]+<I>B</I>[<I>j</I>,<I>k</I>−1]</TD></TR>
+</TABLE><P>
+On a donc <I>p</I>(<I>j</I>)=<I>B</I>[<I>j</I>,<I>j</I>].<BR>
+On tape :
+</P><PRE CLASS="verbatim">partition(n):={
+  local B,j,k,m,S;
+  B:=idn(n+1);
+  pour k de 1 jusque n faire
+    B[0,k]:=1;
+  fpour;
+  pour j de 1 jusque n faire
+    pour k de 1 jusque j faire
+      B[j,k]:=B[j-k,k]+B[j,k-1];
+    fpour;
+    pour k de j+1 jusque n faire
+      B[j,k]:=B[j,j];
+    fpour;
+  fpour;
+  retourne B;
+}
+:;
+</PRE><P>On tape :
+<TT>B:=partition(10)</TT><BR>
+On obtient : 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>2 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>3 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>5 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>7 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>9</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>11</TD><TD ALIGN=center NOWRAP>11</TD><TD ALIGN=center NOWRAP>11</TD><TD ALIGN=center NOWRAP>11</TD><TD ALIGN=center NOWRAP>11 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>11</TD><TD ALIGN=center NOWRAP>13</TD><TD ALIGN=center NOWRAP>14</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>15 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>18</TD><TD ALIGN=center NOWRAP>20</TD><TD ALIGN=center NOWRAP>21</TD><TD ALIGN=center NOWRAP>22</TD><TD ALIGN=center NOWRAP>22</TD><TD ALIGN=center NOWRAP>22 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>12</TD><TD ALIGN=center NOWRAP>18</TD><TD ALIGN=center NOWRAP>23</TD><TD ALIGN=center NOWRAP>26</TD><TD ALIGN=center NOWRAP>28</TD><TD ALIGN=center NOWRAP>29</TD><TD ALIGN=center NOWRAP>30</TD><TD ALIGN=center NOWRAP>30 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>14</TD><TD ALIGN=center NOWRAP>23</TD><TD ALIGN=center NOWRAP>30</TD><TD ALIGN=center NOWRAP>35</TD><TD ALIGN=center NOWRAP>38</TD><TD ALIGN=center NOWRAP>40</TD><TD ALIGN=center NOWRAP>41</TD><TD ALIGN=center NOWRAP>42</TD></TR>
+</TABLE></TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎠</TD></TR>
+</TABLE><P>
+On remarquera que l’on retrouve la matrice <I>A</I> dans les diagonales montantes 
+de la matrice <I>B</I>.<BR>
+On tape :
+<TT>tran(B)[10]</TT><BR>
+ou on tape :
+<TT>col(B,10)</TT><BR>
+On obtient : <TT>[1,1,2,3,5,7,11,15,22,30,42]</TT>
+ou on tape :
+<TT>B[j,10]$(j=0..10)</TT><BR>
+On obtient : <TT>1,1,2,3,5,7,11,15,22,30,42</TT>
+On tape :
+<TT>B:=partition(1000):;</TT><BR>
+On obtient (Evaluation time: 972.05) enfin le résultat...<BR>
+On tape :
+<TT>B[200,1000]</TT><BR>
+On obtient 
+<TT>3972999029388</TT><BR>
+On tape :
+<TT>B[1000,1000]</TT><BR>
+On obtient 
+<TT>24061467864032622473692149727991</TT><BR>
+<B>Remarque</B>
+On peut aussi pour avoir une relation de récurrence considérer les 
+les partitions <I>P</I>(<I>n</I>,<I>p</I>) de <I>n</I> en une somme d’exactement <I>p</I> éléments 
+λ<SUB>1</SUB>≥ ...≥ λ<SUB><I>p</I></SUB>&gt;0. On dit alors :<BR>
+<I>P</I>(<I>n</I>,<I>p</I>) =(nombre de partage de <I>n</I> tels que λ<SUB><I>p</I></SUB>=1)+(nombre de partage de <I>n</I> tels que λ<SUB><I>p</I></SUB>&gt;1).<BR>
+On a :<BR>
+(nombre de partage de <I>n</I> tels que λ<SUB><I>p</I></SUB>=1)=(nombre de partage de <I>n</I>−1 en
+<I>p</I>−1 λ<SUB><I>j</I></SUB>)=<I>P</I>(<I>n</I>−1,<I>p</I>−1)<BR>
+(nombre de partage de <I>n</I> tels que λ<SUB><I>p</I></SUB>&gt;1)=(nombre de partage de <I>n</I>−<I>p</I> en
+<I>p</I> λ<SUB><I>j</I></SUB>)=<I>P</I>(<I>n</I>−<I>p</I>,<I>p</I>)<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>n</I>,<I>p</I>):=<I>P</I>(<I>n</I>−1,<I>p</I>−1)+<I>P</I>(<I>n</I>−<I>p</I>,<I>p</I>)</TD></TR>
+</TABLE><P> 
+avec <I>P</I>(<I>n</I>,0)=0, <I>P</I>(<I>n</I>,<I>n</I>)=1 et <I>P</I>(<I>n</I>,<I>p</I>)=0 si <I>p</I>&gt;<I>n</I><BR>
+On tape et on renvoie la somme des lignes de <I>P</I> :
+</P><PRE CLASS="verbatim">partage(n):={
+  local P,j,k,m,S;
+  P:=idn(n+1);
+  pour k de 1 jusque n faire
+    P[k,0]:=0;
+  fpour;
+  pour j de 1 jusque n faire
+    pour k de 1 jusque j faire
+      P[j,k]:=P[j-1,k-1]+P[j-k,k];
+    fpour;
+  fpour;
+  S:=[];
+  pour k de 1 jusque n faire
+    S[k]:=sum(row(P,k));
+  fpour;
+  retourne S;
+}:;
+</PRE><P>On tape :
+<TT>P:=partage(1000):;</TT><BR>
+On obtient (Evaluation time: 455.81) enfin le résultat...mais c’est deux 
+fois plus rapide qu’avec <TT>B:=partition(1000):;</TT><BR>
+On tape :
+<TT>P[200]</TT><BR>
+On obtient 
+<TT>3972999029388</TT><BR>
+On tape :
+<TT>P[1000]</TT><BR>
+On obtient 
+<TT>24061467864032622473692149727991</TT><BR>
+
+<B>relation entre </B><B><I>P</I></B><B> et </B><B><I>A</I></B> :<BR>
+On a :<BR>
+<I>P</I>[<I>n</I>,<I>p</I>]=<I>P</I>[<I>n</I>−1,<I>p</I>−1]+<I>P</I>[<I>n</I>−<I>p</I>,<I>p</I>]<BR>
+<I>P</I>[<I>n</I>−1,<I>p</I>−1]=<I>P</I>[<I>n</I>−2,<I>p</I>−2]+<I>P</I>[<I>n</I>−<I>p</I>,<I>p</I>−1]....<BR>
+donc </P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>[<I>n</I>,<I>p</I>]= <I>P</I>[<I>n</I>−<I>p</I>,0]+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>p</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>P</I>[<I>n</I>−<I>p</I>,<I>j</I>]</TD></TR>
+</TABLE><P> 
+avec <I>P</I>[<I>n</I>,0]=0, <I>P</I>[<I>n</I>,<I>n</I>]=1 et <I>P</I>[<I>n</I>,<I>p</I>]=0 si <I>p</I>&gt;<I>n</I><BR>
+Si on compare avec les relations obtenus pour <I>A</I>:<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>A</I>[<I>n</I>,<I>k</I>]=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>k</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>A</I>[<I>n</I>−<I>k</I>,<I>j</I>]  et  </TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>A</I>[<I>n</I>,<I>n</I>]=1   et  <I>A</I>[<I>n</I>,0]=0  si  <I>n</I>&gt;0</TD></TR>
+</TABLE><P>
+On a les mêmes relations de récurrence, donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>[<I>n</I>,<I>p</I>]=<I>A</I>[<I>n</I>,<I>p</I>]</TD></TR>
+</TABLE><P>
+<B>Représentation de Young</B><BR>
+On peut voir facilement cette égalité, grâce à la repésentation de 
+Young qui repésente par exemple le partage :<BR>
+20=7+3+3+2+1+1+1+1+1<BR>
+par le tableau formé par 20 carrés disposés selon 9 lignes :<BR>
+7 carrés sur la 1-ière ligne,<BR>
+3 carrés sur la 2-ième ligne,<BR>
+3 carrés sur la 3-ième ligne,<BR>
+2 carrés sur la 4-ième ligne,<BR>
+1 carré sur de la 5-ième jusqu’à la 9-ième ligne :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎡<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎣</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□ </TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+</TABLE></TD><TD CLASS="dcell">⎤<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎦</TD></TR>
+</TABLE><P>
+Le nombre <I>p</I> de lignes correspond a un partage en une 
+somme de <I>p</I> éléments et le plus grand élément <I>m</I> de ce partage 
+est le nombre d’éléments de la première ligne.<BR>
+Si maintenant on échange les lignes et les colonnes (on prend le transposé 
+de ce tableau) on obtient une transformation qui au partage :<BR>
+20=7+3+3+2+1+1+1+1+1 en 
+une somme de 9 termes ayant comme plus grand élément 7 fait correspondre le
+partage :<BR>
+20=9+4+3+1+1+1+1 en 
+une somme de 7 termes ayant comme plus grand élément 9 :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎡<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎣</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>□</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+</TABLE></TD><TD CLASS="dcell">⎤<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎦</TD></TR>
+</TABLE></LI><LI CLASS="li-enumerate"><B>Notations</B><BR>
+1 sera noté 1<SUB>1</SUB>, 1+1 sera noté 2<SUB>1</SUB>, 1+1+1 sera noté 3<SUB>1</SUB> etc...<BR>
+2 sera noté 2<SUB>2</SUB>, 2+2 sera noté 4<SUB>2</SUB>, 2+2+2 sera noté 6<SUB>2</SUB> etc...<BR>
+Le développement en série de ;<BR>
+1/1−<I>x</I><SUP>1</SUP> sera noté 1+<I>x</I><SUP>1<SUB>1</SUB></SUP>+<I>x</I><SUP>2<SUB>1</SUB></SUP>+...+<I>x</I><SUP><I>n</I><SUB>1</SUB></SUP>+...<BR>
+1/1−<I>x</I><SUP>2</SUP> sera noté 1+<I>x</I><SUP>2<SUB>2</SUB></SUP>+<I>x</I><SUP>4<SUB>2</SUB></SUP>+...+<I>x</I><SUP>2<I>n</I><SUB>2</SUB></SUP>+...<BR>
+1/1−<I>x</I><SUP>3</SUP> sera noté 1+<I>x</I><SUP>3<SUB>3</SUB></SUP>+<I>x</I><SUP>6<SUB>3</SUB></SUP>+...+<I>x</I><SUP>3<I>n</I><SUB>3</SUB></SUP>+...<BR>
+.....<BR>
+1/1−<I>x</I><SUP><I>p</I></SUP> sera noté 1+<I>x</I><SUP><I>p</I><SUB><I>p</I></SUB></SUP>+<I>x</I><SUP>2<I>p</I><SUB><I>p</I></SUB></SUP>+...+<I>x</I><SUP><I>pn</I><SUB><I>p</I></SUB></SUP>+...<BR>
+Lorsque l’on fait le produit de ces développements en série le terme en <I>x</I><SUP><I>j</I></SUP> a 
+pour coefficient <I>p</I>(<I>j</I>) car :<BR>
+<I>x</I><SUP><I>j</I></SUP>=<I>x</I><SUP><I>j</I><SUB>1</SUB></SUP>=<I>x</I><SUP>(<I>j</I>−2)<SUB>1</SUB></SUP><I>x</I><SUP>2<SUB>2</SUB></SUP>=<I>x</I><SUP>(<I>j</I>−4)<SUB>1</SUB></SUP><I>x</I><SUP>4<SUB>2</SUB></SUP> ...<BR>
+<I>x</I><SUP><I>j</I></SUP>=<I>x</I><SUP>(<I>j</I>−2)<SUB><I>j</I>−2</SUB></SUP><I>x</I><SUP>2<SUB>1</SUB></SUP>=<I>x</I><SUP>(<I>j</I>−2)<SUB><I>j</I>−2</SUB></SUP><I>x</I><SUP>2<SUB>2</SUB></SUP>=<I>x</I><SUP>(<I>j</I>−1)<SUB><I>j</I>−1</SUB></SUP><I>x</I><SUP>1<SUB>1</SUB></SUP>=<I>x</I><SUP><I>j</I><SUB><I>j</I></SUB></SUP><P>On tape :
+<TT>P:=truncate(product([(1-x</TT><CODE><TT>^</TT></CODE><TT>j)$(j=1..20)]),20)</TT><BR>
+On obtient : <TT>-x</TT><CODE><TT>^</TT></CODE><TT>15-x</TT><CODE><TT>^</TT></CODE><TT>12+x</TT><CODE><TT>^</TT></CODE><TT>7+x</TT><CODE><TT>^</TT></CODE><TT>5-x</TT><CODE><TT>^</TT></CODE><TT>2-x+1</TT><BR>
+On tape : <TT>A:=truncate(series(1/P,x=0,20),20)</TT><BR>
+On obtient :<BR>
+<TT>627*x</TT><CODE><TT>^</TT></CODE><TT>20+490*x</TT><CODE><TT>^</TT></CODE><TT>19+385*x</TT><CODE><TT>^</TT></CODE><TT>18+297*x</TT><CODE><TT>^</TT></CODE><TT>17+231*x</TT><CODE><TT>^</TT></CODE><TT>16+176*x</TT><CODE><TT>^</TT></CODE><TT>15+ 135*x</TT><CODE><TT>^</TT></CODE><TT>14+101*x</TT><CODE><TT>^</TT></CODE><TT>13+77*x</TT><CODE><TT>^</TT></CODE><TT>12+56*x</TT><CODE><TT>^</TT></CODE><TT>11+42*x</TT><CODE><TT>^</TT></CODE><TT>10+30*x</TT><CODE><TT>^</TT></CODE><TT>9+22*x</TT><CODE><TT>^</TT></CODE><TT>8+ 15*x</TT><CODE><TT>^</TT></CODE><TT>7+11*x</TT><CODE><TT>^</TT></CODE><TT>6+7*x</TT><CODE><TT>^</TT></CODE><TT>5+5*x</TT><CODE><TT>^</TT></CODE><TT>4+3*x</TT><CODE><TT>^</TT></CODE><TT>3+2*x</TT><CODE><TT>^</TT></CODE><TT>2+x+1</TT><BR>
+On tape :<TT>symb2poly(A)</TT><BR>
+ou on tape : <TT>coeff(A,x)</TT><BR>
+On obtient la liste <I>p</I>(20),<I>p</I>(19),..,<I>p</I>(1),<I>p</I>(0):<BR>
+<TT>[627,490,385,297,231,176,135,101,77,56,42,30,22,15,11, 7,5,3,2,1,1]</TT><BR>
+On tape :<TT>lcoeff(A)</TT><BR>
+On obtient <I>p</I>(20): 
+<TT>627</TT><BR>
+</P></LI><LI CLASS="li-enumerate">On tape mais cela n’est pas très efficace lorsque <I>n</I> est grand :
+<PRE CLASS="verbatim">partitioner(n):={
+local A,P;
+P:=truncate(product([(1-x^j)$(j=1..n)]),n);
+A:=truncate(series(1/P,x=0,n),n);
+return revlist(symb2poly(A));
+}:;
+</PRE>On tape : <TT>partitioner(20)</TT><BR>
+On obtient la liste <I>p</I>(20),<I>p</I>(19),..,<I>p</I>(1),<I>p</I>(0) :<BR>
+<TT>[627,490,385,297,231,176,135,101,77,56,42,30,22,15,11, 7,5,3,2,1,1]</TT>
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc268">9.1.3</A>  Une méthode plus rapide</H3><P>
+On utilise le théorème du nombre pentagonal d’Euler. Ce théorème donne
+une relation de récurrence entre <I>p</I>(<I>n</I>) et <I>p</I>(<I>j</I>) pour <I>j</I>&lt;<I>n</I> avec la 
+convention que <I>p</I>(<I>j</I>)=0 lorsque <I>j</I>&lt;0, <I>p</I>(0)=1. 
+Cette relation est :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>p</I>(<I>n</I>)=<I>p</I>(<I>n</I>−1)+<I>p</I>(<I>n</I>−2)−<I>p</I>(<I>n</I>−5)−<I>p</I>(<I>n</I>−7)+<I>p</I>(<I>n</I>−12)+<I>p</I>(<I>n</I>−15)−<I>p</I>(<I>n</I>−22)−<I>p</I>(<I>n</I>−26)....</TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>p</I>(<I>n</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>m</I>&gt;0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> (−1)<SUP><I>m</I>+1</SUP><I>p</I>(<I>n</I>−<I>m</I>(3<I>m</I>−1)/2)+(−1)<SUP><I>m</I>+1</SUP><I>p</I>(<I>n</I>−<I>m</I>(3<I>m</I>+1)/2)</TD></TR>
+</TABLE><P>
+Les nombres <I>m</I>(3<I>m</I>−1)/2  et <I>m</I>(3<I>m</I>+1)/2  sont les nombres pentagonaux 
+généralisés. On tape :
+</P><PRE CLASS="verbatim">partition_euler(n):={
+local sg,s1,s2,m,k,j,p;
+p:=[1];
+pour j de 1 jusque n faire
+m:=1;
+sg:=1;
+s1:=0;
+k:=j-m*(3*m-1)/2;
+tantque k&gt;=0 faire 
+s1:=s1+sg*p[k]
+sg:=-sg;
+m:=m+1;
+k:=j-m*(3*m-1)/2;
+ftantque;
+m:=1;
+sg:=1;
+s2:=0;
+k:=j-m*(3*m+1)/2;
+tantque k&gt;=0 faire 
+s2:=s2+sg*p[k]
+sg:=-sg;
+m:=m+1;
+k:=j-m*(3*m+1)/2;
+ftantque;
+p[j]:=s1+s2;
+fpour;
+retourne p;
+}:;
+</PRE><P>On tape :<BR>
+<TT>partition_euler(20)</TT><BR>
+On obtient :<BR>
+<TT>[1,1,2,3,5,7,11,15,22,30,42,56,77,101,135,176,231,297,385,490,627]</TT><BR>
+On tape :<BR>
+<TT>P:=partition_euler(1000)</TT><BR>
+On obtient la liste après 2.77s<BR>
+On tape :
+<TT>P[200]</TT><BR>
+On obtient 
+<TT>3972999029388</TT><BR>
+On tape :
+<TT>P[1000]</TT><BR>
+On obtient 
+<TT>24061467864032622473692149727991</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc269">9.1.4</A>  Estimation asymptotique</H3><P>
+Ramanjan et Hardy ont trouvé une approximation de <I>p</I>(<I>n</I>) qui est :<BR>
+<I>p</I>(<I>n</I>)≃ <I>e</I><SUP>π</SUP>√<SPAN style="text-decoration:overline">2<I>n</I>/3</SPAN>/4<I>n</I>√<SPAN style="text-decoration:overline">3</SPAN> quand <I>n</I> tend vers 
++∞.<BR>
+On tape :<BR>
+<TT>P(n):=exp(pi*sqrt(2n/3))/(4n*sqrt(3))</TT><BR>
+<TT>floor(evalf(P(1000),31))</TT><BR>
+
+On obtient :<BR>
+<TT>24401996316802476288263414942904</TT> au lieu de<BR>
+<TT>24061467864032622473692149727991</TT>
+</P><H2 CLASS="section"><A NAME="toc73"></A><A NAME="htoc270">9.2</A>  Un exercice de combinatoire et son programme</H2><H3 CLASS="subsection"><A NAME="htoc271">9.2.1</A>  L’énoncé</H3><P>
+Un jury est composé de <I>p</I> personnes que l’on choisit parmi <I>n</I> personnes :
+<I>h</I> hommes et <I>f</I> femmes (<I>h</I>+<I>f</I>=<I>n</I>).<BR>
+<B>Application numérique</B> : <I>p</I>=10, <I>n</I>=17, <I>h</I>=9, <I>f</I>=8.
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Écrire un programme qui renvoie la liste contenant les 
+différents jurys possibles.
+</LI><LI CLASS="li-enumerate">On impose comme contrainte que Monsieur Y et Madame X ne doivent pas
+se trouver ensemble.<BR>
+Écrire un programme qui renvoie la liste contenant tous les jurys respectant 
+cette contrainte.
+</LI><LI CLASS="li-enumerate">On veut que le jury respecte la parité "homme-femme".<BR>
+Pour cela, si <I>p</I>=2*<I>k</I> ou <I>p</I>=2*<I>k</I>+1, on suppose <I>f</I>≥ <I>k</I> et <I>h</I>=<I>n</I>−<I>f</I> ≥ <I>p</I>−<I>k</I>.<BR>
+Écrire un programme qui renvoie la liste contenant les 
+jurys ayant <I>p</I>−<I>k</I> hommes et <I>k</I> femmes.
+</LI><LI CLASS="li-enumerate">Avec l’hypothèse précédente, écrire un programme qui renvoie la 
+liste contenant les jurys respectant la parité "homme-femme" et respectant 
+la contrainte Monsieur Y et Madame X ne doivent pas se trouver ensemble.<BR>
+</LI><LI CLASS="li-enumerate">Rappels 
+Avec <TT>Xcas</TT>, la commande <TT>comb(n,p)</TT> renvoie le nombre de combinaisons
+de <I>p</I> objets pris parmi <I>n</I>.<BR>
+Avec <TT>Xcas</TT>, la commande <TT>convert(k,base,2)</TT> renvoie la liste
+<I>K</I> de longueur <I>l</I> vérifiant <I>k</I>=∑<SUB><I>j</I>=0</SUB><SUP><I>l</I>−1</SUP><I>K</I>[<I>j</I>]*2<SUP><I>j</I></SUP>.
+<TT>revlist(K)</TT> renvoie alors l’écriture en base 2 de <I>k</I>.
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc272">9.2.2</A>  Les programmes</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On peut avoir <TT>comb(n,p)</TT> jurys différents.<BR>
+On tape : <TT>comb(17,10)</TT><BR>
+On obtient : <TT>19448</TT><BR>
+Supposons que <I>n</I> cases <I>C</I> numérotées de 0 à <I>n</I>−1 
+représentent les membres du jury.<BR>
+Dans ces cases on met 1 si la personne fait partie 
+du jury et 0 sinon. Un jury est donc une liste de 0 et de 1 et cela fait penser
+à l’écriture en base 2 d’un entier.<BR>
+Avec <TT>Xcas</TT>, la commande <TT>convert(k,base,2)</TT> renvoie la liste
+<I>K</I> de longueur <I>l</I> vérifiant <I>k</I>=∑<SUB><I>j</I>=0</SUB><SUP><I>l</I>−1</SUP><I>K</I>[<I>j</I>]*2<SUP><I>j</I></SUP>
+On va donc considérer un jury comme un entier dont l’écriture en base 2
+a au plus <I>n</I> chiffres et comporte exactement <I>p</I> 1. 
+Pour faire le programme on va repésenter chaque jury par un nombre dont 
+l’écriture en base 2 comporte au plus <I>n</I> chiffres dont <I>p</I> 1 et pas plus de 
+<I>n</I>−<I>p</I> zéros.<BR>
+Le plus petit nombre correspondant à un jury est :<BR>
+<TT>m=sum(2</TT><CODE><TT>^</TT></CODE><TT>j,j,0,p-1)=2</TT><CODE><TT>^</TT></CODE><TT>p-1</TT><BR>
+et le plus grand nombre correspondant à un jury est :<BR>
+<TT>M=sum(2</TT><CODE><TT>^</TT></CODE><TT>j,j,n-p,n-1)=2</TT><CODE><TT>^</TT></CODE><TT>n-2</TT><CODE><TT>^</TT></CODE><TT>(n-p)</TT><BR>
+car les <I>n</I> cases sont numerotés de 0 à <I>n</I>−1.<BR>
+On peut initialiser la liste 
+<TT>L</TT> soit avec <TT>L:=makelist(0,1,1);</TT> soit avec
+<TT>L:=makelist(0,1,comb(n,p));</TT> puisque l’on connait sa longueur.
+On écrit le programme <TT>jurys(n,p)</TT> :
+<PRE CLASS="verbatim">jurys(n,p):={
+local j,k,L,m,M;
+//L:=makelist(0,1,comb(n,p));
+L:=makelist(0,1,1);
+k:=0;
+m:=2^p-1;
+M:=2^n-2^(n-p);
+for (j:=m;j&lt;=M;j++){
+if (sum(convert(j,base,2))==p){
+L[k]=&lt;j;
+k:=k+1;
+};
+}
+return L;
+}
+:;
+</PRE>On tape :
+<TT>J:=jurys(17,10):;</TT><BR>
+On obtient, au bout d’environ 11s, une liste J de taille 19448 et contenant des
+entiers qui lorsqu’on les décompose en base 2 donne la composition du jury.<BR>
+On tape :
+<TT>jurytire0:=J[rand(19448)]</TT><BR>
+On obtient par exemple : <TT>127255</TT><BR>
+On tape :
+<TT>convert(127255,base,2)</TT><BR>
+On obtient par exemple : <TT>[1,1,1,0,1,0,0,0,1,0,0,0,1,1,1,1,1]</TT><BR>
+Donc, les personnes de numéros : <TT>0,1,2,4,8,12,13,14,15,16</TT> ont été
+tirées au sort pour faire partie du jury.<BR>
+On peut bien sûr taper directement :<BR>
+<TT>jurytire0:=convert(J[rand(19448)],base,2)</TT><BR>
+On obtient par exemple : <TT>[1,0,0,0,1,1,1,0,1,1,1,0,0,1,0,1,1]</TT><BR>
+Donc, les personnes de numéros : <TT>0,4,5,6,8,9,10,13,15,16</TT> ont été
+tirées au sort pour faire partie du jury.<BR>
+
+</LI><LI CLASS="li-enumerate">On peut supposer que la case 0 représente Monsieur Y et que la case 
+<I>n</I>−1 représente Madame X.
+Donc le jury repésenté par le nombre <I>j</I> est valable si :<BR>
+<TT>irem(j,2)==0</TT> ou si <TT>j&lt;2</TT><CODE><TT>^</TT></CODE><TT>(n-1)</TT>.<BR>
+On peut réecrire un 
+programme <TT>jurysXY(n,p)</TT> qui utilise <TT>jurys</TT> ou un 
+programme <TT>juryXY(n,p)</TT> qui n’utilise pas <TT>jurys</TT> ou utiliser la 
+liste précédente <TT>J</TT> et rejeter les mauvais tirages.
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+Le programme <TT>jurysXY(n,p)</TT>.<BR>
+On peut initialiser la liste <TT>L</TT>, soit avec<BR>
+<TT>L:=makelist(0,1,1);</TT> soit avec<BR>
+<TT>L:=makelist(0,1,comb(n,p)-comb(n-2,p-2));</TT> 
+puisque l’on connait sa longueur.
+<PRE CLASS="verbatim">jurysXY(n,p):={
+local LP,L,j,k,l;
+LP:=jurys(n,p);
+s:=comb(n,p);
+l:=s-comb(n-2,p-2);
+//L:=makelist(0,1,1);
+L:=makelist(0,1,l);
+l:=0;
+for(k:=0;k&lt;s;k++){
+j:=LP[k];
+if (irem(j,2)==0 or j&lt;2^(n-1)) {
+L[l]=&lt;j;
+l:=l+1;
+}
+}
+return L;
+}:;
+</PRE>On tape : <TT>JXY:=jurysXY(17,10)</TT><BR>
+On a : <TT>size(JXY)=13013</TT><BR>
+On tape : <TT>jurytire1:=convert(JXY[rand(13013)],base,2)</TT><BR>
+On obtient par exemple : <TT>[0,1,1,0,1,1,1,1,1,0,0,0,1,0,1,0,1]</TT><BR>
+Mais ce programme appelle le programme <TT>jurys</TT> précédent....
+</LI><LI CLASS="li-itemize">Un programme <TT>juryXY(n,p)</TT> qui n’utilise pas <TT>jurys</TT><BR>
+Les nombres qui correspondent aux jurys ne contenant pas X et Y en même 
+temps ont dans la décomposition en base 2 soit le coefficient de 2<SUP><I>n</I>−1</SUP>
+nul, soit est un nombre pair avec le coefficient de 2<SUP><I>n</I>−1</SUP> égal à 1 donc
+égal à 2*<I>j</I>+2<SUP><I>n</I>−1</SUP>.<BR>
+Les nombres qui ont <I>p</I> 1 dans leur décomposition en
+base 2 et le coefficient de 2<SUP><I>n</I>−1</SUP> nul, vont de <I>m</I>=2<SUP><I>p</I></SUP>−1 à 
+<I>M</I>=2<SUP>(</SUP><I>n</I>−1)−2<SUP>(</SUP><I>n</I>−<I>p</I>−1).<BR>
+Les nombres pairs de la forme 2*<I>j</I>+2<SUP><I>n</I>−1</SUP> ont <I>j</I> qui a <I>p</I>−1 1 dans sa 
+décomposition en base 2. Les <I>j</I> vont donc de 2<SUP><I>p</I></SUP>−2 à 2<SUP>(</SUP><I>n</I>−1)−2<SUP>(</SUP><I>n</I>−<I>p</I>)
+par pas de 2.<BR>
+On peut initialiser la liste 
+<TT>L</TT> soit avec <TT>L:=makelist(0,1,1);</TT> soit avec
+<TT>L:=makelist(0,1,comb(n,p)-comb(n-2,p-2));</TT> puisque l’on connait sa 
+longueur.On tape le programme <TT>juryXY(n,p)</TT>
+<PRE CLASS="verbatim">juryXY(n,p):={
+local L,j,k,ls,m,M;
+s:=comb(n,p);
+l:=s-comb(n-2,p-2);
+L:=makelist(0,1,l);
+//L:=makelist(0,1,1);
+k:=0;
+m:=2^p-1;
+M:=2^(n-1)-2^(n-p-1);
+for(j:=m;j&lt;=M;j++){
+if (sum(convert(j,base,2))==p){
+L[k]=&lt;j;
+k:=k+1;
+}
+}
+M:=2^(n-1)-2^(n-p);
+for(j:=m-1;j&lt;=M;j:=j+2){
+if (sum(convert(j,base,2))==p-1){
+L[k]=&lt;j+2^(n-1);
+k:=k+1;
+}
+}
+return L;
+}:;
+</PRE>On tape : <TT>JXY:=juryXY(17,10)</TT><BR>
+On a : <TT>size(JXY)=13013</TT><BR>
+On tape : <TT>jurytire2:=convert(JXY[rand(13013)],base,2)</TT><BR>
+On obtient par exemple : <TT>[1,1,1,0,0,1,1,0,0,0,1,1,1,1,0,1]</TT><BR>
+
+</LI><LI CLASS="li-itemize">programme <TT>jurytireXY(J)</TT> qui se sert de la liste <TT>J</TT> obtenue 
+précédemment (<TT>J:=jurys(17,10):;</TT>)<BR>
+On tape :
+<PRE CLASS="verbatim">jurytireXY(J):={
+local k,n,(s:=size(J));
+n:=size(convert(J[s-1],base,2));
+k:=1+2^(n-1);
+while (irem(k,2)!=0 and k&gt;=2^(n-1)){
+k:=J[rand(s)];
+}
+return k;
+}
+</PRE>On tape :
+<TT>jurytireXY(J)</TT>
+On obtient par exemple : <TT>54762</TT><BR>
+On tape :
+<TT>convert(109242,base,2)</TT><BR>
+On obtient : <TT>[0,1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,1]</TT>
+</LI></UL>
+</LI><LI CLASS="li-enumerate">On peut supposer que les cases de 0 à <I>h</I>−1 représentent les 
+hommes et que les cases de <I>h</I> à <I>n</I>−1 représentent les femmes.
+On écrit un nouveau programme <TT>jury55(h,f,p)</TT> qui utilise le programme
+<TT>jurys(n,p)</TT> écrit précédemment ou on se sert de la liste 
+<TT>J</TT> trouvée précedemment.
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+Le programme <TT>jury55(h,f,p)</TT>.<BR>
+On peut initialiser la liste <TT>L</TT> soit avec<BR>
+<TT>L:=makelist(0,1,1);</TT> soit avec<BR>
+<TT>L:=makelist(0,1,comb(h,5)*comb(f,5));</TT><BR>
+puisque l’on connait sa longueur.
+<PRE CLASS="verbatim">jury55(h,f,p):={
+local L,j,k,M,F,l,p2;
+p2:=iquo(p,2);
+L:=makelist(0,1,1);
+//L:=makelist(0,1,comb(h,5)*comb(f,5));
+M:=jurys(h,p-p2);
+F:=jurys(f,p2)*2^h;
+l:=0;
+for(j:=0;j&lt;comb(h,p-p2);j++){
+for(k:=0;k&lt;comb(f,p2);k++){
+L[l]=&lt;M[j]+F[k];
+l:=l+1;
+}
+}
+return L
+}:;
+</PRE><TT>J55:=jury55(9,8,10)</TT><BR>
+<TT>size(J55)=7056</TT><BR>
+On tape : <TT>jurytire3:=convert(J55[rand(7056)],base,2)</TT><BR>
+On obtient par exemple : <TT>[1,0,1,0,1,0,1,0,1,1,1,1,1,1]</TT><BR>
+</LI><LI CLASS="li-itemize">Le programme <TT>jurytire55(J,h)</TT> qui se sert de la liste <TT>J</TT> 
+obtenue précédemment :<BR>
+On tape :
+<PRE CLASS="verbatim">jurytire55(J,h):={
+local k,n,p,la,j,(s:=size(J));
+la:=convert(J[s-1],base,2);
+n:=size(la);
+p:=sum(la);
+k:=iquo(p,2);
+j:=1;
+while (sum(convert(irem(j,2^h),base,2))!=p-k){
+j:=J[rand(s)];
+}
+return j;
+}
+</PRE>On tape : <TT>jurytire4:=convert(jurytire55(J,9),base,2)</TT><BR>
+On obtient par exemple : <TT>[1,1,1,0,1,0,0,0,1,1,1,1,1,0,0,1]</TT><BR>
+</LI></UL>
+</LI><LI CLASS="li-enumerate">On peut supposer que la case 0 représente Monsieur Y et que la case 
+<I>n</I>−1 représente Madame X.
+Donc le jury repésenté par le nombre <I>j</I> est valable si :<BR>
+<TT>irem(j,2)==0</TT> ou si <TT>j&lt;2</TT><CODE><TT>^</TT></CODE><TT>(n-1)</TT>.<BR>
+On peut réecrire un programme <TT>jury55XY(h,f,p)</TT> qui utilise <TT>jury55</TT>,
+ou un programme <TT>jurys55XY(n,p)</TT> qui n’utilise pas <TT>jury55</TT> mais 
+<TT>jurys</TT>,
+ou utiliser la liste précédente <TT>J55</TT> et rejeter les mauvais tirages,
+ou encore utiliser la liste <TT>J</TT> du début et rejeter les mauvais tirages.
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+Le programme <TT>juryXY55(h,f,p)</TT> qui utilise <TT>jury55</TT>.<BR>
+On peut initialiser la liste <TT>L</TT> soit avec<BR>
+<TT>L:=makelist(0,1,1);</TT> soit avec<BR>
+<TT>L:=makelist(0,1,comb(h,p-p2)*comb(f-1,p2-1));</TT><BR>
+ puisque l’on connait sa longueur.
+<PRE CLASS="verbatim">juryXY55(h,f,p):={
+local LP,L,j,k,l,p2;
+p2:=iquo(p,2);
+LP:=jury55(h,f,p);
+//L:=makelist(0,1,1);
+s:=comb(h,p-p2)*comb(f,p2);
+l:=s-comb(h-1,p-p2-1)*comb(f-1,p2-1);
+L:=makelist(0,1,l);
+l:=0;
+for(j:=0;j&lt;s;j++){
+k:=LP[j];
+if (irem(k,2)==0 or k&lt;2^(h+f-1)) {
+L[l]=&lt;k;
+l:=l+1;
+}
+}
+return L;
+}:;
+</PRE>On tape : <TT>JXY55:=juryXY55(9,8,10)</TT><BR>
+On a : <TT>size(JXY55)=4606</TT><BR>
+On tape : <TT>jurytire5:=convert(JXY[rand(40606)],base,2)</TT><BR>
+On obtient par exemple : <TT>[1,0,0,0,0,1,1,1,1,1,1,0,1,1,0,1]</TT><BR>
+Mais ce programme appelle le programme <TT>jurys</TT> précédent....
+</LI><LI CLASS="li-itemize">Un programme <TT>jurys55XY(n,p)</TT> utilise <TT>jurys</TT><BR>
+On tape le programme <TT>jurys55XY(h,f,p)</TT>.<BR>
+On peut initialiser la liste <TT>L</TT> soit avec<BR>
+<TT>L:=makelist(0,1,1);</TT> soit avec<BR>
+<TT>L:=makelist(0,1,comb(h,p-p2)*comb(f-1,p2)+</TT><BR>
+          <TT>comb(h-1,p-p2)*comb(f-1,p2-1));</TT><BR>
+puisque l’on connait sa longueur.
+<PRE CLASS="verbatim">jurys55XY(h,f,p):={
+local L,j,k,M,F,l,p2;
+p2:=iquo(p,2);
+L:=makelist(0,1,1);
+//L:=makelist(0,1,comb(h,p-p2)*comb(f-1,p2)+
+              comb(h-1,p-p2)*comb(f-1,p2-1));
+M:=jurys(h,p-p2);
+F:=jurys(f-1,p2)*2^h;
+l:=0;
+for(j:=0;j&lt;comb(h,p-p2);j++){
+for(k:=0;k&lt;comb(f-1,p2);k++){
+L[l]=&lt;M[j]+F[k];
+l:=l+1;
+}
+}
+M:=jurys(h-1,p-p2);
+F:=jurys(f-1,p2-1)*2^h;
+for(j:=0;j&lt;comb(h-1,p-p2);j++){
+for(k:=0;k&lt;comb(f-1,p2-1);k++){
+L[l]=&lt;2*M[j]+F[k]+2^(h+f-1);
+l:=l+1;
+}
+}
+return L
+}:;
+</PRE>On tape : <TT>JJXY55:=jurys55XY(9,8,10)</TT><BR>
+On a : <TT>size(JJXY55)=4606</TT><BR>
+On tape : <TT>jurytire6:=convert(JJXY55[rand(4606)],base,2)</TT><BR>
+On obtient par exemple : <TT>[0,0,0,1,1,0,1,1,1,1,1,1,0,1,0,0,1]</TT><BR>
+
+</LI><LI CLASS="li-itemize">Le programme <TT>jurytireXY55(J55)</TT> qui se sert de la liste <TT>J55</TT> 
+obtenue précédemment (<TT>J55:=jury55(h,f,p)</TT>) :<BR>
+On tape :
+<PRE CLASS="verbatim">jurytireXY55(J55):={
+local n,k,(s=size(J55));
+n:=size(convert(J55[s-1],base,2));
+k:=1+2^(n-1);
+while (irem(k,2)!=0 and k&gt;=2^(n-1)){
+k:=J55[rand(s)];
+}
+return k;
+}
+</PRE>On tape :
+<TT>jurytire()</TT>
+On obtient par exemple : <TT>63798</TT><BR>
+On tape :
+<TT>convert(63798,base,2)</TT><BR>
+On obtient : <TT>[0,1,1,0,1,1,0,0,1,0,0,1,1,1,1,1]</TT>
+</LI><LI CLASS="li-itemize">Le programme <TT>jurytireXY5(J,h)</TT> qui se sert de la liste <TT>J</TT> 
+obtenue précédemment (<TT>J:=jurys(n,p)</TT>) :<BR>
+On tape :
+<PRE CLASS="verbatim"> jurytireXY5(J,h):={
+local n,k,la,p,(s=size(J));
+la:=convert(J[s-1],base,2);
+n:=size(la);
+p:=sum(la);
+k:=iquo(p,2);
+j:=1;
+while ((sum(convert(irem(j,2^h),base,2))!=p-k) or 
+       (irem(j,2)!=0 and j&gt;=2^(n-1))){
+j:=J[rand(s)];
+}
+return j;
+}
+</PRE>On tape :
+<TT>jurytireXY5(J,9)</TT><BR>
+On obtient par exemple : <TT>24359</TT><BR>
+On tape :
+<TT>convert(24359,base,2)</TT><BR>
+On obtient : <TT>[1,1,1,0,0,1,0,0,1,1,1,1,1,0,1]</TT>
+</LI></UL>
+</LI></OL><H2 CLASS="section"><A NAME="toc74"></A><A NAME="htoc273">9.3</A>  Visualistion des combinaisons modulo 2</H2><H3 CLASS="subsection"><A NAME="htoc274">9.3.1</A>  L’énoncé</H3><P>
+On veut visualiser les points <I>k</I>,<I>j</I> (<I>j</I>≤ <I>k</I>) tel que <I>comb</I>(<I>k</I>,<I>j</I>)=0 mod2
+</P><H3 CLASS="subsection"><A NAME="htoc275">9.3.2</A>  Le programme</H3><P>
+On tape :
+</P><PRE CLASS="verbatim">dessincomb(n):={
+  local j,k,L;
+  L:=NULL;
+  pour j de 1 jusque n faire
+    pour k de j jusque n faire
+      si irem(comb(k,j),2) alors 
+        L:=L,point(k,j,affichage=point_point);
+      fsi;
+    fpour;
+  fpour;
+  retourne L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>dessincomb(255)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge004.png"></P><H2 CLASS="section"><A NAME="toc75"></A><A NAME="htoc276">9.4</A>  Un exercice</H2><P>
+On tire 100 fois de suite au hasard de façon équiprobable un entier <I>p</I>
+parmi 1,2..100 et on note <I>n</I><SUB><I>p</I></SUB> le nombre de fois où il a été tiré.<BR>
+Écrire un programme qui représente les points <I>p</I>,<I>n</I><SUB><I>p</I></SUB>
+On tape :
+</P><PRE CLASS="verbatim">tirage():={
+local p,np,j,L,P;
+L:=0$(j=1..100)
+pour j de 0 jusque 99 faire
+p:=rand(100);
+L[p]:=L[p]+1;
+fpour;
+P:=NULL;
+pour p de 0 jusque 99 faire
+np:=L[p];
+si np!=0 alors P:=P,point(p+1+i*np); fsi; 
+fpour;
+print(max(L));
+retourne P;
+}:;
+</PRE><P>On tape <TT>tirage()</TT><BR>
+On obtient :</P><P><IMG SRC="casrouge005.png"></P><H2 CLASS="section"><A NAME="toc76"></A><A NAME="htoc277">9.5</A>  Valeur de <I>e</I> et le hasard</H2><H3 CLASS="subsection"><A NAME="htoc278">9.5.1</A>  L’énoncé</H3><P>
+On tire des nombres au hasard dans [0;1[ et on les ajoute. On s’arrête quand
+la somme obtenue est strictement plus grande que 1. On peut montrer que le 
+nombres de tirages nécessaires est en moyenne égal à <I>e</I>. Écrire un 
+programme vérifiant expérimentalement ce résultat.
+</P><H3 CLASS="subsection"><A NAME="htoc279">9.5.2</A>  La solution avec <TT>Xcas</TT></H3><P>
+Dans <TT>Xcas</TT>, on peut soit utiliser <TT>rand(0,1)</TT>, soit utiliser 
+la fonction <TT>f:=rand(0..1)</TT> pour obtenir un nombre au hasard entre 0 et 1.<BR>
+On tape :<TT>rand(0.1)</TT><BR>
+On obtient : <TT>0.482860322576</TT><BR>
+On tape : <TT>f:=rand(0..1)</TT><BR>
+puis : <TT>f()</TT>
+On obtient : <TT>0.8627617261373</TT><BR>
+puis : <TT>f()</TT>
+On obtient : <TT>0.3095522336662</TT> etc....<BR>
+On écrit le programme :
+</P><PRE CLASS="verbatim">approxe(n):={
+local j,S,k,N;
+N:=0;
+pour k de 1 jusque n faire
+S:=0;
+j:=0;
+tantque S&lt;=1 faire
+S:=S+rand(0,1);
+j:=j+1;
+ftantque;
+N:=N+j;
+fpour;
+retourne evalf(N/n);
+}:;
+</PRE><P>On tape : <TT>approxe(100000)</TT><BR>
+On obtient : <TT>2.71750000000</TT><BR>
+ alors que <TT>evalf(e)=2.71828182846</TT>
+</P><H2 CLASS="section"><A NAME="toc77"></A><A NAME="htoc280">9.6</A>  Distance moyenne entre de 2 points</H2><H3 CLASS="subsection"><A NAME="htoc281">9.6.1</A>  L’énoncé</H3><P>
+On veut évaluer la distance moyenne entre 2 points choisis au hasard :
+dans un segment <I>S</I> de longueur 1, dans le carré unité <I>C</I> ou dans le cube 
+unité <I>K</I>.
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Écrire un programme qui calcule cette distance moyenne lorsque l’on 
+choisit au hasard <I>n</I> fois de suite 2 points dans <I>S</I>,dans <I>C</I> ou dans <I>K</I>,
+puis généraliser.
+</LI><LI CLASS="li-enumerate">Faire une représentation graphique permettant de visualiser la 
+répartition des distances dans le cube unité <I>K</I>.
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc282">9.6.2</A>  La solution avec <TT>Xcas</TT></H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+<PRE CLASS="verbatim">distS(n):={
+local xa,xb,j,d,D;
+D:=0;
+pour j de 1 jusque n faire
+xa:=rand(0,1);
+xb:=rand(0,1);
+d:=abs(xa-xb);
+D:=D+d;
+fpour;
+retourne evalf(D/n);
+}:;
+
+distC(n):={
+local xa,ya,xb,yb,j,d,D;
+D:=0;
+pour j de 1 jusque n faire
+xa:=rand(0,1);ya:=rand(0,1);
+xb:=rand(0,1);yb:=rand(0,1);
+d:=distance([xa,ya],[xb,yb]);
+D:=D+d;
+fpour;
+retourne evalf(D/n);
+}:;
+
+distK(n):={
+local xa,ya,za,xb,yb,zb,j,d,D;
+D:=0;
+pour j de 1 jusque n faire
+xa:=rand(0,1);ya:=rand(0,1);za:=rand(0,1);
+xb:=rand(0,1);yb:=rand(0,1);zb:=rand(0,1);
+d:=distance([xa,ya,za],[xb,yb,zb]);
+D:=D+d;
+fpour;
+retourne evalf(D/n);
+}:;
+
+distp(p,n):={
+local a,b,j,d,D;
+D:=0;
+pour j de 1 jusque n faire
+a:=op(randMat(1,p,0..1));
+b:=op(randMat(1,p,0..1));
+d:=sqrt(sum((a-b)^2));
+D:=D+d;
+fpour;
+retourne evalf(D/n);
+}:;
+
+</PRE>On tape : <TT>distS(100000)</TT><BR>
+On obtient : <TT>0.333424530881</TT><BR>
+On tape : <TT>distC(100000)</TT><BR>
+On obtient : <TT>0.522140638365</TT><BR>
+On tape : <TT>distK(100000)</TT><BR>
+On obtient : <TT>0.6627691590747</TT><BR>
+On tape : <TT>distp(4,100000)</TT><BR>
+On obtient : <TT>0.777235961163</TT><BR>
+On tape : <TT>distp(5,100000)</TT><BR>
+On obtient : <TT>0.877837288394</TT><BR>
+</LI><LI CLASS="li-enumerate"><PRE CLASS="verbatim">graphdist(n):={
+local xa,ya,za,xb,yb,zb,j,d,L;
+L:=NULL;
+pour j de 1 jusque n faire
+xa:=rand(0,1);ya:=rand(0,1);za:=rand(0,1);
+xb:=rand(0,1);yb:=rand(0,1);zb:=rand(0,1);
+d:=distance([xa,ya,za],[xb,yb,zb]);
+L:=L,point(j+i*d);
+fpour;
+retourne L;
+}:;
+</PRE></LI></OL><P>
+On tape : <TT>graphdist(10000)</TT><BR>
+On obtient :</P><P><IMG SRC="casrouge006.png"></P><HR>
+<A HREF="casrouge008.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge010.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,518 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>Pour s’amuser avec des dessins récursifs</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascas013.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas015.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc223">Chapitre 14</A>  Pour s’amuser avec des dessins récursifs</H1><H2 CLASS="section"><A NAME="toc78"></A><A NAME="htoc224">14.1</A>  Les sapins</H2><PRE CLASS="verbatim">sapin(x,y):={
+ DispG();
+ if (abs(x-y)&lt;0.5) {segment(x,y); return 0;}
+ sapin(x,x+(y-x)*0.5*exp(i));
+ sapin(x,x+(y-x)*0.5*exp(-i));
+ segment(x,(3*x+y)/4);
+ sapin((3*x+y)/4,y);
+}
+</PRE><P>je voulais utiliser similitude mais je n’arrive pas a me debarasser des petites
+croix qui marque le point..meme en faisant nodisp(similitude(....))
+</P><PRE CLASS="verbatim">sapinp(x,y):={
+ DispG();
+ if (abs(x-y)&lt;0.2) {segment(x,y); return 0;}
+ sapin(x,affixe(similitude(x,0.5,1.0,y)));
+ sapin(x,affixe(similitude(x,0.5,-1.0,y)));
+ segment(x,(3*x+y)/4);
+ sapin((3*x+y)/4,y);
+}:;
+</PRE><P>Sans utiliser l’écran <TT>DispG</TT> on met toutes les instructions dans une 
+séquence.<BR>
+On tape :
+</P><PRE CLASS="verbatim">sapin(z0,z1):={
+  local L,v;
+    L:=NULL;
+    v:=z1-z0;
+    si abs(v)&lt;0.5 alors L:=L, segment(z0,z1);retourne L; fsi;
+    L:=L,sapin(z0+v/4,z1);
+    L:=L,segment(z0,z0+v*0.25);
+    L:=L,sapin(z0,z0+v*exp(i*pi/6.)*0.5);
+    L:=L,sapin(z0,z0+v*exp(-i*pi/6.)*0.5); 
+    }:;
+</PRE><P>ou<BR>
+</P><PRE CLASS="verbatim">sapin1(z0,z1,t):={
+  local L,v;
+    L:=NULL;
+    v:=z1-z0;
+    si abs(v)&lt;0.5 alors L:=L, segment(z0,z1);retourne L; fsi;
+    L:=L,sapin1(z0+v/4,z1,t);
+    L:=L,segment(z0,z0+v*0.25);
+    L:=L,sapin1(z0,z0+v*exp(i*t)*0.5,t);
+    L:=L,sapin1(z0,z0+v*exp(-i*t)*0.5,t); 
+    }:;
+</PRE><H2 CLASS="section"><A NAME="toc79"></A><A NAME="htoc225">14.2</A>  Les fleurs</H2><PRE CLASS="verbatim">fleur(x,y):={
+ DispG();
+ if (abs(x-y)&lt;0.5) {segment(x,y);cercle(y,(y-x)*0.3); return 0;}
+ segment(x,y);cercle(y,(y-x)*0.3);cercle(y,(y-x)*0.2);
+ fleur(x,x+(y-x)*0.5*exp(i*0.5));
+ fleur(x,x+(y-x)*0.5*exp(-i*0.5));
+}
+</PRE><P>On tape :<BR>
+<TT>fleur(0,5*i)</TT><BR>
+On obtient le dessin dans <TT>DispG</TT>.
+</P><H2 CLASS="section"><A NAME="toc80"></A><A NAME="htoc226">14.3</A>  L’anémone</H2><PRE CLASS="verbatim">anemone(a,n,c):={
+local L;
+L:=NULL;
+L:=L,cercle(a+i*n,n);
+L:=L,cercle(a-i*n,n);
+L:=L,cercle(a+n,n);
+L:=L,cercle(a-n,n);
+retourne affichage(L,c+rempli),cercle(a,n/2,affichage=rempli+0);
+}:;
+</PRE><P>On tape :<BR>
+<TT>anemone(0,5*i)</TT><BR>
+On obtient 
+</P><H2 CLASS="section"><A NAME="toc81"></A><A NAME="htoc227">14.4</A>  La tulipe</H2><PRE CLASS="verbatim">tulipe(a,n,c):={
+local L;
+L:=L,cercle(a+i*n,n,3.15,6.4);
+L:=L,cercle(a+i*n-n,n,-0.1,1.58);
+L:=L,cercle(a+i*n+n,n,1.58,3.15);
+L:=L,segment(a+i*n-n,a+2*i*n-n);
+retourne affichage(L,c+rempli);
+}:;
+</PRE><P>On tape :<BR>
+<TT>tulipe(0,5*i)</TT><BR>
+On obtient 
+</P><H2 CLASS="section"><A NAME="toc82"></A><A NAME="htoc228">14.5</A>  Les bouquets de fleurs</H2><P>
+Ici on veut avoir le dessin comme réponse, on met donc toute la suite des 
+instructions graphiques dans une liste <TT>L</TT> qui sera retournée comme 
+réponse.<BR>
+On tape pour avoir un bouquet d’anémones:
+</P><PRE CLASS="verbatim">fleurs1(x,y):={
+ local L,c;
+ L:=NULL;
+c:=alea(10)+85;
+ if (abs(x-y)&lt;0.5) {return L,arc(x,y,-5*pi/12,affichage=epaisseur_ligne_3),anemone(y,(y-x)*0.3,c); }
+ L:=arc(x,y,-5*pi/12,affichage=epaisseur_ligne_3),anemone(y,(y-x)*0.2,c);
+ L:=L,fleurs1(x,x+(y-x)*0.5*exp(i*0.5));
+ L:=L,fleurs1(x,x+(y-x)*0.5*exp(-i*0.5));
+retourne L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>fleurs1(0,5*i)</TT><BR>
+On tape pour une carte de "bonne annee":<BR>
+<TT>fleurs1(0,5*i),fleurs1(0,4+4*i),legende(10+5i,"BONNE "),
+legende(10+3i,"ANNEE"),legende(10.2+i,"2011")</TT></P><P>On tape pour avoir un bouquet de tulipes:
+</P><PRE CLASS="verbatim">fleurs3(x,y):={
+ local L,c;
+ L:=NULL;
+c:=alea(10)+85;
+ if (abs(x-y)&lt;0.5) {return L,arc(x,y,-5*pi/12,affichage=epaisseur_ligne_3),tulipe(y,(-i)*(y-x)*(0.5)*exp(-i*5*pi/24),c);}
+ L:=arc(x,y,-5*pi/12,affichage=epaisseur_ligne_3),tulipe(y,-i*(y-x)*(0.4)*exp(-i*5*pi/24),c);
+ L:=L,fleurs3(x,x+(y-x)*0.6*exp(i*0.5));
+ L:=L,fleurs3(x,x+(y-x)*0.6*exp(-i*0.5));
+retourne L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>fleurs3(0,5*i)</TT><BR>
+On tape pour une carte de "bonne annee":<BR>
+<TT>fleurs3(0,5*i),fleurs3(0,3+4*i),fleurs3(0,-3+4*i),legende(10+7i,"BONNE "),
+legende(10+5i,"ANNEE"),legende(10.2+3i,"2011")</TT><BR>
+On tape :<BR>
+<TT>fleurs3(0,5*i),fleurs3(0,3+4*i),fleurs1(14,14+6*i),fleurs1(14,19+6*i),
+legende(8.2+7i,"BONNE "),legende(8.2+5i,"ANNEE"),legende(8.4+3i,"2011")</TT><BR>
+
+</P><H2 CLASS="section"><A NAME="toc83"></A><A NAME="htoc229">14.6</A>  La fougère</H2><P>
+Ce n’est pas un dessin récursif, mais c’est une une suite d’itérées. 
+Pour obtenir cette fougère, on va itérer un système de fonctions avec 
+poids aléatoires.
+On considère :
+<TT>A:=[[0,0,0.5],[0,0.16,0],[0,0,1]]</TT> de poids 0.01,<BR>
+<TT>B:=[[0.2,-0.26,0.4],[0.23,0.22,0.005],[0,0,1]]</TT> de poids 0.07,<BR>
+<TT>C:=[[-0.15,0.28,0.57],[0.26,0.24,-0.12],[0,0,1]]</TT> de poids 0.07,<BR>
+<TT>D:=[[0.85,0.04,0.08],[-0.04,0.85,0.18],[0,0,1]]</TT> de poids 0.85,<BR>
+On définit <TT>F:=A,B,C,D</TT> et on itère en partant du vecteur 
+<TT>w0:=[0,5,1]</TT>. Pour définir <TT>w1</TT>, on applique à <TT>w0</TT>, soit 
+<TT>A</TT>, soit <TT>B</TT>, soit <TT>C</TT> ou <TT>D</TT> de façon aléatoire selon 
+leur poids et on définit <TT>w2</TT> etc...On dessine les points définit par 
+les 2 premières coordonnées des <TT>w</TT>, mais, pour la beauté du dessin, 
+on ne dessine pas les <TT>n1</TT> premiers points. Donc dans fougere on a <TT>n1</TT>
+points invisibles et <TT>n2</TT> itérations .<BR>
+On tape :
+</P><PRE CLASS="verbatim">choisirk():={
+local r,p,k;
+p:=[0.01,0.07,0.07,0.85];
+r:=rand(0,1);
+k:=0;
+tantque r&gt;p[k] faire 
+  r:=r-p[k];
+  k:=k+1;
+ftantque;
+return k;
+}:;
+fougere1(n1,n2):={
+local A,B,C,D,F,j,k,w,P;
+A:=[[0,0,0.5],[0,0.16,0],[0,0,1]];
+B:=[[0.2,-0.26,0.4],[0.23,0.22,0.005],[0,0,1]];
+C:=[[-0.15,0.28,0.57],[0.26,0.24,-0.12],[0,0,1]];
+D:=[[0.85,0.04,0.08],[-0.04,0.85,0.18],[0,0,1]];
+F:=A,B,C,D;
+w:=[0,5,1];
+P:=NULL;
+pour j de 1 jusque n1 faire
+  w:=F[choisirk()]*w;
+fpour;
+pour j de n1+1 jusque n2 faire
+  w:=F[choisirk()]*w;
+  P:=P,point(w[0],w[1]);
+fpour;
+return P;
+}:;
+</PRE><P>On tape :
+<TT>affichage(2+point_point);fougere1(10,10000)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="cascas121.png">
+</P><H2 CLASS="section"><A NAME="toc84"></A><A NAME="htoc230">14.7</A>  Une autre fougère</H2><P>
+Une application affine <I>f</I> de ℝ<SUP>2</SUP> dans ℝ<SUP>2</SUP> est définie par une matrice carrée <I>A</I> de dimension 2 et par un vecteur colonne <I>U</I> de de ℝ<SUP>2</SUP>, on a :<BR>
+<I>f</I>(<I>X</I>)=<I>A</I>*<I>X</I>+<I>U</I> pour tout vecteur colonne <I>X</I> de ℝ<SUP>2</SUP>.<BR>
+Pour faire cette nouvelle fougère, on fera comme précédemment les 
+itérées d’un point (ici l’origine) en utilisant l’une des 4 applications 
+affines de ℝ<SUP>2</SUP> dans ℝ<SUP>2</SUP> avec une probabilité donnée :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<I>f</I><SUB>1</SUB> sera utilisée avec la probabilité <I>p</I>1=0.01 et est définie 
+par :<BR>
+<TT>A1:=[[0,0],[0,0.16]]</TT> et<BR>
+ <TT>U1:=[0,0]</TT>
+</LI><LI CLASS="li-itemize"><I>f</I><SUB>2</SUB> sera utilisée avec la probabilité <I>p</I>2=0.07 et est définie 
+par :<BR>
+<TT>A2:=[[-0.15,0.28],[0.26,0.24]]</TT> et<BR>
+ <TT>U2:=[0,0.44]</TT>
+</LI><LI CLASS="li-itemize"><I>f</I><SUB>3</SUB> sera utilisée avec la probabilité <I>p</I>3=0.07 et est définie 
+par :<BR>
+<TT>A3:=[[0.2,-0.26],[0.23,0.22]]</TT> et<BR>
+ <TT>U3:=[0,1.6]</TT>
+</LI><LI CLASS="li-itemize"><I>f</I><SUB>4</SUB> sera utilisée avec la probabilité <I>p</I>4=0.85 et est définie 
+par :<BR>
+<TT>A4:=[[0.85,0.04],[-0.04,0.85]]</TT> et<BR>
+ <TT>U4:=[0,1.6]</TT>
+</LI></UL><P>
+On tape :
+</P><PRE CLASS="verbatim">choisirk():={
+local r,p,k;
+p:=[0.01,0.07,0.07,0.85];
+r:=rand(0,1);
+k:=0;
+tantque r&gt;p[k] faire 
+  r:=r-p[k];
+  k:=k+1;
+ftantque;
+return k;
+}:;
+fougere2(n):={
+local A,A1,A2,A3,A4,U,U1,U2,U3,U4,j,k,P,w;
+A1:=[[0,0],[0,0.16]];
+U1:=[0,0];
+A2:=[[-0.15,0.28],[0.26,0.24]];
+U2:=[0,0.44];
+A3:=[[0.2,-0.26],[0.23,0.22]];
+U3:=[0,1.6];
+A4:=[[0.85,0.04],[-0.04,0.85]];
+U4:=[0,1.6];
+A:=A1,A2,A3,A4;
+U:=U1,U2,U3,U4;
+w:=[0,0];
+P:=NULL;
+pour j de 1 jusque n faire
+  k:=choisirk();
+  w:=A[k]*w+U[k];
+  P:=P,point(w[0],w[1]);
+fpour;
+return P;
+}:;
+</PRE><P>On tape :
+<TT>affichage(2+point_point);fougere2(3000)</TT><BR>
+On obtient :<BR>
+<IMG SRC="cascas122.png">
+<B>Remarque</B>
+Ces 2 fougères sont sensiblement les mêmes : la première est décrite en 
+coordonnèes homogènes. Voici le programme <TT>fougere3</TT>
+de la fougère2 en coordonnèes homogènes. Ce programme est un peu plus lent
+</P><PRE CLASS="verbatim">choisirk():={
+local r,p,k;
+p:=[0.01,0.07,0.07,0.85];
+r:=rand(0,1);
+k:=0;
+tantque r&gt;p[k] faire 
+  r:=r-p[k];
+  k:=k+1;
+ftantque;
+return k;
+}:;
+fougere3(n):={
+local A,A1,A2,A3,A4,j,k,P,w;
+A1:=[[0,0,0],[0,0.16,0],[0,0,1]];
+A2:=[[-0.15,0.28,0],[0.26,0.24,0.44],[0,0,1]];
+A3:=[[0.2,-0.26,0],[0.23,0.22,1.6],[0,0,1]];
+A4:=[[0.85,0.04,0],[-0.04,0.85,1.6],[0,0,1]];
+A:=A1,A2,A3,A4;
+w:=[0,0,1];
+P:=NULL;
+pour j de 1 jusque n faire
+  k:=choisirk();
+  w:=A[k]*w;
+  P:=P,point(w[0],w[1]);
+fpour;
+return P;
+}
+:;
+</PRE><H2 CLASS="section"><A NAME="toc85"></A><A NAME="htoc231">14.8</A>  Le choux-fleur</H2><H3 CLASS="subsection"><A NAME="htoc232">14.8.1</A>  L’énoncé</H3><P>
+Soit la suite de fonctions <I>f</I><SUB><I>n</I></SUB> de [0;1] dans ℝ définie par :<BR>
+pour <I>n</I>=1 :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I><SUB>1</SUB>(<I>x</I>)=
+</TD><TD CLASS="dcell">⎧<BR>
+⎪<BR>
+⎪<BR>
+⎪<BR>
+⎨<BR>
+⎪<BR>
+⎪<BR>
+⎪<BR>
+⎩</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>x</I></TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">si  <I>x</I>≤ </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>1−<I>x</I></TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">si  <I>x</I>&gt; </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD></TR>
+</TABLE><P>
+et pour <I>n</I>≥ 2 :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I><SUB><I>n</I></SUB>(<I>x</I>)=
+</TD><TD CLASS="dcell">⎧<BR>
+⎪<BR>
+⎪<BR>
+⎪<BR>
+⎨<BR>
+⎪<BR>
+⎪<BR>
+⎪<BR>
+⎩</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>f</I><SUB><I>n</I>−1</SUB>(2<I>x</I>)</TD></TR>
+</TABLE></TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">si  <I>x</I>≤ </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I><SUB><I>n</I></SUB>(<I>x</I>−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)</TD></TR>
+</TABLE></TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">si  <I>x</I>&gt; </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD></TR>
+</TABLE><P>
+La fonction <I>f</I><SUB><I>n</I></SUB> est périodique de période 
+1/2<SUP><I>n</I>−1</SUP> et tracer son graphe sur [0; 1/2<SUP><I>n</I>−1</SUP>].
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Définir dans <TT>Xcas</TT> une fonction calculant <I>f</I><SUB><I>n</I></SUB>(<I>x</I>).
+</LI><LI CLASS="li-enumerate">Définir dans <TT>Xcas</TT> une fonction calculant la somme :<BR>
+<I>S</I><SUB><I>n</I></SUB>(<I>x</I>)=<I>f</I><SUB>1</SUB>(<I>x</I>)+<I>f</I><SUB>2</SUB>(<I>x</I>)+...<I>f</I><SUB><I>n</I></SUB>(<I>x</I>)
+</LI><LI CLASS="li-enumerate">Tracer le graphe de <I>S</I><SUB>10</SUB>
+</LI><LI CLASS="li-enumerate">On définit le dessin suivant :<BR>
+Soient deux points <I>A</I>(<I>x</I><SUB><I>a</I></SUB>,<I>y</I><SUB><I>a</I></SUB>) et <I>B</I>(<I>x</I><SUB><I>b</I></SUB>,<I>y</I><SUB><I>b</I></SUB>)
+à partir du vecteur <I>AB</I>, on construit les vecteurs <I>AC</I> et <I>CB</I> où <I>C</I> a 
+comme coordonnées <I>x</I><SUB><I>c</I></SUB>=(<I>x</I><SUB><I>a</I></SUB>+<I>x</I><SUB><I>b</I></SUB>)/2 et <I>y</I><SUB><I>c</I></SUB>=(<I>y</I><SUB><I>a</I></SUB>+<I>y</I><SUB><I>b</I></SUB>)/2+(<I>x</I><SUB><I>b</I></SUB>−<I>x</I><SUB><I>a</I></SUB>)/2.
+On recommence la même construction à partir de chacun des 2 vecteurs 
+obtenus etc....<BR>
+Écrire un programme qui dessine les segments obtenus au bout de <I>n</I> fois 
+(mais pas les dessins intermédiaires). On remarquera que l’on obtient ainsi 
+le graphe de <I>S</I><SUB><I>n</I></SUB>.
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc233">14.8.2</A>  La correction</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On définit la fonction <TT>f(n,x)</TT> :
+<PRE CLASS="verbatim">f(n,x):={
+si x&lt;=1/2 alors
+si n==1 alors return x;sinon return f(n-1,2x)/2; fsi;
+fsi
+si n==1 alors return 1-x;sinon return f(n,x-1/2); fsi;
+}:;
+</PRE></LI><LI CLASS="li-enumerate">On tape :
+<TT>plotfunc(f(4,x),x=0..1,affichage=1)</TT><BR>
+On obtient :<P><IMG SRC="cascas123.png"></P></LI><LI CLASS="li-enumerate">On définit la fonction <TT>S(n,x)</TT> :
+<PRE CLASS="verbatim">S(n,x):={
+local j,s;
+pour j de 1 jusque n faire
+s:=s+f(j,x);
+fpour;
+return s;
+}:;
+</PRE></LI><LI CLASS="li-enumerate">On définit la fonction récursive <TT>chouxfleur(A,B,n)</TT> :
+<PRE CLASS="verbatim">chouxfleur(A,B,n):={
+  local xa,ya,xb,yb,xc,yc,C;
+  si n==0 alors return segment(A,B);fsi;
+  xa,ya:=coordonnees(A);
+  xb,yb:=coordonnees(B);
+  xc:=(xa+xb)/2;
+  yc:=(ya+yb)/2+(xb-xa)/2;
+  C:=point(xc,yc);
+  return chouxfleur(A,C,n-1),chouxfleur(C,B,n-1);
+}:;
+</PRE>On tape :
+<TT>chouxfleur(point(0),point(1),10)</TT><BR>
+On obtient :<P><IMG SRC="cascas124.png">
+</P></LI></OL><H2 CLASS="section"><A NAME="toc86"></A><A NAME="htoc234">14.9</A>  Les arbres</H2><H3 CLASS="subsection"><A NAME="htoc235">14.9.1</A>  Un arbre</H3><PRE CLASS="verbatim">arbre(x,y):={
+ DispG();
+ if (abs(x-y)&lt;0.2) {segment(x,y); return 0;}
+ segment(x,(x+y)/2);
+ arbre((x+y)/2,(x+y)/2+(y-x)*0.5*exp(i*0.5));
+ arbre((x+y)/2,(x+y)/2+(y-x)*0.5*exp(-i*0.5));
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc236">14.9.2</A>  Un arbre moins déplumé</H3><PRE CLASS="verbatim">arbre2(x,y):={
+ DispG();
+ if (abs(x-y)&lt;0.2) {segment(x,y); return 0;}
+ segment(x,(x+y)/2);
+ arbre2((x+y)/2,(x+y)/2+(y-x)*0.5*exp(i*0.5));
+ arbre2((x+y)/2,(x+y)/2+(y-x)*0.5*exp(-i*0.5));
+ arbre2((x+y)/2,(x+y)/2+(y-x)*0.5*exp(i));
+ arbre2((x+y)/2,(x+y)/2+(y-x)*0.5*exp(-i));
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc237">14.9.3</A>  Un arbre epineux</H3><PRE CLASS="verbatim">arbre3(x,y):={
+ DispG();
+ if (abs(x-y)&lt;0.2) {segment(x,y); return 0;}
+ segment(x,(x+y)*0.5);
+ arbre3((3*x+y)/4,(3*x+y)/4+(y-x)*0.25*exp(i*0.5));
+ arbre3((3*x+y)/4,(3*x+y)/4+(y-x)*0.25*exp(-i*0.5));
+ arbre3((x+y)/2,(x+y)/2+(y-x)*0.5*exp(i));
+ arbre3((x+y)/2,(x+y)/2+(y-x)*0.5*exp(-i));
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc238">14.9.4</A>  Le bouquet final</H3><PRE CLASS="verbatim">bouquet(x,y):={
+ DispG();
+ if (abs(x-y)&lt;0.2) {segment(x,y); return 0;}
+ segment(x,(x+y)*0.5);
+ bouquet((3*x+y)/4,(3*x+y)/4+(y-x)*0.25*exp(i*0.5));
+ bouquet((3*x+y)/4,(3*x+y)/4+(y-x)*0.25*exp(-i*0.5));
+ bouquet((x+y)/2,(x+y)/2+(y-x)*0.5*exp(i));
+ bouquet((x+y)/2,(x+y)/2+(y-x)*0.5*exp(-i));
+ bouquet((x+y)/2,(x+y)/2+(y-x)*0.5);
+</PRE><H2 CLASS="section"><A NAME="toc87"></A><A NAME="htoc239">14.10</A>  Un exercice tiré des olympiades</H2><H3 CLASS="subsection"><A NAME="htoc240">14.10.1</A>  L’énoncé</H3><P>
+On modélise la croissance d’un arbre de la manière suivante :
+au départ il est composé d’un tronc vertical <I>AB</I> de longueur l, au bout 
+d’un an ce tronc donne naissance a 2 branches <I>BC</I> et <I>BD</I> vérifiant :
+<I>BC</I>=0.5*<I>AB</I>, <I>BD</I>=0.75*<I>AB</I>, et<BR>
+(<I>BC</I>,<I>BA</I>)=(<I>BA</I>,<I>BD</I>)=5π/6.<BR>
+Chaque année, chaque branche donne naissance a 2 branches selon le même 
+processus.
+Faire le dessin de l’arbre au bout de 3 ans<BR>
+Si on ne tient pas compte de la durée de vie de l’arbre, quelle est la 
+limite de sa taille ?</P><P>Avec <TT>Xcas</TT> on pourra exécuter <TT>arbre.xws</TT> pour avoir la correction.
+</P><H3 CLASS="subsection"><A NAME="htoc241">14.10.2</A>  Le dessin</H3><P>
+Pour faire le dessin on écrit une procédure récursive <TT>arbre</TT> 
+qui renvoie 0 quand elle se termine et qui a comme paramètres :
+<TT>A</TT> le point de plantation, <TT>l</TT> la longueur du tronc <TT>AB</TT>, <TT>t</TT>
+l’angle que fait <TT>AB</TT> avec le sol, <TT>n</TT> le nombre d’années.
+Ainsi le point <TT>B</TT> a comme affixe <TT>A+l*exp(i*t)</TT>.<BR>
+On verra le dessin dans l’écran <TT>DispG</TT> (<TT>session-&gt;montrer-&gt;DispG</TT>).
+</P><PRE CLASS="verbatim">  arbre(A,l,t,n):={
+    local B;
+    B:=A+l*exp(i*t);
+    segment(A,B);
+    if (n&gt;0){
+      arbre(B,l*0.5,t+pi/6,n-1);
+      arbre(B,l*0.75,t-pi/6,n-1);
+    } 
+    return 0;
+  }:;
+</PRE><H3 CLASS="subsection"><A NAME="htoc242">14.10.3</A>  La taille</H3><P>
+Pour connaitre la taille de l’arbre au bout de <TT>n</TT> années, on écrit une
+procédure récursive <TT>harbre</TT> qui a les mêmes paramètres que la 
+procédure récursive <TT>arbre</TT> et qui renvoie l’ordonnée exacte du point
+le plus haut de l’arbre. 
+</P><PRE CLASS="verbatim">  harbre(A,l,t,n):={
+    local B,res;
+    B:=A+l*exp(i*t);
+    res:=max(ordonnee(A),ordonnee(B));
+    if (n&gt;0){
+      res:=normal(max(res,harbre(B,l/2,t+pi/6,n-1),
+      harbre(B,l*3/4,t-pi/6,n-1)));
+    } 
+    return res;
+  }:;
+</PRE><P>ou plutôt pour éviter des calculs trop longs on écrit <TT>harbra</TT> qui 
+renvoie la valeur approchée de l’ordonnée du 
+point de l’arbre le plus haut. On peut aussi utiliser <TT>harbre</TT> en mettant 
+comme valeur de <TT>l</TT> une valeur décimale : par exemple <TT>1.0</TT>.
+</P><PRE CLASS="verbatim">harbra(A,l,t,n):={
+local B,res;
+B:=evalf(A+l*exp(i*t));
+res:=max(ordonnee(A),ordonnee(B));
+if (n&gt;0){
+res:=max(res,harbre(B,l*0.5,evalf(t+pi/6),n-1),
+harbre(B,l*0.75,evalf(t-pi/6),n-1));
+} 
+return res;
+}:;
+</PRE><P>Pour avoir la hauteur de l’arbre, il faut soit planter l’arbre en un point 
+<TT>A</TT> d’ordonée <TT>0</TT>, soit utiliser la procédure <TT>hauteur_arbre</TT>
+ci-dessous qui suppose que le tronc de l’arbre est vertical :<BR>
+<TT>hauteur_arbre(A,l,n):=harbre(A,l,pi/2,n)-ordonnee(A):;</TT>
+On tape :
+<TT>harbre(0,1,pi/2,10)</TT>
+On obtient au bout de 30s :<BR>
+<TT>(19515*sqrt(3)+52283)/32768</TT><BR>
+On tape :
+<TT>harbre(0,1.0,pi/2,1)</TT>
+On obtient au bout de 5s:<BR>
+<TT>2.62707432586</TT><BR>
+On tape :
+<TT>hauteur_arbre(i,1.0,pi/2,1)</TT>
+On obtient au bout de 5s:<BR>
+<TT>2.62707432586</TT><BR>
+</P><H3 CLASS="subsection"><A NAME="htoc243">14.10.4</A>  La limite de la taille</H3><P>
+Seulement, cela ne nous donne qu’une valeur approchée de la limite de cette 
+hauteur.<BR>
+Pour connaitre la taille maximum <I>h</I> de l’arbre, il faut remarquer que :<BR>
+- si l’arbre poussait verticalement sa hauteur serait une série 
+géométrique de raison 3/4 de somme 4<BR>
+- la hauteur d’un arbre est proportionnelle à la longueur du tronc initial,<BR>
+- qu’au bout de 2 ans la branche gauche de la branche droite est verticale et 
+est de longueur <I>l</I>*3/4*/2=3<I>l</I>/8 c’est à dire que cette branche est de 
+hauteur les 3<I>h</I>/8.<BR>
+On calcule à la main la hauteur de l’arbre au bout d’1 an :
+<I>l</I>+(√<SPAN style="text-decoration:overline">3</SPAN>*<I>l</I>/2)*(3/4)=<I>l</I>(1+3√<SPAN style="text-decoration:overline">3</SPAN>/8)
+ou on tape :<BR>
+<TT>harbre(0,1,pi/2,1);harbre(0,1.0,pi/2,1);</TT><BR>
+On obtient :<BR>
+<TT>(3*sqrt(3)+8)/8,1.64951905284</TT><BR>
+On a donc l’équation :<BR>
+<I>h</I>=1+(√<SPAN style="text-decoration:overline">3</SPAN>/2)*(3/4)+3*<I>h</I>/8<BR>
+On tape :<BR>
+<TT>solve(h=3/8*h+(1+3*sqrt(3)/8) ,h)</TT><BR>
+On obtient :<BR>
+<TT>[1/5*(3*sqrt(3)+8)]</TT><BR>
+On tape :<BR>
+<TT>evalf(1/5*(3*sqrt(3)+8))</TT><BR>
+On obtient :<BR>
+<TT>2.63923048454</TT><BR>
+La taille maximum de l’arbre de tronc <I>l</I> est :<BR>
+<I>l</I>*(3*<I>sqrt</I>(3)+8)/5 ≃ 2.63923048454*<I>l</I>
+</P><HR>
+<A HREF="cascas013.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas015.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

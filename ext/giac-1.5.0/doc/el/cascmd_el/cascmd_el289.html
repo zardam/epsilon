@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Δημιουργία μιας ακολουθίας ή μιας λίστας :  seq $</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el288.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el290.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc325">1.35.5</A>  Δημιουργία μιας ακολουθίας ή μιας λίστας : <TT> seq $</TT></H3><P><A NAME="@default495"></A><A NAME="@default496"></A><A NAME="sec:seq"></A>
+	
+<TT>seq</TT> παίρνει δύο, τρία, τέσσερα ή πέντε ορίσματα : το πρώτο όρισμα είναι μια παράσταση ως προς την μεταβλητή (για παράδειγμα) <I>j</I> και τα υπόλοιπα ορίσματα περιγράφουν ποιές τιμές του <I>j</I> θα χρησιμοποιηθούν για να παράγουν την ακολουθία.
+Πιο συγκεκριμένα, το <I>j</I> θα μεταβληθεί από <I>a</I> έως <I>b</I>:
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+με ένα βήμα που από προεπιλογή είναι 1 ή -1: 	
+<TT>j=a..b</TT> ή 
+	
+<TT>j,a..b</TT> (σύνταξη του <TT>Maple</TT>), 	
+<TT>j,a,b</TT> (σύνταξη του <TT>TI</TT>)
+</LI><LI CLASS="li-itemize">ή με ένα συγκεκριμένο βήμα: 
+	
+<TT>j=a..b,p</TT> (σύνταξη του <TT>Maple</TT>), 	
+<TT>j,a,b,p</TT> (σύνταξη του <TT>TI</TT>).
+</LI></UL><P>
+Εάν χρησιμοποιείται η σύνταξη του <TT>Maple</TT>, η 	
+<TT>seq</TT> επιστρέφει μια ακολουθία,
+και εάν χρησιμοποιείται η σύνταξη του <TT>TI</TT>, η 	
+<TT>seq</TT> επιστρέφει μια λίστα.</P><P>	
+<TT>$</TT> είναι η ενθηματική εκδοχή του 	
+<TT>seq</TT>, όταν 	
+<TT>seq</TT> έχει δύο ορίσματα,
+και επιστρέφει πάντα μια ακολουθία.<BR>
+<B>Σχόλιο:</B> 
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Στον τρόπο λειτουργίας 	
+<TT>Xcas</TT>, η προτεραιότητα του 	
+<TT>$</TT> δεν είναι ίδια με εκείνη,
+για παράδειγμα, του 	
+<TT>Maple</TT>, γιαυτό σε περίπτωση αμφιβολίας
+βάλτε τα ορίσματα του 	
+<TT>$</TT> σε παρενθέσεις.
+Για παράδειγμα, το ισοδύναμο του 	
+<TT>seq(j</TT><CODE><TT>^</TT></CODE><TT>2,j=-1..3)</TT> είναι
+	
+<TT>(j</TT><CODE><TT>^</TT></CODE><TT>2)$(j=-1..3)</TT> και 
+επιστρέφει 	
+<TT>(1,0,1,4,9)</TT>. 
+Το ισοδύναμο του 	
+<TT>seq(4,3)</TT> είναι 	
+<TT>4$3</TT> και επιστρέφει 
+	
+<TT>(4,4,4)</TT>.
+</LI><LI CLASS="li-itemize">Με την σύνταξη του 	
+<TT>Maple</TT>, το 	
+<TT>j,a..b,p</TT> δεν είναι έγκυρο.
+Για να ορίσετε ένα βήμα <I>p</I>, για την μεταβολή του 
+<I>j</I> από το <I>a</I> στο <I>b</I>, χρησιμοποιήστε 	
+<TT>j=a..b,p</TT> ή χρησιμοποιήστε πρώτα την σύνταξη του 	
+<TT>TI</TT>
+	
+<TT>j,a,b,p</TT> και πάρτε την ακολουθία από την λίστα με το 	
+<TT>op(...)</TT>.
+</LI></UL><P>
+Συνοψίζοντας, οι διαφορετικοί τρόποι για να δημιουργήσετε μια ακολουθία είναι οι εξής :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+με σύνταξη του 	
+<TT>Maple</TT> 
+<OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+	
+<TT>seq</TT> έχει δύο ορίσματα : 
+είτε μια παράσταση που εξαρτάται από την παράμετρο 
+(για παράδειγμα) <I>j</I> και <I>j</I>=<I>a</I>..<I>b</I>, όπου <I>a</I> και <I>b</I> είναι πραγματικοί αριθμοί, 
+είτε μια σταθερή παράσταση και έναν ακέραιο <I>n</I>.<BR>
+	
+<TT>seq</TT> επιστρέφει : είτε την ακολουθία όπου <I>j</I> αντικαθίσται στην
+παράσταση από <I>a</I>, <I>a</I>+1,...,<I>b</I> εάν <I>b</I>&gt;<I>a</I> και από <I>a</I>, <I>a</I>−1,...,<I>b</I> εάν <I>b</I>&lt;<I>a</I>,
+είτε την ακολουθία που προκύπτει αντιγράφοντας <I>n</I> φορές την σταθερά.
+</LI><LI CLASS="li-enumerate">	
+<TT>seq</TT> έχει τρία ορίσματα : μια παράσταση που εξαρτάται από την παράμετρο
+(για παράδειγμα) <I>j</I> και <I>j</I>=<I>a</I>..<I>b</I>,<I>p</I> όπου <I>a</I>, <I>b</I> και <I>p</I> είναι 
+πραγματικοί αριθμοί.<BR>
+	
+<TT>seq</TT> επιστρέφει την ακολουθία όπου το <I>j</I> αντικαθίσταται στην
+παράσταση από τα <I>a</I>, <I>a</I>+<I>p</I>,...,<I>b</I> εάν <I>b</I>&gt;<I>a</I> και από <I>a</I>, <I>a</I>−<I>p</I>,...,<I>b</I> 
+εάν <I>b</I>&lt;<I>a</I>.<BR>
+Σημειώσατε ότι <I>j</I>,<I>a</I>..<I>b</I> είναι επίσης έγκυρο αλλά <I>j</I>,<I>a</I>..<I>b</I>,<I>p</I> δεν είναι έγκυρο. 
+</LI></OL>
+</LI><LI CLASS="li-itemize">με σύνταξη του 	
+<TT>TI</TT> 
+<OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+	
+<TT>seq</TT> έχει τέσσερα ορίσματα : μια παράσταση που εξαρτάται από την παράμετρο (για
+παράδειγμα) <I>j</I>, το όνομα της παραμέτρου (για παράδειγμα) <I>j</I>, <I>a</I> και <I>b</I> όπου
+<I>a</I> και <I>b</I> είναι πραγματικοί.<BR>
+	
+<TT>seq</TT> επιστρέφει την λίστα όπου <I>j</I> αντικαθίσταται στην παράσταση από
+<I>a</I>, <I>a</I>+1,...,<I>b</I> εάν <I>b</I>&gt;<I>a</I> και από <I>a</I>, <I>a</I>−1,...,<I>b</I> εάν <I>b</I>&lt;<I>a</I>.
+</LI><LI CLASS="li-enumerate">	
+<TT>seq</TT> έχει πέντε ορίσματα : μια παράσταση που εξαρτάται από την παράμετρο (για 
+παράδειγμα) <I>j</I>, το όνομα της παραμέτρου (για παράδειγμα) <I>j</I>, <I>a</I>, <I>b</I> και <I>p</I> 
+όπου <I>a</I>, <I>b</I> και <I>p</I> είναι πραγματικοί αριθμοί.<BR>
+	
+<TT>seq</TT> επιστρέφει την λίστα όπου το
+<I>j</I> αντικαθίσταται στην παράσταση
+από <I>a</I>, <I>a</I>+<I>p</I>,...,<I>a</I>+<I>k</I>*<I>p</I> (<I>a</I>+<I>k</I>*<I>p</I> ≤ <I>b</I> &lt;<I>a</I>+(<I>k</I>+1)*<I>p</I> ή 
+<I>a</I>+<I>k</I>*<I>p</I> ≥ <I>b</I>&gt; <I>a</I>+(<I>k</I>+1)*<I>p</I>). 
+Από προεπιλογή, <I>p</I>=1 εάν <I>b</I>&gt;<I>a</I> και <I>p</I>=-1 εάν <I>b</I>&lt;<I>a</I>. 
+</LI></OL>
+</LI></UL><P>
+<B>Σημειώσατε</B> ότι 
+με σύνταξη του 	
+<TT>Maple</TT>, η 	
+<TT>seq</TT> δεν παίρνει παραπάνω από 3 ορίσματα και
+επιστρέφει μια ακολουθία, ενώ
+με σύνταξη του 	
+<TT>TI</TT>, η 	
+<TT>seq</TT> παίρνει τουλάχιστον 4 ορίσματα
+και επιστρέφει μια λίστα.<BR><BR>
+Είσοδος για να έχουμε μια ακολουθία με ίδια στοιχεία :
+</P><DIV CLASS="center">	
+<TT>seq(t,4)</TT></DIV><P>
+ή : 
+</P><DIV CLASS="center">	
+<TT>seq(t,k=1..4)</TT></DIV><P>
+ή :
+</P><DIV CLASS="center">	
+<TT>t$4</TT></DIV><P> 
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(t,t,t,t)</TT></DIV><P>
+Είσοδος για να έχουμε μια ακολουθία:
+</P><DIV CLASS="center">	
+<TT>seq(j</TT><CODE><TT>^</TT></CODE><TT>3,j=1..4)</TT></DIV><P>
+ή : 
+</P><DIV CLASS="center">	
+<TT>(j</TT><CODE><TT>^</TT></CODE><TT>3)$(j=1..4)</TT></DIV><P> 
+ή:
+</P><DIV CLASS="center">	
+<TT>seq(j</TT><CODE><TT>^</TT></CODE><TT>3,j,1..4)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(1,4,9,16)</TT></DIV><P>
+Είσοδος για να έχουμε μια ακολουθία :
+</P><DIV CLASS="center">	
+<TT>seq(j</TT><CODE><TT>^</TT></CODE><TT>3,j=-1..4,2)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(1,1,9)</TT></DIV><P>
+Ή για να έχουμε μια λίστα,<BR>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>seq(j</TT><CODE><TT>^</TT></CODE><TT>3,j,1,4)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[1,4,9,16]</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>seq(j</TT><CODE><TT>^</TT></CODE><TT>3,j,0,5,2)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[0,8,64]</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>seq(j</TT><CODE><TT>^</TT></CODE><TT>3,j,5,0,-2)</TT></DIV><P>
+ή
+</P><DIV CLASS="center">	
+<TT>seq(j</TT><CODE><TT>^</TT></CODE><TT>3,j,5,0,2)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[125,27,1]</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>seq(j</TT><CODE><TT>^</TT></CODE><TT>3,j,1,3,0.5)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[1,3.375,8,15.625,27]</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>seq(j</TT><CODE><TT>^</TT></CODE><TT>3,j,1,3,1/2)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[1,27/8,8,125/8,27]</TT></DIV><P>
+<B>Παραδείγματα</B>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Για να βρείτε την τρίτη παράγωγο της  ln(<I>t</I>), εισάγετε :
+<DIV CLASS="center">	
+<TT>diff(log(t),t$3)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>-((-(2*t))/t</TT><CODE><TT>^</TT></CODE><TT>4)</TT></DIV>
+</LI><LI CLASS="li-itemize">Είσοδος :
+<DIV CLASS="center">	
+<TT>l:=[[2,3],[5,1],[7,2]]</TT></DIV>
+<DIV CLASS="center">	
+<TT>seq((l[k][0])$(l[k][1]),k=0 .. size(l)-1)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>2,2,2,seq[5],7,7</TT></DIV>
+έπειτα η 	
+<TT>eval(ans())</TT> επιστρέφει:
+<DIV CLASS="center">	
+<TT>2,2,2,5,7,7</TT></DIV>
+</LI><LI CLASS="li-itemize">Για να μετασχηματίσετε μια συμβολοσειρά σε μια λίστα από τους χαρακτήρες της ορίστε πρώτα την συνάρτηση :
+	
+<PRE CLASS="verbatim"><TT> f(chn):={
+ local l;
+ l:=size(chn);
+ return seq(chn[j],j,0,l-1);
+ }
+</TT></PRE>
+και μετά εισάγετε:
+<DIV CLASS="center">	
+<TT>f("abracadabra")</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>["a","b","r","a","c","a","d","a","b","r","a"]</TT></DIV>
+</LI></UL><HR>
+<A HREF="cascmd_el288.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el290.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

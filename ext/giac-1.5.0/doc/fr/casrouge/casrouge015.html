@@ -1,0 +1,1019 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Le calcul intégral et les équations différentielles</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casrouge014.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge016.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc406">Chapitre 15</A>  Le calcul intégral et les équations différentielles</H1><H2 CLASS="section"><A NAME="toc110"></A><A NAME="htoc407">15.1</A>  La méthode des trapèzes et du point milieu pour calculer une aire</H2><P>
+Dans <TT>Xcas</TT>, il existe déjà une fonction qui calcule la valeur 
+approchée d’une intégrale (en accélérant la méthode des trapèzes 
+par l’algorithme de Romberg) qui est : <TT>romberg</TT><BR>
+Soit une fonction définie et continue sur l’intervalle [<I>a</I> ; <I>b</I>].<BR>
+On sait que ∫<SUB><I>a</I></SUB><SUP><I>b</I></SUP> <I>f</I>(<I>t</I>)<I>dt</I> peut être approchée par l’aire, soit :<BR>
+- du trapèze de sommets <I>a</I>,<I>b</I>,<I>b</I>+<I>i</I>*<I>f</I>(<I>b</I>),<I>a</I>+<I>i</I>*<I>f</I>(<I>a</I>) soit,<BR>
+- du rectangle de sommets
+<I>a</I>,<I>b</I>,<I>b</I>+<I>i</I>*<I>f</I>((<I>a</I>+<I>b</I>)/2),<I>a</I>+<I>i</I>*<I>f</I>((<I>a</I>+<I>b</I>)/2).<BR>
+La méthode des trapèzes (resp point
+milieu) consiste à partager l’intervalle 
+[<I>a</I> ; <I>b</I>] en <I>n</I> parties égales et à faire l’approximation
+de l’intégrale sur chaque sous-intervalle par l’aire des trapèzes (resp 
+rectangles) ainsi définis.
+</P><H3 CLASS="subsection"><A NAME="htoc408">15.1.1</A>  La méthode des trapèzes</H3><P><A NAME="sec:trapeze"></A>
+On partage [<I>a</I> ; <I>b</I>] en <I>n</I> parties égales et <TT>trapeze</TT> renvoie la
+somme des aires des <I>n</I> trapèzes déterminés par la courbe 
+représentative de <I>f</I> et la subdivision de [<I>a</I> ; <I>b</I>].
+</P><PRE CLASS="verbatim">trapeze(f,a,b,n):={
+local s,k;
+s:=evalf((f(a)+f(b))/2);
+for (k:=1;k&lt;n;k++) {
+s:=s+f(a+k*(b-a)/n);
+}
+return s/n*(b-a);
+}
+</PRE><P>On partage [<I>a</I> ; <I>b</I>] en 2<SUP><I>p</I></SUP> parties égales et <TT>trapezel</TT> renvoie 
+la liste de la
+somme des aires des <I>n</I>=2<SUP><I>k</I></SUP> trapèzes déterminés par la courbe 
+représentative de <I>f</I> et la subdivision de [<I>a</I> ; <I>b</I>], liste de longueur 
+<I>p</I>+1, obtenue en faisant varier <I>k</I> de 0 à <I>p</I>.<BR>
+On pourra ensuite, appliquer à cette liste une accélération de convergence.<BR>
+On remarquera qu’à chaque étape, on ajoute des "nouveaux" points
+à la subdivision, et que le calcul utilise la somme <I>s</I> précédente 
+en lui ajoutant la contribution <I>s</I><SUB>1</SUB> des "nouveaux" points
+de la subdivision. 
+</P><PRE CLASS="verbatim">trapezel(f,a,b,p):={
+local s,n,k,lt,s1,j;
+s:=evalf((f(a)+f(b))/2);
+n:=1;
+lt:=[s*(b-a)];
+for (k:=1;k&lt;=p;k++) {
+s1:=0;
+for (j:=0;j&lt;n;j++) {
+s1:=s1+f(a+(2*j+1)*(b-a)/(2*n));
+}
+s:=s+s1;
+n:=2*n;
+lt:=concat(lt,s/n*(b-a));
+}
+return lt;
+}
+</PRE><P>On met ce programme dans un niveau éditeur de programmes (que l’on ouvre 
+avec <TT>Alt+p</TT>), puis on le teste et on le valide avec <TT>OK</TT>.<BR>
+On tape (on partage [0;1] en 2<SUP>6</SUP>=64 parties égales) :<BR>
+<TT>trapezel(x-&gt;x</TT><CODE><TT>^</TT></CODE><TT>2+1,0,1,6)</TT><BR>
+On obtient :<BR>
+<TT>[1.5,1.375,1.34375,1.3359375,1.333984375,1.33349609375,<BR>
+1.33337402344]</TT><BR>
+On sait que <TT>int(x</TT><CODE><TT>^</TT></CODE><TT>2+1,x,0,1)=</TT><TT>4/3</TT><TT>=1.3333333333</TT><BR>
+On tape (on partage [0;1] en 2<SUP>6</SUP>=64 parties égales) :<BR>
+<TT>trapezel(exp,0,1,6)</TT><BR>
+On obtient :<BR>
+<TT>[1.85914091423,1.75393109246,1.72722190456,1.72051859216,<BR>
+1.71884112858,1.71842166032,1.71831678685] </TT><BR>
+On sait que <TT>int(exp(x),x,0,1)=e-1=1.71828182846</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc409">15.1.2</A>  La méthode du point milieu</H3><P>
+On partage [<I>a</I> ; <I>b</I>] en <I>n</I> parties égales et <TT>ptmilieu</TT> renvoie la
+somme des aires des <I>n</I> rectangles déterminés par la courbe 
+représentative de <I>f</I> et les milieux des segments de la subdivision de 
+[<I>a</I> ; <I>b</I>].
+</P><PRE CLASS="verbatim">ptmilieu(f,a,b,n):={
+local s,k;
+s:=0.0;
+for (k:=0;k&lt;n;k++) {
+s:=s+f(a+(b-a)/(2*n)+k*(b-a)/n);
+}
+return s/n*(b-a);
+}
+</PRE><P>On partage [<I>a</I> ; <I>b</I>] en 3<SUP><I>p</I></SUP> parties égales et <TT>ptmilieul</TT> renvoie 
+la liste de la
+somme des aires des <I>n</I>=3<SUP><I>k</I></SUP> rectangles déterminés par la courbe 
+représentative de <I>f</I> et les milieux de la subdivision de [<I>a</I> ; <I>b</I>], 
+liste de longueur <I>p</I>+1, obtenue en faisant varier <I>k</I> de 0 à <I>p</I>.<BR>
+On peut ensuite appliquer à cette liste une accélération de convergence.<BR>
+On remarquera qu’à chaque étape, on ajoute des "nouveaux" points
+à la subdivision, et, que le calcul utilise la somme <I>s</I> précédente 
+en lui ajoutant la contribution <I>s</I><SUB>1</SUB> des "nouveaux" points
+de la subdivision. 
+</P><PRE CLASS="verbatim">ptmilieul(f,a,b,p):={
+local s,n,k,lt,s1,j;
+s:=evalf(f((a+b)/2));
+n:=1;
+lt:=[s*(b-a)];
+for (k:=1;k&lt;=p;k++) {
+s1:=0.0;
+for (j:=0;j&lt;n;j++) {
+s1:=s1+f(a+(6*j+1)*(b-a)/(6*n))+f(a+(6*j+5)*(b-a)/(6*n));
+}
+s:=s+s1;
+n:=3*n;
+lt:=concat(lt,s*(b-a)/n);
+}
+return lt;
+}
+</PRE><P>On met ce programme dans un niveau éditeur de programmes (que l’on ouvre avec
+<TT>Alt+p</TT>), puis on le teste et on le valide avec <TT>OK</TT>.<BR>
+On tape (on partage [0;1] en 3<SUP>4</SUP>=81 parties égales) :<BR>
+<TT>ptmilieul(x-&gt;x</TT><CODE><TT>^</TT></CODE><TT>2+1,0,1,4)</TT><BR>
+On obtient :<BR>
+<TT>[1.25,1.32407407407,1.33230452675,1.33321902149,1.33332063202]</TT>
+On sait que <TT>int(x</TT><CODE><TT>^</TT></CODE><TT>2+1,x,0,1)=</TT><TT>4/3</TT><TT>=1.3333333333</TT><BR>
+On tape (on partage [0;1] en 3<SUP>4</SUP>=81 parties égales) :<BR>
+<TT>ptmilieul(exp,0,1,4)</TT><BR>
+On obtient :<BR>
+<TT>[1.6487212707,1.71035252482,1.7173982568,<BR>
+1.71818362241,1.71827091629]</TT><BR>
+On sait que <TT>int(exp(x),x,0,1)=e-1=1.71828182846</TT>
+</P><H2 CLASS="section"><A NAME="toc111"></A><A NAME="htoc410">15.2</A>  Accélération de convergence : méthode de Richardson et Romberg</H2><P>
+<B>Hypothèse</B> : soit <I>v</I> une fonction qui admet un développement limité
+au voisinage de zéro à l’ordre <I>n</I> :<BR>
+<I>v</I>(<I>h</I>)=<I>v</I>(0)+<I>c</I><SUB>1</SUB>· <I>h</I>+<I>c</I><SUB>2</SUB>· <I>h</I>+...+<I>c</I><SUB><I>n</I></SUB>· <I>h</I><SUP><I>n</I></SUP>+<I>O</I>(<I>h</I><SUP><I>n</I>+1</SUP>)<BR>
+On veut accélérer la convergence de <I>v</I> vers <I>v</I>(0) quand <I>h</I> tend vers 0.
+</P><H3 CLASS="subsection"><A NAME="htoc411">15.2.1</A>  La méthode de Richardson</H3><H4 CLASS="subsubsection">Le principe</H4><P>
+La méthode de Richardson consiste à faire dispataitre le terme en 
+<I>c</I><SUB>1</SUB>· <I>h</I> en faisant par exemple la combinaison 2· <I>v</I>(<I>h</I>/2)−<I>v</I>(<I>h</I>).<BR>
+On a en effet :<BR>
+<I>v</I>(<I>h</I>)=<I>v</I>(0)+<I>c</I><SUB>1</SUB>· <I>h</I>+<I>c</I><SUB>2</SUB>· <I>h</I><SUP>2</SUP>+...+<I>c</I><SUB><I>n</I></SUB>· <I>h</I><SUP><I>n</I></SUP>+<I>O</I>(<I>h</I><SUP><I>n</I>+1</SUP>)<BR>
+ <I>v</I>(<I>h</I>/2)=<I>v</I>(0)+<I>c</I><SUB>1</SUB>· <I>h</I>/2+<I>c</I><SUB>2</SUB>· <I>h</I><SUP>2</SUP>/4+...+<I>c</I><SUB><I>n</I></SUB>· <I>h</I><SUP>2</SUP>/2<SUP><I>n</I></SUP>+<I>O</I>(<I>h</I><SUP><I>n</I>+1</SUP>)<BR>
+Posons :<BR>
+ <I>u</I>(<I>h</I>)=2· <I>v</I>(<I>h</I>/2)−<I>v</I>(<I>h</I>)<BR>
+On a donc 
+ <I>u</I>(<I>h</I>)=<I>v</I>(0)−<I>c</I><SUB>2</SUB>· <I>h</I><SUP>2</SUP>/2+...−<I>c</I><SUB><I>n</I></SUB>· <I>h</I><SUP><I>n</I></SUP>· 2<SUP><I>n</I>−1</SUP>−1/2<SUP><I>n</I>−1</SUP>+<I>O</I>(<I>h</I><SUP><I>n</I>+1</SUP>)<BR>
+<I>u</I> tend donc plus vite que <I>v</I> vers <I>v</I>(0) quand <I>h</I> tend vers 0.<BR>
+On peut continuer et faire subir la même chose à <I>u</I>.
+</P><H4 CLASS="subsubsection">L’algorithme général</H4><P>
+On considère <I>r</I> ∈ ]0;1[ (on peut prendre <I>r</I>=1/2) et on pose :<BR>
+<I>v</I><SUB>0,0</SUB>(<I>h</I>)=<I>v</I>(<I>h</I>)=<I>v</I>(0)+<I>c</I><SUB>1</SUB>· <I>h</I>+<I>c</I><SUB>2</SUB>· <I>h</I><SUP>2</SUP>+...+<I>c</I><SUB><I>n</I></SUB>· <I>h</I><SUP><I>n</I></SUP>+<I>O</I>(<I>h</I><SUP><I>n</I>+1</SUP>)<BR>
+<I>v</I><SUB>1,0</SUB>(<I>h</I>)=<I>v</I>(<I>r</I>· <I>h</I>)=<I>v</I>(0)+<I>c</I><SUB>1</SUB>· <I>r</I>· <I>h</I>+<I>c</I><SUB>2</SUB>· <I>r</I><SUP>2</SUP>· <I>h</I><SUP>2</SUP>+...+<I>c</I><SUB><I>n</I></SUB>· <I>r</I><SUP><I>n</I></SUP>· <I>h</I><SUP><I>n</I></SUP>+<I>O</I>(<I>h</I><SUP><I>n</I>+1</SUP>)<BR>
+<I>v</I><SUB>2,0</SUB>(<I>h</I>)=<I>v</I>(<I>r</I><SUP>2</SUP>· <I>h</I>)=<I>v</I>(0)+<I>c</I><SUB>1</SUB>· <I>r</I><SUP>2</SUP>· <I>h</I>+<I>c</I><SUB>2</SUB>· <I>r</I><SUP>4</SUP>· <I>h</I><SUP>2</SUP>+...+<I>c</I><SUB><I>n</I></SUB>· <I>r</I><SUP>2<I>n</I></SUP>· <I>h</I><SUP><I>n</I></SUP>+<I>O</I>(<I>h</I><SUP><I>n</I>+1</SUP>)<BR>
+Soit :<BR>
+<I>v</I><SUB>1,1</SUB>(<I>h</I>)=1/1−<I>r</I>(<I>v</I>(<I>r</I>· <I>h</I>)−<I>r</I>· <I>v</I>(<I>h</I>))=1/1−<I>r</I>(<I>v</I><SUB>1,0</SUB>(<I>h</I>)−<I>r</I>· <I>v</I><SUB>0,0</SUB>(<I>h</I>))<BR>
+<I>v</I><SUB>1,1</SUB>(<I>h</I>)=<I>v</I>(0)+<I>c</I><SUB>2</SUB>· <I>r</I>· <I>h</I><SUP>2</SUP>+...+<I>c</I><SUB><I>n</I></SUB>· <I>r</I>· (<I>r</I><SUP><I>n</I></SUP>−1)/(<I>r</I>−1)· <I>h</I><SUP><I>n</I></SUP>+<I>O</I>(<I>h</I><SUP><I>n</I>+1</SUP>)<BR>
+on on n’a pas de terme en <I>h</I> dans <I>v</I><SUB>1,1</SUB>(<I>h</I>) et de la même
+façon en posant :<BR>
+<I>v</I><SUB>2,1</SUB>(<I>h</I>)=<I>v</I><SUB>1,1</SUB>(<I>r</I>· <I>h</I>)=1/1−<I>r</I>(<I>v</I>(<I>r</I><SUP>2</SUP>· <I>h</I>)−<I>r</I>· <I>v</I><SUB>1,0</SUB>(<I>h</I>))=1/1−<I>r</I>(<I>v</I><SUB>2,0</SUB>(<I>h</I>)−<I>r</I>· <I>v</I><SUB>1,0</SUB>(<I>h</I>))<BR>
+<I>v</I><SUB>2,1</SUB>(<I>h</I>)=<I>v</I>(0)+<I>c</I><SUB>2</SUB>· <I>r</I><SUP>3</SUP>· <I>h</I><SUP>2</SUP>+...+<I>O</I>(<I>h</I><SUP><I>n</I>+1</SUP>)<BR>
+on n’a pas de terme en <I>h</I> dans <I>v</I><SUB>2,1</SUB>(<I>h</I>)<BR>
+On obtient la suite des fonctions <I>v</I><SUB><I>k</I>,1</SUB>=<I>v</I><SUB>1,1</SUB>(<I>r</I><SUP><I>k</I>−1</SUP>· <I>h</I>) (<I>k</I>&gt;1)
+qui
+n’ont pas de terme en 
+<I>h</I> dans leur développements limités et qui convergent vers v(0).<BR>
+On peut faire subir à la suite <I>v</I><SUB><I>k</I>,1</SUB> le même sort qu’à 
+la suite <I>v</I><SUB><I>k</I>,0</SUB> et obtenir la suite <I>v</I><SUB><I>k</I>,2</SUB> (<I>k</I>&gt;2):<BR>
+on pose <I>v</I><SUB>2,2</SUB>(<I>h</I>)=1/1−<I>r</I><SUP>2</SUP>(<I>v</I><SUB>2,1</SUB>(<I>h</I>)−<I>r</I><SUP>2</SUP>· <I>v</I><SUB>1,1</SUB>(<I>h</I>))<BR>
+et on n’a pas de terme en <I>h</I><SUP>2</SUP> dans <I>v</I><SUB>2,2</SUB>(<I>h</I>) etc....<BR>
+On obtient ainsi les formules de récurrence :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>v</I><SUB><I>k</I>,0</SUB>(<I>h</I>)=<I>v</I>(<I>r</I><SUP><I>k</I></SUP>· <I>h</I>)</TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>v</I><SUB><I>k</I>,<I>p</I></SUB>(<I>h</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">1−<I>r</I><SUP><I>p</I></SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">(<I>v</I><SUB><I>k</I>,<I>p</I>−1</SUB>(<I>h</I>)−<I>r</I><SUP><I>p</I></SUP>· <I>v</I><SUB><I>k</I>−1,<I>p</I>−1</SUB>(<I>h</I>))</TD></TR>
+</TABLE><P>
+On a alors :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>v</I><SUB><I>k</I>,<I>p</I></SUB>(<I>h</I>)=<I>v</I>(0)+<I>O</I>(<I>h</I><SUP><I>p</I>+1</SUP>)</TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc412">15.2.2</A>  Application au calcul de S=∑<SUB><I>k</I>=1</SUB><SUP>∞</SUP>1/<I>k</I><SUP>2</SUP></H3><P>
+On a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>R</I><SUB><I>p</I></SUB>=<I>S</I>−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>p</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=<I>p</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I><SUP>)</SUP>2</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+D’après la comparaison avec une intégrale on a :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>p</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>dx</I>&lt;<I>R</I><SUB><I>p</I></SUB>&lt;</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>p</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>dx</I></TD></TR>
+</TABLE><P>
+Donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>p</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&lt;<I>R</I><SUB><I>p</I></SUB>&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>p</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+donc <I>S</I><SUB>0,<I>p</I></SUB>=<I>S</I><SUB><I>p</I></SUB>=<I>S</I>−<I>R</I><SUB><I>p</I></SUB>=<I>S</I>−1/<I>p</I>+<I>O</I>(1/<I>p</I><SUP>2</SUP>)<BR>
+On forme pour <I>p</I>=1..2<SUP><I>n</I>−1</SUP> :<BR>
+<I>S</I><SUB>1,<I>p</I></SUB>=<I>S</I>1<SUB><I>p</I></SUB>=2*<I>S</I><SUB>2<I>p</I></SUB>−<I>S</I><SUB><I>p</I></SUB>
+puis,<BR>
+<I>S</I><SUB>2,<I>p</I></SUB>=<I>S</I>2<SUB><I>p</I></SUB>=(2<SUP>2</SUP>*<I>S</I>1<SUB>2<I>p</I></SUB>−<I>S</I>1<SUB><I>p</I></SUB>)/(2<SUP>2</SUP>−1)
+puis,<BR>
+<I>S</I><SUB><I>k</I>,<I>p</I></SUB>=(2<SUP><I>k</I></SUP>*<I>S</I><SUB><I>k</I>−1,2<I>p</I></SUB>−<I>S</I><SUB><I>k</I>−1,<I>p</I></SUB>)/(2<SUP><I>k</I></SUP>−1)<BR>
+À la main :<BR>
+<I>S</I><SUB>0,1</SUB>=1,<BR>
+<I>S</I><SUB>0,2</SUB>=5/4=1.25,<BR>
+<I>S</I><SUB>0,3</SUB>=49/36=1.36111111,<BR>
+<I>S</I><SUB>0,4</SUB>=205/144=1.42361111111<BR>
+<I>S</I><SUB>1,1</SUB>=2*<I>S</I><SUB>0,2</SUB>−<I>S</I><SUB>0,1</SUB>=3/2=1.5<BR>
+<I>S</I><SUB>1,2</SUB>=2*<I>S</I><SUB>0,4</SUB>−<I>S</I><SUB>0,2</SUB>=1.59722222222<BR>
+<I>S</I><SUB>2,2</SUB>=(4*<I>S</I><SUB>1,2</SUB>−<I>S</I><SUB>1,1</SUB>)/3=1.62962962963<BR>
+Dans la liste <I>S</I> on met 1,1+1/4,1+1/4+1/9,...1+1/4+...+1/2<SUP>2<I>n</I></SUP>,<BR>
+<I>S</I> a 2<SUP><I>n</I></SUP> termes d’indices 0 à 2<SUP><I>n</I></SUP>−1,<BR>
+puis on forme<BR>
+<I>S</I>1=1.5,1+1/4+2/9+2/16,...<I>S</I>[2<SUP><I>n</I></SUP>−1]−<I>S</I>[2<SUP><I>n</I>−1</SUP>−1]<BR>
+(on doit mettre -1 dans <I>S</I>[2<SUP><I>n</I></SUP>−1]−<I>S</I>[2<SUP><I>n</I>−1</SUP>−1] car les indices de <I>S</I> commencent à 0)<BR>
+<I>S</I>1 a 2<SUP><I>n</I>−1</SUP> termes d’indices 0 à 2<SUP><I>n</I>−1</SUP>−1<BR>
+puis on continue avec une suite <I>S</I>2 de termes pour <I>k</I>=1..2<SUP><I>n</I>−2</SUP> :<BR>
+(4*<I>S</I>1[2*<I>k</I>−1]−<I>S</I>1[<I>k</I>−1])/3 etc...<BR>
+On écrit le programme suivant :
+</P><PRE CLASS="verbatim">richardson(n):={
+local s0,s1,k,j,st,S,puiss;
+s0:=[1.];
+st:=1.0;
+for (k:=2;k&lt;=2^n;k++) {
+st:=st+1/k^2;
+s0:=concat(s0,st);
+}
+//attention s0=S a 2^n termes d'indices 0 (2^n)-1
+S:=s0;
+for (j:=1;j&lt;=n;j++){
+  s1:=[];
+  puiss:=2^j;
+  //j-ieme acceleration s1 a 2^(n-j) termes d'indices 
+  // allant de 0 a 2^(n-j)-1
+  for (k:=1;k&lt;=2^(n-j);k++) {
+     st:=(puiss*s0[2*k-1]-s0[k-1])/(puiss-1);
+     s1:=concat(s1,st);
+  }
+  s0:=s1;
+}
+return S[2^n-1],s1[0];
+}:;
+</PRE><P>La première valeur est la somme des 2<SUP><I>n</I></SUP> premiers termes,
+calculée sans accélération , la deuxième valeur a été obtenue
+après avoir accéléré cette somme <I>n</I> fois.<BR>
+On tape :<BR>
+<TT>richardson(6)</TT><BR>
+On obtient :<BR>
+<TT>1.62943050141, 1.64493406732</TT><BR>
+On a du calculer 2<SUP>6</SUP>=64 termes (1 et 8 décimales exactes).<BR>
+On tape :<BR>
+<TT>richardson(8)</TT><BR>
+On obtient avec plus de décimales :<BR>
+<TT>1.6410354363087,1.6449340668481</TT> (2 et 12 décimales exactes)<BR>
+On a du calculer 2<SUP>8</SUP>=256 termes.<BR>
+On sait que <I>S</I>=∑<SUB><I>k</I>=1</SUB><SUP>∞</SUP>1/<I>k</I><SUP>2</SUP>=π<SUP>2</SUP>/6≃ 1.6449340668482
+</P><H3 CLASS="subsection"><A NAME="htoc413">15.2.3</A>  Application au calcul de la constante d’Euler</H3><P><A NAME="sec:gammarich"></A>
+Par définition la constante d’Euler γ est la limite quand <I>n</I> tend 
+vers l’infini de :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>u</I><SUB><I>n</I></SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">−ln(<I>n</I>)</TD></TR>
+</TABLE><P>
+(voir aussi <A HREF="casrouge013.html#sec:gammaalt">13.3.4</A> et <A HREF="casrouge013.html#sec:gammadiv">13.5.2</A>)<BR>
+On a donc :
+γ=<I>S</I>=1+∑<SUB><I>k</I>=2</SUB><SUP>+∞</SUP>1/<I>k</I>+ln(1−1/<I>k</I>)
+On a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>R</I><SUB><I>p</I></SUB>=<I>S</I>−1−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>p</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">+ln(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>k</I>−1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=<I>p</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">+ln(1−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)</TD></TR>
+</TABLE><P>
+D’après la comparaison avec l’intégrale de la fonction décroissante 
+<I>f</I>(<I>x</I>)=ln(<I>x</I>)−ln(<I>x</I>−1)−1/<I>x</I> pour <I>x</I>≥ 1 on a :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>p</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>f</I>(<I>x</I>)<I>dx</I>&lt;−<I>R</I><SUB><I>p</I></SUB>&lt;</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>p</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>f</I>(<I>x</I>)<I>dx</I></TD></TR>
+</TABLE><P>
+Donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>p</I>ln(1−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>p</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)+1&lt;−<I>R</I><SUB><I>p</I></SUB>&lt;(<I>p</I>−1)ln(1−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>p</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)+1</TD></TR>
+</TABLE><P>
+donc 
+<I>S</I><SUB>0,<I>p</I></SUB>=<I>S</I><SUB><I>p</I></SUB>=<I>S</I>−<I>R</I><SUB><I>p</I></SUB>=<I>S</I>−<I>p</I>ln(1−1/<I>p</I>+1)+1+<I>O</I>(1/<I>p</I><SUP>2</SUP>)=1/2<I>p</I>+<I>O</I>(1/<I>p</I><SUP>2</SUP>)<BR>
+On écrit le programme suivant :
+</P><PRE CLASS="verbatim">richard(n):={
+local s0,s1,k,j,st,S,puiss;
+s0:=[1.0];
+st:=1.0;
+for (k:=2;k&lt;=2^n;k++) {
+st:=st+1/k+evalf(ln(1-1/k),24);
+s0:=concat(s0,st);
+}
+//attention s0=S a 2^n termes d'indices 0 (2^n)-1
+S:=s0;puiss:=1;
+for (j:=1;j&lt;=n;j++){
+  s1:=[];
+  puiss:=2*puiss;
+  //j-ieme acceleration s1 a 2^(n-j) termes d'indices 
+  // allant de 0 a 2^(n-j)-1
+  for (k:=1;k&lt;=2^(n-j);k++) {
+     st:=(puiss*s0[2*k-1]-s0[k-1])/(puiss-1);
+     s1:=concat(s1,st);
+  }
+  s0:=s1;
+}
+return S[puiss-1],s1[0];
+}:;
+</PRE><P>La première valeur est la somme des 2<SUP><I>n</I></SUP> premiers termes,
+calculée sans accélération , la deuxième valeur a été obtenue
+après avoir accéléré cette somme <I>n</I> fois.<BR>
+Avec 24 digits, on tape :<BR>
+<TT>richard(8)</TT><BR>
+On obtient :<BR>
+<TT>0.5791675183377178935391464, 0.5772156649015050409260531</TT><BR>
+On a du calculer 2<SUP>6</SUP>=64 termes (1 et 8 décimales exactes).<BR>
+On tape :<BR>
+<TT>richard(12)</TT><BR>
+On obtient plus de décimales :<BR>
+<TT>0.5773377302469791589300024, 0.5772156649015328606067501</TT> (3 décimales 
+exactes sans accélération et 21 décimales exactes avec accélération)<BR>
+On a du calculer 2<SUP>12</SUP>=4096 termes.<BR>
+On tape :
+<TT>Digits:=24;</TT><BR>
+<TT>evalf(euler_gamma)</TT><BR>
+On obtient : <TT>0.5772156649015328606065119</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc414">15.2.4</A>  La constante d’Euler à epsilon près et ma méthode de Richardson</H3><P>
+La constante d’Euler est la limite dela suite <I>u</I> définit par :
+</P><PRE CLASS="verbatim">u(n):={
+  local res,j;
+  res:=0;
+  pour j de n jusque 1 pas -1 faire 
+    res:=res+1./j; 
+  fpour;
+  return res-evalf(ln(n),24);
+}:;
+</PRE><P>On va écrire la fonction <TT>Richardson</TT> qui va calculer la limite de la 
+suite <I>u</I> à epsilon près avec 24 digits.
+On ècrit la fonction en travaillant sur les lignes :
+</P><PRE CLASS="verbatim">Richardson(u,eps):={
+  local Lprec,Lnouv,n,j;
+  n:=8;
+  Lprec:=[u(n)];
+  repeter
+    n:=2*n;
+    Lnouv:=[u(n)];
+    pour j de 1 jusque size(Lprec) faire 
+      Lnouv[j]:=(2^j*Lnouv[j-1]-Lprec[j-1])/(2^j-1);
+    fpour;
+    Lprec:=Lnouv;
+    afficher(Lprec);
+  jusqua abs(Lnouv[size(Lnouv)-1]-Lnouv[size(Lnouv)-2])&lt;eps;
+  return Lnouv[size(Lnouv)-1];
+}:;
+</PRE><P>On tape :<BR>
+<TT>Richardson(u,1e-9)</TT><BR>
+On obtient :<BR>
+<TT>0.5772156649019757368597692</TT><BR>
+On tape :<BR>
+<TT>Richardson(u,1e-21)</TT><BR>
+On obtient :<BR>
+<TT>0.5772156649015328606066475</TT><BR>
+</P><H3 CLASS="subsection"><A NAME="htoc415">15.2.5</A>  La méthode de Romberg</H3><P>
+C’est l’application de la méthode de Richardson à la formule des trapèzes
+dans le calcul d’une intégrale.
+</P><H4 CLASS="subsubsection">La formule d’Euler Mac Laurin</H4><P>
+<B>La formule à l’ordre 4</B><BR>
+On a :<BR>
+∫<SUB>0</SUB><SUP>1</SUP><I>g</I>(<I>t</I>)<I>dt</I>=1/2(<I>g</I>(0)+<I>g</I>(1))+<I>bernoulli</I>(2)(<I>g</I>′(0)−<I>g</I>′(1))+1/4!<I>bernoulli</I>(4)(<I>g</I><SUP>(3)</SUP>(0)−<I>g</I><SUP>(3)</SUP>(1))+∫<SUB>0</SUB><SUP>1</SUP><I>P</I><SUB>4</SUB>(<I>t</I>)<I>g</I><SUP>(4)</SUP>(<I>t</I>)<I>dt</I><BR>
+où <I>P</I><SUB>4</SUB>(<I>t</I>)=1/4!<I>B</I><SUB>4</SUB>(<I>t</I>) avec<BR>
+<I>B</I><SUB><I>n</I></SUB>(0)=<I>bernoulli</I>(<I>n</I>) et où <I>B</I><SUB><I>n</I></SUB> est le <I>n</I>-ième polynôme de Bernoulli.<BR>
+La suite <I>P</I><SUB><I>n</I></SUB> est définie par :<BR>
+<I>P</I><SUB>0</SUB>=1,et pour <I>k</I>≥1 <I>P</I>′<SUB><I>k</I></SUB>=<I>P</I><SUB><I>k</I>−1</SUB> et ∫<SUB>0</SUB><SUP>1</SUP><I>P</I><SUB><I>k</I></SUB>(<I>u</I>)<I>du</I>=0.<BR>
+Pour la démonstration voir le 
+fasicule Tableur, statistique à la section : Suites adjacentes et convergence
+de  ∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> (−1)<SUP><I>k</I></SUP>/2<I>k</I>+1.<BR>
+<B>Théorème pour la formule des trapèzes</B><BR>
+Si <I>f</I>∈ <FONT COLOR=red><I>C</I></FONT><SUP>2<I>p</I>+2</SUP>([<I>a</I>;<I>b</I>]), il existe des constantes <I>c</I><SUB>2<I>k</I></SUB> pour <I>k</I>=0..<I>p</I> telles que :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>I</I>=</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left"><I>b</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>a</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>f</I>(<I>x</I>)<I>dx</I>=<I>T</I>(<I>h</I>)+<I>c</I><SUB>1</SUB><I>h</I><SUP>2</SUP>+..<I>c</I><SUB><I>p</I></SUB><I>h</I><SUP>2<I>p</I></SUP>+<I>O</I>(<I>h</I><SUP>2<I>p</I>+2</SUP>)</TD></TR>
+</TABLE><P>
+avec </P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>h</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>b</I>−<I>a</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  et   <I>T</I>(<I>h</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>h</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(<I>f</I>(<I>a</I>)+<I>f</I>(<I>b</I>))+<I>h</I> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>f</I>(<I>a</I>+<I>k</I>· <I>h</I>)</TD></TR>
+</TABLE><P>
+On aura reconnu que <I>T</I>(<I>h</I>) est la formule des trapèzes pour le calcul de 
+∫<SUB><I>a</I></SUB><SUP><I>b</I></SUP> <I>f</I>(<I>x</I>)<I>dx</I> avec <I>h</I>=<I>b</I>−<I>a</I>/<I>n</I>.<BR>
+<B>Application de ce théorème pour la formule du point milieu</B><BR>
+Soit un intervalle [<I>a</I>;<I>a</I>+<I>h</I>] de longueur <I>h</I> si on applique la formule du 
+point milieu à <I>I</I>=∫<SUB><I>a</I></SUB><SUP><I>a</I>+<I>h</I></SUP> <I>f</I>(<I>t</I>)<I>dt</I> on a <I>m</I>(<I>h</I>)=<I>h</I>*<I>f</I>((<I>a</I>+<I>a</I>+<I>h</I>)/2) et si on 
+applique la formule des trapèzes aux intervalles [<I>a</I>;<I>a</I>+<I>h</I>/2] et [<I>a</I>+<I>h</I>/2,<I>a</I>+<I>h</I>]
+on a <I>t</I>(<I>h</I>/2)=<I>h</I>*(<I>f</I>(<I>a</I>)+<I>f</I>(<I>a</I>+<I>h</I>))/4+<I>h</I>*<I>f</I>((<I>a</I>+<I>a</I>+<I>h</I>)/2)/2=<I>t</I>(<I>h</I>)/2+<I>m</I>(<I>h</I>)/2 donc
+quand on coupe [<I>a</I>;<I>b</I>] en <I>n</I> intervalles de longueur <I>h</I> si on note <I>M</I>(<I>h</I>) la 
+formule obtenue pour le point milieu et <I>T</I>(<I>h</I>) celle obtenue pour les 
+trapèzes, on a :<BR>
+<I>M</I>(<I>h</I>)=2*<I>T</I>(<I>h</I>/2)−<I>T</I>(<I>h</I>)<BR>
+D’après la formule d’Euler Mac Laurin :<BR>
+<I>T</I>(<I>h</I>)=<I>I</I>−<I>c</I><SUB>1</SUB><I>h</I><SUP>2</SUP>−<I>c</I><SUB>2</SUB>*<I>h</I><SUP>4</SUP>−.....<I>c</I><SUB><I>p</I></SUB>*<I>h</I><SUP>2<I>p</I></SUP>+<I>O</I>(<I>h</I><SUP>2<I>p</I>+2</SUP>) et donc<BR>
+<I>M</I>(<I>h</I>)=<I>I</I>+<I>c</I><SUB>1</SUB>/2*<I>h</I><SUP>2</SUP>+<I>c</I><SUB>2</SUB>*<I>h</I><SUP>4</SUP>*(2<SUP>3</SUP>−1)/2<SUP>3</SUP>+...<I>c</I><SUB><I>p</I></SUB>*<I>h</I><SUP>2<I>p</I></SUP>*(2<SUP>2<I>p</I>−1</SUP>−1)/2<SUP>2<I>p</I>−1</SUP>+<I>O</I>(<I>h</I><SUP>2<I>p</I>+2</SUP>)<BR>
+On en déduit que les termes de ces deux développements sont de signes 
+contraires et donc si on fait le même nombre d’accélération de 
+convergence à <I>T</I>(<I>h</I>) et à <I>M</I>(<I>h</I>) on obtiendra un encadrement de <I>I</I>.
+</P><H4 CLASS="subsubsection">L’algorithme de Romberg</H4><P>
+On applque l’algorithme de Richardson à <I>T</I>(<I>h</I>) avec <I>r</I>=1/2.<BR>
+On pose :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>T</I><SUB><I>n</I>,0</SUB>=<I>T</I>(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>b</I>−<I>a</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2<SUP><I>n</I></SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)</TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>T</I><SUB><I>n</I>,1</SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">4<I>T</I><SUB><I>n</I>,0</SUB>−<I>T</I><SUB><I>n</I>−1,0</SUB></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>T</I><SUB><I>n</I>,<I>k</I></SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2<SUP>2<I>k</I></SUP><I>T</I><SUB><I>n</I>,<I>k</I>−1</SUB>−<I>T</I><SUB><I>n</I>−1,<I>k</I>−1</SUB></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2<SUP>2<I>k</I></SUP>−1</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+<B>Théorème</B> :<BR>
+On a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>T</I><SUB><I>n</I>,<I>p</I></SUB>=<I>I</I>+<I>O</I>(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2<SUP>2<I>np</I></SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)</TD></TR>
+</TABLE><P>
+On partage successivement l’intervalle [<I>a</I>;<I>b</I>] en 1=2<SUP>0</SUP>, 2=2<SUP>1</SUP>,4=2<SUP>2</SUP>,...,2<SUP><I>n</I></SUP>
+et on calcule la formule des trapèzes correspondante : <I>T</I><SUB>0,0</SUB>,<I>T</I><SUB>1,0</SUB>,..,<I>T</I><SUB><I>n</I>,0</SUB> c’est ce que fait le programme <TT>trapezel</TT> fait en <A HREF="#sec:trapeze">15.1.1</A> 
+que je recopie ci-dessous.
+</P><PRE CLASS="verbatim">trapezel(f,a,b,n):={
+local s,puiss2,k,lt,s1,j;
+s:=evalf((f(a)+f(b))/2);
+puiss2:=1;
+lt:=[s*(b-a)];
+for (k:=1;k&lt;=n;k++) {
+    s1:=0;
+    for (j:=0;j&lt;puiss2;j++) {
+        s1:=s1+f(a+(2*j+1)*(b-a)/(2*puiss2));
+    }
+    s:=s+s1;
+    puiss2:=2*puiss2;
+    lt:=concat(lt,s*(b-a)/puiss2);
+}
+return lt;
+}
+</PRE><P>On va travailler tout d’abord avec deux listes :
+<I>l</I>0 et <I>l</I>1 
+au début <I>l</I>0=[<I>T</I><SUB>0,0</SUB>] et <I>l</I>1=[<I>T</I><SUB>1,0</SUB>], on calcule <I>T</I><SUB>1,1</SUB> et
+<I>l</I>1=[<I>T</I><SUB>1,0</SUB>,<I>T</I><SUB>1,1</SUB>], puis on n’a plus besoin de <I>l</I>0 donc on met 
+<I>l</I>1 dans <I>l</I>0 et on recommence avec
+<I>l</I>1=[<I>T</I><SUB>2,0</SUB>], on calcule <I>T</I><SUB>2,1</SUB> et <I>T</I><SUB>2,2</SUB>, et
+<I>l</I>1=[<I>T</I><SUB>2,0</SUB>,<I>T</I><SUB>2,1</SUB>,<I>T</I><SUB>2,2</SUB>] puis on met <I>l</I>1 dans <I>l</I>0 et on recommence 
+avec.....pour enfin avoir
+<I>T</I><SUB><I>n</I>,0</SUB>, <I>T</I><SUB><I>n</I>,1</SUB>,... <I>T</I><SUB><I>n</I>,<I>n</I></SUB> dans <I>l</I>1.
+</P><H4 CLASS="subsubsection">Les programmes</H4><P>
+On applque l’algorithme de Romberg à <TT><I>T</I></TT><SUB><TT><I>k</I>,0</TT></SUB><TT>=<I>l</I>[<I>k</I>]</TT> où
+<TT><I>l</I>=<I>trapezel</I>(<I>f</I>,<I>a</I>,<I>b</I>,<I>n</I>)</TT>.
+</P><PRE CLASS="verbatim">intt_romberg(f,a,b,n):={
+local l,l0,l1,puis,k,j;
+l:=trapezel(f,a,b,n);
+//debut de l'acceleration de Romberg
+l0:=[l[0]];
+//on fait n accelerations
+for (k:=1;k&lt;=n;k++) {
+   l1:=[l[k]];
+   //calcul des T_{k,j} (j=1..k) dans l1
+   for (j:=1;j&lt;=k;j++) {
+      puis:=2^(2*j);
+      l1[j]:=(puis*l1[j-1]-l0[j-1])/(puis-1);
+    }
+    l0:=l1;
+}
+return l1;    
+}
+</PRE><P>On applque l’algorithme de Romberg à <TT><I>M</I></TT><SUB><TT><I>k</I>,0</TT></SUB><TT>=<I>l</I>[<I>k</I>]</TT> où
+<TT><I>l</I>=<I>ptmilieul</I>(<I>f</I>,<I>a</I>,<I>b</I>,<I>n</I>)</TT> que je rappelle ci-dessous.
+</P><PRE CLASS="verbatim">ptmilieul(f,a,b,n):={
+local s,puiss3,k,lt,s1,j;
+s:=evalf(f((a+b)/2));
+puiss3:=1;
+lt:=[s*(b-a)];
+for (k:=1;k&lt;=n;k++) {
+s1:=0.0;
+for (j:=0;j&lt;puiss3;j++) {
+s1:=s1+f(a+(6*j+1)*(b-a)/(6*puiss3))+f(a+(6*j+5)*(b-a)/(6*puiss3));
+}
+s:=s+s1;
+puiss3:=3*puiss3;
+lt:=concat(lt,s*(b-a)/puiss3);
+}
+return lt;
+}
+</PRE><P>On procède comme précédemment en remplacant les puissances de 2 par des puissances de 3 et le calcul de <I>T</I>(<I>h</I>) par celui de <I>M</I>(<I>h</I>).
+</P><PRE CLASS="verbatim">intm_romberg(f,a,b,n):={
+local l,l0,l1,puis,k,j;
+l:=milieul(f,a,b,n);
+//debut de l'acceleration de Romberg
+l0:=[l[0]];
+//on fait n accelerations
+for (k:=1;k&lt;=n;k++) {
+   l1:=[l[k]];
+   //calcul des M_{k,j} (j=1..k) dans l1
+   for (j:=1;j&lt;=k;j++) {
+      puis:=3^(2*j);
+      l1[j]:=(puis*l1[j-1]-l0[j-1])/(puis-1);
+    }
+    l0:=l1;
+}
+return l1;    
+}
+</PRE><P>On peut raffiner en 
+calculant <TT><I>puis</I>=2</TT><SUP><TT>(</TT></SUP><TT>2*<I>j</I>)</TT> dans la boucle (en rajoutant <TT>puis:=1;</TT> 
+avant <TT>for (j:=1;j&lt;=k;j++)..</TT> et en remplacant 
+<TT><I>puis</I>:=2</TT><SUP><TT>(</TT></SUP><TT>2*<I>j</I>);</TT> par <TT>puis:=puis*4;</TT>) et aussi
+en n’utilisant qu’une seule liste...<BR>
+On met ces programmes successivement 
+dans un niveau éditeur de programmes (que l’on ouvre avec <TT>Alt+p</TT>), puis 
+on les teste et on les valide avec <TT>OK</TT>.<BR>
+On tape (on partage [0;1] en 2<SUP>3</SUP>=8 parties égales) :<BR>
+<TT>intt_romberg(x-&gt;x</TT><CODE><TT>^</TT></CODE><TT>2+1,0,1,3)</TT><BR>
+On obtient :<BR>
+<TT>[[1.3359375,1.33333333333,1.33333333333,1.33333333333]</TT><BR>
+On sait que <TT>int(x</TT><CODE><TT>^</TT></CODE><TT>2+1,x,0,1)=</TT><TT>4/3</TT><TT>=1.3333333333</TT><BR>
+On tape (on partage [0;1] en 2<SUP>4</SUP>=16 parties égales) :<BR>
+<TT>intt_romberg(exp,0,1,4)</TT><BR>
+On obtient :<BR>
+<TT>1.71884112858,1.71828197405,1.71828182868,<BR>
+1.71828182846,1.71828182846]</TT><BR>
+On sait que <TT>int(exp(x),x,0,1)=e-1=1.71828182846</TT>.<BR>
+Dans la pratique, l’utilisateur ne connait pas la valeur de <I>n</I> qui donnera un 
+résultat correct sans faire trop de calculs. C’est pourquoi, on va 
+faire le calcul de la méthode des trapèzes au fur et à mesure 
+et changer le test d’arrêt : on s’arrête quand la différence de
+deux termes consécutifs est en valeur absolue plus petit que <I>epsi</I>.
+</P><PRE CLASS="verbatim">intrap_romberg(f,a,b,epsi):={
+local l0,l1,puis,puiss2,k,j,s,s1,test;
+//initialisation on a 1 intervalle
+s:=evalf((f(a)+f(b))/2);
+puiss2:=1;
+l0:=[s*(b-a)];
+k:=1;
+test:=1;
+while (test&gt;epsi) {
+   //calcul de la methode des trapezes avec 2^k intervalles
+   s1:=0;
+   for (j:=0;j&lt;puiss2;j++) {
+        s1:=s1+f(a+(2*j+1)*(b-a)/(2*puiss2));
+   }
+   s:=s+s1;
+   puiss2:=2*puiss2;
+   l1:=[s*(b-a)/puiss2];
+   //debut de l'acceleration de Romberg
+   //calcul des T_{k,j} (j=1..k) dans l1
+   j:=1;
+   while ((test&gt;epsi) and (j&lt;=k)) {
+      puis:=2^(2*j);
+      l1[j]:=(puis*l1[j-1]-l0[j-1])/(puis-1);
+      test:=abs(l1[j]-l1[j-1]);
+      j:=j+1;
+    }
+    l0:=l1;
+    k:=k+1;
+}
+return [k-1,j-1,l1[j-1]];    
+}
+</PRE><P>On renvoie la liste [<I>p</I>,<I>q</I>,<I>val</I>] où <I>val</I>=<I>T</I><SUB><I>q</I>,<I>p</I></SUB> (<I>p</I>=le nombre d’accélérations).<BR>
+On tape :<BR>
+<TT>intrap_romberg(sq,0,1,1e-12)</TT><BR>
+On obtient :<BR>
+<TT>[2,2,0.333333333333]</TT><BR>
+(on a donc dû partager [0;1] en 2<SUP>2</SUP>=4 parties égales et on a fait 2 
+accélérations)<BR>
+On tape :<BR>
+<TT>intrap_romberg(exp,0,1,1e-12)</TT><BR>
+On obtient :<BR>
+<TT>[5,4,1.71828182846]</TT><BR>
+(on a donc dû partager [0;1] en 2<SUP>5</SUP>=32 parties égales et on a fait 4 
+accélérations)<BR>
+
+On peut aussi appliquer l’algorithme de Romberg à <I>M</I>(<I>h</I>) on le même 
+programme en remplacant les puissances de 2 par des puissances de 3 et le 
+calcul de <I>T</I>(<I>h</I>) par celui de <I>M</I>(<I>h</I>).
+</P><PRE CLASS="verbatim">intmili_romberg(f,a,b,epsi):={
+local l0,l1,puis,puiss3,k,j,s,s1,test;
+//initialisation on a 1 intervalle
+s:=evalf(f((a+b)/2));
+puiss3:=1;
+l0:=[s*(b-a)];
+k:=1;
+test:=1;
+while (test&gt;epsi) {
+   //calcul de la methode du point milieu avec 3^k intervalles
+   s1:=0;
+   for (j:=0;j&lt;puiss3;j++) {
+      s1:=s1+f(a+(6*j+1)*(b-a)/(6*puiss3))+
+          f(a+(6*j+5)*(b-a)/(6*puiss3));
+   }
+   s:=s+s1;
+   puiss3:=3*puiss3;
+   l1:=[s*(b-a)/puiss3];
+   //debut de l'acceleration de Romberg
+   //calcul des T_{k,j} (j=1..k) dans l1
+   j:=1;
+   while ((test&gt;epsi) and (j&lt;=k)) {
+      puis:=3^(2*j);
+      l1[j]:=(puis*l1[j-1]-l0[j-1])/(puis-1);
+      test:=abs(l1[j]-l1[j-1]);
+      j:=j+1;
+    }
+    l0:=l1;
+    k:=k+1;
+}
+return [k-1,j-1,l1[j-1]];    
+}
+</PRE><P>On tape :<BR>
+<TT>inmili_romberg(sq,0,1,1e-12)</TT><BR>
+On obtient :<BR>
+<TT>[2,2,0.333333333333]</TT><BR>
+(on a donc dû partager [0;1] en 3<SUP>2</SUP>=9 parties égales et on a fait 2 
+accélérations)<BR>
+On tape :<BR>
+<TT>intmili_romberg(exp,0,1,1e-12)</TT><BR>
+On obtient :<BR>
+<TT>[4,3,1.71828182846]</TT><BR>
+(on a donc dû partager [0;1] en 3<SUP>4</SUP>=81 parties égales et on a fait 3 
+accélérations)<BR>
+</P><H4 CLASS="subsubsection">Application au calcul de ∑<SUB><I>k</I>=1</SUB><SUP>∞</SUP><I>f</I>(<I>k</I>)</H4><P>
+On peut aussi reprendre le programme sur les séries ∑<SUB><I>k</I>=1</SUB><SUP>∞</SUP><I>f</I>(<I>k</I>) 
+et écrire pour faire <I>n</I> accélérations :
+</P><PRE CLASS="verbatim">serie_romberg(f,n):={
+local l,l0,l1,puis,k,j,t,p;
+// calcul des sommes s1,s2,s4,s8,...s2^n que l'on met ds l
+ l:=[f(1)];
+p:=1;
+for (k:=1;k&lt;=n;k++) {
+t:=0.0
+for (j:=p+1;j&lt;=2*p;j++){
+t:=t+f(j)
+}
+t:=l[k-1]+t;
+l:= concat(l,t);
+p:=2*p;
+}
+//debut de l'acceleration de Richardson
+l0:=[l[0]];
+for (k:=1;k&lt;=n;k++) {
+   l1:=[l[k]];
+   //calcul des S_{k,j} (j=1..k) dans l1
+   for (j:=1;j&lt;=k;j++) {
+      puis:=2^(j);
+      l1[j]:=(puis*l1[j-1]-l0[j-1])/(puis-1);
+    }
+    l0:=l1;
+}
+return l1;    
+}
+</PRE><P>On met ce programme dans un niveau éditeur de programmes (que l’on ouvre 
+avec <TT>Alt+p</TT>), puis on le teste et on le valide avec <TT>OK</TT>.<BR>
+On définit <I>f</I> :<BR>
+On tape :<BR>
+<TT>f(x):=1/x</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+On tape (on calcule ∑<SUB><I>k</I>=1</SUB><SUP>6</SUP>4 <I>f</I>(<I>k</I>)) :<BR>
+<TT>serie_romberg(f,6)</TT><BR>
+On obtient cette somme après avoir subit 0,1,..6 accélérations :<BR>
+<TT>[1.62943050141,1.64469373999,1.64492898925,1.64493403752,</TT><BR>
+<TT>1.64493409536,1.64493407424,1.64493406732]</TT><BR>
+Avec le programme <TT>richardson</TT> on avait :<BR>
+<TT>1.62943050141, 1.64493406732</TT><BR>
+On tape (on calcule ∑<SUB><I>k</I>=1</SUB><SUP>2</SUP>56 <I>f</I>(<I>k</I>)) :<BR>
+<TT>serie_romberg(f,8)</TT><BR>
+On obtient cette somme après avoir subit 0,1,..8 accélérations avec plus 
+de déciamles :<BR>
+<TT>[1.6410354363087,1.6449188676629,1.6449339873839,1.6449340668192,</TT><BR>
+<TT>1.6449340668791,1.6449340668489,1.6449340668477,1.644934066848,</TT><BR>
+<TT>1.6449340668481]</TT><BR>
+On sait que <TT>π</TT><SUP><TT>2</TT></SUP><TT>/6=1.6449340668482</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc416">15.2.6</A>  Deux approximations de l’intégrale</H3><P>
+On calcule en même temps l’accélération de convergence pour la 
+méthode des trapèzes et pour la méthode du point milieu.<BR>
+On remarquera qu’ici on découpe l’intervalle [<I>a</I>;<I>b</I>] en 2 puis en 2<SUP>2</SUP>...
+2<SUP><I>k</I></SUP> morceaux et que le calcul de <I>sm</I> (somme des valeurs de <I>f</I>
+aux " points milieux") sert dans le calcul du <I>st</I> suivant (somme des valeurs 
+de <I>f</I> aux "points de subdivision"+(f(a)+f(b))/2) comme contribution des 
+nouveaux points.
+</P><PRE CLASS="verbatim">inttm_romberg(f,a,b,epsi):={
+local lt0,lt1,lm0,lm1,puis,puiss2,k,j,st,sm,s1,test;
+//initialisation on a 1 intervalle
+st:=evalf((f(a)+f(b))/2);
+sm:=evalf(f((a+b)/2));
+puiss2:=1;
+lt0:=[st*(b-a)];
+lm0:=[sm*(b-a)];
+k:=1;
+test:=1;
+while (test&gt;epsi) {
+   //calcul de la methode des trapezes avec 2^k intervalles
+    st:=st+sm;
+   //calcul de la methode des milieux avec 2^k intervalles
+   puiss2:=2*puiss2;
+   s1:=0.0;
+   for (j:=0;j&lt;puiss2;j++) {
+        s1:=s1+f(a+(2*j+1)*(b-a)/(2*puiss2));
+   }
+  
+   sm:=s1;
+   lm1:=[sm*(b-a)/puiss2];
+   lt1:=[st*(b-a)/puiss2];
+   //debut de l'acceleration de Romberg
+   //calcul des T_{k,j} (j=1..k) dans lt1
+   //calcul des M_{k,j} (j=1..k) dans lm1
+   j:=1;
+   while ((test&gt;epsi) and (j&lt;=k)) {
+      puis:=2^(2*j);
+      lt1[j]:=(puis*lt1[j-1]-lt0[j-1])/(puis-1);
+      lm1[j]:=(puis*lm1[j-1]-lm0[j-1])/(puis-1);
+      test:=abs(lt1[j]-lm1[j]);
+      j:=j+1;
+    }
+    lt0:=lt1;
+    lm0:=lm1;
+    k:=k+1;
+}
+return [k-1,j-1,lt1[j-1],lm1[j-1]];    
+}
+</PRE><H2 CLASS="section"><A NAME="toc112"></A><A NAME="htoc417">15.3</A>  Les méthodes numériques pour résoudre <I>y</I>′=<I>f</I>(<I>x</I>,<I>y</I>)</H2><P>
+Dans <TT>Xcas</TT>, il existe déjà les fonctions qui tracent les solutions
+de <I>y</I>′=<I>f</I>(<I>x</I>,<I>y</I>), ce sont :
+<TT>plotode, interactive_plotode</TT> et une fonction <TT>odesolve</TT> qui calcule 
+la valeur numérique en un point d’une solution de <I>y</I>′=<I>f</I>(<I>x</I>,<I>y</I>) et <I>y</I>(<I>t</I><SUB>0</SUB>)=<I>y</I><SUB>0</SUB>
+Soit <I>f</I> une fonction continue de [<I>a</I>;<I>b</I>] × ℝ dans ℝ.<BR>
+On considère l’équation différentielle :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>(<I>t</I><SUB>0</SUB>)=<I>y</I><SUB>0</SUB></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>′(<I>t</I>)=<I>f</I>(<I>t</I>,<I>y</I>(<I>t</I>))</TD></TR>
+</TABLE><P>
+<B>Problème de Cauchy</B>
+Soit <I>U</I> un ouvert de ℝ<SUP>2</SUP> et <I>f</I> une application continue de <I>U</I> dans
+ℝ. On appelle solution du problème de Cauchy (<I>E</I>):
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>(<I>t</I><SUB>0</SUB>)=<I>y</I><SUB>0</SUB></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>′(<I>t</I>)=<I>f</I>(<I>t</I>,<I>y</I>(<I>t</I>))</TD></TR>
+</TABLE><P>
+tout couple (<I>I</I>,<I>g</I>) où <I>I</I> est un intervalle contenant <I>t</I><SUB>0</SUB> et <I>g</I> est une 
+<I>I</I>-solution de (<I>E</I>) c’est à dire une fonction de classe <I>C</I><SUP>1</SUP>(<I>I</I>,ℝ)
+vérifiant <I>g</I>(<I>t</I><SUB>0</SUB>)=<I>y</I><SUB>0</SUB> et <I>g</I>′(<I>t</I>)=<I>f</I>(<I>t</I>,<I>g</I>(<I>t</I>)) pour <I>t</I>∈ <I>I</I>.<BR>
+<B>Théorème de Cauchy-Lipschitz faible</B>
+Soit <I>f</I>, une fonction continue de [<I>a</I>;<I>b</I>] × ℝ dans ℝ,
+lipschitzienne par rapport à la seconde variable c’est à dire :<BR>
+il existe <I>K</I>&gt;0 tel que pour tout <I>t</I>∈[<I>a</I>;<I>b</I>] et pour tout 
+(<I>y</I><SUB>1</SUB>,<I>y</I><SUB>2</SUB>)∈ ℝ<SUP>2</SUP>, |<I>f</I>(<I>t</I>,<I>y</I><SUB>1</SUB>)−<I>f</I>(<I>t</I>,<I>y</I><SUB>2</SUB>)|≤ <I>K</I>|<I>y</I><SUB>1</SUB>−<I>y</I><SUB>2</SUB>|.<BR>
+Alors, quel que soit (<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>)∈ [<I>a</I>;<I>b</I>] × ℝ, il existe une 
+[<I>a</I>;<I>b</I>]-solution unique au problème de Cauchy (<I>E</I>) que l’on appellera <I>y</I>. 
+</P><H3 CLASS="subsection"><A NAME="htoc418">15.3.1</A>  La méthode d’Euler</H3><P>
+La méthode d’Euler consiste à approcher la solution de cette 
+équation différentielle au voisinage de <I>t</I><SUB>0</SUB> par sa tangente en ce point. 
+Cette tangente a comme pente <I>y</I>′(<I>t</I><SUB>0</SUB>)=<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I>(<I>t</I><SUB>0</SUB>))=<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>).<BR>
+On a donc pour <I>t</I> proche de <I>t</I><SUB>0</SUB> par exemple pour <I>t</I>∈ [<I>t</I><SUB>0</SUB>−<I>h</I> ; <I>t</I><SUB>0</SUB>+<I>h</I>] :<BR>
+<I>y</I>(<I>t</I>)≃ <I>y</I><SUB>0</SUB>+<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>)· (<I>t</I>−<I>t</I><SUB>0</SUB>) : on dit que <I>h</I> est le pas de 
+l’approximation.<BR>
+ En principe plus <I>h</I> est petit, meilleure est l’approximation.<BR>
+Soit <I>h</I> un pas, on pose <I>t</I><SUB>1</SUB>=<I>t</I><SUB>0</SUB>+<I>h</I>, et <I>y</I><SUB>1</SUB>=<I>y</I><SUB>0</SUB>+<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>)· (<I>t</I>1−<I>t</I><SUB>0</SUB>)=<I>y</I><SUB>0</SUB>+<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>)· <I>h</I> on a
+l’approximation :<BR>
+<I>y</I>(<I>t</I><SUB>1</SUB>)=<I>y</I>(<I>t</I><SUB>0</SUB>+<I>h</I>)≃ <I>y</I><SUB>1</SUB><BR>
+et on réitère cette approximation, donc si <I>t</I><SUB>2</SUB>=<I>t</I><SUB>1</SUB>+<I>h</I> :<BR>
+<I>y</I>(<I>t</I><SUB>2</SUB>)=<I>y</I>(<I>t</I><SUB>1</SUB>+<I>h</I>)≃ <I>y</I><SUB>1</SUB>+<I>f</I>(<I>t</I><SUB>1</SUB>,<I>y</I><SUB>1</SUB>)· (<I>t</I><SUB>2</SUB>−<I>t</I><SUB>1</SUB>)=≃ <I>y</I><SUB>1</SUB>+<I>f</I>(<I>t</I><SUB>1</SUB>,<I>y</I><SUB>1</SUB>)· <I>h</I>.<BR>
+On écrit donc la fonction <TT>euler_f</TT>, qui réalise une seule étape de 
+cette méthode et qui permet de passer d’un point 
+d’abscisse <I>t</I><SUB>0</SUB> au point d’abscisse <I>t</I><SUB>0</SUB>+<I>h</I>, ces points
+étant situés sur le graphe de la solution approchée par cette méthode.
+</P><PRE CLASS="verbatim">euler_f(f,t0,y0,h):={
+local t1,y1;
+t1:=t0+h;
+y1:=y0+h*f(t0,y0);
+return (t1,y1);
+}
+</PRE><P>Pour tracer le graphe de la solution approchée sur [<I>t</I><SUB>0</SUB>;<I>t</I><SUB>1</SUB>], on écrit :<BR>
+<TT>segment(point((t0,y0)),point(euler_f(f,t0,y0,h)))</TT><BR>
+
+Pour trouver une solution approchée sur [<I>a</I>;<I>b</I>] de l’équation 
+différentielle :<BR>
+<I>y</I>′(<I>t</I>)=<I>f</I>(<I>t</I>,<I>y</I>(<I>t</I>)),  <I>y</I>(<I>t</I><SUB>0</SUB>)=<I>y</I><SUB>0</SUB>, avec <I>t</I><SUB>0</SUB>∈ [<I>a</I>;<I>b</I>],<BR>
+il suffit de partager [<I>a</I>;<I>b</I>] en parties égales de longueur <I>h</I>
+et d’appliquer plusieurs fois la fonction <TT>euler_f</TT> avec le pas <I>h</I> 
+puis avec le pas −<I>h</I>.<BR>
+Voici le programme qui trace la solution sur [<I>a</I>;<I>b</I>] dans l’écran <TT>DispG</TT>
+et qui utilise la fonction <TT>euler_f</TT>.<BR>
+Les derniers segments servent à s’arrêter exactement en <I>a</I> et en <I>b</I>. 
+</P><PRE CLASS="verbatim">trace_sol(f,t0,y0,h,a,b):={
+local t1,y1,td0,yd0,l1,j;
+td0:=t0;
+yd0:=y0;
+h:=abs(h);
+while (t0&lt;b-h){
+    l1:=euler_f(f,t0,y0,h);
+    t1:=l1[0];
+    y1:=l1[1];
+    segment(t0+i*y0,t1+i*y1);
+    t0:= t1;
+    y0:=y1;
+}
+segment(t0+i*y0,b+i*(y0+(b-t0)*f(t0,y0)));
+//on trace avec -h
+t0:=td0;
+y0:=yd0;
+while ( t0&gt;a+h){
+    l1:=euler_f(f,t0,y0,-h);
+    t1:=l1[0];
+    y1:=l1[1];
+    segment(t0+i*y0,t1+i*y1);
+    t0:= t1;
+    y0:=y1;
+}
+segment(t0+i*y0,a+i*(y0+(t0-a)*f(t0,y0))); 
+}
+
+</PRE><P>ou encore pour avoir le dessin dans l’écran graphique obtenu comme réponse,
+on écrit une fonction qui renvoie la séquencee des segments à dessiner :
+</P><PRE CLASS="verbatim">trace_euler(f,t0,y0,h,a,b):={
+local td0,yd0,l1,j,ls;
+td0:=t0;
+yd0:=y0;
+h:=abs(h);
+ls:=[];
+while (t0&lt;b-h){
+    l1:=euler_f(f,t0,y0,h);
+    ls:=ls,segment(t0+i*y0,point(l1));
+    (t0,y0):=l1;
+}
+ls:=ls,segment(t0+i*y0,point(euler_f(f,t0,y0,b-t0)));
+//on trace avec -h en partant de td0 et de yd0 
+//(td0 et  yd0 sont les valeurs du debut)
+t0:=td0;
+y0:=yd0;
+while ( t0&gt;a+h){
+    l1:=euler_f(f,t0,y0,-h);
+    ls:=ls,segment(t0+i*y0,point(l1));
+    (t0,y0):=l1;
+}
+ls:=ls,segment(t0+i*y0,point(euler_f(f,t0,y0,a-t0))); 
+return ls;
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc419">15.3.2</A>  La méthode du point milieu</H3><P>
+La méthode du point milieu consiste à approcher, au voisinage de <I>t</I><SUB>0</SUB>, 
+la solution de l’équation différentielle 
+<I>y</I>′(<I>t</I>)=<I>f</I>(<I>t</I>,<I>y</I>(<I>t</I>)),  <I>y</I>(<I>t</I><SUB>0</SUB>)=<I>y</I><SUB>0</SUB>  <I>t</I><SUB>0</SUB>∈ [<I>a</I>;<I>b</I>], par une paralléle à 
+la tangente au "point milieu de la solution obtenue par la méthode d’Euler" :<BR>
+Le "point milieu de la solution obtenue par la méthode d’Euler" est le point 
+de coordonnées :<BR>
+(<I>t</I><SUB>0</SUB>+<I>h</I>/2,<I>y</I><SUB>0</SUB>+<I>h</I>/2<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>))<BR>
+ et sa tangente a donc comme pente :<BR>
+α=<I>f</I>(<I>t</I><SUB>0</SUB>+<I>h</I>/2,<I>y</I><SUB>0</SUB>+<I>h</I>/2<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>))<BR>
+La méthode du point milieu fait passer du point (<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>) 
+au point (<I>t</I><SUB>1</SUB>,<I>y</I><SUB>1</SUB>) avec :<BR>
+<I>t</I><SUB>1</SUB>=<I>t</I><SUB>0</SUB>+<I>h</I> et <I>y</I><SUB>1</SUB>=<I>y</I><SUB>0</SUB>+<I>h</I>*α=<I>y</I><SUB>0</SUB>+<I>h</I>*<I>f</I>(<I>t</I><SUB>0</SUB>+<I>h</I>/2,<I>y</I><SUB>0</SUB>+<I>h</I>/2*<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>)).<BR>
+On remarquera que :<BR>
+<TT>euler_f(f,t0,y0,h/2)=(t0+h/2,y0+h/2*f(t0,y0))</TT><BR>
+On va donc écrire la fonction :<BR>
+<TT>ptmilieu_f(f,t0,y0,h)=(t0+h,y0+h*f(t0+h/2,y0+h/2*f(t0,y0)))</TT><BR>
+qui réalise une seule étape de cette méthode et qui permet de passer 
+d’un point d’abscisse <I>t</I><SUB>0</SUB> au point d’abscisse <I>t</I><SUB>0</SUB>+<I>h</I>, ces points
+étant situés sur le graphe de la solution approchée par cette méthode.
+</P><PRE CLASS="verbatim">ptmilieu_f(f,t0,y0,h):={
+local t1,y1;
+t1:=t0+h;
+y1:=y0+h*f(t0+h/2,y0+h/2*f(t0,y0));
+return (t1,y1);
+}
+</PRE><P>Il reste à écrire une fonction qui renvoie la séquence des segments 
+obtenus par cette méthode, pour avoir le dessin dans l’écran graphique 
+obtenu comme réponse.<BR>
+On peut écrire la même fonction que précédemment en remplacant 
+simplement tous les appels à <TT>euler_f</TT> par <TT>ptmilieu_f</TT>.<BR>
+Mais on va plutôt rajouter un paramètre supplémentaire <TT>methode</TT> qui 
+sera soit la fonction <TT>euler_f</TT> soit la fonction <TT>ptmilieu_f</TT>.
+On écrit :<BR>
+<TT>trace_methode(methode,f,t0,y0,h,a,b)</TT><BR>
+où <TT>methode</TT> qui est une fonction des variables <TT>f,t0,y0,h</TT>
+</P><PRE CLASS="verbatim">trace_methode(methode,f,t0,y0,h,a,b):={
+local td0,yd0,l1,j,ls;
+td0:=t0;
+yd0:=y0;
+h:=abs(h);
+ls:=[];
+while (t0&lt;b-h){
+    l1:=methode(f,t0,y0,h);
+    ls:=ls,segment(t0++i*y0,point(l1));
+    (t0,y0):=l1;
+}
+ls:=ls,segment(t0+i*y0,point(methode(f,t0,y0,b-t0)));
+//on trace avec -h en partant de td0 et de yd0 
+//(td0 et yd0 sont les valeurs du debut)
+t0:=td0;
+y0:=yd0;
+while ( t0&gt;a+h){
+    l1:=methode(f,t0,y0,-h);
+    ls:=ls,segment(t0+i*y0,point(l1));
+    (t0,y0):=l1;
+}
+ls:=ls,segment(t0+i*y0,point(methode(f,t0,y0,a-t0))); 
+return ls;
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc420">15.3.3</A>  La méthode de Heun</H3><P>
+La méthode de Heun consiste à approcher, au voisinage de <I>t</I><SUB>0</SUB>, la 
+solution de l’équation différentielle 
+<I>y</I>′(<I>t</I>)=<I>f</I>(<I>t</I>,<I>y</I>(<I>t</I>)),  <I>y</I>(<I>t</I><SUB>0</SUB>)=<I>y</I><SUB>0</SUB>  <I>t</I><SUB>0</SUB>∈ [<I>a</I>;<I>b</I>], par une parallèle à 
+la droite de pente 1/2*(<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>)+<I>f</I>(<I>t</I><SUB>0</SUB>+<I>h</I>,<I>y</I><SUB>0</SUB>+<I>h</I>*<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>))) c’est à 
+dire, par une pente égale à la moyenne des pentes des tangentes :<BR>
+- de la solution au point (<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>) (la pente de la tangente en ce point
+vaut <I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>)) et<BR>
+- de la solution obtenue par la méthode d’Euler au point d’abscisse 
+<I>t</I><SUB>0</SUB>+<I>h</I> (point de coordonnées (<I>t</I><SUB>0</SUB>+<I>h</I>,<I>y</I><SUB>0</SUB>+<I>h</I>*<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>)) et la pente de la 
+tangente en ce point vaut <I>f</I>(<I>t</I><SUB>0</SUB>+<I>h</I>,<I>y</I><SUB>0</SUB>+<I>h</I>*<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>))).<BR>
+Donc, la méthode de Heun fait passer du point (<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>) 
+au point (<I>t</I><SUB>1</SUB>,<I>y</I><SUB>1</SUB>) avec :<BR>
+<I>t</I><SUB>1</SUB>=<I>t</I><SUB>0</SUB>+<I>h</I> et <I>y</I><SUB>1</SUB>=<I>y</I><SUB>0</SUB>+<I>h</I>/2*(<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>)+<I>f</I>(<I>t</I><SUB>0</SUB>+<I>h</I>,<I>y</I><SUB>0</SUB>+<I>h</I>*<I>f</I>(<I>t</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>))).<BR>
+On remarquera que :<BR>
+<TT>euler_f(f,t0,y0,h)=(t0+h,y0+h*f(t0,y0))</TT><BR>
+On va donc écrire la fonction :<BR>
+<TT>heun_f(f,t0,y0,h)=<BR>
+(t0+h,y0+h/2*(f(t0,y0)+f(t0+h,y0+h*f(t0,y0))))</TT><BR>
+qui réalise une seule étape de cette méthode et qui permet de passer 
+d’un point d’abscisse <I>t</I><SUB>0</SUB> au point d’abscisse <I>t</I><SUB>0</SUB>+<I>h</I>, ces points
+étant situés sur le graphe de la solution approchée par cette méthode.
+</P><PRE CLASS="verbatim">heun_f(f,t0,y0,h):={
+local t1,y1;
+t1:=t0+h;
+y1:=y0+h/2*(f(t0,y0)+f(t0+h,y0+h*f(t0,y0)));
+return (t1,y1);
+}
+</PRE><P>Il reste à écrire une fonction qui renvoie la séquence des segments 
+obtenus par cette méthode, pour avoir le dessin dans l’écran graphique 
+obtenu comme réponse.<BR>
+On peut écrit la même fonction que précédemment en remplacant 
+simplement tous les appels à <TT>euler_f</TT> par <TT>heun_f</TT> ou encore 
+utiliser la fonction <TT>trace_methode</TT> avec comme valeur de 
+<TT>methode</TT> le fonction <TT>heun_f</TT>.<BR>
+On valide les differentes fonctions :<BR>
+<TT>euler_f</TT>, <TT>ptmilieu_f</TT>, <TT>heun_f</TT> et <TT>trace_methode</TT>.<BR>
+On tape par exemple pour avoir le tracé de la solution sur [-1;1] de :<BR>
+<I>y</I>′=<I>y</I> vérifiant <I>y</I>(0)=1 par les 3 méthodes avec un pas de 0.1 :<BR>
+<TT>f(t,y):=y</TT>
+<TT>trace_methode(euler_f,f,0,1,0.1,-1,1)</TT> et<BR>
+<TT>trace_methode(ptmilieu_f,f,0,1,0.1,-1,1)</TT> ou<BR>
+<TT>trace_methode(heun_f,f,0,1,0.1,-1,1)</TT> ou<BR>
+</P><HR>
+<A HREF="casrouge014.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge016.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

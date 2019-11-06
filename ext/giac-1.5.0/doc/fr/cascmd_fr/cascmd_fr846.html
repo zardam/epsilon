@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Les affectations infixées : =&gt; := =&lt;</title>
+</head>
+<body >
+<a href="cascmd_fr845.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr847.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1030" class="subsection">9.4.13  Les affectations infixées : <span style="font-family:monospace">=&gt; := =&lt;</span></h3>
+<p><a id="hevea_default1539"></a><a id="hevea_default1540"></a><a id="hevea_default1541"></a>
+<span style="font-family:monospace">:= =&gt; =&lt;</span> sont des opérateurs infixés qui permettent de 
+stocker une valeur dans une variable, mais leurs arguments de <span style="font-family:monospace">=&gt;</span> et de
+<span style="font-family:monospace">:= =&lt;</span> ne sont pas dans le même ordre !<br>
+De plus <span style="font-family:monospace">:=</span> et <span style="font-family:monospace">=&lt;</span> n’ont pas le même effet lorsque le premier 
+argument est un élément d’une liste (ou matrice) contenu dans une variable.
+En effet, <span style="font-family:monospace">=&lt;</span> modifie lélément d’une liste (ou matrice) par 
+référence (voir <a href="cascmd_fr848.html#sec%3Adiffaffectation">9.4.15</a>)
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">=&gt;</span> est la version infixée de <span style="font-family:monospace">sto</span>.<br>
+<span style="font-family:monospace">=&gt;</span> stocke le premier argument dans la variable donnée comme deuxième 
+argument.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">4=&gt;a</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">sto(4,a)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">4 et la variable a contient 4</span></div></li><li class="li-itemize"><span style="font-family:monospace">:=</span> et <span style="font-family:monospace">=&lt;</span> ont comme arguments, un nom de variable et la valeur
+à stocker. 
+On tape :
+<div class="center"><span style="font-family:monospace">a:=4</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">a=&lt;4)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">4 et la variable a contient 4</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">A:=[0,1,2,3,4]</span></div>
+<div class="center"><span style="font-family:monospace">B:=A</span></div>
+puis par exemple pour modifier <span style="font-family:monospace">A[3]</span>, on tape :
+<div class="center"><span style="font-family:monospace">A[3]=&lt;33</span></div>
+puis
+<div class="center"><span style="font-family:monospace">A,B</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[0,1,2,33,4],[0,1,2,33,4]</span></div>
+Les variables <span style="font-family:monospace">A</span> et <span style="font-family:monospace">B</span> contiennent toutes les deux la liste
+<span style="font-family:monospace">[0,1,2,33,4]</span>, en effet :<br>
+<span style="font-family:monospace">A:=[0,1,2,3,4]</span> fait pointer <span style="font-family:monospace">A</span> sur la liste <span style="font-family:monospace">[0,1,2,3,4]</span>, 
+puis<br>
+<span style="font-family:monospace">B:=A</span> fait pointer <span style="font-family:monospace">B</span> sur <span style="font-family:monospace">A</span> donc sur la liste 
+<span style="font-family:monospace">[0,1,2,3,4]</span>,<br>
+<span style="font-family:monospace">A[3]=&lt;33</span> modifie la liste pointée par <span style="font-family:monospace">A</span> donc modifie la liste 
+<span style="font-family:monospace">[0,1,2,3,4]</span> en la liste <span style="font-family:monospace">[0,1,2,33,4]</span> et donc <span style="font-family:monospace">B</span> est modifié.
+Il en serait de même si on avait mis <span style="font-family:monospace">B[3]=&lt;33</span> au lieu de 
+<span style="font-family:monospace">A[3]=&lt;33</span>, les variables <span style="font-family:monospace">A</span> et <span style="font-family:monospace">B</span> contiendraient toutes les 
+deux la liste <span style="font-family:monospace">[0,1,2,33,4]</span>. 
+</li></ul><p> 
+<span style="font-weight:bold">Remarque</span><br>
+On peut faire plusieurs affectations à la fois en utilisant les séquences 
+ou les listes.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">[a,b,c]:=[1,2,3]</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[1,2,3]</span></div><div class="center"><span style="font-family:monospace">a contient 1, b contient 2 et c contient 3</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">(a,b,c):=(1,2,3)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(1,2,3)</span></div><div class="center"><span style="font-family:monospace">a contient 1, b contient 2 et c contient 3</span></div><p>
+<span style="font-weight:bold">Attention</span><br>
+Si <span style="font-family:monospace">a</span> contient <span style="font-family:monospace">5</span> et que l’on tape :<br>
+<span style="font-family:monospace">(a,b):=(2,a)</span><br>
+alors <span style="font-family:monospace">a</span> contient <span style="font-family:monospace">2</span> et <span style="font-family:monospace">b</span> contient <span style="font-family:monospace">5</span><br>
+Si <span style="font-family:monospace">a</span> contient <span style="font-family:monospace">1</span> et que l’on tape :<br>
+<span style="font-family:monospace">(a,b):=(2,a)</span><br>
+alors <span style="font-family:monospace">a</span> contient <span style="font-family:monospace">2</span> et <span style="font-family:monospace">b</span> contient <span style="font-family:monospace">1</span><br>
+<span style="font-family:monospace">(a,b):=(b,a+b)</span><br>
+alors <span style="font-family:monospace">a</span> contient <span style="font-family:monospace">1</span> et <span style="font-family:monospace">b</span> contient <span style="font-family:monospace">3</span></p>
+<hr>
+<a href="cascmd_fr845.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr847.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

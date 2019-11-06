@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Utilisation des instructions du debuggeur : cont halt kill</title>
+</head>
+<body >
+<a href="cascmd_fr880.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr882.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1068" class="subsection">9.7.9  Utilisation des instructions du debuggeur : <span style="font-family:monospace">cont halt kill</span></h3>
+<p>
+Les instructions <span style="font-family:monospace">cont halt kill</span> n’ont pas d’arguments.<br>
+<span style="font-family:monospace">cont halt kill</span> sont des instructions du debuggeur (voir ci-dessus).<br>
+<span style="font-family:monospace">cont()</span> et <span style="font-family:monospace">kill()</span> s’utilisent uniquement dans une session de 
+debogage, quand le programme est arrêté. Typiquement, <span style="font-family:monospace">kill()</span> 
+s’utilise quand on a vu où se trouve l’erreur, et que on va savoir corriger 
+le programme, et qu’il est donc inutile de continuer l’exécution du programme
+buggué.<br>
+<span style="font-family:monospace">cont()</span> s’utilise pour atteindre le point d’arrêt suivant.<br>
+<span style="font-family:monospace">halt()</span> peut être mis comme instruction dans le programme pour 
+programmer un point d’arrêt (cela évite de faire une commande 
+<span style="font-family:monospace">breakpoint</span> avec un numéro de ligne)
+Par exemple on tape :
+</p><pre class="verbatim">testhalt(x):={
+  local y; 
+  y:=x;  
+  halt();  
+  return(y);  
+}
+</pre><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">debug(testhalt(5))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">l’ouverture du debuggeur et l’arrêt du programme</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">cont() pour continuer le debugage ou kill() pour l’arrêter</span></div><p>
+<span style="font-weight:bold">Attention</span><br>
+Si on tape juste <span style="font-family:monospace">testhalt(5)</span> sans mettre <span style="font-family:monospace">debug</span>, le debuggeur 
+s’ouvre mais, la liste des instructions formant le programme n’est pas
+affichée donc il vaut mieux faire <span style="font-family:monospace">debug(testhalt(5))</span> puis enlever 
+les <span style="font-family:monospace">halt()</span> quand le programme est au point.</p>
+<hr>
+<a href="cascmd_fr880.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr882.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

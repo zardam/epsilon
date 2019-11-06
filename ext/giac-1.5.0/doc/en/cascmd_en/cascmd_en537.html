@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Extracting element(s) of a matrix : [] at</title>
+</head>
+<body >
+<a href="cascmd_en536.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en538.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec637" class="subsection">5.49.12  Extracting element(s) of a matrix : <span style="font-family:monospace">[] at</span></h3>
+<p><a id="hevea_default838"></a>
+Recall that a matrix is a list of lists with the same size.<br>
+Input : 
+</p><div class="center"><span style="font-family:monospace">A:=[[3,4,5],[1,2,6]]</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">[[3,4,5],[1,2,6]]</span></div><p> 
+The prefixed function <span style="font-family:monospace">at</span> or the 
+index notation <span style="font-family:monospace">[...]</span> is used to access 
+to an element or a row or a column of a matrix:
+</p><ul class="itemize"><li class="li-itemize">
+To extract an element, put the matrix and then, between square 
+brackets put its row index, a comma, and its column index.
+In <span style="font-family:monospace">Xcas</span> mode the first index is 0, in other modes the first
+index is 1.<br>
+Input :
+<div class="center"><span style="font-family:monospace">[[3,4,5],[1,2,6]][0,1]</span></div>
+or :
+<div class="center"><span style="font-family:monospace">A[0,1]</span></div>
+or :
+<div class="center"><span style="font-family:monospace">A[0][1]</span></div>
+or :
+<div class="center"><span style="font-family:monospace">at(A,[0,1])</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">4</span></div></li><li class="li-itemize">To extract a row of the matrix <span style="font-family:monospace">A</span>, 
+put the matrix and then, between 
+square brackets put the row index, input :
+<div class="center"><span style="font-family:monospace">[[3,4,5],[1,2,6]][0]</span></div>
+or :
+<div class="center"><span style="font-family:monospace">A[0]</span></div>
+or :
+<div class="center"><span style="font-family:monospace">at(A,0)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[3,4,2]</span></div></li><li class="li-itemize">To extract a part of a row, put two arguments 
+between the square brackets : 
+the row index and an interval to designate the selected columns.<br>
+Input :
+<div class="center"><span style="font-family:monospace">A[1,0..2]</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[1,2,6]</span></div>
+Input :
+<div class="center"><span style="font-family:monospace">A[1,1..2]</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[2,6]</span></div></li><li class="li-itemize">To extract a column of the matrix <span style="font-family:monospace">A</span>, first transpose
+<span style="font-family:monospace">A</span> (<span style="font-family:monospace">transpose(A)</span>) then extract the row like above.<br>
+Input :
+<div class="center"><span style="font-family:monospace">tran(A)[1]</span></div>
+or :
+<div class="center"><span style="font-family:monospace">at(tran(A),1)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[4,2]</span></div></li><li class="li-itemize">To extract a part of a column of the matrix <span style="font-family:monospace">A</span> 
+as a list, put two arguments 
+between the square brackets : an index interval to 
+designate the selected rows and the column index.<br>
+Input :
+<div class="center"><span style="font-family:monospace">A[0..0,1]</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[4]</span></div><p>This may be used to extract a full column, by specifying all the rows
+as an index interval.<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">A[0..1,1]</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">[4,2]</span></div></li><li class="li-itemize">To extract a sub-matrix of a matrix, put between the square brackets two 
+intervals : one interval for the selected rows and one interval for the 
+selected columns.<br>
+To define the matrix <span style="font-family:monospace">A</span>, input :
+<div class="center"><span style="font-family:monospace">A:=[[3,4,5],[1,2,6]]</span></div>
+Input :
+<div class="center"><span style="font-family:monospace">A[0..1,1..2]</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[[4,5],[2,6]]</span></div>
+Input :
+<div class="center"><span style="font-family:monospace">A[0..1,1..1]</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[[4],[2]]</span></div>
+<span style="font-weight:bold">Remark</span>
+If the second interval is omitted, the sub-matrix is made with the consecutive 
+rows given by the first interval.<br>
+Input :
+<div class="center"><span style="font-family:monospace">A[1..1]</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[[1,2,6]]</span></div>
+</li></ul><p>You may also assign an element of a matrix using index notation,
+if you assign with <span style="font-family:monospace">:=</span> a new copy of the matrix is created
+and the element is modified, if you assign with <span style="font-family:monospace">=&lt;</span>,
+the matrix is modified in place.</p>
+<hr>
+<a href="cascmd_en536.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en538.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

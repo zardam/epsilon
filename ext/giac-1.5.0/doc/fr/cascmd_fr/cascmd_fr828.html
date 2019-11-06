@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Des exemples</title>
+</head>
+<body >
+<a href="cascmd_fr827.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr829.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1007" class="subsection">8.5.6  Des exemples</h3>
+<p>
+Voici quelques exercices :
+</p><ol class="enumerate" type=1><li class="li-enumerate">
+<span style="font-weight:bold">Exercice</span> <br>
+Pour tester l’efficacité d’un vaccin antigrippal on soumet 300 personnes 
+à une expérience : <br>
+- sur 100 personnes non vaccinées, 32 sont atteintes par la grippe,<br>
+- sur 200 personnes vaccinées, 50 sont atteintes par la grippe,<br>
+Ce résultat permet-il d’apprécier l’efficacité du vaccin ?<br>
+On calcule les valeurs <span style="font-style:italic">f</span>1 et <span style="font-style:italic">f</span>2 qui sont les proportions des grippés 
+des deux échantillons on tape :<br>
+<span style="font-family:monospace">f1:=32/100</span><br>
+<span style="font-family:monospace">f2:=50/200</span><br>
+On tape :<br>
+ <span style="font-family:monospace">f1-f2</span><br>
+On obtient :<br>
+<span style="font-family:monospace">7/100</span><br>
+Donc |<span style="font-style:italic">f</span><sub>1</sub>−<span style="font-style:italic">f</span><sub>2</sub>|=0.07<br>
+On calcule la valeur <span style="font-style:italic">p</span> proportion des grippés lorsqu’on reunit les deux 
+échantillons on tape :<br>
+<span style="font-family:monospace">p:=82/300</span><br>
+On obtient :<br>
+<span style="font-family:monospace">41/150</span><br>
+Donc <span style="font-style:italic">p</span>≃ 0.273333333333<br>
+On calcule <span style="font-style:italic">s</span><sub>12</sub>, on tape :<br>
+<span style="font-family:monospace">s12:=sqrt(p*(1-p)*(1/100+1/200))</span><br>
+On obtient :<br>
+<span style="font-family:monospace">sqrt(4469/1500000)</span><br>
+Donc <span style="font-style:italic">s</span><sub>12</sub> ≃ 0.0545832697201<br>
+On tape :<br>
+<span style="font-family:monospace">normalt([32,100],[50,200],0.0545832697201,’!=’,0.05)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">0</span><br>
+et en vert le resumé du test :<br>
+Moyenne estimee en utilisant le(s) echantillon(s) 125<br>
+*** TEST RESULT 0 ***<br>
+Summary Z-Test null hypothesis mu1=mu2, alt. hyp. mu1!=mu2.
+Test returns 0 if probability to observe data is less than 0.05
+(null hyp. mu1=mu2 rejected with less than alpha probability error)
+Test returns 1 otherwise (can not reject null hypothesis)
+Data mean mu1=32, population mean mu2=125
+alpha level 0.05, multiplier*stddev/sqrt(sample size)= 1.95996*0.0545833/10
+<span style="font-family:monospace">1.95996*0.0545833/10</span> renvoie <span style="font-family:monospace">0.0106981084668</span><br>
+On tape :<br>
+<span style="font-family:monospace">a:=normal_icdf(0,sqrt(4469/1500000),0.975)</span> <br>
+On obtient :<br>
+<span style="font-family:monospace">0.10698124281</span><br>
+Puisque <span style="font-family:monospace">|f1-f2|=0.07&lt;a=0.10698124281</span>, on en déduit que les deux 
+échantillons ne sont pas significativement différents au seuil de 5% : 
+on peut donc 
+dire que le vaccin n’est pas efficace mais ce n’est pas une certitude...<br>
+
+La statistique  <span style="font-style:italic">D</span><sup>2</sup>=∑<sub><span style="font-style:italic">j</span>=1</sub><sup><span style="font-style:italic">k</span></sup>(<span style="font-style:italic">n</span><sub><span style="font-style:italic">j</span></sub>−<span style="font-style:italic">e</span><sub><span style="font-style:italic">j</span></sub>)<sup>2</sup>/<span style="font-style:italic">e</span><sub><span style="font-style:italic">j</span></sub> est une 
+bonne mesure de l’écart entre les effectifs observés et les effectifs 
+théoriques : plus <span style="font-style:italic">D</span><sup>2</sup> est proche de zéro, plus la distribution de 
+l’échantillon est conforme à la distribution théorique.<br>
+On calcule la valeur <span style="font-style:italic">d</span>2 de <span style="font-style:italic">D</span><sup>2</sup> on tape :<br>
+<span style="font-family:monospace">d2:=300*(150*32-68*50)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/(100*200*82*218)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">7350/4469</span><br>
+donc <span style="font-style:italic">d</span><sup>2</sup> ≃ 1.645<br>
+On cherche la valeur <span style="font-style:italic">h</span> qui vérifie :<br>
+<span style="font-style:italic">Proba</span>(χ<sub>1</sub><sup>2</sup>&gt;<span style="font-style:italic">h</span>)=0.05  ou encore  <span style="font-style:italic">Proba</span>(χ<sub>1</sub><sup>2</sup> ≤ <span style="font-style:italic">h</span>)=0.95<br>
+ pour cela on tape :<br>
+<span style="font-family:monospace">chisquare_icdf(1,0.95)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">3.84145882069</span><br>
+donc <span style="font-style:italic">h</span> ≃ 3.84<br>
+Puisque <span style="font-family:monospace"><span style="font-style:italic">d</span></span><span style="font-family:monospace">2≃ 1.645&lt;3.84</span> on en déduit que les deux échantillons
+ne sont pas significativement différents au seuil de 5% : on peut donc 
+mettre en doute l’efficacité du vaccin.
+</li><li class="li-enumerate"><span style="font-weight:bold">Exercice</span><br>
+Sur un registre d’état civil, on a relevé 552 naissances dont 289 
+garçons. <br>
+a/ Estimer la fréquence <span style="font-family:monospace">p</span> de naissance d’un garçon.<br>
+b/ Donner un intervalle de confiance pour cette estimation.<br>
+On tape :<br>
+<span style="font-family:monospace">evalf(289/552)</span><br>
+On obtient <span style="font-style:italic">f</span> sui est une estimation de <span style="font-family:monospace">p</span> :<br>
+<span style="font-family:monospace">0.523</span>
+Soit <span style="font-style:italic">X</span> la variable aléatoire égale à 1 pour la naissance d’un garçon et égale à 0 pour la naissance d’une fille. Soient <span style="font-style:italic">X</span><sub>1</sub>...<span style="font-style:italic">X</span><sub>552</sub> les variables <span style="font-style:italic">X</span> 
+correspondant aux 552 naissances et soit <span style="font-style:italic">Y</span> la variable aléatoire égale à ∑<span style="font-style:italic">X</span><sub><span style="font-style:italic">i</span></sub>/<span style="font-style:italic">n</span> = moyenne du nombre de garçons obtenus pour 
+un échantillon d’effectif 552.<br>
+La distribution <span style="font-style:italic">Y</span> est voisine d’une distribution normale de moyenne <span style="font-style:italic">p</span><sub><span style="font-style:italic">est</span></sub>
+et d’écart type σ=√<span style="text-decoration:overline"><span style="font-style:italic">p</span></span><sub><span style="text-decoration:overline"><span style="font-style:italic">est</span></span></sub><span style="text-decoration:overline">(1−</span><span style="text-decoration:overline"><span style="font-style:italic">p</span></span><sub><span style="text-decoration:overline"><span style="font-style:italic">est</span></span></sub><span style="text-decoration:overline">)/552</span>.<br>
+On a donc <span style="font-style:italic">Proba</span>(|<span style="font-style:italic">Y</span>−<span style="font-style:italic">p</span><sub><span style="font-style:italic">est</span></sub>|&lt;1.96σ)=0.95.<br>
+On peut estimer σ par :
+√<span style="text-decoration:overline"><span style="font-style:italic">f</span></span><span style="text-decoration:overline">*(1−</span><span style="text-decoration:overline"><span style="font-style:italic">f</span></span><span style="text-decoration:overline">)/551</span>=√<span style="text-decoration:overline">289*(552−289)/552</span><sup><span style="text-decoration:overline">2</span></sup><span style="text-decoration:overline">/551</span>≃ 0.0213.<br>
+ Donc <span style="font-style:italic">k</span>=1.96*0.0213 &lt;0.042 ce qui donne un intervalle de
+confiance de <span style="font-style:italic">p</span> au seuil de 5% égal à :<br>
+ [0.523−0.042=0.481 ;  0.523+0.042=0.565]
+</li><li class="li-enumerate"><span style="font-weight:bold">Exercice</span><br>
+Dans un hôpital sur un échantillon de 458 malades admis pendant un 
+trimestre il y a eu 141 décès. Estimer le pourcentage de décès par un 
+intervalle de confiance au seuil de 0.01.<br>
+On a :<br>
+<span style="font-style:italic">n</span>=458,<br>
+ <span style="font-style:italic">f</span>=141/458 ≃ 0.307860262009,<br>
+ σ ≃ √<span style="text-decoration:overline"><span style="font-style:italic">f</span></span><span style="text-decoration:overline">(1−</span><span style="text-decoration:overline"><span style="font-style:italic">f</span></span><span style="text-decoration:overline">)/457</span>=0.0215931304967<br>
+<span style="font-family:monospace">normal_icdf(0,1,0.995)=2.57582930355 </span>≃<span style="font-family:monospace"> 2,58</span><br>
+On obtient, si <span style="font-style:italic">Y</span> est la variable aléatoire moyenne du nombre de décès 
+pour des échantillons de taille 458 :<br>
+<span style="font-style:italic">P</span>(|<span style="font-style:italic">Y</span>−<span style="font-style:italic">p</span>|≥ <span style="font-style:italic">k</span>)=0.01 pour <span style="font-style:italic">k</span>=0.258*σ ≃ 0.056
+donc un intervalle de confiance du pourcentage de décès, au seuil de 0.01 
+égal à :
+[0.252;  0.364]<br>
+On tape :<br>
+<span style="font-family:monospace">normal_icdf(141/458,0.0215931304967,0.005)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">0.25224004372</span>
+On tape :<br>
+<span style="font-family:monospace">normal_icdf(141/458,0.0215931304967,0.995)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">0.363480480297</span>
+ce qui donne [0.252 ;  0.364], comme intervalle de
+confiance de <span style="font-style:italic">p</span> au seuil de 5%.
+</li><li class="li-enumerate"><span style="font-weight:bold">Exercice : comparaison de deux moyennes</span><br>
+Pour une même épreuve,
+voici les notes obtenues dans une classe de terminale du lycée A.<br>
+6,10,14,17,9,6,4,12,9,10,10,11,12,18,10,9,11,8,7,10.<br>
+et les notes obtenues dans une classe de terminale du lycée B.<br>
+2,10,14,13,9,6,1,12,9,10,10,10,12,15,19,9,11,8,9,10<br>
+1/ Analyser les résultats de chaque groupe.<br>
+2/ Peut-on considérer que les 2 groupes sont issus d’une même population ?
+<span style="font-weight:bold">Réponse</span> :<br>
+On tape :<br>
+<span style="font-family:monospace">mean([6,10,14,17,9,6,4,12,9,10,10,11,12,18,10, 9,11,8,7,10])</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[10.15]</span><br>
+On tape :<br>
+<span style="font-family:monospace">stddev([6,10,14,17,9,6,4,12,9,10,10,11,12,18,10, 9,11,8,7,10])</span><br>
+On obtient :<br>
+<span style="font-family:monospace">sqrt(4451/400) </span>≃<span style="font-family:monospace"> [3.33579076082]</span><br>
+Le lycée A a une moyenne de 10.15 et un écart type d’environ 3.34.<br>
+On tape :<br>
+<span style="font-family:monospace">mean([2,10,14,13,9,6,1,12,9,10,10,10,12,15,19, 9,11,8,9,10])</span><br>
+On obtient :<br>
+<span style="font-family:monospace">9.95</span><br>
+On tape :<br>
+<span style="font-family:monospace">stddev([2,10,14,13,9,6,1,12,9,10,10,10,12,15,19, 9,11,8,9,10])</span><br>
+On obtient :<br>
+<span style="font-family:monospace">sqrt(6179/400) </span>≃<span style="font-family:monospace"> 3.93033077488</span><br>
+Le lycée B a une moyenne de 9.95 et un écart type d’environ 3.93.<br>
+On a pour le lycée A :
+On tape :<br>
+<span style="font-family:monospace">quartiles([6,10,14,17,9,6,4,12,9,10,10,11,12,18,10, 9,11,8,7,10])</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[4.0],[8.0],[10.0],[11.0],[18.0]]</span><br>
+On a pour le lycée B :
+On tape :<br>
+<span style="font-family:monospace">quartiles([2,10,14,13,9,6,1,12,9,10,10,10,12,15,19, 9,11,8,9,10]) </span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[1.0],[9.0],[10.0],[12.0],[19.0]]</span><br>
+On voit que dans le lycée B la moitie des élèves ont entre 9 et 12 
+alors que dans le lycée A la moitie des élèves ont entre 8 et 11. Donc
+bien que la moyenne du lycée B soit inférieure à la moyenne du lycée A
+il semble que la classe du lycée B soit meilleure que celle du lycée A.
+2/ 
+Si on considère que les deux classes constituent deux échantillons pris au 
+hasard dans une population où la note de l’épreuve est une variable 
+aléatoire <span style="font-style:italic">X</span> de moyenne µ et d’écart-type σ.<br>
+La reunion des 2 échantillons donne un échantillon de taille <span style="font-style:italic">n</span>=40.<br>
+de moyenne µ ≃ (9.95+10.15)/2=10.05 et d’écart-type <span style="font-style:italic">s</span>.<br>
+On tape :<br>
+<span style="font-family:monospace">stddev([6,10,14,17,9,6,4,12,9,10,10,11,12,18,10,9,<br>
+11,8,7,10, 2,10,14,13,9,6,1,12,9,10,10,10,12,15,19,</span><br>
+<span style="font-family:monospace">9,11,8,9,10])</span><br>
+On obtient :<br>
+<span style="font-family:monospace">s=sqrt(5319/400) </span>≃<span style="font-family:monospace"> 3.64657373434</span>.<br>
+La variable aléatoire <span style="text-decoration:overline">X</span><sub>40</sub>, égale à la moyenne des échantillons de taille 40 a donc pour moyenne :<br>
+µ=10.05 
+et pour écart-type :<br>
+σ/√<span style="text-decoration:overline">40</span>≃ <span style="font-style:italic">s</span>/√<span style="text-decoration:overline">39</span>=0.583919119794.<br>
+Donc σ ≃ 3.69302877574<br>
+<span style="font-weight:bold">Remarque</span> : On sait que la statistique 
+<span style="font-style:italic">displaystyle</span> <span style="font-style:italic">n</span><sub>1</sub><span style="font-style:italic">S</span><sub>1</sub><sup>2</sup>+<span style="font-style:italic">n</span><sub>2</sub><span style="font-style:italic">S</span><sub>2</sub><sup>2</sup>/<span style="font-style:italic">n</span><sub>1</sub>+<span style="font-style:italic">n</span><sub>2</sub>−2
+est un estimateur sans biais de σ<sup>2</sup> si σ est l’écart-type de 
+<span style="font-style:italic">X</span>. La valeur
+de cette statistique est obtenue à partir de 
+deux échantillons de taille 
+respective <span style="font-style:italic">n</span><sub>1</sub> et <span style="font-style:italic">n</span><sub>2</sub> et d’écart-type respectif <span style="font-style:italic">s</span><sub>1</sub> et <span style="font-style:italic">s</span><sub>2</sub> qui sont les valeurs de <span style="font-style:italic">S</span><sub>1</sub> et de <span style="font-style:italic">S</span><sub>2</sub> (avec comme notation 
+<span style="font-style:italic">S</span><sup>2</sup>=1/<span style="font-style:italic">n</span>∑<sub><span style="font-style:italic">j</span></sub> (<span style="font-style:italic">X</span><sub><span style="font-style:italic">j</span></sub>−<span style="text-decoration:overline">X</span>)<sup>2</sup> pour un échantillon de taille <span style="font-style:italic">n</span> de la variable <span style="font-style:italic">X</span>). <br>
+On tape (ici <span style="font-style:italic">n</span><sub>1</sub>=<span style="font-style:italic">n</span><sub>2</sub>=20, <span style="font-style:italic">n</span><sub>1</sub>+<span style="font-style:italic">n</span><sub>2</sub>−2=38, <span style="font-style:italic">s</span><sub>1</sub><sup>2</sup>=4451/400, <span style="font-style:italic">s</span><sub>2</sub><sup>2</sup>=6179/400) :<br>
+<span style="font-family:monospace">sqrt(20/38*(6179/400+4451/400))</span><br>
+On obtient alors comme approximation de σ : <span style="font-family:monospace">3.7398986758</span><br>
+On pose comme hypothèse <span style="font-style:italic">H</span><sub>0</sub> : µ<sub>1</sub>=µ<sub>2</sub>=µ et pour hypothèse
+alternative <span style="font-style:italic">H</span><sub>1</sub> : µ<sub>1</sub> ≠ µ<sub>2</sub> et on teste ces hypothèses
+au seuil de 0.05.<br>
+Ā−<span style="text-decoration:overline">B</span> suit une loi normale de
+moyenne 0 et d’écart type σ√<span style="text-decoration:overline">1/20+1/20</span>.<br>
+On a :<br>
+σ=<span style="font-style:italic">s</span>√<span style="text-decoration:overline">40/39</span><br>
+<span style="font-style:italic">s</span>=√<span style="text-decoration:overline">5319/400</span><br>
+σ√<span style="text-decoration:overline">1/20+1/20</span> ≃ <span style="font-style:italic">s</span>√<span style="text-decoration:overline">40/39/10</span>≃ √<span style="text-decoration:overline">5319/100/39</span>≃ 1.16783823959<br>
+Avec <span style="font-family:monospace">Xcas</span>, on tape :<br>
+<span style="font-family:monospace">normal_icdf(0,1.16783823959,0.975)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">2.28892088937</span><br>
+<span style="font-family:monospace">normal_icdf(0,1.16783823959,0.025)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">-2.28892088937</span><br>
+On a <span style="font-style:italic">m</span><sub>1</sub>−<span style="font-style:italic">m</span><sub>2</sub>=10.15−9.95=0.2 et comme <br>
+ −2.28892088937&lt;0.2&lt; 2.28892088937,<br>
+ on accepte l’hypothèse µ<sub>1</sub>=µ<sub>2</sub> au seuil de 5%.<br>
+<span style="font-weight:bold">Autre méthode</span><br>
+On peut aussi utiliser la loi de Student :<br>
+On considére que µ<sub>1</sub>=µ<sub>2</sub>=µ.<br>
+Alors  <span style="font-style:italic">T</span>=(Ā− <span style="text-decoration:overline">B</span>)√<span style="text-decoration:overline">38</span>/√<span style="text-decoration:overline">(20</span><span style="text-decoration:overline"><span style="font-style:italic">s</span></span><sub><span style="text-decoration:overline">1</span></sub><sup><span style="text-decoration:overline">2</span></sup><span style="text-decoration:overline">+20</span><span style="text-decoration:overline"><span style="font-style:italic">s</span></span><sub><span style="text-decoration:overline">2</span></sub><sup><span style="text-decoration:overline">2</span></sup><span style="text-decoration:overline">)(1/20+1/20)</span> suit une loi 
+de Student à 38 degrés de liberté.<br>
+On calcule la valeur <span style="font-style:italic">t</span> de <span style="font-style:italic">T</span> pour l’échantillon on tape :<br>
+<span style="font-family:monospace">t:=(10.15-9.95)*sqrt(38)/sqrt(2*3.34</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+3.93</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)</span><br>
+On obtient : <span style="font-family:monospace">0.200644948434</span>
+On tape :<br>
+<span style="font-family:monospace">student_icdf(38,0.975)</span><br>
+On obtient : <span style="font-family:monospace">2.02439416391</span><br>
+Puisque −2.02439416391&lt;0.2&lt;2.02439416391, on accepte l’hypothèse µ<sub>1</sub>=µ<sub>2</sub>=µ au seuil de 5%.
+</li><li class="li-enumerate"><span style="font-weight:bold">Exercice : comparaison de deux moyennes</span><br>
+Deux entreprises A et B livrent des pièces dans des paquets de 100 pièces.
+On note <span style="font-style:italic">X</span><sub>1</sub> (resp <span style="font-style:italic">X</span><sub>2</sub>) la variable aléatoire égale au nombre de 
+pièces défectueuses par paquet provenant de A (resp B).<br>
+On note <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>1</sub> (resp <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>2</sub>) la variable aléatoire égale au nombre moyen de 
+pièces défectueuses par paquet pour des échantillons aléatoires 
+de 49 paquets (resp 64 paquets) provenant de A (resp B).<br>
+ <span style="font-weight:bold">I)</span> Sur un échantillon de 49 paquets provenant de A on compte le
+nombre de pièces défectueuses dans chaque paquet et on trouve : <br>
+7, 5, 5, 4, 4, 4, 9, 7, 9, 2, 7, 8, 7, 8, 4, 4, 9, 10,<br>
+5, 10, 6, 4, 5, 6, 1, 2, 5, 7, 8, 0, 6, 0, 1, 5, 2, 0,<br>
+5, 2, 3, 3, 4, 1, 3, 10, 1, 0, 10, 2, 7<br>
+1/ Calculer la moyenne <span style="font-style:italic">m</span><sub>1</sub> et l’écart-type <span style="font-style:italic">s</span><sub>1</sub> de cet échantillon.<br>
+2/ Donner une estimation de la moyenne µ<sub>1</sub> et de l’écart-type σ<sub>1</sub>
+de <span style="font-style:italic">X</span><sub>1</sub>.<br>
+3/ Donner une estimation de la moyenne et de l’écart-type de <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>1</sub>.<br>
+<span style="font-weight:bold">Réponse</span> :<br>
+1/ On met les données dans la colonne A du tableur ou on donne un nom à la 
+liste du nombre de pièces défectueuses dans chaque paquet.<br>
+
+- Dans le tableur on tape les données dans les cellules <span style="font-family:monospace">A0..A48</span>, puis 
+en <span style="font-family:monospace">A49</span>, on tape :<br>
+<span style="font-family:monospace">mean((A0):(A48))</span><br>
+On obtient :<br>
+<span style="font-family:monospace">237/49 </span>≃<span style="font-family:monospace"> 4.83673469388</span><br>
+en <span style="font-family:monospace">A50</span> on tape :<br>
+<span style="font-family:monospace">stddev((A0):(A48))</span><br>
+On obtient :<br>
+<span style="font-family:monospace">sqrt(21006/2401 </span>≃<span style="font-family:monospace"> 2.9578462847</span>.<br>
+- Dans une ligne d’entrée, on tape :<br>
+<span style="font-family:monospace">L:=[7,5,5,4,4,4,9,7,9,2,7,8,7,8,4,4,9,10,<br>
+5,10,6,4,5,6,1,2,5,7,8,0,6,0,1,5,2,0,<br>
+5,2,3,3,4,1,3,10,1,0,10,2,7]</span><br>
+puis on tape :
+<span style="font-family:monospace">mean(L)</span><br>
+On obtient <span style="font-style:italic">m</span><sub>1</sub> :<br>
+<span style="font-family:monospace">237/49 </span>≃<span style="font-family:monospace"> 4.83673469388 </span>≃<span style="font-family:monospace"> 4.84</span>.<br>
+puis on tape : <span style="font-family:monospace">stddev(A)</span><br>
+On obtient <span style="font-style:italic">s</span><sub>1</sub>:<br>
+<span style="font-family:monospace">sqrt(21006/2401) </span>≃<span style="font-family:monospace"> 2.9578462847</span>.<br>
+2/ On a un échantillon de grande taille (<span style="font-style:italic">n</span><sub>1</sub>=49) donc d’après la loi des 
+grands nombres, on estime µ<sub>1</sub> par <span style="font-style:italic">m</span><sub>1</sub>= 237/49 ≃ 4.84 et σ<sub>1</sub> 
+par :<br>
+<span style="font-style:italic">s</span><sub>1</sub>√<span style="text-decoration:overline"><span style="font-style:italic">n</span></span><sub><span style="text-decoration:overline">1</span></sub><span style="text-decoration:overline">/</span><span style="text-decoration:overline"><span style="font-style:italic">n</span></span><sub><span style="text-decoration:overline">1</span></sub><span style="text-decoration:overline">−1</span>=√<span style="text-decoration:overline">21006/2401</span>√<span style="text-decoration:overline">49/48</span>≃ 2.98849836021≃ 2.99. <br>
+Donc <span style="font-style:italic">X</span><sub>1</sub> suit à peu près une loi 
+normale de moyenne <span style="font-style:italic">m</span><sub>1</sub>=4.84 et d’écart-type 
+σ<sub>1</sub>=2.99. <br>
+3/ La variable aléatoire <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>1</sub> égale à la
+moyenne des échantillons de taille 49 suit à peu près une loi 
+normale de moyenne µ<sub>1</sub>=4.84 et d’écart-type 
+σ<sub>1</sub>/√<span style="text-decoration:overline">49</span> ≃ <span style="font-style:italic">s</span><sub>1</sub>/√<span style="text-decoration:overline">48</span>≃ 0.426928337173≃ 0.427.<br>
+<span style="font-weight:bold">II)</span> Sur un échantillon de 64 paquets provenant de l’entreprise B on 
+trouve une moyenne <span style="font-style:italic">m</span><sub>2</sub>=3.88 et un écart-type <span style="font-style:italic">s</span><sub>2</sub>=1.45:<br>
+1/ Donner une estimation de la moyenne µ<sub>2</sub> et de l’écart-type σ<sub>2</sub>
+de <span style="font-style:italic">X</span><sub>2</sub>.<br>
+2/ Donner une estimation de la moyenne et de l’écart-type de <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>2</sub>.<br>
+<span style="font-weight:bold">Réponse</span> :<br>
+1/ On a un échantillon de grande taille (<span style="font-style:italic">n</span><sub>2</sub>=64) donc d’après la loi des 
+grands nombres, on estime µ<sub>2</sub> par <span style="font-style:italic">m</span><sub>2</sub>=3.88 et σ<sub>2</sub> par :<br>
+<span style="font-style:italic">s</span><sub>2</sub>√<span style="text-decoration:overline"><span style="font-style:italic">n</span></span><sub><span style="text-decoration:overline">2</span></sub><span style="text-decoration:overline">/</span><span style="text-decoration:overline"><span style="font-style:italic">n</span></span><sub><span style="text-decoration:overline">2</span></sub><span style="text-decoration:overline">−1</span>=1.45√<span style="text-decoration:overline">64/63</span>≃ 1.46146262897≃ 1.46<br>
+On a donc 
+<span style="font-style:italic">X</span><sub>2</sub> suit une loi de moyenne <span style="font-style:italic">m</span><sub>2</sub>=3.88 et d’écart-type 
+σ<sub>1</sub>=1.46. <br>
+2/ La variable aléatoire <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>2</sub> égale à la moyenne des 
+échantillons de taille <span style="font-style:italic">n</span><sub>2</sub>=64 suit à peu près une loi normale de 
+moyenne µ<sub>2</sub>=3.88 et d’écart-type 
+σ<sub>2</sub>/√<span style="text-decoration:overline">64</span> ≃ <span style="font-style:italic">s</span><sub>2</sub>/√<span style="text-decoration:overline">63</span>≃ 0.182682828621≃ 0.183<br>
+ <span style="font-weight:bold">III)</span> On note <span style="font-style:italic">D</span> la variable aléatoire <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>1</sub>−<span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>2</sub>.<br>
+1/ Quelle est la loi de probabilité de <span style="font-style:italic">D</span> ? Déterminer la moyenne et 
+l’écart-type de <span style="font-style:italic">D</span>.<br>
+2/ On pose pour hypothèse nulle <span style="font-style:italic">H</span><sub>0</sub> : µ<sub>1</sub>=µ<sub>2</sub> et pour hypothèse 
+alternative <span style="font-style:italic">H</span><sub>1</sub> : µ<sub>1</sub> ≠ µ<sub>2</sub>. Calculer sous <span style="font-style:italic">H</span><sub>0</sub>, les nombres 
+<span style="font-style:italic">h</span> et <span style="font-style:italic">k</span> tels que :<br>
+<span style="font-style:italic">Proba</span>(−<span style="font-style:italic">h</span>&lt;<span style="font-style:italic">D</span>&lt;<span style="font-style:italic">h</span>)=0.99 et 
+<span style="font-style:italic">Proba</span>(−<span style="font-style:italic">k</span>&lt;<span style="font-style:italic">D</span>&lt;<span style="font-style:italic">k</span>)=0.95.<br>
+3/ Peut-on conclure après examen des échantillons donnés en I et II 
+que la différence des moyennes observées est significative au seuil de 
+risque de 1% ? au seuil de risque de 5% ?<br>
+<span style="font-weight:bold">Réponse</span> :<br>
+1/ <span style="font-style:italic">D</span> suit à peu près une loi 
+normale de moyenne :<br>
+ µ<sub>1</sub>−µ<sub>2</sub> ≃ 4.84−3.88=0.96 <br>
+et d’écart-type :<br>
+√<span style="text-decoration:overline">σ</span><sub><span style="text-decoration:overline">1</span></sub><sup><span style="text-decoration:overline">2</span></sup><span style="text-decoration:overline">/49+σ</span><sub><span style="text-decoration:overline">2</span></sub><sup><span style="text-decoration:overline">2</span></sup><span style="text-decoration:overline">/64</span> ≃ √<span style="text-decoration:overline"><span style="font-style:italic">s</span></span><sub><span style="text-decoration:overline">1</span></sub><sup><span style="text-decoration:overline">2</span></sup><span style="text-decoration:overline">/48+</span><span style="text-decoration:overline"><span style="font-style:italic">s</span></span><sub><span style="text-decoration:overline">2</span></sub><sup><span style="text-decoration:overline">2</span></sup><span style="text-decoration:overline">/63</span>=<br>
+√<span style="text-decoration:overline">21006/(2401*48)+1.45</span><sup><span style="text-decoration:overline">2</span></sup><span style="text-decoration:overline">/63</span> ≃ 0.453082418658≃ 0.46 <br>
+car la variance de <span style="font-style:italic">D</span> est la somme des variances de <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>1</sub> et 
+de <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>2</sub>.<br>
+2/ Sous l’hypothèse <span style="font-style:italic">H</span><sub>0</sub>, <span style="font-style:italic">D</span> suit à peu près une loi normale 
+de moyenne 0 et d’écart-type σ(<span style="font-style:italic">D</span>)=0.46.<br>
+<span style="font-style:italic">h</span> et <span style="font-style:italic">k</span> sont tels que :<br>
+<span style="font-style:italic">Proba</span>(−<span style="font-style:italic">h</span>&lt;<span style="font-style:italic">D</span>&lt;<span style="font-style:italic">h</span>)=0.99 et 
+<span style="font-style:italic">Proba</span>(−<span style="font-style:italic">k</span>&lt;<span style="font-style:italic">D</span>&lt;<span style="font-style:italic">k</span>)=0.95.<br>
+Donc d’après les tables de la loi normale on a :<br>
+<span style="font-style:italic">h</span>=2.58* σ<sub><span style="font-style:italic">D</span></sub>=2.58*0.46=1.1868≃ 1.19 et<br>
+<span style="font-style:italic">k</span>=1.96* σ<sub><span style="font-style:italic">D</span></sub>=1.96*0.46=0.9016≃ 0.9.<br>
+Ou bien avec <span style="font-family:monospace">Xcas</span> on a :<br>
+<span style="font-family:monospace">h:=normal_icdf(0,0.46,0.995)=1.18488147963</span><br>
+<span style="font-family:monospace">k:=normal_icdf(0,0.46,0.975)=0.901583432888</span><br>
+3/ Puisque la valeur de <span style="font-style:italic">D</span> pour l’échantillon est égale à 0.96, on 
+conclut qu’au seuil de 5% on rejette l’hypothèse <span style="font-style:italic">H</span><sub>0</sub> (car 0.96&gt;k) mais 
+par contre, au seuil de 1% on accepte l’hypothèse <span style="font-style:italic">H</span><sub>0</sub> (car 0.96&lt;h).<br>
+<span style="font-weight:bold">Bien comprendre :</span><br>
+Au seuil de 5%, on rejette <span style="font-style:italic">H</span><sub>0</sub> et on se trompe dans moins de 5% des cas, 
+c’est à dire que l’on rejette <span style="font-style:italic">H</span><sub>0</sub> à tort dans moins de 5% des cas, mais
+si on ne veut se tromper que dans 1% des cas, on ne peut pas rejeter <span style="font-style:italic">H</span><sub>0</sub> 
+et donc on l’accepte...<br>
+En fait, on peut dire que l’on rejette <span style="font-style:italic">H</span><sub>0</sub> au seuil de 4% (i.e. on risque de
+se tromper en rejettant <span style="font-style:italic">H</span><sub>0</sub> dans 4% des cas), car :<br>
+<span style="font-family:monospace">0.96&gt;normal_icdf(0,0.46,0.98)=0.944724498891</span> ou encore <br>
+<span style="font-family:monospace">normal_cdf(0,0.46,0.96)=0.981553967548&gt;0.98</span></li><li class="li-enumerate"><span style="font-weight:bold">Exercice </span><br>
+On a administré un somnifère A à 50 personnes choisies au hasard et on a observé une moyenne de sommeil de 8h22 avec un écart-type de 0h24.<br>
+On a administré un somnifère B à 100 personnes choisies au hasard et on a observé une moyenne de sommeil de 7h15 avec un écart-type de 0h30.<br>
+Ces deux somnifères ont-ils une efficacité signicativement différente ? de combien ?<br>
+<span style="font-weight:bold">Réponse</span><br>
+Soit <span style="font-style:italic">X</span><sub>1</sub> la variable aléatoire égale au nombre de minutes de sommeil 
+lorsque l’on a pris le somnifère A et soit <span style="font-style:italic">X</span><sub>2</sub> la variable aléatoire égale au nombre de minutes de sommeil lorsque l’on a pris le somnifère B.<br>
+On note <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>1</sub> (resp <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>2</sub>) la variable aléatoire égale
+à la moyenne du nombre de minutes de sommeil pour des échantillons de 
+taille 50 (resp 100) lorsque l’on a pris le somnifère A
+(resp le somnifère B).<br>
+Au vu de l’échantillon d’effectif <span style="font-style:italic">n</span><sub>1</sub>=50, <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>1</sub> a comme 
+moyenne <span style="font-style:italic">m</span><sub>1</sub> de 8h22 soit de 502 minutes et comme écart-type σ<sub>1</sub>.<br>
+On a donc :<br>
+<span style="font-style:italic">m</span><sub>1</sub>=8*60+22=502 et,<br>
+σ<sub>1</sub> ≃ 24/√<span style="text-decoration:overline">49</span>.<br>
+Au vu de l’échantillon d’effectif <span style="font-style:italic">n</span><sub>2</sub>=100, <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>2</sub> a comme moyenne 
+<span style="font-style:italic">m</span><sub>2</sub> de 7h15 soit de 435 minutes et comme écart-type σ<sub>2</sub>.<br>
+On a donc :<br>
+<span style="font-style:italic">m</span><sub>2</sub>=7*60+15=435 et,<br>
+σ<sub>2</sub>≃ 30/√<span style="text-decoration:overline">99</span>.<br>
+On en déduit que <span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>1</sub>−<span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>2</sub> suit approximativement une 
+loi normale <span style="color:red"><span style="font-style:italic">N</span></span>(µ , σ) avec comme écart-type :<br>
+σ=√<span style="text-decoration:overline">σ</span><sub><span style="text-decoration:overline">1</span></sub><sup><span style="text-decoration:overline">2</span></sup><span style="text-decoration:overline">+σ</span><sub><span style="text-decoration:overline">2</span></sub><sup><span style="text-decoration:overline">2</span></sup>=√<span style="text-decoration:overline">24</span><sup><span style="text-decoration:overline">2</span></sup><span style="text-decoration:overline">/49+30</span><sup><span style="text-decoration:overline">2</span></sup><span style="text-decoration:overline">/99</span>=4.56574321789≃ 4.566.<br>
+On cherche un intervalle de confiance pour µ au seuil de 5% et au seuil 
+de 1%. On sait que l’on a :<br>
+<span style="font-style:italic">Proba</span>(|<span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>1</sub>−<span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>2</sub>| ≤ µ+1.96σ)=0.95<br>
+<span style="font-style:italic">Proba</span>(|<span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>1</sub>−<span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>2</sub>| ≤ µ+2.58σ)=0.99<br>
+<span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>1</sub>−<span style="text-decoration:overline"><span style="font-style:italic">X</span></span><sub>2</sub> a comme valeur <span style="font-style:italic">m</span><sub>1</sub>−<span style="font-style:italic">m</span><sub>2</sub>=67 donc,<br>
+<span style="font-style:italic">Proba</span>(67−1.96*4.566 ≤ µ ≤ 67+1.96*4.566)=0.95 et,<br>
+<span style="font-style:italic">Proba</span>(67−2.58*4.566 ≤ µ ≤ 67+2.58*4.566)=0.99<br>
+On a donc :<br>
+- Un intervalle de confiance pour µ au seuil de 5% est :<br>
+l’intervalle [58;76] (car 58 ≃ 67−1.96*4.566 et 76 ≃ 67+1.96*4.566),<br>
+- Un intervalle de confiance pour µ au seuil de 1% est :<br>
+l’intervalle [55;79] (car 55 ≃ 67−2.58*4.566 et
+79 ≃ 67+2.58*4.566).<br>
+Avec <span style="font-family:monospace">Xcas</span> on tape :<br>
+<span style="font-family:monospace">normal_icdf(67,sqrt(24</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/49+30</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/99),0.975)</span><br>
+On obtient :<br>
+ <span style="font-family:monospace">75.9486922697 </span>≃<span style="font-family:monospace"> 76 </span><br>
+On tape :<br>
+<span style="font-family:monospace">normal_icdf(67,sqrt(24</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/49+30</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/99),0.025)</span><br>
+On obtient : <br>
+<span style="font-family:monospace">58.0513077303 </span>≃<span style="font-family:monospace"> 58</span><br>
+On tape :<br>
+<span style="font-family:monospace">normal_icdf(67,sqrt(24</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/49+30</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/99),0.995)</span><br>
+On obtient : <br>
+<span style="font-family:monospace">78.7605751731 </span>≃<span style="font-family:monospace"> 79</span><br>
+On tape :<br>
+<span style="font-family:monospace">normal_icdf(67,sqrt(24</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/49+30</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/99),0.005)</span><br>
+On obtient : <br>
+<span style="font-family:monospace">55.239424827 </span>≃<span style="font-family:monospace"> 55</span><br>
+Donc :<br>
+- µ est dans l’intervalle [58;76] avec un risque d’erreur de 5% et ,<br>
+- µ est dans l’intervalle [55;79] avec un risque d’erreur de 1%.<br>
+ Le somnifère A allonge la durée du sommeil d’environ 67mn=1h07 par rapport
+au somnifère B, avec une incertidude de (76-58)/2=9mn (resp (79-55)/2=12mn) 
+pour un seuil de 5% (resp 1%).<br>
+Remarque : dans l’exercice précédent on a considéré deux groupes de 
+patients indépendants. On aurait pu faire l’experience sur un même groupe
+(après un certain temps). On aurait eu affaire alors a des échantillons non
+indépendants mais appariés (pour un exemple voir l’exercice suivant).
+</li><li class="li-enumerate"><span style="font-weight:bold">Exercice : Échantillons appariés</span><br>
+On a fait faire une double correction de 30 copies par deux examinateurs A et B
+afin de comparer leur notation. Les copies sont numerotées de 0 à 29. <br>
+On a obtenu pour A :<br>
+<span style="font-family:monospace">13,15,12,15,8,7,11,10,9,13,3,18,17,5,9,10,</span><br>
+<span style="font-family:monospace">11,14,12,10,9,8,13,6,8,16,14,11,12,10</span><br>
+On a obtenu pour B:<br>
+<span style="font-family:monospace">12,13,12,15,7,5,12,10,8,13,4,17,16,4,9,11,10,</span><br>
+<span style="font-family:monospace">13,13,9,10,7,14,8,7,15,13,10,13,10</span><br>
+On tape :<br>
+<span style="font-family:monospace">A:=[13,15,12,15,8,7,11,10,9,13,3,18,17,5,9,</span><br>
+<span style="font-family:monospace">10,11,14,12,10,9,8,13,6,8,16,14,11,12,10]</span> <br>
+On tape :<br>
+<span style="font-family:monospace">mean(A)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">329/30</span>≃<span style="font-family:monospace"> 10.9666666667</span>
+On tape :<br>
+<span style="font-family:monospace">stddev(A)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">sqrt(10769/900) </span>≃<span style="font-family:monospace"> 3.45912641509</span>
+On tape :<br>
+<span style="font-family:monospace">B:=[12,17,11,16,7,7,10,10,8,13,1,18,16,4,8,</span><br>
+<span style="font-family:monospace">10,10,14,11,10,8,8,12,6,7,16,13,11,12,9]</span><br>
+On tape :<br>
+<span style="font-family:monospace">mean(B)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">21/2=10.5</span><br>
+Les deux examinateurs n’ont pas obtenus la même moyenne et la différence 
+des moyennes entre l’examinateur <span style="font-family:monospace">A</span> et l’examinateur <span style="font-family:monospace">B</span> est <span style="font-style:italic">m</span>=0.3.<br>
+On tape : <span style="font-family:monospace">A-B</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[1,-2,1,-1,1,0,1,0,1,0,2,0,1,1,1,0,1,0,1,0,1,0,1,<br>
+0,1,0,1,0,0,1]</span>
+ou encore on définit le caractère différence <span style="font-family:monospace">D</span> avec effectifs :<br>
+<span style="font-family:monospace">D:=([-2,-1,0,1,2],[1,1,12,15,1])</span><br>
+On tape :<br>
+<span style="font-family:monospace">D:=([-2,-1,0,1,2],[1,1,12,15,1])</span><br>
+<span style="font-family:monospace">mean(D)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">m=7/15=0.466666666667</span><br>
+On tape : <br>
+<span style="font-family:monospace">stddev(A-B)</span><br>
+ou <span style="font-family:monospace">stddev(D)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">s=sqrt(131/225) </span>≃<span style="font-family:monospace"> 0.763034876151</span><br>
+On suppose que le caractère différence <span style="font-family:monospace">D</span> est distribué
+selon une loi normale <span style="color:red"><span style="font-style:italic">N</span></span>(µ,σ(<span style="font-style:italic">D</span>)) (il faudrait le 
+vérifié avec le test du χ<sup>2</sup>).<br>
+On pose comme hypothèse <span style="font-style:italic">H</span><sub>0</sub> :µ=0 et comme hypothèse alternative 
+<span style="font-style:italic">H</span><sub>1</sub>: µ ≠ 0.<br>
+On considère la variable <span style="font-family:monospace"><span style="font-style:italic">T</span></span><span style="font-family:monospace">=√</span><span style="font-family:monospace"><span style="text-decoration:overline"><span style="font-style:italic">n</span></span></span><span style="font-family:monospace"><span style="text-decoration:overline">−1</span></span><span style="font-family:monospace">(</span><span style="font-family:monospace"><span style="text-decoration:overline">D</span></span><span style="font-family:monospace">-0/</span><span style="font-family:monospace"><span style="font-style:italic">S</span></span><span style="font-family:monospace">)</span>, <span style="font-family:monospace"><span style="font-style:italic">T</span></span> 
+a pour valeur :<br>
+<span style="font-style:italic">t</span>=√<span style="text-decoration:overline"><span style="font-style:italic">n</span></span><span style="text-decoration:overline">−1</span>*<span style="font-style:italic">m</span>−0/<span style="font-style:italic">s</span><br>
+On tape :<br>
+<span style="font-family:monospace">t:=sqrt(29)*7/15/sqrt(131/225)</span>
+donc <span style="font-style:italic">t</span>≃=3.29352823645<br>
+Au seuil de 5% et avec 29 degrées de liberté on lit dans la table de
+Student, la valeur critique <span style="font-style:italic">h</span> que <span style="font-family:monospace">t</span> ne doit pas dépasser. <br>
+On trouve <span style="font-style:italic">h</span>= 2.05.<br>
+Ou bien on tape avec <span style="font-family:monospace">Xcas</span> :<br>
+<span style="font-family:monospace">h:=student_icdf(29,0.975)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">h=2.04522964213 </span>≃<span style="font-family:monospace"> 2.05</span><br>
+Puisque <span style="font-style:italic">t</span>=3.29352823645&gt;<span style="font-style:italic">h</span> on conclut qu’au seuil de 5%, les 2 moyennes sont 
+significativement différentes.
+</li><li class="li-enumerate"><span style="font-weight:bold">Exercice : Jet d’un dé et test du </span>χ<sup>2</sup><br>
+On jette un dé 90 fois et on a obtenu :<br>
+1 a été obtenu 11 fois,<br>
+2 a été obtenu 16 fois,<br>
+3 a été obtenu 17 fois,<br>
+4 a été obtenu 22 fois,<br>
+5 a été obtenu 14 fois,<br>
+6 a été obtenu 10 fois.<br>
+Peut-on admettre au vu de cette expérience que le dé est régulier ?<br>
+
+Il y a 6 classes et le degré de liberté est égal à 5 puisque 
+l’effectif de la dernière classe est imposé lorsque l’on a l’effectif 
+des 5 premières.
+Pour chaque classe l’effectif théorique de l’échantillon est 90*1/6=15 
+(chaque face ayant une probabilité théorique égale à 1/6 de sortir si le dé est équilibré).<br>
+On calcule l’écart quadradique réduit, c’est la valeur de :<br>
+χ<sup>2</sup>=∑<sub><span style="font-style:italic">j</span>=1</sub><sup>6</sup> (<span style="font-style:italic">X</span><sub><span style="font-style:italic">j</span></sub>−90/6)<sup>2</sup>/90/6 pour l’échantillon 
+considéré.<br>
+On obtient ici :<br>
+1/15((11−15)<sup>2</sup>+(16−15)<sup>2</sup>+(17−15)<sup>2</sup>+(22−15)<sup>2</sup>+(14−15)<sup>2</sup>+(10−15)<sup>2</sup>)=6.4<br>
+Dans une table du χ<sup>2</sup> on lit qu’au seuil 0.05 et pour un degré de 
+liberté 5 la valeur limite de χ<sup>2</sup> est égale à 11.1.<br>
+Avec <span style="font-family:monospace">Xcas</span>, on tape :<br>
+<span style="font-family:monospace">chisquare_icdf(5,0.95)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">11.0704976935 </span>≃<span style="font-family:monospace"> 11.1</span><br>
+ Or on a 6.4&lt;11,1, donc au seuil 0.05, on
+ne rejette pas l’hypothèse : "le dé est régulier" car si on dit que le 
+dé n’est pas régulier on se trompe dans plus de 5% des cas.
+</li><li class="li-enumerate"><span style="font-weight:bold">Exercice : Jet d’un dé et test du </span>χ<sup>2</sup><br>
+On jette un dé 180 fois et on a obtenu :<br>
+1 a été obtenu 22 fois,<br>
+2 a été obtenu 32 fois,<br>
+3 a été obtenu 34 fois,<br>
+4 a été obtenu 44 fois,<br>
+5 a été obtenu 28 fois,<br>
+6 a été obtenu 20 fois.<br>
+Peut-on admettre au vu de cette expérience que le dé est régulier ?<br>
+Par rapport à l’exercice précédent on a doublé le nombre de lancers et
+on a aussi doublé les effectifs de chaque classe.<br>
+On calcule l’écart quadradique réduit, c’est la valeur de :<br>
+χ<sup>2</sup>=∑<sub><span style="font-style:italic">j</span>=1</sub><sup>6</sup> (<span style="font-style:italic">X</span><sub><span style="font-style:italic">j</span></sub>−180/6)<sup>2</sup>/180/6 pour l’échantillon considéré.<br>
+On obtient ici :<br>
+2/15((11−15)<sup>2</sup>+(16−15)<sup>2</sup>+(17−15)<sup>2</sup>+(22−15)<sup>2</sup>+(14−15)<sup>2</sup>+(10−15)<sup>2</sup>)=2*6.4=12.8<br>
+Dans une table du χ<sup>2</sup> on lit qu’au seuil 0.05 et pour un degré de 
+liberté 5 la valeur limite de χ<sup>2</sup> est 11.1. <br>
+Avec <span style="font-family:monospace">Xcas</span>, on tape :<br>
+<span style="font-family:monospace">chisquare_icdf(5,0.95)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">11.0704976935</span>.<br>
+Or on a 12.8&gt;11,1, donc 
+on rejette l’hypothèse : "le dé est régulier" au seuil de 5% ce qui 
+veut dire "le dé n’est pas régulier" dans plus de 95% des cas.
+</li></ol>
+<hr>
+<a href="cascmd_fr827.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr829.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

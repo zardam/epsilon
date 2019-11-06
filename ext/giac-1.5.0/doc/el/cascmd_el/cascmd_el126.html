@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Ορισμός αλγεβρικών συναρτήσεων</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el125.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el127.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc143">1.16.3</A>  Ορισμός αλγεβρικών συναρτήσεων</H3><H4 CLASS="subsubsection"><A NAME="toc4"></A>Ορισμός συνάρτησης από το ℝ<SUP><I>p</I></SUP> στο ℝ</H4><P>
+Για <I>p</I>=1, π.χ. για <I>f</I> : (<I>x</I>)→ <I>x</I>*sin(<I>x</I>), εισάγετε :
+</P><DIV CLASS="center">	
+<TT>f(x):=x*sin(x)</TT></DIV><P>
+ή :
+</P><DIV CLASS="center">	
+<TT>f:=x-&gt;x*sin(x)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(x)-&gt;x*sin(x)</TT></DIV><P>
+Εάν <I>p</I>&gt;1, π.χ. για <I>f</I> : (<I>x</I>,<I>y</I>)→ <I>x</I>*sin(<I>y</I>), εισάγετε :
+</P><DIV CLASS="center">	
+<TT>f(x,y):=x*sin(y)</TT></DIV><P>
+ή :
+</P><DIV CLASS="center">	
+<TT>f:=(x,y)-&gt;x*sin(y)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(x,y)-&gt;x*sin(y)</TT></DIV><P>
+<B>Προσοχή!!!</B> η παράσταση μετά το 	
+<TT>-&gt; </TT> δεν αποτιμάται. Θα πρέπει να χρησιμοποιήσετε 	
+<TT>unapply</TT> αν αναμένετε το δεύτερο μέλος να αποτιμάται πριν τον ορισμό της συνάρτησης.</P><H4 CLASS="subsubsection"><A NAME="toc5"></A>Ορισμός συνάρτησης από το ℝ<SUP><I>p</I></SUP> σε ℝ<SUP><I>q</I></SUP></H4><P>
+Για παράδειγμα:
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Για να ορίσουμε την συνάρτηση <I>h</I> : (<I>x</I>,<I>y</I>)→ (<I>x</I>*cos(<I>y</I>),<I>x</I>*sin(<I>y</I>)).<BR>
+ Είσοδος :
+<DIV CLASS="center">	
+<TT>h(x,y):=(x*cos(y),x*sin(y))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>" (x,y)-&gt;{<BR>
+x*cos(y),x*sin(y);<BR>
+}"</TT></DIV>
+</LI><LI CLASS="li-itemize">Για να ορίσουμε τη συνάρτηση <I>h</I> : (<I>x</I>,<I>y</I>)→ [<I>x</I>*cos(<I>y</I>),<I>x</I>*sin(<I>y</I>)].<BR>
+ Είσοδος :
+<DIV CLASS="center">	
+<TT>h(x,y):=[x*cos(y),x*sin(y)];</TT></DIV>
+ή :
+<DIV CLASS="center">	
+<TT>h:=(x,y)-&gt;[x*cos(y),x*sin(y)];</TT></DIV>
+ή :
+<DIV CLASS="center">	
+<TT>h(x,y):={[x*cos(y),x*sin(y)]};</TT></DIV>
+ή : 
+<DIV CLASS="center">	
+<TT>h:=(x,y)-&gt;return[x*cos(y),x*sin(y)];</TT></DIV>
+ή : 
+<DIV CLASS="center">	
+<TT>h(x,y):={return [x*cos(y),x*sin(y)];}</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>(x,y)-&gt;{return([x*cos(y),x*sin(y)]);}</TT></DIV>
+</LI></UL><P>
+<B>Προσοχή !!!</B> η παράσταση μετά το 	
+<TT>-&gt; </TT> δεν αποτιμάται.</P><H4 CLASS="subsubsection"><A NAME="toc6"></A>Ορισμός οικογενειών μιας συνάρτησης απο το ℝ<SUP><I>p</I>−1</SUP> στο ℝ<SUP><I>q</I></SUP> χρησιμποποιώντας μια συνάρτηση από το ℝ<SUP><I>p</I></SUP> στο ℝ<SUP><I>q</I></SUP></H4><P> Έστω ότι η συνάρτηση <I>f</I>: (<I>x</I>,<I>y</I>) → <I>f</I>(<I>x</I>,<I>y</I>) έχει ορισθεί, και θέλουμε να ορίσουμε μια οικογένεια συναρτήσεων <I>g</I>(<I>t</I>) τέτοιες ώστε <I>g</I>(<I>t</I>)(<I>y</I>):=<I>f</I>(<I>t</I>,<I>y</I>) (δηλαδή η <I>t</I> θεωρείται ως παράμετρος). Επειδή η παράσταση μετά το <TT>-&gt; </TT> (ή <TT>:=</TT>) δεν αποτιμάται, δεν θα πρέπει να ορίσουμε τη <I>g</I>(<I>t</I>) μέσω 	
+<TT>g(t):=y-&gt;f(t,y)</TT>, αλλά θα πρέπει να χρησιμοποιήσουμε την εντολή 	
+<TT>unapply</TT>.</P><P>Για παράδειγμα, υποθέτοντας ότι η <I>f</I>:(<I>x</I>,<I>y</I>)→ <I>x</I>sin(<I>y</I>) και <I>g</I>(<I>t</I>): <I>y</I>→ <I>f</I>(<I>t</I>,<I>y</I>), είσοδος :
+</P><DIV CLASS="center">	
+<TT>f(x,y):=x*sin(y);g(t):=unapply(f(t,y),y)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>((x,y)-&gt;x*sin(y), (t)-&gt;unapply(f(t,y),y))</TT></DIV><P>
+Είσοδος 
+</P><DIV CLASS="center">	
+<TT>g(2)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>y-&gt;2</TT><TT>·</TT><TT> sin(y)</TT></DIV><P>
+Είσοδος 
+</P><DIV CLASS="center">	
+<TT>g(2)(1)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>2</TT><TT>·</TT><TT> sin(1)</TT></DIV><P>
+Επόμενο παράδειγμα: έστω ότι η συνάρτηση <I>h</I>: (<I>x</I>,<I>y</I>) → [<I>x</I>*cos(<I>y</I>),<I>x</I>*sin(<I>y</I>)] έχει ορισθεί, και θέλουμε να ορίσουμε την οικογένεια συναρτήσεων <I>k</I>(<I>t</I>) έχοντας το <I>t</I> σαν παράμετρο και έτσι ώστε <I>k</I>(<I>t</I>)(<I>y</I>):=<I>h</I>(<I>t</I>,<I>y</I>).
+Για να ορίσουμε την συνάρτηση <I>h</I>(<I>x</I>,<I>y</I>), εισάγουμε :
+</P><DIV CLASS="center">	
+<TT>h(x,y):=(x*cos(y),x*sin(y))</TT></DIV><P>
+Για να ορίσουμε κατάλληλα την συνάρτηση <I>k</I>(<I>t</I>), εισάγουμε :
+</P><DIV CLASS="center">	
+<TT>k(t):=unapply(h(x,t),x)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(t)-&gt;unapply(h(x,t),x)</TT></DIV><P>
+Είσοδος
+</P><DIV CLASS="center">	
+<TT>k(2)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(x)-&gt;(x*cos(2),x*sin(2))</TT></DIV><P>
+Είσοδος 
+</P><DIV CLASS="center">	
+<TT>k(2)(1)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(2*cos(1),2*sin(1))</TT></DIV><HR>
+<A HREF="cascmd_el125.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el127.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

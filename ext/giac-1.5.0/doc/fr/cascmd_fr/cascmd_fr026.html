@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Nombres de chiffres significatifs : Digits DIGITS</title>
+</head>
+<body >
+<a href="cascmd_fr025.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr027.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec41" class="subsection">1.7.4  Nombres de chiffres significatifs : <span style="font-family:monospace">Digits DIGITS</span></h3>
+<p><a id="hevea_default15"></a><a id="hevea_default16"></a>
+<span style="font-family:monospace">Digits</span> ou <span style="font-family:monospace">DIGITS</span> est le nom d’une variable qui contient
+le nombre de chiffres de l’affichage.
+On tape :
+</p><div class="center"><span style="font-family:monospace">Digits</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">DIGITS</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">12</span></div><p>
+si dans la configuration du CAS il y a 12 dans la case <span style="font-family:monospace">Chiffres</span>.<br>
+
+On peut changer la valeur de la case <span style="font-family:monospace">Chiffres</span> de la configuration du CAS
+en affectant une valeur à <span style="font-family:monospace">Digits</span> ou <span style="font-family:monospace">DIGITS</span>.
+<span style="font-family:monospace">Digits</span> ou <span style="font-family:monospace">DIGITS</span> permet donc de spécifier le nombre de 
+chiffres significatifs de l’affichage, pour cela on doit taper <span style="font-family:monospace">Digits</span> 
+puis <span style="font-family:monospace">:=</span> et un nombre entier entre 1 et 1000.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">Digits:=3</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">DIGITS:=3</span></div><p>
+pour avoir 3 chiffres à l’affichage :
+Puis, on tape :
+</p><div class="center"><span style="font-family:monospace">1.0/3</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">0.333</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">4.0/3</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">1.33</span></div><p>IL y a deux cas à distinguer :
+</p><ul class="itemize"><li class="li-itemize">
+La valeur de <span style="font-family:monospace">Digits</span> ou <span style="font-family:monospace">DIGITS</span> est inférieure à 14, 
+<span style="font-family:monospace">Xcas</span> travaille alors avec des flottants machines c’est à dire que les 
+décimaux ont environ 14 chiffres significatifs car ils sont representés en 
+binaire sur 52 bits et donc les calculs seront les mêmes quelque soit <span style="font-family:monospace">n</span>
+inférieur à 14, seul l’affichage sera différent. En effet si 
+<span style="font-family:monospace">Digits:=n</span> ou <span style="font-family:monospace">DIGITS:=n</span> avec <span style="font-family:monospace">n</span> inférieur à 14 
+l’affichage sera fait avec <span style="font-family:monospace">n</span> chiffres significatifs.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">Digits:=5</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">DIGITS:=5</span></div>
+puis, on tape :
+<div class="center"><span style="font-family:monospace">a:=4.0/3</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">1.3333</span></div>
+Mais, si on tape :
+<div class="center"><span style="font-family:monospace">b:=a-1.333333333</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">3.3333e-10</span></div>
+ce qui prouve que <span style="font-family:monospace">Xcas</span> travaille avec <span style="font-family:monospace">a=1.33333333333333</span>.</li><li class="li-itemize">La valeur <span style="font-family:monospace">n</span> de <span style="font-family:monospace">Digits</span> ou <span style="font-family:monospace">DIGITS</span> est supérieure à 
+14, <span style="font-family:monospace">Xcas</span> travaille avec des flottants en multi-précision c’est à dire
+que les décimaux auront environ <span style="font-family:monospace">n</span> chiffres significatifs. Donc si 
+on tape <span style="font-family:monospace">Digits:=n</span> ou <span style="font-family:monospace">DIGITS:=n</span> avec <span style="font-family:monospace">n</span> supérieur à 14 
+l’affichage et les calculs se feront avec <span style="font-family:monospace">n</span> chiffres significatifs.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">Digits:=20</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">DIGITS:=20</span></div>
+puis, on tape :
+<div class="center"><span style="font-family:monospace">c:=4.0/3</span></div>
+On obtient 21 chiffres significatifs:
+<div class="center"><span style="font-family:monospace">1.33333333333333333333</span></div>
+0n tape :
+<div class="center"><span style="font-family:monospace">c-1.33333333333333333333</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">0.000000000000000000000</span></div>
+Dans ce cas les calculs correspondent à l’affichage.<br>
+<span style="font-weight:bold">Exemples</span>
+On tape :
+<div class="center"><span style="font-family:monospace">Digits:=5</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">DIGITS:=5</span></div>
+puis
+<div class="center"><span style="font-family:monospace">evalf((pi)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">97.409</span></div>
+puis
+<div class="center"><span style="font-family:monospace">evalf((pi)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4-97.409)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">9.1034e-05</span></div>
+puis
+<div class="center"><span style="font-family:monospace">evalf((pi)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4-97.40909103)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">4.0018e-09</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">Digits:=20</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">DIGITS:=20</span></div>
+puis
+On tape 
+<div class="center"><span style="font-family:monospace">evalf((pi)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">0.974090910340024372345e2</span></div>
+puis
+<div class="center"><span style="font-family:monospace">evalf((pi)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4--97.40909103)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">4.001776687801e-09</span></div>
+</li></ul><p>
+<span style="font-weight:bold">Remarque</span><br>
+ Si pour un calcul on veut par exemple avoir un affichage avec seulement <span style="font-style:italic">n</span> 
+chiffres significatifs il faut utiliser <span style="font-family:monospace">evalf</span> avec 2 arguments : cela ne 
+change pas la valeur de <span style="font-family:monospace">Digits</span>.<br>
+On tape :<br>
+<span style="font-family:monospace">a:=862/7</span><br>
+<span style="font-family:monospace">evalf(a,5)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">123.14</span><br>
+<span style="font-family:monospace">evalf(a)</span><br>
+On obtient si dans la configuration utilisée <span style="font-family:monospace">Digits</span> vaut 12 :<br>
+<span style="font-family:monospace">123.142857143</span>
+</p>
+<hr>
+<a href="cascmd_fr025.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr027.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

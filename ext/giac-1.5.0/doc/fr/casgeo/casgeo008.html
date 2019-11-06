@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casgeo.css">
+<TITLE>Un exemple de géométrie dans l’espace</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casgeo007.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo009.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc147">Chapitre 8</A>  Un exemple de géométrie dans l’espace</H1><H2 CLASS="section"><A NAME="toc47"></A><A NAME="htoc148">8.1</A>  L’énoncé</H2><P>
+Soient <I>OABC</I> un tétraèdre tel que :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<I>OAB</I>, <I>OAC</I>, <I>OBC</I> sont des triangles rectangles
+</LI><LI CLASS="li-itemize"><I>OA</I>=<I>OB</I>=<I>OC</I>=1
+</LI></UL><P>
+Soient <I>I</I> le pied de la hauteur issue de <I>C</I> du triangle <I>ABC</I><BR>
+ <I>H</I> le pied de la hauteur issue de <I>O</I> du triangle <I>OIC</I> et<BR>
+<I>D</I> le point défini par <I>OD</I>=<I>HO</I>
+Montrer :
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Les droites <I>OH</I> et <I>AB</I> sont orthogonales
+</LI><LI CLASS="li-enumerate"><I>H</I> est l’orthocentre du triangle <I>ABC</I>
+</LI><LI CLASS="li-enumerate">Calculer <I>OH</I>
+</LI><LI CLASS="li-enumerate">Le tétraèdre <I>ABCD</I> est régulier
+</LI><LI CLASS="li-enumerate">Calculer les coordonnées du centre <I>s</I> de la sphère 
+circonscrite à <I>ABCD</I>.
+</LI></OL><H2 CLASS="section"><A NAME="toc48"></A><A NAME="htoc149">8.2</A>  La solution avec <TT>Xcas</TT></H2><H3 CLASS="subsection"><A NAME="htoc150">8.2.1</A>  La figure</H3><P>
+On ouvre un niveau de géométrie 3-d (<TT>Alt+h</TT>), on choisit comme 
+repère (<I>O</I>;<I>OA</I>,<I>OB</I>,<I>OC</I>) et 
+on tape :
+</P><PRE CLASS="verbatim">O:=point([0,0,0]);
+A:=point([1,0,0]);
+B:=point([0,1,0]);
+C:=point([0,0,1]);
+pyramide(O,A,B,C);
+I:=projection(droite(A,B),C);
+segment(C,I,affichage=2+ligne_tiret);
+H:=projection(droite(I,C),O);
+segment(O,H,affichage=2+ligne_tiret);
+segment(O,I);
+D:=translation(O-H,O);
+</PRE><P>On obtient :<BR>
+<IMG SRC="casgeo072.png">
+</P><H3 CLASS="subsection"><A NAME="htoc151">8.2.2</A>  Les réponses aux questions</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On tape :<BR>
+<TT>est_orthogonal(droite(A,B),droite(O,H))</TT><BR>
+On obtient :
+<TT>1</TT><BR>
+On tape :<BR>
+<TT>longueur(I,H),longueur(C,H),longueur(C,I)</TT><BR>
+On obtient :
+<TT>(sqrt(6))/6,(sqrt(6))/3,(sqrt(6))/2</TT><BR>
+On tape :<BR>
+<TT>equation(droite(C,I))</TT><BR>
+On obtient :
+<TT>1/2*x+(-1)/2*y=0,-1/2*x-1/2*y-1/2*z+1/2=0</TT><BR>
+On tape :<BR>
+<TT>equation(plan(O,C,I))</TT><BR>
+On obtient :
+<TT>-1/2*x-(-1)/2*y=0</TT><BR>
+On tape :<BR>
+<TT>B-A,H-O,dot(B-A,H-O)</TT><BR>
+On obtient :
+<TT>[-1,1,0],[1/3,1/3,1/3],0</TT>
+</LI><LI CLASS="li-enumerate">On tape :<BR>
+<TT>est_equilateral(A,B,C)</TT><BR>
+On obtient :
+<TT>1</TT><BR>
+On tape :<BR>
+<TT>B-C,H-A,dot(B-C,H-A)</TT><BR>
+On obtient :
+<TT>[0,1,-1],[(-2)/3,1/3,1/3],0</TT><BR>
+On tape :<BR>
+<TT>est_orthogonal(droite(C,B),droite(A,H))</TT><BR>
+On obtient :
+<TT>1</TT>
+</LI><LI CLASS="li-enumerate">On tape :<BR>
+<TT>coordonnees(H)</TT><BR>
+On obtient :<BR>
+<TT>[1/3,1/3,1/3] </TT><BR>
+On tape :<BR>
+<TT>longueur(O,H)</TT><BR>
+On obtient :
+<TT>(sqrt(3))/3</TT>
+</LI><LI CLASS="li-enumerate">On complète la figure en tapant :<BR>
+<TT>D:=translation(O-H,O);</TT><BR>
+<TT>segment(D,H,affichage=2+ligne_tiret);</TT><BR>
+<TT>pyramide(D,A,B,C,affichage=epaisseur_ligne_2)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo073.png"><BR>
+On tape :<BR>
+<TT>longueur(A,B),longueur(B,C),longueur(C,A)</TT><BR>
+On obtient :
+<TT>sqrt(2),sqrt(2),sqrt(2)</TT><BR>
+On tape :<BR>
+<TT>longueur(A,D),longueur(B,D),longueur(C,D)</TT><BR>
+On obtient :
+<TT>sqrt(2),sqrt(2),sqrt(2)</TT>
+</LI><LI CLASS="li-enumerate">On tape, si on sait que le centre <I>s</I> de la sphère circonscrite au 
+tétraèdre régulier <I>ABCD</I> est l’isobarycentre des points <I>A</I>,<I>B</I>,<I>C</I>,<I>D</I> :<BR>
+<TT>c:=coordonnees(isobarycentre(A,B,C,D))</TT><BR>
+On obtient :
+<TT>[1/6,1/6,1/6],0]</TT><BR>
+Puis, on tape :
+<TT>s:=point(c)</TT><BR>
+
+Si on ne sait pas que Le centre <I>s</I> de la sphère circonscrite à un 
+tétraèdre régulier <I>ABCD</I> est l’isobarycentre des points <I>A</I>,<I>B</I>,<I>C</I>,<I>D</I>,
+on tape :<BR>
+<TT>d:=inter(mediatrice(A,B),mediatrice(A,C));</TT><BR>
+<TT>s:=inter_unique(mediatrice(A,D),d)</TT><BR>
+On obtient :
+<TT>pnt(pnt[point[1/6,1/6,1/6],0])</TT><BR>
+
+Puis, on tape :
+<TT>r:=normal(longueur(A,s))</TT><BR>
+On obtient :
+<TT>sqrt(3)/2</TT><BR>
+On tape :<BR>
+<TT>sphere(s,r)</TT><BR>
+On obtient :
+<DIV CLASS="center"><IMG SRC="casgeo074.png"></DIV>
+</LI></OL><H2 CLASS="section"><A NAME="toc49"></A><A NAME="htoc152">8.3</A>  La solution en géométrie pure</H2><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Montrons que les droites <I>OH</I> et <I>AB</I> sont orthogonales.<BR>
+Le triangle <I>ABC</I> est équilatéral car les triangles <I>OAB</I>, <I>OAC</I>, <I>OBC</I> 
+sont des triangles rectangles isocèles égaux.<BR>
+on a <I>AB</I>=<I>BC</I>=<I>CA</I>=√<SPAN style="text-decoration:overline">2</SPAN>
+<I>AB</I> est perpendiculaire à <I>CI</I> car <I>CI</I> est une hauteur (et aussi médiane) 
+du triangle équilatéral <I>ABC</I>.
+<I>AB</I> est perpendiculaire à <I>OI</I> car <I>OI</I> est une médiane et donc aussi 
+une hauteur du triangle isocèle <I>OAB</I> de sommet <I>O</I>.<BR>
+Donc <I>AB</I> est perpendiculaire au plan <I>COI</I> donc <I>AB</I> est perpendiculaire à
+toutes les droites du plan <I>COI</I> et en particulier à <I>OH</I>.
+</LI><LI CLASS="li-enumerate">Montrons que <I>H</I> est l’orthocentre du triangle <I>ABC</I><BR>
+<I>OH</I> est perpendiculaire au plan <I>ABC</I> car orthogonal à <I>AB</I> et à <I>CI</I>
+qui sont 2 droites de ce plan.<BR>
+<I>OA</I>=<I>OB</I>=<I>OC</I>=1 et <I>H</I> est la projection de <I>O</I> sur <I>ABC</I> donc <I>HA</I>=<I>HB</I>=<I>HC</I>.<BR>
+<I>H</I> est donc le point de concours des médiatrices du triangle 
+équilatéral <I>ABC</I> donc <I>H</I> est aussi l’orthocentre du triangle <I>ABC</I>.
+</LI><LI CLASS="li-enumerate">Calculons <I>OH</I><BR>
+Le triangle <I>COI</I> est rectangle en <I>O</I>, <I>CO</I>=1, 
+<I>CI</I>=√<SPAN style="text-decoration:overline">2</SPAN>√<SPAN style="text-decoration:overline">3</SPAN>/2=√<SPAN style="text-decoration:overline">6</SPAN>/2 et <I>OI</I>=√<SPAN style="text-decoration:overline">2</SPAN>/2 donc
+<I>OH</I>=<I>OI</I>× <I>CO</I>/<I>CI</I>=√<SPAN style="text-decoration:overline">3</SPAN>/3</LI><LI CLASS="li-enumerate">Montrons que le tétraèdre <I>ABCD</I> est régulier.<BR>
+<I>DH</I>=2*<I>OH</I>=2√<SPAN style="text-decoration:overline">3</SPAN>/3<BR>
+<I>CH</I>=2/3<I>CI</I>=√<SPAN style="text-decoration:overline">2</SPAN>√<SPAN style="text-decoration:overline">3</SPAN>/3<BR>
+Le triangle <I>DCH</I> étant rectangle en <I>H</I> on en déduit que :<BR>
+<I>DC</I><SUP>2</SUP>=<I>DH</I><SUP>2</SUP>+<I>CH</I><SUP>2</SUP>=(12+6)/9=2
+donc <I>DC</I>=√<SPAN style="text-decoration:overline">2</SPAN>
+On montre de même que <I>DA</I>=√<SPAN style="text-decoration:overline">2</SPAN> et que <I>DB</I>=√<SPAN style="text-decoration:overline">2</SPAN>.<BR>
+On a donc 
+<I>DA</I>=<I>DB</I>=<I>DC</I>=<I>AB</I>=<I>BC</I>=<I>CA</I>=√<SPAN style="text-decoration:overline">2</SPAN> donc<BR>
+le tétraèdre <I>ABCD</I> est régulier.<BR>
+Ou bien on fait comme <TT>Xcas</TT>, on choisit comme repère 
+(<I>O</I>,<I>OA</I>,<I>OB</I>,<I>OC</I>) et on 
+cherche les coordonnés de <I>H</I> dans ce repère.<BR>
+<I>H</I> etant le point de concours des médiatrices du triangle 
+équilatéral <I>ABC</I> de cotés √<SPAN style="text-decoration:overline">2</SPAN>, on a <I>HI</I>=<I>CI</I>/3 et donc
+<I>z</I><SUB><I>H</I></SUB>=1/3<BR>
+<I>H</I> est dans le plan <I>ABC</I> d’équation <I>x</I>+<I>y</I>+<I>z</I>=1 et dans le plan <I>COI</I>
+d’équation <I>x</I>=<I>y</I> donc <I>x</I><SUB><I>H</I></SUB>+<I>y</I><SUB><I>H</I></SUB>=2/3 et <I>x</I><SUB><I>H</I></SUB>=<I>y</I><SUB><I>H</I></SUB> donc <I>H</I> a pour coordonnées
+[1/3,1/3,1/3].<BR>
+On a <I>OD</I>=<I>HO</I> donc <I>D</I> a pour coordonnées 
+[−1/3,−1/3,−1/3].<BR>
+On calcule alors <I>DC</I><SUP>2</SUP>=1/9+1/9+(1+1/3)<SUP>2</SUP>=2
+</LI><LI CLASS="li-enumerate">Calculons le rayon et les coordonnées du centre <I>s</I> de la sphère 
+circonscrite à <I>ABCD</I>.<P>On suppose que l’on sait que le centre <I>s</I> de la sphère circonscrite au 
+tétraèdre régulier <I>ABCD</I> est l’isobarycentre des points <I>A</I>,<I>B</I>,<I>C</I>,<I>D</I>.<BR>
+4<I>Os</I>=<I>OA</I>+<I>OB</I>+<I>OC</I>+<I>OD</I> donc puisque (1−1/3)/4=1/6<BR>
+<I>Os</I> a pour coordonnées : [1/6,1/6,1/6].<BR>
+Le rayon est donc <I>r</I>=<I>As</I>=√<SPAN style="text-decoration:overline">(25+1+1)/36</SPAN>=√<SPAN style="text-decoration:overline">3</SPAN>/2.</P><P>Si on ne sait pas que Le centre <I>s</I> de la sphère circonscrite à un 
+tétraèdre régulier <I>ABCD</I> est l’isobarycentre des points <I>A</I>,<I>B</I>,<I>C</I>,<I>D</I>, on 
+cherche un point <I>s</I> équidisdant de <I>A</I>,<I>B</I>,<I>C</I>,<I>D</I>. <I>s</I> est sur le segment <I>DH</I>
+car tous les points de ce segment sont équidisdant de <I>A</I>,<I>B</I>,<I>C</I>.
+On pose <I>Hs</I>=<I>l</I> et on a :<BR>
+<I>AH</I>=√<SPAN style="text-decoration:overline">2</SPAN>*√<SPAN style="text-decoration:overline">3</SPAN>/3*2/3=√<SPAN style="text-decoration:overline">6</SPAN>/3 car <I>H</I> est le centre de gravité du 
+triangle équlatéral <I>ABC</I> de coté √<SPAN style="text-decoration:overline">2</SPAN>.<BR>
+<I>As</I><SUP>2</SUP>=<I>AH</I><SUP>2</SUP>+<I>l</I><SUP>2</SUP>=2/3+<I>l</I><SUP>2</SUP> car le triangle <I>HAs</I> est rectangle en <I>H</I>.<BR>
+<I>DH</I><SUP>2</SUP>=<I>AD</I><SUP>2</SUP>−<I>AH</I><SUP>2</SUP>=2−2/3=4/3 car le triangle <I>HAD</I> est rectangle en <I>H</I>.<BR>
+donc <I>Ds</I><SUP>2</SUP>=(<I>DH</I>−<I>l</I>)<SUP>2</SUP>=<I>As</I><SUP>2</SUP>=2/3+<I>l</I><SUP>2</SUP><BR>
+2<I>l</I>*<I>DH</I>=2/3 et <I>DH</I>=2/√<SPAN style="text-decoration:overline">3</SPAN>=2√<SPAN style="text-decoration:overline">3</SPAN>/3<BR>
+<I>Hs</I>=<I>l</I>=1/(3<I>DH</I>)=√<SPAN style="text-decoration:overline">3</SPAN>/6=<I>DH</I>/4<BR>
+<I>s</I> est donc le milieu de <I>OH</I> et <I>r</I>=<I>Ds</I>=3<I>DH</I>/4=√<SPAN style="text-decoration:overline">3</SPAN>/2.</P></LI></OL>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casgeo007.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo009.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

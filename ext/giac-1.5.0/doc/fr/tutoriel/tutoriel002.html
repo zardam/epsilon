@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="tutoriel.css">
+<title>Les objets du calcul formel</title>
+</head>
+<body >
+<a href="tutoriel001.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel003.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h2 id="sec5" class="section">2&#XA0;&#XA0;Les objets du calcul formel</h2>
+<h3 id="sec6" class="subsection">2.1&#XA0;&#XA0;Les nombres</h3>
+<p>
+<a id="hevea_default12"></a>
+<a id="hevea_default13"></a>
+Les nombres peuvent &#XEA;tre exacts ou approch&#XE9;s.
+Les nombres exacts sont les constantes pr&#XE9;d&#XE9;finies, les entiers, 
+les fractions d&#X2019;entiers et plus g&#XE9;n&#XE9;ralement toute expression 
+ne contenant que des entiers et des constantes, comme 
+<code>sqrt(2)*e^(i*pi/3)</code>.
+Les nombres approch&#XE9;s sont not&#XE9;s avec la notation scientifique 
+standard&#XA0;: partie enti&#XE8;re suivie du point de s&#XE9;paration 
+et partie fractionnaire (&#XE9;ventuellement
+suivie de <code>e</code> et d&#X2019;un exposant).
+Par exemple, <code>2</code> est un entier exact, 
+<code>2.0</code> est la version approch&#XE9;e du m&#XEA;me
+entier; <code>1/2</code> est un rationnel, <code>0.5</code> 
+est la version approch&#XE9;e du m&#XEA;me
+rationnel.
+<span style="font-family:monospace">Xcas</span> peut g&#XE9;rer des nombres entiers en pr&#XE9;cision arbitraire&#XA0;: 
+essayez de taper <code>500!</code> et comptez le nombre de chiffres 
+de la r&#XE9;ponse.</p><p>On passe d&#X2019;une valeur exacte &#XE0; une valeur approch&#XE9;e par
+<code>evalf</code>, on transforme une valeur approch&#XE9;e en un rationnel
+exact par <code>exact</code>
+<a id="hevea_default14"></a>
+<a id="hevea_default15"></a>
+Les calculs sont effectu&#XE9;s en mode exact si tous les nombres qui
+interviennent sont exacts. Ils sont effectu&#XE9;s en mode approch&#XE9; si
+un des nombres est approch&#XE9;. Ainsi
+<code>1.5+1</code> renvoie un nombre approch&#XE9; alors que <code>3/2+1</code> 
+renvoie un nombre exact.
+</p><pre class="verbatim">sqrt(2)
+evalf(sqrt(2))
+sqrt(2)-evalf(sqrt(2))
+exact(evalf(sqrt(2)))*10^9
+exact(evalf(sqrt(2)*10^9))
+</pre><p> 
+<a id="hevea_default16"></a>
+<a id="hevea_default17"></a>
+Pour les nombres r&#XE9;els approch&#XE9;s, la pr&#XE9;cision par d&#XE9;faut est
+proche de 14 chiffres significatifs (la pr&#XE9;cision relative est de 53
+ou 45 bits pour les r&#XE9;els flottants normalis&#XE9;s selon les versions de Xcas). 
+Elle peut &#XEA;tre augment&#XE9;e, en
+donnant le nombre de d&#XE9;cimales d&#XE9;sir&#XE9;
+comme second argument de <code>evalf</code>.
+</p><pre class="verbatim">evalf(sqrt(2),50)
+evalf(pi,100)
+</pre><p>
+On peut aussi changer la pr&#XE9;cision par d&#XE9;faut pour tous les
+calculs en modifiant
+<a id="hevea_default18"></a>
+la variable <code>Digits</code>.
+</p><pre class="verbatim">Digits:=50
+evalf(pi)
+evalf(exp(pi*sqrt(163)))
+</pre><p><a id="hevea_default19"></a>
+La lettre <code>i</code> est r&#XE9;serv&#XE9;e &#XE0; &#X221A;<span style="text-decoration:overline">&#X2212;1</span> et ne peut &#XEA;tre
+r&#XE9;affect&#XE9;e&#XA0;; en particulier on ne peut pas l&#X2019;utiliser comme indice
+de boucle.
+</p><pre class="verbatim">(1+2*i)^2
+(1+2*i)/(1-2*i)
+e^(i*pi/3)
+</pre><p>
+<a id="hevea_default20"></a>
+<a id="hevea_default21"></a>
+<span style="font-family:monospace">Xcas</span> distingue l&#X2019;infini non sign&#XE9; <code>infinity</code> (&#X221E;), de
+<code>+infinity</code> ou <code>inf</code> (+&#X221E;) et de <code>-infinity</code> 
+ou <code>-inf</code>(&#X2212;&#X221E;).
+</p><pre class="verbatim">1/0; (1/0)^2; -(1/0)^2 
+</pre><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Constantes pr&#XE9;d&#XE9;finies</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>pi</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >&#X3C0;&#X2243; 3.14159265359 </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>e</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><span style="font-style:italic">e</span>&#X2243; 2.71828182846 </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>i</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><span style="font-style:italic">i</span>=&#X221A;<span style="text-decoration:overline">&#X2212;1</span> </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>infinity</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >&#X221E; </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>+infinity</code> ou <code>inf</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >+&#X221E; </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>-infinity</code> ou <code>-inf</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >&#X2212;&#X221E; </td></tr>
+</table>
+</div><p>
+<a id="hevea_default22"></a>
+<a id="hevea_default23"></a>
+</p>
+<h3 id="sec7" class="subsection">2.2&#XA0;&#XA0;Les caract&#XE8;res et les cha&#XEE;nes</h3>
+<p>
+<a id="hevea_default24"></a>
+<a id="hevea_default25"></a>
+Une cha&#XEE;ne est parenth&#XE9;s&#XE9;e par des guillemets (<span style="font-family:monospace">"</span>).
+Un caract&#XE8;re est une cha&#XEE;ne ayant un seul &#XE9;l&#XE9;ment.
+</p><pre class="verbatim">s:="azertyuiop"
+size(s)
+s[0]+s[3]+s[size(s)-1]
+concat(s[0],concat(s[3],s[size(s)-1]))
+head(s)
+tail(s)
+mid(s,3,2)
+l:=asc(s)
+ss:=char(l)
+string(123)
+expr(123)
+expr(0123)
+</pre><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Cha&#XEE;nes</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>asc</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >cha&#XEE;ne-&gt;liste des codes ASCII </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>char</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >liste des codes ASCII-&gt;cha&#XEE;ne </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>size</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >nombre de caract&#XE8;res </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>concat</code> ou <code>+</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >concat&#XE9;nation </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>mid</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >morceau de cha&#XEE;ne</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>head</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >premier caract&#XE8;re </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>tail</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >cha&#XEE;ne sans le 1ier caract&#XE8;re</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>string</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >nombre ou expression-&gt;cha&#XEE;ne </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>expr</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >cha&#XEE;ne-&gt;nombre (base 10 ou 8) ou expression </td></tr>
+</table>
+</div>
+<h3 id="sec8" class="subsection">2.3&#XA0;&#XA0;Les variables</h3>
+<p>
+<a id="hevea_default26"></a>
+<a id="hevea_default27"></a>
+On dit qu&#X2019;une variable est formelle si elle ne contient aucune valeur&#XA0;: 
+toutes les variables sont formelles tant qu&#X2019;elles n&#X2019;ont pas &#XE9;t&#XE9;
+affect&#XE9;es (&#XE0; une valeur).
+<a id="hevea_default28"></a>
+L&#X2019;affectation est not&#XE9;e <code>:=</code>. Au d&#XE9;but 
+de la session <code>a</code> 
+est formelle, elle devient affect&#XE9;e apr&#XE8;s l&#X2019;instruction 
+<code>a:=3</code>, <code>a</code> sera alors remplac&#XE9; par 3 dans tous
+les calculs qui suivent, et <code>a+1</code> renverra 4. 
+<span style="font-family:monospace">Xcas</span> conserve tout le contenu de votre session. Si vous voulez que la variable 
+<code>a</code> apr&#XE8;s l&#X2019;avoir affect&#XE9;e, soit &#XE0; nouveau une variable formelle, il
+faut la "vider" par <code>purge(a)</code>. Dans les exemples qui suivent, les 
+variables utilis&#XE9;es sont suppos&#XE9;es avoir &#XE9;t&#XE9; purg&#XE9;es avant chaque
+suite de commandes.
+<a id="hevea_default29"></a> 
+Il ne faut pas confondre
+</p><ul class="itemize"><li class="li-itemize">
+le signe <code>:=</code> qui d&#XE9;signe l&#X2019;affectation
+</li><li class="li-itemize">le signe <code>==</code> qui d&#XE9;signe une &#XE9;galit&#XE9;
+bool&#XE9;enne&#XA0;: c&#X2019;est une op&#XE9;ration binaire qui retourne 1 ou 0 (1 pour true
+qui veut dire Vrai et 0 pour false qui veut dire Faux) 
+</li><li class="li-itemize">le signe <code>=</code> utilis&#XE9; pour d&#XE9;finir une &#XE9;quation.
+</li></ul><p>
+<a id="hevea_default30"></a>
+<a id="hevea_default31"></a>
+</p><pre class="verbatim">a==b
+a:=b
+a==b
+solve(a=b,a)
+solve(2*a=b+1,a)
+</pre><p>
+<a id="hevea_default32"></a>
+<a id="hevea_default33"></a>
+On peut faire certains types d&#X2019;hypoth&#XE8;ses sur une variable avec
+la commande <code>assume</code>, par exemple <code>assume(a&gt;2)</code>. Une
+hypoth&#XE8;se est une forme sp&#XE9;ciale d&#X2019;affectation, elle efface
+une &#XE9;ventuelle valeur pr&#XE9;c&#XE9;demment affect&#XE9;e &#XE0; la variable.
+Lors d&#X2019;un calcul, la variable n&#X2019;est pas remplac&#XE9;e mais
+l&#X2019;hypoth&#XE8;se sera utilis&#XE9;e dans la mesure du possible, par exemple
+<code>abs(a)</code> renverra <code>a</code> si on fait l&#X2019;hypoth&#XE8;se <code>a&gt;2</code>.
+</p><pre class="verbatim">sqrt(a^2)
+assume(a&lt;0)
+sqrt(a^2)
+assume(n,integer)
+sin(n*pi)
+</pre><p>
+<a id="hevea_default34"></a>
+La fonction <code>subst</code> permet de remplacer une variable dans une
+expression par un nombre ou une autre expression, 
+sans affecter cette variable.
+</p><pre class="verbatim">subst(a^2+1,a=1)
+subst(a^2+1,a=sqrt(b-1))
+a^2+1
+</pre><p><span style="font-weight:bold">Remarque</span>&#XA0;: pour stocker une valeur dans une variable par r&#XE9;f&#XE9;rence,
+par exemple pour modifier une valeur dans une liste (un vecteur, une
+matrice), sans recr&#XE9;er une nouvelle liste mais en modifiant
+en place la liste existante, on utilise l&#X2019;instruction <code>=&lt;</code>
+au lieu de <code>:=</code>.
+Cette instruction est plus rapide que l&#X2019;instruction <code>:=</code>, car
+elle &#XE9;conomise le temps de copie de la liste.
+</p>
+<h3 id="sec9" class="subsection">2.4&#XA0;&#XA0;Les expressions</h3>
+<p>
+<a id="hevea_default35"></a>
+Une expression est une combinaison de nombres et de variables
+reli&#XE9;s entre eux par des op&#XE9;rations&#XA0;: par exemple 
+<code>x^2+2*x+c</code>. </p><p>Lorsqu&#X2019;on valide une commande, <span style="font-family:monospace">Xcas</span>
+remplace les variables par leur valeur si elles en ont une,
+et ex&#XE9;cute les op&#XE9;rations. 
+</p><pre class="verbatim">(a-2)*x^2+a*x+1
+a:=2
+(a-2)*x^2+a*x+1
+</pre><p>
+<a id="hevea_default36"></a>
+Certaines op&#XE9;rations de simplification sont ex&#XE9;cut&#XE9;es
+automatiquement lors d&#X2019;une &#XE9;valuation&#XA0;:
+</p><ul class="itemize"><li class="li-itemize">
+les op&#XE9;rations sur les entiers et sur les 
+fractions, y compris la mise
+sous forme irr&#XE9;ductible
+</li><li class="li-itemize">les simplifications triviales comme <span style="font-style:italic">x</span>+0=<span style="font-style:italic">x</span>,
+<span style="font-style:italic">x</span>&#X2212;<span style="font-style:italic">x</span>=0, <span style="font-style:italic">x</span><sup>1</sup>=<span style="font-style:italic">x</span>&#X2026;</li><li class="li-itemize">quelques formes trigonom&#XE9;triques comme 
+cos(&#X2212;<span style="font-style:italic">x</span>)=cos(<span style="font-style:italic">x</span>), cos(&#X3C0;/4)=&#X221A;<span style="text-decoration:overline">2</span>/2, tan(&#X3C0;/4)=1&#X2026;</li></ul><p>
+Nous verrons dans la section suivante comment obtenir plus de simplifications.
+</p>
+<h3 id="sec10" class="subsection">2.5&#XA0;&#XA0;D&#XE9;velopper et simplifier</h3>
+<p>
+<a id="hevea_default37"></a>
+<a id="hevea_default38"></a>
+En-dehors des r&#XE8;gles de la section pr&#XE9;c&#XE9;dente,
+il n&#X2019;y a pas de simplification syst&#XE9;matique. 
+Il y a deux raisons &#XE0; cela. La premi&#XE8;re est que les 
+simplifications non triviales sont parfois
+co&#XFB;teuses en temps, et le choix d&#X2019;en faire ou non est laiss&#XE9; 
+&#XE0; l&#X2019;utilisateur&#XA0;;
+la deuxi&#XE8;me est qu&#X2019;il y a en g&#XE9;n&#XE9;ral plusieurs mani&#XE8;res de
+simplifier une m&#XEA;me expression, selon l&#X2019;usage que l&#X2019;on veut en
+faire. 
+Les principales commandes pour transformer une expression 
+sont les suivantes&#XA0;:
+</p><ul class="itemize"><li class="li-itemize">
+<a id="hevea_default39"></a>
+<code>expand</code>&#XA0;: d&#XE9;veloppe une expression en tenant compte 
+uniquement de la distributivit&#XE9; de la multiplication sur l&#X2019;addition et
+du d&#XE9;veloppement des puissances enti&#XE8;res.
+</li><li class="li-itemize"><a id="hevea_default40"></a>
+<a id="hevea_default41"></a>
+<code>normal</code> et <code>ratnormal</code>&#XA0;: 
+d&#X2019;un bon rapport temps d&#X2019;ex&#XE9;cution-simplification, elles
+&#XE9;crivent une fraction rationnelle (rapport de deux polyn&#XF4;mes)
+sous forme de fraction irr&#XE9;ductible d&#XE9;velopp&#XE9;e; <code>normal</code>
+tient compte des nombres alg&#XE9;briques (par exemple comme <code>sqrt(2)</code>)
+mais pas <code>ratnormal</code>. Les deux ne tiennent pas compte des relations
+entre fonctions transcendantes (par exemple comme <code>sin</code> et <code>cos</code>).
+</li><li class="li-itemize"><a id="hevea_default42"></a>
+<code>factor</code>&#XA0;: un peu plus lente que les pr&#XE9;c&#XE9;dentes, elle
+&#XE9;crit une fraction sous forme irr&#XE9;ductible factoris&#XE9;e.
+</li><li class="li-itemize"><a id="hevea_default43"></a>
+<code>simplify</code>&#XA0;: elle essaie de se ramener &#XE0;
+des variables alg&#XE9;briquement ind&#XE9;pendantes avant d&#X2019;appliquer
+<code>normal</code>. Ceci est plus co&#XFB;teux en temps et "aveugle" (on
+ne contr&#XF4;le pas les r&#XE9;&#XE9;critures interm&#XE9;diaires).
+Les simplifications faisant intervenir des extensions
+alg&#XE9;briques (par exemple des racines carr&#XE9;es) 
+n&#XE9;cessitent parfois deux appels et/ou des hypoth&#XE8;ses (<code>assume</code>)
+pour enlever des valeurs absolues avant d&#X2019;obtenir la simplification
+souhait&#XE9;e.
+</li><li class="li-itemize"><a id="hevea_default44"></a>
+<code>tsimplify</code> essaie de se ramener &#XE0; des variables 
+alg&#XE9;briquement ind&#XE9;pendantes mais sans appliquer <code>normal</code>
+ensuite.
+</li></ul><p>
+Dans le menu <code>Expression</code> du bandeau sup&#XE9;rieur, les sous-menus sont
+des menus de r&#XE9;&#XE9;criture et contiennent d&#X2019;autres fonctions, pour des 
+transformations plus ou moins sp&#XE9;cialis&#XE9;es. 
+</p><pre class="verbatim">b:=sqrt(1-a^2)/sqrt(1-a)
+ratnormal(b)
+normal(b)
+tsimplify(b)
+simplify(b)
+simplify(simplify(b))
+assume(a&lt;1)
+simplify(b)   
+simplify(simplify(b))
+</pre><p>
+<a id="hevea_default45"></a>
+La fonction <code>convert</code> permet de passer d&#X2019;une expression &#XE0; une
+autre &#XE9;quivalente, sous un format qui est sp&#XE9;cifi&#XE9; par le
+deuxi&#XE8;me argument. 
+</p><pre class="verbatim">convert(exp(i*x),sincos)
+convert(1/(x^4-1),partfrac)
+convert(series(sin(x),x=0,6),polynom)
+</pre><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Transformations</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>simplify</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >simplifier</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>tsimplify</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >simplifier (moins puissant)</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>normal</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >forme normale</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>ratnormal</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >forme normale (moins puissant)</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>expand</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >d&#XE9;velopper</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>factor</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >factoriser</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>assume</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >rajout d&#X2019;hypoth&#XE8;ses</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>convert</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >transformer en un format sp&#XE9;cifi&#XE9;</td></tr>
+</table>
+</div>
+<h3 id="sec11" class="subsection">2.6&#XA0;&#XA0;Les fonctions</h3>
+<p>
+De nombreuses fonctions sont d&#XE9;j&#XE0; d&#XE9;finies dans <span style="font-family:monospace">Xcas</span>, en
+particulier les fonctions classiques. Les plus courantes figurent dans
+le tableau ci-apr&#XE8;s; pour les autres, voir le menu <code>Cmds-&gt;Reel-&gt;Special</code>.<br>
+
+Sinon l&#X2019;utilisateur peut d&#XE9;finir ses propre fonctions, par exemple :
+</p><ul class="itemize"><li class="li-itemize">
+D&#XE9;finition d&#X2019;une fonction d&#X2019;une variable :<br>
+<span style="font-family:monospace">f(x):=x*exp(x)</span> ou<br>
+<span style="font-family:monospace">f:=x-&gt;x*exp(x)</span> ou<br>
+<span style="font-family:monospace">f:=unapply(x*exp(x),x)</span>
+</li><li class="li-itemize">D&#XE9;finition de sa d&#XE9;riv&#XE9;e :<br>
+<span style="font-family:monospace">g:=function_diff(f)</span> ou <br>
+<span style="font-family:monospace">g:=unapply(diff(f(x),x),x)</span>)<br>
+<span style="font-weight:bold">ATTENTION</span> <span style="font-family:monospace">g(x):=diff(f(x),x)</span> N&#X2019;EST PAS VALABLE ! car ce qui est 
+&#XE0; droite de <span style="font-family:monospace">:=</span> n&#X2019;est pas &#XE9;valu&#XE9; lors de la d&#XE9;finition....il
+faut utiliser <span style="font-family:monospace">unapply</span>.
+</li><li class="li-itemize">D&#XE9;finition d&#X2019;une fonction de 2 variables :<br>
+<span style="font-family:monospace">h(r,t):=(r*exp(t),r*t)</span> ou<br>
+<span style="font-family:monospace">h:=(r,t)-&gt;(r*exp(t),r*t);</span>
+</li><li class="li-itemize">D&#XE9;finition &#XE0; partir d&#X2019;une fonction de 2 variables, d&#X2019;une fonction qui
+&#XE0; 1 variable fait correspondre une fonction:<br>
+<span style="font-family:monospace">k(t):=unapply(h(r,t),r)</span><br>
+<span style="font-weight:bold">ATTENTION</span> Ici <span style="font-family:monospace">k(t)</span> est une fonction de la variable <span style="font-family:monospace">r</span>
+qui &#XE0; <span style="font-family:monospace">r</span> fait 
+correspondre <span style="font-family:monospace">h(r,t)</span>. On a par exemple : <span style="font-family:monospace">k(1)(2)=(2*exp(1),2)</span>. L&#XE0; aussi, il faut 
+utiliser <span style="font-family:monospace">unapply</span>.
+</li></ul><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Fonctions classiques</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>abs</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >valeur absolue</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>sign</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >signe (-1,0,+1)</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>max</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >maximum</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>min</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >minimum</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>round</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >arrondi </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>floor</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >partie enti&#XE8;re (plus grand entier &#X2264;)</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>frac</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >partie fractionnaire</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>ceil</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >plus petit entier &#X2265; </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>re</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >partie r&#XE9;elle</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>im</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >partie imaginaire</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>abs</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >module</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>arg</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >argument</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>conj</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >conjugu&#XE9;</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>affixe</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >affixe</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>coordonees</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >coordonn&#XE9;es</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>factorial ou !</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >factorielle</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>sqrt</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >racine carr&#XE9;e</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>exp</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >exponentielle</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>log</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >logarithme naturel</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>ln</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >logarithme naturel</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>log10</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >logarithme en base 10</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>sin</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >sinus</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>cos</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >cosinus</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>tan</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >tangente</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>cot</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >cotangente</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>asin</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >arc sinus</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>acos</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >arc cosinus</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>atan</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >arc tangente</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>sinh</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >sinus hyperbolique</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>cosh</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >cosinus hyperbolique</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>tanh</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >tangente hyperbolique</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>asinh</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >argument sinus hyperbolique</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>acosh</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >argument cosinus hyperbolique</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>atanh</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >argument tangente hyperbolique</td></tr>
+</table>
+</div><p>
+<a id="hevea_default46"></a>
+<a id="hevea_default47"></a>
+<a id="hevea_default48"></a>
+<a id="hevea_default49"></a>
+<a id="hevea_default50"></a>
+<a id="hevea_default51"></a>
+<a id="hevea_default52"></a>
+<a id="hevea_default53"></a>
+<a id="hevea_default54"></a>
+<a id="hevea_default55"></a>
+<a id="hevea_default56"></a>
+<a id="hevea_default57"></a>
+<a id="hevea_default58"></a>
+<a id="hevea_default59"></a>
+<a id="hevea_default60"></a>
+<a id="hevea_default61"></a>
+<a id="hevea_default62"></a>
+<a id="hevea_default63"></a>
+<a id="hevea_default64"></a>
+<a id="hevea_default65"></a>
+<a id="hevea_default66"></a>
+<a id="hevea_default67"></a>
+<a id="hevea_default68"></a>
+<a id="hevea_default69"></a>
+<a id="hevea_default70"></a>
+<a id="hevea_default71"></a>
+<a id="hevea_default72"></a>
+<a id="hevea_default73"></a>
+<a id="hevea_default74"></a>
+<a id="hevea_default75"></a>
+<a id="hevea_default76"></a>
+<a id="hevea_default77"></a>
+<a id="hevea_default78"></a>
+<a id="hevea_default79"></a>
+<a id="hevea_default80"></a>
+<a id="hevea_default81"></a>
+<a id="hevea_default82"></a>
+<a id="hevea_default83"></a>
+<a id="hevea_default84"></a>
+<a id="hevea_default85"></a>
+<a id="hevea_default86"></a>
+<a id="hevea_default87"></a>
+<a id="hevea_default88"></a>
+<a id="hevea_default89"></a>
+<a id="hevea_default90"></a>
+<a id="hevea_default91"></a>
+<a id="hevea_default92"></a>
+<a id="hevea_default93"></a>
+<a id="hevea_default94"></a>
+<a id="hevea_default95"></a>
+<a id="hevea_default96"></a>
+<a id="hevea_default97"></a>
+<a id="hevea_default98"></a>
+<a id="hevea_default99"></a>
+<a id="hevea_default100"></a>
+<a id="hevea_default101"></a>
+<a id="hevea_default102"></a>
+<a id="hevea_default103"></a>
+<a id="hevea_default104"></a>
+<a id="hevea_default105"></a>
+<a id="hevea_default106"></a>
+Pour cr&#XE9;er une nouvelle fonction, il faut la d&#XE9;clarer &#XE0; l&#X2019;aide 
+d&#X2019;une expression contenant la variable. 
+Par exemple l&#X2019;expression <span style="font-style:italic">x</span><sup>2</sup>&#X2212;1 est 
+d&#XE9;finie par <code>x^2-1</code>. Pour la transformer en la fonction <span style="font-style:italic">f</span> qui
+&#XE0; <span style="font-style:italic">x</span> associe <span style="font-style:italic">x</span><sup>2</sup>&#X2212;1, trois possibilit&#XE9;s existent&#XA0;:
+</p><pre class="verbatim">f(x):= x^2-1
+f:=x-&gt;x^2-1
+f:=unapply(x^2-1,x)
+
+f(2); 
+f(a^2);
+</pre><p>
+<a id="hevea_default107"></a>
+<a id="hevea_default108"></a>
+<a id="hevea_default109"></a>
+<a id="hevea_default110"></a>
+Si <code>f</code> est une fonction d&#X2019;une variable et <code>E</code> est une
+expression, <code>f(E)</code> est une autre expression.
+Il est essentiel de ne pas confondre fonction et expression.
+Si on d&#XE9;finit : <code>E:=x^2-1</code>, alors la variable <code>E</code> 
+contient l&#X2019;expression <span style="font-style:italic">x</span><sup>2</sup>&#X2212;1. Pour avoir la valeur de cette
+expression en <span style="font-style:italic">x</span>=2 il faut 
+&#XE9;crire <code>subst(E,x=2)</code> et non <code>E(2)</code>
+car <code>E</code> n&#X2019;est pas une fonction.
+Lorsqu&#X2019;on d&#XE9;finit une fonction,
+le membre de droite de l&#X2019;affectation n&#X2019;est pas &#XE9;valu&#XE9;.
+Ainsi l&#X2019;&#XE9;criture <code>E:=x^2-1; f(x):=E</code>
+d&#XE9;finit la fonction <span style="font-style:italic">f</span>: <span style="font-style:italic">x</span> &#X21A6; <span style="font-style:italic">E</span> car <code>E</code> n&#X2019;est pas &#XE9;valu&#XE9;.
+Par contre <code>E:= x^2-1; f:=unapply(E,x)</code> d&#XE9;finit bien la
+fonction <span style="font-style:italic">f</span>: <span style="font-style:italic">x</span>&#X21A6; <span style="font-style:italic">x</span><sup>2</sup>&#X2212;1 car <code>E</code> est &#XE9;valu&#XE9;.</p><p><a id="hevea_default111"></a>
+<a id="hevea_default112"></a>
+On peut ajouter et multiplier des fonctions,
+par exemple <code>f:=sin*exp</code>. Pour composer des fonctions, on utilise 
+l&#X2019;op&#XE9;rateur <code>@</code> et pour composer plusieurs fois une fonction 
+avec elle-m&#XEA;me, on utilise l&#X2019;op&#XE9;rateur <code>@@</code>.
+</p><pre class="verbatim">f:=x-&gt;x^2-1;
+(f@f)(2);
+(f@sqrt)(a);
+f1:=f@sin
+f2:=f@f
+f3:=f@@3
+f1(a)
+f2(a)
+f3(a)
+</pre><p> 
+On peut d&#XE9;finir des fonctions de plusieurs variables &#XE0; valeurs dans 
+&#X211D; comme :<br>
+<code>f(x,y):=x+2*y</code> <br>
+et des fonctions de plusieurs variables &#XE0; valeurs dans &#X211D;<sup><span style="font-style:italic">p</span></sup>
+par exemple :<br>
+<code>f(x,y):=(x+2*y,x-y)</code> </p>
+<h3 id="sec12" class="subsection">2.7&#XA0;&#XA0;Listes, s&#XE9;quences, ensembles</h3>
+<p>
+<a id="hevea_default113"></a>
+<a id="hevea_default114"></a>
+<a id="hevea_default115"></a>
+<span style="font-family:monospace">Xcas</span> distingue plusieurs sortes de collections d&#X2019;objets, 
+s&#XE9;par&#XE9;s par des virgules&#XA0;: 
+</p><ul class="itemize"><li class="li-itemize">
+les listes (entre crochets)
+</li><li class="li-itemize">les s&#XE9;quences (entre parenth&#XE8;ses) 
+</li><li class="li-itemize">les ensembles (entre pourcentage-accolades)
+</li></ul><pre class="verbatim">liste:=[1,2,4,2]
+sequence:=(1,2,4,2)
+ensemble:=%{1,2,4,2%}
+</pre><p>
+Les listes peuvent contenir des listes (c&#X2019;est le cas des matrices), 
+alors que les s&#XE9;quences sont plates (un &#XE9;l&#XE9;ment d&#X2019;une s&#XE9;quence
+ne peut pas &#XEA;tre une s&#XE9;quence). Dans un ensemble,
+l&#X2019;ordre n&#X2019;a pas d&#X2019;importance et chaque objet est unique. 
+Il existe une autre structure, appel&#XE9;e table, dont nous
+reparlerons plus loin.</p><p>Il suffit de mettre une s&#XE9;quence entre crochets pour en faire une liste
+ou entre accolades pr&#XE9;c&#XE9;d&#XE9;es de <code>%</code> pour en faire un ensemble.
+On passe d&#X2019;une liste &#XE0; sa s&#XE9;quence associ&#XE9;e par <code>op</code>, 
+d&#X2019;une s&#XE9;quence &#XE0; sa liste associ&#XE9;e en la mettant entre crochets
+ou avec la fonction <code>nop</code>.
+Le nombre d&#X2019;&#XE9;l&#XE9;ments d&#X2019;une liste est donn&#XE9; par <code>size</code> 
+(ou <code>nops</code>).
+<a id="hevea_default116"></a>
+<a id="hevea_default117"></a>
+<a id="hevea_default118"></a>
+<a id="hevea_default119"></a>
+<a id="hevea_default120"></a>
+</p><pre class="verbatim">se:=(1,2,4,2)
+li:=[se]
+op(li)
+nop(se)
+nops(se)
+%{se%}
+size([se])
+size(%{se%})
+</pre><p>
+<a id="hevea_default121"></a>
+<a id="hevea_default122"></a>
+<a id="hevea_default123"></a>
+Pour fabriquer une liste ou une s&#XE9;quence, on utilise des commandes
+d&#X2019;it&#XE9;ration comme <code>$</code> ou <code>seq</code> (qui it&#XE8;rent une
+expression) ou <code>makelist</code> (qui d&#XE9;finit une liste &#XE0; l&#X2019;aide d&#X2019;une 
+fonction). 
+</p><pre class="verbatim">1$5
+k^2 $ (k=-2..2)
+seq(k^2,k=-2..2)
+seq(k^2,k,-2..2)
+[k^2$(k=-2..2)]
+seq(k^2,k,-2,2)
+seq(k^2,k,-2,2,2)
+makelist(x-&gt;x^2,-2,2)
+seq(k^2,k,-2,2,2)
+makelist(x-&gt;x^2,-2,2,2)
+</pre><p>
+<a id="hevea_default124"></a>
+<a id="hevea_default125"></a>
+<a id="hevea_default126"></a>
+La s&#XE9;quence vide est not&#XE9;e <code>NULL</code>, la liste vide
+<code>[]</code>. Pour ajouter un &#XE9;l&#XE9;ment &#XE0; une s&#XE9;quence il suffit
+d&#X2019;&#XE9;crire la s&#XE9;quence et l&#X2019;&#XE9;l&#XE9;ment s&#XE9;par&#XE9;s par une virgule. 
+<a id="hevea_default127"></a>
+Pour ajouter un
+&#XE9;l&#XE9;ment &#XE0; une liste on utilise <code>append</code>.
+On acc&#XE8;de &#XE0; un &#XE9;l&#XE9;ment d&#X2019;une liste ou d&#X2019;une s&#XE9;quence gr&#XE2;ce 
+&#XE0; son indice mis entre 
+crochets, le premier &#XE9;l&#XE9;ment &#XE9;tant d&#X2019;indice 0.
+</p><pre class="verbatim">se:=NULL; se:=se,k^2$(k=-2..2); se:=se,1
+li:=[1,2]; (li:=append(li,k^2))$(k=-2..2)
+li[0],li[1],li[2]
+</pre><p>Les polyn&#XF4;mes sont souvent d&#XE9;finis par une expression, mais
+ils peuvent aussi &#XEA;tre repr&#XE9;sent&#XE9;s 
+par la liste de leurs coefficients par ordre
+de degr&#XE9; d&#XE9;croissant, avec comme d&#XE9;limiteurs <code>poly1[</code> et <code>]</code>.
+Il existe aussi une repr&#XE9;sentation
+pour les polyn&#XF4;mes &#XE0; plusieurs variables. Les fonctions
+<code>symb2poly</code> et <code>poly2symb</code> permettent
+de passer de la repr&#XE9;sentation expression &#XE0; la repr&#XE9;sentation
+par liste et inversement, 
+le deuxi&#XE8;me argument d&#XE9;termine s&#X2019;il s&#X2019;agit de polyn&#XF4;mes
+en une variable (on met le nom de la variable) ou de
+polyn&#XF4;mes &#XE0; plusieurs variables (on met la liste des variables).</p><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">S&#XE9;quences et listes</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>E$(k=n..m)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >cr&#XE9;er une s&#XE9;quence</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>seq(E,k=n..m)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >cr&#XE9;er une s&#XE9;quence</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>[E$(k=n..m)]</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >cr&#XE9;er une liste</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>makelist(f,k,n,m,p)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >cr&#XE9;er une liste</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>op(li)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >passer de liste &#XE0; s&#XE9;quence</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>nop(se)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >passer de s&#XE9;quence &#XE0; liste</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>nops(li)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >nombre d&#X2019;&#XE9;l&#XE9;ments</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>size(li)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >nombre d&#X2019;&#XE9;l&#XE9;ments</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>sum</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >somme des &#XE9;l&#XE9;ments</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>product</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >produit des &#XE9;l&#XE9;ments</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>cumSum</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >sommes cumul&#XE9;es des &#XE9;l&#XE9;ments</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>apply(f,li)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >appliquer une fonction aux &#XE9;l&#XE9;ments d&#X2019;une liste</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>map(li,f)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >appliquer une fonction aux &#XE9;l&#XE9;ments d&#X2019;une liste</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>map(li,f,matrix)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >appliquer une fonction aux &#XE9;l&#XE9;ments d&#X2019;une matrice</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>poly2symb</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >polyn&#XF4;me associ&#XE9; &#XE0; une liste</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>symb2poly</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >coefficients d&#X2019;un polyn&#XF4;me</td></tr>
+</table>
+</div><p>
+<a id="hevea_default128"></a>
+<a id="hevea_default129"></a>
+<a id="hevea_default130"></a>
+<a id="hevea_default131"></a>
+<a id="hevea_default132"></a>
+<a id="hevea_default133"></a>
+<a id="hevea_default134"></a>
+<a id="hevea_default135"></a>
+<a id="hevea_default136"></a>
+<a id="hevea_default137"></a>
+<a id="hevea_default138"></a>
+<a id="hevea_default139"></a>
+</p>
+<h3 id="sec13" class="subsection">2.8&#XA0;&#XA0;Temps de calcul, place m&#XE9;moire</h3>
+<p>
+Le principal probl&#XE8;me du calcul formel est la complexit&#XE9; des 
+calculs interm&#XE9;diaires. Elle se traduit &#XE0; la fois par le temps
+n&#XE9;cessaire &#XE0; l&#X2019;ex&#XE9;cution des commandes et par la place m&#XE9;moire
+requise. Les algorithmes impl&#XE9;ment&#XE9;s dans les fonctions
+de <span style="font-family:monospace">Xcas</span> sont performants, mais ils ne
+<a id="hevea_default140"></a>
+<a id="hevea_default141"></a>
+peuvent pas &#XEA;tre optimaux dans tous les cas. La fonction <code>time</code> 
+permet de conna&#XEE;tre le temps d&#X2019;ex&#XE9;cution d&#X2019;une commande (si ce temps
+est tr&#XE8;s court, <span style="font-family:monospace">Xcas</span> ex&#XE9;cute plusieurs fois la commande pour
+afficher un r&#XE9;sultat plus pr&#XE9;cis). La m&#XE9;moire utilis&#XE9;e 
+appara&#XEE;t dans les versions Unix dans la ligne d&#X2019;&#XE9;tat
+(la barre-bouton). Si le temps d&#X2019;ex&#XE9;cution d&#X2019;une
+commande d&#XE9;passe quelques secondes, il est possible que vous ayez
+commis une erreur de saisie. N&#X2019;h&#XE9;sitez pas &#XE0; interrompre
+l&#X2019;ex&#XE9;cution (bouton rouge <code>STOP</code> en haut &#XE0; droite, il est
+conseill&#XE9; de faire une sauvegarde de votre session auparavant).</p>
+<hr>
+<a href="tutoriel001.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel003.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

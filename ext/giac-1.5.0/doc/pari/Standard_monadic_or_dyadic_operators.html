@@ -1,0 +1,438 @@
+<HTML>
+<HEAD>
+  <TITLE>
+    Catalogue of GP/PARI Functions: Standard monadic or dyadic operators
+  </TITLE>
+
+  <META NAME="author"       CONTENT="Nils-Peter Skoruppa">
+  <META NAME="created"      CONTENT="Sat Mar 22 18:13:28 2014">
+  <META NAME="author-email" CONTENT="skoruppa@math.uni-siegen.de">
+  <META NAME="keywords"     CONTENT="PARI, GP, DOC">
+  <link rel="stylesheet" href="/pari.css">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+
+<h3 align=center>Standard monadic or dyadic operators</h3>
+
+<a name="+/-"></a>
+<h4>+/-</h4>
+<p> The expressions <code>+</code>x and <code>-</code>x refer
+to monadic operators (the first does nothing, the second negates x).</p>
+<p>
+The library syntax is <code>GEN <b>gneg</b>(GEN x)</code> for <code>-</code>x.</p>
+
+<hr></hr>
+<a name="+"></a>
+<h4>+</h4>
+<p> The expression x <code>+</code> y is the sum of x and y.
+Addition between a scalar type x and a <code>t_COL</code> or <code>t_MAT</code> y returns
+respectively [y[1] + x, y[2],...] and y + x {Id}. Other additions
+between a scalar type and a vector or a matrix, or between vector/matrices of
+incompatible sizes are forbidden.</p>
+<p>
+The library syntax is <code>GEN <b>gadd</b>(GEN x, GEN y)</code>.</p>
+
+<hr></hr>
+<a name="-"></a>
+<h4>+</h4>
+<p> The expression x <code>+</code> y is the sum of x and y.
+Addition between a scalar type x and a <code>t_COL</code> or <code>t_MAT</code> y returns
+respectively [y[1] + x, y[2],...] and y + x {Id}. Other additions
+between a scalar type and a vector or a matrix, or between vector/matrices of
+incompatible sizes are forbidden.</p>
+<p>
+The library syntax is <code>GEN <b>gadd</b>(GEN x, GEN y)</code>.</p>
+
+<hr></hr>
+<a name="*"></a>
+<h4>*</h4>
+<p> The expression x <code>*</code> y is the product of x
+and y. Among the prominent impossibilities are multiplication between
+vector/matrices of incompatible sizes, between a <code>t_INTMOD</code> or <code>t_PADIC</code>
+Restricted to scalars, <code>*</code> is commutative; because of vector and matrix
+operations, it is not commutative in general.</p>
+<p>
+Multiplication between two <code>t_VEC</code>s or two <code>t_COL</code>s is not
+allowed; to take the scalar product of two vectors of the same length,
+transpose one of the vectors (using the operator <code>~</code> or the function
+<code>mattranspose</code>, see Section [<b>Label: se:linear_algebra</b>]) and multiply a line vector
+by a column vector:</p>
+<p>
+<pre class="code">  ? a = [1,2,3];
+  ? a * a
+    ***   at top-level: a*a
+    ***                  ^--
+    *** _*_: forbidden multiplication t_VEC * t_VEC.
+  ? a * a~
+  %2 = 14
+</pre></p>
+<p></p>
+<p>
+If x,y are binary quadratic forms, compose them; see also
+<code>qfbnucomp</code> and <code>qfbnupow</code>. If x,y are <code>t_VECSMALL</code> of the same
+length, understand them as permutations and compose them.</p>
+<p>
+The library syntax is <code>GEN <b>gmul</b>(GEN x, GEN y)</code> for x <code>*</code> y.
+Also available is <code>GEN <b>gsqr</b>(GEN x)</code> for x <code>*</code> x.</p>
+
+<hr></hr>
+<a name="/"></a>
+<h4>/</h4>
+<p> The expression x <code>/</code> y is the quotient of x
+and y. In addition to the impossibilities for multiplication, note that if
+the divisor is a matrix, it must be an invertible square matrix, and in that
+case the result is x*y^{-1}. Furthermore note that the result is as exact
+as possible: in particular, division of two integers always gives a rational
+number (which may be an integer if the quotient is exact) and <em>not</em> the
+Euclidean quotient (see x <code>\</code> y for that), and similarly the
+quotient of two polynomials is a rational function in general. To obtain the
+approximate real value of the quotient of two integers, add <code>0.</code> to the
+result; to obtain the approximate p-adic value of the quotient of two
+integers, add <code>O(p^k)</code> to the result; finally, to obtain the
+Taylor series expansion of the quotient of two polynomials, add
+<code>O(X^k)</code> to the result or use the <code>taylor</code> function
+(see Section [<b>Label: se:taylor</b>]). </p>
+<p>
+The library syntax is <code>GEN <b>gdiv</b>(GEN x, GEN y)</code> for x <code>/</code> y.</p>
+
+<hr></hr>
+<a name="\"></a>
+<h4>\</h4>
+<p> The expression <code>x \y</code> is the \idx{Euclidean
+quotient} of x and y. If y is a real scalar, this is defined as
+<code>floor(x/y)</code> if y &#62; 0, and <code>ceil(x/y)</code> if y &#60; 0 and
+the division is not exact. Hence the remainder <code>x - (x\y)*y</code>
+is in [0, |y|[.</p>
+<p>
+Note that when y is an integer and x a polynomial, y is first promoted
+to a polynomial of degree 0. When x is a vector or matrix, the operator
+is applied componentwise.</p>
+<p>
+The library syntax is <code>GEN <b>gdivent</b>(GEN x, GEN y)</code>
+for x <code>\</code> y.</p>
+
+<hr></hr>
+<a name="\/"></a>
+<h4>\/</h4>
+<p> The expression x <code>\/</code> y evaluates to the rounded
+Euclidean quotient of x and y. This is the same as <code>x \y</code>
+except for scalar division: the quotient is such that the corresponding
+remainder is smallest in absolute value and in case of a tie the quotient
+closest to + oo  is chosen (hence the remainder would belong to
+]{-}|y|/2, |y|/2]).</p>
+<p>
+When x is a vector or matrix, the operator is applied componentwise.</p>
+<p>
+The library syntax is <code>GEN <b>gdivround</b>(GEN x, GEN y)</code>
+for x <code>\/</code> y.</p>
+
+<hr></hr>
+<a name="^"></a>
+<h4>^</h4>
+<p> The expression x{<code>^</code>}n is powering.
+If the exponent is an integer, then exact operations are performed using
+binary (left-shift) powering techniques. In particular, in this case x
+cannot be a vector or matrix unless it is a square matrix (invertible
+if the exponent is negative). If x is a p-adic number, its
+precision will increase if v_p(n) &#62; 0. Powering a binary quadratic form
+(types <code>t_QFI</code> and <code>t_QFR</code>) returns a reduced representative of the
+class, provided the input is reduced. In particular, x{<code>^</code>}1 is
+identical to x.</p>
+<p>
+PARI is able to rewrite the multiplication x * x of two <em>identical</em>
+objects as x^2, or <code>sqr</code>(x). Here, identical means the operands are
+two different labels referencing the same chunk of memory; no equality test
+is performed. This is no longer true when more than two arguments are
+involved.</p>
+<p>
+If the exponent is not of type integer, this is treated as a transcendental
+function (see Section [<b>Label: se:trans</b>]), and in particular has the effect of
+componentwise powering on vector or matrices.</p>
+<p>
+As an exception, if the exponent is a rational number p/q and x an
+integer modulo a prime or a p-adic number, return a solution y of
+y^q = x^p if it exists. Currently, q must not have large prime factors.
+Beware that</p>
+<p>
+<pre class="code">  ? Mod(7,19)^(1/2)
+  %1 = Mod(11, 19) /* is any square root */
+  ? sqrt(Mod(7,19))
+  %2 = Mod(8, 19)  /* is the smallest square root */
+  ? Mod(7,19)^(3/5)
+  %3 = Mod(1, 19)
+  ? %3^(5/3)
+  %4 = Mod(1, 19)  /* Mod(7,19) is just another cubic root */
+</pre></p>
+<p></p>
+<p>
+If the exponent is a negative integer, an inverse must be computed.
+For non-invertible <code>t_INTMOD</code>, this will fail and implicitly exhibit a
+non trivial factor of the modulus:</p>
+<p>
+<pre class="code">  ? Mod(4,6)^(-1)
+    ***   at top-level: Mod(4,6)^(-1)
+    ***                         ^-----
+    *** _^_: impossible inverse modulo: Mod(2, 6).
+</pre></p>
+<p>
+(Here, a factor 2 is obtained directly. In general, take the gcd of the
+representative and the modulus.) This is most useful when performing
+complicated operations modulo an integer N whose factorization is
+unknown. Either the computation succeeds and all is well, or a factor d
+is discovered and the computation may be restarted modulo d or N/d.</p>
+<p>
+For non-invertible <code>t_POLMOD</code>, this will fail without exhibiting a
+factor.</p>
+<p>
+<pre class="code">  ? Mod(x^2, x^3-x)^(-1)
+    ***   at top-level: Mod(x^2,x^3-x)^(-1)
+    ***                               ^-----
+    *** _^_: non-invertible polynomial in RgXQ_inv.
+  ? a = Mod(3,4)*y^3 + Mod(1,4); b = y^6+y^5+y^4+y^3+y^2+y+1;
+  ? Mod(a, b)^(-1);
+    ***   at top-level: Mod(a,b)^(-1)
+    ***                         ^-----
+    *** _^_: impossible inverse modulo: Mod(0, 4).
+</pre></p>
+<p>
+In fact the latter polynomial is invertible, but the algorithm used
+(subresultant) assumes the base ring is a domain. If it is not the case,
+as here for <b>Z</b>/4<b>Z</b>, a result will be correct but chances are an error
+will occur first. In this specific case, one should work with 2-adics.
+In general, one can try the following approach</p>
+<p>
+<pre class="code">  ? inversemod(a, b) =
+  { my(m);
+    m = polsylvestermatrix(polrecip(a), polrecip(b));
+    m = matinverseimage(m, matid(#m)[,1]);
+    Polrev( vecextract(m, Str("..", poldegree(b))), variable(b) )
+  }
+  ? inversemod(a,b)
+  %2 = Mod(2,4)*y^5 + Mod(3,4)*y^3 + Mod(1,4)*y^2 + Mod(3,4)*y + Mod(2,4)
+</pre></p>
+<p>
+This is not guaranteed to work either since it must invert pivots. See
+Section [<b>Label: se:linear_algebra</b>].</p>
+<p>
+The library syntax is <code>GEN <b>gpow</b>(GEN x, GEN n, long prec)</code>
+for x{<code>^</code>}n.</p>
+<p></p>
+
+<hr></hr>
+<a name="cmp"></a>
+<h4>cmp(x,y)</h4>
+<p></p>
+<p>Gives the result of a comparison between arbitrary objects x and y
+(as -1, 0 or 1). The underlying order relation is transitive,
+the function returns 0 if and only if x&nbsp;<code> == = </code>&nbsp;y, and its
+restriction to integers coincides with the customary one. Besides that,
+it has no useful mathematical meaning.</p>
+<p>
+In case all components are equal up to the smallest length of the operands,
+the more complex is considered to be larger. More precisely, the longest is
+the largest; when lengths are equal, we have matrix  &#62;  vector  &#62;  scalar.
+For example:</p>
+<p>
+<pre class="code">  ? cmp(1, 2)
+  %1 = -1
+  ? cmp(2, 1)
+  %2 = 1
+  ? cmp(1, 1.0)   \\ note that 1 == 1.0, but (1===1.0) is false.
+  %3 = -1
+  ? cmp(x + Pi, [])
+  %4 = -1
+</pre>
+This function is mostly useful to handle sorted lists or
+vectors of arbitrary objets. For instance, if v is a vector, the
+construction <code>vecsort(v, cmp)</code> is equivalent to <code>Set(v)</code>.</p>
+<p>
+The library syntax is <code>GEN <b>cmp_universal</b>(GEN x, GEN y)</code>.</p>
+
+<hr></hr>
+<a name="divrem"></a>
+<h4>divrem(x,y,{v})</h4>
+<p></p>
+<p>Creates a column vector with two components, the first being the Euclidean
+quotient (<code>x \y</code>), the second the Euclidean remainder
+(<code>x - (x\y)*y</code>), of the division of x by y. This avoids the
+need to do two divisions if one needs both the quotient and the remainder.
+If v is present, and x, y are multivariate
+polynomials, divide with respect to the variable v.</p>
+<p>
+Beware that <code>divrem(x,y)[2]</code> is in general not the same as
+<code>x % y</code>; no GP operator corresponds to it:</p>
+<p>
+<pre class="code">  ? divrem(1/2, 3)[2]
+  %1 = 1/2
+  ? (1/2) % 3
+  %2 = 2
+  ? divrem(Mod(2,9), 3)[2]
+   ***   at top-level: divrem(Mod(2,9),3)[2
+   ***                 ^--------------------
+   ***   forbidden division t_INTMOD \ t_INT.
+  ? Mod(2,9) % 6
+  %3 = Mod(2,3)
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>divrem</b>(GEN x, GEN y, long v = -1)</code>, where <code>v</code> is a variable number.
+Also available is <code>GEN <b>gdiventres</b>(GEN x, GEN y)</code> when v is
+not needed.</p>
+
+<hr></hr>
+<a name="lex"></a>
+<h4>lex(x,y)</h4>
+<p></p>
+<p>Gives the result of a lexicographic comparison
+between x and y (as -1, 0 or 1). This is to be interpreted in quite
+a wide sense: It is admissible to compare objects of different types
+(scalars, vectors, matrices), provided the scalars can be compared, as well
+as vectors/matrices of different lengths. The comparison is recursive.</p>
+<p>
+In case all components are equal up to the smallest length of the operands,
+the more complex is considered to be larger. More precisely, the longest is
+the largest; when lengths are equal, we have matrix  &#62;  vector  &#62;  scalar.
+For example:</p>
+<p>
+<pre class="code">  ? lex([1,3], [1,2,5])
+  %1 = 1
+  ? lex([1,3], [1,3,-1])
+  %2 = -1
+  ? lex([1], [[1]])
+  %3 = -1
+  ? lex([1], [1]~)
+  %4 = 0
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>lexcmp</b>(GEN x, GEN y)</code>.</p>
+
+<hr></hr>
+<a name="max"></a>
+<h4>max(x,y)</h4>
+<p></p>
+<p>Creates the maximum of x and y when they can be compared.</p>
+<p>
+The library syntax is <code>GEN <b>gmax</b>(GEN x, GEN y)</code>.</p>
+
+<hr></hr>
+<a name="min"></a>
+<h4>max(x,y)</h4>
+<p></p>
+<p>Creates the maximum of x and y when they can be compared.</p>
+<p>
+The library syntax is <code>GEN <b>gmax</b>(GEN x, GEN y)</code>.</p>
+
+<hr></hr>
+<a name="shift"></a>
+<h4>shift(x,n)</h4>
+<p></p>
+<p>Shifts x componentwise left by n bits if n <code>&#62;=</code> 0 and right by |n|
+bits if n &#60; 0. May be abbreviated as x <code> &#60;&#60; </code> n or x <code> &#62;&#62; </code> (-n).
+A left shift by n corresponds to multiplication by 2^n. A right shift of an
+integer x by |n| corresponds to a Euclidean division of x by 2^{|n|}
+with a remainder of the same sign as x, hence is not the same (in general) as
+x <code>\</code> 2^n.</p>
+<p>
+The library syntax is <code>GEN <b>gshift</b>(GEN x, long n)</code>.</p>
+
+<hr></hr>
+<a name="shiftmul"></a>
+<h4>shiftmul(x,n)</h4>
+<p></p>
+<p>Multiplies x by 2^n. The difference with
+<code>shift</code> is that when n &#60; 0, ordinary division takes place, hence for
+example if x is an integer the result may be a fraction, while for shifts
+Euclidean division takes place when n &#60; 0 hence if x is an integer the result
+is still an integer.</p>
+<p>
+The library syntax is <code>GEN <b>gmul2n</b>(GEN x, long n)</code>.</p>
+
+<hr></hr>
+<a name="sign"></a>
+<h4>sign(x)</h4>
+<p></p>
+<p>sign (0, 1 or -1) of x, which must be of
+type integer, real or fraction.</p>
+<p>
+The library syntax is <code>GEN <b>gsigne</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="vecmax"></a>
+<h4>vecmax(x,{&amp;v})</h4>
+<p></p>
+<p>If x is a vector or a matrix, returns the largest entry of x,
+otherwise returns a copy of x. Error if x is empty.</p>
+<p>
+If v is given, set it to the index of a largest entry (indirect maximum),
+when x is a vector. If x is a matrix, set v to coordinates [i,j]
+such that x[i,j] is a largest entry. This flag is ignored if x is not a
+vector or matrix.</p>
+<p></p>
+<p>
+<pre class="code">  ? vecmax([10, 20, -30, 40])
+  %1 = 40
+  ? vecmax([10, 20, -30, 40], &amp;v); v
+  %2 = 4
+  ? vecmax([10, 20; -30, 40], &amp;v); v
+  %3 = [2, 2]
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>vecmax0</b>(GEN x, GEN *v = NULL)</code>.
+Also available is <code>GEN <b>vecmax</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="vecmin"></a>
+<h4>vecmin(x,{&amp;v})</h4>
+<p></p>
+<p>If x is a vector or a matrix, returns the smallest entry of x,
+otherwise returns a copy of x. Error if x is empty.</p>
+<p>
+If v is given, set it to the index of a smallest entry (indirect minimum),
+when x is a vector. If x is a matrix, set v to coordinates [i,j] such
+that x[i,j] is a smallest entry. This is ignored if x is not a vector or
+matrix.</p>
+<p></p>
+<p>
+<pre class="code">  ? vecmin([10, 20, -30, 40])
+  %1 = -30
+  ? vecmin([10, 20, -30, 40], &amp;v); v
+  %2 = 3
+  ? vecmin([10, 20; -30, 40], &amp;v); v
+  %3 = [2, 1]
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>vecmin0</b>(GEN x, GEN *v = NULL)</code>.
+Also available is <code>GEN <b>vecmin</b>(GEN x)</code>.</p>
+<p></p>
+
+<hr></hr>
+<a name="Comparison and Boolean operators"></a>
+<h4>Comparison and Boolean operators</h4>
+<p> The six
+standard comparison operators <code> &#60;= </code>, <code> &#60; </code>, <code> &#62;= </code>, <code> &#62; </code>,
+<code> == </code>, <code> != </code> are available in GP. The result is 1 if the comparison is
+true, 0 if it is false. The operator <code> == </code> is quite liberal : for
+instance, the integer 0, a 0 polynomial, and a vector with 0 entries are all
+tested equal.</p>
+<p>
+The extra operator <code> == = </code> tests whether two objects are identical and is
+much stricter than <code> == </code> : objects of different type or length are never
+identical.</p>
+<p>
+For the purpose of comparison, <code>t_STR</code> objects are strictly larger than any
+other non-string type; two <code>t_STR</code> objects are compared using the standard
+lexicographic order.</p>
+<p>
+GP accepts <code> &#60;  &#62; </code> as a synonym for <code> != </code>. On the other hand, <code> = </code> is
+definitely <em>not</em> a synonym for <code> == </code>: it is the assignment statement.</p>
+<p>
+The standard boolean operators <code>||</code> (inclusive or), <code>&amp;&amp;</code>
+(and) and <code>!</code> (not) are also available.</p>
+
+<hr></hr>
+
+</BODY>
+</HTML>

@@ -1,0 +1,267 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others 
+  Translation to greek : George Nassopoulos-->
+<HTML>
+<HEAD>
+<TITLE>Λίστες, ακολουθίες, σύνολα</ΤΙTLE>
+<META NAME="description" CONTENT="Listes, s&#233;quences, ensembles">
+<META NAME="keywords" CONTENT="tutoriel">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutoriel.css">
+
+<LINK REL="next" HREF="node13.html">
+<LINK REL="previous" HREF="node11.html">
+<LINK REL="up" HREF="node5.html">
+<LINK REL="next" HREF="node13.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html230"
+  HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html224"
+  HREF="node5.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html218"
+  HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html226"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html228"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html231"
+  HREF="node13.html">Χρόνος υπολογισμού, χώρος μνήμης</A>
+<B> εμφάνιση:</B> <A NAME="tex2html225"
+  HREF="node5.html">Αντικείμενα των αλγεβρικών υπολογισμών</A>
+<B> προηγούμενο:</B> <A NAME="tex2html219"
+  HREF="node11.html">Συναρτήσεις</A>
+ &nbsp; <B>  <A NAME="tex2html227"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html229"
+  HREF="node47.html">Ευρετήριο</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00027000000000000000"></A>
+<A NAME="291"></A>
+<A NAME="292"></A>
+<A NAME="293"></A>
+<BR>
+Λίστες, ακολουθίες, σύνολα
+</H2>
+Το <TT>Xcas</TT> αναγνωρίζει διάφορες συλλογές αντικειμένων, 
+τα οποία χωρίζονται μεταξύ τους με κόμμα&nbsp;: 
+<DL COMPACT>
+
+<DD><LI>τις λίστες (ανάμεσα σε άγκιστρα),
+</LI></DD>
+
+<DD><LI>τις ακολουθίες (ανάμεσα σε παρενθέσεις), 
+</LI></DD
+
+<DD><LI>τα σύνολα (ανάμεσα σε % και αγκύλες, δηλαδή ανάμεσα σε %{ και %}).
+</LI></DD>
+</DL>
+<PRE>
+λίστα:=[1,2,4,2]
+ακολουθία:=(1,2,4,2)
+σύνολο:=%{1,2,4,2%}
+</PRE>
+Οι λίστες μπορούν να περιέχουν λίστες (είναι η περίπτωση των πινάκων), 
+ενώ οι ακολουθίες είναι επίπεδες (ένα στοιχείο μίας ακολουθίας δεν μπορεί 
+να είναι μία ακολουθία).
+Σε ένα σύνολο η σειρά δεν έχει σημασία και κάθε αντικείμενο είναι μοναδικό. 
+Υπάρχει και μία άλλη δομή, που ονομάζεται πίνακας, στην οποία θα αναφερθούμε 
+αργότερα.
+
+<P>
+Αρκεί να βάλουμε μία ακολουθία ανάμεσα σε  άγκιστρα για να την κάνουμε λίστα 
+ή ανάμεσα σε <code>%</code> και αγκύλες  για να την κάνουμε σύνολο.
+Περνάμε από μία λίστα στήν αντίστοιχη ακολουθία με την συνάρτηση <code>op</code>, από
+μία ακολουθία στην αντίστοιχη λίστα βάζοντας την ανάμεσα σε άγκιστρα (ή
+με την συνάρτηση <code>nop</code>).
+Το πλήθος των στοιχείων μίας λίστας δίνεται από την συνάρτηση <code>size</code> 
+(ή την <code>nops</code>).
+<A NAME="1621"></A>
+<A NAME="1622"></A>
+<A NAME="1623"></A>
+<A NAME="1624"></A>
+<A NAME="303"></A>
+<PRE>
+se:=(1,2,4,2)
+li:=[se]
+op(li)
+nop(se)
+nops(se)
+%{se%}
+size([se])
+size(%{se%})
+</PRE>
+<A NAME="306"></A>
+<A NAME="1625"></A>
+<A NAME="1626"></A>
+Για να κατασκευάσουμε μία λίστα ή μία ακολουθία, χρησιμοποιούμε εντολές
+επανάληψης όπως  <code>$</code> ή <code>seq</code> 
+(που επαναλαμβάνουν μία έκφραση) ή την <code>makelist</code> 
+(που κατασκευάζει μία λίστα με την βοήθεια μίας συνάρτησης). <B>Προσοχή:</B> 
+Η <code>seq</code> με δύο ορίσματα επιστρέφει ακολουθία, ενώ με 3 ή 4 ορίσματα 
+επιστρέφει λίστα.
+<PRE>
+1$5
+k^2 $ (k=-2..2)
+seq(k^2,k=-2..2)
+[k^2$(k=-2..2)]
+seq(k^2,k=-2,2)
+seq(k^2,k,-2,2,2)
+makelist(x-&gt;x^2,-2,2)
+makelist(x-&gt;x^2,-2,2,2)
+</PRE>
+<A NAME="1627"></A>
+<A NAME="312"></A>
+<A NAME="313"></A>
+Η κενή ακολουθία σημειώνεται με <code>NULL</code>, ενώ η κενή λίστα με
+<code>[]</code>. Για να προσθέσουμε ένα στοιχείο σε μία ακολουθία αρκεί να 
+γράψουμε την ακολουθία και το στοιχείο διαχωρισμένα με ένα κόμμα. 
+<A NAME="1628"></A>
+Για προσθέσουμε ένα στοιχείο σε μία λίστα χρησιμοποιούμε την συνάρτηση 
+<code>append</code>.
+Πρόσβαση σε ένα στοιχείο μίας λίστας ή μίας ακολουθίας γίνετα με την βοήθεια
+του δείκτη του στοιχείου τοποθετούμενου ανάμεσα σε άγκιστρα. <B>Προσοχή: </B>
+Το <I>πρώτο</I>  στοιχείο μίας λίστας ή μίας ακολουθίας έχει δείκτη 0.
+<PRE>
+se:=NULL; se:=se,k^2$(k=-2..2); se:=se,1
+li:=[1,2]; (li:=append(li,k^2))$(k=-2..2)
+li[0],li[1],li[2]
+</PRE>
+
+<P>
+Τα πολυώνυμα συχνά ορίζονται από μία παράσταση, 
+αλλά μπορούν επίσης να ορισθούν και από την λίστα των συντελεστών τους 
+σε <B>φθίνουσα</B> διάταξη εκθετών.
+Ορίζονται επίσης πολυώνυμα πολλών μεταβλητών. 
+Η συνάρτηση <code>symb2poly</code> μετασχηματίζει μία πολυωνυμική
+παράσταση σε λίστα συντελεστών,
+ ενώ η συνάρτηση <code>poly2symb</code> μετασχηματίζει μία  
+ λίστα συντελεστών σε πολυωνυμική
+παράσταση. Το δεύτερο όρισμα καθορίζει εάν πρόκειται για πολυώνυμο μίας μεταβλητής 
+(βάζουμε το όνομα της μεταβλητής)
+ή για πολυώνυμο πολλών μεταβλητών (βάζουμε την λίστα των μεταβλητών).
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><B>Ακολουθίες και λίστες </B></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>E$(k=n..m)</code></TD>
+<TD ALIGN="LEFT">δημιουργία μίας ακολουθίας</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>seq(E,k=n..m)</code></TD>
+<TD ALIGN="LEFT">δημιουργία μίας ακολουθίας</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>[E$(k=n..m)]</code></TD>
+<TD ALIGN="LEFT">δημιουργία μίας λίστας</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>makelist(f,k,n,m,p)</code></TD>
+<TD ALIGN="LEFT">δημιουργία μίας λίστας</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>op(li)</code></TD>
+<TD ALIGN="LEFT">μετατροπή λίστας σε ακολουθία</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>nop(se)</code></TD>
+<TD ALIGN="LEFT">μετατροπή ακολουθίας σε λίστα</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>nops(li)</code></TD>
+<TD ALIGN="LEFT">πλήθος στοιχείων ακολουθίας ή λίστας</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>size(li)</code></TD>
+<TD ALIGN="LEFT">πλήθος στοιχείων ακολουθίας ή λίστας</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>sum</code></TD>
+<TD ALIGN="LEFT">άθροισμα των στοιχείων</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>product</code></TD>
+<TD ALIGN="LEFT">γινόμενο των στοιχείων</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>cumSum</code></TD>
+<TD ALIGN="LEFT">συσωρευτικό άθροισμα των στοιχείων</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>apply(f,li)</code></TD>
+<TD ALIGN="LEFT">εφαρμογή μίας συνάρτησης στα στοιχεία μίας λίστας</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>apply(f,matrix)</code></TD>
+<TD ALIGN="LEFT">εφαρμογή μίας συνάρτησης στα στοιχεία ενός πίνακα</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>map(li,f)</code></TD>
+<TD ALIGN="LEFT">εφαρμογή μίας συνάρτησης στα στοιχεία μίας λίστας</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>map(matrix,f)</code></TD>
+<TD ALIGN="LEFT">εφαρμογή μίας συνάρτησης στα στοιχεία ενός πίνακα</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>poly2symb</code></TD>
+<TD ALIGN="LEFT">λίστα συντελεστών -> πολυωνυμική παράσταση</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>symb2poly</code></TD>
+<TD ALIGN="LEFT">πολυωνυμική παράσταση -> λίστα συντελεστών</TD>
+</TR>
+</TABLE>
+</DIV>
+<A NAME="1629"></A>
+<A NAME="326"></A>
+<A NAME="1630"></A>
+<A NAME="328"></A>
+<A NAME="1631"></A>
+<A NAME="330"></A>
+<A NAME="1632"></A>
+<A NAME="332"></A>
+<A NAME="1633"></A>
+<A NAME="1634"></A>
+<A NAME="1635"></A>
+<A NAME="336"></A>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html230"
+  HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html224"
+  HREF="node5.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html218"
+  HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html226"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html228"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html231"
+  HREF="node13.html">Χρόνος υπολογισμού, χώρος μνήμης</A>
+<B> εμφάνιση:</B> <A NAME="tex2html225"
+  HREF="node5.html">Αντικείμενα των αλγεβρικών υπολογισμών</A>
+<B> προηγούμενο:</B> <A NAME="tex2html219"
+  HREF="node11.html">Συναρτήσεις </A>
+ &nbsp; <B>  <A NAME="tex2html227"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html229"
+  HREF="node47.html">Ευρετήριο</A></B>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Βιβλιογραφία του <A HREF="http://www-fourier.ujf-grenoble.fr/~parisse/giac_fr.html">giac</A> από τους Renee De Graeve, Bernard Parisse και Bernard Ycart
+</ADDRESS>
+Μετάφραση στα Ελληνικά : Γιώργος Νασόπουλος. Διασκευή : Αλκιβιάδης Γ. Ακρίτας
+</BODY>
+</HTML>

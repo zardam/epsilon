@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Values of a recurrence relation or a system: seqsolve</title>
+</head>
+<body >
+<a href="cascmd_en204.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en206.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec246" class="subsection">5.14.2  Values of a recurrence relation or a system: <span style="font-family:monospace">seqsolve</span></h3>
+<p><a id="hevea_default312"></a>
+<a id="ssec:seqsolve"></a></p><p>See also section <a href="cascmd_en206.html#ssec%3Arsolve">5.14.3</a>.</p><p>The <span style="font-family:monospace">seqsolve</span> command takes three arguments; an expression or
+list of expressions that define a recurrence relation, the variables
+used, and the starting values. For example, if a recurrence relation
+is defined by <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub> = <span style="font-style:italic">f</span>(<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>,<span style="font-style:italic">n</span>) with <span style="font-style:italic">u</span><sub>0</sub> = <span style="font-style:italic">a</span>, the arguments to
+<span style="font-family:monospace">seqsolve</span> will be <span style="font-family:monospace">f(x,n)</span>, <span style="font-family:monospace">[x,n]</span> and
+<span style="font-family:monospace">a</span>. If the recurrence relation
+is defined by <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+2</sub> = <span style="font-style:italic">g</span>(<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>,<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>,<span style="font-style:italic">n</span>) with <span style="font-style:italic">u</span><sub>0</sub> = <span style="font-style:italic">a</span> and <span style="font-style:italic">u</span><sub>1</sub> = <span style="font-style:italic">b</span>, the arguments to
+<span style="font-family:monospace">seqsolve</span> will be <span style="font-family:monospace">g(x,y,n)</span>, <span style="font-family:monospace">[x,y,n]</span> and
+<span style="font-family:monospace">[a,b]</span>. The recurrence relation must have a homogeneous
+linear part, the nonhomogeneous part must be a linear combination of a
+polynomials in <span style="font-family:monospace">n</span> times geometric terms in <span style="font-family:monospace">n</span>.<br>
+<span style="font-family:monospace">seqsolve</span> returns the sequence, as a function of <span style="font-family:monospace">n</span>.</p><p><span style="font-weight:bold">Examples:</span><br>
+</p><ul class="itemize"><li class="li-itemize">
+To find <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>, given that <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub> = 2<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> + <span style="font-style:italic">n</span> and <span style="font-style:italic">u</span><sub>0</sub>=3:
+Input:
+<div class="center">
+<span style="font-family:monospace">seqsolve(2x+n,[x,n],3)
+</span></div>
+Output:
+<div class="center">
+<span style="font-family:monospace">-n-1+4*2^n 
+</span></div></li><li class="li-itemize">To find <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>, given that <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub> = 2<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> + <span style="font-style:italic">n</span> 3<sup><span style="font-style:italic">n</span></sup> and <span style="font-style:italic">u</span><sub>0</sub>=3:
+Input:
+<div class="center">
+<span style="font-family:monospace">seqsolve(2x+n*3^n,[x,n],3)
+</span></div>
+Output:
+<div class="center">
+<span style="font-family:monospace">(n-3)*3^n+6*2^n
+</span></div></li><li class="li-itemize">To find <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>, given that <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub> = <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> + <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>−1</sub>, <span style="font-style:italic">u</span><sub>0</sub> = 0 and
+<span style="font-style:italic">u</span><sub>1</sub>=1:
+Input:
+<div class="center">
+<span style="font-family:monospace">seqsolve(x+y,[x,y,n],[0,1])
+</span></div>
+Output:
+<div class="center">
+<span style="font-family:monospace">(5+sqrt(5))/10*((sqrt(5)+1)/2)^(n-1)+ (5-(sqrt(5)))/10*((-sqrt(5)+1)/2)^(n-1)
+</span></div></li><li class="li-itemize">To find <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> and <span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>, given that <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>=<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> + 2<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>, <span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span>+1</sub> =
+<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> + <span style="font-style:italic">n</span> + 1 with <span style="font-style:italic">u</span><sub>0</sub> = 1, <span style="font-style:italic">v</span><sub>0</sub> = 1:<br>
+Input:
+<div class="center">
+<span style="font-family:monospace">seqsolve([x+2*y,n+1+x],[x,y,n],[0,1])
+</span></div>
+Output:
+<div class="center">
+<span style="font-family:monospace">[(-2*n-(-1)^n+4*2^n-3)/2,((-1)^n+2*2^n-1)/2] 
+</span></div>
+</li></ul>
+<hr>
+<a href="cascmd_en204.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en206.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

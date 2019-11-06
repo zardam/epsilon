@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casinter.css">
+<TITLE>Exécution pas à pas et mise au point d’un programme.</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casinter020.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casinter022.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour &#XE0; la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H2 CLASS="section"><A NAME="htoc82">18</A>  Exécution pas à pas et mise au point d’un programme.</H2><P><A NAME="@default60"></A>
+La commande <TT>debug</TT> permet de lancer un programme en mode
+d’exécution pas à pas. Elle ouvre une fenêtre permettant
+de diriger l’exécution du programme passé en argument.
+Par exemple, on entre le programme :
+</P><PRE CLASS="verbatim">carres(n):={
+  local j,k;
+  k:=0;
+  for (j:=1;j&lt;n+1;j++) {
+    k:=k+j^2;
+  }
+  return k;
+}
+</PRE><P>On tape pour debugger le programme <TT>carres</TT> ci-dessus :
+</P><DIV CLASS="center">
+<TT>debug(carres(5))</TT>
+</DIV><P>
+cela ouvre la fenêtre du debugger.
+En cliquant sur le bouton <TT>sst</TT> on peut exécuter pas à pas
+le programme en visualisant l’évolution des valeurs des variables
+locales et des paramètres du programme. Cela permet de détecter
+la grande majorité des erreurs qui font qu’un programme ne fait
+pas ce que l’on souhaite. Pour des programmes plus longs, 
+le debugger permet de controler
+assez finement l’exécution du programme en placant par exemple
+des points d’arrêt.
+Plus précisément, la fenêtre du debugger contient :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+un écran où se trouve le programme,
+</LI><LI CLASS="li-itemize">une ligne de commandes repérée par <TT>eval</TT> dans laquelle on peut
+faire un calcul, écrire une commande <TT>watch</TT> par exemple ou modifier un 
+paramètre,
+</LI><LI CLASS="li-itemize">une ligne d’état, où est affiché le résultat de la
+dernière évaluation, le nom du programme debuggué, ses
+arguments, la liste des points d’arrêt et le numéro de la ligne 
+exécutée,
+</LI><LI CLASS="li-itemize">7 boutons <TT>sst dans cont tuer rmwtch voir break</TT> :
+<OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+<TT>sst</TT> permet de passer à l’instruction suivante,
+</LI><LI CLASS="li-enumerate"><TT>dans</TT> permet d’entrer dans un sous-programme pour qu’il soit 
+exécuté pas à pas,
+</LI><LI CLASS="li-enumerate"><TT>cont</TT> pour continuer l’exécution jusqu’au point d’arrêt suivant,
+</LI><LI CLASS="li-enumerate"><TT>tuer</TT> pour arrêter prématurément l’exécution
+du programme et donc fermer l’écran du debugger.
+</LI><LI CLASS="li-enumerate"><TT>rmwatch</TT> permet d’enlever une variable de la liste des variables 
+affichées automatiquement (cf. <TT>voir</TT>)
+</LI><LI CLASS="li-enumerate"><TT>voir</TT> permet de demander l’affichage automatique du contenu
+de variables lors du déroulement du programme,
+</LI><LI CLASS="li-enumerate"><TT>break</TT> permet de marquer un point d’arrêt pour que l’exécution 
+se fasse d’un seul coup jusqu’au point d’arrêt,
+</LI></OL>
+</LI><LI CLASS="li-itemize">un écran où va s’afficher les valeurs des variables locales
+et des paramètres (par défaut) ou les valeurs des variables
+que l’on a demandées de voir 
+grâce au bouton <TT>voir</TT> ou à la commande <TT>watch</TT>, 
+</LI></UL><P>Pour mettre au point un programme, on peut aussi utiliser la commande 
+<TT>print</TT> qui permet de réaliser un affichage en cours de programmme.
+Cet affichage s’écrira alors en bleu.
+On tape par exemple dans un éditeur de programmes :
+</P><PRE CLASS="verbatim">carres(n):={
+  local j;
+  for (j:=1;j&lt;n+1;j++) {
+    print(j^2);
+  }
+  return n^2;
+}
+</PRE><P>Puis on compile ce programme en cliquant sur <TT>OK</TT>.</P><P>On tape ensuite dans une ligne de commandes :
+<TT>carres(5)</TT><BR>
+On obtient écrit en bleu dans la zone intermédiaire :<BR>
+<TT>1<BR>
+4<BR>
+9<BR>
+16<BR>
+25</TT><BR>
+et dans la zone réponse, le résultat écrit en noir :<BR>
+<TT>25</TT></P><P>Cette méthode est toutefois plus rudimentaire que l’utilisation de la
+commande <TT>debug</TT> car il faut ajouter une commande print à chaque
+endroit du programme où on veut avoir un affichage, il faut recompiler
+le programme, et il n’est pas possible d’agir directement sur le
+déroulement du programme.</P>Retour &#XE0; la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casinter020.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casinter022.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Encadrement exact des racines réelles d’un polynôme avec leur multiplicité: realroot</title>
+</head>
+<body >
+<a href="cascmd_fr434.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr436.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec551" class="subsection">6.33.2  Encadrement exact des racines réelles d’un polynôme avec leur multiplicité: <span style="font-family:monospace">realroot</span></h3>
+<p><a id="hevea_default804"></a>
+<span style="font-family:monospace">realroot</span> a 1 ou 4 arguments : un polynôme 
+et un nombre rèel <span style="font-style:italic">l</span> et éventuellement deux réels <span style="font-style:italic">a</span>,<span style="font-style:italic">b</span> 
+et cherche les racines rèelles du polynôme 
+en utilisant l’algorithme de Vincent-Akritas-Strzebonski (VAS).<br>
+On peut aussi utiliser un argument supplémentaire pour dire que l’algorithme 
+utilise les suites de Sturm : on met alors <span style="font-family:monospace">sturm</span> comme premier argument.
+Mais les résultats seront moins précis.<br>
+<span style="font-family:monospace">realroot(P,l,a,b)</span> et <span style="font-family:monospace">realroot(sturm,P,l,a,b)</span> renvoient la liste des
+intervalles de longueur &lt;=<span style="font-family:monospace">l</span> où se trouvent les racines réelles de 
+<span style="font-family:monospace">P</span> situées dans <span style="font-family:monospace">a..b</span> avec leur multiplicité. 
+<span style="font-family:monospace">realroot(P,l,a,b)</span> utilise l’algorithme de Vincent-Akritas-Strzebonski 
+(VAS) alors que <span style="font-family:monospace">realroot(sturm,P,l,a,b)</span> utilise les suites de Sturm qui 
+sont moins efficaces.<br>
+</p><ul class="itemize"><li class="li-itemize">
+Si <span style="font-family:monospace">realroot</span> a 1 argument (resp 2 arguments), <span style="font-family:monospace">realroot(P)</span> (resp
+<span style="font-family:monospace">realroot(sturm,P)</span>) renvoie la liste des intervalles où se trouvent les 
+racines réelles de <span style="font-family:monospace">P</span> avec leur multiplicité en utilisant l’algorithme 
+de Vincent-Akritas-Strzebonski (VAS) (resp en utilisant les suites de Sturm).
+L’algorithme s’arrête dès qu’il a trouvé un intervalle qui contient une 
+racine.<br>
+ On tape :<br>
+<span style="font-family:monospace">realroot(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-7*x+7)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[[-4,0],1],[[1,3/2],1],[[3/2,2],1]]</span><br>
+Ce qui veut dire qu’il y a une racine dans l’intervalle [-4,0] qui est de 
+multiplicité 1, une racine dans l’intervalle [1,3/2] qui est de 
+multiplicité 1 et une racine dans l’intervalle [3/2,2] qui est de 
+multiplicité 1.<br>
+On tape :<br>
+<span style="font-family:monospace">realroot(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">5+2*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4-6*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-7*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+7*x+7)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[[-5,-1],1],[-1,2],[[1,3/2],1],[[3/2,2],1]]</span><br>
+Ce qui veut dire que -1 est une racine de multiplicité 2, les 3 autres 
+racines sont de multiplicité 1 et se trouve dans les intervalles 
+[-5,-1],[1,3/2],[3/2,2].<br>
+On tape :<br>
+<span style="font-family:monospace">realroot(125*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-700*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1225*x-686)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[[1,2],2],[[2,4],1]]</span><br>
+Ce qui veut dire qu’il y a une racine de multiplicité 2 dans l’intervalle 
+[1,2] et une racine de multiplicité 1 dans l’intervalle [2,4].
+</li><li class="li-itemize">Si <span style="font-family:monospace">realroot</span> a 2 arguments (resp 3 arguments), <span style="font-family:monospace">realroot(P,l)</span> 
+(resp <span style="font-family:monospace">realroot(sturm,P,l)</span>) renvoie la liste des 
+vecteurs de coordonnées la valeur des racines réelles et exactes du 
+polynôme et leur multiplicité ou des vecteurs de coordonnées un 
+intervalle contenant une racine réelle du polynôme et la multiplicité de 
+cette racine.<br>
+Si l’intervalle renvoyé est [<span style="font-style:italic">a</span><sub>1</sub>,<span style="font-style:italic">a</span><sub>2</sub>] on a |<span style="font-style:italic">a</span><sub>1</sub>−<span style="font-style:italic">a</span><sub>2</sub>|&lt;<span style="font-style:italic">l</span> et 
+la racine <span style="font-style:italic">x</span><sub>1</sub> vérifie <span style="font-style:italic">a</span><sub>1</sub>≤ <span style="font-style:italic">x</span><sub>1</sub> ≤ <span style="font-style:italic">a</span><sub>2</sub>.<br>
+On tape :<br>
+<span style="font-family:monospace">realroot(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">5+2*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4-6*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-7*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+7*x+7,1e-5)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[[-1598513/524288,-1598509/524288],1],[-1,2],</span><br>
+<span style="font-family:monospace">[[2845609/2097152,2845625/2097152],1],</span><br>
+<span style="font-family:monospace">[[3548417/2097152,3548433/2097152],1]]</span><br>
+ce qui donne en valeurs approchèes :<br>
+<span style="font-family:monospace">[[[-3.04892158508,-3.04891395569],1.0],[-1.0,2.0],</span><br>
+<span style="font-family:monospace">[[1.35689210892,1.35689973831],1.0],</span><br>
+<span style="font-family:monospace">[[1.6920170784,1.69202470779],1.0]]</span><br>
+On tape :<br>
+<span style="font-family:monospace">realroot(sturm,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">5+2*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4-6*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-7*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+7*x+7,1e-5)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[[-99907/32768,-399627/131072],1],</span><br>
+<span style="font-family:monospace">[[177851/131072,44463/32768],1],</span><br>
+<span style="font-family:monospace">[[13861/8192,221777/131072],1],[-1,2]]</span><br>
+ce qui donne en valeurs approchèes :<br>
+<span style="font-family:monospace">[[[-3.04891967773,-3.04891204834],1.0],</span><br>
+<span style="font-family:monospace">[[1.35689544678,1.35690307617],1.0],</span><br>
+<span style="font-family:monospace">[[1.69201660156,1.69202423096],1.0],[-1.0,2.0]]</span><br>
+On tape :<br>
+<span style="font-family:monospace">realroot(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-7*x+7,1e-5)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[[-1598513/524288,-1598509/524288],1],</span><br>
+<span style="font-family:monospace">[[2845609/2097152,2845625/2097152],1],</span><br>
+<span style="font-family:monospace">[[3548417/2097152,3548433/2097152],1]]</span><br>
+ce qui donne en valeurs approchèes :<br>
+<span style="font-family:monospace">[[[-3.04892158508,-3.04891395569],1.0],</span><br>
+<span style="font-family:monospace">[[1.35689210892,1.35689973831],1.0],</span><br>
+<span style="font-family:monospace">[[1.6920170784,1.69202470779],1.0]]</span>
+</li><li class="li-itemize">Si <span style="font-family:monospace">realroot</span> a 4 arguments (resp 5 arguments), 
+<span style="font-family:monospace">realroot(P,l,a,b)</span> (resp <span style="font-family:monospace">realroot(sturm,P,l,a,b)</span>) ne renvoie que les 
+racines situées dans l’intervalle [<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>].
+</li></ul><p>
+On tape pour avoir les racines réelles de <span style="font-style:italic">x</span><sup>3</sup>+1 :
+</p><div class="center"><span style="font-family:monospace">realroot(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+1, 0.1)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[-1,1]] </span></div><p> 
+On tape pour avoir les racines réelles de <span style="font-style:italic">x</span><sup>3</sup>−<span style="font-style:italic">x</span><sup>2</sup>−2<span style="font-style:italic">x</span>+2 :
+</p><div class="center"><span style="font-family:monospace">realroot(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2*x+2, 0.1)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[[-3/2,-45/32],1],[1,1],[[11/8,23/16],1]]</span></div><p> 
+ou bien <br>
+</p><div class="center"><span style="font-family:monospace">realroot(sturm,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2*x+2, 0.1)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1,1],[[(-3)/2,(-45)/32],1],[[45/32,3/2],1]]</span></div><p> 
+On tape pour avoir les racines réelles de <span style="font-style:italic">x</span><sup>3</sup>−<span style="font-style:italic">x</span><sup>2</sup>−2<span style="font-style:italic">x</span>+2 dans l’intervalle 
+[0;2] :
+</p><div class="center"><span style="font-family:monospace">realroot(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2*x+2, 0.1,0,2)</span></div><p>
+ou<br>
+</p><div class="center"><span style="font-family:monospace">realroot(sturm,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2*x+2, 0.1,0,2)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1,1],[[11/8,23/16],1]]</span></div>
+<hr>
+<a href="cascmd_fr434.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr436.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

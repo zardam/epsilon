@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Parameters for changing features</title>
+</head>
+<body >
+<a href="cascmd_en824.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en826.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1070" class="subsection">12.3.2  Parameters for changing features</h3>
+<p>Graphical features are changed by giving appropriate values to
+certain parameters. Several values can be given at once with an
+expression of the form <span style="font-family:monospace"><span style="font-style:italic">feature</span></span><span style="font-family:monospace"> = value1 + value2 + …</span>.
+Some values can be set using optional arguments to graphic commands,
+which will set the feature locally; namely, it will only apply to that
+particular graphic object. Some values can be specified at the
+beginning of a line, which will set the feature globally; it will
+apply to all the graphic objects created on that line. For some
+features, both options are available. </p>
+<h4 id="sec1071" class="subsubsection">Parameters for local features</h4>
+<p>
+<a id="hevea_default1473"></a>
+<a id="hevea_default1474"></a>
+<a id="hevea_default1475"></a>
+<a id="hevea_default1476"></a>
+<a id="hevea_default1477"></a>
+<a id="hevea_default1478"></a>
+<a id="hevea_default1479"></a>
+<a id="hevea_default1480"></a>
+<a id="hevea_default1481"></a>
+<a id="hevea_default1482"></a>
+<a id="sec:localfeatures"></a></p><p>Commands which create graphic objects, such as <span style="font-family:monospace">triangle</span>, can
+have optional arguments to change a features of the object.
+For example, the argument <span style="font-family:monospace">color = red</span> will make an object red.<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">triangle(0,1,1+i,color=red)
+</span></div><p>
+Output:
+</p><div class="center">
+<img src="cascmd_en064.png">
+</div><p>The features and their possible values are:
+</p><dl class="description"><dt class="dt-description">
+<span style="font-weight:bold"><span style="font-family:monospace">display</span></span><span style="font-weight:bold"> or </span><span style="font-weight:bold"><span style="font-family:monospace">color</span></span></dt><dd class="dd-description"> These two parameter names
+have the same effect. They control the following features.
+<dl class="description"><dt class="dt-description">
+<span style="font-weight:bold">Color</span></dt><dd class="dd-description"> The following values will change the color:
+<ul class="itemize"><li class="li-itemize">
+An integer from <span style="font-family:monospace">0</span> to <span style="font-family:monospace">381</span>.<br>
+ Integers from 0 to 255 correspond to the color palette, integers from
+256 to 381 will be the spectrum of colors.<br>
+ The program
+<pre class="verbatim">  rainbow() := {
+    local j, C;
+    C := [];
+    for (j := 256; j &lt; 382; j++) {
+      C := append(C,square(j,j+1,color=j+filled));
+      }
+   }
+</pre>
+will show the colors;<br>
+Input:
+<div class="center">
+<span style="font-family:monospace">rainbow();
+</span></div>
+Output:
+<div class="center">
+<img src="cascmd_en065.png">
+</div>
+The number of a color is its <span style="font-style:italic">x</span>-coordinate. To see just
+one color, say the color corresponding to <span style="font-style:italic">n</span> for 256 ≤ <span style="font-style:italic">n</span> ≤ 381,
+enter<br>
+Input:
+<div class="center">
+<span style="font-family:monospace">rainbow()[</span><span style="font-style:italic">n</span><span style="font-family:monospace">-256]
+</span></div></li><li class="li-itemize">The names 
+<span style="font-family:monospace">black</span>, <span style="font-family:monospace">white</span>, <span style="font-family:monospace">red</span>, <span style="font-family:monospace">blue</span>,
+<span style="font-family:monospace">green</span>, <span style="font-family:monospace">magenta</span>, <span style="font-family:monospace">cyan</span> or <span style="font-family:monospace">yellow</span>.
+</li></ul></dd><dt class="dt-description"><span style="font-weight:bold">Fill</span></dt><dd class="dd-description"> The <span style="font-family:monospace">filled</span> value creates a solid object.<br>
+ Input:
+<div class="center">
+<span style="font-family:monospace">triangle(0,1,1+i,display=filled)
+</span></div>
+Output:
+<div class="center">
+<img src="cascmd_en066.png">
+</div>
+</dd><dt class="dt-description"><span style="font-weight:bold">Point markers</span></dt><dd class="dd-description"> By default, points are drawn 
+with a small cross. The following (self-explanatory) values
+change the marker.
+<dl class="description"><dt class="dt-description">
+<span style="font-weight:bold"><span style="font-family:monospace">rhombus_point</span></span></dt><dd class="dd-description">
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">square_point</span></span></dt><dd class="dd-description">
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">cross_point</span></span></dt><dd class="dd-description">
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">star_point</span></span></dt><dd class="dd-description"> 
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">plus_point</span></span></dt><dd class="dd-description"> 
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">point_point</span></span></dt><dd class="dd-description"> 
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">triangle_point</span></span></dt><dd class="dd-description">
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">invisible_point</span></span></dt><dd class="dd-description"> 
+</dd></dl></dd><dt class="dt-description"><span style="font-weight:bold">Point width</span></dt><dd class="dd-description"> The values
+<span style="font-family:monospace">point_width_1</span>,…,<span style="font-family:monospace">point_width_8</span>
+change the thickness of the lines in the point markers.</dd><dt class="dt-description"><span style="font-weight:bold">Line style</span></dt><dd class="dd-description"> The following (self-explanatory) values change
+the style of lines.
+<dl class="description"><dt class="dt-description">
+<span style="font-weight:bold"><span style="font-family:monospace">solid_line</span></span></dt><dd class="dd-description">
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">dash_line</span></span></dt><dd class="dd-description">
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">dashdot_line</span></span></dt><dd class="dd-description">
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">dashdotdot_line</span></span></dt><dd class="dd-description"> 
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">cap_flat_line</span></span></dt><dd class="dd-description"> 
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">cap_round_line</span></span></dt><dd class="dd-description"> 
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">cap_square_line</span></span></dt><dd class="dd-description">
+</dd></dl></dd><dt class="dt-description"><span style="font-weight:bold">Line widths</span></dt><dd class="dd-description"> The values
+<span style="font-family:monospace">line_width_1</span>,…,<span style="font-family:monospace">line_width_8</span>
+change the thickness of the lines.
+</dd></dl></dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">thickness</span></span></dt><dd class="dd-description"> This controls line thickness, it can be
+an integer from 1 to 7.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">nstep</span></span></dt><dd class="dd-description"> This sets the number of sampling points
+for three-dimensional objects.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">tstep</span></span></dt><dd class="dd-description"> This sets the step size of the
+parameter when drawing a one parameter parametric plot.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">ustep</span></span></dt><dd class="dd-description"> This sets the step size of the
+first parameter when drawing a two-parameter parametric plot.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">vstep</span></span></dt><dd class="dd-description"> This sets the step size of the
+second parameter when drawing a two-parameter parametric plot.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">xstep</span></span></dt><dd class="dd-description"> This sets the step size of the
+<span style="font-style:italic">x</span> variable.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">ystep</span></span></dt><dd class="dd-description"> This sets the step size of the
+<span style="font-style:italic">y</span> variable.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">zstep</span></span></dt><dd class="dd-description"> This sets the step size of the
+<span style="font-style:italic">z</span> variable.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">frames</span></span></dt><dd class="dd-description"> This sets the number of
+graphs computed when an animated graph is created with the
+<span style="font-family:monospace">animate</span> or <span style="font-family:monospace">animate3d</span> command.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">legend</span></span></dt><dd class="dd-description"> This adds a legend to a graphic object and
+should be a string. It is probably most useful when
+that object is a point or a polygon. If the object is a polygon,
+the legend will be placed in the middle of the last side. 
+Other parameters for the graphic object will specify the color or
+position of the legend.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">gl_texture</span></span></dt><dd class="dd-description"> This sets an
+image file to be put on the graphic object; it should be the name
+of the file.
+</dd></dl>
+<h4 id="sec1072" class="subsubsection">Parameters for global features</h4>
+<p>
+<a id="sec:globpar"></a></p><p>Parameters set at the beginning of a line change features on the
+entire graphic screen. It only takes effect
+when the line ends with a graphic command.
+For example, starting the line with <span style="font-family:monospace">title=</span><span style="font-family:monospace"><span style="font-style:italic">title
+string</span></span> will give the graphic screen a title.<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">title = "Some triangles"; triangle(0,1,1+i); triangle(2,3,3+i);
+</span></div><p>
+Output:
+</p><div class="center">
+<img src="cascmd_en067.png">
+</div><p>The parameters for global features and their possible values are:
+</p><dl class="description"><dt class="dt-description">
+<span style="font-weight:bold"><span style="font-family:monospace">axes</span></span></dt><dd class="dd-description">
+This determines whether axes are shown or hidden; a value of
+<span style="font-family:monospace">0</span> or <span style="font-family:monospace">false</span> hides the axes, a value of
+<span style="font-family:monospace">1</span> or <span style="font-family:monospace">true</span> shows the axes.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">labels</span></span></dt><dd class="dd-description"> This sets labels for the axes; it should be
+a list of two strings <span style="font-family:monospace">["</span><span style="font-family:monospace"><span style="font-style:italic">x axis label</span></span><span style="font-family:monospace">","</span><span style="font-family:monospace"><span style="font-style:italic">y
+axis label</span></span><span style="font-family:monospace">"]</span>.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">label</span></span></dt><dd class="dd-description">
+This puts labels on the graphic screen in the following ways.
+<ul class="itemize"><li class="li-itemize">
+To set the units on the axes, it can be a list of two or three strings,
+<span style="font-family:monospace">["</span><span style="font-family:monospace"><span style="font-style:italic">x units</span></span><span style="font-family:monospace">","</span><span style="font-family:monospace"><span style="font-style:italic">y units</span></span><span style="font-family:monospace">"]</span> or
+<span style="font-family:monospace">["</span><span style="font-family:monospace"><span style="font-style:italic">x units</span></span><span style="font-family:monospace">","</span><span style="font-family:monospace"><span style="font-style:italic">y units</span></span><span style="font-family:monospace">","</span><span style="font-family:monospace">z
+units</span><span style="font-family:monospace">"]</span>.
+</li><li class="li-itemize">To place a string at a particular point, it can
+be a list of two integers followed by a
+string. The integers determine the point,
+starting from <span style="font-family:monospace">[0,0]</span> in the top left of the
+screen.
+</li></ul>
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">title</span></span></dt><dd class="dd-description"> This sets the title for the graphic window,
+it should be a string.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">gl_texture</span></span></dt><dd class="dd-description"> This sets the wallpaper of the graphic
+window to be an image file, it should be the name of the file.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">gl_x_axis_name</span></span><span style="font-weight:bold">,</span><span style="font-weight:bold"><span style="font-family:monospace">gl_x_axis_name</span></span><span style="font-weight:bold">,</span><span style="font-weight:bold"><span style="font-family:monospace">gl_x_axis_name</span></span></dt><dd class="dd-description">
+These set the names of the axes.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">gl_x_axis_unit</span></span><span style="font-weight:bold">,</span><span style="font-weight:bold"><span style="font-family:monospace">gl_x_axis_unit</span></span><span style="font-weight:bold">,</span><span style="font-weight:bold"><span style="font-family:monospace">gl_x_axis_unit</span></span></dt><dd class="dd-description">
+These set the units of the axes. 
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">gl_x_axis_color</span></span><span style="font-weight:bold">,</span><span style="font-weight:bold"><span style="font-family:monospace">gl_x_axis_color</span></span><span style="font-weight:bold">,</span><span style="font-weight:bold"><span style="font-family:monospace">gl_x_axis_color</span></span></dt><dd class="dd-description">
+These set the colors of the axes
+labels; they take the same color options as the local parameter
+<span style="font-family:monospace">color</span>.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">gl_ortho</span></span></dt><dd class="dd-description"> This ensures that the graph is
+orthonormal when it is set to <span style="font-family:monospace">1</span>.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">gl_x</span></span><span style="font-weight:bold">,</span><span style="font-weight:bold"><span style="font-family:monospace">gl_y</span></span><span style="font-weight:bold">,</span><span style="font-weight:bold"><span style="font-family:monospace">gl_z</span></span></dt><dd class="dd-description">
+These define the framing of the graph; they should be intervals
+<span style="font-style:italic">min</span><span style="font-family:monospace">..</span><span style="font-style:italic">max</span>. (They are not compatible with
+interactive graphs.)
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">gl_xtick</span></span><span style="font-weight:bold">,</span><span style="font-weight:bold"><span style="font-family:monospace">gl_ytick</span></span><span style="font-weight:bold">,</span><span style="font-weight:bold"><span style="font-family:monospace">gl_ztick</span></span></dt><dd class="dd-description">
+These determine the spacing of the ticks on the axes.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">gl_shownames</span></span></dt><dd class="dd-description"> This shows or hides object names, it
+can be <span style="font-family:monospace">true</span> or <span style="font-family:monospace">false</span>.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">gl_rotation</span></span></dt><dd class="dd-description"> This sets the axis of rotation for
+three-dimensional scene animations; it should be a direction vector
+<span style="font-family:monospace">[</span><span style="font-style:italic">x</span><span style="font-family:monospace">,</span><span style="font-style:italic">y</span><span style="font-family:monospace">,</span><span style="font-style:italic">z</span><span style="font-family:monospace">]</span>.
+</dd><dt class="dt-description"><span style="font-weight:bold"><span style="font-family:monospace">gl_quaternion</span></span></dt><dd class="dd-description"> This sets the quaternion for viewing
+three-dimensional scenes; it should be a fourtuple
+<span style="font-family:monospace">[</span><span style="font-style:italic">x</span><span style="font-family:monospace">,</span><span style="font-style:italic">y</span><span style="font-family:monospace">,</span><span style="font-style:italic">z</span><span style="font-family:monospace">,</span><span style="font-style:italic">t</span><span style="font-family:monospace">]</span>. (This is not compatible with
+interactive graphs.)
+</dd></dl>
+<hr>
+<a href="cascmd_en824.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en826.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

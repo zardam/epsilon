@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Solving transportation problems: tpsolve</title>
+</head>
+<body >
+<a href="cascmd_fr632.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr634.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec777" class="subsection">6.54.7  Solving transportation problems: <span style="font-family:monospace">tpsolve</span></h3>
+<p><a id="hevea_default1166"></a>
+The objective of a transportation problem is to minimize the cost of distributing a product from  <span style="font-style:italic">m</span>  sources to  <span style="font-style:italic">n</span>  destinations. It is determined by three parameters :
+</p><ul class="itemize"><li class="li-itemize">
+supply vector  <span style="font-weight:bold"><span style="font-style:italic">s</span></span>=(<span style="font-style:italic">s</span><sub>1</sub>,<span style="font-style:italic">s</span><sub>2</sub>,…,<span style="font-style:italic">s</span><sub><span style="font-style:italic">m</span></sub>) , where  <span style="font-style:italic">s</span><sub><span style="font-style:italic">k</span></sub>∈ℤ ,  <span style="font-style:italic">s</span><sub><span style="font-style:italic">k</span></sub>&gt;0  is the maximum number of units that can be delivered from  <span style="font-style:italic">k</span> -th source for  <span style="font-style:italic">k</span>=1,2,…,<span style="font-style:italic">m</span> ,
+</li><li class="li-itemize">demand vector  <span style="font-weight:bold"><span style="font-style:italic">d</span></span>=(<span style="font-style:italic">d</span><sub>1</sub>,<span style="font-style:italic">d</span><sub>2</sub>,…,<span style="font-style:italic">d</span><sub><span style="font-style:italic">n</span></sub>) , where  <span style="font-style:italic">d</span><sub><span style="font-style:italic">k</span></sub>∈ℤ ,  <span style="font-style:italic">d</span><sub><span style="font-style:italic">k</span></sub>&gt;0  is the minimum number of units required by  <span style="font-style:italic">k</span> -th destination for  <span style="font-style:italic">k</span>=1,2,…,<span style="font-style:italic">n</span> ,
+</li><li class="li-itemize">cost matrix  <span style="font-weight:bold"><span style="font-style:italic">C</span></span>=[<span style="font-style:italic">c</span><sub><span style="font-style:italic">ij</span></sub>]<sub><span style="font-style:italic">m</span>× <span style="font-style:italic">n</span></sub> , where  <span style="font-style:italic">c</span><sub><span style="font-style:italic">ij</span></sub>∈ℝ ,  <span style="font-style:italic">c</span><sub><span style="font-style:italic">ij</span></sub>≥ 0  is the cost of transporting one unit of product from  <span style="font-style:italic">i</span> -th source to  <span style="font-style:italic">j</span> -th destination for  <span style="font-style:italic">i</span>=1,2,…,<span style="font-style:italic">m</span>  and  <span style="font-style:italic">j</span>=1,2,…,<span style="font-style:italic">n</span> .
+</li></ul><p>
+The optimal solution is represented as matrix  <span style="font-weight:bold"><span style="font-style:italic">X</span></span><sup>*</sup>=[<span style="font-style:italic">x</span><sub><span style="font-style:italic">ij</span></sub><sup>*</sup>]<sub><span style="font-style:italic">m</span>× <span style="font-style:italic">n</span></sub> , where  <span style="font-style:italic">x</span><sub><span style="font-style:italic">ij</span></sub><sup>*</sup>  is number of units that must be transported from  <span style="font-style:italic">i</span> -th source to  <span style="font-style:italic">j</span> -th destination for  <span style="font-style:italic">i</span>=1,2,…,<span style="font-style:italic">m</span>  and  <span style="font-style:italic">j</span>=1,2,…,<span style="font-style:italic">n</span> .</p><p>Function <span style="font-family:monospace">tpsolve</span> accepts three arguments: supply vector, demand vector and cost matrix, in that order. It returns a sequence of two elements: total (minimal) cost of transportation  <span style="font-style:italic">c</span>=∑<sub><span style="font-style:italic">i</span>=1</sub><sup><span style="font-style:italic">m</span></sup>∑<sub><span style="font-style:italic">j</span>=1</sub><sup><span style="font-style:italic">n</span></sup><span style="font-style:italic">c</span><sub><span style="font-style:italic">ij</span></sub> <span style="font-style:italic">x</span><sub><span style="font-style:italic">ij</span></sub><sup>*</sup>  and the optimal solution  <span style="font-weight:bold"><span style="font-style:italic">X</span></span><sup>*</sup> .</p><p>Input :
+</p><div class="center">
+<span style="font-family:monospace">s:=[12,17,11];d:=[10,10,10,10];</span><br>
+<span style="font-family:monospace">C:=[[50,75,30,45],[65,80,40,60],[40,70,50,55]];</span><br>
+<span style="font-family:monospace">tpsolve(s,d,C)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2020,[[0,0,2,10],[0,9,8,0],[10,1,0,0]]</span>
+</div><p>If total supply and total demand are equal, i.e. if  ∑<sub><span style="font-style:italic">i</span>=1</sub><sup><span style="font-style:italic">m</span></sup><span style="font-style:italic">s</span><sub><span style="font-style:italic">i</span></sub>=∑<sub><span style="font-style:italic">j</span>=1</sub><sup><span style="font-style:italic">n</span></sup><span style="font-style:italic">d</span><sub><span style="font-style:italic">j</span></sub>  holds, transportation problem is said to be <em>closed</em> or <em>balanced</em>. If total supply exceeds total demand or vice versa, the problem is <em>unbalanced</em>. Such cases are handled by adding a dummy demand resp. supply point to cover the excess and setting cost of “transportation” from resp. to dummy point to zero. In case of unbalanced problem, function <span style="font-family:monospace">tpsolve</span> adds dummy supply/demand point automatically.</p><p>Input :
+</p><div class="center">
+<span style="font-family:monospace">s:=[7,10,8,8,9,6];d:=[9,6,12,8,10];</span><br>
+<span style="font-family:monospace">C:=[[36,40,32,43,29],[28,27,29,40,38],[34,35,41,29,31],</span><br>
+<span style="font-family:monospace">[41,42,35,27,36],[25,28,40,34,38],[31,30,43,38,40]];</span><br>
+<span style="font-family:monospace">tpsolve(s,d,C)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">1275,[[0,0,2,0,5],[0,0,10,0,0],[0,0,0,0,5],</span><br>
+<span style="font-family:monospace">[0,0,0,8,0],[9,0,0,0,0],[0,6,0,0,0]]</span>
+</div><p>Sometimes it is desirable to forbid transportation on certain routes. That is usually achieved by setting very high cost to these routes, represented by symbol  <span style="font-style:italic">M</span> . If <span style="font-family:monospace">tpsolve</span> detects a symbol in cost matrix, it interprets it as  <span style="font-style:italic">M</span>  and assigns 100 times larger cost than the largest numeric element of  <span style="font-weight:bold"><span style="font-style:italic">C</span></span>  to the corresponding routes, which forces the algorithm to avoid them.</p><p>Input :
+</p><div class="center">
+<span style="font-family:monospace">s:=[95,70,165,165];d:=[195,150,30,45,75];</span><br>
+<span style="font-family:monospace">C:=[[15,M,45,M,0],[12,40,M,M,0],</span><br>
+<span style="font-family:monospace">[0,15,25,25,0],[M,0,M,12,0]]</span><br>
+<span style="font-family:monospace">tpsolve(s,d,C)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2820,[[20,0,0,0,75],[70,0,0,0,0],</span><br>
+<span style="font-family:monospace">[105,0,30,30,0],[0,150,0,15,0]]</span>
+</div>
+<hr>
+<a href="cascmd_fr632.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr634.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

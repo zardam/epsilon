@@ -1,0 +1,923 @@
+\documentclass[a4paper,11pt]{book}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{makeidx}
+\usepackage{times}
+\newcommand{\R}{{\mathbb{R}}}
+\newcommand{\C}{{\mathbb{C}}}
+\newcommand{\Z}{{\mathbb{Z}}}
+\newcommand{\N}{{\mathbb{N}}}
+\newcommand{\asinh}{\,\,\mbox{asinh\,}}
+\newcommand{\atanh}{\,\,\mbox{atanh\,}}
+\begin{document}
+\chapter{Graphs}\label{sec:plot}
+Most graph instructions take expressions as arguments. A few
+exceptions (mostly maple-compatibility instructions) also accept
+functions. 
+Some optional arguments, like {\tt color, thickness}, can  be used as optional
+attributes in all graphic instructions. They are described below.
+
+\section{Graph and geometric objects attributes}
+There are two kinds of attributes: global attributes of a graphic
+scene and individual attributes. 
+
+\subsection{Individual attributes}\index{color}\index{display}
+\index{red@{\it red}|textbf}\index{blue@{\it blue}|textbf}\index{yellow@{\it yellow}|textbf}\index{magenta@{\it magenta}|textbf}\index{green@{\it green}|textbf}\index{cyan@{\it cyan}|textbf}\index{white@{\it white}|textbf}\index{black@{\it black}|textbf}\index{filled@{\it filled}}
+Graphic attributes are optional arguments of the
+form {\tt display=value}, they must be given
+as last argument of a graphic instruction. Attributes
+are ordered in several categories: color, point shape, point width,
+line style, line thickness, legend value, position and presence. 
+In addition, surfaces may be filled or not, 3-d surfaces
+may be filled with a texture, 3-d objects may also have properties
+with respect to the light. 
+Attributes of different categories
+may be added, e.g. \\
+{\tt plotfunc($x^2+y^2$,[x,y],display=red+line\_width\_3+filled}
+\begin{itemize}
+\item Colors {\tt display=} or {\tt color=}
+\begin{itemize}
+\item {\tt black}, {\tt white}, {\tt red}, {\tt blue}, {\tt green}, 
+{\tt magenta}, {\tt cyan}, {\tt yellow},
+\item a numeric value between 0 and 255,
+\item a numeric value between 256 and 256+7*16+14 for a color of the
+rainbow,
+\item any other numeric value smaller than 65535, the rendering
+is not garanteed to be portable.
+\end{itemize}
+\item Point shapes {\tt display=} one of the following value
+{\tt rhombus\_point plus\_point  square\_point cross\_point 
+triangle\_point star\_point point\_point invisible\_point}
+\item Point width: {\tt display=} one of the following value
+{\tt point\_width\_n} where {\tt n} is an
+integer between 1 and 7
+\item Line thickness: {\tt thickness=n}
+or {\tt display=line\_width\_n} where {\tt n} is an
+integer between 1 and 7 or 
+\item Line shape: {\tt display=} one of the following value
+{\tt dash\_line solid\_line dashdot\_line dashdotdot\_line
+  cap\_flat\_line cap\_square\_line cap\_round\_line }
+\item Legend, value: {\tt legend="legendname"};
+ position: {\tt display=} one of
+{\tt quandrant1 quadrant2 quadrant3 quadrant4}
+corresponding to the position of the legend of the object 
+(using the trigonometric plan conventions).
+The legend is not displayed if the attribute 
+{\tt display=hidden\_name} is added
+\item {\tt display=filled} specifies that surfaces will be filled
+\item {\tt gl\_texture="picture\_filename"} is used to fill 
+a surface with a texture.  
+Cf. the interface manual for a more complete
+description and for {\tt gl\_material=} options.
+\end{itemize}
+{\bf Examples}
+Input
+\begin{center}{\tt polygone(-1,-i,1,2*i,legende="P")}\end{center}
+Input
+\begin{center}{\tt point(1+i,legende="bonjour")}\end{center}
+Input
+\begin{center}{\tt A:=point(1+i);B:=point(-1);affichage(D:=droite(A,B),hidden\_name)}\end{center}
+Input
+\begin{center}{\tt couleur(segment(0,1+i),rouge)}\end{center}
+Input
+\begin{center}{\tt segment(0,1+i,couleur=rouge)}\end{center}
+
+\subsection{Global attributes}
+These attributes are shared by all objets of the same scene
+\begin{itemize}
+\item {\tt title="titlename"} defines the title
+\item {\tt labels=["xname","yname","zname"]}: names of the $x,y,z$
+axis
+\item {\tt gl\_x\_axis\_name="xname"}, {\tt gl\_y\_axis\_name="yname"},
+{\tt gl\_z\_axis\_name=""}: individual definition
+of the names of the $x,y,z$ axis
+\item {\tt legend=["xunit","yunit","zunit"]}: units for the
+$x,y,z$ axis
+\item {\tt gl\_x\_axis\_unit="xunit"}, {\tt  gl\_y\_axis\_unit="yunit"},
+{\tt gl\_z\_axis\_unit=""}: individual definition
+of the units of the $x,y,z$ axis
+\item {\tt axes=true or false} show or hide axis
+\item {\tt gl\_texture="filename"}: background image
+\item {\tt gl\_x=xmin..xmax}, {\tt gl\_y=ymin..ymax},
+{\tt gl\_z=zmin..zmax}: set the graphic configuration 
+(do not use for interactive scenes)
+\item {\tt gl\_xtick=}, {\tt gl\_ytick=}, {\tt gl\_ztick=}:
+set the tick mark for the axis 
+\item {\tt gl\_shownames=true or false}: show or hide objects names
+\item {\tt gl\_rotation=[x,y,z]}: defines the rotation axis
+for the animation rotation of 3-d scenesé
+\item {\tt gl\_quaternion=[x,y,z,t]}: defines the quaternion
+for the visualization in 3-d scenes (do not use for interactive
+scenes)
+\item a few other OpenGL light configuration options are
+available but not described here.
+\end{itemize}
+{\bf Examples}
+Input
+\begin{center}{\tt legende=["mn","kg"]}\end{center}
+Input
+\begin{center}{\tt titre="medianes";triangle(-1-i,1,1+i);mediane(-1-i,1,1+i);mediane(1,-1-i,1+i);mediane(1+i,1,-1-i)}\end{center}
+Input
+\begin{center}{\tt labels=["u","v"];plotfunc(u+1,u)}\end{center}
+\section{Graph of a function : {\tt plotfunc funcplot DrawFunc Graph}}\index{plotfunc|textbf}\index{funcplot|textbf}\index{DrawFunc|textbf}\index{Graph|textbf}\index{xstep@{\sl xstep}}\index{ystep@{\sl ystep}}\index{zstep@{\sl zstep}}\index{nstep@{\sl nstep}}
+
+\subsection{2-d graph}\label{sec:plotfunc}
+\noindent{\tt plotfunc(f(x),x)} draws the graph of $y=f(x)$ for $x$ in
+the default interval, 
+{\tt plotfunc(f(x),x=a..b)} draws the graph of $y=f(x)$ for $a\leq x\leq b$.
+{\tt plotfunc} accepts an optional \verb|xstep=...| argument to 
+specify the discretisation step in $x$.\\
+Input :
+\begin{center}{\tt  plotfunc(x\verb|^|2-2)}\end{center}
+or
+\begin{center}{\tt  plotfunc(a\verb|^|2-2,a=-1..2)}\end{center}
+Output :
+\begin{center}{\tt the graph of y=x\verb|^|2-2}\end{center}
+Input :
+\begin{center}{\tt  plotfunc(x\verb|^|2-2,x,xstep=1)}\end{center}
+Output :
+\begin{center}{\tt a polygonal line which is a bad representation of y=x\verb|^|2-2 }\end{center}
+It is also possible to specify the number of points used for the 
+representation of the function with \verb|nstep=| instead of \verb|xstep=|.
+For example, input~:
+\begin{center}{\tt  plotfunc(x\verb|^|2-2,x=-2..3,nstep=30)}\end{center}
+
+\subsection{3-d graph}\label{sec:plotfunc3}
+\noindent{\tt plotfunc} takes two main arguments : an expression of two 
+variables or a list of several expressions of two variables and the list of 
+these two variables, where each variable may be replaced by
+an equality variable=interval to specify the range for this variable
+(if not specified, default values are taken from the graph configuration).
+{\tt plotfunc} accepts two optional arguments to specify 
+the discretisation step in $x$ and in $y$ by
+{\tt xstep=...} and {\tt ystep=...}.
+Alternatively one can specify the number of points used for the 
+representation of the function with \verb|nstep=| (instead of \verb|xstep| and 
+{\tt ystep}).\\
+{\tt plotfunc} draws the surface(s) defined by $z=$ the first argument.\\
+Input :
+\begin{center}{\tt plotfunc( x\verb|^|2+y\verb|^|2,[x,y])}\end{center}
+Output :
+\begin{center}{\tt A 3D graph of z=x\verb|^|2+y\verb|^|2}\end{center}
+Input :
+\begin{center}{\tt plotfunc(x*y,[x,y]) }\end{center}
+Output :
+\begin{center}{\tt The surface z=x*y, default ranges}\end{center}
+Input :
+\begin{center}{\tt plotfunc([x*y-10,x*y,x*y+10],[x,y]) }\end{center}
+Output :
+\begin{center}{\tt The surfaces z=x*y-10, z=x*y and z=x*y+10}\end{center}
+Input :
+\begin{center}{\tt plotfunc(x*sin(y),[x=0..2,y=-pi..pi]) }\end{center}
+Output :
+\begin{center}{\tt The surface $z=x*y$ for the specified ranges}\end{center}
+Now an example where we specify the $x$ and $y$ discretisation step 
+with \verb|xstep| and \verb|ystep|. Input :
+\begin{center}
+{\tt plotfunc(x*sin(y),[x=0..2,y=-pi..pi],xstep=1,ystep=0.5) }\end{center}
+Output :
+\begin{center}{\tt A portion of surface $z=x*y$}\end{center}
+Alternatively we may specify 
+the number of points used for the representation of the
+function with \verb|nstep| instead of \verb|xstep| and \verb|ystep|, input~:
+\begin{center}{\tt plotfunc(x*sin(y),[x=0..2,y=-pi..pi],nstep=300)}\end{center}
+Output :
+\begin{center}{\tt A portion of surface $z=x*y$}\end{center}
+{\bf Remarks}
+\begin{itemize}
+\item
+Like any 3-d scene, the viewpoint may be modified by rotation 
+around the {\tt x} axis, the {\tt y} axis or the
+{\tt z} axis, either by dragging the mouse inside the graphic 
+window (push the mouse outside the parallelepiped used for 
+the representation), or with the shortcuts
+{\tt x}, {\tt X}, {\tt y}, {\tt Y}, {\tt z} and {\tt Z}.
+\item
+If you want to print a graph or get a \LaTeX\ translation, use the graph
+menu\\
+{\tt Menu$\blacktriangleright$print$\blacktriangleright$Print(with
+  Latex)}
+\end{itemize}
+
+\subsection{3-d graph with rainbow colors}\label{sec:plotfunc3d}
+\noindent{\tt plotfunc} represents a pure imaginary expression {\tt i*E}
+of two variables with a rainbow color depending 
+on the value of {\tt z=E}. This gives an easy way to 
+find points having the same third coordinate.\\
+The first arguments of {\tt plotfunc} must be {\tt i*E} instead of {\tt E},
+the remaining arguments are the same 
+as for a real 3-d graph (cf \ref{sec:plotfunc3})
+Input :
+\begin{center}{\tt plotfunc(i*x*sin(y),[x=0..2,y=-pi..pi]) }\end{center}
+Output :
+\begin{center}{\tt A piece of the surface $z=x*\sin(y)$ with rainbow colors}\end{center}
+{\bf Remark}\\
+ If you want the impression or the  traduction Latex, you have to use :\\
+{\tt Menu$\blacktriangleright$print$\blacktriangleright$Print(with Latex)}. 
+
+\subsection{4-d graph.}\label{sec:plotfunc4}
+\noindent{\tt plotfunc} represents a complex expression {\tt E} 
+(such that {\tt re(E)} is not identically 0 on the discretisation mesh)
+by the surface {\tt z=abs(E)} where {\tt arg(E)} defines the color 
+from the rainbow. This gives an easy way to 
+see the points having the same argument.
+Note that if {\tt re(E)==0} on the discretisation mesh, 
+it is the surface {\tt z=E/i} that is represented with rainbow colors 
+(cf \ref{sec:plotfunc3d}).\\
+The first argument of {\tt plotfunc} is {\tt E}, 
+the remaining arguments are the same 
+as for a real 3-d graph (cf \ref{sec:plotfunc3}).
+Input :
+\begin{center}{\tt plotfunc((x+i*y)\verb|^|2,[x,y])}\end{center}
+Output :
+\begin{center}{\tt A graph 3D of z=abs((x+i*y)\verb|^|2 with the same color for
+points having the same argument}\end{center}
+Input :
+\begin{center}{\tt plotfunc((x+i*y)\verb|^|2x,[x,y], display=filled)}\end{center}
+Output :
+\begin{center}{\tt The same surface but filled}\end{center}
+We may specify the range of variation of $x$ and $y$ and the number of 
+discretisation points, input :
+\begin{center}{\tt plotfunc((x+i*y)\verb|^|2,[x=-1..1,y=-2..2], nstep=900,display=filled)}\end{center}
+Output :
+\begin{center}{\tt The specified part of the surface with $x$ between -1 and 1, $y$ between -2 and 2 and with 900 points}\end{center}
+ 
+\section{2d graph for Maple compatibility : {\tt plot}}
+\index{plot} \label{sec:plot2d}
+\noindent{\tt plot(f(x),x)} draws the graph of $y=f(x)$. 
+The second argument may specify the range of values {\tt
+  x=xmin..xmax}. One can also plot a function instead of an
+expression using the syntax {\tt plot(f,xmin..xmax)}.
+{\tt plot} accepts an optional argument to specify 
+the step used in $x$ for the discretisation with  
+\verb|xstep=| or the number of points of the discretization
+with \verb|nstep=|.\\
+Input :
+\begin{center}{\tt  plot(x\verb|^|2-2,x)}\end{center}
+Output :
+\begin{center}{\tt the graph of y=x\verb|^|2-2}\end{center}
+Input :
+\begin{center}{\tt  plot(x\verb|^|2-2,xstep=1)}\end{center}
+or 
+\begin{center}{\tt  plot(x\verb|^|2-2,x,xstep=1)}\end{center}
+Output :
+\begin{center}{\tt a polygonal line which is a bad representation of
+    y=x\verb|^|2-2 }\end{center}
+Input!
+\begin{center}{\tt  plot(x\verb|^|2-2,x=-2..3,nstep=30)}\end{center}
+
+
+\section{3d surfaces for Maple compatibility {\tt plot3d}}\index{plot3d}
+\noindent{\tt plot3d} takes three arguments : a function of two variables or 
+an expression of two variables  or a list of three functions of two variables 
+or a list of three expressions of two variables and the names of these two 
+variables with an optional range (for expressions) or the ranges 
+(for functions).\\
+{\tt plot3d(f(x,y),x,y)} (resp {\tt plot3d([f(u,v),g(u,v),h(u,v)],u,v)}) draws 
+the surface $z=f(x,y)$ (resp $x=f(u,v),y=g(u,v),z=h(u,v)$).
+The syntax {\tt plot3d(f(x,y),x=x0..x1,y=y0..y1)} or 
+{\tt plot3d(f,x0..x1,y0..y1)} specifies which part of surface 
+will be computed (otherwise default values are taken from the graph
+configuration).\\ 
+Input :
+\begin{center}{\tt plot3d(x*y,x,y)}\end{center}
+Output :
+\begin{center}{\tt The surface $z=x*y$}\end{center}
+Input :
+\begin{center}{\tt plot3d([v*cos(u),v*sin(u),v],u,v) }\end{center}
+Output :
+\begin{center}{\tt The cone $x=v*\cos(u),y=v*\sin(u),z=v$}\end{center}
+Input :
+\begin{center}{\tt plot3d([v*cos(u),v*sin(u),v],u=0..pi,v=0..3)}\end{center}
+Output :
+\begin{center}{\tt A portion of the cone $x=v*\cos(u),y=v*\sin(u),z=v$}\end{center}
+
+\section{Graph of a line and tangent to a graph}
+\subsection{Draw a line : {\tt line}}\index{line}\label{sec:doite}
+{\bf See also :} \ref{sec:droite2} and \ref{sec:droite3} for line usage in 
+geometry and see \ref{sec:axe2} and \ref{sec:axe3} for axis.\\
+\noindent {\tt line} takes as argument cartesian(s) equation(s) :
+\begin{itemize}
+\item in 2D: one line equation,
+\item in 3D: two plane equations.
+\end{itemize}
+{\tt line} defines and draws the corresponding line.\\
+Input :
+\begin{center}{\tt line(2*y+x-1=0)}\end{center}
+Output :
+\begin{center}{\tt the line 2*y+x-1=0}\end{center}
+Input :
+\begin{center}{\tt line(y=1)}\end{center}
+Output :
+\begin{center}{\tt the horizontal line y=1}\end{center}
+Input :
+\begin{center}{\tt line(x=1)}\end{center}
+Output :
+\begin{center}{\tt the vertical line x=1}\end{center}
+Input :
+\begin{center}{\tt line(x+2*y+z-1=0,z=2)}\end{center}
+Output :
+\begin{center}{\tt the line x+2*y+1=0 in the plane z=2}\end{center}
+Input :
+\begin{center}{\tt line(y=1,x=1)}\end{center}
+Output :
+\begin{center}{\tt the vertical line crossing through (1,1,0)}\end{center}
+{\bf Remark}\\
+{\tt line} defines an oriented line :
+\begin{itemize}
+\item when the 2D line is given by an equation, it is rewritten
+as "left\_member-right\_member={\tt ax+by+c=0}", this determinates
+its normal vector {\tt [a,b]} and the orientation is given by the vector 
+{\tt [b,-a]}) (or its orientation is defined by the 3D cross product of its
+normal vectors (with third coordinate 0) and the vector [0,0,1]).\\
+For example {\tt line(y=2*x)} defines the line {\tt -2x+y=0} with as direction 
+the vector {\tt [1,2]} (or {\tt cross([-2,1,0],[0,0,1])}={\tt [1,2,0]}).
+\item when the 3D line is given by two plane equations, it's 
+direction is defined by the cross product of the normals to the planes 
+(where the plane equation is rewritten as
+"left\_member-right\_member={\tt ax+by+cz+d=0}", so that
+the normal is {\tt [a,b,c]}).\\
+For example the {\tt line(x=y,y=z)} is the line {\tt x-y=0,y-z=0} and its
+direction is :\\
+{\tt cross([1,-1,0],[0,1,-1])}={\tt [1,1,1]}.
+\end{itemize}
+
+\subsection{Draw an 2D horizontal line : {\tt LineHorz}}\index{LineHorz}
+\noindent {\tt LineHorz} takes as argument an expression $a$.\\
+ {\tt LineHorz} draws the horizontal line $y=a$.\\
+Input :
+\begin{center}{\tt LineHorz(1)}\end{center}
+Output :
+\begin{center}{\tt the line y=1}\end{center}
+
+\subsection{Draw a 2D vertical line : {\tt LineVert}}\index{LineVert}
+\noindent {\tt LineVert} takes as argument an expression $a$.\\
+ {\tt LineVert} draws the vertical line $x=a$.\\
+Input :
+\begin{center}{\tt LineVert(1)}\end{center}
+Output :
+\begin{center}{\tt the line x=1}\end{center}
+
+\subsection{Tangent to a 2D graph : {\tt LineTan}}\index{LineTan}
+\noindent {\tt LineTan} takes two arguments : an expression $E_x$ of the
+variable $x$ and a value $x0$ of $x$.\\
+ {\tt LineTan} draws the tangent at $x=x0$ to the graph of $y=E_x$.\\
+Input :
+\begin{center}{\tt LineTan(ln(x),1)}\end{center}
+Output :
+\begin{center}{\tt the line y=x-1}\end{center}
+Input :
+\begin{center}{\tt equation(LineTan(ln(x),1))}\end{center}
+Output :
+\begin{center}{\tt y=(x-1)}\end{center}
+
+\subsection{Tangent to a 2D graph : {\tt tangent}}\index{tangent|textbf}\label{sec:tangente}
+{\bf See also :} \ref{sec:tangent} for plane geometry and 
+\ref{sec:tangent3} for 3D geometry.\\
+\noindent {\tt tangent} takes two arguments : an geometric object and a point 
+{\tt A}.\\
+{\tt tangent} draws tangent(s) to this geometric object crossing through 
+{\tt A}. If the geometric object is the graph {\tt G} of a 2D function, 
+the second argument is either, a real number {\tt x0}, or a 
+point {\tt A} on {\tt G}. In that case {\tt tangent} draws a tangent to this
+graph {\tt G} crossing through the point {\tt A} or through the 
+point of abscissa {\tt x0}.\\
+For example, define the function {\tt g}
+\begin{center} \verb|g(x):=x^2|\end{center}
+then the graph {\tt G=\{(x,y)$\in \R^2$, y=g(x)\}}
+of $g$ and a point $A$ on the graph $G$:
+\begin{center}
+{\tt G:=plotfunc(g(x),x);}\\
+{\tt A:=point(1.2,g(1.2));}
+\end{center}
+If we want to draw the tangent at the point {\tt A} to the graph {\tt
+  G}, we will input:
+\begin{center}
+{\tt T:=tangent(G, A)}
+\end{center}
+or :
+\begin{center}
+{\tt T:=tangent(G, 1.2)}
+\end{center}
+For the equation of the tangent line, input :
+\begin{center}{\tt equation(T)}\end{center}
+
+\subsection{Intersection of a 2D graph with the axis}\index{solve}\index{resoudre}
+\begin{itemize}
+\item The ordinate of the intersection of the graph of $f$ with the 
+$y$-axis is returned by :
+\begin{center}{\tt f(0)}\end{center}
+indeed the point of coordinates $(0,f(0))$ is the intersection point of the 
+graph of $f$ with the $y$-axis,
+\item Finding the intersection of the graph of $f$ with the $x$-axis 
+requires to solve the equation $f(x)=0$. \\
+If the equation is polynomial-like, {\tt solve} will find
+the exact values of the abscissa of these points. Input:
+\begin{center}{\tt solve(f(x),x)}\end{center}
+Otherwise, we can find numeric approximations of these 
+abscissa. First look at the graph for an initial guess or a
+range with an intersection and refine with {\tt fsolve}.
+\end{itemize}
+
+\section{Graph of inequations with 2 variables : {\tt plotinequation inequationplot}}\index{plotinequation|textbf}\index{inequationplot|textbf}
+\noindent{\tt plotinequation([f1(x,y)<a1,...fk(x,y)<ak],[x=x1..x2,y=y1..y2])} 
+draws the points of the plane whose coordinates
+satisfy the inequations of 2 variables :
+\[ \left\{ \begin{array}{ccc}
+f1(x,y) &<&a1 \\
+& ... & \\
+fk(x,y)&<&ak 
+\end{array}\right., \quad
+x1\leq x \leq x2, y1 \leq y \leq y2 \]
+Input :
+\begin{center}{\tt plotinequation(x\verb|^|2-y\verb|^|2<3, [x=-2..2,y=-2..2],xstep=0.1,ystep=0.1)}\end{center}
+Output :
+\begin{center}{\tt the filled portion enclosing the origin and limited by the hyperbola x\verb|^|2-y\verb|^|2=3}\end{center}
+Input :
+\begin{center}{\tt plotinequation([x+y>3,x\verb|^|2<y], [x-2..2,y=-1..10],xstep=0.2,ystep=0.2)}\end{center}
+Output :
+\begin{center}{\tt the filled portion of the plane defined by -2<x<2,y<10,x+y>3,y>x\verb|^|2}\end{center}
+Note that if the ranges for $x$ and $y$ are not specified, 
+{\tt Xcas} takes the default values of 
+{\tt X-,X+,Y-,Y+} defined in the general graphic configuration
+({\tt Cfg$\blacktriangleright$Graphic configuration}).
+
+\section{Graph of the area below a curve : {\tt plotarea areaplot}}\index{plotarea|textbf}\index{areaplot|textbf}\index{rectangle\_droit@{\sl rectangle\_droit}|textbf}\index{rectangle\_gauche@{\sl rectangle\_gauche}|textbf}\index{trapeze@{\sl trapeze}|textbf}\index{point\_milieu@{\sl point\_milieu}|textbf}
+\begin{itemize}
+\item With two arguments, {\tt plotarea} shades the area below a curve.\\ 
+{\tt plotarea(f(x),x=a..b)} draws the area below the curve $y=f(x)$ for 
+$a<x<b$, i.e. the portion of the plane defined by the inequations $a<x<b$ and
+$0<y<f(x)$ or $0>y>f(x)$ according to the sign of $f(x)$ .\\
+Input :
+\begin{center}{\tt plotarea(sin(x),x=0..2*pi)}\end{center}
+Output :
+\begin{center}{\tt the portion of plane locates in the two archs of sin(x)}\end{center}
+\item With four arguments, {\tt plotarea}  represents a numeric approximation
+of the area below a curve, according to a quadrature method from the
+following list:\\
+{\tt trapezoid,rectangle\_left,rectangle\_right,middle\_point}.\\
+For example {\tt plotarea(f(x),x=a..b,n,trapezoid)} 
+draws the area of $n$ trapezes : the 
+third argument is an integer $n$, and the fourth argument is the name of the 
+numeric method of integration when $[a,b]$ is cut into $n$ equal parts.\\
+Input :
+\begin{center}{\tt plotarea((x\verb|^|2,x=0..1,5,trapezoid)}\end{center}
+If you want to display the graph of the curve in contrast
+(e.g. in bold red), input :
+\begin{center}{\tt plotarea(x\verb|^|2,x=0..1,5,trapezoid); 
+plot(x\verb|^|2,x=0..1,display=red+line\_width\_3)}\end{center}
+Output :
+\begin{center}{\tt the 5 trapezes used in the trapezoid method to approach the integral}\end{center}
+Input :
+\begin{center}{\tt plotarea((x\verb|^|2,x=0..1,5,middle\_point)}\end{center}
+Or with the graph of the curve in bold red, input :
+\begin{center}{\tt plotarea(x\verb|^|2,x=0..1,5,middle\_point); plot(x\verb|^|2,x=0..1,display=red+line\_width\_3)}\end{center}
+Output :
+\begin{center}{\tt the 5 rectangles used in the middle\_point method
+    to approach the integral}\end{center}
+\end{itemize}
+
+\section{Contour lines: {\tt plotcontour contourplot \\DrwCtour}}\index{plotcontour|textbf}\index{contourplot|textbf}\index{DrwCtour|textbf}\label{sec:plotcontour}
+\noindent{\tt plotcontour(f(x,y),[x,y])} (or {\tt DrwCtour(f(x,y),[x,y])} or \\
+ {\tt contourplot(f(x,y),[x,y])})
+draws the contour lines of the surface defined by $z=f(x,y)$ for $z=-10$, 
+$z=-8$, .., $z=0$, $z=2$, .., $z=10$. You may specify the desired contour
+lines by a list of values of $z$ given as third argument.\\
+Input :
+\begin{center}{\tt  plotcontour(x\verb|^|2+y\verb|^|2,[x=-3..3,y=-3..3],[1,2,3], display=[green,red,black]+[filled\$3])}\end{center}
+Output :
+\begin{center}{\tt  the graph of the three ellipses x\verb|^|2-y\verb|^|2=n for n=1,2,3; the zones between these ellipses are filled with the color green,red or black}\end{center}
+Input :
+\begin{center}{\tt  plotcontour(x\verb|^|2-y\verb|^|2,[x,y])}\end{center}
+Output :
+\begin{center}{\tt  the graph of 11 hyperbolas x\verb|^|2-y\verb|^|2=n for n=-10,-8,..10}\end{center}
+
+If you want to draw the surface in 3-d representation, 
+input {\tt plotfunc(f(x,y),[x,y])}, see \ref{sec:plotfunc3}):
+\begin{center}{\tt plotfunc( x\verb|^|2-y\verb|^|2,[x,y])}\end{center}
+Output :
+\begin{center}{\tt A 3D representation of z=x\verb|^|2+y\verb|^|2}\end{center}
+
+\section{2-d graph of a 2-d function with colors : 
+{\tt plotdensity densityplot}}
+\index{plotdensity|textbf}\index{densityplot|textbf}
+\noindent{\tt plotdensity(f(x,y),[x,y])}  or  {\tt densityplot(f(x,y),[x,y])}
+draws the graph of $z=f(x,y)$ in the plane where the values of
+$z$ are represented by the rainbow colors. The optional argument
+{\tt z=zmin..zmax} specifies the range of $z$ corresponding to the
+full rainbow, if it is not specified, it is deduced from the minimum
+and maximum value of $f$ on the discretisation. The discretisation
+may be specified by optional {\tt xstep=...} and {\tt ystep=...}
+or {\tt nstep=...} arguments.\\
+Input :
+\begin{center}{\tt plotdensity(x\verb|^|2-y\verb|^|2,[x=-2..2,y=-2..2], xstep=0.1,ystep=0.1)}\end{center}
+Output :
+\begin{center}{\tt A 2D graph where each hyperbola defined by
+    x\verb|^|2-y\verb|^|2=z has a color from the rainbow}\end{center}
+{\bf Remark} : A rectangle representing the scale of colors is 
+displayed below the graph.
+
+\section{Implicit graph: {\tt plotimplicit implicitplot}}\index{plotimplicit}\index{implicitplot}\index{unfactored}
+\noindent{\tt plotimplicit} or {\tt implicitplot} draws curves or 
+surfaces defined by an implicit expression or equation. 
+If the option {\tt unfactored} is given as last argument, the
+original expression is taken unmodified. Otherwise,
+the expression is normalized, then replaced by the
+factorization of the numerator of it's normalization.
+
+Each factor of the expression corresponds to a component
+of the implicit curve or surface. For each factor,
+Xcas tests if it is of total
+degree less or equal to 2, in that case {\tt conic} or
+{\tt quadric} is called. Otherwise the numeric implicit solver
+is called. 
+
+Optional step and ranges arguments may be passed to the numeric
+implicit solver, note that they are dismissed for each component
+that is a conic or a quadric.
+
+\subsection{2D implicit curve}\label{sec:implicitplot}
+\begin{itemize}
+\item {\tt plotimplicit(f(x,y),x,y)} draws the graphic representation of the
+curve defined by the implicit equation $f(x,y)=0$ when $x$ (resp $y$) 
+is in {\tt WX-, WX+} (resp in {\tt WY-, WY+}) defined by {\tt cfg}, 
+
+\item {\tt plotimplicit(f(x,y),x=0..1,y=-1..1)} draws the graphic 
+representation of the curve defined by the implicit equation $f(x,y)=0$ 
+when $0\leq x \leq 1$ and $-1\leq y \leq 1$
+\end{itemize} 
+It is possible to add two arguments to specify the discretisation
+steps for $x$ 
+and $y$ with {\tt xstep=...} and {\tt ystep=...}.\\
+Input :
+\begin{center}{\tt plotimplicit(x\verb|^|2+y\verb|^|2-1,x,y)}\end{center}
+Or :
+\begin{center}{\tt plotimplicit(x\verb|^|2+y\verb|^|2-1,x,y,unfactored)}\end{center}
+Output :
+\begin{center}{\tt The unit circle}\end{center}
+Input :
+\begin{center}{\tt plotimplicit(x\verb|^|2+y\verb|^|2-1,x,y,xstep=0.2,ystep=0.3)}\end{center}
+Or :
+\begin{center}{\tt plotimplicit(x\verb|^|2+y\verb|^|2-1,[x,y],xstep=0.2,ystep=0.3)}\end{center}
+Or :
+\begin{center}{\tt plotimplicit(x\verb|^|2+y\verb|^|2-1,[x,y], xstep=0.2,ystep=0.3,unfactored)}\end{center}
+Output :
+\begin{center}{\tt The unit circle}\end{center}
+Input :
+\begin{center}{\tt plotimplicit(x\verb|^|2+y\verb|^|2-1,x=-2..2,y=-2..2, xstep=0.2,ystep=0.3)}\end{center}
+Output :
+\begin{center}{\tt The unit circle}\end{center}
+
+\subsection{3D implicit surface}\label{sec:implicitplot3}
+\begin{itemize}
+\item {\tt plotimplicit(f(x,y,z),x,y,z)} draws the graphic 
+representation of the surface defined by the implicit equation $f(x,y,z)=0$, 
+\item {\tt plotimplicit(f(x,y,z),x=0..1,y=-1..1,z=-1..1)} draws the surface 
+defined by the implicit equation $f(x,y,z)=0$, 
+where $0\leq x \leq 1$, $-1\leq y \leq 1$ and $-1\leq z \leq 1$.
+\end{itemize}
+It is possible to add three arguments to specify the discretisation
+steps used for $x$, $y$ and $z$ with {\tt xstep=...}, {\tt ystep=...} and 
+{\tt zstep=...}.\\
+Input :
+\begin{center}{\tt plotimplicit(x\verb|^|2+y\verb|^|2+z\verb|^|2-1,x,y,z, xstep=0.2,ystep=0.1,zstep=0.3)}\end{center}
+Input :
+\begin{center}{\tt plotimplicit(x\verb|^|2+y\verb|^|2+z\verb|^|2-1,x,y,z, xstep=0.2,ystep=0.1,zstep=0.3,unfactored)}\end{center}
+Output :
+\begin{center}{\tt The unit sphere}\end{center}
+Input :
+\begin{center}{\tt plotimplicit(x\verb|^|2+y\verb|^|2+z\verb|^|2-1,x=-1..1,y=-1..1,z=-1..1)}\end{center}
+Output :
+\begin{center}{\tt The unit sphere}\end{center}
+
+\section{Parametric curves and surfaces : {\tt plotparam paramplot DrawParm}}\index{plotparam|textbf}\index{paramplot|textbf}\index{DrawParm|textbf}
+\subsection{2D parametric curve }
+\noindent {\tt plotparam([f(t),g(t)],t)}
+or {\tt plotparam(f(t)+i*g(t),t)} (resp 
+{\tt plotparam(f(t)+i*g(t),t=t1..t2)})
+draws the parametric representation of the curve 
+defined by  $x=f(t),y=g(t)$ 
+with the default range of values of $t$ (resp for $t1 \leq t\leq t2$).\\
+The default range of values is taken as specified 
+in the graphic configuration ({\tt t-} and {\tt t+}, 
+cf. \ref{sec:configgeo}).
+{\tt plotparam} accepts an optional argument to specify the discretisation
+step for $t$ with {\tt tstep=}.\\ 
+Input :
+\begin{center}{\tt plotparam(cos(x)+i*sin(x),x) }\end{center}
+or :
+\begin{center}{\tt plotparam([cos(x),sin(x)],x) }\end{center}
+Output :
+\begin{center}{\tt The unit circle}\end{center}
+If in the graphic configuration {\tt t} goes from -4 to 1, input :
+\begin{center}{\tt plotparam(sin(t)+i*cos(t))}\end{center}
+or :
+\begin{center}{\tt plotparam(sin(t)+i*cos(t),t=-4..1) }\end{center}
+or :
+\begin{center}{\tt plotparam(sin(x)+i*cos(x),x=-4..1) }\end{center}
+Output :
+\begin{center}{\tt the arc (sin(-4)+i*cos(-4),sin(1)+i*cos(1)) of the unit circle}\end{center}
+If in the graphic configuration {\tt t} goes from -4 to 1, input :
+\begin{center}{\tt plotparam(sin(t)+i*cos(t),t,tstep=0.5)}\end{center}
+Or :
+\begin{center}{\tt plotparam(sin(t)+i*cos(t),t=-4..1,tstep=0.5)}\end{center}
+Output :
+\begin{center}{\tt A polygon approching the arc (sin(-4)+i*cos(-4),sin(1)+i*cos(1)) of the unit circle}\end{center}
+
+\subsection{3D parametric surface : {\tt plotparam paramplot DrawParm}}\index{plotparam}\index{paramplot}\index{DrawParm}
+\noindent{\tt plotparam} takes two main arguments,
+a list of three 
+expressions of two variables and the list of these variable names
+where each variable name may be replaced by variable=interval
+to specify the range of the parameters.
+It accepts an optionnal argument to specify
+the discretisation steps of the parameters $u$ and $v$ with 
+{\tt ustep=...} and {\tt vstep=...}.\\
+{\tt plotparam([f(u,v),g(u,v),h(u,v)],[u,v])} draws the surface defined by the 
+first argument : $x=f(u,v),y=g(u,v),z=h(u,v)$, where $u$ and $v$
+ranges default to the graphic configuration.\\
+Input :
+\begin{center}{\tt plotparam([v*cos(u),v*sin(u),v],[u,v])}\end{center}
+Output :
+\begin{center}{\tt The cone $x=v*\cos(u),y=v*\sin(u),z=v$}\end{center}
+To specify the range of each parameters, replace each variable
+by an equation variable=range, like this:
+\begin{center}{\tt plotparam([v*cos(u),v*sin(u),v],[u=0..pi,v=0..3]) }\end{center}
+Output :
+\begin{center}{\tt A portion of the cone $x=v*\cos(u),y=v*\sin(u),z=v$}\end{center}
+Input :
+\begin{center}{\tt plotparam([v*cos(u),v*sin(u),v],[u=0..pi,v=0..3],ustep=0.5,vstep=0.5)}\end{center}
+Output :
+\begin{center}{\tt A portion of the cone $x=v*\cos(u),y=v*\sin(u),z=v$}\end{center}
+ 
+\section{Curve defined in polar coordinates : {\tt plotpolar polarplot DrawPol courbe\_polaire}}\index{plotpolar|textbf}\index{polarplot|textbf}\index{DrawPol|textbf}\index{courbe\_polaire|textbf}
+\noindent Let $E_t$ be an expression depending of the variable $t$.\\
+{\tt plotpolar($E_t$,t)} draws the polar representation of the
+curve defined by $\rho=E_t$ for $\theta=t$, that is
+in cartesian coordinates the curve $(E_t \cos(t),E_t \sin(t))$.
+The range of the parameter may be specified by replacing the second argument
+by {\tt t=tmin..tmax}. The discretisation parameter may be specified
+by an optional {\tt tstep=...} argument.\\
+Input 
+\begin{center}{\tt  plotpolar(t,t)}\end{center}
+Output :
+\begin{center}{\tt The spiral $\rho$=t is plotted}\end{center}
+Input
+\begin{center}{\tt  plotpolar(t,t,tstep=1)}\end{center}
+or :
+\begin{center}{\tt  plotpolar(t,t=0..10,tstep=1)}\end{center}
+Output :
+\begin{center}{\tt A polygon line approaching the spiral $\rho$=t is plotted}\end{center}
+
+\section{Graph of a recurrent sequence : {\tt plotseq seqplot graphe\_suite}}\index{plotseq}\index{seqplot}\index{graphe\_suite}\label{sec:plotseq}
+\noindent Let $f(x)$ be an expression depending of the variable $x$ 
+(resp. $f(t)$ an expression depending of the variable $t$).\\
+{\tt plotseq($f(x)$,a,n)} (resp. {\tt plotseq($f(t)$,t=a,n)}) draws the line 
+$y=x$, the graph of $y=f(x)$ (resp $y=f(t)$) and the $n$ first terms of the
+recurrent sequence defined by : $u_0=a,\ \ u_n=f(u_{n-1})$.
+The $a$ value may be replaced by a list of 3 elements, $[a,x_-,x_+]$
+where $x_-..x_+$ will be passed as $x$ range for the graph computation.\\ 
+Input :
+\begin{center}{\tt plotseq(sqrt(1+x),x=[3,0,5],5)}\end{center}
+Output :
+\begin{center}{\tt the graph of y=sqrt(1+x), of y=x and of the 5 first terms of the sequence u\_0=3 and u\_n=sqrt(1+u\_(n-1))}\end{center}
+
+\section{Tangent field : {\tt plotfield fieldplot}}\index{plotfield}\index{fieldplot}
+\begin{itemize}
+\item Let $f(t,y)$ be an expression depending of two variables $t$ and $y$, 
+then :
+\begin{center}
+{\tt plotfield(f(t,y),[t,y])}
+\end{center} 
+draws the tangent field of the 
+differential equation $y'=f(t,y)$ where $y$ is a real variable and
+where $t$ is the abscissa,
+\item Let $V$ be 
+a vector of two expressions depending of 2 variables $x,y$ but 
+independant of the time $t$, then 
+\begin{center}
+{\tt plotfield(V,[x,y])}
+\end{center}
+draws the vector field $V$,
+\item The range of values of $t,y$ or of $x,y$ can be specified with\\
+{\tt t=tmin..tmax}, {\tt x=xmin..xmax}, {\tt y=ymin..ymax}\\
+in place of the variable name.
+\item The discretisation may be specified with optional
+arguments {\tt xstep=...}, {\tt ystep=...}.
+\end{itemize}
+Input :
+\begin{center}{\tt plotfield(4*sin(t*y),[t=0..2,y=-3..7]) }\end{center}
+Output :
+\begin{center}{\tt Segments with slope 4*sin(t*y), representing tangents, are plotting in different points}\end{center}
+With two variables $x,y$, input :
+\begin{center}
+{\tt plotfield(5*[-y,x],[x=-1..1,y=-1..1]) }
+\end{center}
+
+\section{Plotting a solution of a differential equation : {\tt plotode odeplot}}\index{plotode}\index{odeplot}
+\noindent Let $f(t,y)$ be an expression depending of two variables 
+$t$ and $y$.
+\begin{itemize}
+\item {\tt plotode($f(t,y)$,[t,y],[t0,y0])} draws the solution of 
+the differential equation $y'=f(t,y)$ crossing through 
+the point {\tt (t0,y0)} (i.e. such that $y(t_0)=y_0$)
+\item
+By default, $t$ goes in both directions. The range of value of $t$
+may be specified by the optional argument
+{\tt t=tmin..tmax}.
+\item
+We can also represent, in the space or in the plane,
+the solution of a differential equation 
+$y'=f(t,y)$ where $y=(X,Y)$ is a vector of size 2.
+Just replace  $y$ by the variable names $X,Y$
+and the initial value $y_0$ by the two initial values of the
+variables at time $t_0$.
+\end{itemize}
+Input :
+\begin{center}{\tt plotode(sin(t*y),[t,y],[0,1]) }\end{center}
+Output :
+\begin{center}{The graph of the solution of y'=sin(t,y) crossing through the point (0,1)}\end{center}
+Input~:
+\begin{center}
+{\tt S:=odeplot([h-0.3*h*p, 0.3*h*p-p], [t,h,p],[0,0.3,0.7])}
+\end{center}
+Output, the graph in the space of the solution of :
+\[ [h,p]'=[h-0.3 h*p, 0.3 h*p-p] \quad [h,p](0)=[0.3,0.7] \]
+To have a 2-d graph (in the plane), use the option 
+{\tt plane}
+\begin{center}
+{\tt S:=odeplot([h-0.3*h*p, 0.3*h*p-p], [t,h,p],[0,0.3,0.7],plane)}
+\end{center}
+To compute the values of the solution, see
+the section \ref{sec:odesolve}.
+
+\section{Interactive plotting of solutions of a differential equation : {\tt interactive\_plotode interactive\_odeplot}}\index{interactive\_plotode}\index{interactive\_odeplot}
+\noindent Let $f(t,y)$ be an expression depending of two 
+varaiables $t$ and $y$.\\
+{\tt interactive\_plotode(f(t,y),[t,y])} draws the tangent field
+of the differential equation $y'=f(t,y)$ in a new window. 
+In this window, one can click on a point to get the 
+plot of the solution of $y'=f(t,y)$ crossing through this point.\\
+You can further click to display 
+several solutions. To stop  press
+the {\tt Esc} key.\\
+Input :
+\begin{center}{\tt interactive\_plotode(sin(t*y),[t,y]) }\end{center}
+Output :
+\begin{center}{\tt The tangent field is plotted with the
+    solutions of y'=sin(t,y) crossing through the points defined by
+     mouse clicks}\end{center}
+
+\section{Animated graphs (2D, 3D or "4D")}
+{\tt Xcas} can display animated 2D, 3D or "4D" graphs. 
+This is done first by computing
+a sequence of graphic objects, then after completion,
+by displaying the sequence in a loop.
+\begin{itemize} 
+\item To stop or start again the animation, click on the button 
+$\blacktriangleright \mid$ (at the left of {\tt Menu}).
+\item
+The display time of each graphic objet is specified in {\tt animate} of the
+graph configuration ({\tt cfg} button). Put a small time, 
+to have a fast animation.
+\item
+If {\tt animate} is {\tt 0}, the animation is frozen,
+you can move in the sequence of objects one by one by clicking
+on the mouse in the graphic scene.
+\end{itemize}
+
+\subsection{Animation of a 2D graph~: {\tt animate}}\index{animate}
+\noindent{\tt animate} can create a 2-d animation with graphs of functions
+depending of a parameter. The parameter is specified as the 
+third argument of 
+{\tt animate}, the number of pictures as fourth argument with
+{\tt frames=}\index{frames@{\sl frames}|textbf}number, 
+the remaining arguments are the same as those of the {\tt plot} command, 
+see section \ref{sec:plot2d}, p. \pageref{sec:plot2d}.\\
+Input :
+\begin{center}
+{\tt animate(sin(a*x),x=-pi..pi,a=-2..2,frames=10,color=red)}
+\end{center}
+Output :
+\begin{center}{\tt a sequence of graphic representations of y=sin($a$x) for 
+11 values of $a$ between -2 and 2}\end{center}
+
+\subsection{Animation of a 3D graph~: {\tt animate3d}}\index{animate3d}
+\noindent{\tt animate3d} can create a 3-d animation with 
+function graphs depending of a parameter. The parameter is specified as
+the third argument of {\tt animate3d}, the number of pictures
+as fourth argument with 
+{\tt frames=}\index{frames@{\sl frames}}number, the remaining arguments
+are the same as those of the {\tt plotfunc} command, see
+section \ref{sec:plotfunc3}, p. \pageref{sec:plotfunc3}.\\
+Input :
+\begin{center}
+{\tt animate3d(x\verb|^|2+a*y\verb|^|2,[x=-2..2,y=-2..2],a=-2..2, frames=10,display=red+filled)}
+\end{center}
+Output :
+\begin{center}{\tt a sequence of graphic representations
+ of z=x\verb|^|2+$a$*y\verb|^|2 for 11 values of $a$ between -2 and 2}
+\end{center}
+
+\subsection{Animation of a sequence of graphic objects~: {\tt animation}}\index{animation}
+\noindent{\tt animation} animates the representation of a
+sequence of graphic objects
+with a given display time. The sequence of objects depends most of
+the time of a parameter and is defined using the {\tt seq} command
+but it is not mandatory.\\
+{\tt animation} takes as argument the sequence of graphic objects.\\
+To define a sequence of graphic objects with {\tt seq},
+enter the definition of the graphic object (depending on
+the parameter), the parameter name, it's minimum value, it's
+ maximum value maximum and optionnaly a step value.\\
+Input :
+\begin{center}{\tt animation(seq(plotfunc(cos(a*x),x),a,0,10))}\end{center}
+Output :
+\begin{center}{\tt The sequence of the curves defined by $y=\cos(ax)$, for $a=0,1,2..10$}\end{center}
+Input :
+\begin{center}
+{\tt animation(seq(plotfunc(cos(a*x),x),a,0,10,0.5))}\\
+or\\
+{\tt animation(seq(plotfunc(cos(a*x),x),a=0..10,0.5))}
+\end{center}
+Output :
+\begin{center}{\tt The sequence of the curves defined by $y=\cos(ax)$, for $a=0,0.5,1,1.5..10$ }\end{center}
+Input :
+\begin{center}{\tt animation(seq(plotfunc([cos(a*x),sin(a*x)],x=0..2*pi/a), a,1,10))}\end{center}
+Output :
+\begin{center}{\tt The sequence of two curves defined by $y=\cos(ax)$ and $y=\sin(ax)$, for $a=1..10$ and for $x=0..2\pi/a$ }\end{center}
+Input :
+\begin{center}{\tt animation(seq(plotparam([cos(a*t),sin(a*t)], t=0..2*pi),a,1,10))}\end{center}
+Output :
+\begin{center}{\tt The sequence of the parametric curves defined by  $x=\cos(at)$ and $y=\sin(at)$, for $a=1..10$ and for $t=0..2\pi$ }\end{center}
+Input :
+\begin{center}{\tt animation(seq(plotparam([sin(t),sin(a*t)], t,0,2*pi,tstep=0.01),a,1,10))}\end{center}
+Output :
+\begin{center}{\tt The sequence of the parametric curves defined by $x=\sin(t),y=\sin(at)$, for $a=0..10$ and $t=0..2\pi$}\end{center}
+Input :
+\begin{center}{\tt animation(seq(plotpolar(1-a*0.01*t\verb|^|2, t,0,5*pi,tstep=0.01),a,1,10))}\end{center}
+Output :
+\begin{center}{\tt The sequence of the polar curves defined by $\rho=1-a*0.01*t^2$, for $a=0..10$ and $t=0..5\pi$}\end{center}
+Input :
+\begin{center}{\tt plotfield(sin(x*y),[x,y]); animation(seq(plotode(sin(x*y),[x,y],[0,a]),a,-4,4,0.5))}\end{center}
+Output :
+\begin{center}{\tt The tangent field of y'=sin(xy) and the sequence of the integral curves crossing through the point $(0,a)$ for $a$=-4,-3.5...3.5,4}\end{center}
+Input :
+\begin{center}{\tt animation(seq(display(square(0,1+i*a),filled),a,-5,5))}\end{center}
+Output :
+\begin{center}{\tt The sequence of the squares defined by the points 0 and 1+i*$a$ for $a=-5..5$}\end{center}
+Input :
+\begin{center}{\tt animation(seq(droite([0,0,0],[1,1,a]),a,-5,5))}\end{center}
+Output :
+\begin{center}{\tt The sequence of the lines defined by the points [0,0,0] and [1,1,$a$] for $a=-5..5$}\end{center}
+Input :
+\begin{center}{\tt animation(seq(plotfunc(x\verb|^|2-y\verb|^|a,[x,y]),a=1..3))}\end{center}
+Output :
+\begin{center}{\tt The sequence of the "3D" surface defined by $x^2-y^a$, for $a=1..3$ with rainbow colors}\end{center}
+Input :
+\begin{center}{\tt animation(seq(plotfunc((x+i*y)\verb|^|a,[x,y], display=filled),a=1..10)}\end{center}
+Output :
+\begin{center}{\tt The sequence of the "4D" surfaces defined by $(x+i*y)^a$, for $a=0..10$ with rainbow colors}\end{center}
+
+{\bf Remark}
+We may also define the sequence with a program, 
+for example if we want to draw the
+segments of length $1,\sqrt 2...\sqrt 20$ constructed with a 
+right triangle of side 1 and the previous segment
+(note that there is a {\tt c:=evalf(..)} statement
+to force approx. evaluation otherwise the computing time 
+would be too long) :
+\begin{verbatim}
+seg(n):={
+ local a,b,c,j,aa,bb,L;
+ a:=1;
+ b:=1;
+ L:=[point(1)];
+ for(j:=1;j<=n;j++){
+  L:=append(L,point(a+i*b));
+  c:=evalf(sqrt(a^2+b^2));
+  aa:=a;
+  bb:=b;
+  a:=aa-bb/c;
+  b:=bb+aa/c;
+ }
+ L;
+}
+\end{verbatim}
+Then input : 
+\begin{center}{\tt animation(seg(20))}\end{center}
+We see, each point, one to one with a display time that
+depends of the {\tt animate} value in {\tt cfg}.\\
+Or :
+\begin{center}{\tt L:=seg(20); s:=segment(0,L[k])\$(k=0..20)}\end{center}
+We see 21 segments. \\
+Then, input :
+\begin{center}{\tt animation(s)}\end{center}
+We see, each segment, one to one with a display time that
+depends of the {\tt animate} value in {\tt cfg}.
+
+
+
+\end{document}

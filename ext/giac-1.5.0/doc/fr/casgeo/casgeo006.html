@@ -1,0 +1,928 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casgeo.css">
+<TITLE>Le théorème de Morley</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casgeo005.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo007.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc118">Chapitre 6</A>  Le théorème de Morley</H1><H2 CLASS="section"><A NAME="toc39"></A><A NAME="htoc119">6.1</A>  Le théorème</H2><P>
+Soit un triangle <I>ABC</I> et ses trissectrices intérieures.<BR>
+Soient <I>P</I>,<I>Q</I>,<I>R</I> les points de ces trissectrices tels que le triangle <I>ABP</I> 
+(respectivement <I>BCQ</I>, <I>CAR</I>) ait comme angles
+ <I>A</I>/3 et  <I>B</I>/3 (respectivement 
+ <I>B</I>/3 et  <I>C</I>/3,  <I>C</I>/3 et 
+ <I>A</I>/3), alors le triangle <I>PQR</I> est équilatéral.<BR>
+De plus si <I>U</I>, <I>V</I>, <I>W</I>  sont les points de ces trissectrices tels que le 
+triangle <I>ABU</I> (respectivement <I>BCV</I>, <I>CAW</I>) ait comme angles 
+ 2<I>A</I>/3 et 
+ 2<I>B</I>/3 (respectivement  2<I>B</I>/3 et 
+ 2<I>C</I>/3,  2<I>C</I>/3
+et  2<I>A</I>/3), 
+alors les triangles <I>URQ</I>, <I>VRP</I>, <I>WPQ</I> sont isocèles.<BR>
+On remarquera que le triangle isocèle <I>URQ</I> a comme angles :<BR>
+<I>U</I>=π− 2<I>A</I>/3− 2<I>B</I>/3<BR>
+<I>R</I>=<I>Q</I>= <I>A</I>/3+ <I>B</I>/3. </P><H2 CLASS="section"><A NAME="toc40"></A><A NAME="htoc120">6.2</A>  La figure</H2><P>
+On prend comme paramètres <TT>a1</TT> et <TT>b1</TT> qui représentent le tiers 
+des angles <TT>A</TT> et <TT>B</TT> du triangle <TT>ABC</TT>.<BR>
+Quitte à faire une similitude, on peut choisir <TT>A</TT> à l’origine du 
+repère et <TT>B</TT> au point d’affixe 1, le point <TT>C</TT> a alors 
+comme affixe :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">tan(3*<I>b</I>1)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">tan(3*<I>a</I>1)+tan(3*<I>b</I>1)*(1+<I>i</I>*tan(3*<I>a</I>1))</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+<I>C</I> est donc sur la droite passant par <I>A</I> de pente tan(3*<I>a</I>1) et sur la 
+droite passant par <I>B</I> et de pente −<I>tan</I>(3*<I>b</I>1).<BR>
+On tape :
+</P><PRE CLASS="verbatim">A:= point(-4.95-1.777*i); 
+B:= point(3.786-2.876*i);
+C:= point(0.722+1.9*i);
+a1:=(angle(A,B,C))/3;  
+b1:=(angle(B,C,A))/3;  
+c1:=eval(pi/3-a1-b1);  
+P:=inter(rotation(A,a1,droite(A,B)),rotation(B,-b1,   
+                                    droite(B,A)))[0];  
+Q:=inter(rotation(C,-c1,droite(C,B)),rotation(B,b1,
+                                    droite(B,C)))[0];  
+R:=inter(rotation(A,-a1,droite(A,C)),rotation(C,c1,
+                                    droite(C,A)))[0]; 
+U:=inter(rotation(A,2*a1,droite(A,B)),rotation(B,-2*b1,
+                                    droite(B,A)))[0];  
+V:=inter(rotation(C,-2*c1,droite(C,B)),rotation(B,2*b1,
+                                    droite(B,C)))[0];  
+W:=inter(rotation(A,-2*a1,droite(A,C)),rotation(C,2*c1,
+                                    droite(C,A)))[0]; 
+triangle(A,R,C);
+triangle(B,Q,C);
+triangle(A,P,B);
+triangle(P,Q,R);
+triangle(U,Q,R);
+triangle(V,P,R);
+triangle(W,Q,P); 
+</PRE><P><B>Remarque</B>
+On peut aussi utiliser la définition d’une droite par un point et sa pente 
+pour définir les points <TT>C</TT> et <TT>P</TT> ce qui nous dispense faire les 
+calculls des coordonnées de <TT>C</TT> et <TT>P</TT>.<BR>
+On peut aussi taper :
+</P><PRE CLASS="verbatim">A:=point(0);
+B:=point(1);
+a1:=0.32;
+b1:=0.42;
+TA1:=droite(A,pente=tan(a1));
+TA2:=droite(A,pente=tan(2a1));
+TA3:=droite(A,pente=tan(3a1)):;
+TB1:=droite(B,pente=-tan(2b1)):;
+TB2:=droite(B,pente=-tan(b1)):;
+TB3:=droite(B,pente=-tan(3b1)):;
+C:=inter_unique(TA3,TB3);
+TC1:=droite(C,pente=tan(2a1-b1+pi/3)):;
+TC2:=droite(C,pente=tan(a1-2b1+2pi/3)):;
+TC3:=droite(C,pente=tan(3a1+pi/3)):;
+P:=inter_unique(TA1,TB2);
+Q:=inter_unique(TB1,TC2);
+R:=inter_unique(TC1,TA2);
+triangle(A,R,C);
+triangle(B,Q,C);
+triangle(A,P,B);
+triangle(P,Q,R,couleur=magenta+line_width_2);
+pq2:=longueur2(P,Q);
+pr2:=longueur2(P,R);
+qr2:=longueur2(Q,R);
+U:=inter_unique(TB1,TA2);
+V:=inter_unique(TB2,TC1);
+W:=inter_unique(TC2,TA1)
+normal(longueur2(W,Q)-longueur2(W,P));
+normal(longueur2(U,Q)-longueur2(U,R));
+normal(longueur2(V,P)-longueur2(V,R));
+angle(A,B,W,"a1");
+angle(B,V,A,"b1");
+polygone(W,Q,U,R,V,P,affichage=vert);
+</PRE><P>On obtient la figure du triangle de Morley :<BR>
+
+<IMG SRC="casgeo054.png"><BR>
+
+et <TT>0.0379352631434</TT> comme valeur des carrés des 3 longueurs et des 
+valeurs de l’ordre de 10<SUP>−14</SUP> pour les différence de longueurs.<BR>
+Mais cela n’est pas une démonstration....</P><H2 CLASS="section"><A NAME="toc41"></A><A NAME="htoc121">6.3</A>  La démonstration du théorème avec <TT>Xcas</TT></H2><P>
+On place <TT>A</TT> à l’origine, <TT>B</TT> en (1,0) et on utilise 2 paramètres 
+<TT>a1</TT> et <TT>b1</TT>, tels que les angles en <TT>A</TT> et <TT>B</TT> soient 
+<TT>3*a1</TT>, <TT>3*b1</TT>
+<TT>C</TT> est donc sur la droite passant par <TT>A</TT> de pente <TT>tan(3*a1)</TT> et 
+sur la droite passant par <TT>B</TT> et de pente <TT>-tan(3*b1)</TT>, etc.<BR>
+Pour faire une démonstration avec <TT>Xcas</TT>, on va remplacer :
+<TT>a1:=0.32;</TT> par <TT>assume(a1=0.32);</TT> et<BR>
+<TT>b1:=0.42;</TT> par <TT>assume(b1=0.42);</TT><BR>
+La figure reste la même mais les calculs sont faits avec les paramètres 
+formels <TT>a1</TT> et <TT>b1</TT>:
+</P><PRE CLASS="verbatim">assume(a1=0.32);
+assume(b1=0.42);
+A:=point(0);
+B:=point(1);
+TA1:=droite(A,pente=tan(a1));
+TB1:=droite(A,pente=texpand(tan(2a1)));
+TA3:=droite(A,pente=texpand(tan(3a1))):;
+TB1:=droite(B,pente=-texpand(tan(2b1))):;
+TB2:=droite(B,pente=-tan(b1)):;
+TB3:=droite(B,pente=-texpand(tan(3b1))):;
+C:=inter_unique(TA3,TB3);
+TC1:=droite(C,pente=texpand(tan(2a1-b1+pi/3))):;
+TC2:=droite(C,pente=texpand(tan(a1-2b1+2pi/3))):;
+TC3:=droite(C,pente=texpand(tan(3a1+pi/3))):;
+P:=inter_unique(TA1,TB2);
+Q:=inter_unique(TB1,TC2);
+R:=inter_unique(TC1,TA2);
+triangle(A,R,C);
+triangle(B,Q,C);
+triangle(A,P,B);
+triangle(P,Q,R,couleur=magenta+line_width_2);
+pq2:=longueur2(P,Q);
+pr2:=longueur2(P,R);
+qr2:=longueur2(Q,R);
+U:=inter_unique(TB1,TA2);
+V:=inter_unique(TB2,TC1);
+W:=inter_unique(TC2,TA1)
+angle(A,B,W,"a1");
+angle(B,V,A,"b1");
+polygone(W,Q,U,R,V,P,affichage=vert);
+normal(pq2-pr2),normal(pq2-qr2);
+normal(longueur2(W,Q)-longueur2(W,P));
+normal(longueur2(U,Q)-longueur2(U,R));
+normal(longueur2(V,P)-longueur2(V,R));
+</PRE><P>Ou on tape dans un éditeur de programme 
+</P><PRE CLASS="verbatim">assume(a1=0.32); 
+assume(b1=0.42);
+A:=point(0);
+B:=point(1);
+C:=point(texpand(tan(b1*3)/(tan(a1*3)+
+                 tan(b1*3))*(1+i*tan(a1*3))));
+P:=point(texpand(tan(b1)/(tan(a1)+
+                 tan(b1))*(1+i*tan(a1))));
+R:=(inter(droite(0,1+i*texpand(tan(2*a1))),
+      droite(C,C+1+i*texpand(tan(pi/3+2*a1-b1)))))[0];
+Q:=(inter(droite(1,i*texpand(tan(2*b1))),
+      droite(C,C+1+i*texpand(tan(2*pi/3+a1-2*b1)))))[0];
+U:=point(texpand(tan(2*b1)/(tan(2*a1)+
+                 tan(2*b1))*(1+i*tan(2*a1))));
+W:=(inter(droite(0,1+i*texpand(tan(a1))),
+      droite(C,C+1+i*texpand(tan(2*pi/3+a1-2*b1)))))[0];
+V:=(inter(droite(1,i*texpand(tan(b1))),
+       droite(C,C+1+i*texpand(tan(pi/3+2*a1-b1)))))[0];
+triangle(A,R,C);
+triangle(B,Q,C);
+triangle(A,P,B);
+triangle(P,Q,R);
+triangle(P,Q,W);
+triangle(P,V,R);
+triangle(U,Q,R);
+pq2:=longueur2(P,Q);
+pr2:=longueur2(P,R);
+qr2:=longueur2(Q,R);
+ur2:=longueur2(U,R);
+uq2:=longueur2(U,Q);
+vr2:=longueur2(V,R);
+vp2:=longueur2(V,P);
+pw2:=longueur2(P,W);
+qw2:=longueur2(Q,W);
+normal(pq2-pr2),normal(pq2-qr2);
+normal(uq2-ur2);
+normal(vp2-vr2);
+normal(pw2-qw2);
+</PRE><P>On valide par <TT>OK</TT></P><P>On obtient alors :<BR>
+<TT>0,0,0,0,0</TT><BR>
+ce qui prouve que le triangle <TT>PQR</TT> est équilatéral et que les 
+triangles <TT>UQR</TT>, <TT>VPR</TT> et <TT>WPQ</TT> sont isocèles.</P><H3 CLASS="subsection"><A NAME="htoc122">6.3.1</A>  Une démonstration géométrique</H3><P>
+<TT>La figure</TT><BR>
+
+</P><DIV CLASS="center"><IMG SRC="casgeo055.png"></DIV><P>
+<TT>La démonstration</TT><BR>
+On suppose que les angles du triangle <I>ABC</I> valent 3<I>a</I>,3<I>b</I>,3<I>c</I> 
+(<I>a</I>+<I>b</I>+<I>c</I>=π/3).<BR>
+On trace les trissectrices des angles <I>B</I> et <I>C</I>.<BR>
+Soit <I>D</I> l’intersection des deux trissectrices tels que le triangle <I>BCD</I> aient
+comme angles <I>b</I> et <I>c</I> et π−<I>b</I>−<I>c</I>.<BR>
+Soient <I>F</I> et <I>H</I> tels que le triangle <I>HFD</I> soit isocéle d’angle à la base
+<I>a</I>+<I>c</I> et <I>H</I> sur <I>CD</I> et <I>F</I> sur la 2-ième trissectrice de <I>B</I> : on 
+construit <I>F</I> sur la 2-ième trissectrice de <I>B</I> tel que l’angle 
+<I>FDB</I> =π/3+<I>c</I>=<I>a</I>+<I>c</I>+<I>b</I>+<I>c</I>,<BR>
+Soient <I>E</I> et <I>K</I> tels que le triangle <I>KED</I> soit isocéle d’angle à la base
+<I>a</I>+<I>b</I> et <I>K</I> sur <I>BD</I> et <I>E</I> sur la 2-ième trissectrice de <I>C</I> : on 
+construit <I>F</I> sur la 2-ième trissectrice de <I>C</I> tel que l’angle 
+<I>CDK</I> =π/3+<I>b</I>=<I>a</I>+<I>b</I>+<I>b</I>+<I>c</I>)<BR>
+On a :<BR>
+<I>HDB</I>=<I>b</I>+<I>c</I>=<I>KDC</I><BR>
+<I>FDE</I>+(<I>a</I>+<I>c</I>)+(<I>b</I>+<I>c</I>)+(π−<I>b</I>−<I>c</I>)+(<I>a</I>+<I>b</I>)+(<I>b</I>+<I>c</I>)=2π donc,<BR>
+<I>FDE</I>=π−2<I>a</I>−2<I>b</I>−2<I>c</I>=π/3 et<BR>
+<I>BFD</I>=π−<I>b</I>−(<I>a</I>+<I>c</I>)−(<I>b</I>+<I>c</I>)=<I>a</I>+π/3<BR>
+<I>CED</I>=π−<I>c</I>−(<I>a</I>+<I>b</I>)−(<I>b</I>+<I>c</I>)=<I>a</I>+π/3<BR>
+<I>D</I> est sur les bissectrices des angles <I>CBF</I> et <I>BCE</I>, 
+donc <I>D</I> est équidistant de <I>BF</I> et <I>CE</I> et puisque <I>BFD</I>=<I>CED</I> on a <I>DE</I>=<I>DF</I><BR>
+donc le triangle <I>DEF</I> est équilatèral (<I>DE</I>=<I>DF</I> et <I>FDE</I>=π/3).<BR>
+Il reste donc à montrer que <I>F</I> et <I>E</I> sont sur les trissectrices de <I>A</I> :
+on va montrer que <I>FH</I> et <I>EK</I> sont les trissectrices de <I>A</I>.<BR>
+<I>FK</I> est la bissectrice de <I>DKE</I><BR>
+<I>FB</I> est la bissectrice de <I>DBA</I> donc<BR>
+si on suppose que <I>KE</I> coupe <I>AB</I> an <I>L</I>, <I>LF</I> est la bissectrice de 
+<I>L</I> et
+<I>BLF</I>=<I>FLK</I>=<I>a</I> (<I>BKL</I>=π−2(<I>a</I>+<I>b</I>) <I>KBL</I>=2<I>b</I> 
+donc <I>BLK</I>=2<I>a</I>) et comme <I>BFH</I>=<I>a</I>+<I>b</I>,
+<I>L</I>,<I>F</I>,<I>H</I> sont alignés.<BR>
+De même si on suppose que <I>HF</I> coupe <I>AC</I> en <I>J</I>, <I>JE</I> est la bissectrice 
+de <I>J</I> et
+<I>CJE</I>=<I>EJH</I>=<I>a</I> et <I>J</I>,<I>E</I>,<I>K</I> sont alignés.<BR>
+On a <I>K</I>,<I>E</I>,<I>L</I> sont alignés et <I>J</I>,<I>E</I>,<I>K</I> sont alignés.<BR>
+On a <I>L</I>,<I>F</I>,<I>H</I> sont alignés et <I>F</I>,<I>H</I>,<I>J</I> sont alignés<BR>
+donc <I>J</I> et <I>L</I> sont à l’intersection de <I>EK</I> et <I>FH</I>.
+Mais <I>J</I> est sur <I>AB</I> et <I>L</I> sur <I>AC</I>, donc <I>J</I> et <I>L</I> sont confondus
+en <I>A</I> et on en déduit que
+<I>FH</I> et <I>EK</I> sont les trissectices de l’angle <I>A</I>. </P><H3 CLASS="subsection"><A NAME="htoc123">6.3.2</A>  La démonstration d’un Lemme</H3><P>
+Les instructions pour faire cette figure se trouve dans le fichier 
+<TT>morley1.xws</TT>.</P><DIV CLASS="center"><IMG SRC="casgeo056.png"></DIV><P>
+<B>Lemme</B> : Soient un triangle <I>ABC</I>, <I>J</I> le point de concours de ses 
+bissectrices intérieures et <I>P</I> un point de la bissectrice intérieure de 
+l’angle <I>A</I> se trouvant à l’intérieur du triangle <I>ABC</I> alors :<BR>
+<I>J</I> et <I>P</I> sont confondus si et seulement si 
+ <I>BPC</I>=(π+ <I>A</I>)/2.<BR>
+
+En effet :<BR>
+- si <I>J</I> et <I>P</I> sont confondus on a bien :
+ <I>BJC</I>=π−( <I>B</I>+ <I>C</I>)/2=(π+ <I>A</I>)/2.<BR>
+- soit <I>P</I> est un point de la bissectrice intérieure de 
+l’angle <I>A</I> se trouvant à l’intérieur du triangle <I>ABC</I> et tel que
+ <I>BPC</I>=(π+ <I>A</I>)/2.<BR>
+On remarque que <I>BPC</I>=π−(<I>PBC</I>+<I>PCB</I>) croît lorsque
+<I>P</I> s’éloigne de <I>A</I> en restant sur la bissectrice intérieure de
+l’angle <I>A</I>, donc si <I>P</I> ≠ <I>J</I> on a soit 
+ <I>BPC</I>&gt;<I>BJC</I>=(π+ <I>A</I>)/2 soit 
+ <I>BPC</I>&lt;<I>BJC</I>=(π+ <I>A</I>)/2.<BR>
+ On en déduit donc que <I>P</I> et  <I>J</I> sont confondus.</P><H3 CLASS="subsection"><A NAME="htoc124">6.3.3</A>  Une démonstration géométrique pas courante</H3><P>
+On va démontrer le théorème pour un triangle <I>ABC</I> d’angles de mesure
+3*<I>a</I>, 3*<I>b</I> et 3*<I>c</I> (<I>a</I>+<I>b</I>+<I>c</I>=π/3).<BR>
+La forme de la preuve n’est pas courante : on part d’un triangle <I>PQR</I>
+équilatéral et on construit à l’extérieur de ce triangle les triangles
+isocèles <I>UQR</I>, <I>VPR</I> et <I>WPQ</I> d’angles :<BR>
+<I>QRU</I>=<I>UQR</I>=<I>a</I>+<I>b</I>=π/3−<I>c</I>,<BR>
+<I>VPR</I>=<I>VRP</I>=<I>b</I>+<I>c</I>=π/3−<I>a</I> et<BR>
+<I>WPQ</I>=<I>WQP</I>=<I>c</I>+<I>a</I>=π/3−<I>b</I>.<BR>
+En effet on sait d’après les calculs faits par <TT>Xcas</TT> que le triangle 
+<I>PQR</I> est équilatéral et que les triangles <I>UQR</I>, <I>VPR</I> et <I>WPQ</I> 
+sont isocèles.<BR>
+Puis on construit le triangle <I>ABC</I> :<BR>
+<I>A</I> est l’intersection de <I>UR</I> et de <I>PW</I>,<BR>
+<I>B</I> est l’intersection de <I>UQ</I> et de <I>PV</I> et<BR>
+<I>C</I> est l’intersection de <I>VR</I> et de <I>QW</I>.<BR>
+</P><DIV CLASS="center"><IMG SRC="casgeo057.png"></DIV><P>
+On obtient la figure ci-dessus :<BR>
+On peut montrer par des considération d’angles que <I>V</I> se trouve à 
+l’intérieur du triangle <I>ARP</I> (<I>PRU</I>+<I>RPW</I>&gt;π et 
+<I>VPR</I>&lt;π−<I>RPW</I>) etc...<BR>
+On va montrer qu’alors <I>P</I>, <I>Q</I>, <I>R</I> sont les points de concours des 
+trissectrices intérieures de Morley.<BR>
+Calculons quelques angles :<BR>
+ <I>APV</I>=π−(π/3−<I>b</I>)−π/3−(π/3−<I>a</I>)=<I>a</I>+<I>b</I>=π/3−<I>c</I> donc<BR>
+ <I>APR</I>=π/3−<I>c</I>+π/3−<I>a</I>=π/3+<I>b</I><BR>
+de même<BR>
+ <I>ARV</I>=π/3−<I>b</I> et<BR>
+ <I>ARP</I>=π/3−<I>b</I>+π/3−<I>a</I>=π/3+<I>c</I><BR>
+donc <I>PAR</I>=<I>a</I><BR>
+de même  <I>PBQ</I>=<I>b</I> et <I>QCR</I>=<I>c</I><BR>
+ <I>AUB</I>=<I>RUQ</I>=π−(2π/3−<I>c</I>)=π/3+2*<I>c</I><BR>
+ <I>APB</I>=π−<I>APV</I>=2π/3+<I>c</I>=π/2+π/6−<I>c</I>=π/2+<I>AUB</I>/2<BR>
+<I>PU</I> est la médiatrice de <I>RQ</I> puisque <I>PQ</I>=<I>PR</I> et <I>UQ</I>=<I>UR</I>.<BR>
+<I>PU</I> est donc aussi la bissectrice intérieure de l’angle <I>U</I> et 
+<I>APB</I>=(π+<I>AUB</I>)/2 donc d’après le lemme :<BR>
+<I>P</I> est le point de concours des bissectrices intérieures du triangle <I>UAB</I>
+de même,<BR>
+<I>Q</I> est le point de concours des bissectrices intérieures du triangle <I>VBC</I> 
+et<BR>
+<I>R</I> est le point de 
+concours des bissectrices intérieures du triangle <I>WAC</I>.<BR>
+L’angle <I>A</I> vaut donc 3<I>a</I>, l”angle <I>B</I> vaut donc 3<I>b</I> et l”angle <I>C</I> vaut donc 3<I>c</I> ce qui prouve que <I>P</I>, <I>Q</I>, <I>R</I> sont les points de concours des trissectrices intérieures de Morley.<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc125">6.3.4</A>  Une démonstration selon Conway</H3><P>
+On suppose tout d’abord le problème résolu c’est à dire que le triangle
+<I>PQR</I> est équilatéral.<BR>
+Soient :<BR>
+<I>a</I>, <I>b</I>, <I>c</I> le tiers des mesures des angles du triangle <I>ABC</I> on a donc
+<I>a</I>+<I>b</I>+<I>c</I>=π/3,<BR>
+<I>R</I><SUB>1</SUB> le symétrique de <I>R</I> par rapport à <I>PA</I> : <I>R</I><SUB>1</SUB> se trouve sur <I>AB</I>
+puisque <I>PAR</I>=<I>PAB</I>=<I>a</I>,<BR>
+et de même, <I>Q</I><SUB>2</SUB> le symétrique de <I>Q</I> par rapport à <I>PB</I> 
+se trouve sur <I>AB</I>.<BR>
+Le triangle <I>PQ</I><SUB>2</SUB><I>R</I><SUB>1</SUB> est donc isocèle (<I>PR</I><SUB>1</SUB>=<I>PR</I>=<I>PQ</I>=<I>PQ</I><SUB>2</SUB>),<BR>
+ on en
+déduit que <I>Q</I><SUB>2</SUB><I>R</I><SUB>1</SUB><I>P</I>= <I>PQ</I><SUB>2</SUB><I>R</I><SUB>1</SUB>, 
+et par symétrie que
+<I>ARP</I>= <I>PQB</I>=γ.<BR>
+On a :
+<I>APB</I>+<I>BPQ</I>+<I>QPR</I>+<I>RPA</I>=2π
+c’est à dire<BR>
+ (π−<I>a</I>−<I>b</I>)+(π−<I>b</I>−γ)+π/3+(π−<I>a</I>−γ)=2π
+soit<BR>
+ γ=2*π/3−<I>a</I>−<I>b</I>=<I>c</I>+π/3.<BR>
+Donc le triangle <I>APR</I> a comme angles : <I>a</I>,  <I>c</I>+π/3, <I>b</I>+π/3,<BR>
+le triangle <I>BQP</I> a comme angles : <I>b</I>,  <I>c</I>+π/3, <I>a</I>+π/3,<BR>
+de même le triangle <I>CRQ</I> a comme angles : <I>c</I>,  <I>b</I>+π/3, <I>a</I>+π/3.<BR>
+L’écriture en Latex de cette figure se trouve dans le fichier <TT>morleypuzzel.tex</TT>.
+<IMG SRC="casgeo058.png">
+L’idée de Conway est de faire un puzzle avec 7 pièces (cf figure) :<BR>
+avec ces 7 pièces on va pouvoir reconstituer un triangle <I>ABC</I> d’angle
+3<I>a</I>, 3<I>b</I> et 3<I>c</I> dans lequel les trissectrices se coupent selon
+le triangle équilatéral de Morley.<BR>
+Les pièces du puzzles sont :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+1 triangle équilatéral de cotés de longueur 1 (en rouge),
+</LI><LI CLASS="li-itemize">3 triangles
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+le premier <I>PAR</I> (en vert) est défini par <I>PR</I> de longueur 1, l’angle 
+<I>P</I> de mesure π/3+<I>b</I> et l’angle 
+<I>R</I> de mesure π/3+<I>c</I> et <I>APR</I> est de sens direct.<BR>
+On a donc :<BR>
+<I>PA</I>=sin(<I>c</I>+π/3)/sin(<I>a</I>), <I>RA</I>=sin(<I>b</I>+π/3)/sin(<I>a</I>) et l’angle 
+<I>A</I> est de mesure <I>a</I>,
+</LI><LI CLASS="li-itemize">le second <I>PQB</I> (en bleu) est défini par <I>PQ</I> de longueur 1, l’angle 
+<I>P</I> de mesure π/3+<I>a</I> et l’angle 
+<I>Q</I> de mesure π/3+<I>c</I> et <I>BQP</I> est de sens direct.<BR>
+On a donc :<BR>
+<I>PB</I>=sin(<I>c</I>+π/3)/sin(<I>b</I>), <I>QB</I>=sin(<I>a</I>+π/3)/sin(<I>b</I>) et l’angle <I>B</I> est de 
+mesure <I>b</I>,<BR>
+</LI><LI CLASS="li-itemize">le troisième <I>QRC</I> (en magenta) est défini par <I>RQ</I> de longueur 1, l’angle
+<I>R</I> de mesure π/3+<I>a</I> et l’angle 
+<I>Q</I> de mesure π/3+<I>b</I> et <I>CRQ</I> est de sens direct.<BR>
+On a donc :<BR>
+<I>QC</I>=sin(<I>a</I>+π/3)/sin(<I>c</I>), <I>RC</I>=sin(<I>b</I>+π/3)/sin(<I>c</I>) et l’angle <I>C</I> est de mesure <I>c</I>.
+</LI></UL>
+</LI><LI CLASS="li-itemize">3 triangles
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+le premier <I>PAB</I>1 (en noir) est défini par un coté de longueur <I>PA</I> 
+trouvée ci-dessus (<I>PA</I>=sin(<I>c</I>+π/3)/sin(<I>a</I>)) l’angle <I>A</I> 
+de mesure <I>a</I> et l’angle <I>P</I> de mesure <I>c</I>+2*π/3. Dans ce 
+triangle l’angle 
+<I>B</I>1 a comme mesure <I>b</I> et on a :
+<I>PB</I>1=<I>PA</I>*sin(<I>a</I>)/sin(<I>b</I>)=sin(<I>c</I>+π/3)/sin(<I>b</I>)=<I>PB</I>,
+</LI><LI CLASS="li-itemize">le second <I>RCA</I>1 (en jaune) est défini par un coté de longueur <I>RC</I> 
+trouvée ci-dessus (<I>RC</I>=sin(<I>b</I>+π/3)/sin(<I>c</I>)) l’angle <I>C</I> 
+de mesure <I>c</I> et l’angle <I>R</I> de mesure <I>b</I>+2π/3. 
+Dans ce triangle l’angle <I>A</I>1 a comme mesure <I>a</I> et on a :
+<I>RA</I>1=<I>RC</I>*sin(<I>c</I>)/sin(<I>a</I>)=sin(<I>b</I>+π/3)/sin(<I>a</I>)=<I>RA</I>,
+</LI><LI CLASS="li-itemize">le troisième <I>QBC</I>1 (en cyan) est défini par un coté de longueur 
+<I>QB</I> trouvée ci-dessus (<I>QB</I>=sin(<I>a</I>+π/3)/sin(<I>b</I>)) l’angle 
+<I>B</I> de mesure <I>b</I> et l’angle <I>Q</I> de mesure 
+<I>a</I>+2π/3. Dans ce triangle l’angle 
+<I>C</I>1 a comme mesure <I>c</I> et on a :
+<I>QC</I>1=<I>QB</I>*sin(<I>b</I>)/sin(<I>c</I>)=sin(<I>a</I>+π/3)/sin(<I>c</I>)=<I>QC</I>.
+</LI></UL>
+</LI></UL><P>
+Il est alors facile de montrer, par des considérations de mesure d’angles
+et de longueurs, que les triangles s’emboitent bien. </P><H3 CLASS="subsection"><A NAME="htoc126">6.3.5</A>  Une autre démonstration</H3><P>
+On pose :<BR>
+<I>ARP</I>=γ et<BR>
+ <I>APR</I>=β.<BR>
+Si <I>R</I> est le rayon du cercle circonscrit du triangle <I>ABC</I> on a la relation :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>AB</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">sin(3<I>c</I>)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>AC</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">sin(3<I>b</I>)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>BC</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">sin(3<I>a</I>)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=2<I>R</I></TD></TR>
+</TABLE><P>
+En considérant les triangles <I>APR</I>, <I>APB</I>, <I>ARC</I>, <I>ABC</I> on peut montrer en utilisant les relations ci-dessus que :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>PR</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2<I>R</I> sin(<I>a</I>) sin(<I>b</I>) sin(3<I>c</I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">sin(γ) sin(<I>c</I>+2π/3)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2<I>R</I> sin(<I>a</I>) sin(3<I>b</I>) sin(<I>c</I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">sin(β) sin(<I>b</I>+2π/3)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On en déduit après différents calculs laissés au lecteur (voir les indications ci-dessous) que :<BR>
+γ=<I>c</I>+π/3, β=<I>b</I>+π/3 et<BR>
+<I>PR</I>=8<I>R</I>sin(<I>a</I>)sin(<I>b</I>)sin(<I>c</I>)<BR>
+Indications :<BR>
+1/ Pour tout <I>x</I> on a :<BR>
+2sin(<I>x</I>+π/3) sin(<I>x</I>+2π/3)=1/2−cos(2<I>x</I>+π)=1/2+cos(2<I>x</I>) et<BR>
+2sin(<I>x</I>)(1/2−cos(2<I>x</I>))=3sin(<I>x</I>)−4sin(<I>x</I>)<SUP>3</SUP>=sin(3<I>x</I>) donc<BR>
+4sin(<I>x</I>) sin(<I>x</I>+π/3) sin(<I>x</I>+2π/3)=sin(3<I>x</I>).<BR>
+On obtient donc en remplacant sin(3<I>c</I>) et sin(3<I>b</I>) dans :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2<I>R</I> sin(<I>a</I>) sin(<I>b</I>) sin(3<I>c</I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">sin(γ) sin(<I>c</I>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2<I>R</I> sin(<I>a</I>) sin(3<I>b</I>) sin(<I>c</I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">sin(β) sin(<I>b</I>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+l’égalité :<BR>
+sin(β)sin(<I>c</I>+π/3)=sin(γ)sin(<I>b</I>+π/3)<BR>
+et donc<BR>
+<I>PR</I>=8<I>R</I> sin(<I>a</I>) sin(<I>b</I>) sin(<I>c</I>)sin(<I>c</I>+π/3)/sin(γ) 
+2/ si sin(<I>a</I>)≠ 0, sin(<I>b</I>)≠ 0, sin(<I>a</I>+<I>b</I>)≠ 0, le système :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎧<BR>
+⎨<BR>
+⎩</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=left NOWRAP><I>x</I>+<I>y</I>=<I>a</I>+<I>b</I></TD></TR>
+<TR><TD ALIGN=left NOWRAP>sin(<I>x</I>)/sin(<I>a</I>)=sin(<I>y</I>)/sin(<I>b</I>)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>a comme solution <I>x</I>=<I>a</I>+<I>k</I>π, <I>y</I>=<I>b</I>−<I>k</I>π où <I>k</I> ∈ <I>Z</I>.<BR>
+En effet on a <I>y</I>=<I>a</I>+<I>b</I>−<I>x</I><BR>
+donc sin(<I>x</I>)sin(<I>b</I>)=sin(<I>a</I>)(sin(<I>a</I>+<I>b</I>)cos(<I>x</I>)−cos(<I>a</I>+<I>b</I>)sin(<I>x</I>))<BR>
+sin(<I>x</I>)(sin(<I>b</I>)+sin(<I>a</I>)cos(<I>a</I>+<I>b</I>))=cos(<I>x</I>)sin(<I>a</I>)sin(<I>a</I>+<I>b</I>)<BR>
+on développe cos(<I>a</I>+<I>b</I>) et on obtient :<BR>
+sin(<I>x</I>)cos(<I>a</I>)sin(<I>a</I>+<I>b</I>)=cos(<I>x</I>)sin(<I>a</I>)sin(<I>a</I>+<I>b</I>)<BR>
+et donc puisque sin(<I>a</I>+<I>b</I>)≠ 0<BR>
+sin(<I>x</I>−<I>a</I>)=0
+d’ou le résultat.<BR>
+Donc le système :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎧<BR>
+⎪<BR>
+⎪<BR>
+⎪<BR>
+⎨<BR>
+⎪<BR>
+⎪<BR>
+⎪<BR>
+⎩</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">sin(β)/sin(<I>b</I>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)=sin(γ)/sin(<I>c</I>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">) </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">β+γ=<I>b</I>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+<I>c</I>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=π−<I>a</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>avec sin(<I>b</I>+π/3)≠ 0, sin(<I>c</I>+π/3)≠ 0, sin(π−<I>a</I>)≠ 0<BR>
+a pour solutions :<BR>
+ β=<I>b</I>+π/3+<I>k</I>π et  γ=(<I>c</I>+π/3)−<I>k</I>π où <I>k</I> ∈ <I>Z</I>.<BR>
+Donc sin(γ)=sin(<I>c</I>+π/3) et donc<BR>
+<I>PR</I>=8*<I>R</I>*sin(<I>a</I>)*sin(<I>b</I>)*sin(<I>c</I>)
+La formule etant symétrique par rapport à  <I>a</I>, <I>b</I>,  <I>c</I> on a :<BR>
+ <I>PR</I>=8*<I>R</I>*sin(<I>a</I>)*sin(<I>b</I>)*sin(<I>c</I>)=<I>RQ</I>=<I>PQ</I><BR>
+Le triangle <I>PQR</I> est donc équilatèral.</P><H2 CLASS="section"><A NAME="toc42"></A><A NAME="htoc127">6.4</A>  Le théorème de Morley généralisé</H2><P>
+Soit un triangle <I>ABC</I> et ses trissectrices.<BR>
+On considère toutes les intersections de ces trissectrices.<BR>
+ Combien trouve-t-on de triangles équilatéraux ?
+</P><H3 CLASS="subsection"><A NAME="htoc128">6.4.1</A>  Les trissectrices d’un angle de droites</H3><P>
+Soit un angle de droites (<I>AB</I>, <I>AC</I>) de mesure 
+3<I>t</I>+<I>k</I>π (<I>k</I> entier) :
+il y a 6 trissectrices (<I>D</I>1, <I>D</I>2, <I>D</I>3, <I>D</I>4, <I>D</I>5, <I>D</I>6) qui forment avec <I>AB</I> des angles de mesure :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>t</I>, 2<I>t</I>, <I>t</I>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">, 2<I>t</I>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">, <I>t</I>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">, 2<I>t</I>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">4π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=2<I>t</I>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+π</TD></TR>
+</TABLE><P>
+On considère deux groupes de trois trissectrices (<I>D</I>1, <I>D</I>3, <I>D</I>5) et 
+(<I>D</I>2, <I>D</I>4, <I>D</I>6) : dans chaque groupe les trissectrices se déduisent l’une 
+de l’autre par des rotations d’angle π/3.<BR>
+Voici les instructions contenu dans le fichier <TT>morleytri6</TT> qui permet de tracer les 6 trissectrices de 
+l’angle de droite (AB,AC) :</P><PRE CLASS="verbatim">A:= point(-1.2*i); 
+B:= point(3.7-1.5*i);
+C:= point(1.5+1.1*i);
+t:=angle(A,B,C)/3;
+D1:=droite(A,A+(B-A)*exp(i*t));
+D2:=droite(A,A+2*(B-A)*exp(i*t*2));
+D3:=droite(A,A+(B-A)*exp(i*(t+pi/3)));
+D4:=droite(A,A+2*(B-A)*exp(i*2*(t+pi/3)));
+D5:=droite(A,A+(B-A)*exp(i*(t+2*pi/3)));
+D6:=droite(A,A+2*(B-A)*exp(i*(2*t+pi/3)));
+couleur(droite(A,B),1);
+couleur(droite(A,C),1);
+</PRE><P>On obtient la figure :<BR>
+<IMG SRC="casgeo059.png">
+</P><H3 CLASS="subsection"><A NAME="htoc129">6.4.2</A>  Calcul numérique des différentes longueurs</H3><P>
+On fait tout d’abord avec <TT>Xcas</TT> un calcul numérique pour avoir une 
+idée du résultat.
+Quitte à faire une similitude on peut choisir <TT>A</TT> à l’origine et 
+<TT>B</TT> au point d’affixe 1.<BR>
+La site d’instructions ci-dessous calcule les coordonnées 
+des 108 points d’intersections des trissectrices entre elles : il y a 
+3× 6=18 trissectrices, sur chaque trissectrices 
+il y a 6+6=12 points d’intersections donc en tout 18× 12/2=108 points 
+d’intersections que l’on met dans la liste <TT>P</TT>.<BR>
+Puis on met dans une matrice symétrique <TT>LO</TT> de dimension 108× 108
+le carré des distances entre ces 108 points.<BR>
+On met ensuite dans la variable <TT>trequi</TT> la liste des triplets formant un 
+triangle équilatéral, selon le calcul numérique.<BR>
+<TT>A</TT> est une liste de 7 éléments qui sont :<BR>
+<TT>A[0]=0</TT>, c’est l’affixe du sommet <I>A</I> du triangle,<BR>
+<TT>A[1]</TT> est l’affixe d’un point situé sur la trissectrice <TT>AD1</TT>,<BR>
+<TT>A[2]</TT> est l’affixe d’un point situé sur la trissectrice <TT>AD2</TT>, etc...<BR>
+de même pour <TT>B</TT> et <TT>C</TT> (<TT>B[0]=1</TT>...).<BR>
+Voici les instructions qui calcule les coordonnées 
+des 108 points d’intersections des trissectrices entre elles :
+</P><PRE CLASS="verbatim">a1:=0.2;
+b1:=0.4;
+A:=[0,1+i*texpand(tan(a1)),1+i*texpand(tan(2*a1)),
+   1+i*texpand(tan(pi/3+a1)),
+   1+i*texpand(tan(2*a1+2*pi/3)),1+i*texpand(tan(a1+2*pi/3)),
+   1+i*texpand(tan(pi/3+2*a1))];
+B:=[1,i*texpand(tan(2*b1)),i*texpand(tan(b1)),
+    i*texpand(tan(2*b1+2*pi/3)),i*texpand(tan(b1+pi/3)),
+    i*texpand(tan(pi/3+2*b1)),i*texpand(tan(2*pi/3+b1))];
+C0:=texpand(tan(b1*3)/(tan(a1*3)+tan(b1*3))*(1+i*tan(a1*3)));
+C:=[C0,C0+1+i*texpand(tan(pi/3+2*a1-b1)),
+    C0+1+i*texpand(tan(2*pi/3+a1-2*b1)),
+    C0+1+i*texpand(tan(2*pi/3+2*a1-b1)),
+    C0+1+i*texpand(tan(pi/3+a1-2*b1)),
+    C0+1+i*texpand(tan(2*a1-b1)),C0+1+i*texpand(tan(a1-2*b1))];
+P:=[];
+for (k:=1;k&lt;=6;k++) {
+ for (j:=1;j&lt;=6;j++){
+   P:=concat(P,affixe((inter(droite(A[0],A[k]),
+      droite(B[0],B[j])))[0]));
+   P:=concat(P,affixe((inter(droite(B[0],B[k]),
+      droite(C[0],C[j])))[0]));
+   P:=concat(P,affixe((inter(droite(A[0],A[k]),
+      droite(C[0],C[j])))[0]));
+ }
+};
+LO:=[];
+for (k:=0;k&lt;108;k++) {
+  LOL:=[];
+  for (j:=0;j&lt;108;j++){
+    LOL:=concat(LOL,longueur2(P[k],P[j]));
+  }
+LO:=append(LO,LOL);
+};
+trequi:=[];
+for (k:=0;k&lt;106;k++) {
+  for (j:=k+1;j&lt;107;j++){
+    l:=LO[k,j];
+    for (s:=j+1;s&lt;108;s++){
+      if ((abs(normal(l-LO[j,s]))&lt;0.0000001) and 
+          (abs(normal(l-LO[k,s]))&lt;0.0000001)){
+        trequi:=append(trequi,[k,j,s]);
+      }
+    }
+  }
+};
+trequi;
+</PRE><P>On tape dans <TT>Xcas</TT> : <TT>size(trequi)</TT> : on obtient <TT>54</TT>.<BR>
+Cette liste contient donc 54 triplets ce qui veut dire qu’il y a 
+numériquement 
+54 triangles équilatéraux. Parmi ces triangles 
+il y en a 18 seulement qui mettent en jeu les trissectrices des 3 angles du 
+triangle.<BR>
+Les autres triangles ont des sommets qui sont des intersections de 
+trissectrices de 2 angles du triangle : ceci était à prévoir et se 
+démontre facilement.<BR>
+En effet si on considère deux angles de sommets <I>A</I> et <I>B</I> et leurs 
+trissectrices : les 3 trissectrices <I>AD</I>1, <I>AD</I>3, <I>AD</I>5 de l’angle <I>A</I> se 
+déduisent l’une de l’autre par des rotations de centre A et d’angle 
+π/3 et les intersections des 3 trissectrices (<I>AD</I>1, <I>AD</I>3, <I>AD</I>5)
+de l’angle <I>A</I> avec les 3 trissectrices <I>BD</I>1, <I>BD</I>3, <I>BD</I>5 de l’angle <I>B</I> 
+déterminent 3 triangles équilatéraux.</P><P>Plus précisément soient <I>M</I> le point d’intersection de <I>AD</I>1 avec <I>BD</I>1, 
+<I>N</I> le point d’intersection de <I>AD</I>3 avec <I>BD</I>3, <I>O</I> le point 
+d’intersection de <I>AD</I>5 avec <I>BD</I>5.
+Alors le triangle <I>MNO</I> est équilatèral.<BR>
+On tape :
+</P><PRE CLASS="verbatim">trissect(A,B,C):={
+local t;
+t:=angle(A,B,C)/3;
+D1:=droite(A,A+(B-A)*exp(i*t));
+D2:=droite(A,A+(B-A)*exp(i*t*2));
+D3:=droite(A,A+(B-A)*exp(i*(t+pi/3)));
+D4:=droite(A,A+(B-A)*exp(i*2*(t+pi/3)));
+D5:=droite(A,A+(B-A)*exp(i*(t+2*pi/3)));
+D6:=droite(A,A+(B-A)*exp(i*2*(t+2*pi/3)));
+return([D1,D2,D3,D4,D5,D6,
+  couleur(droite(A,B),1),couleur(droite(A,C),1)]);
+}:;
+</PRE><P>Puis, on tape :
+</P><PRE CLASS="verbatim">A:= point(-1.2*i); 
+B:= point(3.7-1.5*i);
+C:= point(1.5+1.1*i);
+TA:=trissect(A,B,C):;
+TB:=trissect(B,C,A):;
+M:=inter_droite(TA[0],TB[0]);
+N:=inter_droite(TA[2],TB[2]);
+O:=inter_droite(TA[4],TB[4]);
+triangle(A,B,C);
+segment(A,M),segment(B,M);
+segment(A,N),segment(B,N);
+segment(A,O),segment(B,O);
+triangle(M,N,O,affichage=2+epaisseur_ligne_2)
+</PRE><P>On obtient :<BR>
+<IMG SRC="casgeo060.png"></P><P>Montrons par exemple que <I>MNO</I> est un triangle équilatéral :
+la rotation de centre <I>M</I> et d’angle π/3 transforme <I>A</I> en 
+<I>A</I>1, <I>B</I> en <I>B</I>1 et <I>N</I> en <I>N</I>1.<BR>
+<IMG SRC="casgeo061.png"></P><P>les triangles <I>MAA</I>1 et <I>MNN</I>1 sont des triangles équilatéraux directs
+(triangle isocèle ayant un angle de π/3). <I>M</I> étant sur <I>AD</I>1, <I>A</I>1 
+se trouve donc sur <I>AD</I>5.<BR>
+ <I>A</I>1<I>N</I>1 fait un angle de π/3 avec <I>AN</I>. <I>N</I> étant sur <I>AD</I>3, <I>A</I>1<I>N</I>1 est 
+donc parallèle à <I>AD</I>5. On a ainsi montré que <I>N</I>1 se trouve sur <I>AD</I>5 c’est à dire que 
+<I>A</I>, <I>A</I>1, <I>N</I>1 sont alignés.<BR>
+On montre de même que <I>B</I>, <I>B</I>1, <I>N</I>1 sont alignés et donc <I>N</I>1 se trouve sur <I>BD</I>5 d’où <I>N</I>1 et
+<I>O</I> sont confondus. Ce qui prouve que <I>MNO</I> est un triangle équilatéral. 
+Donc les 3 trissectrices <I>AD</I>1, <I>AD</I>3, <I>AD</I>5 de l’angle <I>A</I> forment avec les
+6 trissectrices de l’angle <I>B</I>, 6 triangles équilatéraux.
+Donc les 6 trissectrices de l’angle <I>A</I> forment avec les
+6 trissectrices de l’angle <I>B</I>, 12 triangles équilatéraux.
+Donc il existe 3× 12=36 triangles équilatéraux de ce type.</P><H3 CLASS="subsection"><A NAME="htoc130">6.4.3</A>  Les 18 triangles équilatéraux</H3><H4 CLASS="subsubsection">Qui sont-ils?</H4><P>
+On modifie le programme <TT>morley108</TT> pour ne tester que des triangles obtenus par les intersections des trissectrices des 3 angles.<BR>
+Un triangle est désigné soit :<BR>
+- par un triplet qui sont ses sommets par exemple :
+<TT>(A1B2, B1C2, C1A2)</TT> ce qui veut dire que le premier sommet est 
+l’intersection de la trissectrice 1 issue de <TT>A</TT> avec la trissectrice 2
+issue de <TT>B</TT> etc...
+soit<BR>
+- par un triplet de couples par exemple : <TT>[[1,2],[1,4],[3,2]]</TT> désigne le même 
+triangle que <TT>(A1B2, B1C4, C3A2)</TT>.<BR>
+On écrit le fichier <TT>morley18</TT> qui met dans la liste <TT>trequi</TT> les 
+triangles qui sont numériquement équilatéraux :
+</P><PRE CLASS="verbatim">a1:=0.2;
+b1:=0.4;
+A:=[0,1+i*texpand(tan(a1)),1+i*texpand(tan(2*a1)),
+1+i*texpand(tan(pi/3+a1)),1+i*texpand(tan(2*a1+2*pi/3)),
+1+i*texpand(tan(a1+2*pi/3)),1+i*texpand(tan(pi/3+2*a1))];
+B:=[1,i*texpand(tan(2*b1)),i*texpand(tan(b1)),
+i*texpand(tan(2*b1+2*pi/3)),i*texpand(tan(b1+pi/3)),
+i*texpand(tan(pi/3+2*b1)),i*texpand(tan(2*pi/3+b1))];
+C0:=texpand(tan(b1*3)/(tan(a1*3)+tan(b1*3))*(1+i*tan(a1*3)));
+C:=[C0,C0+1+i*texpand(tan(pi/3+2*a1-b1)),
+    C0+1+i*texpand(tan(2*pi/3+a1-2*b1)),
+    C0+1+i*texpand(tan(2*pi/3+2*a1-b1)),
+    C0+1+i*texpand(tan(pi/3+a1-2*b1)),
+    C0+1+i*texpand(tan(2*a1-b1)),C0+1+i*texpand(tan(a1-2*b1))];
+P1:=[];
+P2:=[];
+P3:=[];
+for (k:=1;k&lt;=6;k++) {
+  for (j:=1;j&lt;=6;j++){
+    P1:=concat(P1,affixe((inter(droite(A[0],A[k]),
+        droite(B[0],B[j])))[0]));
+    P3:=concat(P3,affixe((inter(droite(A[0],A[k]),
+        droite(C[0],C[j])))[0]));
+    P2:=concat(P2,affixe((inter(droite(B[0],B[k]),
+        droite(C[0],C[j])))[0]));
+  }
+};
+LO12:=[];
+for (k:=0;k&lt;36;k++) {
+  LOL12:=[];
+  for (j:=0;j&lt;36;j++){
+    LOL12:=concat(LOL12,longueur2(P1[k],P2[j]));
+  }
+  LO12:=append(LO12,LOL12);
+};
+LO23:=[];
+for (k:=0;k&lt;36;k++) {
+  LOL23:=[];
+  for (j:=0;j&lt;36;j++){
+    LOL23:=concat(LOL23,longueur2(P2[k],P3[j]));
+  }
+  LO23:=append(LO23,LOL23);
+};
+LO13:=[];
+for (k:=0;k&lt;36;k++) {
+  LOL13:=[];
+  for (j:=0;j&lt;36;j++){
+    LOL13:=concat(LOL13,longueur2(P1[k],P3[j]));
+  }
+  LO13:=append(LO13,LOL13);
+};
+trequi:=[];
+for (k:=0;k&lt;36;k++) {
+  for (j:=0;j&lt;36;j++){
+    l:=LO12[k,j];
+    for (s:=0;s&lt;36;s++){
+      if ((abs(normal(l-LO23[j,s]))&lt;0.0000001) and 
+          (abs(normal(l-LO13[k,s]))&lt;0.0000001)){
+        trequi:=append(trequi,[[iquo(k,6)+1,irem(k,6)+1],
+                               [iquo(j,6)+1,irem(j,6)+1],
+                               [irem(s,6)+1,iquo(s,6)+1]]);
+      }
+    }
+  }
+};
+trequi;
+</PRE><P>On fait <TT>Charger session</TT> du menu <TT>Fich</TT> de <TT>Xcas</TT> et on 
+sélectionne <TT>morley18</TT> du répértoire 
+<TT>examples/geo</TT> pour exécuter ce fichier.<BR>
+La liste <TT>trequi</TT> contient cette fois 18 triplets, il y donc 
+numèriquement 18 triangles équilatéraux dont les sommets sont définis 
+comme intersection des trissectrices des 3 angles du triangle.<BR>
+On trouve comme contenu de <TT>trequi</TT> :
+</P><PRE CLASS="verbatim">[[[1,2],[1,2],[1,2]],
+[[1,2],[1,4],[3,2]],
+[[1,4],[3,2],[1,2]],
+[[1,4],[3,6],[5,2]],
+[[1,6],[5,4],[3,2]],
+[[1,6],[5,6],[5,2]],
+[[3,2],[1,2],[1,4]],
+[[3,2],[1,6],[5,4]],
+[[3,4],[3,4],[3,4]],
+[[3,4],[3,6],[5,4]],
+[[3,6],[5,2],[1,4]],
+[[3,6],[5,4],[3,4]],
+[[5,2],[1,4],[3,6]],
+[[5,2],[1,6],[5,6]],
+[[5,4],[3,2],[1,6]],
+[[5,4],[3,4],[3,6]],
+[[5,6],[5,2],[1,6]],
+[[5,6],[5,6],[5,6]]]
+</PRE><P>Chaque triplet désigne les sommets d’un triangle. Avec la notation 
+<TT>A1B2</TT> qui désigne l’intersection de la trissectrice 1 issue de 
+<TT>A</TT> avec la trissectrice 2 issue de <TT>B</TT> on a :<BR>
+<TT>(A1B2, B1C2, C1A2),</TT><BR>
+<TT>(A1B2, B1C4, C3A2),</TT><BR>
+<TT>(A1B4, B3C2, C1A2),</TT><BR>
+<TT>(A1B4, B3C6, C5A2),</TT><BR>
+<TT>(A1B6, B5C4, C3A2),</TT><BR>
+<TT>(A1B6, B5C6, C5A2),</TT><BR>
+<TT>(A3B2, B1C2, C1A4),</TT><BR>
+<TT>(A3B2, B1C6, C5A4),</TT><BR>
+<TT>(A3B4, B3C4, C3A4),</TT><BR>
+<TT>(A3B4, B3C6, C5A4),</TT><BR>
+<TT>(A3B6, B5C2, C1A4),</TT><BR>
+<TT>(A3B6, B5C4, C3A4),</TT><BR>
+<TT>(A5B2, B1C4, C3A6),</TT><BR>
+<TT>(A5B2, B1C6, C5A6),</TT><BR>
+<TT>(A5B4, B3C2, C1A6),</TT><BR>
+<TT>(A5B4, B3C4, C3A6),</TT><BR>
+<TT>(A5B6, B5C2, C1A6),</TT><BR>
+<TT>(A5B6, B5C6, C5A6)</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc131">6.4.4</A>  La figure</H3><P>
+On dessine les 18 triangles.<BR>
+On écrit un fichier <TT>morleydess18</TT> qui va calculer les coordonnées des 
+27 points sommets de ces 18 triangles et dessiner ces 18 triangles.<BR>
+On pourra avec un tel dessin faire bouger <TT>A</TT> ou <TT>B</TT> ou <TT>C</TT>.<BR>
+On note <TT>DA</TT> (resp <TT>DB</TT>, <TT>DC</TT>) la liste des 6 trissectrices de l’angle <TT>A</TT> (resp <TT>B</TT>, <TT>C</TT>).<BR>
+On remarquera dans la définition de <TT>DA, DB, DC</TT> :<BR>
+ - un zéro au début de la liste pour que la première trissectrice 
+soit d’indice 1 etc...<BR>
+- un zéro en fin de liste pour que les objets graphiques situés dans la liste ne soient pas dessinés (pour ne pas surcharger la figure) (on aurait aussi pu employer la fonction <TT>nodisp</TT>).
+</P><PRE CLASS="verbatim">A:=point(-2.35-i*2.28);
+B:=point(-0.684-i*2.3);
+C:=point(-1.35-i*0.61);
+a1:=angle(A,B,C)/3;
+a2:=angle(B,C,A)/3;
+a3:=pi/3-a1-a2;
+DA:=0,droite(A,A+(B-A)*exp(i*a1)):;
+DA:=DA,droite(A,A+(B-A)*exp(i*a1*2)):;
+DA:=DA,droite(A,A+(B-A)*exp(i*(a1+pi/3))):;
+DA:=DA,droite(A,A+(B-A)*exp(i*2*(a1+pi/3))):;
+DA:=DA,droite(A,A+(B-A)*exp(i*(a1+2*pi/3))):;
+DA:=DA,droite(A,A+(B-A)*exp(i*2*(a1+2*pi/3))),0:;
+DB:=0,droite(B,B+(C-B)*exp(i*a2)):;
+DB:=DB,droite(B,B+(C-B)*exp(i*a2*2)):;
+DB:=DB,droite(B,B+(C-B)*exp(i*(a2+pi/3))):;
+DB:=DB,droite(B,B+(C-B)*exp(i*2*(a2+pi/3))):;
+DB:=DB,droite(B,B+(C-B)*exp(i*(a2+2*pi/3))):;
+DB:=DB,droite(B,B+(C-B)*exp(i*2*(a2+2*pi/3))),0:;
+DC:=0,droite(C,C+(A-C)*exp(i*a3)):;
+DC:=DC,droite(C,C+(A-C)*exp(i*a3*2)):;
+DC:=DC,droite(C,C+(A-C)*exp(i*(a3+pi/3))):;
+DC:=DC,droite(C,C+(A-C)*exp(i*2*(a3+pi/3))):;
+DC:=DC,droite(C,C+(A-C)*exp(i*(a3+2*pi/3))):;
+DC:=DC,droite(C,C+(A-C)*exp(i*2*(a3+2*pi/3))),0:;
+P1:=[];
+P1:=concat(P1,affixe((inter(DA[1],DB[2]))[0]));
+P1:=concat(P1,affixe((inter(DA[1],DB[4]))[0]));
+P1:=concat(P1,affixe((inter(DA[1],DB[6]))[0]));
+P1:=concat(P1,affixe((inter(DA[3],DB[2]))[0]));
+P1:=concat(P1,affixe((inter(DA[3],DB[4]))[0]));
+P1:=concat(P1,affixe((inter(DA[3],DB[6]))[0]));
+P1:=concat(P1,affixe((inter(DA[5],DB[2]))[0]));
+P1:=concat(P1,affixe((inter(DA[5],DB[4]))[0]));
+P1:=concat(P1,affixe((inter(DA[5],DB[6]))[0]));
+P2:=[];
+P2:=concat(P2,affixe((inter(DB[1],DC[2]))[0]));
+P2:=concat(P2,affixe((inter(DB[1],DC[4]))[0]));
+P2:=concat(P2,affixe((inter(DB[1],DC[6]))[0]));
+P2:=concat(P2,affixe((inter(DB[3],DC[2]))[0]));
+P2:=concat(P2,affixe((inter(DB[3],DC[4]))[0]));
+P2:=concat(P2,affixe((inter(DB[3],DC[6]))[0]));
+P2:=concat(P2,affixe((inter(DB[5],DC[2]))[0]));
+P2:=concat(P2,affixe((inter(DB[5],DC[4]))[0]));
+P2:=concat(P2,affixe((inter(DB[5],DC[6]))[0]));
+P3:=[];
+P3:=concat(P3,affixe((inter(DC[1],DA[2]))[0]));
+P3:=concat(P3,affixe((inter(DC[1],DA[4]))[0]));
+P3:=concat(P3,affixe((inter(DC[1],DA[6]))[0]));
+P3:=concat(P3,affixe((inter(DC[3],DA[2]))[0]));
+P3:=concat(P3,affixe((inter(DC[3],DA[4]))[0]));
+P3:=concat(P3,affixe((inter(DC[3],DA[6]))[0]));
+P3:=concat(P3,affixe((inter(DC[5],DA[2]))[0]));
+P3:=concat(P3,affixe((inter(DC[5],DA[4]))[0]));
+P3:=concat(P3,affixe((inter(DC[5],DA[6]))[0]));
+triangle(A,B,C);
+triangle(P1[0],P2[0],P3[0]);
+P:=point(P1[0]);
+Q:=point(P2[0]);
+R:=point(P3[0]);
+triangle(P1[0],P2[1],P3[3]);
+triangle(P1[1],P2[3],P3[0]);
+triangle(P1[1],P2[5],P3[6]);
+triangle(P1[2],P2[7],P3[3]);
+triangle(P1[2],P2[8],P3[6]);
+triangle(P1[3],P2[0],P3[1]);
+triangle(P1[3],P2[2],P3[7]);
+triangle(P1[4],P2[4],P3[4]);
+triangle(P1[4],P2[5],P3[7]);
+triangle(P1[5],P2[6],P3[1]);
+triangle(P1[5],P2[7],P3[4]);
+triangle(P1[6],P2[1],P3[5]);
+triangle(P1[6],P2[2],P3[8]);
+triangle(P1[7],P2[3],P3[2]);
+triangle(P1[7],P2[4],P3[5]);
+triangle(P1[8],P2[6],P3[2]);
+triangle(P1[8],P2[8],P3[8]);
+</PRE><P>On obtient :<BR>
+<IMG SRC="casgeo062.png"><BR>
+
+On voit que ces triangles ont leur cotés parallèles.<BR>
+On peut le faire montrer par <TT>Xcas</TT> avec le programme suivant se trouvant dans le fichier <TT>morleypara</TT> :
+</P><PRE CLASS="verbatim">est_parallele(droite(P1[0],P2[0]),droite(P1[8],P2[8]));
+est_parallele(droite(P1[0],P2[0]),droite(P1[0],P3[6]));
+est_parallele(droite(P1[0],P2[0]),droite(P1[4],P2[4]));
+est_parallele(droite(P1[4],P2[4]),droite(P1[4],P3[1]));
+est_parallele(droite(P1[0],P2[0]),droite(P1[8],P2[8]));
+est_parallele(droite(P1[8],P2[8]),droite(P1[8],P3[5]));
+est_parallele(droite(P1[0],P2[0]),droite(P3[6],P2[5]));
+est_parallele(droite(P1[4],P2[4]),droite(P1[2],P3[3]));
+</PRE><H3 CLASS="subsection"><A NAME="htoc132">6.4.5</A>  La démonstration avec <TT>Xcas</TT></H3><P>
+Pour montrer plus facilement que les 18 triangles trouvés sont 
+équilatéraux on va écrire dans le fichier <TT>equimorley</TT> une fonction 
+ayant <TT>m,n,p,q,r,s</TT> comme paramètres représentant le triangle 
+<TT>AmBn,BpCq,CrAs</TT> et qui teste si ce triangle est équilatéral :
+</P><PRE CLASS="verbatim">equimore(m,n,p,q,r,s):={
+assume(a1=0.3); 
+assume(a2=0.4);
+A:=[0,1+i*texpand(tan(a1)),1+i*texpand(tan(2*a1)),
+1+i*texpand(tan(pi/3+a1)),1+i*texpand(tan(2*a1+2*pi/3)),
+1+i*texpand(tan(a1+2*pi/3)),1+i*texpand(tan(pi/3+2*a1))];
+B:=[1,i*texpand(tan(2*a2)),i*texpand(tan(a2)),
+i*texpand(tan(2*a2+2*pi/3)),i*texpand(tan(a2+pi/3)),
+i*texpand(tan(pi/3+2*a2)),i*texpand(tan(2*pi/3+a2))];
+C0:=texpand(tan(a2*3)/(tan(a1*3)+tan(a2*3))*(1+i*tan(a1*3)));
+C:=[C0,C0+1+i*texpand(tan(pi/3+2*a1-a2)),
+C0+1+i*texpand(tan(2*pi/3+a1-2*a2)),
+C0+1+i*texpand(tan(2*pi/3+2*a1-a2)),
+C0+1+i*texpand(tan(pi/3+a1-2*a2)),
+C0+1+i*texpand(tan(2*a1-a2)),C0+1+i*texpand(tan(a1-2*a2))];
+P:=affixe((inter(droite(A[0],A[m]),droite(B[0],B[n])))[0]);
+Q:=affixe((inter(droite(B[0],B[p]),droite(C[0],C[q])))[0]);
+R:=affixe((inter(droite(C[0],C[r]),droite(A[0],A[s])))[0]);
+lpq:=longueur2(P,Q);
+lpr:=longueur2(P,R);
+lqr:=longueur2(Q,R);
+return([normal(lpq-lpr),normal(lpq-lqr)]);
+};
+</PRE><P>On fait <TT>Charger session</TT> du 
+menu <TT>Fich</TT> de <TT>Xcas</TT> et on selectionne <TT>equimorley</TT> du répértoire 
+<TT>examples/geo</TT> pour exécuter ce fichier, puis :<BR>
+<TT>equimorley(5,6,5,6,5,6)</TT><BR>
+On trouve :<BR>
+<TT>[0,0]</TT><BR>
+ et cela prouve que le triangle <TT>(A5B6, B5C6, C5A6)</TT> est équilatéral.<BR>
+puis par exemple :<BR>
+<TT>equimorley(5,4,3,2,1,6)</TT><BR>
+On trouve :<BR>
+<TT>[0,0]
+</TT><BR>
+ et cela prouve que le triangle <TT>(A5B4, B3C2, C1A6)</TT> est équilatéral.<BR>
+Avec la fonction <TT>equimore</TT>, on peut donc montrer que les 18 triangles
+trouvés précédemment sont bien tous équilatéraux.</P>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casgeo005.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo007.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

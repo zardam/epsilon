@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Fonction testant le type de son argument: type</title>
+</head>
+<body >
+<a href="cascmd_fr837.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr839.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1022" class="subsection">9.4.5  Fonction testant le type de son argument: <span style="font-family:monospace">type</span></h3>
+<p><a id="hevea_default1504"></a>
+<a id="hevea_default1505"></a><a id="hevea_default1506"></a><a id="hevea_default1507"></a><a id="hevea_default1508"></a><a id="hevea_default1509"></a><a id="hevea_default1510"></a><a id="hevea_default1511"></a><a id="hevea_default1512"></a><a id="hevea_default1513"></a><a id="hevea_default1514"></a><a id="hevea_default1515"></a><a id="hevea_default1516"></a><a id="hevea_default1517"></a><a id="hevea_default1518"></a><a id="hevea_default1519"></a><a id="hevea_default1520"></a><a id="hevea_default1521"></a><a id="hevea_default1522"></a>
+<span style="font-family:monospace">type</span> est une fonction qui a un argument et qui renvoie le
+type de cet argument par exemple :<br>
+ 
+<span style="font-family:monospace">double ou DOM_FLOAT, integer ou DOM_INT, complex ou DOM_COMPLEX,</span><br>
+<span style="font-family:monospace">identifier ou DOM_IDENT, vector ou DOM_LIST, func ou DOM_FUNC</span><br>
+<span style="font-family:monospace">expression ou DOM_SYMBOLIC, rational ou DOM_RAT, string ou DOM_STRING</span>.<br>
+Il y a 20 types différents qui sont représentés par un entier entre 1 
+et 20.<br>
+<span style="font-family:monospace">type</span> permet de tester une erreur d’entrée.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">type(3.14)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">double</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">type(3.14)+0</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">1</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">type(3)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">integer</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">type(3)+0</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">2</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">type(3% 5)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">15</span></div><p><span style="font-weight:bold">Remarque : utilisation de type pour les graphes</span> <br>
+voir aussi <a href="index.html#sec%3Aplot">3</a><br>
+Si le graphe dépend d’une fonction utilisateur, il faut que la fonction soit 
+définie même lorsque le(s) paramètre(s) a (ont) une valeur formelle, ce 
+qui peut se faire en testant le type du paramètre, comme dans l’exemple 
+suivant, <span style="font-style:italic">f</span> est définie en testant du type du paramètre par :
+</p><pre class="verbatim">f(x):= {
+  if (type(x)==identifier) return 'f'(x); 
+  while(x&gt;0){ x--; } 
+  return x; 
+}:;
+</pre><p>
+Ainsi <span style="font-family:monospace">f(x)</span> renvoie <span style="font-family:monospace">f(x)</span> et <span style="font-family:monospace">f(3.1)</span> renvoie <span style="font-family:monospace">-0.9</span>.<br>
+ou bien<br>
+</p><pre class="verbatim">g(x):= {   
+  if (type(x)!=vector) return 'g'(x); 
+  if (type(x)==identifier) return 'g'(x); 
+  while(x[0]&gt;0){x[0]:=x[0]-1; } 
+  return x; 
+}:;
+</pre><p>
+Ainsi <span style="font-family:monospace">g(x)</span> renvoie <span style="font-family:monospace">g(x)</span>, <span style="font-family:monospace">g([x,y,z])</span> renvoie <span style="font-family:monospace">g([x,y,z])</span>
+et <span style="font-family:monospace">g([1.1,2,3])</span> renvoie <span style="font-family:monospace">[-0.9,2,3]</span>.<br>
+Par exemple si <span style="font-family:monospace">G:=plotfunc(g(x)</span>, le test permet d’utiliser le graphe <span style="font-family:monospace">G</span> de <span style="font-family:monospace">g</span> dans des commandes comme <span style="font-family:monospace">translation(1+i,G)</span>...
+</p>
+<hr>
+<a href="cascmd_fr837.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr839.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

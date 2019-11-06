@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Perform thresholding operations on an array : threshold</title>
+</head>
+<body >
+<a href="cascmd_en295.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en297.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec366" class="subsection">5.27.11  Perform thresholding operations on an array : <span style="font-family:monospace">threshold</span><a id="hevea_default514"></a></h3>
+<p>
+<span style="font-family:monospace">threshold</span> changes the data in an array which does not meet some kind of minimality criterion. It takes the following parameters :
+</p><ul class="itemize"><li class="li-itemize">
+	vector  <span style="font-weight:bold"><span style="font-style:italic">v</span></span>  of real or complex numbers
+	</li><li class="li-itemize">bound specification <span style="font-family:monospace">bnd</span>
+	</li><li class="li-itemize">comparison operator (optional)
+	</li><li class="li-itemize"><span style="font-family:monospace">abs[=true,false]</span> (optional)
+</li></ul><p>
+Bound specification may be either a single real number  <span style="font-style:italic">b</span>  (or an equation <span style="font-family:monospace">b=value</span>) or a list of two real numbers  <span style="font-style:italic">l</span>,<span style="font-style:italic">u</span>  (or equations <span style="font-family:monospace">l=lvalue</span>, <span style="font-family:monospace">u=uvalue</span>). In the latter case a vector  <span style="font-weight:bold"><span style="font-style:italic">w</span></span>  is returned, as defined by :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">w</span><sub><span style="font-style:italic">k</span></sub>=</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:left;white-space:nowrap" ><span style="font-family:monospace">uvalue</span> (defaults to  <span style="font-style:italic">u</span> ),</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>&gt;<span style="font-style:italic">u</span>,</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" ><span style="font-family:monospace">lvalue</span> (defaults to  <span style="font-style:italic">l</span> ),</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>&lt;<span style="font-style:italic">l</span>,</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>,</td><td style="text-align:left;white-space:nowrap" >otherwise
+</td></tr>
+</table></td></tr>
+</table></td></tr>
+</table><p>
+for  <span style="font-style:italic">k</span>=0,1,…,<span style="font-style:italic">n</span>−1  where  <span style="font-style:italic">n</span>= <span style="font-family:monospace">size</span>( <span style="font-weight:bold"><span style="font-style:italic">v</span></span> ) when the element  <span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>  is a real number. If  <span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>  is complex, then  |<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>|  is compared with  <span style="font-style:italic">u</span>  resp.  <span style="font-style:italic">l</span>  and the value <span style="font-family:monospace">uvalue</span> resp. <span style="font-family:monospace">lvalue</span> is multiplied by  <span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>/|<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>| .</p><p>In the first case where <span style="font-family:monospace">bnd</span> is a number or an equation, the return vector  <span style="font-weight:bold"><span style="font-style:italic">w</span></span>  is defined by :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">w</span><sub><span style="font-style:italic">k</span></sub>=</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎨<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:left;white-space:nowrap" ><span style="font-family:monospace">value</span> (defaults to  <span style="font-style:italic">b</span> ),</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>&lt;<span style="font-style:italic">b</span>,</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>,</td><td style="text-align:left;white-space:nowrap" >otherwise
+</td></tr>
+</table></td></tr>
+</table></td></tr>
+</table><p>
+if  <span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>∈ℝ  (if  <span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>  is complex, then  |<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>|  is compared with  <span style="font-style:italic">b</span>  and the <span style="font-family:monospace">value</span> is multiplied by  <span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>/|<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>| ), for  <span style="font-style:italic">k</span>=0,1,…,<span style="font-style:italic">n</span>−1 . If comparison operator is specified (one of <span style="font-family:monospace">&gt;</span>, <span style="font-family:monospace">&lt;=</span> or <span style="font-family:monospace">&gt;=</span>, must be quoted), it is used instead of <span style="font-family:monospace">&lt;</span> (which is the default) in the above formula. If the fourth argument is specified, the data in  <span style="font-weight:bold"><span style="font-style:italic">v</span></span>  must be real and the following formula is used for  <span style="font-style:italic">w</span><sub><span style="font-style:italic">k</span></sub> ,  <span style="font-style:italic">k</span>=0,1,…,<span style="font-style:italic">n</span>−1  :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">w</span><sub><span style="font-style:italic">k</span></sub>=</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:left;white-space:nowrap" ><span style="font-family:monospace">value</span>,</td><td style="text-align:left;white-space:nowrap" > <span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>≥ 0  and  |<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>|&lt;<span style="font-style:italic">b</span> ,</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" >−<span style="font-family:monospace">value</span>,</td><td style="text-align:left;white-space:nowrap" > <span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>&lt;0  and  |<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>|&lt;<span style="font-style:italic">b</span> ,</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>,</td><td style="text-align:left;white-space:nowrap" >otherwise.
+</td></tr>
+</table></td></tr>
+</table></td></tr>
+</table><p>
+As before, <span style="font-family:monospace">value</span> defaults to  <span style="font-style:italic">b</span>  and the comparison operator used to test  |<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>|  against  <span style="font-style:italic">b</span>  (by default <span style="font-family:monospace">&lt;</span>) is specified by the third argument.</p><p>For example, input :
+</p><div class="center">
+	<span style="font-family:monospace">threshold([2,3,1,2,5,4,3,7],3)</span>
+</div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[3,3,3,3,5,4,3,7]</span>
+</div><p>
+Input :
+</p><div class="center">
+	<span style="font-family:monospace">threshold([2,3,1,2,5,4,3,7],3=a,’&gt;=’)</span>
+</div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[2,a,1,2,a,a,a,a]</span>
+</div><p>
+Input :
+</p><div class="center">
+	<span style="font-family:monospace">threshold([-2,-3,1,2,5,-4,3,-1],3=0,abs=true)</span>
+</div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[0,-3,0,0,5,-4,3,0]</span>
+</div><p>
+Input :
+</p><div class="center">
+	<span style="font-family:monospace">threshold([-2,-3,1,2,5,-4,3,-1],3=0,’&lt;=’,abs=true)</span>
+</div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[0,0,0,0,5,-4,0,0]</span>
+</div><p>
+Input :
+</p><div class="center">
+	<span style="font-family:monospace">threshold([-120,-11,-3,0,7,27,111,234],[-100,100])</span>
+</div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[-100,-11,-3,0,7,27,100,100]</span>
+</div><p>
+Input :
+</p><div class="center">
+	<span style="font-family:monospace">threshold([-120,-11,-3,0,7,27,111,234],[-100=-inf,100=inf])</span>
+</div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[-infinity,-11,-3,0,7,27,+infinity,+infinity]</span>
+</div><p>In the following example, a square-like wave is created from a single sine wave by clipping sample values. Input :
+</p><div class="center">
+<span style="font-family:monospace">data:=threshold(3*sin(2*pi*440*soundsec(2)),[-1.0,1.0]):;<br>
+s:=createwav(data):; playsnd(s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">1
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">plotwav(s,range=[1000,2000])
+</span></div><p>
+Output :
+</p><div class="center">
+<img src="cascmd_en022.png">
+</div>
+<hr>
+<a href="cascmd_en295.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en297.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

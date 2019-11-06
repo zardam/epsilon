@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Προσαρτημένος πίνακας :  adjoint_matrix</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el411.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el413.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc459">1.46.9</A>  Προσαρτημένος πίνακας : <TT> adjoint_matrix</TT></H3><P><A NAME="@default690"></A>
+	
+<TT>adjoint_matrix </TT> παίρνει ως όρισμα έναν τετραγωνικό πίνακα 
+<I>A</I> μεγέθους <I>n</I>.<BR>
+	
+<TT>adjoint_matrix </TT> επιστρέφει την λίστα των συντελεστών του <I>P</I> 
+(χαρακτηριστικό πολυώνυμο του <I>A</I>), και
+μία λίστα πινάκων που είναι οι συντελεστές του (γενικού) προσαρτημένου πίνακα μεγέθους <I>n</I>, δηλαδή του πολυωνύμου <I>Q</I>(<I>x</I>) = <I>I</I>× <I>x</I><SUP><I>n</I>−1</SUP>+⋯+<I>B</I><SUB>0</SUB>  βαθμού <I>n</I>−1. <B>Προσοχή!</B> Το 	
+<TT>Xcas</TT> επιστρέφει την απόλυτη τιμή του <I>Q</I>(<I>x</I>). O προσαρτημένος πινακας του <I>A</I> είναι (−1)<SUP><I>n</I>−1</SUP><I>Q</I>(<I>x</I>) και επομένως, ο απλός προσαρτημένος πινακας του <I>A</I> 
+είναι (−1)<SUP><I>n</I>−1</SUP><I>B</I><SUB>0</SUB> = (−1)<SUP><I>n</I>−1</SUP><I>Q</I>(0). </P><P>Ο απλός προσαρτημένος πινακας ενός τετραγωνικού πίνακα <I>A</I> μεγέθους <I>n</I> είναι ο πίνακας <I>B</I> 
+μεγέθους <I>n</I> του οποίου το στοιχείο στην θέση (<I>i</I>,<I>j</I>) είναι (−1)<SUP><I>i</I>+<I>j</I></SUP> επί την ορίζουσα του πίνακα που προκύπτει από τον <I>A</I> αν διαγράψουμε την σειρά <I>j</I> και την στήλη <I>i</I> (προσέξτε την αναστροφή!). Ο (γενικός) προσαρτημένος πίνακας του <I>A</I> είναι ο απλός προσαρτημένος πινακας του  <TT><I>xI</I>-<I>A</I></TT>. 
+Ισχύει </P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>A</I>× <I>B</I> = <I>B</I>× <I>A</I> = det(<I>A</I>)× <I>I</I> </TD></TR>
+</TABLE><P> 
+καθώς επίσης και :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>x</I>)× <I>I</I>=det(<I>xI</I>−<I>A</I>)<I>I</I>=(<I>xI</I>−<I>A</I>)<I>Q</I>(<I>x</I>)</TD></TR>
+</TABLE><P>
+Εφόσον το πολυώνυμο <I>P</I>(<I>x</I>)× <I>I</I>−<I>P</I>(<I>A</I>) 
+μπορεί επίσης να διαιρεθεί από <I>x</I>× <I>I</I>−<I>A</I> (από αλγεβρικές ταυτότητες), 
+αυτό αποδεικνύει ότι <I>P</I>(<I>A</I>)=0.<BR>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>adjoint_matrix([[4,1,-2],[1,2,-1],[2,1,0]])</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">
+	
+<TT>[
+</TT><TT><B>[</B></TT><TT>1,-6,12,-8</TT><TT><B>]</B></TT><TT>,<BR>
+</TT><TT><B>[</B></TT><TT> [[1,0,0],[0,1,0],[0,0,1]],
+[[-2,1,-2], [1,-4,-1],[2,1,-6]],
+[[1,-2,3],[-2,4,2],[-3,-2,7]] </TT><TT><B>]</B></TT><TT>
+] </TT></DIV><P>
+Επομένως, το χαρακτηριστικό πολυώνυμο <I>P</I> είναι :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>x</I>)=<I>x</I><SUP>3</SUP>−6*<I>x</I><SUP>2</SUP>+12*<I>x</I>−8 </TD></TR>
+</TABLE><P>
+Η ορίζουσα του <I>A</I> ισούται με −<I>P</I>(0)=8.
+Ο απλός προσαρτημένος πίνακας του <I>A</I> ισούται με :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>B</I>=<I>Q</I>(0)=[[1,−2,3],[−2,4,2],[−3,−2,7]] </TD></TR>
+</TABLE><P>
+Επομένως, ο αντίστροφος του <I>A</I> ισούται με :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">1/8*[[1,−2,3],[−2,4,2],[−3,−2,7]] </TD></TR>
+</TABLE><P>
+Ο γενικός προσαρτημένος πίνακας του <I>A</I> είναι :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">[[<I>x</I><SUP>2</SUP>−2<I>x</I>+1,<I>x</I>−2,−2<I>x</I>+3],[<I>x</I>−2,<I>x</I><SUP>2</SUP>−4<I>x</I>+4,−<I>x</I>+2],[2<I>x</I>−3,<I>x</I>−2,<I>x</I><SUP>2</SUP>−6<I>x</I>+7]] </TD></TR>
+</TABLE><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>adjoint_matrix([[4,1],[1,2]])</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[[1,-6,7],[[[1,0],[0,1]],[[-2,1],[1,-4]]]]</TT></DIV><P>
+Επομένως, το χαρακτηριστικό πολυώνυμο <I>P</I> είναι :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>x</I>)=<I>x</I><SUP>2</SUP>−6*<I>x</I>+7 </TD></TR>
+</TABLE><P>
+Η ορίζουσα του <I>A</I> ισούται με +<I>P</I>(0)=7.
+Ο απλός προσαρτημένος πίνακας του <I>A</I> ισούται με 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>Q</I>(0)= −[[−2,1],[1,−4]] </TD></TR>
+</TABLE><P>
+Επομένως, ο αντίστροφος του <I>A</I> ισούται με :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">−1/7*[[−2,1],[1,−4]] </TD></TR>
+</TABLE><P>
+Ο γενικός προσαρτημένος πίνακας του <I>A</I> είναι :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">−[[<I>x</I>−2,1],[1,<I>x</I>−4]] </TD></TR>
+</TABLE><HR>
+<A HREF="cascmd_el411.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el413.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

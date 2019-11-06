@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Creating or recreating images: writergb</title>
+</head>
+<body >
+<a href="cascmd_en1024.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<hr>
+<h3 id="sec1312" class="subsection">14.2.4  Creating or recreating images: <span style="font-family:monospace">writergb</span><a id="hevea_default1706"></a></h3>
+<p>The <span style="font-family:monospace">writergb</span> writes images to <span style="font-family:monospace">png</span> files; the image
+can either be read in with <span style="font-family:monospace">readrgb</span> or created by
+<span style="font-family:monospace">writergb</span> itself.</p>
+<h4 id="sec1313" class="subsubsection">Writing images given in <span style="font-family:monospace">Xcas</span> format</h4>
+<p>To write an existing image, the <span style="font-family:monospace">writergb</span> command takes two
+arguments, a file name and an image in <span style="font-family:monospace">Xcas</span> format (see 
+section <a href="cascmd_en1022.html#sec%3Aimagestruct">14.2.1</a>). </p><p><span style="font-family:monospace">writergb</span> writes the image to the given file.</p><p>As an example, suppose the following image is stored in file
+<span style="font-family:monospace">image1234.jpg</span>.
+</p><div class="center">
+<img src="cascmd_en269.png">
+</div><p>
+Using <span style="font-family:monospace">readrgb</span>,<br>
+</p><div class="center">
+<span style="font-family:monospace">a := readrgb("image1234.jpg")
+</span></div><p>
+the variable <span style="font-family:monospace">a</span> will contain a list,
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">a[0]</span> will be <span style="font-family:monospace">[4,250,500]</span>, the number of
+channels, the height and the width of the image.
+</li><li class="li-itemize"><span style="font-family:monospace">a[1]</span>, the red channel,
+</li><li class="li-itemize"><span style="font-family:monospace">a[2]</span>, the green channel,
+</li><li class="li-itemize"><span style="font-family:monospace">a[3]</span>, the transparency channel,
+</li><li class="li-itemize"><span style="font-family:monospace">a[4]</span>, the blue channel.
+</li></ul><p>
+The command<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">writergb("image2134.png",[a[0],a[2],a[1],a[3],a[4]])
+</span></div><p>
+will produce an image file <span style="font-family:monospace">image2134.png</span> which is simply
+<span style="font-family:monospace">image1234.png</span> with the green and red colors switched.
+</p><div class="center">
+<img src="cascmd_en270.png">
+</div>
+<h4 id="sec1314" class="subsubsection">Creating images</h4>
+<p>The <span style="font-family:monospace">Xcas</span> image format can be typed in by hand.<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">writergb("image1.png",[[4,2,2],[[255,0],[0,0]],[[0,255],[0,0]],
+[[255,125],[255,255]],[[0,0],[255,0]]])
+</span></div><p>
+creates a file <span style="font-family:monospace">image1.png</span> containing an image 2 points by 2
+points, the upper left point is red, the upper right point is a muted
+green, the lower left point is blue, and the lower right point is black.
+The transparency value of <span style="font-family:monospace">125</span> for the upper right point makes
+it partially transparent and mutes the color.</p><p>For larger images, in some cases the matrix operations of
+<span style="font-family:monospace">Xcas</span> can be used to create the channels.<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">writergb("image2.png",[[4,300,300],makemat(0,300,300),
+makemat(0,300,300), makemat(255,300,300),makemat(0,300,300) +
+idn(300)*255])
+</span></div><div class="center">
+<img src="cascmd_en271.png">
+</div><p>The <span style="font-family:monospace">writergb</span> command can also take as input a
+simplified version of the <span style="font-family:monospace">Xcas</span> image description, which
+doesn’t involve stating the number of channels, the size of the image,
+or the transparency. There is a full color version of this simplified
+form and a grayscale version.</p><p>To create a full color image, the <span style="font-family:monospace">writergb</span> command takes four
+arguments, the name of the file to store the image, the red channel
+(matrix), the green channel and the blue channel.<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">writergb("image2.png",[[255,250],[0,120]],[[0,255],[0,0]],[[0,0],[255,100]])
+</span></div><p>
+creates a file <span style="font-family:monospace">image2.png</span> containing an image 2 points by 2
+points, the upper left point is red (rgb value (255,0,0)), the upper
+right point is yellow (rgb value (250,255,0)), the lower left point is
+blue (rgb value (0,0,255) and the lower right point is violet (rgb
+value (120,0,100)).</p><p>To create a grayscale image, the <span style="font-family:monospace">writergb</span> command takes two
+arguments, the name of the file to store the image and a matrix
+representing how dark each point is (where <span style="font-family:monospace">0</span> is black and
+<span style="font-family:monospace">255</span> is white).<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">writergb("image3.png",[[65,125],[185,200]])
+</span></div><p>
+creates a file <span style="font-family:monospace">image3.png</span> containing an image 2 points by 2
+points, the upper left point is dark gray, the upper
+right point is medium gray, the lower left point is
+light gray and the lower right point is even lighter gray.</p>
+<hr>
+<a href="cascmd_en1024.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+</body>
+</html>

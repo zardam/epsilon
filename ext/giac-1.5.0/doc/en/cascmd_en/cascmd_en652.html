@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Solving linear homogeneous second-order ODE with rational coefficients : kovacicsols</title>
+</head>
+<body >
+<a href="cascmd_en651.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en653.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec778" class="subsection">5.62.3  Solving linear homogeneous second-order ODE with rational coefficients : <span style="font-family:monospace">kovacicsols</span><a id="hevea_default1013"></a></h3>
+<p>
+<span style="font-family:monospace">kovacicsols</span> uses Kovacic’s algorithm to find a Liouvillian solution of an ordinary linear homogeneous second-order differential equation
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><a id="kovacic-ode"></a><span style="font-style:italic">a</span> <span style="font-style:italic">y</span>″+<span style="font-style:italic">b</span> <span style="font-style:italic">y</span>′+<span style="font-style:italic">c</span> <span style="font-style:italic">y</span>=0,    (7)</td></tr>
+</table><p>
+where <span style="font-style:italic">a</span>, <span style="font-style:italic">b</span> and <span style="font-style:italic">c</span> are rational functions of the independent variable. The command takes from one to three arguments :
+</p><ul class="itemize"><li class="li-itemize">
+equation (<a href="#kovacic-ode">7</a>) as an expression (left-hand side), equality or a list of coefficients [<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>,<span style="font-style:italic">c</span>],
+</li><li class="li-itemize">independent variable (optional, by default <span style="font-style:italic">x</span>),
+</li><li class="li-itemize">dependent variable (optional, by default <span style="font-style:italic">y</span>).
+</li></ul><p>
+The dependent variable should not be specified if the equation (<a href="#kovacic-ode">7</a>) is entered as a list of coefficients.</p><p>The return value can be a list or an expression. An empty list means that there are no Liouvillian solutions to the input equation. If a non-empty list is returned, it contains one or two independent solution(s) <span style="font-style:italic">y</span><sub>1</sub> (and <span style="font-style:italic">y</span><sub>2</sub>) to the equation (<a href="#kovacic-ode">7</a>). The general solution to (<a href="#kovacic-ode">7</a>) is then
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>=<span style="font-style:italic">C</span><sub>1</sub> <span style="font-style:italic">y</span><sub>1</sub>+<span style="font-style:italic">C</span><sub>2</sub> <span style="font-style:italic">y</span><sub>2</sub>, </td></tr>
+</table><p>
+where <span style="font-style:italic">C</span><sub>1</sub>,<span style="font-style:italic">C</span><sub>2</sub>∈ℝ are arbitrary constants. However, for some equations only <span style="font-style:italic">y</span><sub>1</sub> is returned, in which case <span style="font-style:italic">y</span><sub>2</sub> can be obtained as (using reduction of order) :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><a id="kovacic-reduction"></a><span style="font-style:italic">y</span><sub>2</sub>=<span style="font-style:italic">y</span><sub>1</sub> </td><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><span style="font-style:italic">y</span><sub>1</sub><sup>−2</sup>.    (8)</td></tr>
+</table><p>
+If <span style="font-family:monospace">kovacicsols</span> returns an expression, it means that the solution to (<a href="#kovacic-ode">7</a>) is given implicitly. In that case the return value is a polynomial <span style="font-style:italic">P</span> of order <span style="font-style:italic">n</span>∈{4,6,12} in the variable <span style="font-family:monospace">omega_</span> (denoted here by ω) with rational coefficients <span style="font-style:italic">r</span><sub><span style="font-style:italic">k</span></sub>, <span style="font-style:italic">k</span>=0,1,2,…,<span style="font-style:italic">n</span>. If <span style="font-style:italic">P</span>(ω<sub>0</sub>)=0 for some ω<sub>0</sub>, then <span style="font-style:italic">y</span>=exp(∫ω<sub>0</sub>) is a solution to the equation (<a href="#kovacic-ode">7</a>).</p>
+<h5 id="sec779" class="paragraph">Examples.</h5>
+<p>
+In the first example we find the general solution to the equation
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>″=</td><td class="dcell">⎛<br>
+⎜<br>
+⎜<br>
+⎝</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span></td></tr>
+</table></td><td class="dcell">−</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">3</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">16 <span style="font-style:italic">x</span><sup>2</sup></td></tr>
+</table></td><td class="dcell">⎞<br>
+⎟<br>
+⎟<br>
+⎠</td><td class="dcell"> <span style="font-style:italic">y</span>. </td></tr>
+</table><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">kovacicsols(y</span><code><span style="font-family:monospace">''</span></code><span style="font-family:monospace">=y*(1/x-3/16x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(1/4)*exp(2*sqrt(x)),x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(1/4)*exp(-2*sqrt(x))]
+</span></div><p>
+Therefore, <span style="font-style:italic">y</span>=<span style="font-style:italic">C</span><sub>1</sub> <span style="font-style:italic">x</span><sup>1/4</sup> <span style="font-style:italic">e</span><sup>2 √<span style="text-decoration:overline"><span style="font-style:italic">x</span></span></sup>+<span style="font-style:italic">C</span><sub>2</sub> <span style="font-style:italic">x</span><sup>1/4</sup> <span style="font-style:italic">e</span><sup>−2 √<span style="text-decoration:overline"><span style="font-style:italic">x</span></span></sup> is the general solution.</p><p>In the following example we solve the equation
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">x</span>″(<span style="font-style:italic">t</span>)+</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">3 (<span style="font-style:italic">t</span><sup>2</sup>−<span style="font-style:italic">t</span>+1)</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">16 (<span style="font-style:italic">t</span>−1)<sup>2</sup> <span style="font-style:italic">t</span><sup>2</sup></td></tr>
+</table></td><td class="dcell"> <span style="font-style:italic">x</span>(<span style="font-style:italic">t</span>)=0. </td></tr>
+</table><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">kovacicsols(x</span><code><span style="font-family:monospace">''</span></code><span style="font-family:monospace">+3*(t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-t+1)/(16*(t-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)*x,t,x)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[(-t*(t-1)*(2*t+2*sqrt(t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-t)-1))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(1/4), (t*(t-1)*(-2*t+2*sqrt(t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-t)+1))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(1/4)]
+</span></div><p>
+Now for arbitrary <span style="font-style:italic">C</span><sub>1</sub>,<span style="font-style:italic">C</span><sub>2</sub>∈ℝ we have
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" ><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">x</span>(<span style="font-style:italic">t</span>)=<span style="font-style:italic">C</span><sub>1</sub> </td><td class="dcell"><table style="border-spacing:0" class="cellpadding0"><tr><td ALIGN="right"><div CLASS="vbar" STYLE="height:0em;"></div></td></tr>
+<tr><td><span style="font-size:xx-large"><span style="font-size:150%">∜</span></span></td></tr>
+</table></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">t</span> (<span style="font-style:italic">t</span>−1) (1−2 <span style="font-style:italic">t</span>−2 </td><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:0;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">t</span><sup>2</sup>−<span style="font-style:italic">t</span></td></tr>
+</table></td><td class="dcell">)</td></tr>
+</table></td></tr>
+</table></td><td class="dcell">+</td></tr>
+</table></td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">C</span><sub>2</sub> </td><td class="dcell"><table style="border-spacing:0" class="cellpadding0"><tr><td ALIGN="right"><div CLASS="vbar" STYLE="height:0em;"></div></td></tr>
+<tr><td><span style="font-size:xx-large"><span style="font-size:150%">∜</span></span></td></tr>
+</table></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">t</span> (<span style="font-style:italic">t</span>−1) (1−2 <span style="font-style:italic">t</span>+2 </td><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:0;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">t</span><sup>2</sup>−<span style="font-style:italic">t</span></td></tr>
+</table></td><td class="dcell">)</td></tr>
+</table></td></tr>
+</table></td><td class="dcell">.</td></tr>
+</table></td></tr>
+</table></td></tr>
+</table><p>In the next example we find a particular solution to the equation
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>″=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">4 <span style="font-style:italic">x</span><sup>6</sup>−8 <span style="font-style:italic">x</span><sup>5</sup>+12 <span style="font-style:italic">x</span><sup>4</sup>+4 <span style="font-style:italic">x</span><sup>3</sup>+7 <span style="font-style:italic">x</span><sup>2</sup>−20 <span style="font-style:italic">x</span>+4</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">4 <span style="font-style:italic">x</span><sup>4</sup></td></tr>
+</table></td><td class="dcell"> <span style="font-style:italic">y</span>. </td></tr>
+</table><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">r:=(4x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">6-8x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">5+12x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4+4x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+7x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-20x+4)/(4x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4):; kovacicsols(y</span><code><span style="font-family:monospace">''</span></code><span style="font-family:monospace">=r*y)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)/(x*sqrt(x))*exp((x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-2*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2)/(2*x))]
+</span></div><p>
+Hence <span style="font-style:italic">y</span>=(<span style="font-style:italic">x</span><sup>2</sup>−1) <span style="font-style:italic">x</span><sup>−3/2</sup> <span style="font-style:italic">e</span><sup><span style="font-style:italic">x</span><sup>3</sup>−2 <span style="font-style:italic">x</span><sup>2</sup>−2/2 <span style="font-style:italic">x</span></sup> is a solution to the given equation.</p><p>A similar output is obtained when solving the equation
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>″+<span style="font-style:italic">y</span>′=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">6 <span style="font-style:italic">y</span></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span><sup>2</sup></td></tr>
+</table></td><td class="dcell">. </td></tr>
+</table><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">kovacicsols(y</span><code><span style="font-family:monospace">''</span></code><span style="font-family:monospace">+y</span><code><span style="font-family:monospace">'</span></code><span style="font-family:monospace">=6y/x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+6*x+12)*exp(-x)/x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2]
+</span></div><p>To solve Titchmarsh equation
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>″+(19−<span style="font-style:italic">x</span><sup>2</sup>) <span style="font-style:italic">y</span>=0, </td></tr>
+</table><p>
+input :
+</p><div class="center">
+<span style="font-family:monospace">kovacicsols(y</span><code><span style="font-family:monospace">''</span></code><span style="font-family:monospace">+(19-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)*y=0,x,y)
+</span></div><p>
+We obtain a particular solution
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>=</td><td class="dcell">⎛<br>
+⎜<br>
+⎜<br>
+⎝</td><td class="dcell"><span style="font-style:italic">x</span><sup>9</sup>−18 <span style="font-style:italic">x</span><sup>7</sup>+</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">189 <span style="font-style:italic">x</span><sup>5</sup></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">−</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">315 <span style="font-style:italic">x</span><sup>3</sup></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">+</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">945 <span style="font-style:italic">x</span></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">16</td></tr>
+</table></td><td class="dcell">⎞<br>
+⎟<br>
+⎟<br>
+⎠</td><td class="dcell"> exp</td><td class="dcell">⎛<br>
+⎜<br>
+⎜<br>
+⎝</td><td class="dcell">−</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span><sup>2</sup></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">⎞<br>
+⎟<br>
+⎟<br>
+⎠</td><td class="dcell">. </td></tr>
+</table><p>To find the general solution of Halm’s equation
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">(1+<span style="font-style:italic">x</span><sup>2</sup>)<sup>2</sup> <span style="font-style:italic">y</span>″(<span style="font-style:italic">x</span>)+3 <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>)=0, </td></tr>
+</table><p>
+input :
+</p><div class="center">
+<span style="font-family:monospace">sol:=kovacicsols((1+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*y</span><code><span style="font-family:monospace">''</span></code><span style="font-family:monospace">+3y=0,x,y)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)/(sqrt(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1))]
+</span></div><p>
+The other basic solution is obtained by using (<a href="#kovacic-reduction">8</a>). Input :
+</p><div class="center">
+<span style="font-family:monospace">y1:=sol[0]; y2:=normal(y1*int(y1</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">-2,x))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)/(sqrt(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1)),-x/(sqrt(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1))
+</span></div><p>
+Therefore, <span style="font-style:italic">y</span>=<span style="font-style:italic">C</span><sub>1</sub> <span style="font-style:italic">x</span><sup>2</sup>−1/√<span style="text-decoration:overline"><span style="font-style:italic">x</span></span><sup><span style="text-decoration:overline">2</span></sup><span style="text-decoration:overline">+1</span>+<span style="font-style:italic">C</span><sub>2</sub> <span style="font-style:italic">x</span>/√<span style="text-decoration:overline"><span style="font-style:italic">x</span></span><sup><span style="text-decoration:overline">2</span></sup><span style="text-decoration:overline">+1</span>, where <span style="font-style:italic">C</span><sub>1</sub>,<span style="font-style:italic">C</span><sub>2</sub>∈ℝ.</p><p>In the following example we find the general solution of the non-homogeneous equation
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>″−</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">27 <span style="font-style:italic">y</span></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">36 (<span style="font-style:italic">x</span>−1)<sup>2</sup></td></tr>
+</table></td><td class="dcell">=<span style="font-style:italic">x</span>+4. </td></tr>
+</table><p>
+First we need to find the general solution to the corresponding homogeneous equation <span style="font-style:italic">y</span><sub><span style="font-style:italic">h</span></sub>″−27 <span style="font-style:italic">y</span><sub><span style="font-style:italic">h</span></sub>/36 (<span style="font-style:italic">x</span>−1)<sup>2</sup>=0. Input :
+</p><div class="center">
+<span style="font-family:monospace">sols:=kovacicsols(y</span><code><span style="font-family:monospace">''</span></code><span style="font-family:monospace">-y*27/(36*(x-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),x,y)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2*x)/(sqrt(x-1))]
+</span></div><p>
+We call the obtained solution <span style="font-style:italic">y</span><sub>1</sub> and find the other basic independent solution by using (<a href="#kovacic-reduction">8</a>). Input :
+</p><div class="center">
+<span style="font-family:monospace">y1:=sols[0]:; y2:=y1*int(1/y1</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-1/(sqrt(x-1)*2)
+</span></div><p>
+Now the general solution of the homogeneous equation is
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span><sub><span style="font-style:italic">h</span></sub>=<span style="font-style:italic">C</span><sub>1</sub> <span style="font-style:italic">y</span><sub>1</sub>+<span style="font-style:italic">C</span><sub>2</sub> <span style="font-style:italic">y</span><sub>2</sub>=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">C</span><sub>1</sub> (<span style="font-style:italic">x</span><sup>2</sup>−2 <span style="font-style:italic">x</span>)+<span style="font-style:italic">C</span><sub>2</sub></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">x</span>−1</td></tr>
+</table></td></tr>
+</table></td></tr>
+</table></td><td class="dcell">,   <span style="font-style:italic">C</span><sub>1</sub>,<span style="font-style:italic">C</span><sub>2</sub>∈ℝ. </td></tr>
+</table><p>
+A particular solution <span style="font-style:italic">y</span><sub><span style="font-style:italic">p</span></sub> of the non-homogeneous equation can be obtained by variation of parameters as
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span><sub><span style="font-style:italic">p</span></sub>=−<span style="font-style:italic">y</span><sub>1</sub> </td><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">y</span><sub>2</sub> <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">W</span></td></tr>
+</table></td><td class="dcell"> <span style="font-style:italic">d</span><span style="font-style:italic">x</span>+<span style="font-style:italic">y</span><sub>2</sub> </td><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">y</span><sub>1</sub> <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">W</span></td></tr>
+</table></td><td class="dcell"> <span style="font-style:italic">d</span><span style="font-style:italic">x</span>, </td></tr>
+</table><p>
+where <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)=<span style="font-style:italic">x</span>+4 and <span style="font-style:italic">W</span> is the Wronskian of <span style="font-style:italic">y</span><sub>1</sub> and <span style="font-style:italic">y</span><sub>2</sub>, i.e. </p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">W</span>=<span style="font-style:italic">y</span><sub>1</sub> <span style="font-style:italic">y</span><sub>2</sub>′−<span style="font-style:italic">y</span><sub>2</sub> <span style="font-style:italic">y</span><sub>1</sub>′≠ 0.</td></tr>
+</table><p> Input :
+</p><div class="center">
+<span style="font-family:monospace">W:=y1*y2’-y2*y1’:; f:=x+4:; yp:=normal(-y1*int(y2*f/W,x)+y2*int(y1*f/W,x))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">(4*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+72*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-156*x+80)/21
+</span></div><p>
+Hence <span style="font-style:italic">y</span><sub><span style="font-style:italic">p</span></sub>=1/21 (4 <span style="font-style:italic">x</span><sup>3</sup>+72 <span style="font-style:italic">x</span><sup>2</sup>−156 <span style="font-style:italic">x</span>+80). Now <span style="font-style:italic">y</span>=<span style="font-style:italic">y</span><sub><span style="font-style:italic">p</span></sub>+<span style="font-style:italic">y</span><sub><span style="font-style:italic">h</span></sub>. We proceed by checking that it is indeed the general solution of the given equation. Input :
+</p><div class="center">
+<span style="font-family:monospace">purge(C1,C2):; ysol:=yp+C1*y1+C2*y2:; normal(diff(ysol,x,2)-27/(36*(x-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)*ysol)==f
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">true
+</span></div><p>In the next example we attempt to solve the equation from the original Kovacic’s paper :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>″=</td><td class="dcell">⎛<br>
+⎜<br>
+⎜<br>
+⎝</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">3</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">16 <span style="font-style:italic">x</span> (<span style="font-style:italic">x</span>−1)</td></tr>
+</table></td><td class="dcell">−</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">2</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">9 (<span style="font-style:italic">x</span>−1)<sup>2</sup></td></tr>
+</table></td><td class="dcell">−</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">3</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">16 <span style="font-style:italic">x</span><sup>2</sup></td></tr>
+</table></td><td class="dcell">⎞<br>
+⎟<br>
+⎟<br>
+⎠</td><td class="dcell"> <span style="font-style:italic">y</span>. </td></tr>
+</table><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">r:=-3/(16x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)-2/(9*(x-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)+3/(16x*(x-1)):; kovacicsols(y</span><code><span style="font-family:monospace">''</span></code><span style="font-family:monospace">=r*y)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-omega_</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4*(x-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4+ omega_</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*(x-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*(7*x-3)/3- omega_</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*(x-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*(48*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-41*x+9)/24+ omega_*x*(x-1)*(320*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-409*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+180*x-27)/432+ (-2048*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4+3484*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-2313*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+702*x-81)/20736
+</span></div><p>
+The solution is <span style="font-style:italic">y</span>=exp(∫ω<sub>0</sub>), where ω<sub>0</sub> is a zero of the above expression, thus being a root of a fourth-order polynomial in ω. In similar cases one can try the Ferrari method to obtain ω<sub>0</sub>.</p><p>We get similar output while trying to solve the equation
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">48 <span style="font-style:italic">t</span> (<span style="font-style:italic">t</span>+1) (5 <span style="font-style:italic">t</span>−4) <span style="font-style:italic">y</span>″+8 (25 <span style="font-style:italic">t</span>+16) (<span style="font-style:italic">t</span>−2) <span style="font-style:italic">y</span>′−(5 <span style="font-style:italic">t</span>+68) <span style="font-style:italic">y</span>=0. </td></tr>
+</table><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">de:=[48t*(t+1)*(5t-4),8*(25t+16)*(t-2),-(5t+68)]:; kovacicsols(de,t)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">omega_</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4*(135*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4-616*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-144*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+3072*t-4096)/20736- omega_</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*(t+1)*(15*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-80*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+80*t+256)/24- t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4*(t+1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*(t+4)*(5*t+4)+ 2*omega_*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*(t+1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*(t-4)*(5*t+8)/3- omega_</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*t*(t+1)*(23*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-92*t+128)/54
+</span></div>
+<hr>
+<a href="cascmd_en651.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en653.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

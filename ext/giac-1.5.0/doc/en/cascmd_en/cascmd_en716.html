@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>The negative binomial distribution</title>
+</head>
+<body >
+<a href="cascmd_en715.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en717.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec881" class="subsection">8.4.2  The negative binomial distribution</h3>
+<h4 id="sec882" class="subsubsection">The probability density function for the negative
+binomial distribution: <span style="font-family:monospace">negbinomial</span><a id="hevea_default1223"></a></h4>
+<p>
+If you repeatedly perform an experiment with probability of success
+<span style="font-style:italic">p</span>, then, given an integer <span style="font-style:italic">n</span>, the probability of <span style="font-style:italic">k</span> failures that occur
+before you have <span style="font-style:italic">n</span> successes is given by the negative binomial
+distribution, and can be computed with
+<span style="font-family:monospace">negbinomial(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,</span><span style="font-style:italic">k</span><span style="font-family:monospace">,</span><span style="font-style:italic">p</span><span style="font-family:monospace">)</span>. It is given by the formula
+(<sub><span style="font-style:italic">k</span></sub><sup><span style="font-style:italic">n</span>+<span style="font-style:italic">k</span>−1</sup>)<span style="font-style:italic">p</span><sup><span style="font-style:italic">n</span></sup>(1−<span style="font-style:italic">p</span>)<sup><span style="font-style:italic">k</span></sup>. If you enter
+</p><div class="center">
+<span style="font-family:monospace">negbinomial(4,2,0.5)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">0.15625
+</span></div><p>Note that
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎛<br>
+⎝</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left"><span style="font-style:italic">n</span></td></tr>
+<tr><td class="dcell" style="text-align:left">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:left"><span style="font-style:italic">k</span></td></tr>
+</table></td><td class="dcell">⎞<br>
+⎠</td><td class="dcell">= </td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">n</span>!</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">k</span>! (<span style="font-style:italic">n</span>−<span style="font-style:italic">k</span>)!</td></tr>
+</table></td><td class="dcell"> = </td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">n</span> (<span style="font-style:italic">n</span>−1 ) … (
+<span style="font-style:italic">n</span>−<span style="font-style:italic">k</span>+1)</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">k</span>!</td></tr>
+</table></td></tr>
+</table><p>
+The second formula makes sense even if <span style="font-style:italic">n</span> is negative, and you can
+write
+<span style="font-family:monospace">negbinomial</span>(<span style="font-style:italic">n</span>,<span style="font-style:italic">k</span>,<span style="font-style:italic">p</span>) = (<sub><span style="font-style:italic">k</span></sub><sup>−<span style="font-style:italic">n</span></sup>)<span style="font-style:italic">p</span><sup><span style="font-style:italic">n</span></sup> (<span style="font-style:italic">p</span>−1)<sup><span style="font-style:italic">k</span></sup>, from
+which the name negative binomial distribution comes from. This also
+makes it simple to determine the mean (<span style="font-style:italic">n</span>(1−<span style="font-style:italic">p</span>)/<span style="font-style:italic">p</span>) and variance
+(<span style="font-style:italic">n</span>(1−<span style="font-style:italic">p</span>)/<span style="font-style:italic">p</span><sup>2</sup>). The negative binomial is also called the Pascal
+distribution (after Blaise Pascal) or the Pólya distribution
+(after George Pólya).</p>
+<h4 id="sec883" class="subsubsection">The cumulative distribution function for the negative
+binomial distribution: <span style="font-family:monospace">negbinomial_cdf</span><a id="hevea_default1224"></a></h4>
+<p>The cumulative distribution function for the negative binomial
+distribution is given by the <span style="font-family:monospace">negbinomial_cdf</span> command. Given
+parameters <span style="font-style:italic">n</span> and <span style="font-style:italic">p</span>, as above, then
+<span style="font-family:monospace">negbinomial_cdf(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,</span><span style="font-style:italic">p</span><span style="font-family:monospace">,</span><span style="font-style:italic">x</span><span style="font-family:monospace">) = Prob(</span><span style="font-style:italic">X</span> ≤ <span style="font-style:italic">x</span><span style="font-family:monospace">) =
+negbinomial(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,</span>0<span style="font-family:monospace">,</span><span style="font-style:italic">p</span><span style="font-family:monospace">) + …+ negbinomial(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,floor(</span><span style="font-style:italic">x</span><span style="font-family:monospace">),</span><span style="font-style:italic">p</span><span style="font-family:monospace">)</span>,
+and
+<span style="font-family:monospace">negbinomial_cdf(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,</span><span style="font-style:italic">p</span><span style="font-family:monospace">,</span><span style="font-style:italic">x</span><span style="font-family:monospace">,</span><span style="font-style:italic">y</span><span style="font-family:monospace">) = Prob(</span><span style="font-style:italic">x</span> ≤ <span style="font-style:italic">X</span> ≤ <span style="font-style:italic">y</span><span style="font-family:monospace">) = 
+negbinomial(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,ceil(</span><span style="font-style:italic">x</span><span style="font-family:monospace">),</span><span style="font-style:italic">p</span><span style="font-family:monospace">) + </span>⋯<span style="font-family:monospace"> + negbinomial(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,floor(</span><span style="font-style:italic">y</span><span style="font-family:monospace">),</span><span style="font-style:italic">p</span><span style="font-family:monospace">)</span>.
+If you enter
+</p><div class="center">
+<span style="font-family:monospace">negbinomial_cdf(4,0.5,2)
+</span></div><p>
+for example, you will get
+</p><div class="center">
+<span style="font-family:monospace">0.34375 
+</span></div>
+<h4 id="sec884" class="subsubsection">The inverse distribution function for the negative
+binomial distribution: <span style="font-family:monospace">negbinomial_icdf</span><a id="hevea_default1225"></a></h4>
+<p>Given a value <span style="font-style:italic">h</span>, the inverse distribution function gives
+the smallest value
+of <span style="font-style:italic">x</span> so that Prob(<span style="font-style:italic">X</span> ≤ <span style="font-style:italic">x</span>) ≥ <span style="font-style:italic">h</span>.
+The <span style="font-family:monospace">negbinomial_icdf</span> gives the inverse
+distribution function for the negative binomial distribution. 
+If you enter
+</p><div class="center">
+<span style="font-family:monospace">negbinomial_icdf(4,0.5,0.9)
+</span></div><p>
+for example, you will get
+</p><div class="center">
+<span style="font-family:monospace">8
+</span></div>
+<hr>
+<a href="cascmd_en715.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en717.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

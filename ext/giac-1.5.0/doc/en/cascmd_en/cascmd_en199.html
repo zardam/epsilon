@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Substitute a variable by a value (Maple and Mupad compatibility) : subs</title>
+</head>
+<body >
+<a href="cascmd_en198.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en200.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec239" class="subsection">5.13.22  Substitute a variable by a value (Maple and Mupad compatibility) : <span style="font-family:monospace">subs</span></h3>
+<p><a id="hevea_default306"></a><a id="sec:subs"></a>
+In <span style="font-family:monospace">Maple</span> and in <span style="font-family:monospace">Mupad</span>, one would use the <span style="font-family:monospace">subs</span>
+command to substitute a variable 
+by a value in an expression. But the order of the arguments differ
+between <span style="font-family:monospace">Maple</span> and <span style="font-family:monospace">Mupad</span>. Therefore, to achieve compatibility,
+<span style="font-family:monospace">Xcas</span> <span style="font-family:monospace">subs</span> command arguments order depends on the mode
+</p><ul class="itemize"><li class="li-itemize">
+In <span style="font-family:monospace">Maple</span> mode, <span style="font-family:monospace">subs</span> takes two arguments : an equality 
+(variable=substitution value) and the expression.<br>
+To substitute several variables in an expression, use a list of equality
+(variable names <span style="font-family:monospace">=</span> substitution value) as first argument.
+</li><li class="li-itemize">In <span style="font-family:monospace">Mupad</span> or <span style="font-family:monospace">Xcas</span> or <span style="font-family:monospace">TI</span>, <span style="font-family:monospace">subs</span> 
+takes two or three arguments : 
+an expression and an equality (variable=substitution value) or 
+an expression, a variable name and the substitution value.<br>
+To substitute several variables, <span style="font-family:monospace">subs</span> takes two or three arguments :
+<ul class="itemize"><li class="li-itemize">
+an expression of variables and a list of 
+(variable names <span style="font-family:monospace">=</span> substitution value),
+</li><li class="li-itemize">an expression of variables, a list of variables and a list of their 
+substitution values.
+</li></ul>
+</li></ul><p>
+<span style="font-family:monospace">subs</span> returns the expression with the substitution done.
+Note that <span style="font-family:monospace">subs</span> does not quote its argument, hence
+in a normal evaluation process, the substitution variable should
+be purged otherwise it will be replaced by its assigned value
+before substitution is done.<br>
+Input in <span style="font-family:monospace">Maple</span> mode (if the variable <span style="font-family:monospace">a</span> is purged else input 
+<span style="font-family:monospace">purge(a)</span>) :
+</p><div class="center"><span style="font-family:monospace">subs(a=2,a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1)</span></div><p>
+Output 
+</p><div class="center"><span style="font-family:monospace">2</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1</span></div><p>
+Input in <span style="font-family:monospace">Maple</span> mode (if the variables <span style="font-family:monospace">a</span> and <span style="font-family:monospace">b</span> are purged
+else input <span style="font-family:monospace">purge(a,b)</span>):
+</p><div class="center"><span style="font-family:monospace">subs([a=2,b=1],a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+b)</span></div><p> 
+Output :
+</p><div class="center"><span style="font-family:monospace">2</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">subs(a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1,a=2)</span></div><p> 
+or :
+</p><div class="center"><span style="font-family:monospace">subs(a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1,a,2)</span></div><p> 
+Output (if the variable <span style="font-family:monospace">a</span> is purged else input <span style="font-family:monospace">purge(a)</span>) :
+</p><div class="center"><span style="font-family:monospace">5</span></div><p> 
+Input :
+</p><div class="center"><span style="font-family:monospace">subs(a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+b,[a=2,b=1])</span></div><p> 
+or :
+</p><div class="center"><span style="font-family:monospace">subs(a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+b,[a,b],[2,1])</span></div><p> 
+Output (if the variables <span style="font-family:monospace">a</span> and <span style="font-family:monospace">b</span> are purged else input 
+<span style="font-family:monospace">purge(a,b)</span>) :
+</p><div class="center"><span style="font-family:monospace">2</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1</span></div>
+<hr>
+<a href="cascmd_en198.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en200.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

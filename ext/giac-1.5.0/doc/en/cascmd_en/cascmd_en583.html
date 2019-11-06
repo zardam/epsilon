@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Global extrema without using derivatives : nlpsolve</title>
+</head>
+<body >
+<a href="cascmd_en582.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en584.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec699" class="subsection">5.53.3  Global extrema without using derivatives : <span style="font-family:monospace">nlpsolve</span></h3>
+<p><a id="hevea_default915"></a>
+<span style="font-family:monospace">nlpsolve</span> computes the optimum of a (not necessarily differentiable) nonlinear (multivariate) objective function, subject to a set of nonlinear equality and/or inequality constraints, using the COBYLA algorithm. The command takes the following arguments:
+</p><ul class="itemize"><li class="li-itemize">
+	<span style="font-family:monospace">obj</span> : objective expression
+	</li><li class="li-itemize"><span style="font-family:monospace">constr</span> : list of equality and inequality constraints (optional)
+	</li><li class="li-itemize"><span style="font-family:monospace">bd</span> : sequence of variable boundaries (optional) : <span style="font-family:monospace">x=a..b</span>, <span style="font-family:monospace">y=c..d</span>, …	</li><li class="li-itemize"><span style="font-family:monospace">opt</span> : sequence of options (optional), which may be one of:
+	<ul class="itemize"><li class="li-itemize">
+		<span style="font-family:monospace">maximize=true</span> or <span style="font-family:monospace">false</span> (or just <span style="font-family:monospace">maximize</span>)
+		</li><li class="li-itemize"><span style="font-family:monospace">nlp_initialpoint=[x=x0,y=y0,...]</span>
+		</li><li class="li-itemize"><span style="font-family:monospace">nlp_iterationlimit=n</span>
+		</li><li class="li-itemize"><span style="font-family:monospace">assume=nlp_nonnegative</span>
+		</li><li class="li-itemize"><span style="font-family:monospace">nlp_precision=eps</span>
+	</li></ul>
+</li></ul><p><span style="font-family:monospace">nlpsolve</span> returns a list containing the optimal value of the objective and a vector of optimal values of the decision variables.</p><p>The objective is minimized by default, unless <span style="font-family:monospace">maximize</span> or <span style="font-family:monospace">maximize=true</span> is specified as an option.</p><p>Initial point, if given, does not need to be feasible. Note, however, that the initial value of a variable must not be zero. If the initial point is not given or isn’t feasible, a feasible starting guess is automatically generated. Note that choosing a good initial point is needed for obtaining a correct solution in some cases.</p><p>Input syntax for <span style="font-family:monospace">nlpsolve</span> resembles that of Maple’s <span style="font-family:monospace">NLPSolve</span> (entering the objective as a function (univariate case) is not supported, however).</p>
+<h4 id="sec700" class="subsubsection">Examples</h4>
+<p>Input :
+</p><div class="center">
+	<span style="font-family:monospace">nlpsolve(ln(1+x1^2)-x2,[(1+x1^2)^2+x2^2=4])
+</span></div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[-1.73205080757,[x1=-4.77142305945e-08,x2=1.73205080757]]
+</span></div><p>
+Input :
+</p><div class="center">
+	<span style="font-family:monospace">nlpsolve(-x1*x2*x3,[72-x1-2x2-2x3&gt;=0],
+	x1=0..20,x2=0..11,x3=0..42)
+</span></div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[-3300.0,[x1=20.0,x2=11.0,x3=15.0]]
+</span></div><p>
+Input :
+</p><div class="center">
+	<span style="font-family:monospace">nlpsolve(x^3+2x*y-2y^2,x=-10..10,y=-10..10,
+	nlp_initialpoint=[x=3,y=4],maximize)
+</span></div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[1050.0,[x=10.0,y=4.99999985519]]
+</span></div><p>
+Input :
+</p><div class="center">
+	<span style="font-family:monospace">nlpsolve(sin(x)/x,x=1..30)
+</span></div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[-0.217233628211,[x=4.49340942383]]
+</span></div><p>
+Input :
+</p><div class="center">
+	<span style="font-family:monospace">nlpsolve(2-1/120*x1*x2*x3*x4*x5,
+	[x1&lt;=1,x2&lt;=2,x3&lt;=3,x4&lt;=4,x5&lt;=5],assume=nlp_nonnegative)
+</span></div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[1.0,[x1=1.0,x2=2.0,x3=3.0,x4=4.0,x5=5.0]]
+</span></div>
+<hr>
+<a href="cascmd_en582.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en584.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

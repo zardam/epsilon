@@ -1,0 +1,92 @@
+\documentclass{article}
+%\oddsidemargin 5 mm
+%\evensidemargin 5 mm
+%\textwidth 16cm
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{ifpdf}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\ifpdf
+ \usepackage[pdftex,colorlinks]{hyperref}
+\else
+ \usepackage[ps2pdf,breaklinks=true,colorlinks=true,linkcolor=red,citecolor=green]{hyperref}
+ \fi
+
+\newtheorem{rem}{Remark}
+\newcommand{\R}{{\mathbb{R}}}
+\newcommand{\C}{{\mathbb{C}}}
+\newcommand{\Z}{{\mathbb{Z}}}
+\newcommand{\N}{{\mathbb{N}}}
+\newcommand{\Q}{{\mathbb{Q}}}
+\newcommand{\faux}{$\square\;$}
+\newcommand{\vrai}{$\square\;$}
+%\newcommand{\vrai}{$\boxtimes\;$}
+%\newcommand{\item}{\item \faux}
+%\newcommand{\item}{\item \faux}
+\newtheorem{thm}{Theorem}
+
+\newtheorem{exo}{Exercice}[section]
+\input{giacfr.tex}
+\giacmathjax
+%HEVEA\renewcommand{\footertext}{}
+
+\title{Faire interagir \LaTeX\ avec Xcas}
+
+\author{Bernard Parisse\\Institut Fourier\\UMR 5582 du
+  CNRS\\Universit\'e de Grenoble I}
+\date{2018}
+
+%\bibliographystyle{plain}
+
+\begin{document}
+\begin{giacjshere}
+\giacpython
+%\makeindex
+
+\tableofcontents
+%\printindex
+
+Exemples de commande Xcas dans un fichier \LaTeX\, deux formats de sortie
+sont possibles~: 
+\begin{itemize}
+\item HTML5 avec \verb|hevea2mml|. Le lecteur peut ex\'ecuter des
+commandes saisies par l'auteur, en les modifiant \'eventuellement. 
+\item PDF avec \verb|icas|. Les commandes Xcas sont extraites
+du fichier tex, exe\'ecut\'ees et leurs r\'esultats sont ins\'er\'es
+dans un fichier temporaire qui est alors compil\'e avec \verb|pdflatex|.
+\end{itemize}
+
+\section{Graphes}
+
+\giacinput{plot(sin(x))}
+
+\section{Tortue logo}
+\begin{giaconload}
+def polyg(n,l):
+  for j in range(n):
+    avance l
+    tourne_gauche 360/n
+\end{giaconload}
+% \giacinput{
+% efface;
+% for n from 3 to 10 do polyg(n,20) od;
+% }
+\begin{giaconloadhide}
+for n from 5 to 10 do polyg(n,30) od;
+\end{giaconloadhide}
+\begin{giacprog}
+#
+efface
+for n in range(2,11):
+  polyg(n,20)
+\end{giacprog}
+
+\end{giacjshere}
+\end{document}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>L’affectation : = := =&gt; sto Store</title>
+</head>
+<body >
+<a href="cascmd_fr064.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr066.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec91" class="subsection">2.5.2  L’affectation : <span style="font-family:monospace">= := =&gt; sto Store</span></h3>
+<p><a id="hevea_default46"></a><a id="hevea_default47"></a><a id="hevea_default48"></a><a id="hevea_default49"></a><a id="hevea_default50"></a><a id="sec:variable"></a>
+On peut utiliser les fonctions infixées <span style="font-family:monospace">:=</span> comme en Pascal ou <span style="font-family:monospace">=</span> ou
+<span style="font-family:monospace">=&gt;</span> comme le "sto" des calculatrices pour réaliser une affectation ou 
+encore, <br>
+les fonctions préfixées, <span style="font-family:monospace">sto</span> ou <span style="font-family:monospace">Store</span>, d’arguments la valeur 
+à affecter et le nom d’une variable.<br>
+<span style="font-family:monospace">:=</span> (ou <span style="font-family:monospace">=</span> ou <span style="font-family:monospace">=&gt;</span> ou <span style="font-family:monospace">sto</span> ou <span style="font-family:monospace">Store</span>) permet 
+d’affecter une variable.<br>
+On tape (<span style="font-weight:bold">attention à l’ordre des arguments !</span>) :
+</p><div class="center"><span style="font-family:monospace">a:=4</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">a=4</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">4=&gt;a</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">sto(4,a)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">Store(4,a)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">4</span></div><p>
+<span style="font-family:monospace">:=</span> ou <span style="font-family:monospace">=&gt;</span> permettent aussi de définir des fonctions.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">f(x):=sin(x)/x</span></div><p>
+ou 
+</p><div class="center"><span style="font-family:monospace">sin(x)/x=&gt;f(x)</span></div><p>
+ou encore 
+</p><div class="center"><span style="font-family:monospace">f:=x-&gt;sin(x)/x</span></div><p>
+ou 
+</p><div class="center"><span style="font-family:monospace">x-&gt;sin(x)/x=&gt;f</span></div><p>
+On peut aussi définir une fonction par morceaux :
+</p><ul class="itemize"><li class="li-itemize">
+une fonction définie par 2 valeurs,<br>
+par exemple, pour définir 
+la fonction <span style="font-style:italic">g</span> qui vaut 1 si <span style="font-style:italic">x</span>&gt;0 et -1 si <span style="font-style:italic">x</span>≤ 0 on tape :
+<a id="hevea_default51"></a><a id="hevea_default52"></a><a id="hevea_default53"></a><a id="hevea_default54"></a><a id="hevea_default55"></a>
+On tape :
+<div class="center"><span style="font-family:monospace">g(x):=ifte(x&gt;0,1,-1)</span></div> 
+ce qui est équivalent à :
+<div class="center"><span style="font-family:monospace">g(x):=if x&gt;0 then 1; else -1; end_if</span></div>
+On tape (voir plus loin la différence avec <span style="font-family:monospace">ifte</span>) :
+<div class="center"><span style="font-family:monospace">g(x):=when(x&gt;0,1,-1)</span></div>
+ou 
+<div class="center"><span style="font-family:monospace">g(x):=quand(x&gt;0,1,-1)</span></div>
+ou 
+<div class="center"><span style="font-family:monospace">g(x):=IFTE(x&gt;0,1,-1)</span></div>
+ou 
+<div class="center"><span style="font-family:monospace">g(x):=(x&gt;0)?1:-1</span></div>
+En effet <span style="font-family:monospace">ifte</span> (ou <span style="font-family:monospace">when</span> ou <span style="font-family:monospace">quand</span> ou <span style="font-family:monospace">IFTE</span>) a trois 
+arguments : une condition et deux expressions et <span style="font-family:monospace">?</span> est infixé avec la 
+conditionà gauche entre des parenthèses et à droite on met les deux
+expressions séparées par <span style="font-family:monospace">:</span>.<br>
+Si la condition est vraie, <span style="font-family:monospace">ifte</span> (ou <span style="font-family:monospace">when</span> ou <span style="font-family:monospace">quand</span> ou 
+<span style="font-family:monospace">IFTE</span> ou <span style="font-family:monospace">?</span>) renvoie la première expression et sinon <span style="font-family:monospace">ifte</span> (ou
+<span style="font-family:monospace">when</span> ou <span style="font-family:monospace">quand</span> ou <span style="font-family:monospace">IFTE</span> ou <span style="font-family:monospace">?</span>) renvoie la deuxième 
+expression.<p><span style="font-weight:bold">Remarque</span><br>
+La condition <span style="font-style:italic">x</span> != <span style="font-style:italic">a</span> peut être remplacée par le rèel <span style="font-style:italic">r</span>=<span style="font-style:italic">x</span>−<span style="font-style:italic">a</span> :<br>
+si <span style="font-style:italic">r</span>==0 la condition est fausse et sinon elle est vraie.<br>
+On tape pour définir la fonction qui vaut partout 0 sauf en 1 où elle 
+vaut 1 :
+</p><div class="center"><span style="font-family:monospace">h(x):=when(x-1,0,1)</span></div><p>
+est équivalent à :
+</p><div class="center"><span style="font-family:monospace">h(x):=when(x!=1,0,1)</span></div><p><span style="font-weight:bold">Remarque : Différence entre </span><span style="font-weight:bold"><span style="font-family:monospace">ifte</span></span><span style="font-weight:bold"> et les autres </span><span style="font-weight:bold"><span style="font-family:monospace">when....</span></span><br>
+On tape :
+<span style="font-family:monospace">f(x):=ifte(x&gt;0,1,0);</span><br>
+<span style="font-family:monospace">g(x):=when(x&gt;0,1,0)</span> ou <span style="font-family:monospace">g(x):=quand(x&gt;0,1,0)</span><br>
+puis on tape <span style="font-family:monospace">f(x)</span> <br>
+on obtient :<br>
+Ifte: Unable to check test Error: Bad Argument Value<br>
+ici <span style="font-family:monospace">x</span> n’a pas de valeur : avec <span style="font-family:monospace">ifte</span> ou <span style="font-family:monospace">if then else end_if</span> 
+il faut que la variable <span style="font-family:monospace">x</span> soit affectée pour pouvoir tester la 
+condition (quand on définit une fonction ce qui suit le := n’est pas 
+évalué donc la définition de <span style="font-family:monospace">f(x)</span> ne pose pas de problème).<br>
+Pour la définition de <span style="font-style:italic">g</span> avec <span style="font-family:monospace">when....</span>, la variable <span style="font-family:monospace">x</span> n’a pas
+besoin dêtre affectée.<br>
+On tape <span style="font-family:monospace">g(x)</span><br>
+on obtient :<br>
+<span style="font-family:monospace">((x&gt;0)? 1 : -1)</span><br>
+car <span style="font-family:monospace">?</span> est la version infixée de <span style="font-family:monospace">when</span>.</p></li><li class="li-itemize">une fonction définie par <span style="font-style:italic">n</span> valeurs,<a id="hevea_default56"></a><br>
+par exemple, pour définir 
+la fonction <span style="font-style:italic">g</span> qui vaut -1 si <span style="font-style:italic">x</span>&lt;−1, 0 si −1≤ <span style="font-style:italic">x</span>≤ 1 et 1 si <span style="font-style:italic">x</span>&gt;1,
+on tape :
+<div class="center"><span style="font-family:monospace">g(x):=piecewise(x&lt;-1,-1,x&lt;=1,0,1)</span> </div>
+<span style="font-family:monospace">piecewise</span> utilise des paires condition/valeur ou valeur est renvoyée si 
+sa condition est vraie ce qui implique que les conditions précédentes sont 
+fausses. Si le nombre d’arguments est impair, 
+la dernière valeur est la valeur par défaut (comme dans un <span style="font-family:monospace">switch</span>).<br>
+<span style="font-family:monospace">piecewise</span> est la généralisation de <span style="font-family:monospace">when</span>.<br>
+Pour définir 
+la fonction <span style="font-style:italic">f</span> qui vaut -2 si <span style="font-style:italic">x</span>&lt;−2, 3<span style="font-style:italic">x</span>+4 si −2≤ <span style="font-style:italic">x</span> &lt;−1,
+1 si −1 ≤ <span style="font-style:italic">x</span>&lt;0 et <span style="font-style:italic">x</span>+1 si <span style="font-style:italic">x</span> ≥ 0,
+on tape :
+<div class="center"><span style="font-family:monospace">f(x):=piecewise(x&lt;-2,-2,x&lt;-1,3x+4,x&lt;0,1,x+1)</span></div>
+On peut alors faire le graphe de <span style="font-style:italic">f</span> en tapant :
+<div class="center"><span style="font-family:monospace">plotfunc(f(x))</span></div>
+</li></ul>
+<hr>
+<a href="cascmd_fr064.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr066.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

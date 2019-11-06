@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Ολοκλήρωση κατά μέλη : ibpdv και ibpu</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el137.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el139.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc157">1.18.4</A>  Ολοκλήρωση κατά μέλη : <TT>ibpdv</TT> και <TT>ibpu</TT></H3><H4 CLASS="subsubsection"><A NAME="toc9"></A>	
+<TT>ibpdv</TT></H4><P><A NAME="@default265"></A>
+	
+<TT>ibpdv</TT> χρησιμοποιείται για την εύρεση του αορίστου ολοκληρώματος μιας παράστασης γραμμένης 
+ως <I>u</I>(<I>x</I>).<I>v</I>′(<I>x</I>).<BR>
+	
+<TT>ibpdv</TT> παίρνει δύο ορίσματα :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+μια παράσταση 
+<I>u</I>(<I>x</I>).<I>v</I>′(<I>x</I>) και <I>v</I>(<I>x</I>) (ή μια λίστα δύο παραστάσεων 
+[<I>F</I>(<I>x</I>), <I>u</I>(<I>x</I>)*<I>v</I>′(<I>x</I>)] και <I>v</I>(<I>x</I>)),
+</LI><LI CLASS="li-itemize">ή μια παράσταση <I>g</I>(<I>x</I>) και 0 (ή μια λίστα δύο παραστάσεων 
+[<I>F</I>(<I>x</I>), <I>g</I>(<I>x</I>)] και 0).
+</LI></UL><P>
+	
+<TT>ibpdv</TT> επιστρέφει :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+εάν <I>v</I>(<I>x</I>) ≠ 0, την λίστα [<I>u</I>(<I>x</I>).<I>v</I>(<I>x</I>),−<I>v</I>(<I>x</I>).<I>u</I>′(<I>x</I>)] (ή 
+[<I>F</I>(<I>x</I>)+<I>u</I>(<I>x</I>).<I>v</I>(<I>x</I>),−<I>v</I>(<I>x</I>).<I>u</I>′(<I>x</I>)]),
+</LI><LI CLASS="li-itemize">εάν το δεύτερο όρισμα είναι 0, το αόριστο ολοκλήρωμα του πρώτου ορίσματος 
+<I>g</I>(<I>x</I>) (ή <I>F</I>(<I>x</I>)+το αόριστο ολοκλήρωμα του <I>g</I>(<I>x</I>)) :<BR>
+επομένως, η εντολή 	
+<TT>ibpdv(g(x),0)</TT> επιστρέφει το αόριστο ολοκλήρωμα 	
+<TT>G(x)</TT> της 	
+<TT>g(x)</TT> και<BR>
+η εντολή 	
+<TT>ibpdv([F(x),g(x)],0)</TT> επιστρέφει 	
+<TT>F(x)+G(x)</TT> όπου 	
+<TT>diff(G(x))=g(x)</TT>.
+</LI></UL><P>
+Επομένως, 	
+<TT>ibpdv</TT> επιστρέφει τους όρους που υπολογίζονται με ολοκλήρωση κατά μέλη, με την πιθανότητα να γίνουν πολλαπλά 	
+<TT>ibpdv</TT> διαδιοχικά.<BR>
+Αφού υπολογίσουμε το αποτέλεσμα του 	
+<TT>ibpdv(u(x)*v</TT><TT>′</TT><TT>(x),v(x))</TT>, για να βρούμε το αόριστο ολοκλήρωμα του <I>u</I>(<I>x</I>).<I>v</I>′(<I>x</I>), απομένει να υπολογίσουμε το ολοκλήρωμα του δεύτερου όρου του ολοκληρώματος και μετά, να αθροίσουμε αυτό το ολοκλήρωμα με τον πρώτο όρο του αποτελέσματος : για να το κάνουμε αυτό, απλά χρησιμοποιούμε την εντολή 	
+<TT>ibpdv</TT> με το αποτέλεσμα ως πρώτο όρισμα και μια νέα <I>v</I>(<I>x</I>) (ή 0 για να τερματίσουμε την ολοκλήρωση) ως δεύτερο όρισμα.<BR>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>ibpdv(ln(x),x) </TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[x.ln(x),-1]</TT></DIV><P>
+μετά :
+</P><DIV CLASS="center">	
+<TT>ibpdv([x.ln(x),-1],0) </TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>-x+x.ln(x)</TT></DIV><P>
+<B>Σχόλιο</B><BR>
+ Όταν το πρώτο όρισμα του 	
+<TT>ibpdv</TT> είναι μια λίστα δύο στοιχείων, η εντολή 	
+<TT>ibpdv</TT> δουλεύει μόνο με το τελευταίο στοιχείο της λίστας και προσθέτει τον όρο που έχει ολοκληρωθεί στο πρώτο στοιχείο αυτής της λίστας. (Συνεπώς είναι δυνατόν να γίνουν πολλαπλά 	
+<TT>ibpdv</TT> διαδοχικά).<BR>
+Για παράδειγμα :<BR>
+	
+<TT>ibpdv((log(x))</TT><CODE><TT>^</TT></CODE><TT>2,x) = [x*(log(x))</TT><CODE><TT>^</TT></CODE><TT>2,-(2*log(x))]</TT><BR>
+απομένει να ολοκληρώσουμε το 	
+<TT>-(2*log(x))</TT>. Εισάγετε :<BR>
+	
+<TT>ibpdv(ans(),x)</TT> ή εισάγετε :<BR>
+	
+<TT>ibpdv([x*(log(x))</TT><CODE><TT>^</TT></CODE><TT>2,-(2*log(x))],x)</TT><BR>
+Έξοδος :<BR>
+	
+<TT>[x*(log(x))</TT><CODE><TT>^</TT></CODE><TT>2+x*(-(2*log(x))),2]</TT><BR>
+και απομένει να ολοκληρώσουμε το 	
+<TT>2</TT>, γι’αυτό εισάγετε 	
+<TT>ibpdv(ans(),0)</TT> ή<BR>
+	
+<TT>ibpdv([x*(log(x))</TT><CODE><TT>^</TT></CODE><TT>2+x*(-(2*log(x))),2],0)</TT>.<BR>
+Έξοδος :
+	
+<TT>x*(log(x))</TT><CODE><TT>^</TT></CODE><TT>2+x*(-(2*log(x)))+2*x</TT>
+</P><H4 CLASS="subsubsection"><A NAME="toc10"></A>	
+<TT>ibpu</TT></H4><P><A NAME="@default266"></A>
+	
+<TT>ibpu</TT> χρησιμοποιείται για την εύρεση του αορίστου ολοκληρώματος μιας παράστασης γραμμένης 
+ως <I>u</I>(<I>x</I>).<I>v</I>′(<I>x</I>)<BR>
+	
+<TT>ibpu</TT> παίρνει δύο ορίσματα : 
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+μια παράσταση <I>u</I>(<I>x</I>).<I>v</I>′(<I>x</I>) και <I>u</I>(<I>x</I>) (ή μια λίστα δύο παραστάσεων 
+[<I>F</I>(<I>x</I>), <I>u</I>(<I>x</I>)*<I>v</I>′(<I>x</I>)] και <I>u</I>(<I>x</I>)),
+</LI><LI CLASS="li-itemize">μια παράσταση <I>g</I>(<I>x</I>) και 0 (ή μια λίστα δύο παραστάσεων [<I>F</I>(<I>x</I>) <I>g</I>(<I>x</I>)] 
+και 0).
+</LI></UL><P>
+	
+<TT>ibpu</TT> επιστρέφει :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+εάν <I>u</I>(<I>x</I>) ≠ 0, τη λίστα [<I>u</I>(<I>x</I>).<I>v</I>(<I>x</I>),−<I>v</I>(<I>x</I>).<I>u</I>′(<I>x</I>)] 
+(ή επιστρέφει τη λίστα [<I>F</I>(<I>x</I>)+<I>u</I>(<I>x</I>).<I>v</I>(<I>x</I>),−<I>v</I>(<I>x</I>).<I>u</I>′(<I>x</I>)]),
+</LI><LI CLASS="li-itemize">εάν το δεύτερο όρισμα είναι 0, το αόριστο ολοκλήρωμα του πρώτου ορίσματος <I>g</I>(<I>x</I>)
+(ή <I>F</I>(<I>x</I>)+το αόριστο ολοκλήρωμα της <I>g</I>(<I>x</I>)):<BR>
+	
+<TT>ibpu(g(x),0)</TT> επιστρέφει 	
+<TT>G(x)</TT> όπου 	
+<TT>diff(G(x))=g(x)</TT> ή<BR>
+ 	
+<TT>ibpu([F(x),g(x)],0)</TT> επιστρέφει 	
+<TT>F(x)+G(x)</TT> όπου 	
+<TT>diff(G(x))=g(x)</TT>.
+</LI></UL><P>
+Επομένως, η εντολή 	
+<TT>ibpu</TT> επιστρέφει τους όρους που υπολογίζονται με ολοκλήρωση κατά μέλη, με την πιθανότητα να γίνουν πολλαπλά 	
+<TT>ibpu</TT> διαδοχικά.<BR>
+Αφού υπολογίσουμε το αποτέλεσμα του 	
+<TT>ibpu(u(x)*v</TT><TT>′</TT><TT>(x),u(x))</TT>, για να βρούμε το αόριστο ολοκλήρωμα του <I>u</I>(<I>x</I>).<I>v</I>′(<I>x</I>), απομένει να υπολογίσουμε το ολοκλήρωμα του δεύτερου όρου του ολοκληρώματος και μετά, να αθροίσουμε αυτό το ολοκλήρωμα με τον πρώτο όρο του αποτελέσματος : για να το κάνουμε αυτό, απλά χρησιμοποιούμε την εντολή 	
+<TT>ibpu</TT> με το αποτέλεσμα ως πρώτο όρισμα και μια νέα <I>u</I>(<I>x</I>) (ή 0 για να τερματίσουμε την ολοκλήρωση) ως δεύτερο όρισμα.<BR>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>ibpu(ln(x),ln(x)) </TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[x.ln(x),-1]</TT></DIV><P>
+μετά
+</P><DIV CLASS="center">	
+<TT>ibpu([x.ln(x),-1],0) </TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>-x+x.ln(x)</TT></DIV><P>
+<B>Σχόλιο</B><BR>
+Όταν το πρώτο όρισμα του 	
+<TT>ibpu</TT> είναι μια λίστα δύο στοιχείων, η εντολή 	
+<TT>ibpu</TT> δουλεύει μόνο με το τελευταίο στοιχείο της λίστας και προσθέτει τον όρο που έχει ολοκληρωθεί στο πρώτο στοιχείο της λίστας. (Συνεπώς είναι δυνατόν να γίνουν πολλαπλά 	
+<TT>ibpu</TT> διαδοχικά).<BR>
+Για παράδειγμα :<BR>
+	
+<TT>ibpu((log(x))</TT><CODE><TT>^</TT></CODE><TT>2,log(x)) = [x*(log(x))</TT><CODE><TT>^</TT></CODE><TT>2,-(2*log(x))]</TT><BR>
+απομένει να ολοκληρώσουμε το 	
+<TT>-(2*log(x))</TT>, γι’ αυτό εισάγουμε :<BR>
+	
+<TT>ibpu(ans(),log(x))</TT>
+ή εισάγουμε :<BR>
+	
+<TT>ibpu([x*(log(x))</TT><CODE><TT>^</TT></CODE><TT>2,-(2*log(x))],log(x))</TT><BR>
+Έξοδος :<BR>
+	
+<TT>[x*(log(x))</TT><CODE><TT>^</TT></CODE><TT>2+x*(-(2*log(x))),2]</TT><BR>
+απομένει να ολοκληρώσουμε το 	
+<TT>2</TT>, γι’ αυτό εισάγουμε :<BR>
+	
+<TT>ibpu(ans(),0)</TT> ή εισάγουμε :<BR>
+	
+<TT>ibpu([x*(log(x))</TT><CODE><TT>^</TT></CODE><TT>2+x*(-(2*log(x))),2],0)</TT>.<BR>
+Έξοδος :
+	
+<TT>x*(log(x))</TT><CODE><TT>^</TT></CODE><TT>2+x*(-(2*log(x)))+2*x</TT></P><HR>
+<A HREF="cascmd_el137.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el139.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

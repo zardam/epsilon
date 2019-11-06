@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Passage de la forme standard à la forme canonique</title>
+</head>
+<body >
+<a href="cascmd_fr630.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr632.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec772" class="subsection">6.54.5  Passage de la forme standard à la forme canonique</h3>
+<p>
+La forme standard d’un problème d’optimisation linéaire est
+analogue à la forme canonique, mais en remplacant <span style="font-style:italic">Ax</span>≤ <span style="font-style:italic">b</span>
+par <span style="font-style:italic">Ax</span>=<span style="font-style:italic">b</span> avec <span style="font-style:italic">b</span>≥ 0 et où on cherche
+<span style="font-style:italic">x</span>≥ 0 (on peut s’y ramener si nécessaire
+en changeant le signe d’une ligne).</p><p>Le problème pour appliquer l’algorithme précédent est qu’on ne
+peut pas ajouter de variables d’écarts et donc qu’on n’a pas de
+valeur <span style="font-style:italic">x</span> évidente dans le domaine de maximisation (dit autrement
+on n’a pas de sous-matrice identité dans la formulation matricielle
+du problème et il n’y a pas d’opération de lignes évidente
+qui permette de le faire).</p><p>On va se ramener à des problèmes sous forme "canonique" par
+la méthode dite en 2 phases. Soit <span style="font-style:italic">m</span> le nombre de lignes de <span style="font-style:italic">A</span>
+(nombre de conditions dans <span style="font-style:italic">Ax</span>=<span style="font-style:italic">b</span>). On ajoute des variables
+artificielles <span style="font-style:italic">y</span><sub>1</sub>,...,<span style="font-style:italic">y</span><sub><span style="font-style:italic">m</span></sub> et on maximise
+−∑<span style="font-style:italic">y</span><sub><span style="font-style:italic">i</span></sub> sous condition <span style="font-style:italic">Ax</span>=<span style="font-style:italic">b</span>, <span style="font-style:italic">x</span> ≥ 0, <span style="font-style:italic">y</span> ≥ 0 
+en partant de la valeur initiale 0 pour les variables
+non artificielles et <span style="font-style:italic">b</span> pour <span style="font-style:italic">y</span>
+(on appelle donc <code>simplex_reduce</code> avec
+un argument matrice obtenue en augmentant <span style="font-style:italic">A</span> par l’identité, <span style="font-style:italic">b</span> inchangé
+et un <span style="font-style:italic">c</span> artificiel formé de 0 au début et de 1 en dessous de 
+l’identité (que <span style="font-family:monospace">simplex_reduce</span> va commencer par annuler)).
+Si le maximum existe et est 0, on obtiendra une sous-matrice
+identité dans les colonnes correspondants à <span style="font-style:italic">x</span>, et on pourra
+éliminer les variables artificielles (dont la valeur sera 0
+pour atteindre l’optimum).
+Il restera à appliquer à nouveau l’algorithme du simplexe 
+mais avec le <span style="font-style:italic">c</span> original (comme les coefficients de <span style="font-style:italic">c</span> correspondant
+à l’identité n’ont pas de raison d’être nuls, 
+on doit commencer par les rendre
+nuls, ce que <code>simplex_reduce</code> fait si on permute les
+colonnes pour placer la sous-matrice identité à droite).</p><p>Exemple : on cherche le minimum de 2<span style="font-style:italic">x</span>+3<span style="font-style:italic">y</span>−<span style="font-style:italic">z</span>+<span style="font-style:italic">t</span> avec les
+<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>,<span style="font-style:italic">t</span>≥ 0 et :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎨<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" >−<span style="font-style:italic">x</span>−<span style="font-style:italic">y</span>+<span style="font-style:italic">t</span></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">y</span>−<span style="font-style:italic">z</span>+<span style="font-style:italic">t</span></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" >3
+</td></tr>
+</table></td><td class="dcell">
+</td></tr>
+</table><p>
+Ceci revient à calculer l’opposé du maximum de −(2<span style="font-style:italic">x</span>+3<span style="font-style:italic">y</span>−<span style="font-style:italic">z</span>+<span style="font-style:italic">t</span>).
+On ajoute donc deux variables artificielles <span style="font-style:italic">y</span><sub>1</sub> et <span style="font-style:italic">y</span><sub>2</sub>, on tape
+directement la matrice de l’algorithme
+</p><pre class="verbatim">simplex_reduce([[-1,-1,0,1,1,0,1],
+[0,1,-1,1,0,1,3],
+[0,0,0,0,1,1,0]])
+</pre><p>
+On obtient comme optimum 0, avec 0 comme valeurs pour les variables
+artificielles, et la matrice
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎛<br>
+⎜<br>
+⎜<br>
+⎝</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >−1/2</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >−1/2</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >1/2</td><td style="text-align:center;white-space:nowrap" >1/2</td><td style="text-align:center;white-space:nowrap" >2 </td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >1/2</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >−1/2</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >−1/2</td><td style="text-align:center;white-space:nowrap" >1/2</td><td style="text-align:center;white-space:nowrap" >1 </td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >0
+</td></tr>
+</table></td><td class="dcell">⎞<br>
+⎟<br>
+⎟<br>
+⎠</td></tr>
+</table><p>
+Ceci signifie aussi qu’une valeur initiale dans le domaine est
+(0,1,0,2). Il nous reste à optimiser le problème de départ
+en remplacant les lignes de <span style="font-style:italic">Ax</span>=<span style="font-style:italic">b</span> par les 2 premières lignes
+de la matrice réponse ci-dessus dont on enlève les variables 
+artificielles et en ajoutant la ligne de la fonction à optimiser.
+On prend donc la matrice
+</p><pre class="verbatim">simplex_reduce([[-1/2,0,-1/2,1,2],
+[1/2,1,-1/2,0,1],[2,3,-1,1,0]])
+</pre><p>
+On obtient comme maximum -5, donc le minimum de l’opposé est 5,
+obtenu pour (0,1,0,2) soit après replacement des colonnes 
+<span style="font-style:italic">t</span>=2 et <span style="font-style:italic">y</span>=1, les autres nuls.</p><p>Pour plus de détails, chercher sur google <code>simplex algorithm</code> 
+ou dans une bibliothèque Ciarlet “Introduction à l’analyse
+matricielle et à l’optimisation”.
+</p><p><span style="font-weight:bold">Back to the general case.</span><br>
+The standard form of a linear programming problem is similar
+to the simplest case above, but with <span style="font-style:italic">Ax</span>=<span style="font-style:italic">b</span> (instead of <span style="font-style:italic">Ax</span>≤ <span style="font-style:italic">b</span>)
+under the conditions <span style="font-style:italic">x</span>≥ 0. We may further assume that <span style="font-style:italic">b</span>≥ 0
+(if not, one can change the sign of the corresponding line).
+</p><ul class="itemize"><li class="li-itemize">
+The first problem is to find an <span style="font-style:italic">x</span> in the <span style="font-style:italic">Ax</span>=<span style="font-style:italic">b</span>, <span style="font-style:italic">x</span>≥ 0 domain.
+Let <span style="font-style:italic">m</span> be the number of lines of <span style="font-style:italic">A</span>. Add artificial variables
+<span style="font-style:italic">y</span><sub>1</sub>,...,<span style="font-style:italic">y</span><sub><span style="font-style:italic">m</span></sub> and maximize
+−∑<span style="font-style:italic">y</span><sub><span style="font-style:italic">i</span></sub> under the conditions <span style="font-style:italic">Ax</span>=<span style="font-style:italic">b</span>, <span style="font-style:italic">x</span> ≥ 0, <span style="font-style:italic">y</span> ≥ 0
+starting with initial value 0 for <span style="font-style:italic">x</span> variables
+and <span style="font-style:italic">y</span>=<span style="font-style:italic">b</span>
+(to solve this with <span style="font-family:monospace">Xcas</span>, call <code>simplex_reduce</code> with
+a single matrix argument obtained by augmenting <span style="font-style:italic">A</span> by the
+identity, <span style="font-style:italic">b</span> unchanged and an artificial
+<span style="font-style:italic">c</span> with 0 under <span style="font-style:italic">A</span> and 1 under the identity).
+If the maximum exists and is 0, the identity submatrix above the last
+column corresponds to an <span style="font-style:italic">x</span> solution, we may forget the artificial
+variables (they are 0 if the maximum is 0).
+</li><li class="li-itemize">Now we make a second call to <code>simplex_reduce</code>
+with the original <span style="font-style:italic">c</span> and the value of <span style="font-style:italic">x</span> we found in the domain.
+</li><li class="li-itemize">Example : find the minimum of 2<span style="font-style:italic">x</span>+3<span style="font-style:italic">y</span>−<span style="font-style:italic">z</span>+<span style="font-style:italic">t</span> with
+<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>,<span style="font-style:italic">t</span>≥ 0 and :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎨<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" >−<span style="font-style:italic">x</span>−<span style="font-style:italic">y</span>+<span style="font-style:italic">t</span></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">y</span>−<span style="font-style:italic">z</span>+<span style="font-style:italic">t</span></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" >3
+</td></tr>
+</table></td><td class="dcell">
+</td></tr>
+</table>
+This is equivalent to find the opposite of the maximum of −(2<span style="font-style:italic">x</span>+3<span style="font-style:italic">y</span>−<span style="font-style:italic">z</span>+<span style="font-style:italic">t</span>).
+Let us add two artificial variables <span style="font-style:italic">y</span><sub>1</sub> and <span style="font-style:italic">y</span><sub>2</sub>,
+<pre class="verbatim">simplex_reduce([[-1,-1,0,1,1,0,1],
+[0,1,-1,1,0,1,3],
+[0,0,0,0,1,1,0]])
+</pre>
+Output: optimum=0, artificial variables=0, and the matrix
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎛<br>
+⎜<br>
+⎜<br>
+⎝</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >−1/2</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >−1/2</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >1/2</td><td style="text-align:center;white-space:nowrap" >1/2</td><td style="text-align:center;white-space:nowrap" >2 </td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >1/2</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >−1/2</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >−1/2</td><td style="text-align:center;white-space:nowrap" >1/2</td><td style="text-align:center;white-space:nowrap" >1 </td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >0
+</td></tr>
+</table></td><td class="dcell">⎞<br>
+⎟<br>
+⎟<br>
+⎠</td></tr>
+</table>
+Columns 2 and 4 are the columns of the identity (in lines 1 and 2).
+Hence <span style="font-style:italic">x</span>=(0,1,0,2) is an initial point in the domain.
+We are reduced to solve the initial problem, after replacing the
+lines of <span style="font-style:italic">Ax</span>=<span style="font-style:italic">b</span> by the two first lines of the answer above,
+removing the last columns corresponding to the artificial variables.
+We add <span style="font-style:italic">c</span>.<span style="font-style:italic">x</span> as last line
+<pre class="verbatim">simplex_reduce([[-1/2,0,-1/2,1,2],
+[1/2,1,-1/2,0,1],[2,3,-1,1,0]])
+</pre>
+Output: maximum=-5, hence the minimum of the opposite is 5,
+obtained for (0,1,0,2), after replacement
+<span style="font-style:italic">x</span>=0, <span style="font-style:italic">y</span>=1, <span style="font-style:italic">z</span>=0 and <span style="font-style:italic">t</span>=2.
+</li></ul><p>Pour plus de details, chercher sur google : <code>algorithme du simplex</code>.
+</p>
+<hr>
+<a href="cascmd_fr630.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr632.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

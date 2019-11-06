@@ -1,0 +1,653 @@
+<HTML>
+<HEAD>
+  <TITLE>
+    Catalogue of GP/PARI Functions: Programming in GP: control statements
+  </TITLE>
+
+  <META NAME="author"       CONTENT="Nils-Peter Skoruppa">
+  <META NAME="created"      CONTENT="Sat Mar 22 18:13:28 2014">
+  <META NAME="author-email" CONTENT="skoruppa@math.uni-siegen.de">
+  <META NAME="keywords"     CONTENT="PARI, GP, DOC">
+  <link rel="stylesheet" href="/pari.css">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+
+<h3 align=center>Programming in GP: control statements</h3>
+
+<a name="break"></a>
+<h4>break({n = 1})</h4>
+<p></p>
+<p>Interrupts execution of current <em>seq</em>, and
+immediately exits from the n innermost enclosing loops, within the
+current function call (or the top level loop); the integer n must be
+positive. If n is greater than the number of enclosing loops, all
+enclosing loops are exited.</p>
+
+<hr></hr>
+<a name="breakpoint"></a>
+<h4>breakpoint()</h4>
+<p></p>
+<p>Interrupt the program and enter the breakloop. The program continues when
+the breakloop is exited.</p>
+<p>
+<pre class="code">  ? f(N,x)=my(z=x^2+1);breakpoint();gcd(N,z^2+1-z);
+  ? f(221,3)
+    ***   at top-level: f(221,3)
+    ***                 ^--------
+    ***   in function f: my(z=x^2+1);breakpoint();gcd(N,z
+    ***                              ^--------------------
+    ***   Break loop: type &#60;Return&#62; to continue; 'break' to go back to GP
+  break&#62; z
+  10
+  break&#62;
+  %2 = 13
+</pre></p>
+<p></p>
+
+<hr></hr>
+<a name="dbg_down"></a>
+<h4>dbg_down({n = 1})</h4>
+<p></p>
+<p>(In the break loop) go down n frames. This allows to cancel a previous call to
+<code>dbg_up</code>.</p>
+
+<hr></hr>
+<a name="dbg_err"></a>
+<h4>dbg_err()</h4>
+<p></p>
+<p>In the break loop, return the error data of the current error, if any.
+See <code>iferr</code> for details about error data.  Compare:</p>
+<p>
+<pre class="code">  ? iferr(1/(Mod(2,12019)^(6!)-1),E,Vec(E))
+  %1 = ["e_INV", "Fp_inv", Mod(119, 12019)]
+  ? 1/(Mod(2,12019)^(6!)-1)
+    ***   at top-level: 1/(Mod(2,12019)^(6!)-
+    ***                  ^--------------------
+    *** _/_: impossible inverse in Fp_inv: Mod(119, 12019).
+    ***   Break loop: type 'break' to go back to GP prompt
+  break&#62; Vec(dbg_err())
+  ["e_INV", "Fp_inv", Mod(119, 12019)]
+</pre></p>
+<p></p>
+
+<hr></hr>
+<a name="dbg_up"></a>
+<h4>dbg_up({n = 1})</h4>
+<p></p>
+<p>(In the break loop) go up n frames. This allows to inspect data of the
+parent function. To cancel a <code>dbg_up</code> call, use <code>dbg_down</code></p>
+
+<hr></hr>
+<a name="dbg_x"></a>
+<h4>dbg_x(A{,n})</h4>
+<p></p>
+<p>Print the inner structure of <code>A</code>, complete if <code>n</code> is omitted, up
+to level <code>n</code> otherwise. This is useful for debugging. This is similar to
+<code>\x</code> but does not require <code>A</code> to be an history entry. In particular,
+it can be used in the break loop.</p>
+
+<hr></hr>
+<a name="for"></a>
+<h4>for(X = a,b,<em>seq</em>)</h4>
+<p></p>
+<p>Evaluates <em>seq</em>, where
+the formal variable X goes from a to b. Nothing is done if a &#62; b.
+a and b must be in <b>R</b>.</p>
+
+<hr></hr>
+<a name="forcomposite"></a>
+<h4>forcomposite(n = a,{b},<em>seq</em>)</h4>
+<p></p>
+<p>Evaluates <em>seq</em>,
+where the formal variable n ranges over the composite numbers between the
+non-negative real numbers a to b, including a and b if they are
+composite. Nothing is done if a &#62; b.</p>
+<p>
+<pre class="code">  ? forcomposite(n = 0, 10, print(n))
+  4
+  6
+  8
+  9
+  10
+</pre>
+Omitting b means we will run through all composites  <code>&#62;=</code> a,
+starting an infinite loop; it is expected that the user will break out of
+the loop himself at some point, using <code>break</code> or <code>return</code>.</p>
+<p>
+Note that the value of n cannot be modified within <em>seq</em>:</p>
+<p>
+<pre class="code">  ? forcomposite(n = 2, 10, n = [])
+   ***   at top-level: forcomposite(n=2,10,n=[])
+   ***                                      ^---
+   ***   index read-only: was changed to [].
+</pre></p>
+<p></p>
+
+<hr></hr>
+<a name="fordiv"></a>
+<h4>fordiv(n,X,<em>seq</em>)</h4>
+<p></p>
+<p>Evaluates <em>seq</em>, where
+the formal variable X ranges through the divisors of n
+(see <code>divisors</code>, which is used as a subroutine). It is assumed that
+<code>factor</code> can handle n, without negative exponents. Instead of n,
+it is possible to input a factorization matrix, i.e. the output of
+<code>factor(n)</code>.</p>
+<p>
+This routine uses <code>divisors</code> as a subroutine, then loops over the
+divisors. In particular, if n is an integer, divisors are sorted by
+increasing size.</p>
+<p>
+To avoid storing all divisors, possibly using a lot of memory, the following
+(much slower) routine loops over the divisors using essentially constant
+space:</p>
+<p>
+<pre class="code">  FORDIV(N)=
+  { my(P, E);
+  
+    P = factor(N); E = P[,2]; P = P[,1];
+    forvec( v = vector(#E, i, [0,E[i]]),
+    X = factorback(P, v)
+    \\ ...
+  );
+  }
+  ? for(i=1,10^5, FORDIV(i))
+  time = 3,445 ms.
+  ? for(i=1,10^5, fordiv(i, d, ))
+  time = 490 ms.
+</pre></p>
+<p></p>
+
+<hr></hr>
+<a name="forell"></a>
+<h4>forell(E,a,b,<em>seq</em>)</h4>
+<p></p>
+<p>Evaluates <em>seq</em>, where the formal variable E = [<em>name</em>, M, G]
+ranges through all elliptic curves of conductors from a to b. In this
+notation <em>name</em> is the curve name in Cremona's elliptic  curve  database,
+M is the minimal model, G is a <b>Z</b>-basis of the free part of the
+Mordell-Weil group E(<b>Q</b>).</p>
+<p>
+<pre class="code">  ? forell(E, 1, 500, my([name,M,G] = E); \
+      if (#G &#62; 1, print(name)))
+  389a1
+  433a1
+  446d1
+</pre></p>
+<p>
+The <code>elldata</code> database must be installed and contain data for the
+specified conductors.</p>
+<p>
+The library syntax is <code><b>forell</b>(void *data, long (*call)(void*,GEN), long a, long b)</code>.</p>
+
+<hr></hr>
+<a name="forpart"></a>
+<h4>forpart(X = k,<em>seq</em>,{a = k},{n = k})</h4>
+<p></p>
+<p>Evaluate <em>seq</em> over the partitions X = [x_1,...x_n] of the
+integer k, i.e.&nbsp;increasing sequences x_1 <code>&#60;=</code> x_2... <code>&#60;=</code> x_n of sum
+x_1+...+ x_n = k. By convention, 0 admits only the empty partition and
+negative numbers have no partitions. A partition is given by a
+<code>t_VECSMALL</code>, where parts are sorted in nondecreasing order:</p>
+<p>
+<pre class="code">  ? forpart(X=3, print(X))
+  Vecsmall([3])
+  Vecsmall([1, 2])
+  Vecsmall([1, 1, 1])
+</pre>
+Optional parameters n and a are as follows:</p>
+<p>
+<b>*</b> n = <em>nmax</em> (resp. n = [<em>nmin</em>,<em>nmax</em>]) restricts
+partitions to length less than <em>nmax</em> (resp. length between
+<em>nmin</em> and nmax), where the <em>length</em> is the number of nonzero
+entries.</p>
+<p>
+<b>*</b> a = <em>amax</em> (resp. a = [<em>amin</em>,<em>amax</em>]) restricts the parts
+to integers less than <em>amax</em> (resp. between <em>amin</em> and
+<em>amax</em>).</p>
+<p>
+By default, parts are positive and we remove zero entries unless amin <code>&#60;=</code> 0,
+in which case X is of constant length <em>nmax</em>.</p>
+<p>
+<pre class="code">  \\ at most 3 non-zero parts, all &#60;= 4
+  ? forpart(v=5,print(Vec(v)),4,3)
+  [1, 4]
+  [2, 3]
+  [1, 1, 3]
+  [1, 2, 2]
+  
+  \\ between 2 and 4 parts less than 5, fill with zeros
+  ? forpart(v=5,print(Vec(v)),[0,5],[2,4])
+  [0, 0, 1, 4]
+  [0, 0, 2, 3]
+  [0, 1, 1, 3]
+  [0, 1, 2, 2]
+  [1, 1, 1, 2]
+</pre></p>
+<p>
+The behaviour is unspecified if X is modified inside the loop.</p>
+<p>
+The library syntax is <code><b>forpart</b>(void *data, long (*call)(void*,GEN), long k, GEN a, GEN n)</code>.</p>
+
+<hr></hr>
+<a name="forprime"></a>
+<h4>forprime(p = a,{b},<em>seq</em>)</h4>
+<p></p>
+<p>Evaluates <em>seq</em>,
+where the formal variable p ranges over the prime numbers between the real
+numbers a to b, including a and b if they are prime. More precisely,
+the value of
+p is incremented to <code>nextprime(p + 1)</code>, the smallest prime strictly
+larger than p, at the end of each iteration. Nothing is done if a &#62; b.</p>
+<p>
+<pre class="code">  ? forprime(p = 4, 10, print(p))
+  5
+  7
+</pre>
+Omitting b means we will run through all primes  <code>&#62;=</code> a,
+starting an infinite loop; it is expected that the user will break out of
+the loop himself at some point, using <code>break</code> or <code>return</code>.</p>
+<p>
+Note that the value of p cannot be modified within <em>seq</em>:</p>
+<p>
+<pre class="code">  ? forprime(p = 2, 10, p = [])
+   ***   at top-level: forprime(p=2,10,p=[])
+   ***                                   ^---
+   ***   prime index read-only: was changed to [].
+</pre></p>
+<p></p>
+
+<hr></hr>
+<a name="forstep"></a>
+<h4>forstep(X = a,b,s,<em>seq</em>)</h4>
+<p></p>
+<p>Evaluates <em>seq</em>,
+where the formal variable X goes from a to b, in increments of s.
+Nothing is done if s &#62; 0 and a &#62; b or if s &#60; 0 and a &#60; b. s must be in
+<b>R</b>^* or a vector of steps [s_1,...,s_n]. In the latter case, the
+successive steps are used in the order they appear in s.</p>
+<p></p>
+<p>
+<pre class="code">  ? forstep(x=5, 20, [2,4], print(x))
+  5
+  7
+  11
+  13
+  17
+  19
+</pre></p>
+<p></p>
+
+<hr></hr>
+<a name="forsubgroup"></a>
+<h4>forsubgroup(H = G,{<em>bound</em>},<em>seq</em>)</h4>
+<p></p>
+<p>Evaluates <em>seq</em> for
+each subgroup H of the <em>abelian</em> group G (given in
+SNF form or as a vector of elementary divisors).</p>
+<p>
+If <em>bound</em> is present, and is a positive integer, restrict the output to
+subgroups of index less than <em>bound</em>. If <em>bound</em> is a vector
+containing a single positive integer B, then only subgroups of index
+exactly equal to B are computed</p>
+<p>
+The subgroups are not ordered in any
+obvious way, unless G is a p-group in which case Birkhoff's algorithm
+produces them by decreasing index. A subgroup is given as a matrix
+whose columns give its generators on the implicit generators of G. For
+example, the following prints all subgroups of index less than 2 in G = 
+<b>Z</b>/2<b>Z</b> g_1  x <b>Z</b>/2<b>Z</b> g_2:</p>
+<p></p>
+<p>
+<pre class="code">  ? G = [2,2]; forsubgroup(H=G, 2, print(H))
+  [1; 1]
+  [1; 2]
+  [2; 1]
+  [1, 0; 1, 1]
+</pre></p>
+<p>
+The last one, for instance is generated by (g_1, g_1 + g_2). This
+routine is intended to treat huge groups, when <code>subgrouplist</code> is not an
+option due to the sheer size of the output.</p>
+<p>
+For maximal speed the subgroups have been left as produced by the algorithm.
+To print them in canonical form (as left divisors of G in HNF form), one
+can for instance use</p>
+<p>
+<pre class="code">  ? G = matdiagonal([2,2]); forsubgroup(H=G, 2, print(mathnf(concat(G,H))))
+  [2, 1; 0, 1]
+  [1, 0; 0, 2]
+  [2, 0; 0, 1]
+  [1, 0; 0, 1]
+</pre></p>
+<p>
+Note that in this last representation, the index [G:H] is given by the
+determinant. See <code>galoissubcyclo</code> and <code>galoisfixedfield</code> for
+applications to Galois theory.</p>
+<p>
+The library syntax is <code><b>forsubgroup</b>(void *data, long (*call)(void*,GEN), GEN G, GEN bound)</code>.</p>
+
+<hr></hr>
+<a name="forvec"></a>
+<h4>forvec(X = v,<em>seq</em>,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Let v be an n-component
+vector (where n is arbitrary) of two-component vectors [a_i,b_i]
+for 1 <code>&#60;=</code> i <code>&#60;=</code> n. This routine evaluates <em>seq</em>, where the formal
+variables X[1],..., X[n] go from a_1 to b_1,..., from a_n to
+b_n, i.e.&nbsp;X goes from [a_1,...,a_n] to [b_1,...,b_n] with respect
+to the lexicographic ordering. (The formal variable with the highest index
+moves the fastest.) If <em>flag</em> = 1, generate only nondecreasing vectors X, and
+if <em>flag</em> = 2, generate only strictly increasing vectors X.</p>
+<p>
+The type of X is the same as the type of v: <code>t_VEC</code> or <code>t_COL</code>.</p>
+
+<hr></hr>
+<a name="if"></a>
+<h4>if(a,{<em>seq1</em>},{<em>seq2</em>})</h4>
+<p></p>
+<p>Evaluates the expression sequence <em>seq1</em> if a is non-zero, otherwise
+the expression <em>seq2</em>. Of course, <em>seq1</em> or <em>seq2</em> may be empty:</p>
+<p>
+<code>if (a,<em>seq</em>)</code> evaluates <em>seq</em> if a is not equal to zero
+(you don't have to write the second comma), and does nothing otherwise,</p>
+<p>
+<code>if (a,,<em>seq</em>)</code> evaluates <em>seq</em> if a is equal to zero, and
+does nothing otherwise. You could get the same result using the <code>!</code>
+(<code>not</code>) operator: <code>if (!a,<em>seq</em>)</code>.</p>
+<p>
+The value of an <code>if</code> statement is the value of the branch that gets
+evaluated: for instance</p>
+<p>
+<pre class="code">  x = if(n % 4 == 1, y, z);
+</pre>
+sets x to y if n is 1 modulo 4, and to z
+otherwise.</p>
+<p>
+Successive 'else' blocks can be abbreviated in a single compound <code>if</code>
+as follows:</p>
+<p>
+<pre class="code">  if (test1, seq1,
+      test2, seq2,
+      ...
+      testn, seqn,
+      seqdefault);
+</pre>
+is equivalent to</p>
+<p>
+<pre class="code">  if (test1, seq1
+           , if (test2, seq2
+                      , ...
+                        if (testn, seqn, seqdefault)...));
+</pre>
+For instance, this allows to write traditional switch / case
+constructions:</p>
+<p>
+<pre class="code">  if (x == 0, do0(),
+      x == 1, do1(),
+      x == 2, do2(),
+      dodefault());
+</pre></p>
+<p></p>
+<p>
+<b>Remark.</b>
+The boolean operators <code>&amp;&amp;</code> and <code>||</code> are evaluated
+according to operator precedence as explained in Section [<b>Label: se:operators</b>], but,
+contrary to other operators, the evaluation of the arguments is stopped
+as soon as the final truth value has been determined. For instance</p>
+<p>
+<pre class="code">  if (x != 0 &amp;&amp; f(1/x), ...)
+</pre></p>
+<p>
+is a perfectly safe statement.</p>
+<p>
+<b>Remark.</b> Functions such as <code>break</code> and <code>next</code> operate on
+<em>loops</em>, such as <code>forxxx</code>, <code>while</code>, <code>until</code>. The <code>if</code>
+statement is <em>not</em> a loop. (Obviously!)</p>
+
+<hr></hr>
+<a name="iferr"></a>
+<h4>iferr(<em>seq1</em>,E,<em>seq2</em>{,<em>pred</em>})</h4>
+<p></p>
+<p>Evaluates the expression sequence <em>seq1</em>. If an error occurs,
+set the formal parameter <em>E</em> set to the error data.
+If <em>pred</em> is not present or evaluates to true, catch the error
+and evaluate <em>seq2</em>. Both <em>pred</em> and <em>seq2</em> can reference <em>E</em>.
+The error type is given by <code>errname(E)</code>, and other data can be
+accessed using the <code>component</code> function. The code <em>seq2</em> should check
+whether the error is the one expected. In the negative the error can be
+rethrown using <code>error(E)</code> (and possibly caught by an higher <code>iferr</code>
+instance). The following uses <code>iferr</code> to implement Lenstra's ECM factoring
+ method</p>
+<p>
+<pre class="code">  ? ecm(N, B = 1000!, nb = 100)=
+    {
+      for(a = 1, nb,
+        iferr(ellmul(ellinit([a,1]*Mod(1,N)), [0,1]*Mod(1,N), B),
+          E, return(gcd(lift(component(E,2)),N)),
+          errname(E)=="e_INV" &amp;&amp; type(component(E,2)) == "t_INTMOD"))
+    }
+  ? ecm(2^101-1)
+  %2 = 7432339208719
+</pre></p>
+<p>
+The return value of <code>iferr</code> itself is the value of <em>seq2</em> if an
+error occurs, and the value of <em>seq1</em> otherwise. We now describe the
+list of valid error types, and the associated error data <em>E</em>; in each
+case, we list in order the components of <em>E</em>, accessed via
+<code>component(E,1)</code>, <code>component(E,2)</code>, etc.</p>
+<p>
+<b>Internal errors, "system" errors.</b></p>
+<p>
+<b>*</b> <code>"e_ARCH"</code>. A requested feature s is not available on this
+ architecture or operating system.
+ <em>E</em> has one component (<code>t_STR</code>): the missing feature name s.</p>
+<p>
+<b>*</b> <code>"e_BUG"</code>. A bug in the PARI library, in function s.
+ <em>E</em> has one component (<code>t_STR</code>): the function name s.</p>
+<p>
+<b>*</b> <code>"e_FILE"</code>. Error while trying to open a file.
+ <em>E</em> has two components, 1 (<code>t_STR</code>): the file type (input, output,
+ etc.), 2 (<code>t_STR</code>): the file name.</p>
+<p>
+<b>*</b> <code>"e_IMPL"</code>. A requested feature s is not implemented.
+ <em>E</em> has one component, 1 (<code>t_STR</code>): the feature name s.</p>
+<p>
+<b>*</b> <code>"e_PACKAGE"</code>. Missing optional package s.
+ <em>E</em> has one component, 1 (<code>t_STR</code>): the package name s.</p>
+<p>
+<b>Syntax errors, type errors.</b></p>
+<p>
+<b>*</b> <code>"e_DIM"</code>. The dimensions of arguments x and y submitted
+ to function s does not match up.
+ E.g., multiplying matrices of inconsistent dimension, adding vectors of
+ different lengths,...
+ <em>E</em> has three component, 1 (<code>t_STR</code>): the function name s, 2: the
+ argument x, 3: the argument y.</p>
+<p>
+<b>*</b> <code>"e_FLAG"</code>. A flag argument is out of bounds in function s.
+ <em>E</em> has one component, 1 (<code>t_STR</code>): the function name s.</p>
+<p>
+<b>*</b> <code>"e_NOTFUNC"</code>. Generated by the PARI evaluator; tried to use a
+<code>GEN</code> x which is not a <code>t_CLOSURE</code> in a function call syntax (as in
+<code>f = 1; f(2);</code>).
+ <em>E</em> has one component, 1: the offending <code>GEN</code> x.</p>
+<p>
+<b>*</b> <code>"e_OP"</code>. Impossible operation between two objects than cannot
+ be typecast to a sensible common domain for deeper reasons than a type
+ mismatch, usually for arithmetic reasons. As in <code>O(2) + O(3)</code>: it is
+ valid to add two <code>t_PADIC</code>s, provided the underlying prime is the same; so
+ the addition is not forbidden a priori for type reasons, it only becomes so
+ when inspecting the objects and trying to perform the operation.
+ <em>E</em> has three components, 1 (<code>t_STR</code>): the operator name <em>op</em>,
+ 2: first argument, 3: second argument.</p>
+<p>
+<b>*</b> <code>"e_TYPE"</code>. An argument x of function s had an unexpected type.
+ (As in <code>factor("blah")</code>.)
+ <em>E</em> has two components, 1 (<code>t_STR</code>): the function name s,
+ 2: the offending argument x.</p>
+<p>
+<b>*</b> <code>"e_TYPE2"</code>. Forbidden operation between two objects than cannot be
+ typecast to a sensible common domain, because their types do not match up.
+ (As in <code>Mod(1,2) + Pi</code>.)
+ <em>E</em> has three components, 1 (<code>t_STR</code>): the operator name <em>op</em>,
+ 2: first argument, 3: second argument.</p>
+<p>
+<b>*</b> <code>"e_PRIORITY"</code>. Object o in function s contains
+ variables whose priority is incompatible with the expected operation.
+ E.g.&nbsp;<code>Pol([x,1], 'y)</code>: this raises an error because it's not possible to
+ create a polynomial whose coefficients involve variables with higher priority
+ than the main variable. E has four components: 1 (<code>t_STR</code>): the function
+ name s, 2: the offending argument o, 3 (<code>t_STR</code>): an operator
+ <em>op</em> describing the priority error, 4 (<code>t_POL</code>):
+ the variable v describing the priority error. The argument
+ satisfies <code>variable</code>(x)&nbsp;<em>op</em> <code>variable</code>(v).</p>
+<p>
+<b>*</b> <code>"e_VAR"</code>. The variables of arguments x and y submitted
+ to function s does not match up. E.g., considering the algebraic number
+ <code>Mod(t,t^2+1)</code> in <code>nfinit(x^2+1)</code>.
+ <em>E</em> has three component, 1 (<code>t_STR</code>): the function name s, 2
+ (<code>t_POL</code>): the argument x, 3 (<code>t_POL</code>): the argument y.</p>
+<p>
+<b>Overflows.</b></p>
+<p>
+<b>*</b> <code>"e_COMPONENT"</code>. Trying to access an inexistent component in a
+ vector/matrix/list in a function: the index is less than 1 or greater
+ than the allowed length.
+ <em>E</em> has four components,
+ 1 (<code>t_STR</code>): the function name
+ 2 (<code>t_STR</code>): an operator <em>op</em> ( &#60;  or  &#62; ),
+ 2 (<code>t_GEN</code>): a numerical limit l bounding the allowed range,
+ 3 (<code>GEN</code>): the index x. It satisfies x <em>op</em> l.</p>
+<p>
+<b>*</b> <code>"e_DOMAIN"</code>. An argument is not in the function's domain.
+ <em>E</em> has five components, 1 (<code>t_STR</code>): the function name,
+ 2 (<code>t_STR</code>): the mathematical name of the out-of-domain argument
+ 3 (<code>t_STR</code>): an operator <em>op</em> describing the domain error,
+ 4 (<code>t_GEN</code>): the numerical limit l describing the domain error,
+ 5 (<code>GEN</code>): the out-of-domain argument x. The argument satisfies x
+ <em>op</em> l, which prevents it from belonging to the function's domain.</p>
+<p>
+<b>*</b> <code>"e_MAXPRIME"</code>. A function using the precomputed list of prime
+ numbers ran out of primes.
+ <em>E</em> has one component, 1 (<code>t_INT</code>): the requested prime bound, which
+ overflowed <code>primelimit</code> or 0 (bound is unknown).</p>
+<p>
+<b>*</b> <code>"e_MEM"</code>. A call to <code>pari_malloc</code> or <code>pari_realloc</code>
+ failed. <em>E</em> has no component.</p>
+<p>
+<b>*</b> <code>"e_OVERFLOW"</code>. An object in function s becomes too large to be
+ represented within PARI's hardcoded limits. (As in <code>2^2^2^10</code> or
+ <code>exp(1e100)</code>, which overflow in <code>lg</code> and <code>expo</code>.)
+ <em>E</em> has one component, 1 (<code>t_STR</code>): the function name s.</p>
+<p>
+<b>*</b> <code>"e_PREC"</code>. Function s fails because input accuracy is too low.
+ (As in <code>floor(1e100)</code> at default accuracy.)
+ <em>E</em> has one component, 1 (<code>t_STR</code>): the function name s.</p>
+<p>
+<b>*</b> <code>"e_STACK"</code>. The PARI stack overflows.
+ <em>E</em> has no component.</p>
+<p>
+<b>Errors triggered intentionally.</b></p>
+<p>
+<b>*</b> <code>"e_ALARM"</code>. A timeout, generated by the <code>alarm</code> function.
+ <em>E</em> has one component (<code>t_STR</code>): the error message to print.</p>
+<p>
+<b>*</b> <code>"e_USER"</code>. A user error, as triggered by
+ <code>error</code>(g_1,...,g_n).
+ <em>E</em> has one component, 1 (<code>t_VEC</code>): the vector of n arguments given
+ to <code>error</code>.</p>
+<p>
+<b>Mathematical errors.</b></p>
+<p>
+<b>*</b> <code>"e_CONSTPOL"</code>. An argument of function s is a constant
+ polynomial, which does not make sense. (As in <code>galoisinit(Pol(1))</code>.)
+ <em>E</em> has one component, 1 (<code>t_STR</code>): the function name s.</p>
+<p>
+<b>*</b> <code>"e_COPRIME"</code>. Function s expected coprime arguments,
+ and did receive x,y, which were not.
+ <em>E</em> has three component, 1 (<code>t_STR</code>): the function name s,
+ 2: the argument x, 3: the argument y.</p>
+<p>
+<b>*</b> <code>"e_INV"</code>. Tried to invert a non-invertible object x in
+ function s.
+ <em>E</em> has two components, 1 (<code>t_STR</code>): the function name s,
+ 2: the non-invertible x. If x = <code>Mod</code>(a,b)
+ is a <code>t_INTMOD</code> and a is not 0 mod b, this allows to factor
+ the modulus, as <code>gcd</code>(a,b) is a non-trivial divisor of b.</p>
+<p>
+<b>*</b> <code>"e_IRREDPOL"</code>. Function s expected an irreducible polynomial,
+ and did receive T, which was not. (As in <code>nfinit(x^2-1)</code>.)
+ <em>E</em> has two component, 1 (<code>t_STR</code>): the function name s,
+ 2 (<code>t_POL</code>): the polynomial x.</p>
+<p>
+<b>*</b> <code>"e_MISC"</code>. Generic uncategorized error.
+ <em>E</em> has one component (<code>t_STR</code>): the error message to print.</p>
+<p>
+<b>*</b> <code>"e_MODULUS"</code>. moduli x and y submitted to function s are
+ inconsistent. As in</p>
+<p>
+<pre class="code">     nfalgtobasis(nfinit(t^3-2), Mod(t,t^2+1)
+</pre></p>
+<p>
+ <em>E</em> has three component, 1 (<code>t_STR</code>): the function s,
+ 2: the argument x, 3: the argument x.</p>
+<p>
+<b>*</b> <code>"e_NEGVAL"</code>. An argument of function s is a power series with
+ negative valuation, which does not make sense. (As in <code>cos(1/x)</code>.)
+ <em>E</em> has one component, 1 (<code>t_STR</code>): the function name s.</p>
+<p>
+<b>*</b> <code>"e_PRIME"</code>. Function s expected a prime number,
+ and did receive p, which was not. (As in <code>idealprimedec(nf, 4)</code>.)
+ <em>E</em> has two component, 1 (<code>t_STR</code>): the function name s,
+ 2: the argument p.</p>
+<p>
+<b>*</b> <code>"e_ROOTS0"</code>. An argument of function s is a zero polynomial,
+ and we need to consider its roots. (As in <code>polroots(0)</code>.) <em>E</em> has
+ one component, 1 (<code>t_STR</code>): the function name s.</p>
+<p>
+<b>*</b> <code>"e_SQRTN"</code>. Trying to compute an n-th root of x, which does
+ not exist, in function s. (As in <code>sqrt(Mod(-1,3))</code>.)
+ <em>E</em> has two components, 1 (<code>t_STR</code>): the function name s,
+ 2: the argument x.</p>
+
+<hr></hr>
+<a name="next"></a>
+<h4>next({n = 1})</h4>
+<p></p>
+<p>Interrupts execution of current seq,
+resume the next iteration of the innermost enclosing loop, within the
+current function call (or top level loop). If n is specified, resume at
+the n-th enclosing loop. If n is bigger than the number of enclosing
+loops, all enclosing loops are exited.</p>
+
+<hr></hr>
+<a name="return"></a>
+<h4>return({x = 0})</h4>
+<p></p>
+<p>Returns from current subroutine, with
+result x. If x is omitted, return the <code>(void)</code> value (return no
+result, like <code>print</code>).</p>
+
+<hr></hr>
+<a name="until"></a>
+<h4>until(a,<em>seq</em>)</h4>
+<p></p>
+<p>Evaluates <em>seq</em> until a is not
+equal to 0 (i.e.&nbsp;until a is true). If a is initially not equal to 0,
+<em>seq</em> is evaluated once (more generally, the condition on a is tested
+<em>after</em> execution of the <em>seq</em>, not before as in <code>while</code>).</p>
+
+<hr></hr>
+<a name="while"></a>
+<h4>while(a,<em>seq</em>)</h4>
+<p></p>
+<p>While a is non-zero, evaluates the expression sequence <em>seq</em>. The
+test is made <em>before</em> evaluating the seq, hence in particular if a
+is initially equal to zero the <em>seq</em> will not be evaluated at all.</p>
+<p></p>
+
+<hr></hr>
+
+</BODY>
+</HTML>

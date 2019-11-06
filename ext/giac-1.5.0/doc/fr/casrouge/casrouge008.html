@@ -1,0 +1,4065 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Les programmes d’arithmétique</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casrouge007.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge009.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc160">Chapitre 8</A>  Les programmes d’arithmétique</H1><H2 CLASS="section"><A NAME="toc45"></A><A NAME="htoc161">8.1</A>  Quotient et reste de la division euclidienne</H2><H3 CLASS="subsection"><A NAME="htoc162">8.1.1</A>  Les fonctions iquo, irem et smod de <TT>Xcas</TT></H3><P><A NAME="@default78"></A><A NAME="@default79"></A><A NAME="@default80"></A><A NAME="@default81"></A><A NAME="@default82"></A>
+Si <I>a</I> et <I>b</I> sont des entiers ou des entiers de Gauss :<BR>
+<TT>iquo(a,b)</TT> renvoie le quotient <I>q</I> de la division euclidienne de <I>a</I> par <I>b</I> et<BR>
+<TT>irem(a,b)</TT> renvoie le reste <I>r</I> de la division euclidienne de <I>a</I> par <I>b</I>.<BR>
+<I>q</I> et <I>r</I> vérifient :<BR>
+si <I>a</I> et <I>b</I> sont entiers <I>a</I>=<I>b</I>*<I>q</I>+<I>r</I> avec 0 ≤ <I>r</I>&lt;<I>b</I><BR>
+si <I>a</I> et <I>b</I> sont des entiers de Gauss <I>a</I>=<I>b</I>*<I>q</I>+<I>r</I> avec |<I>r</I>|<SUP>2</SUP>) ≤ |<I>b</I>|<SUP>2</SUP>/2.<BR>
+Par exemple si <I>a</I>=−2+6*<I>i</I> et si <I>b</I>=1+3*<I>i</I> on a :<BR>
+<I>q</I>=2+<I>i</I> et <I>r</I>=−1−<I>i</I><BR>
+Si <I>a</I> et <I>b</I> sont des entiers relatifs <TT>smod(a,b)</TT> renvoie le reste 
+symétrique <I>rs</I> de la division euclidienne de <I>a</I> par <I>b</I>.<BR>
+<I>q</I> et <I>rs</I> vérifient :<BR>
+<I>a</I>=<I>b</I>*<I>q</I>+<I>rs</I> avec −<I>b</I>/2&lt;<I>rs</I> ≤ <I>b</I>/2<BR>
+Exemples :<BR>
+<TT>smod(7,4)=-1</TT><BR>
+<TT>smod(-10,4)=-2</TT><BR>
+<TT>smod(10,4)=2</TT><BR>
+<B>Remarque</B>
+<TT>mod</TT> (ou <TT>%</TT>) est une fonction infixée et désigne un élément 
+de <I>Z</I>/<I>nZ</I>.<BR>
+On a : <TT>7 mod 4=-1%4</TT> désigne un élément de <I>Z</I>/4<I>Z</I> mais<BR>
+<TT>smod(7,4)=(7%4)%0=-1</TT> désigne un entier.
+</P><H3 CLASS="subsection"><A NAME="htoc163">8.1.2</A>  Activité</H3><H4 CLASS="subsubsection">le texte de l’exercice</H4><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Vérifier que : 
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">13</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">18</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">45</TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+</LI><LI CLASS="li-enumerate">On donne deux entiers <I>a</I> et <I>b</I> vérifiant : 0&lt;<I>b</I> &lt;<I>a</I>.
+On note <I>q</I> et <I>r</I> le quotient et le reste de la division euclidienne de <I>a</I> 
+par <I>b</I> (<I>a</I>=<I>bq</I>+<I>r</I> avec 0≤ <I>r</I>&lt;<I>b</I>).<P>Démontrer que :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>q</I>&gt;0</TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>q</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>b</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>a</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> ≤ </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>q</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE></LI><LI CLASS="li-enumerate">On définit <I>u</I> et <I>v</I> par :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>b</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>a</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>q</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>v</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>u</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE> et
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>u</I>=<I>a</I>(<I>q</I>+1)</TD></TR>
+</TABLE>
+Exprimer <I>v</I> en fonction de <I>b</I> et <I>r</I>.<P>Démontrer que :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>v</I>≤ <I>b</I>&lt;<I>a</I>&lt;<I>u</I></TD></TR>
+</TABLE><P>
+Si <I>r</I>=0, vérifier que : </P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>b</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>a</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>q</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE></LI><LI CLASS="li-enumerate">Si <I>r</I> est différent de zéro, on pose :
+<I>a</I><SUB>1</SUB>=<I>u</I> et <I>b</I><SUB>1</SUB>=<I>v</I>.<P>Puis, on recommence :
+on divise <I>a</I><SUB>1</SUB> par <I>b</I><SUB>1</SUB>.<BR>
+On trouve un quotient <I>q</I><SUB>1</SUB> et un reste <I>r</I><SUB>1</SUB>.Si <I>r</I><SUB>1</SUB>  est nul, vérifier 
+que :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>b</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>a</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>q</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>q</I><SUB>1</SUB></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Si <I>r</I><SUB>1</SUB> n’est pas nul, on recommence.</P><P>Montrer qu’il existe une suite finie d’entiers <I>Q</I><SUB>0</SUB>, <I>Q</I><SUB>1</SUB>,...<I>Q</I><SUB><I>n</I></SUB> strictement 
+croissante telle que :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>b</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>a</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>Q</I><SUB>0</SUB></TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>Q</I><SUB>1</SUB></TD></TR>
+</TABLE></TD><TD CLASS="dcell">+...+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>Q</I><SUB><I>n</I></SUB></TD></TR>
+</TABLE></TD></TR>
+</TABLE></LI><LI CLASS="li-enumerate">Rédiger l’algorithme décrit ici et l’appliquer à la fraction : <TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">151</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">221</TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+</LI></OL><H4 CLASS="subsubsection">L’algorithme</H4><P>
+On suppose que la fraction <TT> </TT><TT><I>NUM</I>/<I>DENOM</I></TT><TT>∈]0;1[</TT>.</P><P>L’algorithme s’écrit en langage non fonctionnel :<BR>
+<TT>DENOM </TT><TT>→</TT><TT>A<BR>
+NUM</TT><TT>→</TT><TT>B<BR>
+Quotient(A, B)</TT><TT>→</TT><TT>Q<BR>
+Reste(A, B)</TT><TT>→</TT><TT>R<BR>
+tantque R </TT><TT>≠</TT><TT>0 faire<BR>
+Q+1</TT><TT>→</TT><TT>D<BR>
+Afficher D<BR>
+B-R</TT><TT>→</TT><TT>B<BR>
+A*D</TT><TT>→</TT><TT>A<BR>
+Quotient(A, B)</TT><TT>→</TT><TT>Q<BR>
+Reste(A, B)</TT><TT>→</TT><TT>R<BR>
+ftantque<BR>
+Afficher Q<BR>
+</TT>
+</P><H4 CLASS="subsubsection">Traduction Xcas</H4><P>
+On écrit la fonction <TT>decomp</TT> qui va décomposer selon l’algorithme la 
+fraction <TT>frac</TT>. Cette fonction va renvoyer la liste <TT>lres</TT> égale 
+à <TT>[<I>Q</I></TT><SUB><TT>0</TT></SUB><TT>,..<I>Q</I></TT><SUB><TT><I>n</I></TT></SUB><TT>]</TT> avec <TT>0&lt;<I>Q</I></TT><SUB><TT>0</TT></SUB><TT>&lt;,..&lt;<I>Q</I></TT><SUB><TT><I>n</I></TT></SUB> et 
+<TT><I>frac</I>=1/<I>Q</I></TT><SUB><TT>0</TT></SUB><TT>+..+1/<I>Q</I></TT><SUB><TT><I>n</I></TT></SUB>.<BR>
+Attention <TT>frac=b/a</TT> et donc <TT>fxnd(frac)=fxnd(b/a)=[b,a]</TT>.
+</P><PRE CLASS="verbatim">decomp(frac):={
+local a,b,l,q,r,lres;
+l:=fxnd(frac);
+b:=l[0];
+a:=l[1];
+q:=iquo(a,b);
+r:=irem(a,b);
+lres:=[];
+while (r!=0) {
+lres:= concat(lres, q+1);
+b:=b-r;
+a:=a*(q+1);
+q:=iquo(a,b);
+r:=irem(a,b);
+}
+lres:=concat(lres,q);
+return lres;
+}
+</PRE><H4 CLASS="subsubsection">Application à 151/221</H4><P>
+On tape :<BR>
+<TT>decomp(151/221)</TT><BR>
+On obtient :<BR>
+<TT>[2,6,61,5056,40895962,4181199228867648]</TT><BR>
+On vérifie :<BR>
+<TT>1/2+1/6+1/61+1/5056+1/40895962+1/4181199228867648</TT><BR>
+On obtient :<BR>
+<TT>151/221</TT><BR>
+On peut écrire un programme pour faire le vérification :<BR>
+<TT>size(l)</TT> est égal à la longueur de la liste <TT>l</TT>
+</P><PRE CLASS="verbatim">verifie(l):={
+local s,k,res;
+s:=size(l);
+res:=0;
+for (k:=0;k&lt;s;k++){
+res:=res+1/l[k];
+}
+return res;
+}
+</PRE><P>On tape :<BR>
+<TT>verifie([2,6,61,5056,40895962,4181199228867648])</TT><BR>
+On obtient :<BR>
+<TT>151/221</TT></P><H2 CLASS="section"><A NAME="toc46"></A><A NAME="htoc164">8.2</A>  Calcul du PGCD par l’algorithme d’Euclide</H2><P>
+Soient <I>A</I> et <I>B</I> deux entiers positifs dont on cherche le <I>PGCD</I>.<BR>
+L’algorithme d’Euclide est basé sur la définition récursive du <I>PGCD</I> :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>PGCD</I>(<I>A</I>,0)</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><I>A</I> </TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>PGCD</I>(<I>A</I>,<I>B</I>)</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><I>PGCD</I>(<I>B</I>,<I>A</I>  mod  <I>B</I>)   <I>si</I>   <I>B</I> ≠ 0</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+où <I>A</I> mod <I>B</I> désigne le reste de la division euclidienne de <I>A</I> par <I>B</I>.<BR>
+Voici la description de cet algorithme :<BR>
+on effectue des divisions euclidiennes successives :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>A</I>=</TD><TD ALIGN=center NOWRAP><I>B</I> × <I>Q</I><SUB>1</SUB>+<I>R</I><SUB>1</SUB></TD><TD ALIGN=left NOWRAP>0 ≤ <I>R</I><SUB>1</SUB> &lt; <I>B</I> </TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>B</I>=</TD><TD ALIGN=center NOWRAP><I>R</I><SUB>1</SUB> × <I>Q</I><SUB>2</SUB>+<I>R</I><SUB>2</SUB></TD><TD ALIGN=left NOWRAP>0 ≤ <I>R</I><SUB>2</SUB> &lt; <I>R</I><SUB>1</SUB> </TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>R</I><SUB>1</SUB>=</TD><TD ALIGN=center NOWRAP><I>R</I><SUB>2</SUB> × <I>Q</I><SUB>3</SUB>+<I>R</I><SUB>3</SUB></TD><TD ALIGN=left NOWRAP>0 ≤ <I>R</I><SUB>3</SUB> &lt; <I>R</I><SUB>2</SUB> </TD></TR>
+<TR><TD ALIGN=right NOWRAP>.......</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Après un nombre fini d’étapes, il existe un entier n tel que : 
+<I>R</I><SUB><I>n</I></SUB> = 0.<BR>
+on a alors :<BR>
+<I>PGCD</I>(<I>A</I>,<I>B</I>)= <I>PGCD</I>(<I>B</I>,<I>R</I><SUB>1</SUB>) =...<BR>
+<I>PGCD</I>(<I>R</I><SUB><I>n</I>−1</SUB>,<I>R</I><SUB><I>n</I></SUB>) = <I>PGCD</I>(<I>R</I><SUB><I>n</I>−1</SUB>,0) = <I>R</I><SUB><I>n</I>−1</SUB>
+</P><H3 CLASS="subsection"><A NAME="htoc165">8.2.1</A>  Traduction algorithmique</H3><P>
+-Version itérative<BR>
+Si <I>B</I>≠ 0 on calcule <I>R</I>=<I>A</I> mod<I>B</I>, puis avec <I>B</I> dans le rôle 
+de <I>A</I> (en mettant <I>B</I> dans <I>A</I> ) et <I>R</I> dans le rôle de <I>B</I> ( en mettant 
+<I>R</I> dans <I>B</I>) on recommence jusqu’à ce que <I>B</I>=0, le <I>PGCD</I> est alors égal
+à <I>A</I>.
+</P><PRE CLASS="verbatim">fonction PGCD(A,B)
+local R
+</PRE><P><TT>tantque B </TT><TT>≠</TT><TT> 0 faire</TT>
+</P><PRE CLASS="verbatim">  A mod B=&gt;R
+  B=&gt;A
+  R=&gt;B
+ftantque
+retourne A
+ffonction
+</PRE><P>-Version récursive<BR>
+On écrit simplement la définition récursive vue plus haut.
+</P><PRE CLASS="verbatim">fonction PGCD(A,B)
+</PRE><P><TT>Si B </TT><TT>≠</TT><TT> 0 alors</TT>
+</P><PRE CLASS="verbatim">  retourne PGCD(B,A mod B) 
+  sinon
+  retourne A
+fsi
+ffonction
+</PRE><H3 CLASS="subsection"><A NAME="htoc166">8.2.2</A>  Traduction Xcas</H3><P>
+- Version itérative :
+</P><PRE CLASS="verbatim">pgcd(a,b):={
+  local r; 
+  while (b!=0){
+   r:=irem(a,b);
+   a:=b;
+   b:=r;
+  } 
+  return(a);
+};
+</PRE><P>- Version récursive.
+</P><PRE CLASS="verbatim">pgcdr(a,b):={
+  if (b==0) 
+    return(a);
+  else 
+    return(pgcdr(b,irem(a,b)));
+};
+</PRE><H3 CLASS="subsection"><A NAME="htoc167">8.2.3</A>  Traduction MapleV</H3><P>
+-Version itérative :
+</P><PRE CLASS="verbatim">pgcd:=proc(x,y)
+local a,b,r:
+a:=x:
+b:=y:
+while (b&gt;0) do
+r:=irem(a,b):
+a:=b:
+b:=r:
+od:
+RETURN(a):
+end:
+</PRE><P>-Version récursive :
+</P><PRE CLASS="verbatim">pgcd:=proc(a,b)
+if (b=0) then
+RETURN(a)
+ else 
+RETURN(pgcd(b,irem(a,b))):
+fi:
+end:
+</PRE><H3 CLASS="subsection"><A NAME="htoc168">8.2.4</A>  Traduction MuPAD</H3><P>
+-Version itérative :
+</P><PRE CLASS="verbatim">pgcd:=proc(a,b)
+local r:
+begin
+while (b&gt;0) do
+r:=a mod b:
+a:=b:
+b:=r:
+end_while:
+return(a):
+end_proc;
+</PRE><P>-Version récursive :
+</P><PRE CLASS="verbatim">pgcd:=proc(a,b)
+begin
+if (b=0) then
+ return(a)
+ else 
+return(pgcd(b,a mod b)):
+end_if:
+end_proc;
+</PRE><H3 CLASS="subsection"><A NAME="htoc169">8.2.5</A>  Traduction TI89 92</H3><P>
+-Version itérative
+</P><PRE CLASS="verbatim">:pgcd(a,b)
+:Func 
+:Local r
+</PRE><P><TT>:While b </TT><TT>≠</TT><TT> 0 </TT>
+</P><PRE CLASS="verbatim">:mod(a,b)=&gt;r
+:b=&gt;a
+:r=&gt;b
+:EndWhile
+:Return a
+:EndFunc
+</PRE><P>-Version récursive
+</P><PRE CLASS="verbatim">:pgcd(a,b)
+:Func 
+</PRE><P><TT>:If b </TT><TT>≠</TT><TT> 0 Then</TT>
+</P><PRE CLASS="verbatim">:Return  pgcd(b, mod(a,b)) 
+:Else
+:Return a
+:EndIf
+:EndFunc
+</PRE><H3 CLASS="subsection"><A NAME="htoc170">8.2.6</A>  Le pgcd dans ℤ[<I>i</I>]</H3><P>
+On rappelle que ℤ[<I>i</I>]={<I>m</I>+<I>n</I>*<I>i</I>, (<I>m</I>,<I>n</I>)∈ ℤ<SUP>2</SUP>}.<BR>
+Soient <I>a</I> ∈ ℤ[<I>i</I>] et <I>b</I> ∈ ℤ[<I>i</I>]−{0}, alors on dit que le quotient <I>q</I>
+de <I>a</I> par <I>b</I> est l’affixe du (ou des) point(s), le plus proche pour le 
+module, du point d’affixe <I>a</I>/<I>b</I>.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Montrer que |<I>q</I>−<I>a</I>/<I>b</I>|<SUP>2</SUP> ≤ 1/2. En déduire que |<I>a</I>−<I>bq</I>|<SUP>2</SUP> ≤ |<I>b</I>|<SUP>2</SUP>/2
+et que l’algorithme d’Euclide se termine lorsqu’on prend <I>q</I> comme quotient 
+euclidien.
+</LI><LI CLASS="li-itemize">Écrire un programme qui calcule le pgcd de 2 nombres de ℤ[<I>i</I>]. On 
+normalisera le résultat (en multipliant le résultat par 1,-1,i ou -i)
+pour que le pgcd soit un nombre de partie rèelle 
+strictement positive et de partie imaginaire positive ou nulle.
+</LI></UL><P>
+On tape :
+</P><PRE CLASS="verbatim">quotient(a,b):={
+local q1,q2,c;
+c:=normal(a/b);
+q1:=re(c);
+q2:=im(c);
+return round(q1)+i*round(q2);
+}:;
+pgcdzi(a,b):={
+local q,r;
+tantque b!=0 faire
+  q:=quotient(a,b);
+  r:=a-b*q;
+  a:=b;
+  b:=r;
+ftantque;
+//on normalise
+si re(a)&lt;0 et im(a)&lt;=0 alors retourne -a;fsi;
+si im(a)&lt;0 alors retourne i*a;fsi;
+si re(a)&lt;=0 alors retourne -i*a;fsi;
+retourne a;
+}:;
+</PRE><P>On tape :<BR>
+<TT>pgcdzi(3+i,3-i)</TT><BR>
+On obtient :
+<TT>1+i</TT><BR>
+On tape :<BR>
+<TT>pgcdzi(7+i,-6+17*i)</TT><BR>
+On obtient :
+<TT>3+4*i</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc171">8.2.7</A>  Le pgcd dans ℤ[<I>i</I>√<SPAN style="text-decoration:overline">2</SPAN>]</H3><P>
+On rappelle que ℤ[<I>i</I>√<SPAN style="text-decoration:overline">2</SPAN>]={<I>m</I>+<I>i</I>*<I>n</I>√<SPAN style="text-decoration:overline">2</SPAN>, (<I>m</I>,<I>n</I>)∈ ℤ<SUP>2</SUP>}.<BR>
+Soient <I>a</I> ∈ ℤ[<I>i</I>√<SPAN style="text-decoration:overline">2</SPAN>] et <I>b</I> ∈ ℤ[<I>i</I>√<SPAN style="text-decoration:overline">2</SPAN>]−{0}, alors on dit que le 
+quotient <I>q</I> de <I>a</I> par <I>b</I> est l’affixe du (ou des) point(s), le plus proche 
+pour le module, du point d’affixe <I>a</I>/<I>b</I>.
+On tape :
+</P><PRE CLASS="verbatim">quorest(a,b):={
+local q1,q2,q,r,c;
+c:=normal(a/b);
+q1:=normal(round(re(c)));
+q2:=normal(round(im(c)/sqrt(2)));
+q:= q1+i*q2*sqrt(2);
+r:=simplify(a-b*q);
+return q,r;
+}:;
+pgcdzis2(a,b):={
+local r;
+tantque b!=0 faire
+  r:=quorest(a,b)[1];
+  a:=b;
+  b:=r;
+ftantque;
+//on normalise
+si re(a)&lt;0  alors retourne -a;fsi;
+retourne a;
+}:;
+</PRE><P>On tape :<BR>
+<TT>pgcdzis2(3+i*sqrt(2),3-i*sqrt(2))</TT><BR>
+On obtient :
+<TT>1</TT><BR>
+On tape :<BR>
+<TT>pgcdzis2(4+5*i*sqrt(2),-2+3*i*sqrt(2))</TT><BR>
+On obtient :
+<TT>2-(3*i)*sqrt(2)</TT></P><H2 CLASS="section"><A NAME="toc47"></A><A NAME="htoc172">8.3</A>  Identité de Bézout par l’algorithme d’Euclide</H2><P>
+Dans ce paragraphe la fonction <TT>Bezout(A,B)</TT> renvoie la liste {<I>U</I>, <I>V</I>, <I>PGCD</I>(<I>A</I>,<I>B</I>)}
+où <I>U</I> et <I>V</I> vérifient :
+ <I>A</I> × <I>U</I> + <I>B</I> × <I>V</I> = <I>PGCD</I>(<I>A</I>,<I>B</I>) 
+</P><H3 CLASS="subsection"><A NAME="htoc173">8.3.1</A>  Version itérative sans les listes</H3><P>
+L’algorithme d’Euclide permet aussi de trouver un couple <I>U</I> et <I>V</I> 
+vérifiant:</P><P> <I>A</I> × <I>U</I> + <I>B</I> × <I>V</I>= <I>PGCD</I>(<I>A</I>,<I>B</I>) </P><P>En effet, si on note  <I>A</I><SUB>0</SUB> et <I>B</I><SUB>0</SUB>  les valeurs de <I>A</I> et de <I>B</I> du début on a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP> <I>A</I></TD><TD ALIGN=center NOWRAP>=<I>A</I><SUB>0</SUB> × <I>U</I>+<I>B</I><SUB>0</SUB> × <I>V</I>    avec   <I>U</I>=1  <I>et</I>  <I>V</I>=0 </TD></TR>
+<TR><TD ALIGN=right NOWRAP> <I>B</I></TD><TD ALIGN=center NOWRAP>=<I>A</I><SUB>0</SUB> × <I>W</I>+<I>B</I><SUB>0</SUB> × <I>X</I>    avec   <I>W</I>=0  <I>et</I>   <I>X</I>=1 </TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>Puis on fait évoluer <I>A</I>, <I>B</I>, <I>U</I>, <I>V</I>, <I>W</I>, <I>X</I> de façon à ce que ces 
+deux relations soient toujours vérifiées. Voici comment
+<I>A</I>, <I>B</I>, <I>U</I>, <I>V</I>, <I>W</I>, <I>X</I> évoluent :<BR>
+- on pose :
+ <I>A</I>=<I>B</I> × <I>Q</I>+<I>R</I>     0 ≤ <I>R</I> &lt; <I>B</I>   ( <I>R</I> = <I>A</I> mod <I>B</I>  <I>et</I>   <I>Q</I> = <I>E</I>(<I>A</I> / <I>B</I> ))<BR>
+- on écrit alors :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>R</I>=<I>A</I>−<I>B</I> × <I>Q</I>=<I>A</I><SUB>0</SUB> × (<I>U</I>−<I>W</I> × <I>Q</I>)+<I>B</I><SUB>0</SUB> × (<I>V</I>−<I>X</I> × <I>Q</I>)=<I>A</I><SUB>0</SUB> × <I>S</I>+<I>B</I><SUB>0</SUB> × <I>T</I> </TD></TR>
+<TR><TD ALIGN=right NOWRAP>avec   <I>S</I>=<I>U</I>−<I>W</I> × <I>Q</I>   et    <I>T</I>=<I>V</I>−<I>X</I> × <I>Q</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Il reste alors à recommencer avec <I>B</I> dans le rôle de <I>A</I> (<TT>B=&gt;A  W=&gt;U  X=&gt;V</TT>) et <I>R</I> dans le rôle de <I>B</I> (<TT>R=&gt;B  S=&gt;W  T=&gt;X</TT> ) d’où l’algorithme:
+</P><PRE CLASS="verbatim">fonction Bezout(A,B)
+local U,V,W,X,S,T,Q,R
+1=&gt;U 0=&gt;V 0=&gt;W 1=&gt;X
+</PRE><P><TT>tantque B </TT><TT>≠</TT><TT> 0 faire</TT>
+</P><PRE CLASS="verbatim">A mod B=&gt;R 
+E(A/B)=&gt;Q
+//R=A-B*Q
+U-W*Q=&gt;S
+V-X*Q=&gt;T
+B=&gt;A W=&gt;U X=&gt;V
+R=&gt;B S=&gt;W T=&gt;X
+ftantque
+retourne {U, V, A}
+ffonction
+</PRE><H3 CLASS="subsection"><A NAME="htoc174">8.3.2</A>  Version itérative avec les listes</H3><P>
+On peut simplifier l’écriture de l’algorithme ci-dessus en utilisant moins de
+variables : pour cela on utilise les listes <I>LA</I>, <I>LB</I>, <I>LR</I> pour mémoriser 
+les triplets {<I>U</I>, <I>V</I>, <I>A</I>}, {<I>W</I>, <I>X</I>, <I>B</I>} et {<I>S</I>, <I>T</I>, <I>R</I>}.
+Ceci est très commode car les logiciels de calcul savent ajouter des listes 
+de même longueur (en ajoutant les éléments de même indice) et savent 
+aussi multiplier une liste par un nombre (en multipliant chacun des 
+éléments de la liste par ce nombre).<BR>
+</P><PRE CLASS="verbatim">fonction Bezout(A,B)
+local LA LB LR
+{1, 0, A}=&gt;LA
+{0, 1, B}=&gt;LB
+</PRE><P><TT>tantque LB[3] </TT><TT>≠</TT><TT> 0 faire</TT>
+</P><PRE CLASS="verbatim">LA-LB*E(LA[3]/LB[3])=&gt;LR 
+LB=&gt;LA 
+LR=&gt;LB 
+ftantque
+retourne LA
+ffonction
+</PRE><H3 CLASS="subsection"><A NAME="htoc175">8.3.3</A>  Version récursive sans les listes</H3><P><A NAME="sec:recsl"></A>
+Si on utilise des variables globales pour <TT>A, B, D, U, V, T</TT>, on peut voir 
+la fonction <TT>Bezout</TT> comme calculant à partir de <TT>A B</TT>, des valeurs 
+qu’elle met dans <TT>U, V, D (AU+BV=D)</TT>, grâce à une variable locale 
+<TT>Q</TT>.<BR>
+On écrit donc une fonction sans paramètre : seule la variable <TT>Q</TT> doit être locale à la foncton alors que les autres variables <TT>A, B ...</TT> 
+sont globales.<BR>
+<TT>Bezout</TT> fabrique <TT>U, V, D</TT> vérifiant <TT>A*U+B*V=D</TT> à partir de <TT>A</TT> et <TT>B</TT>.
+Avant l’appel récursif (on présérve <TT>E(A/B)=Q</TT> et on met <TT>A</TT> et 
+<TT>B</TT> à jour ( nouvelles valeurs), après l’appel les variables <TT>U, V, D</TT> vérifient 
+<TT>A*U+B*V=D</TT> (avec <TT>A</TT> et <TT>B</TT> les nouvelles valeurs), il suffit 
+alors de revenir aux premières valeurs de
+<TT>A</TT> et <TT>B</TT> en écrivant :<BR>
+<TT>B*U+(A-B*Q)*V=A*V+B*(U-V*Q)</TT><BR>
+On écrit alors :
+</P><PRE CLASS="verbatim">fonction Bezout
+local Q 
+Si B != 0 faire
+E(A/B)=&gt;Q
+A-B*Q=&gt;R
+B=&gt;A
+R=&gt;B
+Bezout
+U-V*Q=&gt;W
+V=&gt;U
+W=&gt;V
+sinon 
+1=&gt;U
+0=&gt;V
+A=&gt;D
+fsi
+ffonction
+</PRE><H3 CLASS="subsection"><A NAME="htoc176">8.3.4</A>  Version récursive avec les listes</H3><P>
+On peut définir récursivement la fonction Bezout par:</P><P> <I>Bezout</I>(<I>A</I>,0)={1, 0, <I>A</I>}  </P><P>Si  <I>B</I> ≠ 0  il faut définir  <I>Bezout</I>(<I>A</I>,<I>B</I>) en fonction de  <I>Bezout</I>(<I>B</I>,<I>R</I>) 
+lorsque  <I>R</I>=<I>A</I>−<I>B</I> × <I>Q</I> et <I>Q</I>=<I>E</I>(<I>A</I>/<I>B</I>).</P><P>On a:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>Bezout</I>(<I>B</I>,<I>R</I>)=<I>LT</I>={<I>W</I>, <I>X</I>, <I>pgcd</I>(<I>B</I>,<I>R</I>)} </TD></TR>
+<TR><TD ALIGN=right NOWRAP>avec  <I>W</I> × <I>B</I>+<I>X</I> × <I>R</I>=<I>pgcd</I>(<I>B</I>,<I>R</I>)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Donc:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP> <I>W</I> × <I>B</I>+<I>X</I> × (<I>A</I>−<I>B</I> × <I>Q</I>)</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><I>pgcd</I>(<I>B</I>,<I>R</I>)   ou encore </TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>X</I> × <I>A</I>+(<I>W</I>−<I>X</I> × <I>Q</I>) × <I>B</I></TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><I>pgcd</I>(<I>A</I>,<I>B</I>).</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+D’où si <I>B</I> ≠ 0 et si  <I>Bezout</I>(<I>B</I>,<I>R</I>)=<I>LT</I> on a :</P><P> <I>Bezout</I>(<I>A</I>,<I>B</I>)={<I>LT</I>[2], <I>LT</I>[1]−<I>LT</I>[2] × <I>Q</I>, <I>LT</I>[3]}.</P><PRE CLASS="verbatim">fonction Bezout(A,B)
+local LT Q R
+</PRE><P><TT>Si B </TT><TT>≠</TT><TT> 0 faire</TT>
+</P><PRE CLASS="verbatim">E(A/B)=&gt;Q
+A-B*Q=&gt;R
+Bezout(B,R)=&gt;LT
+retourne {LT[2], LT[1]-LT[2]*Q, LT[3]}
+sinon retourne {1, 0, A} 
+fsi
+ffonction
+</PRE><H3 CLASS="subsection"><A NAME="htoc177">8.3.5</A>  Traduction Xcas</H3><P><A NAME="sec:bezout"></A>
+- Version itérative avec les listes
+</P><PRE CLASS="verbatim">bezout(a,b):={
+//renvoie [u,v,d] tels que a*u+b*v=pgcd(a,b) (fct iterative)
+local la,lb,lr,q,lb2;
+la:=[1,0,eval(a)];
+lb:=[0,1,eval(b)];
+lb2:=eval(b);
+while (lb2 !=0){
+q:=iquo(la[2],lb2);
+lr:=la+(-q)*lb;
+la:=lb;
+lb:=lr;
+lb2:=lb[2];
+}
+return(la);
+};
+</PRE><P>- Version récursive avec les listes
+</P><PRE CLASS="verbatim">bezoutr(a,b):={
+//renvoie [u,v,d] tels que a*u+b*v=pgcd(a,b) (fct recursive)
+local lb,q,r;
+if (b!=0) {
+q:=iquo(a,b);
+r:=irem(a,b);
+lb:=bezoutr(b,r);
+return([lb[1],lb[0]+(-q)*lb[1],lb[2]]);
+} else 
+return([1,0,a]);
+};
+</PRE><H2 CLASS="section"><A NAME="toc48"></A><A NAME="htoc178">8.4</A>  Décomposition en facteurs premiers d’un entier</H2><P>
+Dans cette section, on ne suppose pas connue une table de nombres premiers : 
+on ne se sert donc pas du programme crible.
+</P><H3 CLASS="subsection"><A NAME="htoc179">8.4.1</A>  Les algorithmes et leurs traductions algorithmiques</H3><UL CLASS="itemize"><LI CLASS="li-itemize">
+Premier algorithme<BR>
+Soit <I>N</I> un entier.<BR>
+On teste, pour tous les nombres <I>D</I> de 2 à <I>N</I>, la divisibilité de <I>N</I> par 
+<I>D</I>.<BR>
+Si <I>D</I> divise <I>N</I>, on cherche alors les diviseurs de <I>N</I>/<I>D</I> etc...<I>N</I>/<I>D</I> joue le 
+rôle de <I>N</I> et on s’arrête quand <I>N</I>=1<BR>
+On met les diviseurs trouvés dans la liste <TT>FACT</TT>.<PRE CLASS="verbatim">fonction factprem(N)
+local D FACT 
+2 =&gt; D
+{} =&gt; FACT
+tantque N&lt;= 1 faire
+si N mod D = 0 alors
+   concat(FACT,D) =&gt; FACT
+    N/D =&gt; N
+   sinon
+    D+1 =&gt; D
+ fsi
+ftantque
+retourne FACT
+ffonction
+</PRE></LI><LI CLASS="li-itemize">Première amélioration<BR>
+On ne teste que les diviseurs <I>D</I> entre 2 et <I>E</I>(√<SPAN style="text-decoration:overline"><I>N</I></SPAN>).<BR>
+En effet si <I>N</I>=<I>D</I>1*<I>D</I>2 alors on a :<BR>
+soit <I>D</I>1 ≤ <I>E</I>(√<SPAN style="text-decoration:overline"><I>N</I></SPAN>), soit <I>D</I>2 ≤ <I>E</I>(√<SPAN style="text-decoration:overline"><I>N</I></SPAN>) car sinon on aurait :<BR>
+<I>D</I>1*<I>D</I>2 ≥ (<I>E</I>(√<SPAN style="text-decoration:overline"><I>N</I></SPAN>)+1)<SUP>2</SUP> &gt;<I>N</I>.<PRE CLASS="verbatim">fonction factprem1(N)
+local D FACT
+2 =&gt; D
+{} =&gt; FACT
+tantque D*D!= N faire
+si N mod D = 0 alors
+    concat(FACT,D) =&gt; FACT
+    N/D=&gt; N
+   sinon
+    D+1 =&gt; D
+ fsi
+ftantque
+concat(FACT,N) =&gt; FACT
+retourne FACT
+ffonction
+</PRE><P>Dans la liste <TT>FACT</TT>, on a les diviseurs premiers éventuellement 
+plusieurs fois, par exemple :<BR>
+<TT>factprem1(12)={2,2,3}</TT>.
+</P></LI><LI CLASS="li-itemize">Deuxième amélioration<BR>
+On cherche si 2 divise <I>N</I>, puis on teste les diviseurs impairs <I>D</I> entre 3 et 
+<I>E</I>(√<SPAN style="text-decoration:overline"><I>N</I></SPAN>).<P>Dans la liste <TT>FACT</TT>, on fait suivre chaque diviseur premier par son 
+exposant, par exemple :<BR>
+<TT>factprem2(12)={2,2,3,1}</TT>.
+</P><PRE CLASS="verbatim">fonction  facprem2(N)
+local K D FACT
+{}=&gt;FACT
+0 =&gt; K
+tantque N mod 2 == 0 faire
+    K+1 =&gt; K
+    N/2 =&gt; N
+ftantque
+si K !=0 alors
+    concat(FACT,{2 K}) =&gt; FACT
+fsi
+3 =&gt;D
+tantque D*D&lt;= N faire
+    0 =&gt; K
+    tantque N mod D = 0 faire
+      K+1 =&gt; K
+      N/D =&gt; N
+    ftantque
+    si K !=0 alors
+      concat(FACT,{D K})=&gt; FACT
+    fsi
+     D+2 =&gt; D
+ftantque
+si N != 1 alors
+    concat(FACT,{N 1})=&gt; FACT
+fsi
+retourne FACT
+ffonction
+</PRE></LI><LI CLASS="li-itemize">Troisième amélioration<BR>
+On cherche si 2 et 3 divisent <I>N</I>, puis on teste les diviseurs <I>D</I> entre 5 et 
+<I>E</I>(√<SPAN style="text-decoration:overline"><I>N</I></SPAN>) de la forme 6*<I>k</I>−1 ou 6*<I>k</I>+1.<BR>
+On remarque que si :<BR>
+ <I>D</I>=6*<I>k</I>−1 on a <I>D</I>+(4*<I>D</I> mod6)= 6*<I>k</I>+1<BR>
+ et que si :<BR>
+ <I>D</I>=6*<I>k</I>+1 on a <I>D</I>+(4*<I>D</I> mod6)=6*(<I>k</I>+1)−1<BR>
+Dans la liste <TT>FACT</TT>, on fait suivre chaque diviseur par son exposant,
+par exemple :<BR>
+<TT>factprem3(12)={2,2,3,1}</TT>.
+<PRE CLASS="verbatim">fonction  factprem3(N)
+local J,D,FACT 
+2=&gt;D
+{}=&gt;FACT
+tantque (D*D&lt;=N) faire
+ 0=&gt;J
+ tantque (N mod D=0) faire
+   N/D=&gt;N
+   J+1=&gt;J
+ ftantque
+si (J!= 0) alors concat(FACT,{D,J})=&gt;FACT fsi
+ si (D&lt;4) alors 
+   2*D-1=&gt;D
+ sinon
+   D+(4*D mod 6)=&gt;D
+ fsi
+ftantque
+si (N !=1) alors concat(FACT,{N,1})=&gt;FACT fsi
+retourne(FACT)
+ffonction
+</PRE></LI></UL><H3 CLASS="subsection"><A NAME="htoc180">8.4.2</A>  Traduction Xcas</H3><P><A NAME="sec:factprem"></A>
+On traduit la troisième amélioration.
+</P><PRE CLASS="verbatim">factprem(n):={
+//decompose n en facteur premier dans la liste l de dimension s
+local j,d,s,l;
+d:=2;
+s:=0;
+l:=[];
+while (d*d&lt;=n) {
+j:=0;
+while (irem(n,d)==0){
+n:=iquo(n,d);
+j:=j+1;
+}
+if (j!=0) {
+l:=concat(l,[d,j]);
+s:=s+2;
+}
+if (d&lt;4) {
+d:=2*d-1;
+}
+else {
+d:=d+irem(4*d,6);
+}
+}
+if (n!=1) {
+l:=concat(l,[n,1]);
+s:=s+2;
+}
+return([l,s]);
+};
+</PRE><H2 CLASS="section"><A NAME="toc49"></A><A NAME="htoc181">8.5</A>  Décomposition en facteurs premiers en utilisant le crible</H2><P>
+Pour effectuer la décomposition en facteurs premiers de <I>n</I>, on utilise la 
+table des nombres premiers fabriquée par le crible : on ne teste ainsi que 
+des nombres premiers.<BR>
+Si on peut écrire <I>N</I>=<I>A</I>*<I>D</I><SUP><I>J</I></SUP> avec <I>PGCD</I>(<I>A</I>,<I>D</I>)=1 et <I>J</I>&gt;0 alors <I>D</I><SUP><I>J</I></SUP> est un 
+facteur de la décomposition de <I>N</I>.<BR>
+On écrit tout d’abord la fonction <TT>ddiv(N,D)</TT> qui renvoie :<BR>
+- soit la liste :<BR>
+<TT>[ N,[]]</TT> si <I>D</I> n’est pas un diviseur de <I>N</I>,<BR>
+- soit la liste :<BR>
+<TT>[A,[D,J]]</TT> si <I>N</I>=<I>A</I>*<I>D</I><SUP><I>J</I></SUP> avec <I>PGCD</I>(<I>A</I>,<I>D</I>)=1 et <I>J</I>&gt;0.<BR>
+ <I>D</I><SUP><I>J</I></SUP> est alors un diviseur de <I>N</I> et <I>A</I>=<I>N</I>/<I>D</I><SUP><I>J</I></SUP> . 
+</P><H3 CLASS="subsection"><A NAME="htoc182">8.5.1</A>  Traduction Algorithmique</H3><PRE CLASS="verbatim">fonction ddiv(N,D)
+//ddiv renvoie [a,[d,j]] (n=a*d^j, pgcd(a,d)=1) si j!=0 sinon [n,[]] 
+local L,J
+0=&gt;J
+tantque  (N mod D)=0) faire
+N/D=&gt;N
+J+1=&gt;J
+ftantque
+si (J=0) alors
+{N,{}}=&gt;L
+sinon
+{N,{D,J}}=&gt;L
+fsi
+retourne(L)
+ffonction
+</PRE><P>On cherche la liste des nombres premiers plus petit que √<SPAN style="text-decoration:overline"><I>N</I></SPAN> et on met 
+cette liste dans la variable <I>PREM</I>. Lorsque <I>N</I>&gt;1, on teste si ces nombres 
+premiers sont des diviseurs de <I>N</I> en utilisant <TT>ddiv</TT>. 
+</P><PRE CLASS="verbatim">fonction criblefact(N)
+//decomposition en facteurs premiers de n 
+//en utilisant ddiv et crible
+local D,PREM,S,LD,LDIV;
+PREM:=crible(floor(sqrt(N)));
+S:=dim(PREM);
+LDIV:={};
+1=&gt;K
+tantque (K&lt;=S et N&gt;1) faire 
+  ddiv(N,PREM[K])=&gt;LD
+  concat(LDIV,ld[2])=&gt;LDIV;
+  LD[1]=&gt;N
+  K+1=&gt;K
+ftantque
+si (N != 1) alors
+ concat(LDIV,[N,1])=&gt;LDIV;
+fsi
+retourne(LDIV);
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc183">8.5.2</A>  Traduction Xcas</H3><P><A NAME="sec:criblefact"></A>
+</P><PRE CLASS="verbatim">ddiv(n,d):={
+//ddiv renvoie [a,[d,j]] (n=a*d^j, pgcd(a,d)=1) si j!=0 
+//sinon [n,[]] 
+local l,j;
+j:=0;
+while (irem(n,d)==0){
+n:=iquo(n,d);
+j:=j+1;
+}
+if (j==0){
+l:=[n,[]];
+} else {
+l:=[n,[d,j]];
+}
+return(l);
+}
+</PRE><PRE CLASS="verbatim">criblefact(n):={
+//decomposition en facteurs premiers de n 
+//en utilisant ddiv et crible
+local d,prem,s,ld,ldiv;
+prem:=crible(floor(sqrt(n)));
+s:=size(prem);
+ldiv:=[];
+for (k:=0;k&lt;s;k++){
+ld:=ddiv(n,prem[k]);
+ldiv:=concat(ldiv,ld[1]);
+n:=ld[0];
+k:=k+1;
+}
+if (n!=1){
+ldiv:=concat(ldiv,[n,1]);
+}
+return(ldiv);
+}
+</PRE><H2 CLASS="section"><A NAME="toc50"></A><A NAME="htoc184">8.6</A>  La liste des diviseurs</H2><H3 CLASS="subsection"><A NAME="htoc185">8.6.1</A>  Les programmes avec les élèves</H3><P>
+L’algorithme naïf :<BR>
+<TT>pour j de 1 a n faire<BR>
+  si (j divise n) alors<BR>
+    afficher j<BR>
+  fsi<BR>
+fpour</TT><BR>
+
+Les élèves remarquent que l’on peut avoir les diviseurs deux par deux.<BR>
+<TT>pour j de 1 a E(</TT><TT>√</TT><TT><SPAN style="text-decoration:overline">n</SPAN></TT><TT>) faire<BR>
+  si (j divise n) alors<BR>
+    afficher j, n/j<BR>
+  fsi<BR>
+fpour</TT><BR>
+Malheureusement, lorsque l’entier <I>n</I> est le carré de <I>p</I>, <I>p</I> figure deux 
+fois dans l’affichage des diviseurs.<BR>
+On améliore donc l’algorithme :<BR>
+ 
+<TT>1 </TT><TT>→</TT><TT> j<BR>
+tantque j&lt;</TT><TT>√</TT><TT><SPAN style="text-decoration:overline">n</SPAN></TT><TT> faire<BR>
+  si (j divise n) alors<BR>
+    afficher j, n/j<BR>
+  fsi<BR>
+  j+1 </TT><TT>→</TT><TT> j<BR>
+ftantque<BR>
+si j</TT><TT>·</TT><TT>j=n alors<BR>
+  afficher j<BR>
+fsi</TT>
+<B>Remarque</B>
+Les programmes sont ensuite mis sur des calculatrices, c’est pourquoi les 
+algorithmes précédents utilisent la commande <TT>afficher</TT>. Si on veut 
+écrire un programme avec <TT>Xcas</TT> on fera une fonction : on mettera les 
+diviseurs dans une liste qui sera à la fin la valeur de la fonction en 
+utilisant la commande <TT>retourne</TT> par exemple :
+</P><H4 CLASS="subsubsection">Traduction Xcas de l’algorithme naïf</H4><PRE CLASS="verbatim">nbdivis(n):={
+local j, L,sn;
+L:=[];
+j:=1;
+sn:=sqrt(n)
+tantque j&lt;sn faire
+si irem(n,j)==0 alors L:=concat(L,[j,n/j]); fsi;
+j:=j+1;
+ftantque;
+si j*j==n alors L:=append(L,j) fsi;
+retourne L;
+}:;
+</PRE><H3 CLASS="subsection"><A NAME="htoc186">8.6.2</A>  Le nombre de diviseurs d’un entier <I>n</I></H3><P>
+On décompose <I>n</I> en facteurs premiers, puis on donne aux exposants de ces 
+facteurs premiers toutes les valeurs possibles. 
+Si <I>n</I>=<I>a</I><I>b</I><I>c</I><SUP>γ</SUP>
+l’exposant de <I>a</I> paut prendre α+1 valeurs (0..α), celui de <I>b</I>
+peut prendre β+1 valeurs et celui de <I>c</I>
+peut prendre γ+1 valeurs donc le nombre de diviseurs de <I>n</I> est (α+1)*(β+1)*(γ+1).
+</P><H3 CLASS="subsection"><A NAME="htoc187">8.6.3</A>  L’algorithme sur un exemple</H3><P> 
+Déscription de l’algorithme sur un exemple :<BR>
+<I>n</I>=360=2<SUP>3</SUP>*3<SUP>2</SUP>*5<BR>
+<I>n</I> a donc (3+1)*(2+1)*(1+1)=24 diviseurs.<BR>
+On les écrit en faisant varier le triplet représentant les exposants avec 
+l’ordre :<BR>
+(0,0,0),(1,0,0),(2,0,0),(3,0,0),<BR>
+(0,1,0),(1,1,0),(2,1,0),(3,1,0),<BR>
+(0,2,0),(1,2,0),...,<BR>
+(0,2,1),(1,2,1),(2,2,1),(3,2,1))<BR>
+On a (<I>a</I><SUB>1</SUB>,β,γ) &lt; (<I>b</I><SUB>1</SUB>,<I>b</I><SUB>2</SUB>,<I>b</I><SUB>3</SUB>) si :<BR>
+γ&lt;<I>b</I><SUB>3</SUB> ou<BR>
+γ=<I>b</I><SUB>3</SUB> et β&lt;<I>b</I><SUB>2</SUB> ou<BR>
+γ=<I>b</I><SUB>3</SUB> et β=<I>b</I><SUB>2</SUB> et <I>a</I><SUB>1</SUB>&lt;<I>b</I><SUB>1</SUB>.<BR>
+On obtient les 4*3*2=24 diviseurs de 360 :<BR>
+1,2,4,8,3,6,12,24,9,18,36,72,5,10,20,40,15,30,60,120,45,90,180,360.<BR>
+que l’on peut écrire en le tableau suivant :<BR>
+1,2,4,8 (les puissances de 2)<BR>
+3,6,12,24 (3*les puissances de 2)<BR>
+9,18,36,72 (3*3*les puissances de 2)<BR>
+5,10,20,40 (5*les puissances de 2)<BR>
+15,30,60,120 (5*3*les puissances de 2)<BR>
+45,90,180,360 (5*3*3*les puissances de 2).<BR>
+Comment obtient-on la liste des diviseurs de <I>a</I><I>b</I><I>c</I><SUP>γ</SUP> 
+à partir de la liste <TT>L1</TT> des diviseurs de <I>a</I><I>b</I><SUP>β</SUP> ?<BR>
+Il suffit de rajouter à <TT>L1</TT> la liste <TT>L2</TT> constituée par :<BR>
+<TT><I>c</I>*<I>L</I>1,...,<I>c</I><I>L</I>1</TT><BR>
+Dans le programme cette liste de diviseurs (<TT>L1</TT>) sera donc constituée 
+au fur et à mesure au moyen d’une liste (<TT>L2</TT>) qui correspond au parcours
+de l’arbre.<BR>
+On initialise <TT>L1</TT> avec <TT>{1}</TT>, puis on rajoute à <TT>L1</TT>
+la liste <TT>L2</TT> formée par :<BR>
+<TT><I>a</I>*<I>L</I>1,...,<I>a</I><I>L</I>1</TT>.<BR>
+Puis on recommence avec le diviseur suivant :<BR>
+on rajoute à <TT>L1</TT>
+la liste <TT>L2</TT> formée par <TT><I>b</I>*<I>L</I>1,...,<I>b</I><I>L</I>1</TT> etc...
+</P><H3 CLASS="subsection"><A NAME="htoc188">8.6.4</A>  Les algorithmes donnant la liste des diviseurs de n </H3><P> 
+La liste <TT>L1</TT> est la liste destinée à contenir les diviseurs de <TT>N</TT>.<BR>
+Au dèbut <TT><I>L</I>1={1}</TT> et <TT><I>L</I>2={}</TT>.<BR>
+Pour avoir la liste des diviseurs de <TT>N</TT>, on cherche <TT>A</TT> le premier 
+diviseur de <TT>N</TT> et on cherche <TT>a</TT> la puissance avec quelle <TT>A</TT>
+divise <TT>N</TT>.<BR>
+On définit la liste <TT>L2</TT> :<BR>
+<TT>L2</TT> est obtenue en concaténant, les listes <TT>L1*A</TT>, <TT><I>L</I>1*<I>A</I></TT><SUP><TT>2</TT></SUP>,
+...,<TT><I>L</I>1*<I>A</I></TT><SUP><TT><I>a</I></TT></SUP> : au début <TT>L1={1}</TT> donc 
+<TT><I>L</I>2={<I>A</I>,<I>A</I></TT><SUP><TT>2</TT></SUP><TT>,...,<I>A</I></TT><SUP><TT><I>a</I></TT></SUP><TT>}</TT>.<BR>
+On modifie la liste <TT>L1</TT> en lui concaténant la liste <TT>L2</TT>, ainsi 
+<TT><I>L</I>1={1,<I>A</I>,<I>A</I></TT><SUP><TT>2</TT></SUP><TT>,...,<I>A</I></TT><SUP><TT><I>a</I></TT></SUP><TT>}</TT>.<BR>
+Puis, on vide la liste <TT>L2</TT>. On cherche <TT>B</TT> le deuxième diviseur 
+éventuel de <TT>N</TT> et on 
+cherche <TT>b</TT> la puissance avec quelle <TT>B</TT> divise <TT>N</TT>.<BR>
+On définit la nouvelle liste <TT>L2</TT> :<BR>
+<TT>L2</TT> est obtenue en concaténant, les listes <TT>L1*B</TT>, <TT><I>L</I>1*<I>B</I></TT><SUP><TT>2</TT></SUP>,
+..., <TT><I>L</I>1*<I>B</I></TT><SUP><TT><I>b</I></TT></SUP> (c’est à dire 
+<TT><I>L</I>2={<I>B</I>,<I>B</I>*<I>A</I>,<I>B</I>*<I>A</I></TT><SUP><TT>2</TT></SUP><TT>,..,<I>B</I>*<I>A</I></TT><SUP><TT><I>a</I></TT></SUP><TT><I>B</I></TT><SUP><TT>2</TT></SUP><TT>,<I>B</I></TT><SUP><TT>2</TT></SUP><TT>*<I>A</I>,<I>B</I></TT><SUP><TT>2</TT></SUP><TT>*<I>A</I></TT><SUP><TT>2</TT></SUP><TT>,..,<I>B</I></TT><SUP><TT>2</TT></SUP><TT>*<I>A</I></TT><SUP><TT><I>a</I></TT></SUP><TT>,..,<I>B</I></TT><SUP><TT><I>b</I></TT></SUP><TT>*<I>A</I></TT><SUP><TT><I>a</I></TT></SUP><TT>,}</TT>)<BR>
+On modifie la liste <TT>L1</TT> en lui concaténant la liste <TT>L2</TT>, ainsi :<BR>
+<TT><I>L</I>1={1,<I>A</I>,<I>A</I></TT><SUP><TT>2</TT></SUP><TT>,...,<I>A</I></TT><SUP><TT><I>a</I></TT></SUP><TT>,<I>B</I>,<I>B</I>*<I>A</I>,<I>B</I>*<I>A</I></TT><SUP><TT>2</TT></SUP><TT>,...,<I>B</I>*<I>A</I></TT><SUP><TT><I>a</I></TT></SUP><TT>,...,<I>B</I></TT><SUP><TT><I>b</I></TT></SUP><TT>,<I>B</I></TT><SUP><TT><I>b</I></TT></SUP><TT>*<I>A</I>,<I>B</I></TT><SUP><TT><I>b</I></TT></SUP><TT>*<I>A</I></TT><SUP><TT>2</TT></SUP><TT>,...,<I>B</I></TT><SUP><TT><I>b</I></TT></SUP><TT>*<I>A</I></TT><SUP><TT><I>a</I></TT></SUP><TT>}</TT>.<BR>
+Et ainsi de suite, jusqu’à avoir epuisé tous les diviseurs de <TT>N</TT>.
+</P><H4 CLASS="subsubsection">Traduction Algorithmique</H4><P>
+<TT>fonction NDIV0(N)<BR>
+local D,L1,L2,K</TT><BR>
+<TT>2 =&gt; <I>D</I></TT><BR>
+<TT>{1} =&gt; <I>L</I>1</TT><BR>
+<TT><I>tant</I> <I>que</I>  (<I>N</I> ≠ 1) <I>faire</I></TT><BR>
+<TT>{}=&gt;L2 </TT><BR>
+<TT>0=&gt; <I>K</I></TT>:<BR>
+<TT>tantque ((N MOD D) =0) faire</TT><BR>
+<TT><I>N</I>/<I>D</I>=&gt; <I>N</I></TT><BR>
+<TT><I>K</I>+1 =&gt;<I>K</I></TT><BR>
+<TT><I>concat</I>(<I>L</I>2,<I>L</I>1*<I>D</I>  <I>K</I>)=&gt; <I>L</I>2</TT><BR>
+<TT>ftantque</TT><BR>
+<TT><I>concat</I>(<I>L</I>1,<I>L</I>2)=&gt; <I>L</I>1</TT><BR>
+<TT><I>D</I>+1=&gt; <I>D</I></TT><BR>
+<TT>ftantque</TT><BR>
+<TT>retourne(L1)</TT>
+</P><H4 CLASS="subsubsection">Traduction Xcas</H4><PRE CLASS="verbatim">ndiv0(n):={
+  local d,l1,l2,k;
+  d:=2;
+  l1:=[1];
+  while (n!=1) {
+    l2:=[];
+    k:=0;
+    while (irem(n,d)==0) {
+      n:=iquo(n,d);
+      k:=k+1;
+      l2:=concat(l2,l1*d^k);
+    }
+    l1:=concat(l1,l2); 
+    d:=d+1;
+  }
+  return(l1);
+}
+</PRE><P>On peut améliorer ce programme en calculant <TT>l1*d</TT><CODE><TT>^</TT></CODE><TT>k</TT> au fur et 
+à mesure sans utiliser <TT>k</TT>....<BR>
+On a en effet sur l’exemple précédent <I>n</I>=360=2<SUP>3</SUP>*3<SUP>2</SUP>*5 :<BR>
+<TT>l1:=[1]</TT>;<BR>
+les puissances de 2 sont obtenus avec
+<TT>l2:=l1</TT> on a alors <TT>l2:=[1]</TT><BR>
+<TT>l2:=l2*2;l1:=concat(l1,l2)</TT> on a alors <TT>l2:=[2];l1:=[1,2]</TT><BR>
+<TT>l2:=l2*2;l1:=concat(l1,l2)</TT> on a alors <TT>l2:=[4];l1:=[1,2,4]</TT><BR>
+<TT>l2:=l2*2;l1:=concat(l1,l2)</TT> on a alors <TT>l2:=[8];l1:=[1,2,4,8]</TT><BR>
+les puissances de 3 sont obtenus avec
+<TT>l2:=l1</TT> on a alors <TT>l2:=[1,2,4,8]</TT><BR>
+<TT>l2:=l2*3;l1:=concat(l1,l2)</TT> on a alors <TT>l2:=[3,6,12,24];</TT> <TT>l1:=[1,2,4,8,3,6,12,24]</TT><BR>
+<TT>l2:=l2*3;l1:=concat(l1,l2)</TT> on a alors <TT>l2:=[9,18,36,72];</TT> <TT>l1:=[1,2,4,8,3,6,12,24,9,18,36,72]</TT><BR>
+les puissances de 5 sont obtenus avec
+<TT>l2:=l1</TT> on a alors <TT>l2:=[1,2,4,8,3,6,12,24,9,18,36,72]</TT><BR>
+<TT>l2:=l2*5;l1:=concat(l1,l2)</TT> on a alors <TT>l2:=[5,10,20,40,15,30,60,120,45,90,180,360]</TT><BR>
+donc<BR>
+<TT>l1:=[1,2,4,8,3,6,12,24,9,18,36,72,5,10,20,40,15,30,60,120,45,90,180,360]</TT><BR>
+On tape :
+</P><PRE CLASS="verbatim">ndiv1(n):={
+  local d,l1,l2;
+  d:=2;
+  l1:=[1];
+  while (n!=1) {
+    l2:=l1;
+    while (irem(n,d)==0) {
+      n:=iquo(n,d);
+      l2:=l2*d
+      l1:=concat(l1,l2);
+    }
+    d:=d+1;
+  }
+  return(l1);
+}:;
+</PRE><P>On peut encore améliorer ce programme si on tient compte du fait qu’après
+avoir éventuellement divisé <TT>N</TT> par 2 autant de fois qu’on le pouvait,
+les diviseurs potentiels de <TT>N</TT> sont impairs.<BR>
+On remplace alors :<BR>
+<TT><I>D</I>+1 =&gt; <I>D</I></TT><BR>
+par :<BR>
+<TT>si D=2 alors</TT>
+<TT><I>D</I>+1 =&gt; <I>D</I></TT>
+<TT>sinon</TT><BR>
+<TT><I>D</I>+2 =&gt; <I>D</I></TT>
+<TT>fsi</TT><BR>
+
+On améliore le programme précédent en remarquant que,
+si le diviseur potentiel <TT>D</TT> est tel que <TT><I>D</I>&gt;√</TT><TT><SPAN style="text-decoration:overline"><I>N</I></SPAN></TT>, c’est que 
+<TT>N</TT> est premier ou vaut 1.
+On ne continue donc pas la recherche des diviseurs de <TT>N</TT> et quand 
+<TT>N</TT> est diffèrent de 1 on complète
+<TT>L1</TT> par <TT>L1*N</TT>.<BR>
+Et aussi, on ne teste comme diviseur potentiel de <TT>N</TT>, que les 
+nombres 2, 3, puis les nombres de la forme 6*<I>k</I>−1 ou de la forme 6*<I>k</I>+1 
+(pour <I>k</I>∈ ℕ).<BR>
+On remplace donc :<BR>
+<TT>si D=2 alors</TT>
+<TT><I>D</I>+1 =&gt; <I>D</I></TT>
+<TT>sinon</TT><BR>
+<TT><I>D</I>+2 =&gt; <I>D</I></TT>
+<TT>fsi</TT><BR>
+par :<BR>
+<TT>si D&lt;4 alors</TT>
+<TT>2*<I>D</I>-1 =&gt; <I>D</I></TT>
+<TT>sinon</TT><BR>
+<TT><I>D</I>+(4*<I>D</I> </TT><TT>mod</TT><TT>6) =&gt; <I>D</I></TT>
+<TT>fsi</TT>
+</P><H4 CLASS="subsubsection">Traduction Algorithmique</H4><P>
+<TT>fonction ndiv2(N)<BR>
+local D,L1,L2,K</TT><BR>
+<TT>2 =&gt; <I>D</I></TT><BR>
+<TT>{1} =&gt; <I>L</I>1</TT><BR>
+<TT><I>tant</I> <I>que</I>  (<I>D</I> ≤ √</TT><TT><SPAN style="text-decoration:overline"><I>N</I></SPAN></TT><TT>) <I>faire</I></TT><BR>
+<TT>{}=&gt;L2 </TT><BR>
+<TT>0=&gt; <I>K</I></TT>:<BR>
+<TT>tantque ((N MOD D) =0) faire</TT><BR>
+<TT><I>N</I>/<I>D</I>=&gt; <I>N</I></TT><BR>
+<TT><I>K</I>+1 =&gt;<I>K</I></TT><BR>
+<TT><I>concat</I>(<I>L</I>2,<I>L</I>1*<I>D</I>  <I>K</I>)=&gt; <I>L</I>2</TT><BR>
+<TT>ftantque</TT><BR>
+<TT><I>concat</I>(<I>L</I>1,<I>L</I>2)=&gt; <I>L</I>1</TT><BR>
+<TT>si D&lt;4 alors</TT>
+<TT>2*<I>D</I>-1 =&gt; <I>D</I></TT>
+<TT>sinon</TT><BR>
+<TT><I>D</I>+(4*<I>D</I> </TT><TT>mod</TT><TT>6) =&gt; <I>D</I></TT>
+<TT>fsi</TT><BR>
+<TT>ftantque</TT><BR>
+<TT><I>si</I> <I>N</I> ≠ 1 <I>alors</I></TT><BR>
+<TT><I>concat</I>(<I>L</I>1,<I>L</I>1*<I>N</I>) =&gt;<I>L</I>1</TT><BR>
+<TT>fsi</TT><BR>
+<TT>retourne(L1)</TT>
+</P><H4 CLASS="subsubsection">Traductions Xcas des améliorations</H4><PRE CLASS="verbatim">ndivi(n):={
+  local d,l1,l2,k;
+  d:=2;
+  l1:=[1];
+  l2:=l1
+  while (irem(n,d)==0) {
+      n:=iquo(n,d);
+      l2:=l2*d
+      l1:=concat(l1,l2);
+    }
+  d:=3;
+   while (d&lt;=sqrt(n) and n&gt;1) {
+    l2:=l1;
+    while (irem(n,d)==0) {
+      n:=iquo(n,d);
+      l2:=l2*d
+      l1:=concat(l1,l2);
+    }
+    d:=d+2;
+  };
+  if (n!=1) {l1:=concat(l1,l1*n)};
+  return(l1);
+}:;
+</PRE><P>Si on ne teste pas <TT>d&lt;sqrt(n)</TT> le programme est plus simple :
+</P><PRE CLASS="verbatim">ndivis(n):={
+  local d,l1,l2,k;
+  d:=2;
+  l1:=[1];
+  l2:=l1
+  while (irem(n,d)==0) {
+      n:=iquo(n,d);
+      l2:=l2*d
+      l1:=concat(l1,l2);
+    }
+  d:=3;
+   while (n&gt;1) {
+    l2:=l1;
+    while (irem(n,d)==0) {
+      n:=iquo(n,d);
+      l2:=l2*d
+      l1:=concat(l1,l2);
+    }
+    d:=d+2;
+  };
+  return(l1);
+}:;
+</PRE><P>Ou bien on utilise <TT>ifactors</TT> : on obtient un programme plus rapide surtout
+lorsqu’il y a de grands facteurs premiers car la
+décomposition en facteurs premiers est optimisée.<BR>
+<TT>ndivfact(n)</TT> renvoie la liste des diviseurs de <TT>n</TT> et la longueur de 
+cette liste.
+On calcule la longueur de cette liste en faisant le produit des exposants 
+augmentés de 1. Par exemple si <TT>n=360</TT>=2<SUP>3</SUP>*3<SUP>2</SUP>*5, la liste des diviseurs
+de <TT>n=360</TT> a comme longueur <TT>sd:=(3+1)*(2+1)*(1+1)</TT>=24<BR>
+La liste <TT>l1</TT> va contenir la liste des diviseurs et pour 
+chaque nouveau diviseur de <I>n</I>, la liste <TT>l2</TT> contient les nouveaux 
+diviseurs qui doivent être rajoutés à <TT>l1</TT>.<BR>
+Par exemple si <TT>n=360</TT>
+au début 
+<TT>l1:=[1]</TT> et <TT>l2:=l1</TT><BR>
+<TT>d:=2</TT> est un diviseur donc<BR>
+<TT>l2:=2*l2</TT> i.e. <TT>l2:=[2]</TT> et <TT>l1:=concat(l1,l2)</TT> i.e. <TT>l1=[1,2]</TT><BR>
+<TT>d:=2</TT> est encore un diviseur donc<BR>
+<TT>l2:=2*l2</TT> i.e. <TT>l2:=[4]</TT> et <TT>l1:=concat(l1,l2)</TT> i.e. <TT>l1=[1,2,4]</TT><BR>
+<TT>d:=2</TT> est encore un diviseur donc<BR>
+<TT>l2:=2*l2</TT> i.e. <TT>l2:=[8]</TT> et <TT>l1:=concat(l1,l2)</TT> i.e. <TT>l1=[1,2,4,8]</TT><BR>
+On a épuiser le diviseur 2. On recopie <TT>l1</TT> dans <TT>l2</TT><BR>
+<TT>l2:=l1</TT> i.e. <TT>l2=[1,2,4,8]</TT><BR>
+le nouveau diviseur est 3 donc<BR>
+<TT>l2:=3*l2</TT> i.e. <TT>l2:=[3,6,12,24]</TT> et <TT>l1:=concat(l1,l2)</TT> i.e. 
+<TT>l1=[1,2,4,3,6,12,24]</TT><BR>
+<TT>d:=3</TT> est encore un diviseur donc<BR>
+<TT>l2:=3*l2</TT> i.e. <TT>l2:=[9,18,36,72]</TT> et <TT>l1:=concat(l1,l2)</TT> i.e. 
+<TT>l1=[1,2,4,8,3,6,12,24,9,18,36,72]</TT><BR>
+On a épuiser le diviseur 3. On recopie <TT>l1</TT> dans <TT>l2</TT><BR>
+<TT>l2:=l1</TT> i.e. <TT>l2=[1,2,4,8,3,6,12,24,9,18,36,72]</TT>
+le nouveau diviseur est 5 donc<BR>
+<TT>l2:=5*l2</TT> i.e. <TT>l2:=[5,10,20,40,15,30,60,120,45,90,180,360]</TT> et 
+<TT>l1:=concat(l1,l2)</TT> i.e.<BR>
+<TT>l1=[1,2,4,8,3,6,12,24,9,18,36,72,5,10,20,40,15,30,60,120,45,90,180,360]</TT><BR>
+On a épuiser tous les diviseurs donc les diviseurs de 360 sont 
+<TT>l1=[1,2,4,8,3,6,12,24,9,18,36,72,5,10,20,40,15,30,60,120,45,90,180,360]</TT><BR>
+On tape :
+</P><PRE CLASS="verbatim">ndivfact(n):={
+  local F,d,l1,l2,k,kd,sf,sd,j;
+  si n==0 alors retourne "erreur"; fsi;
+  si n&lt;0 alors n:=-n; fsi;
+  F:=ifactors(n);
+  sf:=size(F)-1;
+  sd:=1;
+  pour k de 1 jusque sf pas 2 faire 
+   sd:=sd*(F[k]+1);
+  fpour;
+  k:=1;
+  l1:=[1];
+    while (k&lt;=sf) {
+    l2:=l1;kd:=F[k];
+    d:=F[k-1];
+    pour j de 1 jusque kd faire
+      l2:=l2*d
+      l1:=concat(l1,l2);
+    fpour;
+  k:=k+2;
+  }; 
+  return l1,sd;
+  }:;
+</PRE><P>Comparons les temps d’exécution sur 2 exemples.<BR>
+On tape :<BR>
+<TT>ndivis(30!);</TT><BR>
+On obtient :<BR>
+<TT>Temps mis pour l’évaluation: 7.53</TT><BR>
+On tape :<BR>
+<TT>ndivi(30!);</TT><BR>
+On obtient :<BR>
+<TT>Temps mis pour l’évaluation: 8.03</TT><BR>
+On tape :<BR>
+<TT>ndivfact(30!);</TT><BR>
+On obtient :<BR>
+<TT>Temps mis pour l’évaluation: 7.33</TT><BR>
+Mais si on tape :<BR>
+<TT>ndivis(30!*907);</TT><BR>
+On obtient :<BR>
+<TT>Temps mis pour l’évaluation: 19.28</TT><BR>
+On tape :<BR>
+<TT>ndivi(30!*907);</TT><BR>
+On obtient :<BR>
+<TT>Temps mis pour l’évaluation: 17.07</TT><BR>
+On tape :<BR>
+<TT>ndivfact(30!*907);</TT><BR>
+On obtient :<BR>
+<TT>Temps mis pour l’évaluation: 17.07</TT><BR>
+Donc dans le 1ier cas <TT>ndivis</TT> va plus vite et dans le 2nd cas c’est
+<TT>ndivi</TT> qui va plus vite.</P><H2 CLASS="section"><A NAME="toc51"></A><A NAME="htoc189">8.7</A>  La liste des diviseurs avec la décomposition en facteurs premiers</H2><H3 CLASS="subsection"><A NAME="htoc190">8.7.1</A>  <TT>FPDIV</TT></H3><P>
+On utilise le programme <TT>factprem</TT> (qui donne la liste des facteurs 
+premiers de <TT>N</TT> (cf <A HREF="#sec:factprem">8.4.2</A>)
+pour obtenir la liste des diviseurs de <TT>N</TT> selon l’algorithme utilisé dans <TT>NDIV1</TT>.
+</P><H4 CLASS="subsubsection">Traduction Algorithmique</H4><PRE CLASS="verbatim">fonction fpdiv(N)
+//renvoie la liste des diviseurs de n en utilisant factprem
+local L1,L2,L3,D,ex,S
+factprem(N)=&gt;L3
+dim(L3)=&gt;S
+{1}=&gt;L1
+pour  K de 1 a S-1 pas 2 faire
+{}=&gt;L2
+L3[K]=&gt;D
+L3[K+1]=&gt;ex
+pour  J de 1 a ex faire 
+concat(L2,L1*(D^J))=&gt;L2
+}
+concat(L1,L2)=&gt;L1
+}
+retourne(L1)
+}
+</PRE><H4 CLASS="subsubsection">Traduction Xcas</H4><PRE CLASS="verbatim">fpdiv(n):={
+//renvoie la liste des diviseurs de n en utilisant factprem
+local l1,l2,l3,d,ex,s;
+l3:=factprem(n);
+s:=size(l3);
+l1:=[1];
+for (k:=0;k&lt;s-1;k:=k+2) {
+l2:=[];
+d:=l3[k];
+ex:=l3[k+1];
+for (j:=1;j&lt;=ex;j++) {
+l2:=concat(l2,l1*(d^j));
+}
+l1:=concat(l1,l2);
+}
+return(l1);
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc191">8.7.2</A>  <TT>CRIBLEDIV</TT></H3><P>
+Pour obtenir la liste des diviseurs de <TT>N</TT> selon l’algorithme utilisé 
+dans <TT>NDIV1</TT>, on utilise le programme <TT>criblefact</TT> 
+(cf <A HREF="#sec:criblefact">8.5.2</A>) qui donne la liste des facteurs premiers de <TT>N</TT>.<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc192">8.7.3</A>  Traduction Algorithmique</H3><PRE CLASS="verbatim">fonction criblediv(N)
+//renvoie la liste des diviseurs de n en utilisant factprem
+local L1,L2,L3,D,ex,S
+criblefact(N)=&gt;L3
+dim(L3)=&gt;S
+{1}=&gt;L1
+pour  K de 1 a S-1 pas 2 faire
+{}=&gt;L2
+L3[K]=&gt;D
+L3[K+1]=&gt;ex
+pour  J de 1 a ex faire 
+concat(L2,L1*(D^J))=&gt;L2
+}
+concat(L1,L2)=&gt;L1
+}
+retourne(L1)
+}
+</PRE><H4 CLASS="subsubsection">Traduction Xcas</H4><PRE CLASS="verbatim">criblediv(n):={
+//renvoie la liste des diviseurs de n en utilisant criblefact
+local l1,l2,l3,d,ex;
+l3:=criblefact(n);
+s:=size(l3);
+l1:=[1];
+for (k:=0;k&lt;s-1;k:=k+2) {
+l2:=[];
+d:=l3[k];
+ex:=l3[k+1];
+for (j:=1;j&lt;=ex;j++) {
+l2:=concat(l2,l1*(d^j));
+}
+l1:=concat(l1,l2);
+}
+return(l1);
+}
+</PRE><H2 CLASS="section"><A NAME="toc52"></A><A NAME="htoc193">8.8</A>  Calcul de  <I>A</I><SUP><I>P</I></SUP>   <I>mod</I> <I>N</I></H2><P><A NAME="sec:puimod"></A>
+</P><H3 CLASS="subsection"><A NAME="htoc194">8.8.1</A>  Traduction Algorithmique</H3><P>
+-Premier algorithme<BR>
+On utilise deux variables locales PUIS et I.<BR>
+On fait un programme itératif de façon qu’à chaque étape, PUIS 
+représente <I>A</I><SUP><I>I</I></SUP> mod<I>N</I>
+</P><PRE CLASS="verbatim">fonction puimod1 (A, P, N)
+local PUIS, I
+1=&gt;PUIS
+pour I de 1 a P faire
+  A*PUIS mod N =&gt;PUIS 
+fpour
+retourne PUIS
+ffonction
+</PRE><P>-Deuxième algorithme<BR>
+On n’utilise ici qu’une seule variable locale PUI, mais on fait varier P de 
+façon qu’à chaque étape de l’itération on ait :<BR>
+ <I>PUI</I> * <I>A</I><SUP><I>P</I></SUP> mod<I>N</I>=<I>constante</I>. Au début  <I>PUI</I>=1 donc 
+<I>constante</I>=<I>A</I><SUP><I>P</I></SUP> mod<I>N</I> (pour la valeur initiale du paramètre <I>P</I>, c’est 
+à dire que cette <I>constante</I> est égale à ce que doit retourner la 
+fonction), et, à chaque étape, on utilise l’égalité
+<I>PUI</I>*<I>A</I><SUP><I>P</I></SUP> mod<I>N</I>=(<I>PUI</I>*<I>A</I>mod<I>N</I>)*<I>A</I><SUP><I>P</I>−1</SUP> mod<I>N</I>, pour diminuer la valeur de <I>P</I>,
+et pour arriver à la fin à <I>P</I>=0, et alors on a la <I>constante</I>=<I>PUI</I>.
+</P><PRE CLASS="verbatim">fonction puimod2 (A, P, N)
+local PUI
+1=&gt;PUI
+tantque  P&gt;0  faire
+  A*PUI mod N =&gt;PUI 
+  P-1=&gt;P
+ftantque
+retourne PUI
+ffonction
+</PRE><P>-Troisième algorithme<BR>
+ On peut aisément modifier ce programme en remarquant que :<BR>
+<I>A</I><SUP>2*<I>P</I></SUP> = (<I>A</I>*<I>A</I>)<SUP><I>P</I></SUP> .<BR>
+Donc quand <I>P</I> est pair, on a la relation :<BR>
+<I>PUI</I>*<I>A</I><SUP><I>P</I></SUP> = <I>PUI</I>*(<I>A</I>*<I>A</I>mod<I>N</I>)<SUP><I>P</I>/2</SUP> mod<I>N</I><BR>
+et quand <I>P</I> est impair, on a la relation :<BR>
+<I>PUI</I>*<I>A</I><SUP><I>P</I></SUP> = (<I>PUI</I>*<I>A</I>mod<I>N</I>)*<I>A</I><SUP><I>P</I>−1</SUP>mod<I>N</I>.<BR>
+On obtient alors, un algorithme rapide du calcul de  <I>A</I><SUP><I>P</I></SUP> mod<I>N</I> .
+</P><PRE CLASS="verbatim">fonction puimod3 (A, P, N)
+local PUI
+1=&gt;PUI
+tantque  P&gt;0  faire
+  si P mod 2 =0 alors
+    P/2=&gt;P
+    A*A mod N=&gt;A
+  sinon
+    A*PUI mod N =&gt;PUI 
+    P-1=&gt;P
+  fsi
+ftantque
+retourne PUI
+ffonction
+</PRE><P>On peut remarquer que si <I>P</I> est impair, <I>P</I>−1 est pair.<BR>
+On peut donc écrire :
+</P><PRE CLASS="verbatim">fonction puimod4 (A, P, N)
+local PUI
+1=&gt;PUI
+tantque  P&gt;0  faire
+  si P mod 2 =1 alors
+    A*PUI mod N =&gt;PUI 
+    P-1=&gt;P
+  fsi   
+P/2=&gt;P
+A*A mod N=&gt;A
+ftantque
+retourne PUI
+ffonction
+</PRE><P>-Programme récursif</P><P>On peut définir la puissance par les relations de récurrence :
+<I>A</I><SUP>0</SUP>=1<BR>
+<I>A</I><SUP><I>P</I>+1</SUP> mod<I>N</I> =(<I>A</I><SUP><I>P</I></SUP> mod<I>N</I> )*<I>A</I> mod<I>N</I> 
+</P><PRE CLASS="verbatim">fonction puimod5(A, P, N)
+si P&gt;0 alors
+retourne puimod5(A, P-1, N)*A mod N
+sinon
+retourne 1
+fsi
+ffonction
+</PRE><P>-Programme récursif rapide
+</P><PRE CLASS="verbatim">fonction puimod6(A, P, N)
+si P&gt;0 alors
+  si P mod 2 =0 alors
+    retourne puimod6((A*A mod N), P/2, N)
+  sinon
+    retourne puimod6(A, P-1, N)*A mod N
+  fsi 
+sinon
+retourne 1
+fsi
+ffonction
+</PRE><H3 CLASS="subsection"><A NAME="htoc195">8.8.2</A>  Traduction Xcas</H3><PRE CLASS="verbatim">puimod(a,p,n):={
+//calcule recursivement la puissance rapide a^p modulo n
+ if (p==0){
+    return(1);
+ }  
+ if (irem(p,2)==0){
+    return(puimod(irem(a*a,n),iquo(p,2),n));
+ } 
+ return(irem(a*puimod(a,p-1,n),n));
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc196">8.8.3</A>  Un exercice</H3><P>
+Étant donné deux entiers <I>a</I>∈ ℕ<SUP>*</SUP> et <I>n</I>∈ ℕ, <I>n</I>≥ 2, on veut 
+connaitre les différentes valeurs de <I>a</I><SUP><I>p</I></SUP> mod<I>n</I> pour <I>p</I> ∈ ℕ, c’est 
+à dire l’orbite de <I>a</I> dans (ℤ/<I>n</I>ℤ,×).<BR>
+On démontre que l’orbite se termine toujours par un cycle puisque ℤ/<I>n</I>ℤ
+a un nombre fini d’éléments.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Trouver l’orbite de 2<SUP><I>p</I></SUP> mod24
+</LI><LI CLASS="li-itemize">Écrire une fonction de <I>a</I> et <I>n</I> qui renvoie les plus petis entiers 
+<I>h</I>≥ 0 et <I>T</I>&gt;0 vérifiant :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I><SUP><I>h</I></SUP>=<I>a</I><SUP><I>h</I>+<I>T</I></SUP> mod<I>n</I></TD></TR>
+</TABLE> 
+et la liste des <I>a</I><SUP><I>p</I></SUP> mod<I>n</I> pour <I>p</I>=0..<I>h</I>+<I>T</I>−1
+</LI><LI CLASS="li-itemize">Écrire une fonction de <I>a</I>, et <I>n</I> qui représente graphiquement 
+<I>a</I><SUP><I>p</I></SUP> mod<I>n</I> en fonction de <I>p</I>.
+</LI></UL><P><B>Solution</B>
+On tape :
+<TT>(irem(2</TT><CODE><TT>^</TT></CODE><TT>p ,24)$(p=0..10))</TT><BR>
+On obtient : <TT>1,2,4,8,16,8,16,8,16,8,16</TT>
+donc <I>h</I>=3 et <I>T</I>=2<BR>
+On utilise la commande <TT>member</TT> qui teste si un élément est dans une 
+liste et <TT>member</TT> renvoie soit l’indice +1, soit 0.
+On peut utiliser soit un <TT>tantque</TT> soit un <TT>repeter</TT> (<TT>tantque non arrêt faire....tantque</TT> ou <TT>repeter ...jusqua arrêt</TT>) et on remarquera
+le test d’arrêt. On sait qu’une affectation renvoie la valeur affectée, 
+donc <TT>k:=member(b,L)</TT> renvoie soit 0 soit un nombre non nul. On fait une 
+boucle et on s’arrete quand <TT>k:=member(b,L)</TT> est non nul.
+</P><PRE CLASS="verbatim">orbite1(a,n):={
+local k,h,T,p,b,L;
+L:=[1];
+p:=1;
+b:=irem(a,n);
+tantque !(k:=member(b,L)) faire
+L:=append(L,b);
+b:=irem(b*a,n);
+p:=p+1;
+ftantque;
+h:=k-1;
+T:=p-h;
+return h,T,L;
+}:;
+</PRE><PRE CLASS="verbatim">orbite2(a,n):={
+local k,h,T,p,b,L;
+L:=[];
+p:=0;
+b:=1;
+repeter
+L:=append(L,b);
+b:=irem(b*a,n);
+p:=p+1;
+jusqua (k:=member(b,L));
+h:=k-1;
+T:=p-h;
+return h,T,L;
+}:;
+</PRE><P>On dessine les points du cycle et de 2 périodes avec la couleur <I>a</I> ou la couleur 0 lorsque <I>a</I>=7 :
+</P><PRE CLASS="verbatim">dessin(a,n):={
+local k,h,T,L,P,s,LT;
+P:=NULL;
+h,T,L:=orbite1(a,n);
+s:=dim(L);
+LT:=mid(L,h);
+L:=concat(concat(L,LT),LT);
+pour k de 0 jusque s+2*T-1 faire 
+P:=P,point(k,L[k]);
+fpour;
+si a==7 alors return affichage(P,epaisseur_point_3);fsi;
+return affichage(P,a+epaisseur_point_3);
+}:;
+</PRE><P>On tape : <TT>dessin(2,11)</TT><BR>
+On tape : <TT>dessin(3,11)</TT><BR>
+On tape : <TT>dessin(2,9)</TT><BR>
+On tape : <TT>dessin(3,9)</TT><BR>
+et on observe.....<BR>
+On peut rappeler
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+le Théorème de Fermat :si <I>n</I> est premier et 0&lt;<I>a</I>&lt;<I>n</I>, alors :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I><SUP><I>n</I>−1</SUP>=1 mod<I>n</I></TD></TR>
+</TABLE>
+</LI><LI CLASS="li-itemize">la Généralisation du théorème de Fermat : si <I>a</I> et <I>n</I> sont 
+premiers entre eux, alors si <TT>euler(n)</TT>=φ(<I>n</I>) est l’indicatrice 
+d’Euler, on a :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I><SUP>φ(<I>n</I>)</SUP>=1 mod<I>n</I></TD></TR>
+</TABLE> 
+</LI></UL><P>
+On tape :
+</P><PRE CLASS="verbatim">est_premier_avec(n):={
+local L,a;
+L:=NULL;
+pour a de 1 jusque n-1 faire
+si gcd(a,n)==1 alors L:=L,a; fsi;
+fpour;
+return L;
+}:;
+</PRE><P>Puis, on tape : <TT>E:=est_premier_avec(9)</TT><BR>
+On obtient : <TT>1,2,4,5,7,8</TT><BR>
+et on a bien : <TT>euler(9)=6=dim(E)</TT><BR>
+Une démonstration rapide de ces théorèmes :<BR>
+Si <I>a</I> et <I>n</I> sont premiers entre eux, <I>a</I> est inversible dans ℤ/<I>n</I>ℤ,×
+Soit <I>E</I> l’ensemble des nombres de [1..<I>n</I>] qui sont premiers avec <I>n</I> 
+(<TT>E:=est_premier_avec(n)</TT>) et soit <TT>Ea</TT> l’ensemble des <I>k</I>*<I>a</I> pour 
+<I>k</I>∈ <I>E</I>. Tous les éléments de <I>Ea</I> sont distincts et inversibles dans 
+ℤ/<I>n</I>ℤ,×: donc 
+les ensembles <I>E</I> et <I>Ea</I> sont les mêmes. En faisant le produit de tous ces 
+éléments on obtient Π<SUB><I>k</I>∈ <I>E</I></SUB><I>k</I>=Π<SUB><I>k</I>∈ <I>Ea</I></SUB><I>k</I>=<I>a</I><SUP>φ</SUP>(<I>n</I>)Π<SUB><I>k</I>∈ <I>E</I></SUB><I>k</I>,
+Π<SUB><I>k</I>∈ <I>E</I></SUB><I>k</I> étant inversible dans ℤ/<I>n</I>ℤ,×
+on en déduit que <I>a</I><SUP>φ</SUP>(<I>n</I>)=1.</P><H2 CLASS="section"><A NAME="toc53"></A><A NAME="htoc197">8.9</A>  La fonction "estpremier"</H2><H3 CLASS="subsection"><A NAME="htoc198">8.9.1</A>  Traduction Algorithmique</H3><P>
+- Premier algorithme<BR>
+On va écrire un fonction booléenne de paramètre <I>N</I>, qui sera égale à
+<I>VRAI</I> quand <I>N</I> est premier, et, à <I>FAUX</I> sinon.<BR>
+Pour cela, on cherche si <I>N</I> posséde un diviseur différent de 1 et 
+inférieur ou égal à 
+ <I>E</I>(√<SPAN style="text-decoration:overline"><I>N</I></SPAN>) (partie entière de racine de <I>N</I>).<BR>
+On traite le cas <I>N</I>=1 à part !<BR>
+On utilise une variable booléenne <I>PREM</I> qui est au départ à <I>VRAI</I>, et 
+qui passe à <I>FAUX</I> dès que l’on rencontre un diviseur de <I>N</I>.<BR>
+</P><PRE CLASS="verbatim">Fonction estpremier(N)
+local PREM, I, J
+</PRE><P><TT>E(</TT><TT>√</TT><TT><SPAN style="text-decoration:overline"><I>N</I></SPAN></TT><TT>) =&gt;J</TT>
+</P><PRE CLASS="verbatim">Si N = 1 alors
+  FAUX=&gt;PREM
+  sinon
+  VRAI=&gt;PREM
+fsi
+2=&gt;I
+</PRE><P><TT>tantque PREM et I </TT><TT>≤</TT><TT>J faire</TT>
+</P><PRE CLASS="verbatim">  si N mod I = 0 alors
+     FAUX=&gt;PREM
+     sinon
+     I+1=&gt;I
+  fsi 
+ftantque
+retourne PREM
+ffonction
+</PRE><P>-Première amélioration<BR>
+On peut remarquer que l’on peut tester si <I>N</I> est pair, et ensuite,
+tester si <I>N</I> posséde un diviseur impair.
+</P><PRE CLASS="verbatim">Fonction estpremier(N)
+local PREM, I, J
+</PRE><P><TT>E(</TT><TT>√</TT><TT><SPAN style="text-decoration:overline"><I>N</I></SPAN></TT><TT>) =&gt;J<BR>
+ Si (N = 1) ou (N mod 2 = 0) et N</TT><TT>≠</TT><TT>2 alors</TT>
+</P><PRE CLASS="verbatim">  FAUX=&gt;PREM
+  sinon
+  VRAI=&gt;PREM
+fsi
+3=&gt;I
+</PRE><P><TT>tantque PREM et I </TT><TT>≤</TT><TT>J faire</TT>
+</P><PRE CLASS="verbatim">  si N mod I = 0 alors
+     FAUX=&gt;PREM
+     sinon
+     I+2=&gt;I
+  fsi 
+ftantque
+retourne PREM
+ffonction
+</PRE><P>- Deuxième amélioration<BR>
+On regarde si N est divisible par 2 ou par 3, sinon on regarde si N posséde un diviseur de la forme 6 × <I>k</I>−1  ou 6 × <I>k</I>+1  
+(pour <I>k</I>∈ ℕ).
+</P><PRE CLASS="verbatim">Fonction estpremier(N)
+local PREM, I, J
+</PRE><P><TT>E(</TT><TT>√</TT><TT><SPAN style="text-decoration:overline"><I>N</I></SPAN></TT><TT>) =&gt;J</TT>
+</P><PRE CLASS="verbatim">Si (N = 1) ou (N mod 2 = 0) ou ( N mod 3 = 0) alors
+  FAUX=&gt;PREM
+  sinon
+  VRAI=&gt;PREM
+fsi
+si N=2 ou N=3 alors 
+VRAI=&gt;PREM
+fsi
+5=&gt;I
+</PRE><P><TT>tantque PREM et I </TT><TT>≤</TT><TT>J faire</TT>
+</P><PRE CLASS="verbatim">  si (N mod I = 0) ou (N mod I+2 =0) alors
+     FAUX=&gt;PREM
+     sinon
+     I+6=&gt;I
+  fsi 
+ftantque
+retourne PREM
+ffonction
+</PRE><H3 CLASS="subsection"><A NAME="htoc199">8.9.2</A>  Traduction Xcas</H3><PRE CLASS="verbatim">estprem(n):={
+//teste si n est premier
+  local prem,j,k;
+  if ((irem(n,2)==0) or (irem(n,3)===0) or (n==1)) {
+     return(false);
+  }
+  if ((n==2) or (n==3)) {
+     return(true);
+  }
+  prem:=true;
+  k:=5;
+  while ((k*k&lt;=n) and prem) {
+     if (irem(n,k)==0 or irem(n,k+2)==0) {
+        prem:=false;
+     }
+     else {
+        k:=k+6;
+     }
+  }
+  return(prem);
+} 
+</PRE><H2 CLASS="section"><A NAME="toc54"></A><A NAME="htoc200">8.10</A>  La fonction estpremc en utilisant le crible</H2><H3 CLASS="subsection"><A NAME="htoc201">8.10.1</A>  Traduction algorithmique</H3><PRE CLASS="verbatim">fonction estpremc(N)
+//utilise la fonction crible pour tester si n est premier
+local PREM,S;
+crible(floor(sqrt(N)))=&gt;PREM
+dim(PREM)=&gt;S
+si  (N=1) retourne(FAUX)
+pour K de 1 a S faire
+ si  (N mod ,PREM[K])=0)
+    retourne(FAUX);
+ fsi
+fpour
+retourne(VRAI)
+ffonction
+</PRE><H3 CLASS="subsection"><A NAME="htoc202">8.10.2</A>  Traduction Xcas</H3><PRE CLASS="verbatim">estpremc(n):={
+//utilise la fonction crible pour tester si n est premier
+local prem,s;
+prem:=crible(floor(sqrt(n)));
+s:=size(prem);
+if (n==1) return(false);
+for (k:=0;k&lt;s;k++){
+ if (irem(n,prem[k])==0){
+    return(false);
+ } 
+}
+return(true);
+}
+</PRE><H2 CLASS="section"><A NAME="toc55"></A><A NAME="htoc203">8.11</A>  Méthode probabiliste de Mr Rabin</H2><P>
+Si <I>N</I> est premier alors tous les nombres <I>K</I> strictement inférieurs à <I>N</I> 
+sont premiers avec <I>N</I>, donc d’après le petit théorème de Fermat on a :<BR>
+ <I>K</I><SUP><I>N</I>−1</SUP> = 1 mod<I>N</I><BR>
+Par contre, si <I>N</I> n’est pas premier, les entiers <I>K</I> (1&lt;<I>K</I>&lt;<I>N</I>) vérifiant :<BR>
+ <I>K</I><SUP><I>N</I>−1</SUP> = 1 mod<I>N</I> sont peu nombreux.<BR>
+ La méthode probabiliste de Rabin consiste à prendre au hasard un 
+nombre <I>K</I> dans l’intervalle [2 ; <I>N</I>−1] (
+1&lt; <I>K</I> &lt; <I>N</I> ) et à calculer :<BR>
+ <I>K</I><SUP><I>N</I>−1</SUP>   mod  <I>N</I><BR>
+Si  <I>K</I><SUP><I>N</I>−1</SUP> = 1   mod  <I>N</I> on refait un autre tirage du nombre <I>K</I>, et, si 
+ <I>K</I><SUP><I>N</I>−1</SUP> ≠ 1   mod  <I>N</I> on est sûr que <I>N</I> n’est pas premier.<BR>
+Si on obtient  <I>K</I><SUP><I>N</I>−1</SUP> = 1   mod  <I>N</I> pour 20 tirages successifs de <I>K</I> on
+peut conclure que <I>N</I> est premier avec une probabilité d’erreur faible :<BR>
+on dit alors que <I>N</I> est pseudo-premier.<BR>
+Bien sûr cette méthode est employée pour savoir si de grands nombres 
+sont pseudo-premiers mais on préfére utiliser la méthode de Miller-Rabin 
+(cf <A HREF="#sec:miller">8.12</A>)
+qui est aussi une méthode probabiliste mais qui donne <I>N</I> premier avec une 
+probabilité d’erreur plus faible (inférieure à (0.25)<SUP>20</SUP> si on a 
+effectué 20 tirages, soit, une erreur de l’ordre de 10<SUP>−12</SUP>). 
+</P><H3 CLASS="subsection"><A NAME="htoc204">8.11.1</A>  Traduction Algorithmique</H3><P>
+On suppose que :<BR>
+<TT>hasard(N)</TT> donne un nombre entier au hasard entre 0 et <I>N</I>−1.<BR>
+ Le calcul de 
+ <I>K</I><SUP><I>N</I>−1</SUP>   mod  <I>N</I> 
+se fait grâce à l’algorithme de la puissance rapide (cf page <A HREF="#sec:puimod">??</A>).<BR>
+On suppose que :<BR>
+<TT>powmod(K, P, N)</TT> calcule  <I>K</I><SUP><I>P</I></SUP> mod<I>N</I> 
+</P><PRE CLASS="verbatim">Fonction estprem(N)
+local K, I, P
+1=&gt;I
+1=&gt;P
+tantque P = 1 et I &lt; 20 faire
+hasard(N-2)+2=&gt;K
+powmod(K, N-1, N)=&gt;P
+I+1=&gt;I
+ftantque
+Si P =1 alors
+retourne VRAI
+sinon
+retourne FAUX
+fsi
+ffonction
+</PRE><H3 CLASS="subsection"><A NAME="htoc205">8.11.2</A>  Traduction Xcas</H3><P> <A NAME="sec:Xcasrabin"></A>
+La fonction <TT>powmod</TT> existe dans <TT>Xcas</TT> : il est donc inutile de la programmer. 
+</P><PRE CLASS="verbatim">rabin(n):={
+//teste par la methode de Rabin si n est pseudo-premier
+local k,j,p;
+j:=1;
+p:=1;
+while ((p==1) and (j&lt;20)) {
+k:=2+rand(n-2);
+p:=powmod(k,n-1,n);
+j:=j+1;
+}
+if (p==1) {
+return(true);
+} 
+return(false);
+}
+</PRE><H2 CLASS="section"><A NAME="toc56"></A><A NAME="htoc206">8.12</A>  Méthode probabiliste de Mr Miller-Rabin</H2><P> <A NAME="sec:miller"></A>
+</P><H3 CLASS="subsection"><A NAME="htoc207">8.12.1</A>  Un exemple</H3><P>
+<B>Rappel</B> Le théorème de Fermat :<BR>
+Si <I>n</I> est premier et si <I>k</I> est un entier quelconque alors <I>k</I><SUP><I>n</I></SUP>=<I>k</I> mod<I>n</I>.<BR>
+et donc<BR>
+Si <I>n</I> est premier et si <I>k</I> est premier avec <I>n</I> alors <I>k</I><SUP><I>n</I>−1</SUP>=1 mod<I>n</I>.<BR>
+
+Soit <I>N</I>=561=3*11*17. Il se trouve que l’on a :
+pour tout <I>A</I> (<I>A</I>&lt;<I>N</I>), on a <I>A</I><SUP><I>N</I></SUP>=<I>A</I>  mod  <I>N</I>, donc si <I>A</I> est premier avec
+<I>N</I> on a <I>A</I><SUP><I>N</I>−1</SUP>=1  mod  <I>N</I>, le test de Rabin est donc en defaut,
+seulement pour <I>A</I> non premier avec <I>N</I>.
+Par exemple on a :<BR>
+3<SUP>560</SUP>=375  mod  561<BR>
+11<SUP>560</SUP>=154  mod  561<BR>
+17<SUP>560</SUP>=34  mod  561<BR>
+471<SUP>560</SUP>=375  mod  561<BR>
+mais pour tous les nombres <I>A</I> non multiples de 3, 11 ou 17 on a :<BR>
+<I>A</I><SUP><I>N</I>−1</SUP>=1  mod  561.<BR>
+Par exemple on a :<BR>
+5<SUP>560</SUP>=1  mod  561.<BR>
+52<SUP><I>N</I>−1</SUP>=1  mod  561.<BR>
+On risque donc de dire avec le test de Rabbin que 561 est pseudo-premier.<BR>
+Il faut donc affiner le test en remarquant que si <I>N</I> est premier l’équation:
+<I>X</I><SUP>2</SUP>=1 mod<I>N</I> n’a pour solution que <I>X</I>=1 mod<I>N</I> ou <I>X</I>=−1 mod<I>N</I>.<BR>
+Le test de Miller-Rabin est basé sur cette remarque.<BR>
+Pour <I>N</I>=561, <I>N</I>−1=560, on a : 
+560=35*2<SUP>16</SUP><BR>
+13<SUP>35</SUP>=208  mod  561<BR>
+13<SUP>35*2</SUP>=67  mod  561<BR>
+13<SUP>35*4</SUP>=1  mod  561<BR>
+13<SUP>35*8</SUP>=1  mod  561...<BR>
+On vient de trouver que 67 est solution de <I>X</I><SUP>2</SUP>=1 mod561 donc on peut 
+affirmer que 561 n’est pas premier.<BR>
+<I>A</I>=13 vérifie le test de Rabin car 13<SUP>560</SUP>=1  mod  561<BR>
+mais ne vérifie pas le test de Miller-Rabin car<BR>
+13<SUP>35*2</SUP>≠ −1 mod561 et 13<SUP>35*2</SUP> ≠ 1 mod561<BR>
+et pourtant 13<SUP>35*4</SUP>=13<SUP>35*4</SUP>=1  mod  561<BR>
+Par contre ce test ne suffit pas pour affirmer qu’un nombre est premier car :<BR>
+101<SUP>35</SUP>=560=−1 mod561 et donc 101<SUP>35*2</SUP>=1 mod561 et cela ne 
+fournit pas de solutions autre que 1 ou -1 à l’équation <I>X</I><SUP>2</SUP>=1 mod561. </P><H3 CLASS="subsection"><A NAME="htoc208">8.12.2</A>  L’algorithme</H3><P>
+L’algorithme est basé sur :<BR>
+1/ Le petit théorème de Fermat:<BR>
+ <I>A</I><SUP><I>N</I>−1</SUP> = 1 mod<I>N</I> si <I>N</I> est premier et si <I>A</I>&lt;<I>N</I>.<BR>
+2/ Si <I>N</I> est premier, l’équation  <I>X</I>*<I>X</I> = 1 mod<I>N</I> n’a pas d’autres 
+solutions que <I>X</I>=1 mod<I>N</I> ou <I>X</I>=−1 mod<I>N</I>.<BR>
+En effet il existe un 
+entier <I>k</I> vérifiant  <I>X</I>*<I>X</I>−1=(<I>X</I>+1)*(<I>X</I>−1)=<I>k</I>*<I>N</I> donc,<BR>
+puisque <I>N</I> est premier, <I>N</I> divise <I>X</I>+1 ou <I>X</I>−1. On a donc soit 
+<I>X</I>=1 mod<I>N</I> ou <I>X</I>=−1 mod<I>N</I>.<BR>
+On élimine les nombres pairs que l’on sait ne pas être premiers.<BR>
+On suppose donc que <I>N</I> est impair et donc que <I>N</I>−1 est pair et s’écrit :<BR>
+<I>N</I>−1=2<SUP><I>t</I></SUP>*<I>Q</I> avec <I>t</I>&gt;0 et <I>Q</I> impair.<BR>
+Si <I>A</I><SUP><I>N</I>−1</SUP>=1 mod<I>N</I> c’est que <I>A</I><SUP><I>N</I>−1</SUP> mod<I>N</I> est le carré de 
+<I>B</I>=<I>A</I><SUP><I>N</I>−1/2</SUP>=<I>A</I><SUP>2<SUP><I>t</I>−1</SUP><I>Q</I></SUP> mod<I>N</I>.<BR>
+Si on trouve <I>B</I>≠ 1 mod<I>N</I> et <I>B</I>≠ −1 mod<I>N</I> on est sûr que <I>N</I> 
+n’est pas premier.<BR>
+Si <I>B</I>=−1 mod<I>N</I> on recommence avec une autre valeur de <I>A</I>.<BR>
+Si <I>B</I>=1 mod<I>N</I> on peut recommencer le même raisonnement si 
+<I>N</I>−1/2 est encore pair 
+(<I>B</I>=<I>A</I><SUP><I>N</I>−1/2</SUP>=(<I>A</I><SUP><I>N</I>−1/4</SUP>)<SUP>2</SUP> mod<I>N</I>) ou<BR>
+si <I>N</I>−1/2 est impair, on recommence avec une autre valeur de <I>A</I>.<BR>
+On en déduit que :<BR>
+si <I>N</I>−1=2<SUP><I>t</I></SUP>.<I>Q</I> et<BR>
+si  <I>A</I><SUP><I>N</I>−1</SUP> = 1 mod<I>N</I> et<BR>
+si <I>A</I><SUP><I>Q</I></SUP> ≠ 1 mod<I>N</I>  et<BR>
+si pour 0 ≤ <I>ex</I> &lt; <I>t</I> on a <I>A</I><SUP>2<SUP><I>ex</I></SUP>.<I>Q</I></SUP> ≠ −1 mod<I>N</I> c’est que <I>N</I> n’est pas premier.<BR>
+D’où la définition :<BR>
+Soit <I>N</I> un entier positif impair égal à 1+2<SUP><I>t</I></SUP>*<I>Q</I> avec <I>Q</I> impair.<BR>
+On dit que <I>N</I> est pseudo-premier fort de base <I>A</I> si :<BR>
+soit <I>A</I><SUP><I>Q</I></SUP>=1 mod<I>N</I><BR>
+soit si il existe <I>e</I>, 0 ≤ <I>e</I>&lt;<I>t</I> tel que <I>A</I><SUP><I>Q</I>*2<SUP><I>e</I></SUP></SUP>=−1 mod<I>N</I>.<BR>
+On voit facilement qu’un nombre premier impair est pseudo-premier fort dans 
+n’importe quelle base <I>A</I> non divisible par <I>N</I>.<BR>
+Réciproquement on peut montrer que si <I>N</I>&gt;4 n’est pas premier, il existe
+au plus <I>N</I>/4 bases <I>A</I> (1&lt;<I>A</I>&lt;<I>N</I>) pour lesquelles <I>N</I> est pseudo-premier fort 
+de base <I>A</I>.<BR>
+ 
+L’algorithme va choisir au hasard au plus 20 nombres <I>A</I><SUB><I>k</I></SUB> compris entre 2
+et <I>N</I>−1 : si <I>N</I> est pseudo-premier fort de base <I>A</I><SUB><I>k</I></SUB> pour <I>k</I>=1..20 alors
+<I>N</I> est premier avec une tres forte probabilité égale à 
+(1/4)<SUP>20</SUP>(&lt;10<SUP>−12</SUP>).<BR>
+Bien sûr cette méthode est employée pour savoir si de grands nombres 
+sont pseudo-premiers.
+</P><H3 CLASS="subsection"><A NAME="htoc209">8.12.3</A>  Traduction Algorithmique</H3><P>
+On suppose que :<BR>
+<TT>hasard(N)</TT> donne un nombre entier au hasard entre 0 et <I>N</I>−1.<BR>
+ Le calcul de 
+ <I>K</I><SUP><I>N</I>−1</SUP> mod<I>N</I> 
+se fait grâce à l’algorithme de la puissance rapide (cf page <A HREF="#sec:puimod">??</A>).<BR>
+On notera :<BR>
+<TT>powmod(K, P, N)</TT> la fonction qui calcule  <I>K</I><SUP><I>P</I></SUP> mod  <I>N</I> 
+</P><PRE CLASS="verbatim">Fonction Miller(N)
+local Q,P,t,C,A,B,ex
+si (N=2) alors retourne FAUX
+si (N mod 2)==0) alors retourne FAUX
+N-1=&gt;Q
+0=&gt;t
+tantque (Q mod 2 =0) faire
+t+1=&gt;t
+E(Q/2)=&gt;Q
+ftantque
+//N-1=2^t*Q
+20=&gt;C
+VRAI=&gt;P
+tantque (C&gt;0 et P) faire
+hasard(N-2)+2=&gt;A
+0=&gt;ex
+powmod(A, Q, N)=&gt;B
+si B&lt;&gt;1 alors
+tant que (B&lt;&gt;1) et (B&lt;&gt;N-1) et (ex&lt;t-1) faire
+ex+1=&gt;ex
+powmod(B,2,n)=&gt;B
+ftantque
+si (B&lt;&gt;N-1) alors 
+FAUX=&gt;P
+fsi
+C-1=&gt;C
+ftantque
+retourne P
+ffonction
+</PRE><H3 CLASS="subsection"><A NAME="htoc210">8.12.4</A>  Traduction Xcas</H3><P> <A NAME="sec:xcasmiller"></A>
+La fonction <TT>powmod</TT> existe dans <TT>Xcas</TT> : il est donc inutile de la programmer.
+</P><PRE CLASS="verbatim">miller(n):={
+local p,q,t,c,a,b,ex;
+if (n==2){return(true);}
+if (irem(n,2)==0) {return(false);}
+q:=n-1;
+t:=0;
+while (irem(q,2)==0) {
+t:=t+1;
+q:=iquo(q,2);
+}
+//ainsi n-1=q*2^t
+c:=20;
+p:=true;
+while ((c&gt;0) and p) {
+//rand(k) renvoie un nombre entier de [0,k-1] si k&lt;999999999
+if (n&lt;=10^9) {a:=2+rand(n-2);} else {a:=2+rand(999999999);}
+ex:=0;
+b:=powmod(a,q,n);
+//si b!=1 on regarde si b^{2^(ex)}=-1 mod n (ex=0..t-1) 
+if (b!=1) {
+while ((b!=1) and (b!=n-1) and (ex&lt;=t-2)) {
+b:=powmod(b,2,n);
+ex:=ex+1;}
+//si b!=n-1 c'est que n n'est pas premier
+if (b!=n-1) {p:=false;}
+}
+c:=c-1;
+}
+return(p);
+};
+</PRE><H2 CLASS="section"><A NAME="toc57"></A><A NAME="htoc211">8.13</A>  Numération avec Xcas</H2><P><A NAME="@default83"></A><A NAME="@default84"></A><A NAME="@default85"></A>
+On a besoin ici des fonctions de <TT>Xcas</TT> :<BR>
+- <TT>asc</TT> qui convertit un caractère
+ou une chaîne de caractères,
+en une liste de nombres et,<BR>
+- <TT>char</TT> qui convertit un nombre ou
+une liste de nombres en un caractère 
+ou une chaîne de caractères.<BR>
+On a :<BR>
+<TT>char(n)</TT> pour <I>n</I> entier, (0 ≤ <I>n</I> ≤ 255) donne le caractère 
+ayant comme code ASCII l’entier <I>n</I>.<BR>
+<TT>char(l)</TT> pour une liste d’entiers <I>l</I> (0 ≤ <I>l</I>[<I>j</I>] ≤ 255), donne la 
+chaîne de caractères dont 
+les caractères ont pour code ASCII les entiers <I>l</I>[<I>j</I>] qui composent
+la liste <I>l</I>.<BR>
+<TT>asc(mot)</TT> renvoie la liste des codes ASCII des lettres composant le mot.<BR>
+<B>Exemples</B><BR>
+<TT>asc("A")=[65]</TT><BR>
+<TT>char(65)="A"</TT><BR>
+<TT>asc("Bonjour")= [66,111,110,106,111,117,114]</TT><BR>
+<TT>char([66,111,110,106,111,117,114])="Bonjour"</TT><BR>
+<B>Remarque</B> :<BR>
+Il existe aussi la fonction <TT>ord</TT> qui a pour argument une chaîne de 
+caractères mais qui renvoie le code ASCII de la première lettre de la
+chaîne de caractères :<BR>
+<BR>
+<TT>ord("B")= 66</TT>
+<TT>ord("Bonjour")= 66</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc212">8.13.1</A>  Passage de l’écriture en base dix à une écriture en base b</H3><H4 CLASS="subsubsection">La base b est inférieure ou égale à 10</H4><P>
+- Version itérative<BR>
+Si <I>n</I>&lt;<I>b</I>, il n’y a rien à faire : l’écriture en base <I>b</I> est la même que 
+l’écriture en base dix et est <I>n</I>.
+On divise <I>n</I> par <I>b</I> : <I>n</I>=<I>b</I>*<I>q</I>+<I>r</I> avec 0≤ <I>r</I>&lt;<I>b</I>).<BR>
+Le reste <I>r</I> de la division euclidienne de <I>n</I> par <I>b</I> 
+(<TT>r:=irem(n,b)</TT>) donne le dernier chiffre de l’écriture en base <I>b</I> de 
+<I>n</I>.
+L’avant dernier chiffre de l’écriture en base <I>b</I> de <I>n</I> sera donné par le 
+le reste de la division euclidienne de <I>q</I> (<TT>q:=iquo(n,b)</TT>) par <I>b</I>.
+On fait donc une boucle en remplacant <I>n</I> par <I>q</I> (<TT>n:=iquo(n,b)</TT>) 
+tant que <I>n</I> ≥ <I>b</I> en mettant à chaque étape <TT>r:=irem(n,b)</TT> au 
+début de la liste qui doit renvoyer le résultat.<BR>
+On écrit la fonction itérative <TT>ecritu</TT>
+qui renvoie la liste des chiffres de <I>n</I> en base <I>b</I> :
+</P><PRE CLASS="verbatim">ecritu(n,b):={
+//n est en base 10 et b&lt;=10, ecrit est une fonction iterative 
+//renvoie la liste des caracteres de l'ecriture de n en base b  
+local L;
+L:=[];
+while (n&gt;=b){
+L:=concat([irem(n,b)],L);
+n:=iquo(n,b);
+}
+L:=concat([n],L);
+return(L);
+}
+</PRE><P>- Version récursive<BR>
+Si <I>n</I>&lt;<I>b</I>, l’écriture en base <I>b</I> est la même que 
+l’écriture en base dix et est <I>n</I>.<BR>
+Si <I>n</I> ≥ <I>b</I>, l’écriture en base <I>b</I> de <I>n</I> est formée par
+l’écriture en base <I>b</I> de <I>q</I> suivi de <I>r</I>, lorsque <I>q</I> et <I>r</I> sont le
+quotient et le reste de la division euclidienne de <I>n</I> par <I>b</I> 
+(<I>n</I>=<I>b</I>*<I>q</I>+<I>r</I> avec 0≤ <I>r</I>&lt;<I>b</I>).<BR>
+On écrit la fonction récursive <TT>ecritur</TT>
+qui renvoie la liste des chiffres de <I>n</I> en base <I>b</I> :
+</P><PRE CLASS="verbatim">ecritur(n,b):={
+//n est en base 10 et b&lt;=10, ecritur est recursive 
+//renvoie la liste des caracteres de l'ecriture de n en base b
+if (n&gt;=b)
+return(concat(ecritur(iquo(n,b),b),irem(n,b)));
+else
+return([n]);
+}
+</PRE><H4 CLASS="subsubsection">La base b est inférieure ou égale à 36</H4><P>
+On choisit 36 symboles pour écrire un nombre :
+les 10 chiffres 0,1..9 et les 26 lettres majuscules <I>A</I>,<I>B</I>,..,<I>Z</I>.<BR>
+On transforme tout nombre positif ou nul <I>n</I> (<I>n</I>&lt;<I>b</I>) en un caractère : 
+ce caractére est soit un chiffre (si <I>n</I>&lt;10) soit une lettre (<I>A</I>,<I>B</I>...<I>Z</I>) 
+(si 9&lt;<I>n</I>&lt;36).
+</P><PRE CLASS="verbatim">chiffre(n,b):={
+//transforme n (0&lt;=n&lt;b) en son caractere ds la base b 
+if (n&gt;9) 
+n:=char(n+55);
+else 
+n:=char(48+n);
+return(n);
+}
+</PRE><P>On obtient alors la fonction itérative <TT>ecritu</TT>:
+</P><PRE CLASS="verbatim">ecritu(n,b):={
+//n est en base 10 et b&lt;=36, ecritu est une fonction iterative 
+//renvoie la liste des caracteres de l'ecriture de n en base b  
+local L,r,rc;
+L:=[];
+while (n&gt;=b){
+r:=irem(n,b);
+rc:=chiffre(r,b);
+L:=concat([rc],L);
+n:=iquo(n,b);
+}
+n:=chiffre(n,b);
+L:=concat([n],L);
+return(L);
+}
+</PRE><P>- Version recursive
+</P><PRE CLASS="verbatim">ecriture(n,b):={
+//n est en base 10 et b&lt;=36, ecriture est une fonction recursive 
+//renvoie la liste des caracteres de l'ecriture de n en base b
+local r,rc;
+if (n&gt;=b){
+r:=irem(n,b);
+rc:=chiffre(r,b);
+return(append(ecriture(iquo(n,b),b),rc));
+}
+else {
+return([chiffre(n,b)]);
+}
+}
+</PRE><P>En utilisant la notion de séquence on peut aussi écrire :
+</P><PRE CLASS="verbatim">ecrit(n,b):= { 
+//renvoie la sequence des chiffres de n dans la base b 
+local m,u,cu; 
+  m:=(NULL);  
+  while(n!=0){ 
+      u:=(irem(n,b));  
+      if (u&gt;9) { 
+          cu:=(char(u+55));  
+        } 
+       else { 
+          cu:=(char(u+48));  
+        };  
+      m:=(cu,m);  
+      n:=(iquo(n,b));  
+    };  
+  return(m); 
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc213">8.13.2</A>  Passage de l’écriture en base b de n à l’entier n</H3><P>
+Il faut convertir ici chaque caractère en sa valeur (on convertit le 
+caractère contenu dans m en le nombre nm).<BR>
+Si <I>m</I>=(<I>c</I>0,<I>c</I>1,<I>c</I>2,<I>c</I>3) alors <I>n</I>=<I>c</I>0*<I>b</I><SUP>3</SUP>+<I>c</I>1*<I>b</I><SUP>2</SUP>+<I>c</I>2*<I>b</I>+<I>c</I>3.<BR>
+On calcule <I>n</I> en se servant de l’algorithme de Hörner (cf <A HREF="#sec:horner">8.15</A>).
+En effet le calcul de <I>n</I>=<I>c</I>0*<I>b</I><SUP>3</SUP>+<I>c</I>1*<I>b</I><SUP>2</SUP>+<I>c</I>2*<I>b</I>+<I>c</I>3 revient à calculer la 
+valeur du polynôme <I>P</I>(<I>x</I>)=<I>c</I>0*<I>x</I><SUP>3</SUP>+<I>c</I>1*<I>x</I><SUP>2</SUP>+<I>c</I>2*<I>x</I>+<I>c</I>3 pour <I>x</I>=<I>b</I>.<BR>
+<I>n</I> va contenir successivement :<BR>
+0 (<I>n</I>:=0) puis<BR>
+<I>c</I>0 (<I>n</I>:=<I>n</I>*<I>b</I>+<I>c</I>0) puis<BR>
+<I>c</I>0*<I>b</I>+<I>c</I>1 (<I>n</I>:=<I>n</I>*<I>b</I>+<I>c</I>1) puis<BR>
+<I>c</I>0*<I>b</I><SUP>2</SUP>+<I>c</I>1*<I>b</I>+<I>c</I>2=(<I>c</I>0*<I>b</I>+<I>c</I>1)*<I>b</I>+<I>c</I>2 (<I>n</I>:=<I>n</I>*<I>b</I>+<I>c</I>2) et enfin<BR>
+<I>c</I>0*<I>b</I><SUP>3</SUP>+<I>c</I>1*<I>b</I><SUP>2</SUP>+<I>c</I>2*<I>b</I>+<I>c</I>3 (<I>n</I>:=<I>n</I>*<I>b</I>+<I>c</I>3).<BR>
+On écrit donc la fonction nombre dans <TT>Xcas</TT> : 
+</P><PRE CLASS="verbatim">nombre(m,b):={
+local s,k,am,nm,n; 
+  s:=(size(m));  
+  n:=(0);  
+  k:=(0);  
+  if (s!=0) { 
+      while(k&lt;s){ 
+          am:=(asc(m[k])[0]);  
+          if (am&gt;64) { 
+              nm:=(am-55);  
+            } 
+           else { 
+              nm:=(am-48);  
+            };  
+          if (nm&gt;(b-1)) { 
+              return("erreur");  
+            }  
+          n:=(n*b+nm);  
+          k:=(k+1);  
+        };  
+    }   
+  return(n);
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc214">8.13.3</A>  Un exercice et sa solution</H3><H4 CLASS="subsubsection">L’énoncé</H4><P>
+On veut afficher en base dix la suite ordonnée des entiers dont l’écriture 
+en base trois ne comporte que des 0 ou des 1 (pas de 2).
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Calculer à la main les huit premiers termes de cette suite.
+</LI><LI CLASS="li-enumerate">Décrire un algorithme qui donne les 128 premiers termes de cette suite.
+</LI><LI CLASS="li-enumerate">Écrire une fonction qui renvoie la liste des <I>n</I> premiers termes de 
+cette suite.
+</LI></OL><H4 CLASS="subsubsection">La correction</H4><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Voici les 8 premiers termes de cette suite :<BR>
+<TT>[0,1,3,4,9,10,12,13]</TT> dont lécriture en base 3 est :<BR>
+<TT>[[0],[1],[1,0],[1,1],[1,0,0],[1,0,1],[1,1,0],[1,1,1]]</TT><BR>
+</LI><LI CLASS="li-enumerate">Il y a plusieurs algorithmes possibles :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+On écrit les nombres de 0 à <I>N</I> en base 3 et met dans la liste 
+réponse ceux qui ne contiennent pas de 2 dans leur écriture en base 3.
+On s’arrete quand la liste réponse contient <I>n</I> éléments,
+</LI><LI CLASS="li-itemize">On écrit les nombres de 0 à <I>n</I> en base 2 et on considère cette 
+écriture comme étant celle d’un nombre écrit en base 3.
+</LI><LI CLASS="li-itemize">On regarde comment on peut les termes de la suite se déduisent les 
+uns des autres. On peut remarquer que :<BR>
+0=3*0,1=3*0+1,3=3*1,4=3*1+1,9=3*3,10=3*3+1,12=3*4,13=3*4+1....
+</LI><LI CLASS="li-itemize">On regarde comment sont faits les termes de la suite.
+On peut remarquer que :<BR>
+3=0+3,4=1+3 donc 3 et 4 ont èté obtenu à partir de
+0 et 1 en leur ajoutant 3,<BR>
+9=0+9,10=1+9,12=3+9,13=4+9 donc 9,10,11 et 12 ont èté obtenu à partir de
+0,1,3 et 4 en leur ajoutant 9... 
+Les 8 prochains termes de cette suite seront obtenus en ajoutant 3<SUP>3</SUP>
+à chacun des 8 premiers. On obtient ainsi les 16 premiers termes
+de cette suite. Puis les 16 prochains termes de cette suite seront obtenus en 
+ajoutant 3<SUP>4</SUP> à chacun des 16 premiers termes etc...
+</LI></UL>
+</LI><LI CLASS="li-enumerate">On va traduire avec <TT>Xcas</TT> chacun des algorithmes ci-dessus.
+Voici les fonctions de <TT>Xcas</TT> que l’on va utiliser :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+La fonction <TT>est_element(L,a)</TT> qui teste si <TT>a</TT> est dans la 
+liste <TT>L</TT> et qui renvoie <TT>0</TT> ou <TT>n+1</TT> si <TT>n</TT> est l’indice de
+la première occurence de <TT>a</TT> dans <TT>L</TT>,
+</LI><LI CLASS="li-itemize">La fonction <TT>convert(n,base,b)</TT> (resp <TT>convert(L,base,b)</TT>)
+qui convertit un entier <TT>n</TT> en la liste des coefficients en base <TT>b</TT> 
+dans l’ordre croissant (resp qui convertit la liste <TT>L</TT> des coefficients 
+en base <TT>b</TT> dans l’odre croissant en un entier <TT>n</TT>).
+</LI><LI CLASS="li-itemize">Pour ajouter un nombre <TT>a</TT> à chacun des termes 
+d’une liste <TT>L</TT> on peut utiliser : la fonction <TT>map</TT> et écrire 
+<TT>map(L,x-&gt;x+a)</TT> ou bien utiliser
+l’addition de <TT>L</TT> et de la liste <TT>[a,a..a]</TT> ayant la longueur de
+<TT>L</TT> et écrire <TT>L+[a$dim(L)]</TT>
+</LI><LI CLASS="li-itemize">Pour faire les opérations : multiplier par 3 et multiplier par 3 puis 
+ajouter 1 sur chacun des termes d’une liste <TT>L</TT>,
+on peut utiliser : la fonction <TT>map</TT> et écrire 
+<TT>mat2list(map(L,x-&gt;[3*x,3*x+1]))</TT> car <TT>map(L,x-&gt;[3*x,3*x+1])</TT>renvoie une matrice et <TT>mat2list</TT> transforme une matrice en liste.
+</LI></UL>
+Voici les programmes correspondants aux algorithmes décrits précédement
+à la question 2. On tape les fonctions <TT>pasde21(n)</TT> ..<TT>pasde24(n)</TT>
+qui renvoient les <TT>n</TT> premiers termes de la liste demandée. 
+La variable <TT>p</TT> contient à chaque étape la dimension de la liste 
+<TT>L</TT>.
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+<PRE CLASS="verbatim">pasde21(n):={
+  local L,j,J,p;
+  L:=[0];
+  p:=1;
+  j:=1;
+  tantque p&lt;n faire
+    J:=convert(j,base,3);
+    si not(est_element(2,J)) alors 
+      L:= append(L,j);
+      p:=p+1;
+    fsi;
+    j:=j+1;
+  ftantque;
+  retourne L;
+}
+:;
+
+</PRE></LI><LI CLASS="li-itemize"><PRE CLASS="verbatim">pasde22(n):={
+  local J,a,p,L;
+  L:=[];
+  pour p de 0 jusque n-1 faire
+    J:=convert(p,base,2);
+    a:=convert(J,base,3);
+    L:=append(L,a)
+  fpour
+  retourne L;
+}:;
+</PRE></LI><LI CLASS="li-itemize">À la fin de la boucle <TT>tantque</TT>, <TT>L</TT> a <I>p</I>≥ <I>n</I> éléments : 
+il faut donc raccourcir la liste <TT>L</TT> (<TT>L:=mid(L,0,n)</TT>)
+<PRE CLASS="verbatim">pasde23(n):={
+  local L,p;
+  L:=[0];
+  p:=1;
+  tantque p&lt;n faire
+    L:=mat2list(map(L,x-&gt;[x*3,x*3+1]));
+    p:=2*p;
+  ftantque;
+  L:=mid(L,0,n);
+  retourne L;
+}
+:;
+</PRE>Dans le programme ci-dessus la liste <TT>L</TT> est recréée à chaque 
+itération, il est donc préférable de modifier ce programme pour qu’à 
+chaque itération on ne calcule que les nouveaux termes dans la liste 
+ <TT>LA</TT> et ce sont ces nouveaux termes qui créront les termes suivants...
+<PRE CLASS="verbatim">pasde23b(n):={
+  local L,p,LA;
+  L:=[0,1];
+  LA:=[1];
+  p:=2;
+  tantque p&lt;n faire 
+  LA:=mat2list(map(LA,x-&gt;[x*3,x*3+1]));
+  L:=concat(L,LA);
+  p:=2*p;
+  ftantque;
+  L:=mid(L,0,n);
+  retourne L;
+}
+:;
+</PRE>À la fin de la boucle <TT>tantque</TT>, <TT>L</TT> a 2<SUP><I>j</I></SUP>=<I>p</I>≥ <I>n</I> éléments : 
+il faut raccourcir la liste <TT>L</TT> (<TT>L:=mid(L,0,n)</TT>) et on calcule des 
+termes pour rien...On modifie encore le programme, mais comme la liste <TT>LA</TT>
+engendre les termes 2 par 2, on calcule quand même un terme de trop si 
+<TT>n</TT> est impair.<PRE CLASS="verbatim">pasde23t(n):={
+  local L,p,LA;
+  L:=[0,1];
+  LA:=[1];
+  p:=2;
+  tantque 2p&lt;=n faire 
+  LA:=mat2list(map(LA,x-&gt;[x*3,x*3+1]));
+  L:=concat(L,LA);
+  p:=2*p;
+  ftantque;
+  LA:=mat2list(map(mid(LA,0,iquo(n-p+1,2)),x-&gt;[x*3,x*3+1]));
+  L:=concat(L,LA);
+  retourne mid(L,0,n);
+}
+:;
+</PRE></LI><LI CLASS="li-itemize">La variable <TT>j</TT> contient le nombre d’iterations : à chaque 
+étape on a <I>p</I>=2<SUP><I>j</I></SUP> et <I>puis</I>3<I>j</I>=3<SUP><I>j</I></SUP>.
+<PRE CLASS="verbatim">pasde24(n):={
+  local L,j,p,puis3j;
+  L:=[0];
+  j:=0;
+  p:=1;
+  puis3j:=1;
+  tantque p&lt;n faire
+    L:=concat(L,L+[puis3j$p]);
+    //L:=concat(L,map(L,x-&gt;x+puis3j));
+    j:=j+1;
+    puis3j:=3*puis3j;
+    p:=2*p;
+  ftantque;
+  L:=mid(L,0,n);
+  retourne L;
+}
+:;
+</PRE>À la fin de la boucle <TT>tantque</TT>, <TT>L</TT> a 2<SUP><I>j</I></SUP>=<I>p</I>&gt;=<I>n</I> éléments : il 
+faut donc raccourcir la liste <TT>L</TT> (<TT>L:=mid(L,0,n)</TT>) et on calcule des 
+termes pour rien...On modifie donc le programme :
+<PRE CLASS="verbatim">pasde24b(n):={
+  local L,j,p,puis3j;
+  L:=[0];
+  j:=0;
+  p:=1;
+  puis3j:=1;
+  tantque 2*p&lt;=n faire
+    L:=concat(L,L+[puis3j$p]);
+    j:=j+1;
+    puis3j:=3*puis3j;
+    p:=2*p;
+  ftantque;
+  L:=concat(L,mid(L,0,n-p)+[puis3j$(n-p)]);;
+  retourne L;
+}:;
+</PRE></LI></UL>
+Voici ce que l’on obtient :<BR>
+
+<IMG SRC="casrouge003.png"><P>Ce qui montre que le dernier algorithme est le meilleur...
+</P></LI></OL><H2 CLASS="section"><A NAME="toc58"></A><A NAME="htoc215">8.14</A>  Écriture d’un entier dans une base rationnelle</H2><P>
+Soient deux entiers <I>p</I>,<I>q</I>, premiers entre eux tel que <I>q</I>&lt;<I>p</I>. 
+On veut écrire un entier <I>n</I> sous la forme :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>n</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>s</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>n</I><SUB><I>k</I></SUB>(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>p</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>q</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)<SUP><I>k</I></SUP>  avec  <I>n</I><SUB><I>k</I></SUB>&lt;<I>p</I> </TD></TR>
+</TABLE><P>
+On définit la suite :<BR>
+<I>u</I>(0)=<I>n</I>, <I>u</I>(1)=<I>iquo</I>(<I>u</I>(0),<I>p</I>)*<I>q</I>, <I>u</I>(<I>k</I>+1)=<I>iquo</I>(<I>u</I>(<I>k</I>),<I>p</I>)*<I>q</I> 
+<I>u</I> est une suite décroissante donc il existe <I>s</I> tel que <I>u</I>(<I>s</I>)=0.<BR>
+On a :<BR>
+<I>u</I>(0)=<I>iquo</I>(<I>u</I>(0,<I>p</I>)*<I>p</I>+<I>irem</I>(<I>u</I>(0),<I>p</I>)=<I>u</I>(1)*<I>p</I>/<I>q</I>+<I>irem</I>(<I>u</I>(0),<I>p</I>)<BR>
+<I>u</I>(1)=<I>iquo</I>(<I>u</I>(1,<I>p</I>)*<I>p</I>+<I>irem</I>(<I>u</I>(1),<I>p</I>)=<I>u</I>(2)*<I>p</I>/<I>q</I>+<I>irem</I>(<I>u</I>(1),<I>p</I>)<BR>
+On pose <I>n</I><SUB>0</SUB>=<I>irem</I>(<I>u</I>(0),<I>p</I>)<BR>
+Donc :<BR>
+<I>q</I><SUP><I>s</I>−1</SUP><I>u</I>(0)=<I>u</I>(1)*<I>p</I>*<I>q</I><SUP><I>s</I>−2</SUP>+<I>q</I><SUP><I>s</I>−1</SUP><I>n</I><SUB>0</SUB><BR>
+et par itération :<BR>
+<I>pq</I><SUP><I>s</I>−2</SUP><I>u</I>(1)=<I>u</I>(2)<I>p</I><SUP>2</SUP><I>q</I><SUP><I>s</I>−3</SUP>+<I>pq</I><SUP><I>s</I>−2</SUP><I>n</I><SUB>1</SUB> avec <I>n</I><SUB>1</SUB>==<I>irem</I>(<I>u</I>(1),<I>p</I>)<BR>
+...<BR>
+<I>q</I><SUP><I>s</I>−1</SUP><I>u</I>(0)=∑<SUB><I>k</I>=0</SUB><SUP><I>s</I>−1</SUP><I>p</I><SUP><I>k</I></SUP><I>q</I><SUP><I>s</I>−<I>k</I>−1</SUP><I>n</I><SUB><I>k</I></SUB><BR>
+ou encore :<BR>
+<I>n</I>=<I>u</I>(0)=∑<SUB><I>k</I>=0</SUB><SUP><I>s</I>−1</SUP><I>p</I><SUP><I>k</I></SUP><I>q</I><SUP>−<I>k</I></SUP><I>n</I><SUB><I>k</I></SUB><BR>
+Cette écriture est unique : on raisonne par récurrencesur <I>n</I>.<BR>
+Le développement est unique pour tous les <I>n</I>&lt;<I>p</I>.<BR>
+Si il y a unicité pour tous les entiers <I>m</I>&lt;<I>n</I> alors si on a 2 développements
+de n :<BR>
+<I>n</I>==∑<SUB><I>k</I>=0</SUB><SUP><I>s</I>−1</SUP><I>p</I><SUP><I>k</I></SUP><I>q</I><SUP>−<I>k</I></SUP><I>a</I><SUB><I>k</I></SUB> et <I>n</I>==∑<SUB><I>k</I>=0</SUB><SUP><I>s</I>−1</SUP><I>p</I><SUP><I>k</I></SUP><I>q</I><SUP>−<I>k</I></SUP><I>b</I><SUB><I>k</I></SUB>
+puisque <I>n</I>=<I>a</I><SUB>0</SUB>+<I>p</I>*∑<SUB><I>k</I>=1</SUB><SUP><I>s</I>−1</SUP><I>p</I><SUP><I>k</I>−1</SUP><I>q</I><SUP>−<I>k</I></SUP><I>a</I><SUB><I>k</I></SUB>=<I>b</I><SUB>0</SUB>+<I>p</I>*∑<SUB><I>k</I>=1</SUB><SUP><I>s</I>−1</SUP><I>p</I><SUP><I>k</I>−1</SUP><I>q</I><SUP>−<I>k</I></SUP><I>b</I><SUB><I>k</I></SUB>= on en déduit que <I>a</I><SUB>0</SUB>=<I>b</I><SUB>0</SUB>=<TT>irem</TT>(<I>n</I>,<I>p</I>) et on applique 
+l’hypothèse de récurrence à <TT>iquo</TT>(<I>n</I>,<I>p</I>)*<I>q</I> qui est strictement inférieur à <I>n</I>.<BR>
+On écrit le programme <TT>dev</TT> qui renvoie la liste de dimension <I>s</I> :<BR>
+[<I>n</I><SUB>0</SUB>,<I>n</I><SUB>1</SUB>..<I>n</I><SUB><I>s</I>−1</SUB>] et le programme <TT>verif</TT> qui effectue la vérification.
+</P><PRE CLASS="verbatim">dev(n,p,q):={
+local L,s,u;
+si gcd(p,q)!=1 ou q&gt;p-1 alors return "erreur"; fsi;
+L:=NULL;
+si n&lt;p alors return n; fsi;
+s:=n;
+tantque s&gt;0 faire
+u:=irem(s,p);
+s:=iquo(s,p)*q;
+L:=L,u;
+}
+return [L];
+}
+:;
+verif(L,p,q):={
+local n,s,k;
+n:=L[0];
+s:=size(L);
+pour k de 1 jusque s-1 faire
+n:=n+L[k]*(p/q)^k;
+fpour;
+return n;
+}:;
+</PRE><P>On tape :<BR>
+<TT>L:=dev(33,3,2)</TT>
+On obtient :<BR>
+<TT>[0,1,2,2,1,2]</TT><BR>
+On tape :<BR>
+<TT>verif(L,3,2)</TT>
+On obtient :<BR>
+<TT>33</TT><BR>
+On tape :<BR>
+<TT>L:=dev(133,13,8)</TT>
+On obtient :<BR>
+<TT>[3,2,9,11,8]</TT><BR>
+On tape :<BR>
+<TT>verif(L,13,8)</TT>
+On obtient :<BR>
+<TT>133</TT>
+</P><H2 CLASS="section"><A NAME="toc59"></A><A NAME="htoc216">8.15</A>  Traduction Xcas de l’algorithme de Hörner</H2><P><A NAME="@default86"></A><A NAME="@default87"></A><A NAME="@default88"></A><A NAME="sec:horner"></A>
+Soit un polynôme <I>P</I> donné sous la forme d’une liste <TT>l</TT> formée par 
+les coefficients de <I>P</I> selon les puissances décroissantes.<BR>
+<TT>hornerl(l,a)</TT> renvoie une liste formée par la valeur <TT>val</TT> 
+du polynôme en <I>x</I>=<I>a</I> et par la liste <TT>lq</TT> des coefficients selon les 
+puissances décroissantes du quotient <I>Q</I>(<I>x</I>) de <I>P</I>(<I>x</I>) par (<I>x</I>−<I>a</I>).<BR>
+On a :<BR>
+<TT><I>P</I>(<I>a</I>)=<I>l</I>[0]*<I>a</I></TT><SUP><TT><I>p</I></TT></SUP><TT>+<I>l</I>[1]*<I>a</I></TT><SUP><TT><I>p</I>-1</TT></SUP><TT>+...+<I>l</I>[<I>p</I>]=</TT><BR>
+<TT><I>l</I>[<I>p</I>]+<I>a</I>*(<I>l</I>[<I>p</I>-1]+<I>a</I>*(<I>l</I>[<I>p</I>-2]+...+<I>a</I>*(<I>l</I>[1]+<I>a</I>*<I>l</I>[0])))</TT><BR>
+<TT><I>P</I>(<I>x</I>)=<I>l</I>[0]*<I>x</I></TT><SUP><TT><I>p</I></TT></SUP><TT>+<I>l</I>[1]*<I>x</I></TT><SUP><TT><I>p</I>-1</TT></SUP><TT>+...+<I>l</I>[<I>p</I>]=</TT><BR>
+<TT>(<I>x</I>-<I>a</I>)*(<I>lq</I>[0]*<I>x</I></TT><SUP><TT><I>p</I>-1</TT></SUP><TT>+...<I>lq</I>[<I>p</I>-1])+<I>val</I></TT><BR>
+donc <TT><I>val</I>=<I>P</I>(<I>a</I>)</TT>
+et <TT>p=s-1</TT> si <TT>s</TT> est la longueur de la liste <TT>l</TT> donc :<BR>
+<TT>lq[0]=l[0]<BR>
+lq[1]=a*lq[0]+l[1]<BR>
+lq[j]=a*lq[j-1]+l[j]<BR>
+....<BR>
+val=a*lq[p-1]+l[p]</TT>
+</P><PRE CLASS="verbatim">hornerl(l,a):={
+local s,val,lq,j;
+s:=size(l);
+//on traite les polys constants (de degre=0) 
+if (s==1) {return [l[0],[0]]};
+// si s&gt;1
+lq:=[];
+val:=0;
+for (j:=0;j&lt;s-1;j++) {
+val:=val*a+l[j];
+lq:=append(lq,val);
+}
+val:=val*a+l[s-1];
+return([val,lq]);
+};
+</PRE><P>On tape :<BR>
+<TT>hornerl([1,2,4],12)</TT><BR>
+On obtient :<BR>
+<TT>[172,[1,14]]</TT><BR>
+ce qui veut dire que :<BR>
+<I>x</I><SUP>2</SUP>+2<I>x</I>+4=(<I>x</I>+14)(<I>x</I>−12)+172<BR>
+Si le polynôme est donné avec son écriture habituelle.<BR>
+Pour utiliser la fonction précédente on a alors besoin des deux 
+fonctions :<BR>
+ <TT>symb2poly</TT> qui transforme un polynôme en la liste de ses
+coefficients selon les puissances décroissantes.<BR>
+<TT>poly2symb</TT> qui transforme une liste en l’écriture habituelle du 
+polynôme ayant cette pour coefficients selon les puissances décroissantes. 
+</P><PRE CLASS="verbatim">hornerp(p,a,x):={
+//ne marche pas pour les polys constants (de degre=0) 
+local l,val,lh;
+l:=symb2poly(p,x);
+lh:=hornerl(l,a);
+p:=poly2symb(lh[1],x);
+val:=lh[0];
+return([val,p]);
+};
+</PRE><P>On tape :<BR>
+<TT>hornerp(x</TT><CODE><TT>^</TT></CODE><TT>2+2x+4,12,x)</TT><BR>
+On obtient :<BR>
+<TT>172,x+14</TT><BR>
+On tape :<BR>
+<TT>hornerp(y</TT><CODE><TT>^</TT></CODE><TT>2+2y+4,12,y)</TT><BR>
+On obtient :<BR>
+<TT>172,y+14</TT><BR>
+Dans <TT>Xcas</TT>, il existe la fonction <TT>horner</TT> qui calcule selon la 
+méthode de Hörner la valeur d’un polynôme (donné sous forme de liste 
+ou par son expression) en un point :<BR>
+On tape :<BR>
+<TT>horner(x</TT><CODE><TT>^</TT></CODE><TT>2+2x+4,12)</TT><BR>
+On obtient :<BR>
+<TT>172</TT><BR>
+On tape :<BR>
+<TT>horner(y</TT><CODE><TT>^</TT></CODE><TT>2+2y+4,12,y)</TT><BR>
+On obtient :<BR>
+<TT>172</TT><BR>
+On tape :<BR>
+<TT>horner([1,2,4],12)</TT><BR>
+On obtient :<BR>
+<TT>172</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc217">8.15.1</A>  Un autre exercice et sa solution</H3><P>
+Trouver le plus petit entier positif <I>n</I>, tel que <I>n</I>, 2<I>n</I>, 3<I>n</I>, 4<I>n</I>, 5<I>n</I>,
+6<I>n</I> contiennent exactement les mêmes chiffres.<BR>
+On tape la fonction booléenne qui teste si les entiers <I>n</I> et <I>m</I> ont des 
+chiffres identiques.
+On se sert de la fonction <TT>string</TT> qui transforme un entier en une chaine de caractères, puis on 
+transforme cette chaine en la liste de ses caractères ou en son code de Ascii, puis on 
+trie cette liste.<BR>
+On tape :
+</P><PRE CLASS="verbatim">chiffreid(n,m):={
+local S1,S2,s1,s2,L1,L2,k;
+  S1:=string(n);s1:=size(S1);
+  S2:=string(m);s2:=size(S2);
+  si s1!=s2 alors retourne faux; fsi;
+  L1:=[sort(S1[k]$(k=0..s1-1))]; 
+  L2:=[sort(S2[k]$(k=0..s1-1))];
+  retourne L1==L2;
+}:;
+</PRE><P>ou
+</P><PRE CLASS="verbatim">chiffreid(n,m):={
+local S1,S2,s1,s2,L1,L2,k;
+  S1:=string(n);s1:=size(S1);
+  S2:=string(m);s2:=size(S2);
+  si s1!=s2 alors retourne faux; fsi;
+  L1:=sort(asc(S1)); 
+  L2:=sort(asc(S2));
+  retourne L1==L2;
+}:;
+</PRE><P>On tape la fonction booléenne qui teste si les entiers <I>n</I>, 2<I>n</I>, 3<I>n</I>, 4<I>n</I>, 
+5<I>n</I>, 6<I>n</I> ont des chiffres identiques. Si cela est le cas on 
+sait que <I>n</I> est divisible par 3 puisque la somme des chiffres de <I>n</I> est égale la somme des chiffres 
+de 3<I>n</I>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">chiffreid16(n):={
+  local k;
+  si irem(n,3)!=0 alors retourne faux; fsi;
+  pour k de 6 jusque 2 pas -1 faire 
+  si chiffreid(n,k*n)==faux alors retourne faux fsi;
+  fpour;
+  retourne vrai;
+  }:;
+</PRE><P>On tape la fonction qui renvoie le plus petit entier positif <I>n</I>, tel que <I>n</I>, 
+2<I>n</I>, 3<I>n</I>, 4<I>n</I>, 5<I>n</I>, 6<I>n</I> contiennent exactement les mêmes chiffres.<BR>
+On tape : 
+</P><PRE CLASS="verbatim">ppchiffreid():={
+local n;
+n:=3;
+tantque chiffreid16(n)==faux faire 
+  n:=n+3;
+ ftantque;
+retourne n; 
+  }:;
+</PRE><P>On tape :<BR>
+<TT>ppchiffreid()</TT><BR>
+On obtient :<BR>
+<TT>142857</TT><BR>
+On vérifie :<BR>
+On tape :<BR>
+<TT>n:=142857;2*n;3*n;4*n;5*n;6*n</TT><BR>
+On obtient ;<BR>
+<TT>142857,285714,428571,571428,714285,857142</TT> 
+On peut changer le programme ci-dessus pour savoir qui est le <I>n</I> suivant en 
+initialisant <I>n</I> à 142860. On trouve alors 1428570.<BR>
+Puis on change à nouveau le programme ci-dessus pour savoir qui est le <I>n</I> suivant en 
+initialisant <I>n</I> à 1428573. On trouve alors 1429857.<BR>
+Puis par curiosité, on cherche le suivant (mais c’est long !), on trouve 14285700.<BR>
+On a donc le début de cette suite :
+<TT>142857, 1428570, 1429857, 14285700, 14298570</TT></P><H2 CLASS="section"><A NAME="toc60"></A><A NAME="htoc218">8.16</A>  Savoir si le polynôme <I>A</I> est divisible par <I>B</I></H2><H3 CLASS="subsection"><A NAME="htoc219">8.16.1</A>  Programmation de la fonction booléenne <TT>estdivpoly</TT></H3><P>
+On va écrire la fonction récursive <TT>estdivpoly</TT> qui a comme arguments, 
+deux polynômes <TT>A</TT> et <TT>B</TT> écrits sous forme symbolique et qui 
+renverra <TT>1</TT> si <TT>A</TT> est divisible par <TT>B</TT> et <TT>0</TT> sinon.<BR>
+On rappelle que <TT>degree(A)</TT> renvoie le degré de <TT>A</TT> et que
+<TT>valuation(A)</TT> renvoie la valuation de <TT>A</TT>
+(la plus petite puissance de <TT>A</TT>). </P><P>Pour Savoir si <TT>A</TT> est divisible par <TT>B</TT>, on s’interesse aux termes de 
+plus haut degré et de plus bas degré de <TT>A</TT> et <TT>B</TT> : c’est à dire
+qu’a chaque étape on essaye de faire la division par les 2 bouts ....<BR>
+Par exemple si :<BR>
+<TT>A=x</TT><CODE><TT>^</TT></CODE><TT>3+2*x-3</TT> et <TT>B=x</TT><CODE><TT>^</TT></CODE><TT>2+x</TT> on sait que <TT>A</TT> n’est pas 
+divisible par <TT>B</TT> car <TT>-3</TT> n’est pas divisible par <TT>x</TT>,<BR>
+ou encore si :<BR>
+<TT>A=x</TT><CODE><TT>^</TT></CODE><TT>3+2*x</TT><CODE><TT>^</TT></CODE><TT>2</TT> et <TT>B=x</TT><CODE><TT>^</TT></CODE><TT>2+1</TT> on sait que <TT>A</TT> 
+n’est pas divisible par <TT>B</TT> car le quotient aurait pour degré
+<TT>3-2=1</TT> et pour valuation <TT>2-0=2</TT>, ce qui est impossible <TT>1&lt;2</TT> (le 
+degré n’peut pas être inférieur à la valuation.<BR>
+</P><PRE CLASS="verbatim">estdivpoly(A,B):={
+  local da,db,va,vb,dq,vq,dva,dvb,dvq,Q,Ca,Cb;
+  da:=degree(A);
+  va:=valuation(A);
+  dva:=da-va;
+  db:=degree(B);
+  vb:=valuation(B);
+  dvb:=db-vb;
+  if (A==0) then return 1;end_if;
+  if ((da&lt;db) or (va&lt;vb)) then return 0;end_if;
+  if ((dva==0) and (dvb&gt;0)) then return 0;end_if;
+  if ((dva&gt;=0) and (dvb==0)) then return 1;end_if;
+  Cb:=coeffs(B);
+  if ((dva&gt;0) and (dvb&gt;0)) then 
+  dq:=da-db;
+  vq:=va-vb;
+  dvq:=dq-vq;
+  if (dvq&lt;0) then return 0;end_if;
+  Ca:=coeffs(A); 
+  Q:=Ca[0]/Cb[0]*x^(dq);
+  if (dvq==0) then 
+  A:=normal(A-B*Q);
+  else
+  Q:=Q+Ca[dva]/Cb[dvb]*x^(vq);  
+  A:=normal(A-B*Q);
+  end_if;
+  da:=degree(A);
+  va:=valuation(A);
+   end_if;
+  return estdivpoly(A,B);
+};
+</PRE><P>On tape :
+<TT>A:=normal((x</TT><CODE><TT>^</TT></CODE><TT>4-x</TT><CODE><TT>^</TT></CODE><TT>3+x</TT><CODE><TT>^</TT></CODE><TT>2-1)*(x</TT><CODE><TT>^</TT></CODE><TT>5-x</TT><CODE><TT>^</TT></CODE><TT>3+x</TT><CODE><TT>^</TT></CODE><TT>2-1)</TT><BR>
+puis,<BR>
+<TT>estdivpoly(A,x</TT><CODE><TT>^</TT></CODE><TT>4-x</TT><CODE><TT>^</TT></CODE><TT>3+x</TT><CODE><TT>^</TT></CODE><TT>2-1)</TT><BR>
+On obtient :<BR>
+<TT>1</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc220">8.16.2</A>  Autre version du programme précedent : <TT>quoexpoly</TT></H3><P>
+Lorsque <TT>A</TT> est divisible par <TT>B</TT> on peut en modifiant le programme
+précédent avoir facilement le quotient exact de <TT>A</TT> par <TT>B</TT>.<BR>
+On écrit la fonction récursive <TT>quoexpoly</TT> qui a trois arguments, 
+deux polynômes <TT>A</TT> et <TT>B</TT> écrits sous forme symbolique et <TT>0</TT>.
+<TT>quoexpoly</TT> renverra <TT>1,Q</TT> si <TT>A=B*Q</TT> et <TT>0</TT> sinon.<BR>
+Puis on écrit la fonction <TT>quopoly(A,B)</TT> qui est égale à 
+<TT>quoexpoly(A,B,0)</TT>.
+</P><PRE CLASS="verbatim">quoexpoly(A,B,SQ):={
+  local da,db,va,vb,dq,vq,dva,dvb,dvq,Q,Ca,Cb;
+  da:=degree(A);
+  va:=valuation(A);
+  dva:=da-va;
+  db:=degree(B);
+  vb:=valuation(B);
+  dvb:=db-vb;
+  if (A==0) then return 1,SQ;end_if;
+  if ((da&lt;db) or (va&lt;vb)) then return 0;end_if;
+  if ((dva==0) and (dvb&gt;0)) then return 0;end_if;
+  if ((dva&gt;=0) and (dvb==0)) then return 1,normal(SQ+normal(A/B));end_if;
+  Cb:=coeffs(B);
+  if ((dva&gt;0) and (dvb&gt;0)) then 
+  dq:=da-db;
+  vq:=va-vb;
+  dvq:=dq-vq;
+  if (dvq&lt;0) then return 0;end_if;
+  Ca:=coeffs(A); 
+  Q:=Ca[0]/Cb[0]*x^(dq);
+  if (dvq==0) then 
+  A:=normal(A-B*Q);
+  SQ:=normal(SQ+Q);
+  else
+  Q:=Q+Ca[dva]/Cb[dvb]*x^(vq);  
+  A:=normal(A-B*Q);
+   SQ:=normal(SQ+Q);
+  end_if;
+  da:=degree(A);
+  va:=valuation(A);
+   end_if;
+  return quoexpoly(A,B,SQ);
+};
+estquopoly(A,B):=quoexpoly(A,B,0);
+</PRE><P>On tape :
+<TT>A:=normal((x</TT><CODE><TT>^</TT></CODE><TT>4-x</TT><CODE><TT>^</TT></CODE><TT>3+x</TT><CODE><TT>^</TT></CODE><TT>2-1)*(x</TT><CODE><TT>^</TT></CODE><TT>5-x</TT><CODE><TT>^</TT></CODE><TT>3+x</TT><CODE><TT>^</TT></CODE><TT>2-1)</TT><BR>
+puis,<BR>
+<TT>estquopoly(A,x</TT><CODE><TT>^</TT></CODE><TT>4-x</TT><CODE><TT>^</TT></CODE><TT>3+x</TT><CODE><TT>^</TT></CODE><TT>2-1)</TT><BR>
+On obtient :<BR>
+<TT>1,x</TT><CODE><TT>^</TT></CODE><TT>5-x</TT><CODE><TT>^</TT></CODE><TT>3+x</TT><CODE><TT>^</TT></CODE><TT>2-1</TT></P><H2 CLASS="section"><A NAME="toc61"></A><A NAME="htoc221">8.17</A>  Affichage d’un nombre en une chaîne comprenant des espaces</H2><H3 CLASS="subsection"><A NAME="htoc222">8.17.1</A>  Affichage d’un nombre entier par tranches de <I>p</I> chiffres</H3><P>
+Pour rendre plus facile la lecture d’un grand nombre entier, on veut l’afficher
+par tranches, c’est à dire selon une chaîne de caractères constituées
+par les <I>p</I> premiers chiffres du nombre et d’un espace, puis les <I>p</I> suivants 
+etc...
+On écrit le programme qui va afficher le nombre <I>n</I> par tranches de <I>p</I> 
+chiffres: 
+</P><PRE CLASS="verbatim">affichen(n,p):={
+local reste,result,s;
+result:="";
+while (n&gt;10^p) {
+//on transforme irem(n,10^p) en une chaine
+reste:=cat(irem(n,10^p),"");
+s:=size(reste);
+//on ajoute l'espace et les zeros qui manquent
+reste:=cat(" ",op(newList(p-s)),reste);
+n:=iquo(n,10^p);
+//on concatene reste avec result 
+result:=cat(reste,result);
+}
+reste:=cat(n);
+return cat(reste,result);
+};
+</PRE><P>On tape :<BR>
+<TT>affichen(1234567,3)</TT>
+On obtient :<BR>
+<TT>"1 234 567"</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc223">8.17.2</A>  Transformation d’un affichage par tranches en un nombre entier</H3><P>
+Pour avoir la transformation inverse, on va transformer une chaîne
+comportant des chiffres et un autre caractère (par exemple un espace) en un 
+nombre entier.<BR>
+On écrit le programme :
+</P><PRE CLASS="verbatim">enleve(chn,ch):={
+local l,s;
+s:=length(chn)-1;
+//on transforme chn en une liste de ces lettres
+//puis, on enleve le caractere ch de cette liste
+l:=remove(x-&gt;(ord(x)==ord(ch)),seq(chn[k],k,0,s));
+//on transforme la liste en chaine
+return expr(char(ord(l)));
+};
+</PRE><P>On peut aussi remplacer la dernière ligne :<BR>
+<TT>return char(ord(l))</TT><BR>
+(<TT>ord(l)</TT> transforme la liste de caractères en la liste de leurs codes 
+ascii et <TT>char</TT> transforme la liste des codes ascii en une chaîne).<BR>
+par :<BR>
+<TT>return cat(op(l))</TT><BR>
+car <TT>op(l)</TT> transforme la liste en une séquence et <TT>cat</TT>
+concatène les éléments de cette séquence en une chaîne.
+On tape :<BR>
+<TT>enleve("1 234 567"," ")</TT>
+On obtient :<BR>
+<TT>1234567</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc224">8.17.3</A>  Affichage d’un nombre décimal de [0,1[ par tranches de <I>p</I> chiffres</H3><P>
+Pour rendre plus facile la lecture d’un nombre décimal de [0,1[, on veut 
+l’afficher par tranches, c’est à dire selon une chaîne de caractères 
+constituées par les <I>p</I> premières décimales du nombre et d’un espace, 
+puis les <I>p</I> suivants etc...
+On suppose que l’écriture de <I>d</I> comporte un point (.) suivi des 
+décimales et ne comporte pas d’exposant (pas de <I>e</I>4)</P><P>On écrit le programme qui va afficher le nombre <I>d</I> par tranches de <I>p</I> 
+chiffres: 
+</P><PRE CLASS="verbatim">affiched(d,p):={
+local deb,result;
+//on suppose 0&lt;=d&lt;1
+d:=cat(d,"");
+if (d[0]=="0") {d:=tail(d);}
+if (expr(tail(d))&lt;10^p){return d;}
+deb:=mid(d,0,p+1);
+result:=cat(deb," ");
+d:=mid(d,p+1);
+while (expr(d)&gt;10^p) {
+deb:=mid(d,0,p);
+result:=cat(result,deb," ");
+d:=mid(d,p);
+}
+return cat(result,d);
+};
+</PRE><P>On tape :<BR>
+<TT>affiched(0.1234567,3)</TT><BR>
+On obtient :<BR>
+<TT>".123 456 7"</TT><BR>
+<B>Remarque</B><BR>
+La commande <TT>enleve(affiched(d,3)," ")</TT> permet encore de retrouver <TT>d</TT>.
+</P><PRE CLASS="verbatim">enleve(chn,ch):={
+local l,s;
+s:=length(chn)-1;
+//on transforme chn en une liste de ces lettres
+//puis, on enleve le caractere ch de cette liste
+l:=remove(x-&gt;(ord(x)==ord(ch)),seq(chn[k],k,0,s));
+//on transforme la liste en chaine
+return expr(char(ord(l)));
+};
+</PRE><H3 CLASS="subsection"><A NAME="htoc225">8.17.4</A>  Affichage d’un nombre décimal par tranches de <I>p</I> chiffres</H3><P>
+Pour rendre plus facile la lecture d’un nombre décimal, on veut 
+l’afficher par tranches, c’est à dire selon une chaîne de caractères 
+constituées par sa partie entière écrite par tranches de <I>p</I> chiffres,
+puis ses <I>p</I> premières décimales du nombre et d’un espace, puis les <I>p</I> 
+suivants etc...<BR>
+Ici, le nombre <I>f</I> peut comporter un exposant à la fin de son écriture.<BR>
+On écrit le programme qui va afficher le nombre décimal <I>f</I> par tranches 
+de <I>p</I> chiffres : 
+</P><PRE CLASS="verbatim">//pour les flottants f utiliser affichef
+// appelle affichen et affiched 
+//par exemple affichef(1234.12345,3)
+affichef(f,p):={
+local deb,result,s,indicep,fn,fd,indicee;
+//on suppose f&gt;1
+f:=cat(f);
+s:=size(f)-1;
+indicep:=member(".",seq(f[k],k,0,s));
+indicee:=member("e",seq(f[k],k,0,s));
+if (indicep!=0) {
+fn:=mid(f,0,indicep-1);
+fd:=mid(f,indicep-1);
+if (indicee!=0) {
+return affichen(expr(fn),p)+affiched(expr(mid(fd,0,
+indicee-1)),p)+mid(fd,indicee-1);}
+return affichen(expr(fn),p)+affiched(expr(fd),p)
+}
+return affichen(expr(f),p);
+};
+</PRE><P>On tape :<BR>
+<TT>affichef(1234567.1234567,3)</TT><BR>
+On obtient (pour 12 chiffres significatifs) :<BR>
+<TT>"1 234 567.123 46"</TT><BR>
+On obtient (pour 14 chiffres significatifs) :<BR>
+<TT>"1 234 567.123 456 7"</TT><BR>
+On obtient (pour 15 chiffres significatifs) :<BR>
+<TT>"0.123 456 712 345 670 0*e7"</TT><BR>
+<B>Remarque</B><BR>
+La commande <TT>enleve(affichef(q,3)," ")</TT> permet encore de retrouver <TT>q</TT>.
+</P><PRE CLASS="verbatim">enleve(chn,ch):={
+local l,s;
+s:=length(chn)-1;
+//on transforme chn en une liste de ces lettres
+//puis, on enleve le caractere ch de cette liste
+l:=remove(x-&gt;(ord(x)==ord(ch)),seq(chn[k],k,0,s));
+//on transforme la liste en chaine
+return expr(char(ord(l)));
+};
+</PRE><H2 CLASS="section"><A NAME="toc62"></A><A NAME="htoc226">8.18</A>  Écriture décimale d’un nombre rationnel</H2><H3 CLASS="subsection"><A NAME="htoc227">8.18.1</A>  Algorithme de la potence</H3><P>
+Pour obtenir la partie entière et le développement décimal de 
+ <I>a</I>/<I>b</I>, on va construire deux listes :
+<TT>L1</TT> la liste des restes et <TT>L2</TT> 
+la liste des quotients obtenus par l’algorithme de la potence .<BR>
+On met le quotient <I>q</I> dans <TT>L1</TT> et le reste <I>r</I> dans <TT>L2</TT>.<BR>
+On a ainsi, la partie entière de  <I>a</I>/<I>b</I> dans <TT>L1</TT>
+et comme  <I>a</I>/<I>b</I>=<I>q</I>+<I>r</I>/<I>b</I> on cherche la partie entière de  10*<I>r</I>/<I>b</I> qui va rallonger <TT>L1</TT> etc...</P><P>Si on veut, par exemple, le développement décimale de 
+ 278/31 on cherche :<BR>
+le quotient <I>q</I>=8 et le reste <I>r</I>=30 de la divison euclidienne de 278 par 31.<BR>
+La partie entière est donc 8 et, on met 8<TT>L1</TT> .
+Pour avoir la partie décimale de  278/31, on fait 
+comme à la main l’algorithme de
+la potence : on multiplie le reste trouvé par 10, on trouve 300 
+puis on le divise par 31 : le quotient trouvé 9 est 
+rajouté à <TT>L1</TT> et le reste est rajouté à <TT>L2</TT> etc...<BR>
+On écrit la fonction potence qui renvoie dans la première liste 
+la partie entière puis les <I>n</I> décimales de <I>a</I>/<I>b</I> et dans la 
+deuxième liste les restes successifs obtenus.
+</P><PRE CLASS="verbatim">potence(a,b,n):={
+ local L1,L2,k;
+ b0:=b;
+ b:=iquo(a,b0);
+ a:=irem(a,b0);
+ L1:=[b];
+ L2:=[a];
+ for (k:=1;k&lt;=n and a!=0;k++){
+    b:=iquo(a*10,b0);
+    a:=irem(a*10,b0);
+    L2:=append(L2,a);
+    L1:=append(L1,b);
+ };
+ return([L1,L2]);
+};
+</PRE><P>En exécutant <TT>potence(278,31,20)</TT>, on lit la partie entière de 
+ 278/31 et les chiffres de sa partie décimale dans la 
+première liste et, la suite des restes dans la deuxième liste.<BR>
+<B>Exercice</B><BR>
+Écrire la partie entière et le développement décimal de :<BR>
+ <I>a</I>=11/7, <I>b</I>=15/14 et 
+<I>c</I>=17/28.<BR>
+Calculer <I>a</I>−<I>b</I> et <I>a</I>−<I>c</I> 
+et donner leur partie entière et leur
+développement décimal.<BR>
+Que remarqez-vous ?<BR>
+<B>Exercice</B>
+Comment modifier <TT>L1</TT> et <TT>L2</TT> pour que les chiffres de la 
+partie décimale de <I>a</I>/<I>b</I> se lisent par paquet de trois 
+chiffres dans <TT>L1</TT>.<BR>
+ Avec l’exemple 278/31 on veut obtenir :
+<TT>L1=[8,967,741,935 ...]</TT><BR>
+Tester votre modification pour 349/1332.<BR>
+Que remarquez vous ? 
+</P><H3 CLASS="subsection"><A NAME="htoc228">8.18.2</A>  Avec un programme</H3><P>
+<TT>division(a,b,n,t)</TT> donne la partie entière suivie de <I>n</I> paquets de
+<I>t</I> décimales (i.e. des <I>n</I>*<I>t</I> premières 
+décimales) de <I>a</I>/<I>b</I>.
+</P><PRE CLASS="verbatim"> 
+division(a,b,n,t):={
+local L1,L2,p,q,r,k;
+L1:=[iquo(a,b)];
+r:=irem(a,b);
+for (k:=1;k&lt;=n and r!=0;k++) {
+q:=iquo(r*10^t,b);
+//10^(p-1)&lt;= q &lt;10^p
+if (q==0) {p:=1} else {p:=floor(ln(q)/ln(10)+1)};
+//on complete par des zeros pour avoir un paquet de t decimales
+for (j:=p+1;j&lt;=t;j++){
+L1:=append(L1,0);
+}
+L1:=append(L1,q);
+r:=irem(r*10^t,b);
+}
+return(L1,r);
+};
+</PRE><P>On tape pour avoir 5*6=30 decimales :<BR>
+<TT>division(2669,201,6,5)</TT><BR>
+On obtient :<BR>
+<TT>[13,27860,69651,74129,35323,38308,45771],29</TT> 
+</P><H3 CLASS="subsection"><A NAME="htoc229">8.18.3</A>  Construction d’un rationnel</H3><P>
+Trouver un nombre rationnel qui s’écrit :<BR>
+0.123123123123... se terminant par une suite illimitée de 123.<BR>
+Trouver un nombre rationnel qui s’écrit :<BR>
+0.120123123123... se terminant par une suite illimitée de 123.<BR>
+Écrire un programme qui permet de trouver un nombre rationnel à partir 
+d’un développement décimal périodique.<BR>
+Réponse :<BR>
+On écrit la fonction <TT>rationnel</TT> qui a comme le paramètre deux listes 
+<TT>l1</TT> et <TT>l2</TT> :<BR>
+- <TT>l1</TT> désigne la partie non périodique de ce développement et 
+<TT>l1[0]</TT> désigne la partie entière.<BR>
+- <TT>l2</TT> représente un développement décimal périodique.</P><PRE CLASS="verbatim"> 
+rationnel(l1,l2):={
+//l1 et l2 sont non vides
+local pui,s1,s2,n,p,np,pui,k;
+pui:=10;
+s2:=size(l2);
+n:=l2[0];
+for (k:=1;k&lt;s2;k++){
+pui:=pui*10;
+n:=n*10+l2[k];
+}
+// 0.123123...=123/999 
+p:=n/(pui-1);
+//np partie non periodique
+np:=l1[0];
+s1:=size(l1);
+pui:=1;
+for (k:=1;k&lt;s1;k++){
+pui:=pui*10;
+np:=np+l1[k]/pui;
+}
+//pui=10^(s1-1) 
+return(np+p/pui);
+};
+</PRE><H2 CLASS="section"><A NAME="toc63"></A><A NAME="htoc230">8.19</A>  Développement en fraction continue</H2><H3 CLASS="subsection"><A NAME="htoc231">8.19.1</A>  Développement en fraction continue d’un rationnel</H3><H4 CLASS="subsubsection">Les définitions</H4><P>
+<B>Théorème1</B> Si <I>a</I> et <I>b</I> sont des entiers naturels premiers entre
+eux, alors il existe des entiers naturels 
+<I>a</I><SUB>0</SUB>,<I>a</I><SUB>1</SUB>,...,<I>a</I><SUB><I>n</I></SUB> (0 ≤ <I>n</I>) tels que :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>a</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>b</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=<I>a</I><SUB>0</SUB>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I><SUB>1</SUB>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I><SUB>2</SUB>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">...<I>a</I><SUB><I>n</I>−2</SUB>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I><SUB><I>n</I>−1</SUB>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>a</I><SUB><I>n</I></SUB></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Si <I>b</I>≤ <I>a</I> les <I>aj</I> sont non nuls et, si <I>a</I>&lt;<I>b</I> alors <I>a</I><SUB>0</SUB>=0 et les autres 
+<I>a</I><SUB><I>j</I></SUB> sont non nuls.<BR>
+<B>Définition</B>
+On pose alors <I>a</I>/<I>b</I>=(<I>a</I><SUB>0</SUB>,<I>a</I>1,...<I>a</I><SUB><I>n</I></SUB>) et on dit que 
+(<I>a</I><SUB>0</SUB>,<I>a</I>1,...<I>a</I><SUB><I>n</I></SUB>) 
+est une fraction continue : c’est le développement en fraction continue de
+ <I>a</I>/<I>b</I>.<BR>
+<B>Remarque</B> si <I>b</I>≤ <I>a</I> et si <I>a</I>/<I>b</I>=(<I>a</I><SUB>0</SUB>,<I>a</I>1,...<I>a</I><SUB><I>n</I></SUB>) 
+alors <I>b</I>/<I>a</I>=(0,<I>a</I><SUB>0</SUB>,<I>a</I>1,...<I>a</I><SUB><I>n</I></SUB>).<BR>
+<B>Réduite et reste</B>
+On dit que la fraction <I>P</I><SUB><I>p</I></SUB>/<I>Q</I><SUB><I>p</I></SUB> égale à la
+fraction continue (<I>a</I><SUB>0</SUB>,<I>a</I>1,...<I>a</I><SUB><I>p</I></SUB>), où <I>p</I>≤ <I>n</I>, est la réduite de 
+rang <I>p</I> de <I>a</I>/<I>b</I> ou que c’est le développement en 
+fraction continue d’ordre <I>p</I> de <I>a</I>/<I>b</I>.<BR>
+ On dit que 
+<I>r</I>=(0,<I>a</I><SUB><I>p</I>+1</SUB>,..,<I>a</I><SUB><I>n</I></SUB>) est le reste du développement d’ordre <I>p</I> (<I>r</I>&lt;1)
+et on a <I>a</I>/<I>b</I>=(<I>a</I><SUB>0</SUB>,<I>a</I>1,...<I>a</I><SUB><I>p</I></SUB>+<I>r</I>)=(<I>a</I><SUB>0</SUB>,<I>a</I>1,...<I>a</I><SUB><I>p</I></SUB>,1/<I>r</I>),<BR>
+<I>a</I>/<I>b</I>=<I>a</I><SUB>0</SUB>+1/<I>a</I><SUB>1</SUB>+1/<I>a</I><SUB>2</SUB>+1/...<I>a</I><SUB><I>p</I>−3</SUB>+1/<I>a</I><SUB><I>p</I>−2</SUB>+1/<I>a</I><SUB><I>p</I></SUB>+<I>r</I>.<BR>
+</P><H4 CLASS="subsubsection">Propriétés des réduites</H4><P>
+Si <I>P</I><SUB><I>p</I></SUB>/<I>Q</I><SUB><I>p</I></SUB> égale à la
+fraction continue (<I>a</I><SUB>0</SUB>,<I>a</I>1,...<I>a</I><SUB><I>p</I></SUB>), où <I>p</I>≤ <I>n</I>, est la réduite de 
+rang <I>p</I> de <I>a</I>/<I>b</I>=(<I>a</I><SUB>0</SUB>,<I>a</I>1,...<I>a</I><SUB><I>n</I></SUB>), on a :<BR>
+<I>P</I><SUB>0</SUB>=<I>a</I><SUB>0</SUB><BR>
+<I>Q</I><SUB>0</SUB>=1<BR>
+<I>P</I><SUB>1</SUB>=<I>a</I><SUB>0</SUB>*<I>a</I><SUB>1</SUB>+1<BR>
+<I>Q</I><SUB>1</SUB>=<I>a</I><SUB>1</SUB><BR>
+<I>P</I><SUB><I>p</I></SUB>=<I>P</I><SUB><I>p</I>−1</SUB>*<I>a</I><SUB><I>p</I></SUB>+<I>P</I><SUB><I>p</I>−2</SUB><BR>
+<I>Q</I><SUB><I>p</I></SUB>=<I>Q</I><SUB><I>p</I>−1</SUB>*<I>a</I><SUB><I>p</I></SUB>+<I>Q</I><SUB><I>p</I>−2</SUB><BR>
+En effet on le montre par récurrence :<BR>
+<I>P</I><SUB>2</SUB>/<I>Q</I><SUB>2</SUB>=<I>a</I><SUB>0</SUB>+<I>a</I><SUB>2</SUB>/(<I>a</I><SUB>1</SUB><I>a</I><SUB>2</SUB>+1) donc<BR>
+<I>P</I><SUB>2</SUB>=<I>a</I><SUB>2</SUB>(<I>a</I><SUB>0</SUB>+<I>a</I><SUB>1</SUB>+1)+<I>a</I><SUB>0</SUB>=<I>a</I><SUB>2</SUB><I>P</I><SUB>1</SUB>+<I>P</I><SUB>0</SUB> et<BR>
+<I>Q</I><SUB>2</SUB>=<I>a</I><SUB>2</SUB><I>a</I><SUB>1</SUB>+1=<I>a</I><SUB>2</SUB><I>Q</I><SUB>1</SUB>+<I>Q</I><SUB>0</SUB><BR>
+(<I>a</I><SUB>0</SUB>,<I>a</I><SUB>1</SUB>,...,<I>a</I><SUB><I>p</I></SUB>+1/<I>a</I><SUB><I>p</I>+1</SUB>)=<I>P</I><SUB><I>p</I>+1</SUB>/<I>Q</I><SUB><I>p</I>+1</SUB> donc<BR>
+<I>P</I><SUB><I>p</I>+1</SUB>/<I>Q</I><SUB><I>p</I>+1</SUB>=((<I>a</I><SUB><I>p</I></SUB>+1/<I>a</I><SUB><I>p</I>+1</SUB>)<I>P</I><SUB><I>p</I>−1</SUB>+<I>P</I><SUB><I>p</I>−2</SUB>)/((<I>a</I><SUB><I>p</I></SUB>+1/<I>a</I><SUB><I>p</I>+1</SUB>)<I>Q</I><SUB><I>p</I>−1</SUB>+<I>Q</I><SUB><I>p</I>−2</SUB>)<BR>
+<I>P</I><SUB><I>p</I>+1</SUB>=<I>a</I><SUB><I>p</I>+1</SUB>(<I>a</I><SUB><I>p</I></SUB><I>P</I><SUB><I>p</I>−1</SUB>+<I>P</I><SUB><I>p</I>−2</SUB>)+<I>P</I><SUB><I>p</I>−1</SUB>=<I>a</I><SUB><I>p</I>+1</SUB><I>P</I><SUB><I>p</I></SUB>+<I>P</I><SUB><I>p</I>−1</SUB> et<BR>
+<I>Q</I><SUB><I>p</I>+1</SUB>=<I>a</I><SUB><I>p</I>+1</SUB>(<I>a</I><SUB><I>p</I></SUB><I>Q</I><SUB><I>p</I>−1</SUB>+<I>Q</I><SUB><I>p</I>−2</SUB>)+<I>Q</I><SUB><I>p</I>−1</SUB>=<I>a</I><SUB><I>p</I>+1</SUB><I>Q</I><SUB><I>p</I></SUB>+<I>Q</I><SUB><I>p</I>−1</SUB>
+</P><H4 CLASS="subsubsection">Les programmes</H4><P>
+<B>Le programme f2dfc :</B><BR>
+On veut transformer une fraction en son développement en fraction continue :<BR>
+<TT><I>f</I>2<I>dfc</I>(<I>a</I>/<I>b</I>)=(<I>a</I></TT><SUB><TT>0</TT></SUB><TT>, <I>a</I></TT><SUB><TT>1</TT></SUB><TT>,...<I>a</I></TT><SUB><TT><I>n</I></TT></SUB><TT>)</TT>.<BR>
+Pour obtenir le développement en fraction continue de <I>a</I>/<I>b</I>, on cherche le 
+quotient <I>q</I> et le reste <I>r</I> de la division euclidienne de <I>a</I> par <I>b</I>.
+On a : <I>q</I>=<I>a</I><SUB>0</SUB> et <I>a</I>/<I>b</I>=<I>a</I><SUB>0</SUB>+<I>r</I>/<I>b</I>=<I>a</I><SUB>0</SUB>+1/(<I>b</I>/<I>r</I>) et, on continue en cherchant
+la partie entiére de <I>b</I>/<I>r</I> qui sera <I>a</I><SUB>1</SUB>....On reconnait
+l’algorithme d’Euclide : la suite (<I>a</I><SUB>0</SUB>, <I>a</I><SUB>1</SUB>,...<I>a</I><SUB><I>n</I></SUB>) est donc la suite 
+des quotients de l ’algorithme d’Euclide.<BR>
+On écrit le programme : 
+</P><PRE CLASS="verbatim">f2dfc(fract):={
+local r,q,l,lres,a,b;
+l:=f2nd(fract);
+a:=l[0];
+b:=l[1];
+lres:=[];
+while (b&gt;0) {
+q:=iquo(a,b)
+lres:=concat(lres,q);
+r:=irem(a,b); 
+a:=b;
+b:=r:
+}
+return lres;
+}
+</PRE><P>On tape :<BR>
+<TT>f2dfc(2599/357)</TT><BR>
+On obtient :<BR>
+<TT>[7,3,1,1,3,14]</TT><BR>
+<B>Le programme f2reduites d’un rationnel et l’identité de Bézout :</B> 
+On veut obtenir la suite des réduites de <I>a</I>/<I>b</I>.<BR>
+L’algorithme pour obtenir les réduites ressemble beaucoup à l’algorithme 
+utilisé pour obtenir les coefficients <I>u</I> et <I>v</I> de l’identité de 
+Bézout (cf <A HREF="#sec:bezout">8.3.5</A>).<BR>
+En effet on a :<BR>
+<I>P</I><SUB>0</SUB>=<I>a</I><SUB>0</SUB>=<I>a</I><SUB>0</SUB>*1+0 alors que <I>v</I><SUB>0</SUB>=0<BR>
+<I>Q</I><SUB>0</SUB>=1=<I>a</I><SUB>0</SUB>*0+1 alors que <I>u</I><SUB>0</SUB>=1<BR>
+<I>P</I><SUB>1</SUB>=<I>a</I><SUB>0</SUB><I>a</I><SUB>1</SUB>+1=<I>P</I><SUB>0</SUB>*<I>a</I><SUB>1</SUB>+1 alors que <I>v</I><SUB>1</SUB>=1<BR>
+<I>Q</I><SUB>1</SUB>=<I>a</I><SUB>1</SUB>=<I>a</I><SUB>1</SUB>*<I>Q</I><SUB>0</SUB>+0 alors que <I>u</I><SUB>1</SUB>=0<BR>
+<I>P</I><SUB><I>p</I></SUB>=<I>P</I><SUB><I>p</I>−1</SUB>*<I>a</I><SUB><I>p</I></SUB>+<I>P</I><SUB><I>p</I>−2</SUB> alors que <I>v</I><SUB><I>p</I></SUB>=<I>v</I><SUB><I>p</I>−2</SUB>−<I>a</I><SUB><I>p</I>−2</SUB><I>v</I><SUB><I>p</I>−1</SUB><BR>
+<I>Q</I><SUB><I>p</I></SUB>=<I>Q</I><SUB><I>p</I>−1</SUB>*<I>a</I><SUB><I>p</I></SUB>+<I>Q</I><SUB><I>p</I>−2</SUB> alors que <I>u</I><SUB><I>p</I></SUB>=<I>u</I><SUB><I>p</I>−2</SUB>−<I>a</I><SUB><I>p</I>−2</SUB><I>u</I><SUB><I>p</I>−1</SUB><BR>
+Ainsi :<BR>
+<I>P</I><SUB>0</SUB>=0+<I>a</I><SUB>0</SUB>*1=<I>v</I><SUB>0</SUB>−<I>a</I><SUB>0</SUB>*<I>v</I><SUB>1</SUB>=−<I>v</I><SUB>2</SUB><BR>
+<I>P</I><SUB>1</SUB>=1+<I>P</I><SUB>0</SUB>*<I>a</I><SUB>1</SUB>=<I>v</I><SUB>1</SUB>−<I>v</I><SUB>2</SUB>*<I>a</I><SUB>1</SUB>=<I>v</I><SUB>3</SUB><BR>
+<I>P</I><SUB>2</SUB>=<I>P</I><SUB>0</SUB>+<I>P</I><SUB>1</SUB>*<I>a</I><SUB>2</SUB>=−<I>v</I><SUB>2</SUB>+<I>v</I><SUB>3</SUB>*<I>a</I><SUB>2</SUB>=−(<I>v</I><SUB>2</SUB>−<I>v</I><SUB>3</SUB>*<I>a</I><SUB>2</SUB>)=−<I>v</I><SUB>4</SUB><BR>
+On a donc pour tout <I>p</I> ≥ 0, si <I>a</I><SUB><I>p</I></SUB> est la suite des quotients de 
+l’algorithme d’Euclide :<BR>
+<I>Q</I><SUB><I>p</I></SUB>=<I>Q</I><SUB><I>p</I>−1</SUB>*<I>a</I><SUB><I>p</I></SUB>+<I>Q</I><SUB><I>p</I>−2</SUB> avec <I>Q</I><SUB>−2</SUB>=1=<I>u</I><SUB>0</SUB> et <I>Q</I><SUB>−1</SUB>=0=<I>u</I><SUB>1</SUB> et,<BR>
+<I>P</I><SUB><I>p</I></SUB>=<I>P</I><SUB><I>p</I>−1</SUB>*<I>a</I><SUB><I>p</I></SUB>+<I>P</I><SUB><I>p</I>−2</SUB> avec <I>P</I><SUB>−2</SUB>=0=<I>v</I><SUB>0</SUB> et <I>P</I><SUB>−1</SUB>=1=<I>v</I><SUB>1</SUB><BR>
+Dans l’algorithme de Bézout on a :<BR>
+<I>u</I><SUB><I>p</I></SUB>=−<I>u</I><SUB><I>p</I>−1</SUB>*<I>a</I><SUB><I>p</I>−2</SUB>+<I>u</I><SUB><I>p</I>−2</SUB> et <I>v</I><SUB><I>p</I></SUB>=−<I>v</I><SUB><I>p</I>−1</SUB>*<I>a</I><SUB><I>p</I>−2</SUB>+<I>v</I><SUB><I>p</I>−2</SUB> 
+<I>Q</I><SUB>0</SUB>=0+<I>u</I><SUB>2</SUB> donc <I>Q</I><SUB>1</SUB>=−<I>u</I><SUB>3</SUB>, <I>Q</I><SUB>2</SUB>=<I>u</I><SUB>4</SUB> etc...donc <I>Q</I><SUB><I>n</I></SUB>=(−1)<SUP><I>n</I></SUP><I>u</I><SUB><I>n</I>+2</SUB> et,<BR>
+<I>P</I><SUB>0</SUB>=−<I>v</I><SUB>2</SUB>+0 donc <I>P</I><SUB>1</SUB>=<I>v</I><SUB>3</SUB>, <I>P</I><SUB>2</SUB>=−<I>v</I><SUB>4</SUB> etc...donc <I>P</I><SUB><I>n</I></SUB>=(−1)<SUP><I>n</I>+1</SUP><I>v</I><SUB><I>n</I>+2</SUB>.<BR>
+Donc <I>P</I><SUB><I>n</I></SUB>/<I>Q</I><SUB><I>n</I></SUB>=−<I>v</I><SUB><I>n</I>+2</SUB>/<I>u</I><SUB><I>n</I>+2</SUB><BR>
+Donc la suite <I>Q</I><SUB><I>j</I></SUB>/<I>P</I><SUB><I>j</I></SUB> est donc la suite des −<I>u</I>/<I>v</I>.<BR>
+On écrit le programme (calqué sur le programme <TT>Bezout</TT> avec les 
+listes) qui transforme une fraction en son développement en fraction continue
+suivi de la suite de ces réduites : 
+</P><PRE CLASS="verbatim">f2reduites(fract):={
+local lr,q,l,lres,la,lb,lq;
+l:=f2nd(fract);
+//a:=l[0];b:=l[1];
+la:=[1,0,l[0]];
+lb:=[0,1,l[1]];
+lq:=[];
+lres:=[];
+while (lb[2]&gt;0) {
+q:=iquo(la[2],lb[2])
+lr:=la-q*lb;
+lq:=concat(lq,q);
+lres:=concat(lres,-lr[1]/lr[0]);
+la:=lb;
+lb:=lr;
+}
+return lq,lres;
+}
+</PRE><P>On tape :<BR>
+<TT>f2reduites(2599/357)</TT><BR>
+On obtient :<BR>
+<TT>[7,3,1,1,3,14],[7,22/3,29/4,51/7,182/25,2599/357]</TT><BR>
+<B>Remarque</B> :<BR>
+On ne peut pas remplacer :<BR>
+<TT>lr:=la-q*lb;</TT><BR>
+<TT>lres:=concat(lres,-lr[1]/lr[0])</TT><BR>
+par :<BR>
+<TT>lr:=la+q*lb;</TT><BR>
+<TT>lres:=concat(lres,lr[1]/lr[0]);</TT><BR>
+car alors <TT>lr</TT> n’est plus la suite des restes !<BR>
+<B>Le programme dfc2reduites d’un rationnel et l’identité de Bézout:</B> 
+On veut obtenir la suite des réduites d’une liste <I>l</I> (qui sera par exemple 
+le développement en fraction continue d’un rationnel <I>a</I>/<I>b</I>) 
+On écrit le programme (calqué sur le programme <TT>Bezout</TT> sans les 
+listes) qui transforme une liste [<I>a</I><SUB>0</SUB>,<I>a</I><SUB>1</SUB>,..<I>a</I><SUB><I>n</I></SUB>] en la 
+liste [<I>a</I><SUB>0</SUB>,<I>a</I><SUB>0</SUB>+1/<I>a</I><SUB>1</SUB>,....,(<I>a</I><SUB>0</SUB>+1/<I>a</I><SUB>1</SUB>+1/...+1/<I>a</I><SUB><I>n</I>−1</SUB>+1/<I>a</I><SUB><I>n</I></SUB>)] : 
+</P><PRE CLASS="verbatim">dfc2reduites(l):={
+local s,p0,q0,p1,q1,p,q,lres,j;
+s:=size(l);
+lres:=[];
+p0:=0;
+p1:=1;
+q0:=1;
+q1:=0;
+for (j:=0;j&lt;s;j++){
+  p:=p0+l[j]*p1;
+  q:=q0+l[j]*q1;
+  lres:=concat(lres,p/q);
+  p0:=p1;
+  q0:=q1;
+  p1:=p;
+  q1:=q;
+}
+return lres;
+}
+</PRE><P>On remarquera que :<BR>
+ -la suite des <I>P</I> est initialisée par
+<I>p</I>0 et <I>p</I>1, puis, quand <I>j</I>=0, on fait le calcul de <I>P</I><SUB>0</SUB> qui est mis dans 
+<I>p</I>, puis, quand <I>j</I>=1 on fait 
+le calcul de <I>P</I><SUB>1</SUB> qui est mis dans <I>p</I>, etc... et que<BR>
+- la suite des <I>Q</I> est initialisée par :
+<I>q</I>0 et <I>q</I>1, puis, quand <I>j</I>=0 on fait le calcul de <I>Q</I><SUB>0</SUB> qui est mis dans 
+<I>q</I>, quand <I>j</I>=1, on fait
+le calcul de <I>Q</I><SUB>1</SUB> est mis dans <I>q</I>, etc...<BR>
+On tape :<BR>
+<TT>dfc2reduites([7,3,1,1,3,14])</TT><BR>
+On obtient :<BR>
+<TT>[7,22/3,29/4,51/7,182/25,2599/357]</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc232">8.19.2</A>  Développement en fraction continue d’un réel quelconque</H3><P>
+<B>Théorème2</B> Si α est un nombre réel non rationnel,
+alors il existe des entiers naturels non nuls 
+<I>a</I><SUB>0</SUB>,<I>a</I><SUB>1</SUB>,...,<I>a</I><SUB><I>n</I></SUB> et un réel β&lt;1 tels que :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">α=<I>a</I><SUB>0</SUB>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I><SUB>1</SUB>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I><SUB>2</SUB>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">...<I>a</I><SUB><I>n</I>−2</SUB>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I><SUB><I>n</I>−1</SUB>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>a</I><SUB><I>n</I></SUB>+β</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On dit que (<I>a</I><SUB>0</SUB>,<I>a</I>1,...<I>a</I><SUB><I>n</I></SUB>) est le développement en fraction continue 
+d’ordre <I>n</I>+1 de α et que β est le reste de ce développement.<BR>
+Un rationnel a un développement en fraction continue fini et 
+réciproquement, un développement en fraction continue fini représente 
+un rationnel.<BR>
+Un réel non rationnel a un développement en fraction continue infini.<BR>
+Si α est un nombre quadratique (i.e. α est racine d’une 
+équation du second degré), α a un développement en fraction 
+continue périodique et réciproquement, un développement en fraction 
+continue périodique représente un nombre quadratique.</P><H3 CLASS="subsection"><A NAME="htoc233">8.19.3</A>  Les programmes</H3><P>
+On va écrire deux fonctions <TT>r2dfc</TT> et <TT>dfc2r</TT>.
+</P><H4 CLASS="subsubsection">La fonction r2dfc</H4><P>
+<TT>r2dfc(alpha,n)</TT> qui transforme un réel <TT>alpha</TT> en son
+développement en fraction continue et qui renvoie deux listes, soit :<BR>
+- <TT>[<I>a</I></TT><SUB><TT>0</TT></SUB><TT>,<I>a</I></TT><SUB><TT>1</TT></SUB><TT>...<I>a</I></TT><SUB><TT><I>p</I></TT></SUB><TT>],[]</TT> avec <TT><I>p</I> ≤ <I>n</I></TT> où les <TT><I>a</I></TT><SUB><TT><I>j</I></TT></SUB> sont 
+des entiers, la deuxième liste est 
+vide et la première liste est le développement en fraction 
+continue de <TT>alpha</TT> (les <TT><I>a</I></TT><SUB><TT><I>j</I></TT></SUB> sont des entiers et donc <TT>alpha</TT> 
+est une fraction)<BR>
+- <TT>[<I>a</I></TT><SUB><TT>0</TT></SUB><TT>,<I>a</I></TT><SUB><TT>1</TT></SUB><TT>...<I>a</I></TT><SUB><TT><I>n</I>-1</TT></SUB><TT>,<I>b</I>],[]</TT>, la deuxième liste est vide et 
+la première liste est le développement en fraction 
+continue d’ordre <I>n</I>−1 de <TT>alpha</TT> suivi de <TT><I>b</I>&gt;1</TT> (le reste est égal à 
+<TT>1/<I>b</I></TT>), où les <TT><I>a</I></TT><SUB><TT><I>j</I></TT></SUB> sont des entiers et <TT>b</TT> est un réel 
+plus grand que 1, soit,<BR>
+- <TT>[<I>a</I></TT><SUB><TT>0</TT></SUB><TT>,<I>a</I></TT><SUB><TT>1</TT></SUB><TT>...<I>a</I></TT><SUB><TT><I>p</I></TT></SUB><TT>],[<I>a</I></TT><SUB><TT><I>r</I></TT></SUB><TT>,..<I>a</I></TT><SUB><TT><I>p</I></TT></SUB><TT>]</TT> avec <TT><I>r</I>≤ <I>p</I> &lt; <I>n</I></TT><BR>
+où les <TT><I>a</I></TT><SUB><TT><I>j</I></TT></SUB> sont des entiers, la première liste est le 
+développement en fraction continue d’ordre <I>p</I> de <TT>alpha</TT> et 
+la deuxième liste représente la période de cedéveloppement en fraction 
+continue (les <TT><I>a</I></TT><SUB><TT><I>j</I></TT></SUB> sont des entiers et donc <TT>alpha</TT> est un nombre 
+quadratique)<BR>
+.<BR>
+On remarquera dans le programme ci-dessous que :<BR>
+<TT><I>a</I></TT><SUB><TT>0</TT></SUB><TT>=<I>floor</I>(<I>alpha</I>)=<I>q</I></TT> remplace <TT><I>q</I>:=<I>iquo</I>(<I>a</I>,<I>b</I>)</TT> lorsque 
+<TT>alpha=a/b</TT><BR>
+et que <TT>r=alpha-q</TT> remplace <TT><I>irem</I>(<I>a</I>,<I>b</I>)/<I>b</I></TT> lorsque 
+<TT>alpha=a/b</TT><BR>
+et donc que si <TT>r=alpha-q</TT>, <TT><I>a</I></TT><SUB><TT>1</TT></SUB><TT>=<I>floor</I>(1/<I>r</I>)</TT> etc...<BR>
+Le problème ici est de pouvoir comparer <TT>alpha</TT> et <TT>q</TT> 
+c’est à dire savoir si <TT>r==0</TT> et pour cela on est obligé de
+faire les calculs avec beaucoup de décimales c’est à dire d’augmenter 
+le nombre de digits (on tape par exemple <TT>DIGITS:=30</TT>). 
+Il faut bien sûr repérer la période, pour cela on forme la liste 
+<TT>lr</TT> des restes successifs. La liste <TT>lq</TT> des parties entières
+successives forme le début du développement en fraction continue.
+</P><PRE CLASS="verbatim">r2dfc(alpha,n):={
+local r,q,lq,lr,p,j;
+q:=floor(alpha);
+r:=normal(alpha-q);
+lq:=[];
+lr:=[];
+for (j:=1;j&lt;=n;j:=j+1) {
+lq:=concat(lq,q);
+if (r==0){return (lq,[]);}
+p:=member(r,lr);
+if (p) {return (lq,mid(lq,p)):}
+lr:=concat(lr,r);
+alpha:=normal(1/r);
+q:=floor(alpha);
+r:=normal(alpha-q);
+}
+return (concat(lq,alpha),[]);
+};
+</PRE><P>On tape :<BR>
+<TT>dfc2r(sqrt(2),1)</TT><BR>
+On obtient :<BR>
+<TT>([1,sqrt(2)+1],[])</TT><BR>
+On tape :<BR>
+<TT>dfc2r(sqrt(2),2)</TT><BR>
+On obtient :<BR>
+<TT>([1,2],[2])</TT><BR>
+On tape :<BR>
+<TT>dfc2r(pi),6</TT><BR>
+On obtient :<BR>
+<TT>([3,7,15,1,292,1,(-33102*pi+103993)/(33215*pi-104348)],[])</TT>
+<B>Remarque</B>
+Le premier argument doit être un nombre exact, car sinon les calculs sont 
+faits en mode approché et le test r==0 n’est jamais réalisé...
+</P><H4 CLASS="subsubsection">La fonction dfc2r</H4><P>
+On écrit la fonction réciproque de <TT>r2dfc</TT> qui à partir d’un 
+développement en fraction continue et d’un reste éventuel ou d’un 
+développement en fraction continue et d’une période éventuelle 
+renvoie un réel.<BR>
+<TT>dfc2r(d,t)</TT> transforme en un réel, la liste <TT>d</TT> représente un
+développement en fraction continue et la liste 
+<TT>t</TT> représente la période.<BR>
+On remarquera que lorsque la liste 
+<TT>t</TT> n’est pas vide il faut déterminer le nombre <TT>0&lt;y&lt;1</TT> qui admet 
+cette liste périodique comme développement en fraction continue et 
+pour ce faire résoudre l’équation :<BR>
+<TT><I>y</I>=(0,<I>t</I></TT><SUB><TT>0</TT></SUB><TT>,...<I>t</I></TT><SUB><TT><I>st</I>-1</TT></SUB><TT>+<I>y</I>)</TT>
+le reste est alors <TT><I>y</I>+<I>d</I></TT><SUB><TT><I>s</I>-1</TT></SUB> (<TT>s:=size(d)</TT>).<BR>
+On écrit le programme :
+</P><PRE CLASS="verbatim">dfc2r(d,t):={
+local s,st,alpha,l,ap,k;
+s:=size(d);
+alpha:=d[s-1];
+for (k:=s-2;k&gt;=0;k:=k-1) {alpha:=normal(d[k]+1/alpha);}
+if (t==[]) {return normal(alpha);}
+st:=size(t);
+purge(y);
+ap:=t[st-1]+y;
+for (k:=st-2;k&gt;=0;k:=k-1) {ap:=normal(t[k]+1/ap);}
+l:=solve(y=1/ap,y);
+if (l[0]&gt;0){y:=normal(l[0]);}else{y:=normal(l[1]);};
+alpha:=d[s-1]+y;
+for (k:=s-2;k&gt;=0;k:=k-1) {alpha:=normal(d[k]+1/alpha);}
+return(normal(a)lpha);
+};
+</PRE><P>ou avec une écriture plus concise :
+</P><PRE CLASS="verbatim">dfc2r(d,t):={
+local s,st,alpha,l,ap,k;
+s:=size(d);
+st:=size(t);
+if (st==0) 
+  {y:=0;} 
+   else 
+ {purge(y);
+  ap:=t[st-1]+y;
+  for (k:=st-2;k&gt;=0;k:=k-1) {ap:=normal(t[k]+1/ap);}
+  l:=solve(y=1/ap,y);
+  if (l[0]&gt;0){y:=normal(l[0]);}else{y:=normal(l[1]);};
+  }
+alpha:=d[s-1]+y;
+for (k:=s-2;k&gt;=0;k:=k-1) {alpha:=normal(d[k]+1/alpha);}
+return(normal(alpha));
+};
+</PRE><H3 CLASS="subsection"><A NAME="htoc234">8.19.4</A>  Exemples</H3><P>
+1/ Développement en fraction continue de :
+<TT>1393/972</TT>,
+<TT>1+√</TT><TT><SPAN style="text-decoration:overline">13</SPAN></TT> et 
+<TT>1-√</TT><TT><SPAN style="text-decoration:overline">13</SPAN></TT>.<BR>
+On a :<BR>
+<TT>r2dfc(1393/972,3)=[1,2,3,130/31],[]</TT><BR>
+<TT>r2dfc(1393/972,7)=[1,2,3,4,5,6],[]</TT><BR>
+et on a bien :<BR>
+<TT>r2dfc(130/31,3)=[4,5,6],[]</TT><BR>
+<TT>r2dfc(31/130,4)=[0,4,5,6],[]</TT><BR>
+On peut vérifier que :<BR>
+<TT>dfc2r([1,2,3,4,5,6],[])=1393/972</TT><BR>
+<TT>dfc2r([1,2,3+31/130],[])=dfc2r([1,2,3,130/31],[])=1393/972</TT><BR>
+On a :<BR>
+<TT>r2dfc(1+sqrt(13),3)=[4,1,1,(sqrt(13)+2)/3],[]</TT><BR>
+<TT>r2dfc(1+sqrt(13),6)=[4,1,1,1,1,6],[1,1,1,1,6]</TT><BR>
+<TT>r2dfc(1-sqrt(13),7)=[-3,2,1,1,6,1,1],[1,1,6,1,1]</TT></P><P>2/ Trouver les réels qui ont comme développement en fraction continue :<BR>
+<TT>[2,4,4,4,4,4....]</TT> (suite illimitée de <TT>4</TT>) et<BR>
+<TT>[1,1,1,1,1,1....]</TT> (suite illimitée de <TT>1</TT>).<BR>
+On a :<BR>
+<TT>dfc2r([2,4],[4])=sqrt(5)</TT>
+ou encore
+<TT>dfc2r([2],[4])=sqrt(5)</TT>
+On a :<BR>
+<TT>dfc2r([1],[1])=(sqrt(5)+1)/2</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc235">8.19.5</A>  Suite des réduites successives d’un réel</H3><P>
+Si <TT>alpha</TT> a comme développement en fraction continue
+<TT>(<I>a</I></TT><SUB><TT>0</TT></SUB><TT>,<I>a</I></TT><SUB><TT>1</TT></SUB><TT>,....<I>a</I></TT><SUB><TT><I>n</I></TT></SUB><TT>....)</TT>, la suite des réduites est la suite des 
+nombres rationnels ayant comme développement en fraction continue :
+<TT>(<I>a</I></TT><SUB><TT>0</TT></SUB><TT>),(<I>a</I></TT><SUB><TT>0</TT></SUB><TT>,<I>a</I></TT><SUB><TT>1</TT></SUB><TT>),..,(<I>a</I></TT><SUB><TT>0</TT></SUB><TT>,<I>a</I></TT><SUB><TT>1</TT></SUB><TT>....<I>a</I></TT><SUB><TT><I>n</I></TT></SUB><TT>),.... </TT>.<BR>
+On écrit le programme permettant d’obtenir les <TT>p</TT> premières 
+réduites de <TT>alpha</TT>.<BR>
+On écrit le programme <TT>reduiten</TT> (on recalcule les réduites sans 
+se servir des relations de récurrence) :
+</P><PRE CLASS="verbatim">reduiten(alpha,p):={
+local l,k,ld,lt,st,s,q,lred,redu;
+ld:=r2dfc(alpha,p);
+l:=ld[0];
+s:= size(l);
+if (s&lt;p) {
+  lt:=ld[1];
+  st:=size(lt);
+  if (st!=0){
+    q:=iquo(p-s,st);
+    for (j:=0;j&lt;=q; j++){
+      l:= concat(l,lt)
+    }
+  }
+  else {
+  p:=s;
+  } 
+}
+lred:=[];
+for (k:=1;k&lt;=p;k++){
+  redu:=dfc2r(mid(l,0,k),[]);
+  lred:=append(lred,redu);
+}
+return (lred);
+};
+</PRE><P><TT>reduiten(sqrt(53),5)</TT><BR>
+On obtient :<BR>
+<TT>[7,22/3,29/4,51/7,182/25]</TT><BR>
+
+On écrit maintenant le programme <TT>reduite</TT> permettant d’obtenir les 
+<TT>p</TT> premières réduites de <TT>alpha</TT>, en se servant de la fonction 
+<TT>dfc2reduites</TT> écrite auparavant et qui utilise les relations de 
+récurrence.
+</P><PRE CLASS="verbatim">reduite(alpha,p):={
+local l,ld,lt,st,s,q,lred;
+ld:=r2dfc(alpha,p);
+l:=ld[0];
+s:= size(l);
+if (s&lt;p) {
+  lt:=ld[1];
+  st:=size(lt);
+  if (st!=0){
+    q:=iquo(p-s,st);
+    for (j:=0;j&lt;=q; j++){
+      l:= concat(l,lt)
+    }
+  }
+}  
+l:= mid(l,0,p);
+lred:=dfc2reduites(l);
+return lred;
+}
+</PRE><P>On tape :<BR>
+<TT>reduite(sqrt(53),5)</TT><BR>
+On obtient :<BR>
+<TT>[7,22/3,29/4,51/7,182/25]</TT><BR>
+On tape :<BR>
+<TT>reduite(11/3,2)</TT><BR>
+On obtient :<BR>
+<TT>[3,4]</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc236">8.19.6</A>  Suite des réduites "plus 1" successives d’un réel</H3><P>
+Si <TT>alpha</TT> a comme développement en fraction continue
+<TT>(<I>a</I></TT><SUB><TT>0</TT></SUB><TT>,<I>a</I></TT><SUB><TT>1</TT></SUB><TT>,....<I>a</I></TT><SUB><TT><I>n</I></TT></SUB><TT>....)</TT>, la suite des réduites "plus 1"
+est la suite des nombres 
+rationnels ayant comme développement en fraction continue :
+<TT>(<I>a</I></TT><SUB><TT>0</TT></SUB><TT>+1),(<I>a</I></TT><SUB><TT>0</TT></SUB><TT>,<I>a</I></TT><SUB><TT>1</TT></SUB><TT>+1),..,(<I>a</I></TT><SUB><TT>0</TT></SUB><TT>,<I>a</I></TT><SUB><TT>1</TT></SUB><TT>....<I>a</I></TT><SUB><TT><I>n</I></TT></SUB><TT>+1),.... </TT>.<BR>
+On écrit le programme permettant d’obtenir les <TT>p</TT> premières 
+réduites "plus 1" de <TT>alpha</TT>.
+</P><PRE CLASS="verbatim">reduite1(alpha,p):={
+local l,ld,lt,st,s,q,lred;
+ld:=r2dfc(alpha,p);
+l:=ld[0];
+s:= size(l);
+if (s&lt;p) {
+  lt:=ld[1];
+  st:=size(lt);
+  if (st!=0){
+    q:=iquo(p-s,st);
+    for (j:=0;j&lt;=q; j++){
+    l:= concat(l,lt)
+    }
+  }
+}  
+l:= mid(l,0,p)+1;
+lred:=dfc2reduites(l);
+return lred;
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc237">8.19.7</A>  Propriété des réduites</H3><P>
+<B>Propriété des réduites de </B><B><TT>alpha</TT></B> :<BR>
+Une réduite <TT>p/q</TT> approche <TT>alpha</TT> à moins de <TT>1/<I>q</I></TT><SUP><TT>2</TT></SUP> et si
+<TT>s/t</TT> est la réduite plus 1 de même rang <TT>n</TT> on a :<BR>
+- <TT>|<I>p</I>/<I>q</I>-<I>s</I>/<I>t</I>|&lt;1/<I>q</I></TT><SUP><TT>2</TT></SUP><BR>
+- si <TT>n</TT> est pair <TT><I>p</I>/<I>q</I> ≤ <I>alpha</I> ≤ <I>r</I>/<I>s</I></TT><BR>
+- si <TT>n</TT> est impair <TT><I>r</I>/<I>s</I> ≤ <I>alpha</I> ≤ <I>p</I>/<I>q</I></TT><BR>
+- les réduites de rang pair et les réduites de rang impair forment 
+deux suites adjacentes qui convergent vers <TT>alpha</TT><BR>
+- les réduites plus 1 de rang pair et les réduites plus 1 de rang impair 
+forment deux suites adjacentes qui convergent vers <TT>alpha</TT><BR>
+Donc, si on pose :<BR>
+<TT>lred:=reduite(alpha,10)</TT> et 
+<TT>lred1:=reduite1(alpha,10)</TT>,
+ces deux suites <TT>lred</TT> et <TT>lred1</TT> fournissent un encadrement de 
+<TT>alpha</TT> plus précisément on a :<BR>
+<TT>lred[0] </TT><TT>≤</TT><TT> lred1[1]</TT><TT>≤..≤</TT><TT> lred[2p] </TT><TT>≤</TT><TT> lred1[2p+1]&lt;alpha</TT><BR>
+<TT>alpha&lt;lred[2p+1]</TT><TT>≤</TT><TT> lred1[2p] </TT><TT>≤ ...≤</TT><TT> lred[1] </TT><TT>≤</TT><TT> lred1[0]</TT><BR>
+c’est à dire que l’encadrement fait avec 2 réduites successives de rang
+<I>p</I>−1 et <I>p</I> est moins bon que l’encadrement fait avec la réduite de rang 
+<I>p</I> et la réduite plus 1 de rang <I>p</I>.<BR>
+<B>Exemple</B><BR>
+On a :<BR>
+<TT>r2dfc(sqrt(53),5)= [7,3,1,1,3,sqrt(53)+7],[]</TT><BR>
+<TT>dfc2r([7,3,1,1,3],[])=182/25</TT><BR>
+<TT>reduite(sqrt(53),5)[4]=182/25=7.28</TT><BR>
+<TT>reduite1(sqrt(53),5)[4]=233/32=7.28125</TT><BR>
+<TT>reduite(182/25,5)[4]=182/25=7.28</TT><BR>
+<TT>reduite1(182/25,5)[4]=233/32=7.28125</TT><BR>
+et donc <TT>7.28&lt;√</TT><TT><SPAN style="text-decoration:overline">53</SPAN></TT><TT>&lt;7.28125</TT><BR>
+<TT>r2dfc(sqrt(53),6)= [7,3,1,1,3,14],[3,1,1,3,14]</TT><BR>
+<TT>dfc2r([7,3,1,1,3,14],[])=2599/357</TT><BR>
+<TT>reduite(sqrt(53),6)[5]=2599/357=7.28011204482</TT><BR>
+<TT>reduite1(sqrt(53),6)[5]=2781/382=7.28010471204</TT><BR>
+<TT>reduite(2599/357,5)[4]=2599/357=7.28011204482</TT><BR>
+<TT>reduite1(2599/357,5)[4]=2781/382=7.28010471204</TT><BR>
+et donc <TT>7.28010471204&lt;√</TT><TT><SPAN style="text-decoration:overline">53</SPAN></TT><TT>&lt;7.28011204482</TT><BR>
+On a 1/357<SUP>2</SUP>=7.84627576521<I>e</I>−06 et 1/382<SUP>2</SUP>=6.8528823223<I>e</I>−06</P><H2 CLASS="section"><A NAME="toc64"></A><A NAME="htoc238">8.20</A>  Suite de Hamming</H2><H3 CLASS="subsection"><A NAME="htoc239">8.20.1</A>  La définition</H3><P>
+La suite de Hamming est la suite des nombres entiers qui n’ont pour diviseurs 
+premiers que 2, 3 et 5.<BR>
+Cette suite commence par : [2,3,4,5,6,8,9,10,12,15,16,18,20,24,25...]<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc240">8.20.2</A>  L’algorithme à l’aide d’un crible</H3><P>
+On écrit tous les nombres de Hamming de 0 à <TT>n&gt;0</TT> et on barre les 
+nombres qui sont de la forme 2<SUP><I>a</I></SUP>*3<SUP><I>b</I></SUP>*5<SUP><I>c</I></SUP> avec <I>a</I>,<I>b</I>,<I>c</I> variant de 0 à un
+nombre tel que 2<SUP><I>a</I></SUP>*3<SUP><I>b</I></SUP>*5<SUP><I>c</I></SUP> ≤ <I>n</I>: les nombres barrés (excepté 1) 
+sont les nombres de Hamming inférieurs à <TT>n&gt;0</TT>.<BR>
+Voici la fonction <TT>hamming(n)</TT> écrite en <TT>Xcas</TT> pour obtenir
+les nombres de Hamming inférieurs à <TT>n&gt;0</TT>.
+</P><PRE CLASS="verbatim">hamming(n):={
+  local H,L,a,b,c,j,d;
+  L:=makelist(x-&gt;x,0,n);
+  //les nbres de Hamming sont 2^a*3^b*5^c
+  c:=0; b:=0;a:=0;
+  d:=1;
+  while (d&lt;=n) { 
+    while (d&lt;=n){ 
+      while (d&lt;=n) {
+ L[d]:=0;
+ //d:=5*d
+ c:=c+1;
+ d:=2^a*3^b*5^c; 
+      }
+      c:=0; 
+      b:=b+1;
+      //d:=2^a*3^b*5^c
+      d:=2^a*3^b;
+    }
+    //c:=0;
+    b:=0;
+    a:=a+1;
+    //d:=2^a*3^b*5^c
+    d:=2^a;
+  }
+  H:=[];
+  for (j:=2;j&lt;=n;j++) {
+    if (L[j]==0) H:=append(H,j);
+  }
+  return H;
+}
+</PRE><P>ou encore en supprimant la variable c :
+</P><PRE CLASS="verbatim">hamming(n):={
+  local H,L,a,b,j,d;
+  L:=makelist(x-&gt;x,0,n);
+  //les nbres de Hamming sont 2^a*3^b*5^c
+ a:=0;
+  d:=1;
+  while (d&lt;=n) { 
+    b:=0; 
+    while (d&lt;=n){ 
+      while (d&lt;=n) {
+ L[d]:=0;
+ d:=5*d; 
+      } 
+      b:=b+1;
+      d:=2^a*3^b;
+    }
+    a:=a+1;
+    d:=2^a;
+  }
+  H:=[];
+  for (j:=2;j&lt;=n;j++) {
+    if (L[j]==0) H:=append(H,j);
+  }
+  return H;
+}
+</PRE><P>ou encore en supprimant a,b,c et en preservant la valeur de d avant les while :
+</P><PRE CLASS="verbatim">hamming(n):={
+  local H,L,d,j,k;
+  L:=makelist(x-&gt;x,0,n);
+  //les nbres de Hamming sont 2^a*3^b*5^c
+  d:=1;
+  while (d&lt;=n) { 
+    j:=d; 
+    while (j&lt;=n){
+      k:=j; 
+      while (k&lt;=n) {
+ L[k]:=0;
+ k:=5*k; 
+      } 
+      j:=3*j;
+    }
+    d:=2*d;
+  }
+  H:=[];
+  for (j:=2;j&lt;=n;j++) {
+    if (L[j]==0) H:=append(H,j);
+  }
+  return H;
+}
+</PRE><P>On tape :<BR>
+<TT>hamming(20)</TT><BR>
+On obtient :<BR>
+<TT>[2,3,4,5,6,8,9,10,12,15,16,18,20]</TT><BR>
+On tape :<BR>
+<TT>hamming(40)</TT><BR>
+On obtient :<BR>
+<TT>[2,3,4,5,6,8,9,10,12,15,16,18,20,24,25,27,30,32,36,40]</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc241">8.20.3</A>  L’algorithme sans faire un crible</H3><P>
+Supposons que l’on ait trouvé les premiers éléments de cette suite par
+exemple : 2,3,4,5.<BR>
+L’élément suivant est obtenu en multipliant une des cases 
+précédentes par 2, 3 ou 5.<BR>
+Le problème c’est d’avoir les éléments suivants dans l’ordre....<BR>
+Comment trouver lélément suivant de <TT>H:=[2,3,4,5]</TT> :<BR>
+on a déja multiplié <TT>H[0]=2</TT> par 2 pour obtenir 4 donc<BR>
+on peut multiplier <TT>H[1]=3</TT> par 2 pour obtenir m=6 ou<BR>
+multiplier <TT>H[0]=2</TT> par 3 pour obtenir p=6 ou<BR>
+multiplier <TT>H[0]=2</TT> par 5 pour obtenir q=10.<BR>
+L’élément suivant est donc 6=min(6,6,10) et <TT>H:=[2,3,4,5,6]</TT>.<BR>
+Maintenant, on a déja multiplier 
+<TT>H[0]=2</TT> par 2 et par 3 pour obtenir 4 et 6 et<BR>
+on a déja multiplier <TT>H[1]=3</TT> par 2 pour obtenir 6 donc<BR>
+donc<BR>
+on peut multiplier <TT>H[2]=4</TT> par 2 pour obtenir m=8 ou<BR>
+multiplier <TT>H[1]=3</TT> par 3 pour obtenir p=9 ou<BR>
+multiplier <TT>H[0]=2</TT> par 5 pour obtenir q=10.<BR>
+L’élément suivant est donc 8=min(8,9,10) et <TT>H:=[2,3,4,5,6,8]</TT>.<BR>
+Pour que chaque terme de la suite soit multiplié par 2, par 3 et par 5,
+il faut donc pévoir 3 indices :<BR>
+<TT>k0</TT> qui sera l’indice de l’élément qu’il faut multiplier par 2,<BR>
+<TT>k1</TT> qui sera l’indice de l’élément qu’il faut multiplier par 3,<BR>
+<TT>k2</TT> qui sera l’indice de l’élément qu’il faut multiplier par 5.<BR>
+Cela signifie que :<BR>
+pour tout <TT>r&lt;k0</TT> les <TT>2*H[r]</TT> ont déjà été rajoutés,<BR>
+pour tout <TT>r&lt;k1</TT> les <TT>3*H[r]</TT> ont déjà été rajoutés,<BR>
+pour tout <TT>r&lt;k2</TT> les <TT>5*H[r]</TT> ont déjà été rajoutés,<BR>
+Naturellement <TT>k0</TT>≥ <TT>k1</TT>≥ <TT>k2</TT>.<BR>
+Les 3 candidats pour être l’élément suivant sont donc :<BR>
+<TT>2*H[k0]</TT>, <TT>3*H[k1]</TT>, <TT>5*H[k2]</TT><BR>
+l’un de ces éléments est plus petit que les autres et on le rajoute à la 
+suite. Il faut alors augmenter l’indice correspondant de 1 : par exemple 
+si c’est <TT>3*H[k1]</TT> qui est le minimum il faut augmenter <TT>k1</TT> de 1 et
+si <TT>3*H[k1]</TT>= <TT>5*H[k2]</TT> est le minimum, il faut augmenter <TT>k1</TT> et 
+<TT>k2</TT> de 1. 
+</P><H3 CLASS="subsection"><A NAME="htoc242">8.20.4</A>  La traduction de l’algorithme avec Xcas</H3><P>
+<TT>hamming(n)</TT> va renvoyer les <TT>n</TT> premiers éléments de la suite de 
+Hamming.<BR>
+L’indice <TT>j</TT> sert simplement à compter les éléments de <TT>H</TT>.<BR>
+<TT>k</TT> est une suite qui contient les indices <TT>k0,k1,k2</TT>.<BR>
+On peut initialiser <TT>H</TT> à <TT>[2,3,4,5]</TT> donc <TT>j</TT> à <TT>4</TT>,
+et <TT>k</TT> à <TT>[1,0,0]</TT> (car <TT>H[0]=2</TT> a été multiplié par 2, 
+mais pas par 3, ni par 5) mais cela suppose <TT>n&gt;3</TT>.<BR>
+On peut aussi initialiser <TT>H</TT> à <TT>[1]</TT>, <TT>k</TT> à <TT>[0,0,0]</TT>
+(<TT>H[0]=1</TT> n’a pas été multiplié par 2, ni par 3, ni par 5)
+et <TT>j</TT> à <TT>0</TT> puis enlever <TT>1</TT> de <TT>H</TT> à la fin car <TT>1</TT> 
+n’est pas un terme de la suite.<BR>
+
+Voici la fonction <TT>hamming(n)</TT> écrite en <TT>Xcas</TT> pour <TT>n&gt;3</TT>.
+</P><PRE CLASS="verbatim">//pour n&gt;3
+hamming(n):={
+  local H,j,k,m,p,q,mi;
+  H:=[2,3,4,5];
+  j:=4;
+  k:=[1,0,0];
+  while (j&lt;n) {
+  m:=2*H[k[0]];
+  p:=3*H[k[1]];
+  q:=5*H[k[2]];
+  mi:=min(m,p,q);
+  H:=append(H,mi);
+  j:=j+1;
+  if (mi==m) {k[0]:=k[0]+1};
+  if (mi==p) {k[1]:=k[1]+1};
+  if (mi==q) {k[2]:=k[2]+1};
+  }
+  return H;
+}
+</PRE><P>Voici la fonction <TT>hamming(n)</TT> écrite en <TT>Xcas</TT> pour <TT>n&gt;0</TT>.
+</P><PRE CLASS="verbatim">//pour n&gt;0
+hamming(n):={
+  local H,j,k,m,p,q,mi;
+  H:=[1];
+  j:=0;
+  k:=[0,0,0];
+  while (j&lt;n) {
+  m:=2*H[k[0]];
+  p:=3*H[k[1]];
+  q:=5*H[k[2]];
+  mi:=min(m,p,q);
+  H:=append(H,mi);
+  j:=j+1;
+  if (mi==m) {k[0]:=k[0]+1};
+  if (mi==p) {k[1]:=k[1]+1};
+  if (mi==q) {k[2]:=k[2]+1};
+  }
+  return tail(H);
+}:;
+</PRE><P>On tape :<BR>
+<TT>hamming(20)</TT><BR>
+On obtient :<BR>
+<TT>[2,3,4,5,6,8,9,10,12,15,16,18,20,24,25,27,30,32,36,40]</TT>
+</P><H2 CLASS="section"><A NAME="toc65"></A><A NAME="htoc243">8.21</A>  Développement diadique de <I>a</I>/<I>b</I>∈ [0;1[</H2><H3 CLASS="subsection"><A NAME="htoc244">8.21.1</A>  L’énoncé</H3><P>
+Le développement diadique de <I>a</I>/<I>b</I>∈ [0;1[ est lécriture de
+<I>a</I>/<I>b</I> sous la forme :
+<I>a</I>/<I>b</I>=<I>d</I><SUB>1</SUB>/2+<I>d</I><SUB>2</SUB>/2<SUP>2</SUP>+...+<I>d</I><SUB><I>k</I></SUB>/2<SUP><I>k</I></SUP> avec 
+<I>d</I><SUB><I>k</I></SUB>∈ {0,1}.<BR>
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Écrire un programme qui affiche la liste des <I>d</I><SUB><I>k</I></SUB> se terminant par la liste 
+des premiers termes <I>d</I><SUB>1</SUB>,<I>d</I><SUB>2</SUB>..,<I>d</I><SUB><I>n</I></SUB> de la suite <I>d</I>,<BR>
+</LI><LI CLASS="li-enumerate">Écrire un programme qui affiche la liste des <I>d</I><SUB><I>k</I></SUB> se terminant par la 
+liste des <I>d</I><SUB><I>k</I></SUB> qui forme la période. Par exemple, on a :<BR>
+7/12=1/2+0/2<SUP>2</SUP>+0/2<SUP>3</SUP>+1/2<SUP>4</SUP>+0/2<SUP>5</SUP>+1/2<SUP>6</SUP>+.... et on écrit [1,0,0,1,0,[1,0]].<BR>
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc245">8.21.2</A>  La solution</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Si <I>q</I>=<I>a</I>/<I>b</I> et si <I>d</I><SUB>1</SUB>=<I>floor</I>(2*<I>q</I>), on a 
+<I>a</I>/<I>b</I>=<I>d</I><SUB>1</SUB>/2+2<I>a</I>−<I>b</I>*<I>d</I><SUB>1</SUB>/2*<I>b</I>. Donc, 
+le développement diadique de <I>a</I>/<I>b</I>∈ [0;1[ est lécriture de
+<I>q</I>=<I>a</I>/<I>b</I> sous la forme : <I>d</I><SUB>1</SUB> suivi du développement diadique de
+la fraction 2<I>a</I>−<I>b</I>*<I>d</I><SUB>1</SUB>/2*<I>b</I> de [0;1[.<BR>
+On tape pour avoir les premiers termes <I>d</I><SUB>1</SUB>,<I>d</I><SUB>2</SUB>..,<I>d</I><SUB><I>n</I></SUB> de la suite <I>d</I> :
+<PRE CLASS="verbatim">diadiquen(a,b,n):={
+local d,q,k,p,L;
+p:=2;
+L:=NULL;
+q:=a/b;
+pour k de 1 jusque n faire
+d:=floor(p*q);
+L:=L,d;
+q:=q-d/p;
+p:=2*p
+fpour;
+retourne L;
+}:;
+</PRE>On tape : <TT>diadiquen(3,10,15)</TT><BR>
+On obtient : <TT>0,1,0,0,1,1,0,0,1,1,0,0,1,1,0</TT><BR>
+</LI><LI CLASS="li-enumerate">Pour trouver la période, il faut savoir que l’on commence une période 
+lorsque l’on retrouve parmi la liste des nouvelles 
+fractions à développer un même numérateur. On garde donc dans <TT>A</TT> 
+la liste des numérateurs en mettant un 0 quand le terme correspondant de <I>d</I> 
+est nul.<BR>
+On tape pour avoir les premiers termes de la suite <I>d</I> et sa période : 
+<PRE CLASS="verbatim">diadiques(a,b):={
+local d,q,k,p,L,A;
+L:=NULL;
+A:=NULL;
+q:=a/b;
+a:=numer(q);
+p:=2;
+d:=floor(p*q);
+repeter
+L:=L,d;
+si d!=0 alors 
+A:=A,a;
+sinon 
+A:=A,0;
+fsi;
+q:=q-d/p;
+a:=numer(q);
+p:=2*p
+d:=floor(p*q);
+k:=member(a,[A]);
+jusqua k!=0 and d!=0;
+retourne [L,mid([L],k-1)];
+}:;
+</PRE>On tape : <TT>diadiques(3,10)</TT><BR>
+On obtient : <TT>[0,1,0,0,1,[1,0,0,1]]</TT>
+</LI></OL><H2 CLASS="section"><A NAME="toc66"></A><A NAME="htoc246">8.22</A>  Écriture d’un entier comme ∑<SUB><I>j</I>≥ 1</SUB> <I>a</I><SUB><I>j</I></SUB><I>j</I>! avec 0≤ <I>a</I><SUB><I>j</I></SUB>&lt;<I>j</I></H2><H3 CLASS="subsection"><A NAME="htoc247">8.22.1</A>  L’énoncé</H3><P>
+On veut écrire un entier <I>n</I> ∈ ℕ sous la forme ∑<SUB><I>j</I>≥ 1</SUB> <I>a</I><SUB><I>j</I></SUB><I>j</I>! avec 
+0≤ <I>a</I><SUB><I>j</I></SUB>&lt;<I>j</I> pour tout <I>j</I>.<BR>
+Par exemple 43=1· 4!+3· 3!+0· 2!+1· 1!.
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Quel est le plus grand entier <I>J</I> tel que <I>a</I><SUB><I>J</I></SUB> ≠ 0 ?
+</LI><LI CLASS="li-enumerate">Écrire un programme <TT>ecritfac</TT> qui renvoie les coefficients <I>a</I><SUB><I>j</I></SUB>
+du développement dans l’ordre décroissant : par exemple
+<TT>ecritfac(43)</TT> renverra <TT>(1,3,0,1)</TT>. 
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc248">8.22.2</A>  La solution</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Montrons par recurrence que :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=<I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>= 1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>j</I>· <I>j</I>!&lt;<I>N</I>!</TD></TR>
+</TABLE>
+vrai pour <I>N</I>=2 car 1&lt;2!=2<BR>
+si ∑<SUB><I>j</I>= 1</SUB><SUP><I>j</I>=<I>N</I>−1</SUP> <I>j</I>· <I>j</I>!&lt;<I>N</I>! alors
+∑<SUB><I>j</I>= 1</SUB><SUP><I>j</I>=<I>N</I>−1</SUP> <I>j</I>· <I>j</I>!+<I>N</I>· <I>N</I>!&lt;<I>N</I>!+<I>N</I>· <I>N</I>!=(<I>N</I>+1)!<P>Si <I>n</I>=∑<SUB><I>j</I>= 1</SUB><SUP><I>j</I>=<I>J</I></SUP> <I>a</I><SUB><I>j</I></SUB><I>j</I>! avec 0≤ <I>a</I><SUB><I>j</I></SUB>&lt;<I>j</I> et <I>a</I><SUB><I>J</I></SUB>≠ 0 on a :<BR>
+<I>J</I>!≤ <I>n</I>=<I>a</I><SUB><I>J</I></SUB><I>J</I>!+∑<SUB><I>j</I>= 1</SUB><SUP><I>j</I>=<I>J</I>−1</SUP> <I>a</I><SUB><I>j</I></SUB><I>j</I>!&lt;<I>J</I>· <I>J</I>!+∑<SUB><I>j</I>= 1</SUB><SUP><I>j</I>=<I>J</I>−1</SUP> <I>j</I>· <I>j</I>!<BR>
+donc
+<I>J</I>!≤ <I>n</I>&lt;(<I>J</I>+1)!
+</P></LI><LI CLASS="li-enumerate">On cherche d’abord la valeur de <I>J</I>, puis on fait le quotient de <I>n</I> par 
+<I>J</I>! et on recommence avec comme valeur de <I>n</I> le reste de la division de 
+<I>n</I> par <I>J</I>!.<BR>
+On tape :
+<PRE CLASS="verbatim">ecritfac(n):={
+  local j,J,k,L,a;
+  L:=NULL;
+  j:=1;
+  tantque n&gt;=j! faire j:=j+1 ftantque;
+  J:=j-1;
+  pour k de J jusque 1 pas -1 faire 
+    a:=iquo(n,k!);
+    L:=L,a;
+    n:=irem(n,k!);
+  fpour;
+return L;
+}:;
+</PRE>On tape :
+<TT>ecritfac(43)</TT><BR>
+On obtient : <TT>(1,3,0,1)</TT>
+On tape :
+<TT>ecritfac(150)</TT><BR>
+On obtient : <TT>(1,1,1,0,0)</TT>
+</LI></OL><H2 CLASS="section"><A NAME="toc67"></A><A NAME="htoc249">8.23</A>  Les nombres de Mersenne</H2><H3 CLASS="subsection"><A NAME="htoc250">8.23.1</A>  Définitions et téorèmes</H3><P>
+<B>Définitions</B><BR>
+Lorsque pour <I>p</I> ∈ ℕ, <I>M</I><SUB><I>p</I></SUB>=2<SUP><I>p</I></SUP>−1 est premier on dit que c’est un nombre 
+premier de <B>Mersenne</B>.<BR>
+Un nombre <I>n</I> est <B>parfait</B> si il est égal à la somme de ses diviseurs 
+propres (1 est compris mais pas <I>n</I>).<BR>
+Par exemple 6 et 28 sont parfaits car 6=1+2+3 et 28=1+2+4+7+14.<BR>
+<B>Téorème 1</B><BR>
+<I>k</I> est un nombre parfait pair si et seulement si il est de la forme
+<I>k</I>= 2<SUP><I>n</I>−1</SUP>(2<SUP><I>n</I></SUP>−1) avec <I>M</I><SUB><I>n</I></SUB>=2<SUP><I>n</I></SUP>−1 premier.<BR>
+<B>Téorème 2</B><BR>
+Si <I>M</I><SUB><I>n</I></SUB>=2<SUP><I>n</I></SUP>−1 est premier, alors <I>n</I> est aussi premier.<BR>
+La réciproque est fausse (voir le <B>Test de Lucas-Lehmer</B> ci-après),
+par exemple, <I>M</I><SUB>11</SUB> n’est pas premier :<BR>
+<I>M</I><SUB>11</SUB>=2<SUP>11</SUP>−1=2047=23*89<BR>
+<B>Téorème 3</B><BR>
+Soient 2 nombres premiers <I>p</I> et <I>q</I>. Si <I>q</I> divise <I>M</I><SUB><I>p</I></SUB> = 2<SUP><I>p</I></SUP>−1, alors
+<I>q</I>=+/−1 (mod8) et il existe <I>k</I> ∈ ℕ tel que <I>q</I> = 2<I>kp</I> + 1.<BR>
+<B>Téorème 4</B><BR>
+Si <I>p</I> un nombre premier vérifiant <I>p</I> = 3 (mod4) alors 2<I>p</I>+1 est un 
+nombre premier si et seulement si 2<I>p</I>+1 divides <I>M</I><SUB><I>p</I></SUB>.<BR>
+<B>Téorème 5</B><BR>
+Si on fait la somme des chiffres d’un nombre parfait pair différent de 6, 
+puis la somme des chiffres du résultat et que l’on continue le processus 
+alors on obtient 1.<BR>
+<B>Exercice</B><BR>
+Écrire un programme qui teste si un nombre <I>n</I> vérifie le théorème 5.<BR>
+
+Il faut donc utiliser la fonction <TT>revlist(convert(n,base,10))</TT> de 
+<TT>Xcas</TT> qui renvoie la liste des chiffres de l’écriture en base 10 de 
+l’entier <TT>n</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">sumchiffre(n):={
+local L,s;
+si n==6 alors retourne 1 fsi;
+s:=n;
+tantque s&gt;9 faire 
+L:=convert(n,base,10);
+s:=sum(L);
+ftantque;
+si s==1 alors retourne 1;
+sinon  retourne s;
+fsi;
+}:;
+</PRE><H3 CLASS="subsection"><A NAME="htoc251">8.23.2</A>  Test de Lucas-Lehmer</H3><P>
+<B>Test de Lucas-Lehmer</B><BR>
+Si <I>p</I> est un nombre premier alors le nombre de Mersenne <I>M</I><SUB><I>p</I></SUB>=2<SUP><I>p</I></SUP>−1 est 
+premier si et seulement si 2<SUP><I>p</I></SUP>−1 divise <I>S</I>(<I>p</I>−1) lorsque <I>S</I>(<I>n</I>) est la suite
+définie par <I>S</I>(<I>n</I>+1)=<I>S</I>(<I>n</I>)<SUP>2</SUP>−2, et <I>S</I>(1)=4.
+<B>Exercice</B><BR>
+Écrire le programme correspondant à ce test : on calculera la suite <I>S</I>(<I>n</I>)
+modulo 2<SUP><I>p</I></SUP>−1 pour gagner du temps.<BR>
+On tape :
+</P><PRE CLASS="verbatim">Test_LL(p):={
+local s,j;      
+s := 4;
+pour j de 2 jusque p-1 faire
+  s := s^2-2 mod n;
+fpour;
+si s == 0 alors
+     return "2^"+string(p)+"-1 est premier";
+  sinon
+     return "2^"+string(p)+"-1 est non premier";
+fsi;
+}:;
+</PRE><P>On tape :<BR>
+<TT>Test_LL(11213)</TT>
+On obtient (Evaluation time: 6.43) :<BR>
+<TT>2</TT><CODE><TT>^</TT></CODE><TT>11213-1 est premier</TT><BR>
+On tape :<BR>
+<TT>Test_LL(11351)</TT>
+On obtient :<BR>
+<TT>2</TT><CODE><TT>^</TT></CODE><TT>11351-1 est non premier</TT><BR>
+<B>Remarque</B><BR>
+En janvier 1998, un élève ingénieur a prouvé que <I>M</I><SUB><I>p</I></SUB> était premier
+pour <I>p</I>=3021377 (<I>M</I><SUB><I>p</I></SUB> a 909526 chiffres !).</P><H2 CLASS="section"><A NAME="toc68"></A><A NAME="htoc252">8.24</A>  Les nombres parfaits et les nombres amiables</H2><H3 CLASS="subsection"><A NAME="htoc253">8.24.1</A>  Les nombres parfaits</H3><P>
+<B>Définitions</B><BR>
+Un nombre <I>n</I> est <B>parfait</B> si il est égal à la somme de ses diviseurs 
+propres (1 est compris mais pas <I>n</I>).<BR>
+Par exemple 6 et 28 sont parfaits car 6=1+2+3 et 28=1+2+4+7+14.</P><P><B>L’énoncé</B><BR>
+Quels sont les nombres parfaits inférieurs à 11000?<BR>
+Montrer que si 2<SUP><I>p</I></SUP>−1 est premier alors 2<SUP><I>p</I>−1</SUP>(2<SUP><I>p</I></SUP>−1) est parfait.
+<B>La solution</B><BR>
+On utilise l’instruction <TT>idivis(n)</TT> qui renvoie la liste des diviseurs 
+de l’entier <TT>n</TT> et l’instruction <TT>sum(L)</TT> qui renvoie la somme de la
+liste <TT>L</TT>.<BR>
+On tape avec les instructions françaises :
+</P><PRE CLASS="verbatim">parfait(n):={
+  local j,a,b,L;
+  L:=NULL;
+  pour j de 2 jusque n faire
+    a:=sum(idivis(j))-j;
+    si a==j alors L:=L,j; fsi;
+  fpour;
+  retourne L;
+}:;
+</PRE><P>On tape pour avoir les nombres parfaits inférieur à 11000 :<BR>
+<TT>parfait(11000) </TT>
+0n obtient :<BR>
+<TT>6,28,496,8128</TT><BR>
+
+Si 2<SUP><I>p</I></SUP>−1 est premier alors les diviseurs de 2<SUP><I>p</I>−1</SUP>(2<SUP><I>p</I></SUP>−1) sont :<BR>
+1,(2<SUP><I>p</I></SUP>−1),2,2(2<SUP><I>p</I></SUP>−1),2<SUP>2</SUP>,2<SUP>2</SUP>(2<SUP><I>p</I></SUP>−1),..2<SUP><I>p</I>−2</SUP>,2<SUP><I>p</I>−2</SUP>(2<SUP><I>p</I></SUP>−1),2<SUP><I>p</I>−1</SUP>,2<SUP><I>p</I>−1</SUP>(2<SUP><I>p</I></SUP>−1).
+La somme de ces diviseurs est :<BR>
+On tape pour avoir cette somme simplifiée et factorisée :<BR>
+<TT>factor(normal(sum(2</TT><CODE><TT>^</TT></CODE><TT>k*(1+2</TT><CODE><TT>^</TT></CODE><TT>p-1),k=0..p-1)))</TT><BR>
+0n obtient :<BR>
+<TT>2</TT><CODE><TT>^</TT></CODE><TT>p*(2</TT><CODE><TT>^</TT></CODE><TT>p -1)</TT><BR>
+La somme de tous les diviseurs propres de 2<SUP><I>p</I>−1</SUP>(2<SUP><I>p</I></SUP>−1) est
+2<SUP><I>p</I>−1</SUP>(2<SUP><I>p</I></SUP>−1) donc si 2<SUP><I>p</I></SUP>−1 est premier 2<SUP><I>p</I>−1</SUP>(2<SUP><I>p</I></SUP>−1) est parfait.<BR>
+Euler a montré que tous les nombres parfaits pairs sont de cette forme.<BR>
+
+Donc 2<SUP><I>p</I>−1</SUP>(2<SUP><I>p</I></SUP>−1) est parfait si <I>M</I><SUB><I>p</I></SUB>=2<SUP><I>p</I></SUP>−1 est premier.<BR>
+Pour <I>p</I>=2 on a 2<SUP>2</SUP>−1=3 est premier donc 2*3=6 est parfait.<BR>
+Pour <I>p</I>=3 on a 2<SUP>3</SUP>−1=7 est premier donc 4*7=28 est parfait.<BR>
+Pour <I>p</I>=5 on a 2<SUP>5</SUP>−1=31 est premier donc 16*31=496 est parfait.<BR>
+Pour <I>p</I>=7 on a 2<SUP>7</SUP>−1=127 est premier donc 64*127=8128 est parfait.<BR>
+Pour <I>p</I>=13 on a 2<SUP>13</SUP>−1=8191 est premier donc 4096*8191=33550336 est parfait.<BR>
+Pour <I>p</I>=17 on a 2<SUP>17</SUP>−1=13107 est premier donc 65536*131071=8589869056 est parfait (il a été découvert en 1588 par Cataldi).<BR>
+Pour <I>p</I>=19 on a 2<SUP>19</SUP>−1=524287 est premier donc 262144*524287=137438691328 est parfait (il a été découvert en 1588 par Cataldi).<BR>
+Puis pour <I>p</I>=31,61,89 on a encore 2<SUP><I>p</I></SUP>−1 premier ....<BR>
+ En 1936 le Dr Samuel I. Krieger dit que pour <I>p</I>=257 2<SUP>513</SUP>−2<SUP>256</SUP> est 
+parfait (il a 155 chiffres ) malheureusement le nombre 2<SUP>257</SUP>−1 n’est pas 
+premier..... .<BR>
+On refait donc un programme qui teste si 2<SUP><I>p</I></SUP>−1 est premier et on en déduit 
+le nombre parfait correspondant.
+</P><PRE CLASS="verbatim">parfait2(p):={
+  local j,a,b,L;
+  L:=NULL;
+  pour j de 2 jusque p faire
+   a:=2^(j-1);
+   b:=2*a-1;
+   si isprime(b) alors L:=[L,a*b,j]; fsi;
+  fpour;
+  retourne L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>A:=parfait2(1100)</TT><BR>
+<TT>size(A)</TT><BR>
+On obtient :<BR>
+<TT>14</TT><BR>
+On tape :<BR>
+<TT>A[13]</TT><BR>
+On obtient le 14ième nombre parfait :<BR>
+<TT>[2</TT><CODE><TT>^</TT></CODE><TT>606*(2</TT><CODE><TT>^</TT></CODE><TT>607-1),607]</TT><BR>
+On tape :<BR>
+<TT>B:=[A]:;</TT><BR>
+<TT>col(B,1)</TT><BR>
+On obtient la liste des nombres <I>p</I>≤ 1100 tels que 2<SUP><I>p</I></SUP>−1 soit premier :<BR>
+<TT>[2,3,5,7,13,17,19,31,61,89,107,127,521,607]</TT><BR>
+<B>Remarque : relation entre les nombres parfaits et les cubes</B><BR>
+0n remarque qu’à part 6 chaque nombre parfait est égal à la somme des 
+cubes de nombres impairs consécutifs:<BR>
+28=1<SUP>3</SUP>+3<SUP>3</SUP>=<TT>sum((2*n+1)</TT><CODE><TT>^</TT></CODE><TT>3,n=0..1)</TT><BR>
+496=1<SUP>3</SUP>+3<SUP>3</SUP>+5<SUP>3</SUP>+7<SUP>3</SUP>=<TT>sum((2*n+1)</TT><CODE><TT>^</TT></CODE><TT>3,n=0..3)</TT><BR>
+8128=1<SUP>3</SUP>+3<SUP>3</SUP>+5<SUP>3</SUP>+7<SUP>3</SUP>+9<SUP>3</SUP>+11<SUP>3</SUP>+13<SUP>3</SUP>+15<SUP>3</SUP>=<TT>sum((2*n+1)</TT><CODE><TT>^</TT></CODE><TT>3,n=0..7)</TT><BR>
+33550336=<TT>sum((2*n+1)</TT><CODE><TT>^</TT></CODE><TT>3,n=0..63)</TT><BR>
+8589869056=<TT>sum((2*n+1)</TT><CODE><TT>^</TT></CODE><TT>3,n=0..255)</TT><BR>
+137438691328=<TT>sum((2*n+1)</TT><CODE><TT>^</TT></CODE><TT>3,n=0..511)</TT><BR>
+0n remarque aussi que l’on fait la somme pour <I>n</I> variant de 0 à :<BR>
+1=2<SUP>1</SUP>−1<BR>
+3=2<SUP>2</SUP>−1<BR>
+7=2<SUP>3</SUP>−1<BR>
+63=2<SUP>6</SUP>−1<BR>
+255=2<SUP>8</SUP>−1<BR>
+511=2<SUP>9</SUP>−1<BR>
+
+<B>Question ouverte</B>
+Existe-t-il des nombres parfaits impairs ????????????
+Ce que l’on sait c’est que si il en existe un alors il est tres grand !
+Cete question est certainement le plus vieux problème de mathematiques non 
+résolu....</P><H3 CLASS="subsection"><A NAME="htoc254">8.24.2</A>  Les nombres amiables</H3><P>
+<B>L’énoncé</B><BR>
+On se propose d’écrire un programme qui donne la suite des couples amiables 
+dont l’un des nombres est inférieur ou égal à un entier <I>n</I>. Voici les 
+définitions des nombres parfaits et des nombres amiables :<BR>
+<B>Définitions</B><BR>
+Un nombre <I>n</I> est <B>parfait</B> si il est égal à la somme de ses diviseurs 
+propres (1 est compris mais pas <I>n</I>).<BR>
+Deux nombres <I>a</I> et <I>b</I> sont <B>amiables</B> ou amis, si l’un est égal à la 
+somme des diviseurs propres de l’autre et inversement.<BR>
+Les nombres parfaits <I>a</I> sont des nombres amiables avec eux mêmes.
+<B>La solution</B><BR>
+On utilise l’instruction <TT>idivis(n)</TT> qui renvoie la liste des diviseurs 
+de l’entier <TT>n</TT> et l’instruction <TT>sum(L)</TT> qui renvoie la somme de la
+liste <TT>L</TT>.<BR>
+Pour ne pas avoir 2 fois le même couple on n’affiche que les couples [<I>j</I>,<I>a</I>] 
+avec <I>j</I>≤ <I>a</I>.<BR>
+On tape avec les instructions françaises :
+</P><PRE CLASS="verbatim">amiable(n):={
+  local j,a,b,L;
+  L:=NULL;
+  pour j de 2 jusque n faire
+    a:=sum(idivis(j))-j;
+    b:=sum(idivis(a))-a;
+    si b==j et j&lt;=a alors L:=L,[j,a]; fsi;
+  fpour;
+  retourne L;
+}:;
+</PRE><P>On tape pour avoir les nombres amiable inférieur à 11000 :<BR>
+<TT>amiable(11000) </TT>
+0n obtient :<BR>
+<TT>[6,6],[28,28],[220,284],[496,496],[1184,1210],[2620,2924],
+[5020,5564],[6232,6368],[8128,8128],[10744,10856]</TT><BR>
+Les nombres parfaits <I>a</I> sont les nombres amiables [<I>a</I>,<I>a</I>].</P><H2 CLASS="section"><A NAME="toc69"></A><A NAME="htoc255">8.25</A>  Les parallélépipèdes rectangles presque parfaits</H2><H3 CLASS="subsection"><A NAME="htoc256">8.25.1</A>  L’énoncé</H3><P>
+On se propose d’écrire un programme qui donne les dimensions des 
+parallélépipèdes rectangles presque parfaits dont les côtés sont
+inférieurs ou égaux à un entier <I>n</I>≤ 1000. Voici 
+la définition d’un parallélépipède rectangle presque parfait :<BR>
+<B>Définitions</B><BR>
+Un parallélépipède rectangle est presque parfait si :
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+les longueurs de ses côtés sont des nombres entiers,
+</LI><LI CLASS="li-enumerate">les longueurs des dagonales de ses 3 faces sont aussi des nombres entiers.
+</LI></OL><P>
+Par exemple, le parallélépipède rectangle de côtés 44 17 240 est 
+presque parfait.<BR>
+<B>Attention</B> les 6 permutations de (44 17 240) représentent le même
+parallélépipède rectangle.
+</P><H3 CLASS="subsection"><A NAME="htoc257">8.25.2</A>  La solution</H3><P>
+Si 3 entiers (<I>a</I>,<I>b</I>,<I>c</I>) vérifiant <I>a</I>&lt; <I>b</I>&lt; <I>c</I> représentent un 
+parallélépipède rectangle, pour su’il soit presque parfait il faut que :
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+√<SPAN style="text-decoration:overline"><I>a</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>b</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP> soit un entier,
+</LI><LI CLASS="li-enumerate">√<SPAN style="text-decoration:overline"><I>a</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>c</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP> soit un entier,
+</LI><LI CLASS="li-enumerate">√<SPAN style="text-decoration:overline"><I>b</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>c</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP> soit un entier
+</LI></OL><P>
+Comment tester qu’un nombre <I>p</I> est un carré parfait ?
+On peut écrire :<BR>
+<TT>frac(sqrt(p))==0</TT> ou<BR>
+<TT>floor(sqrt(p))</TT><CODE><TT>^</TT></CODE><TT>2-p==0</TT><BR>
+mais cela demande un calcul ! Il est donc préferable d’utiliser la commande
+<TT>type</TT> qui renvoie le type de l’argument. Par exemple :<BR>
+<TT>type(sqrt(4))==integer</TT> renvoie <TT>1</TT> et <TT>type(sqrt(5))==integer</TT> 
+renvoie <TT>0</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">parapparfait(n):={
+  local a,b,c,L;
+  L:=NULL;
+  pour a de 1 jusque n faire
+    pour b de a+1 jusque n faire
+      si type(sqrt(a^2+b^2))==integer  alors
+         pour c de b+1 jusque n faire
+           si type(sqrt(a^2+c^2))==integer alors
+             si type(sqrt(c^2+b^2))==integer alors 
+                L:=L,[a,b,c]; 
+             fsi;
+           fsi;
+        fpour;
+      fsi;
+    fpour;
+  fpour;
+  retourne L;
+}:;
+</PRE><P>0n tape : <TT>L:=parapparfait(1000)</TT><BR>
+On obtient (c’est long !):<BR>
+<TT>[44,117,240],[85,132,720],[88,234,480],[132,351,720],</TT><BR>
+<TT>[140,480,693],[160,231,792],[176,468,960],[240,252,275],</TT><BR>
+<TT>[480,504,550],[720,756,825]</TT></P><P>On peut modifier le programme pour avoir pour chaque <I>a</I>, une liste provisoire
+<TT>P</TT> qui sera la liste <I>a</I>,<I>b</I><SUB>1</SUB>,<I>b</I><SUB>2</SUB>...<I>b</I><SUB><I>p</I></SUB> telle que <I>a</I><SUP>2</SUP>+<I>b</I><SUB><I>j</I></SUB><SUP>2</SUP> soit un 
+carré. Puis dans cette liste on cherchera les <I>b</I><SUB><I>j</I></SUB> et les <I>b</I><SUB><I>k</I></SUB> tels que
+<I>b</I><SUB><I>j</I></SUB><SUP>2</SUP>+<I>b</I><SUB><I>k</I></SUB><SUP>2</SUP> soit un carré. Le triplet [<I>a</I>,<I>b</I><SUB><I>j</I></SUB>,<I>b</I><SUB><I>k</I></SUB>] répond alors à la 
+quesstion.<BR>
+On tape :
+</P><PRE CLASS="verbatim">paralparfait(n):={
+  local a,b,c,L,P,j,s,k,b2;
+  L:=NULL;
+  pour a de 1 jusque n faire
+    P:=a;
+    pour b de a+1 jusque n faire
+      si type(sqrt(a^2+b^2))==integer  alors
+         P:=P,b;
+      fsi;
+    fpour;
+    s:=size(P)-1; 
+    pour j de 1 jusque s-1 faire
+      b:=P[j];
+      b2:=b^2;
+      pour k de j+1 jusque s faire
+        c:=P[k];
+        si type(sqrt(b2+c^2))==integer alors 
+          L:=L,[a,b,c]; 
+        fsi;
+       fpour;
+     fpour;
+   fpour;
+   retourne L;
+}:;
+</PRE><P>0n tape : <TT>L:=paralparfait(1000)</TT><BR>
+On obtient (c’est 2 fois moins long !):<BR>
+<TT>[44,117,240],[85,132,720],[88,234,480],[132,351,720],</TT><BR>
+<TT>[140,480,693],[160,231,792],[176,468,960],[240,252,275],</TT><BR>
+<TT>[480,504,550],[720,756,825]</TT></P><P><B>Remarque</B><BR>
+On peut facilement avoir les couples <I>a</I>,<I>b</I> tel que <I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> soit un carré.<BR>
+On tape :
+</P><PRE CLASS="verbatim">sommecarre(n):={
+  local a,b,L,P;
+  L:=NULL;
+  pour a de 1 jusque n faire
+    P:=a;
+    pour b de a+1 jusque n faire
+      si type(sqrt(a^2+b^2))==integer  alors
+        P:=P,b;
+      fsi;
+    fpour;
+    si size(P)&gt;1 alors L:=L,[P];fsi;
+  fpour;
+  retourne L;
+}:;
+</PRE><P>On tape : <TT>sommecarre(100)</TT><BR>
+On obtient :<BR>
+<TT>[3,4],[5,12],[6,8],[7,24],[8,15],[9,12,40],[10,24],</TT><BR>
+<TT>[11,60],[12,16,35],[13,84],[14,48],[15,20,36],</TT><BR>
+<TT>[16,30,63],[18,24,80],[20,21,48,99],[21,28,72],</TT><BR>
+<TT>[24,32,45,70],[25,60],[27,36],[28,45,96],[30,40,72],</TT><BR>
+<TT>[32,60],[33,44,56],[35,84],[36,48,77],[39,52,80],</TT><BR>
+<TT>[40,42,75,96],[42,56],[45,60],[48,55,64,90],[51,68],</TT><BR>
+<TT>[54,72],[56,90],[57,76],[60,63,80,91],[63,84],[65,72],</TT><BR>
+<TT>[66,88],[69,92],[72,96],[75,100],[80,84]</TT>
+Par exemple, on voit que :<BR>
+20<SUP>2</SUP>+15<SUP>2</SUP> est un carré : c’est 25<SUP>2</SUP>,<BR>
+20<SUP>2</SUP>+21<SUP>2</SUP> est un carré : c’est 29<SUP>2</SUP>,<BR>
+20<SUP>2</SUP>+48<SUP>2</SUP> est un carré : c’est 52<SUP>2</SUP>,<BR>
+20<SUP>2</SUP>+99<SUP>2</SUP> est un carré : c’est 101<SUP>2</SUP>.<BR>
+ou encore<BR>
+60<SUP>2</SUP>+11<SUP>2</SUP> est un carré : c’est 61<SUP>2</SUP>,<BR>
+60<SUP>2</SUP>+25<SUP>2</SUP> est un carré : c’est 65<SUP>2</SUP>,<BR>
+60<SUP>2</SUP>+32<SUP>2</SUP> est un carré : c’est 68<SUP>2</SUP>,<BR>
+60<SUP>2</SUP>+45<SUP>2</SUP> est un carré : c’est 75<SUP>2</SUP>,<BR>
+60<SUP>2</SUP>+63<SUP>2</SUP> est un carré : c’est 87<SUP>2</SUP>,<BR>
+60<SUP>2</SUP>+80<SUP>2</SUP> est un carré : c’est 100<SUP>2</SUP>.<BR>
+60<SUP>2</SUP>+91<SUP>2</SUP> est un carré : c’est 109<SUP>2</SUP>.<BR>
+On peut aussi en déduire que :<BR>
+60<SUP>2</SUP>+144<SUP>2</SUP> est un carré : c’est 156<SUP>2</SUP> (car 15<SUP>2</SUP>+36<SUP>2</SUP>=39<SUP>2</SUP>).<BR>
+60<SUP>2</SUP>+175<SUP>2</SUP> est un carré : c’est 185<SUP>2</SUP> (car 12<SUP>2</SUP>+35<SUP>2</SUP>=37<SUP>2</SUP>).<BR>
+60<SUP>2</SUP>+297<SUP>2</SUP> est un carré : c’est 303<SUP>2</SUP>.(car 20<SUP>2</SUP>+99<SUP>2</SUP>=101<SUP>2</SUP>).<BR>
+Mais si on veut tous les nombres <I>b</I>≤ 300 tels que <I>n</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> soit un 
+carré il est préférable d’écrire le programme :
+</P><PRE CLASS="verbatim">n2plusb2(n,N):= {
+local b,P;
+P:=n;
+pour b de 1 jusque N faire 
+si type(sqrt(n^2+b^2))==integer  alors 
+P:=P,b; 
+fsi;
+fpour ;
+P;
+}:;
+</PRE><P>On tape : <TT>n2plusb2(20,1000)</TT><BR>
+On obtient :<BR>
+<TT>20,15,21,48,99</TT><BR>
+On tape : <TT>n2plusb2(60,300)</TT><BR>
+On obtient :<BR>
+<TT>60,11,25,32,45,63,80,91,144,175,221,297</TT><BR>
+seul 60<SUP>2</SUP>+221<SUP>2</SUP>=229<SUP>2</SUP> n’avait pas été trouvé précédemment car 229 
+est un nombre premier !<BR>
+On tape : <TT>n2plusb2(60,1000)</TT><BR>
+On obtient :<BR>
+<TT>60,11,25,32,45,63,80,91,144,175,221,297,448,899</TT>
+</P><H2 CLASS="section"><A NAME="toc70"></A><A NAME="htoc258">8.26</A>  Les nombres heureux</H2><H3 CLASS="subsection"><A NAME="htoc259">8.26.1</A>  L’énoncé</H3><P>
+On se propose d’écrire un programme qui donne la suite des nombres heureux
+inférieurs ou égaux à un entier <I>n</I>. Voici un algorithme définissant 
+cette suite :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+On écrit la suite des nombres entiers de 2 à <I>n</I>,
+</LI><LI CLASS="li-itemize">On entoure 2 et on supprime les nombres de 2 en 2,
+</LI><LI CLASS="li-itemize">On entoure 3 et on supprime les nombres de 3 en 3,
+</LI><LI CLASS="li-itemize">On continue de la même façon : à chaque fois, on entoure <I>m</I> le 
+premier nombre non entouré et on supprime les nombres de <I>m</I> en <I>m</I>,
+</LI><LI CLASS="li-itemize">On s’arrête quand il ne reste que des nombres entourés : ce sont les nombres heureux
+</LI></UL><P>
+Par exemple :<BR>
+après la première étape on a : 2,3,5,7,9,11,13,15,17...<BR>
+après la deuxième étape on a : 2,3,5,7,11,17...<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc260">8.26.2</A>  La solution</H3><P>
+Ce programme ressemble au crible d’Eratosthène, mais si <I>m</I> est le
+nombre que l’on vient d’entourer et qu’il est d’indice <I>p</I>, on supprime les 
+nombres d’indices <I>p</I>+<I>m</I>,<I>p</I>+2<I>m</I>...<I>p</I>+<I>km</I> mais dans la liste <TT>tab</TT> modifiée
+et non les multiples du nombre <I>m</I>.<BR>
+On tape avec les instructions françaises :
+</P><PRE CLASS="verbatim">heureux(n):={
+  local tab,heur,m,j,p,k;
+  tab:=j$(j=2..n);
+  tab:=concat([0,0],[tab]);
+  heur:=[];
+  p:=2;
+  tantque (p&lt;=n) faire
+    m:=p;
+    k:=0;
+    pour j de p+1 jusque n faire
+      si tab[j]!=0 alors k:=k+1; fsi;
+      si irem(k,m)==0 alors tab[j]:=0 fsi;
+    fpour;
+    p:=p+1;
+    si p&lt;=n alors 
+      tantque tab[p]==0 and p&lt;n faire p:=p+1 ftantque;
+      si p==n and tab[p]==0 alors p:=n+1;fsi;
+    fsi;
+  ftantque; 
+  pour p de 2 jusque n faire
+    si (tab[p]!=0) alors 
+      heur:=append(heur,p);
+    fsi;
+  fpour;
+  retourne(heur);
+}:;
+</PRE><P>Dans ce programme on peut se passer de la liste <TT>heur</TT> : il suffit de
+supprimer la dernière instruction <TT>pour</TT> et de mettre :<BR>
+<TT>retourne remove(x-&gt;x==0,tab);</TT> à la place de <TT>retourne heur</TT>
+On tape : <TT>heureux(100)</TT><BR>
+On obtient :<BR>
+<TT>[2,3,5,7,11,13,17,23,25,29,37,41,43,47,53,61,67,71,77,83,89,91,97]</TT></P><P>On peut aussi et ce sera plus rapide, modifier la liste <TT>tab</TT> au fur et 
+à mesure en supprimant à chaque étape les valeurs barrées c’est à 
+dire les valeurs mises à 0 en utilisant l’instruction <TT>remove</TT> et en 
+mettant au fur et à mesure les nombres heureux dans <TT>heur</TT>.<BR>
+On tape avec les instructions françaises :
+</P><PRE CLASS="verbatim">//renvoie la liste des nombres heureux&lt;=n
+heureux2(n):={
+  local tab,heur,m,j,k,s;
+  tab:=[j$(j=2..n)];
+  heur:=[];
+  s:=dim(tab);
+  k:=0;
+  tantque (s&gt;0) faire
+    j:=0;
+    m:=tab[0];
+    heur[k]:=m;
+    tantque j&lt;s faire
+      tab[j]:=0;
+      j:=j+m;
+    ftantque;
+      tab:=remove(x-&gt;x==0,tab);
+      s:=dim(tab);
+      k:=k+1;
+  ftantque;
+  retourne(heur);
+}:;
+</PRE><P>On tape : <TT>heureux2(100)</TT><BR>
+On obtient :<BR>
+<TT>[2,3,5,7,11,13,17,23,25,29,37,41,43,47,53,61,67,71,77,<BR>
+ 83,89,91,97]</TT>
+</P><H2 CLASS="section"><A NAME="toc71"></A><A NAME="htoc261">8.27</A>  L’équation de Pell</H2><H3 CLASS="subsection"><A NAME="htoc262">8.27.1</A>  Les proriétés</H3><P>
+Résoudre l’équation de Pell c’est trouver les plus petits entiers <I>x</I>,<I>y</I> qui
+sont solutions de <I>x</I><SUP>2</SUP>−<I>n</I>*<I>y</I><SUP>2</SUP>=1 lorsque <I>n</I> est un entier.<BR>
+Euler à montré que l’on pouvait résoudre cette équation à l’aide du 
+développement en fraction continue de √<SPAN style="text-decoration:overline"><I>n</I></SPAN> (par exemple <TT>dfc(n,20)</TT>).
+Supposons que le développement en fraction continue de √<SPAN style="text-decoration:overline"><I>n</I></SPAN> soit de 
+période <I>k</I>. On a :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+pour <I>k</I>=2<I>h</I>−1,<BR>
+ √<SPAN style="text-decoration:overline"><I>n</I></SPAN>=[<I>a</I><SUB>0</SUB>,<I>a</I><SUB>1</SUB>,..,<I>a</I><SUB><I>h</I>−1</SUB>,<I>a</I><SUB><I>h</I>−1</SUB>,..,<I>a</I><SUB>1</SUB>,2<I>a</I><SUB>0</SUB>],[<I>a</I><SUB>1</SUB>,..,<I>a</I><SUB><I>h</I>−1</SUB>,<I>a</I><SUB><I>h</I>−1</SUB>,..,<I>a</I><SUB>1</SUB>,2<I>a</I><SUB>0</SUB>]].<BR>
+<B>Par exemple</B><BR>
+<TT>dfc(sqrt(13),20)=[3,1,1,1,1,6,[1,1,1,1,6]]</TT><BR>
+</LI><LI CLASS="li-itemize">pour <I>k</I>=2<I>h</I>,<BR>
+√<SPAN style="text-decoration:overline"><I>n</I></SPAN>=[<I>a</I><SUB>0</SUB>,<I>a</I><SUB>1</SUB>,..,<I>a</I><SUB><I>h</I>−1</SUB>,<I>a</I><SUB><I>h</I></SUB>, <I>a</I><SUB><I>h</I>−1</SUB>,..,<I>a</I><SUB>1</SUB>,2<I>a</I><SUB>0</SUB>],[<I>a</I><SUB>1</SUB>,..,<I>a</I><SUB><I>h</I>−1</SUB>,<I>a</I><SUB><I>h</I></SUB>,<I>a</I><SUB><I>h</I>−1</SUB>,..,<I>a</I><SUB>1</SUB>,2<I>a</I><SUB>0</SUB>]] (ici <I>k</I>=5,)<BR>
+<B>Par exemple</B><BR>
+<TT>dfc(sqrt(23),20)=[4,1,3,1,8,[1,3,1,8]]</TT> (ici <I>k</I>=4)<BR>
+</LI></UL><P>
+Soit le développement en fraction continue de √<SPAN style="text-decoration:overline"><I>n</I></SPAN> :<BR>
+√<SPAN style="text-decoration:overline"><I>n</I></SPAN>=[<I>a</I><SUB>0</SUB>,<I>a</I><SUB>1</SUB>,....<I>a</I><SUB><I>k</I></SUB>,<I>x</I><SUB><I>k</I></SUB>]<BR>
+Soient :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>A</I><SUB><I>k</I></SUB></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>B</I><SUB><I>k</I></SUB></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=[<I>a</I><SUB>0</SUB>,<I>a</I><SUB>1</SUB>,....<I>a</I><SUB><I>k</I></SUB>]</TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I><SUB><I>k</I></SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I><SUB><I>k</I></SUB>+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>n</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>Q</I><SUB><I>k</I></SUB></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On a les relations :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>A</I><SUB>2</SUB>=0, <I>A</I><SUB>1</SUB>=1, <I>A</I><SUB><I>k</I></SUB>=<I>a</I><SUB><I>k</I></SUB> <I>A</I><SUB><I>k</I>−1</SUB>+<I>A</I><SUB><I>k</I>−2</SUB></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>B</I><SUB>2</SUB>=1, <I>B</I><SUB>1</SUB>=0, <I>B</I><SUB><I>k</I></SUB>=<I>a</I><SUB><I>k</I></SUB> <I>B</I><SUB><I>k</I>−1</SUB>+<I>B</I><SUB><I>k</I>−2</SUB></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I><SUB><I>k</I></SUB>=floor(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I><SUB><I>k</I></SUB>+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>n</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>Q</I><SUB><I>k</I></SUB></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)</TD></TR>
+</TABLE><P>
+Puisque <I>x</I><SUB><I>k</I>+1</SUB>=1/(<I>x</I><SUB><I>k</I></SUB>−<I>a</I><SUB><I>k</I></SUB>) on a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I><SUB>0</SUB>=0, <I>P</I><SUB><I>k</I>+1</SUB>=<I>a</I><SUB><I>k</I></SUB><I>Q</I><SUB><I>k</I></SUB>−<I>P</I><SUB><I>k</I></SUB></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>Q</I><SUB>0</SUB>=1, <I>Q</I><SUB><I>k</I>+1</SUB>=<I>a</I><SUB><I>k</I></SUB>(<I>P</I><SUB><I>k</I></SUB>−<I>P</I><SUB><I>k</I>−1</SUB>)+<I>Q</I><SUB><I>k</I>−1</SUB></TD></TR>
+</TABLE><P>
+Donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>A</I><SUB><I>k</I></SUB></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>B</I><SUB><I>k</I></SUB></TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>A</I><SUB><I>k</I>+1</SUB></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>B</I><SUB><I>k</I>+1</SUB></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=(−1)<SUP><I>k</I>+1</SUP></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>B</I><SUB><I>k</I></SUB><I>B</I><SUB><I>k</I>+1</SUB></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>A</I><SUB><I>k</I>−1</SUB><I>x</I><SUB><I>k</I></SUB>+<I>A</I><SUB><I>k</I>−2</SUB></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>B</I><SUB><I>k</I>−1</SUB><I>x</I><SUB><I>k</I></SUB>+<I>B</I><SUB><I>k</I>−2</SUB></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>A</I><SUB><I>k</I>−1</SUB></TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">+<I>P</I><SUB><I>k</I></SUB><I>A</I><SUB><I>k</I>−1</SUB>+<I>Q</I><SUB><I>k</I></SUB><I>A</I><SUB><I>k</I>−2</SUB></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>B</I><SUB><I>k</I>−1</SUB></TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> +<I>P</I><SUB><I>k</I></SUB><I>B</I><SUB><I>k</I>−1</SUB>+<I>Q</I><SUB><I>k</I></SUB><I>B</I><SUB><I>k</I>−2</SUB></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>Q</I><SUB><I>k</I></SUB><I>A</I><SUB><I>k</I>−2</SUB>+<I>P</I><SUB><I>k</I></SUB> <I>A</I><SUB><I>k</I>−1</SUB>=<I>n</I> <I>B</I><SUB><I>k</I>−1</SUB></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>Q</I><SUB><I>k</I></SUB><I>B</I><SUB><I>k</I>−2</SUB>+<I>P</I><SUB><I>k</I></SUB> <I>B</I><SUB><I>k</I>−1</SUB>=<I>A</I><SUB><I>k</I>−1</SUB></TD></TR>
+</TABLE><P>
+On a donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">(<I>A</I><SUB><I>k</I>−2</SUB><I>B</I><SUB><I>k</I>−1</SUB>−<I>A</I><SUB><I>k</I>−1</SUB><I>B</I><SUB><I>k</I>−2</SUB>)<I>Q</I><SUB><I>k</I></SUB>=<I>nB</I><SUB><I>k</I>−1</SUB><SUP>2</SUP>−<I>A</I><SUB><I>k</I>−1</SUB><SUP>2</SUP>=(−1)<SUP><I>k</I>−1</SUP><I>Q</I><SUB><I>k</I></SUB></TD></TR>
+</TABLE><P>Si (<I>P</I><SUB><I>n</I></SUB> +√<SPAN style="text-decoration:overline"><I>n</I></SPAN>)/<I>Q</I><SUB><I>n</I></SUB> est le <I>n</I>-ième quotient du développement en 
+fraction continue de √<SPAN style="text-decoration:overline"><I>n</I></SPAN> alors si <I>Q</I><SUB><I>h</I></SUB>= <I>Q</I><SUB><I>h</I>−1</SUB> 
+(resp <I>P</I><SUB><I>h</I></SUB>= <I>P</I><SUB><I>h</I>−1</SUB>) on a <I>k</I>=2<I>h</I>−1 (resp <I>k</I>=2<I>h</I>−2).<BR>
+On en déduit donc la valeur <I>k</I> de la période.<BR>
+La plus petite solution de <I>x</I><SUP>2</SUP> − <I>ny</I><SUP>2</SUP> =1 est donnée par :<BR>
+<I>A</I><SUB><I>k</I>−1</SUB> + <I>B</I><SUB><I>k</I>−1</SUB>√<SPAN style="text-decoration:overline"><I>n</I></SPAN> où <I>A</I><SUB><I>n</I></SUB>/<I>B</I><SUB><I>n</I></SUB> est la <I>n</I>-ième fraction convergeant
+vers √<SPAN style="text-decoration:overline"><I>n</I></SPAN>.<BR>
+<B>Remarque</B><BR>
+Soit <I>n</I> un entier. Si <I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB> sont solutions de <I>x</I><SUP>2</SUP>−<I>n</I>*<I>y</I><SUP>2</SUP>=1 alors 
+<I>x</I><SUB><I>k</I></SUB>,<I>y</I><SUB><I>k</I></SUB> sont d’autres solutions grace à la formule :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I><SUB><I>k</I></SUB>+<I>y</I><SUB><I>k</I></SUB></TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=(<I>x</I><SUB>0</SUB>+<I>y</I><SUB>0</SUB></TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)<SUP><I>k</I></SUP></TD></TR>
+</TABLE><P>
+En effet, par récurrence si on a <I>x</I><SUB><I>k</I></SUB>+<I>y</I><SUB><I>k</I></SUB>√<SPAN style="text-decoration:overline"><I>n</I></SPAN>=(<I>x</I><SUB>0</SUB>+<I>y</I><SUB>0</SUB>√<SPAN style="text-decoration:overline"><I>n</I></SPAN>)<SUP><I>k</I></SUP> et
+(<I>x</I><SUB><I>k</I></SUB>,<I>y</I><SUB><I>k</I></SUB>) solution de <I>x</I><SUP>2</SUP>−<I>ny</I><SUP>2</SUP>=1 alors :<BR>
+<I>x</I><SUB><I>k</I>+1</SUB>+<I>y</I><SUB><I>k</I>+1</SUB>√<SPAN style="text-decoration:overline"><I>n</I></SPAN>=(<I>x</I><SUB>0</SUB>+<I>y</I><SUB>0</SUB>√<SPAN style="text-decoration:overline"><I>n</I></SPAN>)*(<I>x</I><SUB><I>k</I></SUB>+<I>y</I><SUB><I>k</I></SUB>√<SPAN style="text-decoration:overline"><I>n</I></SPAN>) donc<BR>
+<I>x</I><SUB><I>k</I>+1</SUB>=<I>x</I><SUB>0</SUB><I>x</I><SUB><I>k</I></SUB>+<I>ny</I><SUB>0</SUB><I>y</I><SUB><I>k</I></SUB> et<BR>
+<I>y</I><SUB><I>k</I>+1</SUB>=<I>x</I><SUB>0</SUB><I>y</I><SUB><I>k</I></SUB>+<I>y</I><SUB>0</SUB><I>x</I><SUB><I>k</I></SUB> donc<BR>
+<I>x</I><SUB><I>k</I>+1</SUB><SUP>2</SUP>=(<I>x</I><SUB>0</SUB><I>x</I><SUB><I>k</I></SUB>+<I>ny</I><SUB>0</SUB><I>y</I><SUB><I>k</I></SUB>)<SUP>2</SUP>=<I>x</I><SUB>0</SUB><SUP>2</SUP><I>x</I><SUB><I>k</I></SUB><SUP>2</SUP>+<I>n</I><SUP>2</SUP><I>y</I><SUB>0</SUB><SUP>2</SUP><I>y</I><SUB><I>k</I></SUB><SUP>2</SUP>+2<I>nx</I><SUB>0</SUB><I>x</I><SUB><I>k</I></SUB><I>y</I><SUB>0</SUB><I>y</I><SUB><I>k</I></SUB>=<BR>
+<I>x</I><SUB>0</SUB><SUP>2</SUP><I>x</I><SUB><I>k</I></SUB><SUP>2</SUP>+(1+<I>x</I><SUB>0</SUB><SUP>2</SUP>)(1+<I>x</I><SUB><I>k</I></SUB><SUP>2</SUP>)+2<I>nx</I><SUB>0</SUB><I>x</I><SUB><I>k</I></SUB><I>y</I><SUB>0</SUB><I>y</I><SUB><I>k</I></SUB>=2<I>x</I><SUB>0</SUB><SUP>2</SUP><I>x</I><SUB><I>k</I></SUB><SUP>2</SUP>+<I>x</I><SUB>0</SUB><SUP>2</SUP>+1+<I>x</I><SUB><I>k</I></SUB><SUP>2</SUP>+2<I>nx</I><SUB>0</SUB><I>x</I><SUB><I>k</I></SUB><I>y</I><SUB>0</SUB><I>y</I><SUB><I>k</I></SUB><BR>
+<I>ny</I><SUB><I>k</I>+1</SUB><SUP>2</SUP>=<I>n</I>(<I>x</I><SUB>0</SUB><I>y</I><SUB><I>k</I></SUB>+<I>y</I><SUB>0</SUB><I>x</I><SUB><I>k</I></SUB>)<SUP>2</SUP>=<I>nx</I><SUB>0</SUB><SUP>2</SUP><I>y</I><SUB><I>k</I></SUB><SUP>2</SUP>+<I>ny</I><SUB>0</SUB><SUP>2</SUP><I>x</I><SUB><I>k</I></SUB><SUP>2</SUP>+2<I>nx</I><SUB>0</SUB><I>y</I><SUB><I>k</I></SUB><I>y</I><SUB>0</SUB><I>x</I><SUB><I>k</I></SUB>=<BR>
+=<I>x</I><SUB>0</SUB><SUP>2</SUP>(1+<I>x</I><SUB><I>k</I></SUB><SUP>2</SUP>)+(1+<I>x</I><SUB>0</SUB><SUP>2</SUP>)<I>x</I><SUB><I>k</I></SUB><SUP>2</SUP>+2<I>nx</I><SUB>0</SUB><I>y</I><SUB><I>k</I></SUB><I>y</I><SUB>0</SUB><I>x</I><SUB><I>k</I></SUB>=2<I>x</I><SUB>0</SUB><SUP>2</SUP><I>x</I><SUB><I>k</I></SUB><SUP>2</SUP>+<I>x</I><SUB>0</SUB><SUP>2</SUP>+<I>x</I><SUB><I>k</I></SUB><SUP>2</SUP><BR>
+donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I><SUB><I>k</I>+1</SUB><SUP>2</SUP>−<I>ny</I><SUB><I>k</I>+1</SUB><SUP>2</SUP>=1</TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc263">8.27.2</A>  Le programme</H3><P>
+Le programme ci dessous trouve les plus petits entiers <I>A</I>,<I>B</I> qui sont solutions 
+de <I>A</I><SUP>2</SUP>−<I>n</I>*<I>B</I><SUP>2</SUP>=1 lorsque <I>n</I> est entier qui n’est pas un carré parfait.<BR>
+Les différentes valeurs de <I>a</I> sont le développement en fraction continue
+de √<SPAN style="text-decoration:overline"><I>n</I></SPAN>.
+<I>A</I><SUB><I>p</I></SUB>/<I>B</I><SUB><I>p</I></SUB> sont les réduites de rang <I>p</I> (<I>A</I><SUB><I>p</I></SUB>/<I>B</I><SUB><I>p</I></SUB>=[<I>a</I><SUB>0</SUB>,...<I>a</I><SUB><I>p</I></SUB>])
+On a <I>P</I><SUB><I>k</I></SUB> et <I>Q</I><SUB><I>k</I></SUB> qui sont tels que:<BR>
+√<SPAN style="text-decoration:overline"><I>n</I></SPAN>=[<I>a</I>−0,<I>a</I>−1,...<I>a</I><SUB><I>k</I>−1</SUB>+<I>Q</I><SUB><I>k</I></SUB>/(√<SPAN style="text-decoration:overline"><I>n</I></SPAN>+<I>P</I><SUB><I>k</I></SUB>)]</P><PRE CLASS="verbatim">Pell(n):={
+local A,B,P,Q,R,a,sn,AA,BB,NA,NB;
+if (type(n)!=DOM_INT) {return "erreur"};
+if (round(sqrt(n))^2==n) {return "erreur"};
+R:=0;
+Q:=1;
+P:=0;
+sn:=floor(sqrt(n));
+a:=sn;
+AA:=1;A:=a;
+BB:=0;B:=1;
+print(a,P,Q,R,A,B);
+while (A^2-n*B^2!=1) {
+P:=sn-R;
+Q:=(n-P^2)/Q;
+a:=floor((P+sn)/Q);
+R:=irem(P+sn,Q);
+NA:=a*A+AA;
+NB:=a*B+BB;
+AA:=A;
+BB:=B;
+A:=NA;
+B:=NB;
+print(a,P,Q,R,A,B);
+}
+return (A,B);
+}
+:;
+</PRE><P>On tape :<BR>
+<TT>Pell(13)</TT><BR>
+On obtient :<BR>
+<TT>649,180</TT><BR>
+En effet : 649<SUP>2</SUP>−13*180<SUP>2</SUP>=1
+On tape :<BR>
+<TT>Pell(43)</TT><BR>
+On obtient :<BR>
+<TT>3482,531</TT><BR>
+En effet : 3482<SUP>2</SUP>−43*531<SUP>2</SUP>=1</P><HR>
+<A HREF="casrouge007.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge009.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

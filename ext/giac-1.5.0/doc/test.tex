@@ -1,0 +1,173 @@
+% Pour compiler ce fichier, vous devez d'abord installer
+% hevea: http://hevea.inria.fr
+% giac.tex: http://www-fourier.ujf-grenoble.fr/~parisse/giac/giac.tex
+% copier hevea.sty dans le repertoire courant
+% ensuite vous pouvez tester avec la commande hevea test 
+\documentclass[a4paper,11pt]{article}
+%\textwidth 11,8 cm
+%\textheight 17 cm
+\textheight 23 cm
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{makeidx}
+\usepackage{times}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{latexsym}
+\usepackage{graphicx}
+%\usepackage{pst-plot}
+\usepackage{ifpdf}
+\ifpdf
+ \usepackage[pdftex,colorlinks]{hyperref}
+\else
+ \usepackage[ps2pdf,
+            breaklinks=true,
+            colorlinks=true,
+            linkcolor=red,
+            citecolor=green
+            ]{hyperref}
+\fi
+
+\input{giac.tex}
+\giacmathjax
+%HEVEA\renewcommand{\footertext}{}
+
+
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{example}[thm]{Example}
+
+
+\newcommand{\R}{{\mathbb{R}}}
+\newcommand{\C}{{\mathbb{C}}}
+\newcommand{\Z}{{\mathbb{Z}}}
+\newcommand{\N}{{\mathbb{N}}}
+\newcommand{\Q}{{\mathbb{Q}}}
+\newcommand{\tr}{\mbox{tr\,}}
+
+
+\title {Examples of interactive computations inside a \LaTeX\ file
+  compiled to HTML.}
+\author{B. Parisse\\Institut Fourier\\UMR 5582 du CNRS
+\\Université de Grenoble}
+
+\date{2015}
+
+\makeindex
+
+\begin{document}
+%\loadgiacjsonline
+%\loadgiacjs
+\begin{giacjshere}
+\maketitle
+
+\tableofcontents
+
+\printindex
+
+\section{Description}
+This \LaTeX\ source will output an interactive HTML file if you compile
+with {\tt hevea} (tested with \verb|hevea 2.23|), where interactive
+computations are done with the computer algebra system Giac.
+
+\section{Install}
+Please install
+\ahref{http://hevea.inria.fr}{hevea}.
+Copy \ahref{http://www-fourier.univ-grenoble-alpes.fr/\%7eparisse/giac/giac.tex}{giac.tex}
+and \ahref{http://hevea.inria.fr/distri/hevea.sty}{hevea.sty}
+in the same folder as your source file.
+You can also get a copy of the source
+\ahref{http://www-fourier.univ-grenoble-alpes.fr/\%7eparisse/giac/test.tex}{test.tex} 
+for this file and check your installation by compiling it\\
+\verb|hevea test|
+
+\section{Commands}
+You must first enter the command \verb|\input{giac.tex}| in the
+preamble of your \LaTeX\ source file
+and add one of the commands \verb|\begin{giacjshere}|\index{giacjshere}
+\verb|\begin{giacjs}|\index{giacjs} or 
+\verb|\begin{giacjsonline}|\index{giacjsonline}
+just after \verb|\begin{document}|: the difference is that the javascript
+kernel \verb|giac.js|
+will either be found from the same place where the file was downloaded
+or on the hard disk (assuming that Giac/Xcas is
+installed on the target computer) or downloaded from Giac Internet website.
+You must also add the corresponding  command \verb|\end{giacjs}| or
+\verb|\end{giacjsonline}| just before \verb|\end{document}|.
+You should add the command \verb|\tableofcontents|\index{table} then
+\verb|\printindex|\index{index} just after
+\verb|\begin{giacjsonline}| (and add \verb|\makeindex| somewhere).
+
+Inline command with Mathml or 2d graph output 
+\verb|\giacinputmath{}| or \verb|\giaccmdmath{}{}|~:\\
+\verb|\giacinputmath{factor(x^10-1)}|\index{giacinputmath}\\
+\giacinputmath{factor(x^10-1)}\\
+With an optional style argument\\
+\verb|\giacinputmath[style="width:200px;height:20px;font-size:large"]{factor(x^10-1)}|\\
+\giacinputmath[style="width:200px;height:20px;font-size:large"]{factor(x^10-1)}\\
+\verb|\giaccmdmath{factor}{x^4-1}|\index{giaccmdmath}\\
+\giaccmdmath{factor}{x^4-1}\\
+\verb|\giaccmdmath[style="width:200px;height:20px;font-size:large"]{factor}{x^4-1}|\\
+\giaccmdmath[style="width:200px;height:20px;font-size:large"]{factor}{x^4-1}
+
+Outline command with mathml output
+\verb|\giacinputbigmath{}| or \verb|\giaccmdbigmath{}{}|~:\\
+\verb|\giacinputbigmath{factor(x^100-1)}|\index{giacinputbigmath}\\
+\giacinputbigmath{factor(x^100-1)}\\
+\verb|\giacinputbigmath[style="width:600px;height:20px;font-size:large"]{factor(x^100-1)}|\\
+\giacinputbigmath[style="width:600px;height:20px;font-size:large"]{factor(x^100-1)}\\
+\verb|\giaccmdbigmath{factor}{x^100-1}|\index{giaccmdbigmath}\\
+\giaccmdbigmath{factor}{x^100-1}\\
+\verb|\giaccmdbigmath[style="width:600px;height:20px;font-size:large"]{factor}{x^100-1}|\\
+\giaccmdbigmath[style="width:600px;height:20px;font-size:large"]{factor}{x^100-1}
+
+Inline command example with text or plot output 
+\verb|\giacinput| and \verb|\giacinputbig|\index{giacinputbig}, 
+example:\\
+\verb|\giacinput{factor(x^4-1)}|\index{giacinput}~:\\
+\giacinput{factor(x^4-1)}\\
+Same command with optional style argument\\
+\verb|\giacinput[style="width:200px;height:20px;font-size:large"]{plot(sin(x))}|\\
+\giacinput[style="width:200px;height:20px;font-size:large"]{plot(sin(x))}
+
+A button with a command applied on the field entry with
+\verb|\giaccmd|, example\\
+\verb|\giaccmd{factor}{x^4-1}|\index{giaccmd}~:\\
+\giaccmd{factor}{x^4-1}\\
+with optional style argument\\
+\verb|\giaccmd[style="width:200px;height:20px;font-size:large"]{factor}{x^4-1}|\\
+\giaccmd[style="width:200px;height:20px;font-size:large"]{factor}{x^4-1}
+
+{\bf Warning}, you must replace \verb|<| by \verb|&lt;| and \verb|>|
+by \verb|&gt;|, otherwise they will be interpreted as HTML delimiters.
+
+For a program\index{giacprog} or multi-line commands\\
+\verb|\begin{giacprog}...\end{giacprog}|, example homemade absolute value\\
+\begin{giacprog}
+f(x):={
+  local y;
+  if x<0 then y:=-x; else y=x; fi;
+  return y;
+}
+\end{giacprog}
+Inside this environment, you can keep \verb|<| and \verb|>|.
+Do not use this environment in another environment (like itemize or enumerate).
+
+A link\index{giaclink} to Xcas offline with a few commands\\
+\verb|\giaclink{http://www-fourier.univ-grenoble-alpes.fr/\%7eparisse/xcasen.html#+factor(x^4-1)&+a:=idn(3)&}|\\
+\giaclink{http://www-fourier.univ-grenoble-alpes.fr/\%7eparisse/xcasen.html#+factor(x^4-1)&+a:=idn(3)&}
+
+A slider\\ 
+\verb|\giacslider{a}{-5}{5}{0.1}{0}{plot(sin(a*x))}|\index{giacslider}\\
+\giacslider{a}{-5}{5}{0.1}{0}{plot(sin(a*x))}
+
+\section{Logo turtle}
+\giacinput{efface; avance 30;}
+
+\end{giacjshere}
+\end{document}

@@ -1,0 +1,148 @@
+INTRODUCTION:
+
+This package contains the distribution for itex2MML. Binaries for MacOSX and
+Linux are provided in the itex-binaries directory. The source code is in the
+itex-src directory. It should compile on most platforms by simply typing
+
+     make
+     sudo make install
+
+The resulting itex2MML binary is a stream filter. It takes text with embedded
+itex equations on STDIN, converts the itex equations to MathML, and outputs
+the resulting text on STDOUT.
+
+Also included are Ruby bindings. The easiest way to obtain them, with a recent version of Rubygems is
+
+     gem install itextomml
+     
+Alternatively, if you have GNU make and SWIG 1.3, they can be
+built manually with
+
+     make ruby
+     make test_ruby
+     sudo make install_ruby
+
+The Ruby module provides four public methods
+
+       require 'itextomml'
+       itex =  Itex2MML::Parser.new
+
+       itex.html_filter(a_string)
+               converts all itex equations in a_string to MathML, passing the
+               rest of a_string unmodified. Returns the converted string. 
+
+       itex.filter(a_string)
+               converts all itex equations in a_string to MathML. Returns just
+               the MathML equation(s), as a string.
+
+       itex.inline_filter(a_string)
+               treats a_string as an inline equation (automatically supplies
+               the surrounding $...$, so you don't have to) and converts it
+               MathML. Returns the MathML inline equation, as a string.
+
+       itex.block_filter(a_string)
+               treats a_string as a block equation (automatically supplies
+               the surrounding $$...$$, so you don't have to) and converts it
+               MathML. Returns the MathML block equation, as a string.
+               
+Note that the commandline tool and the Ruby library return MathML named entities in the output.
+On the public web, it is safest to convert these either to utf-8 characters or to NCRs. For that,
+you can use the Perl library, MathML::Entities (available from CPAN) or the String methods
+  String#to_ncr
+  String to_utf8
+  String#to_ncr!
+and
+  String#to_utf8!
+provided for that purpose in the itex_stringsupport.rb library included with the Rubygem.
+
+Finally, there is a MovableType (2.6 or greater) plugin which provides two
+Text Filtering options:
+
+1) itex to MathML
+2) itex to MathML with parbreaks
+
+The plugin relies on the itex2MML commandline utility to do the actual
+conversion. The first filter is a straight itex2MML translation. The latter
+uses the "TeX" (and blogger's) convention that two linebreaks in succession
+signify a new paragraph. (The bloggers also like to convert single linebreaks
+to <br />, but that would mess with TeX formula entry, so we don't support it.)
+
+A second plugin (also included) provides additionalText Filtering options:
+
+1) Textile with itex to MathML
+2) Markdown with itex to MathML
+
+Details describing this plugin are available at: 
+
+    http://golem.ph.utexas.edu/~distler/blog/archives/000374.html
+
+It requires both the itex2MML plugin and the Textile and/or Markdown plugins.
+
+See
+      http://golem.ph.utexas.edu/~distler/blog/itex2MMLcommands.html
+
+and Paul Gartside's page
+ 
+      http://pear.math.pitt.edu/mathzilla/itex2mml.html
+
+for more details on composing in itex and using the itex2MML program.
+The version of itex2MML included here is greatly-enhanced, with
+many bugfixes and support for a larger subset of LaTeX/AMSLaTeX syntax.
+
+Below I've put some simple notes specific to the use of this plugin.
+
+USAGE NOTES:
+
+1) Tex equations are delimited by $...$ (inline) or \[...\] (display).
+Alternatively, $$...$$ can also be used to delimit display equations. So,
+just as in a TeX document, be sure you don't have any free-floating $'s
+in your text. If you want to enter something that renders as a $, use
+the unicode entity &#36;.
+
+2) The itex2MML stream filter does not distinguish between $$...$$ and \[...\].
+Both result in display equations. However, the MovableType plugin and Maruku
+
+    http://maruku.rubyforge.org/
+
+the Ruby Markdown implementation, do distinguish between them. Both have
+automatic equation-numbering: \[...\] results in a numbered equation. You
+can add an optional label
+
+    \[...\label{foo}...\]
+
+and then you can refer to the equation with either (eq:foo) or \eqref{foo}.
+These are automatically turned into hyperlinks.
+
+2) If you are using the "itex to MathML with parbreaks" filter, paragraph
+breaks are inserted automatically, whenever you insert a blank line in your
+text.  If you are using the plain "itex to MathML" filter, you need to put
+in the paragraph (and any other) XHTML tags yourself.
+
+3) Mozilla only renders MathML when you serve the document as XML (ie
+using the MIME type application/xhtml+xml rather than text/html). You had
+better be producing 100% valid XHTML if you want to see *anything* when Mozilla
+is operating in that mode.
+
+4)The best way to serve up XML to Mozilla, while still catering to
+other browsers is to use mod_rewrite rules in the .htaccess file of your
+blog. See
+    http://golem.ph.utexas.edu/~distler/blog/archives/000167.html
+for how to do that.
+
+PLUGIN INSTALLATION INSTRUCTIONS:
+
+1) Put the contents of the plugins directory into your MovableType plugins
+directory.
+
+2) If you are running MacOSX or Linux, I've provided a precompiled binary,
+so you can skip to step 3).
+If these don't do the trick for you, or if you prefer to compile your own,
+cd into the itex-src directory and type "make". The result should be an itex2MML
+binary for your architecture.
+
+3) Copy itex2MML into /usr/local/bin/, and make sure it's executable
+(mode 755). If you're building from source, you can achieve this by typing
+"make install". If you decide to put it in another location, edit
+itex2MML.pl to reflect its new location.
+
+Itex2MML is Open Source software, released under a triple license: GPL, MPL and LGPL.

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Normal distributions</title>
+</head>
+<body >
+<a href="cascmd_en718.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en720.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec890" class="subsection">8.4.5  Normal distributions</h3>
+<h4 id="sec891" class="subsubsection">The probability density function for a normal
+distribution: <span style="font-family:monospace">normald</span><a id="hevea_default1230"></a> <span style="font-family:monospace">loi_normal</span><a id="hevea_default1231"></a></h4>
+<p>The <span style="font-family:monospace">normald</span> (or <span style="font-family:monospace">loi_normal</span>) command returns the
+value of the normal probability density function. You can give it
+arguments of the mean µ, standard deviation σ and a value
+<span style="font-style:italic">x</span> then 
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-family:monospace">normald</span>(µ,σ,<span style="font-style:italic">x</span>) = </td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >2π</td></tr>
+</table></td><td class="dcell"> σ</td></tr>
+</table></td></tr>
+</table></td><td class="dcell">
+<span style="font-style:italic">e</span><sup>(<span style="font-style:italic">x</span>−µ)<sup>2</sup>/2</sup>
+</td></tr>
+</table><p>
+If you enter
+</p><div class="center">
+<span style="font-family:monospace">normald(2,1,3)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">exp(-1/2)/sqrt(2*pi)
+</span></div><p>If you don’t give the command values for µ and σ, then
+<span style="font-family:monospace">normald</span> will use the values µ=0 and σ = 1, and so
+compute the standard normal density function. If you enter
+</p><div class="center">
+<span style="font-family:monospace">normald(2)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">1/(sqrt(2*pi)*exp(2))
+</span></div>
+<h4 id="sec892" class="subsubsection">The cumulative distribution function for normal
+distributions: <span style="font-family:monospace">normal_cdf</span><a id="hevea_default1232"></a> <span style="font-family:monospace">normald_cdf</span><a id="hevea_default1233"></a></h4>
+<p>The command <span style="font-family:monospace">normal_cdf</span> (or <span style="font-family:monospace">normald_cdf</span>) computes
+the cumulative distribution function for the normal distribution.
+Like <span style="font-family:monospace">normald</span>, you can give it the mean and standard deviation
+of the distribution; if you enter
+</p><div class="center">
+<span style="font-family:monospace">normal_cdf(1,2,1.96)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">0.684386303484
+</span></div><p>
+You can also leave off the mean and standard deviation, in which case
+<span style="font-family:monospace">normal_cdf</span> will compute the cumulative distribution function
+for the standard normal distribution;
+</p><div class="center">
+<span style="font-family:monospace">normal_cdf(1,2.1,1.2)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">0.537937144066
+</span></div><p>If you give <span style="font-family:monospace">normal_cdf</span> an extra argument (with or without
+the mean and standard deviation), you will get the probability that
+the random variable lies between two values;
+<span style="font-family:monospace">normal_cdf(</span><span style="font-style:italic">x</span><span style="font-family:monospace">,</span><span style="font-style:italic">y</span><span style="font-family:monospace">)</span> = Prob(<span style="font-style:italic">x</span> ≤ <span style="font-style:italic">X</span> ≤ <span style="font-style:italic">y</span>). If you
+enter
+</p><div class="center">
+<span style="font-family:monospace">normal_cdf(1,2.1,1.2,9)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">0.461993238584
+</span></div>
+<h4 id="sec893" class="subsubsection">The inverse distribution function for normal
+distributions: <span style="font-family:monospace">normal_icdf</span><a id="hevea_default1234"></a> <span style="font-family:monospace">normald_icdf</span><a id="hevea_default1235"></a></h4>
+<p>
+Given a value <span style="font-style:italic">h</span>, the inverse distribution function gives
+the value of <span style="font-style:italic">x</span> with Prob(<span style="font-style:italic">X</span> ≤ <span style="font-style:italic">x</span>) ≤ <span style="font-style:italic">h</span>.
+The <span style="font-family:monospace">normal_icdf</span> (or <span style="font-family:monospace">normald_icdf</span>) will compute the
+inverse distribution for the normal distribution. If no
+mean or standard deviation are given, the standard normal distribution
+will be used. If you enter
+</p><div class="center">
+<span style="font-family:monospace">normal_icdf(0.975)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">1.95996398454
+</span></div><p>
+You can, of course, also give the mean and standard deviation. If you
+enter
+</p><div class="center">
+<span style="font-family:monospace">normal_icdf(1,2,0.495)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">0.974933060984
+</span></div>
+<h4 id="sec894" class="subsubsection">The upper tail cumulative function for normal
+distributions: <span style="font-family:monospace">UTPN</span><a id="hevea_default1236"></a></h4>
+<p>The <span style="font-family:monospace">UTPN</span> (the Upper Tail Probability - Normal distribution) will compute
+Prob(<span style="font-style:italic">X</span> &gt; <span style="font-style:italic">x</span>). If you don’t give it a mean and variance, then
+it will compute the probability for the standard normal distribution.
+If you enter
+</p><div class="center">
+<span style="font-family:monospace">UTPN(1.96)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">0.0249978951482
+</span></div><p>
+You can also specify a mean and a variance, but note that unlike
+<span style="font-family:monospace">normald</span> and <span style="font-family:monospace">normal_cdf</span>, the <span style="font-family:monospace">UTPN</span> requires
+the variance and not the standard deviation. If you enter
+</p><div class="center">
+<span style="font-family:monospace">UTPN(1,4,1.96)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">0.315613696516
+</span></div>
+<hr>
+<a href="cascmd_en718.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en720.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

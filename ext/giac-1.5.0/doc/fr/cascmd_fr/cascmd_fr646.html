@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Matrice de passage et matrice de Jordan : jordan</title>
+</head>
+<body >
+<a href="cascmd_fr645.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr647.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec795" class="subsection">6.57.5  Matrice de passage et matrice de Jordan : <span style="font-family:monospace">jordan</span></h3>
+<p><a id="hevea_default1193"></a>
+<span style="font-family:monospace">jordan</span> a comme argument une matrice <span style="font-style:italic">A</span> d’ordre <span style="font-style:italic">n</span>.<br>
+<span style="font-family:monospace">jordan</span> renvoie 
+</p><ul class="itemize"><li class="li-itemize">
+en mode <span style="font-family:monospace">Xcas</span> (il faut être en mode complexe c’est à dire avoir
+coché <span style="font-family:monospace">Complexe</span> dans la configuration 
+de CAS lorsqu’il y a des valeurs propres complexes), <span style="font-family:monospace">Mupad</span> ou <span style="font-family:monospace">TI</span><br>
+une séquencee composée de
+deux matrices : une matrice de changement de base <span style="font-style:italic">P</span> de colonnes les vecteurs 
+propres et caractéristiques de <span style="font-style:italic">A</span>, suivie de la matrice de 
+Jordan <span style="font-style:italic">J</span> associée à <span style="font-style:italic">A</span> dans la nouvelle base,
+</li><li class="li-itemize">en mode <span style="font-family:monospace">Maple</span><br>
+ la matrice de Jordan <span style="font-style:italic">J</span> associée à <span style="font-style:italic">A</span> dans la nouvelle base. On peut 
+cependant obtenir la matrice de changement de base <span style="font-style:italic">P</span>, dans une variable 
+passée en second argument, par exemple 
+<div class="center"> <span style="font-family:monospace">jordan([[1,0,0],[0,1,1],[1,1,-1]],’P’)</span>
+</div>
+</li></ul><p>
+On a :<br>
+<span style="font-style:italic">J</span>=<span style="font-style:italic">P</span><sup>−1</sup><span style="font-style:italic">AP</span>.<br>
+<span style="font-weight:bold">Remarques</span>
+Pour <span style="font-family:monospace">rat_jordan</span> :
+</p><ul class="itemize"><li class="li-itemize">
+La syntaxe <span style="font-family:monospace">Maple</span> est aussi valable dans les autres modes, par 
+exemple, en mode <span style="font-family:monospace">Xcas</span>, on tape :
+<div class="center"> <span style="font-family:monospace">rat_jordan([[4,1,1],[1,4,1],[1,1,4]],’P’)</span>
+</div>
+On obtient :
+<div class="center"> <span style="font-family:monospace">[[1,-1,1/2],[1,0,-1],[1,1,1/2]]</span>
+</div>
+puis <span style="font-family:monospace">P</span> renvoie :
+<div class="center"> <span style="font-family:monospace">[[6,0,0],[0,3,0],[0,0,3]]</span>
+</div>,
+On tape :
+<div class="center"> <span style="font-family:monospace">rat_jordan([[-1,1,0],[0,-1,1],[1,0,-1]])</span>
+</div>
+On obtient :
+<div class="center"> <span style="font-family:monospace">[[1,1,-1],[1,0,-1],[1,-1,2]],[[0,0,0],[0,0,-3],[0,1,-3]]</span>
+</div>
+On tape (en mode complexe) :
+<div class="center"> <span style="font-family:monospace">jordan([[-1,1,0],[0,-1,1],[1,0,-1]])</span>
+</div>
+On obtient :
+<div class="center"> <span style="font-family:monospace">[[1,(-i)*sqrt(3)-1,(i)*sqrt(3)-1],[1,2,2], 
+[1,(i)*sqrt(3)-1, (-i)*sqrt(3)-1]], [[0,0,0],
+[0,((i)*sqrt(3)-3)/2,0],[0,0,((-i)*sqrt(3)-3)/2]]</span>
+</div>
+</li><li class="li-itemize">Lorsque <span style="font-style:italic">A</span> est symétrique et a des valeurs propres d’ordre multiple,
+<span style="font-family:monospace">Xcas</span> renvoie des vecteurs propres orthogonaux (pas forcément normés 
+i.e. <span style="font-family:monospace">tran(P)*P</span>) et une matrice diagonale ayant pour diagonale le carré 
+de la norme des vecteurs propres. 
+par exemple :
+<div class="center"> <span style="font-family:monospace">rat_jordan([[4,1,1],[1,4,1],[1,1,4]])</span>
+</div>
+renvoie :
+<div class="center"> <span style="font-family:monospace">[[1,-1,1/2],[1,0,-1],[1,1,1/2]],[[6,0,0],[0,3,0],[0,0,3]]</span>
+</div>
+</li></ul><p>
+Pour avoir la matrice de Jordan de :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎡<br>
+⎢<br>
+⎢<br>
+⎣</td><td class="dcell">
+</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >0</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >−1
+</td></tr>
+</table></td><td class="dcell">
+</td><td class="dcell">⎤<br>
+⎥<br>
+⎥<br>
+⎦</td></tr>
+</table><p>
+on tape en mode <span style="font-family:monospace">Xcas</span>, <span style="font-family:monospace">Mupad</span> et <span style="font-family:monospace">TI</span> :
+</p><div class="center"><span style="font-family:monospace">jordan([[1,0,0],[0,1,1],[1,1,-1]])</span></div><p>
+On obtient :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎡<br>
+⎢<br>
+⎢<br>
+⎢<br>
+⎢<br>
+⎣</td><td class="dcell">
+</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >−1</td><td style="text-align:center;white-space:nowrap" >0</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >2</td></tr>
+</table></td><td class="dcell">−1</td></tr>
+</table></td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" ><table class="display"><tr style="vertical-align:middle"><td class="dcell">−</td><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >2</td></tr>
+</table></td><td class="dcell">−1 
+</td></tr>
+</table></td></tr>
+</table></td><td class="dcell">
+</td><td class="dcell">⎤<br>
+⎥<br>
+⎥<br>
+⎥<br>
+⎥<br>
+⎦</td><td class="dcell">, 
+</td><td class="dcell">⎡<br>
+⎢<br>
+⎢<br>
+⎢<br>
+⎢<br>
+⎢<br>
+⎢<br>
+⎣</td><td class="dcell">
+</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" ><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >2</td></tr>
+</table></td></tr>
+</table></td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >0</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >0</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" ><table class="display"><tr style="vertical-align:middle"><td class="dcell">−</td><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >2</td></tr>
+</table></td></tr>
+</table></td></tr>
+</table></td><td class="dcell">
+</td><td class="dcell">⎤<br>
+⎥<br>
+⎥<br>
+⎥<br>
+⎥<br>
+⎥<br>
+⎥<br>
+⎦</td></tr>
+</table><p>
+On tape en mode <span style="font-family:monospace">Maple</span> :
+</p><div class="center"><span style="font-family:monospace">jordan([[1,0,0],[0,1,1],[1,1,-1]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1,0,0],[0,-(sqrt(2)),0],[0,0,sqrt(2)]]</span></div><p>
+On tape en mode <span style="font-family:monospace">Maple</span> :
+</p><div class="center"><span style="font-family:monospace">jordan([[1,0,0],[0,1,1],[1,1,-1]],’P’)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1,0,0],[0,-(sqrt(2)),0],[0,0,sqrt(2)]]</span></div><p>
+puis on tape :
+</p><div class="center"><span style="font-family:monospace">P)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[-1,0,0],[1,1,1],[0,-sqrt(2)-1,sqrt(2)-1]]</span></div><p>
+On tape en mode <span style="font-family:monospace">Xcas</span>, <span style="font-family:monospace">Mupad</span> et <span style="font-family:monospace">TI</span>:
+</p><div class="center"><span style="font-family:monospace">jordan([[4,1,-2],[1,2,-1],[2,1,0]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[[1,2,1],[0,1,0],[1,2,0]],[[2,1,0],[0,2,1],[0,0,2]]]</span></div><p>
+En mode complexe et en mode <span style="font-family:monospace">Xcas</span>, <span style="font-family:monospace">Mupad</span> et <span style="font-family:monospace">TI</span>, on tape :
+</p><div class="center"><span style="font-family:monospace">jordan([[2,0,0],[0,2,-1],[2,1,2]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1,0,0],[-2,-1,-1],[0,i,-i]],[[2,0,0],[0,2+i,0],[0,0,2-i]]</span></div>
+<hr>
+<a href="cascmd_fr645.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr647.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

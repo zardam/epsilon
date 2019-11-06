@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Régression logistique : logistic_regression</title>
+</head>
+<body >
+<a href="cascmd_fr755.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr757.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec927" class="subsection">8.2.20  Régression logistique : <span style="font-family:monospace">logistic_regression</span></h3>
+<p><a id="hevea_default1360"></a>
+Les courbes logistiques sont des courbes dont léquation <span style="font-style:italic">y</span>=<span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>) sont
+solutions d’une équation différentielle de la forme :<br>
+<span style="font-style:italic">y</span>′/<span style="font-style:italic">y</span>=<span style="font-style:italic">a</span>*<span style="font-style:italic">y</span>+<span style="font-style:italic">b</span> et <span style="font-style:italic">y</span><sub>0</sub>=<span style="font-style:italic">y</span>(<span style="font-style:italic">x</span><sub>0</sub>) avec <span style="font-style:italic">a</span>&lt;0 et <span style="font-style:italic">b</span>&gt;0.<br>
+Les solutions sont de la forme : <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>)=<span style="font-style:italic">C</span>/(1+exp(−α (<span style="font-style:italic">x</span>−<span style="font-style:italic">x</span><sub>0</sub>−<span style="font-style:italic">k</span>)
+avec <span style="font-style:italic">C</span>=−<span style="font-style:italic">b</span>/<span style="font-style:italic">a</span>, α=−<span style="font-style:italic">b</span> et <span style="font-style:italic">y</span><sub>0</sub>=(−<span style="font-style:italic">b</span>/<span style="font-style:italic">a</span>)/(1+exp(−<span style="font-style:italic">b</span>*<span style="font-style:italic">k</span>) soit <br>
+<span style="font-style:italic">k</span>=−1/<span style="font-style:italic">b</span>*(<span style="font-style:italic">ln</span>(−((<span style="font-style:italic">a</span>*<span style="font-style:italic">y</span>0+<span style="font-style:italic">b</span>)/(<span style="font-style:italic">a</span>*<span style="font-style:italic">y</span>0))))
+Pour vérifier, on peut taper :
+</p><div class="center"><span style="font-family:monospace">normal(desolve(y’/y=a*y+b)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(-b*exp(-(b*c_0-b*x)))/(a*exp(-(b*c_0-b*x))-1)</span></div><p>Puis on peut taper :
+</p><div class="center"><span style="font-family:monospace">normal(desolve([y’/y=a*y+b,y(x0)=y0],y)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[(-b*exp(b*x-b*x0+ln(y0/(a*y0+b))))/(a*exp(b*x-b*x0+ln(y0/(a*y0+b)))-1)]</span></div><p>
+On a donc :
+<span style="font-style:italic">c</span><sub>0</sub>=<span style="font-style:italic">x</span><sub>0</sub>−ln(<span style="font-style:italic">y</span><sub>0</sub>/(<span style="font-style:italic">a</span>*<span style="font-style:italic">y</span><sub>0</sub>+<span style="font-style:italic">b</span>))/<span style="font-style:italic">b</span>
+Donc, en multipliant le numérateur et dénominateur de <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>) par 
+exp(<span style="font-style:italic">b</span>*<span style="font-style:italic">c</span>_0−<span style="font-style:italic">b</span>*<span style="font-style:italic">x</span>) on a :<br>
+<span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>)=(−<span style="font-style:italic">b</span>/(exp(<span style="font-style:italic">b</span>*<span style="font-style:italic">c</span>_0−<span style="font-style:italic">b</span>*<span style="font-style:italic">x</span>)*<span style="font-style:italic">a</span>*<span style="font-style:italic">exp</span>(−(<span style="font-style:italic">b</span>*<span style="font-style:italic">c</span>_0−<span style="font-style:italic">b</span>*<span style="font-style:italic">x</span>))−1)
+soit <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>)=−<span style="font-style:italic">b</span>/(<span style="font-style:italic">a</span>−exp(<span style="font-style:italic">b</span>*(<span style="font-style:italic">x</span>−<span style="font-style:italic">c</span><sub>0</sub>)))=(−<span style="font-style:italic">b</span>/(<span style="font-style:italic">a</span>*(1−exp(<span style="font-style:italic">b</span>*(<span style="font-style:italic">x</span>−<span style="font-style:italic">c</span><sub>0</sub>))/<span style="font-style:italic">a</span>))<br>
+On a 1/<span style="font-style:italic">a</span>=−exp(−<span style="font-style:italic">ln</span>(−<span style="font-style:italic">a</span>)) car <span style="font-style:italic">a</span>&lt;0
+donc <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>)=(−<span style="font-style:italic">b</span>/<span style="font-style:italic">a</span>)*(1/(1+exp(<span style="font-style:italic">b</span>*(<span style="font-style:italic">x</span>−<span style="font-style:italic">c</span><sub>0</sub>)−ln(−<span style="font-style:italic">a</span>)))
+qui est bien la forme annoncée.</p><p>Lorsque on connait les valeurs de <span style="font-style:italic">f</span>′ en <span style="font-style:italic">x</span>=<span style="font-style:italic">x</span><sub>0</sub>,<span style="font-style:italic">x</span><sub>0</sub>+1....<span style="font-style:italic">x</span><sub>0</sub>+<span style="font-style:italic">n</span>, on cherche
+une fonction logistique <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>) tel que <span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>) approche au mieux les 
+différentes valeurs de <span style="font-style:italic">f</span>′(<span style="font-style:italic">x</span>).</p><p><span style="font-family:monospace">logistic_regression</span> a comme paramètres :
+</p><ul class="itemize"><li class="li-itemize">
+une liste <span style="font-family:monospace">L</span> qui contient les valeurs de <span style="font-style:italic">y</span>′ pour 
+<span style="font-style:italic">x</span>=<span style="font-style:italic">x</span><sub>0</sub>,<span style="font-style:italic">x</span><sub>0</sub>+1....<span style="font-style:italic">x</span><sub>0</sub>+<span style="font-style:italic">n</span>,
+</li><li class="li-itemize">la valeur de <span style="font-family:monospace">x0</span> de <span style="font-style:italic">x</span><sub>0</sub>
+</li><li class="li-itemize">la valeur <span style="font-family:monospace">y0</span> de <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span><sub>0</sub>) lorsqu’on la connait sinon <span style="font-family:monospace">Xcas</span>
+arrive à l’estimer...
+</li></ul><p>
+<span style="font-family:monospace">logistic_regression(L,x0,y0</span> renvoie les fonctions <span style="font-family:monospace">y(x)</span> et
+<span style="font-family:monospace">y’(x)</span>, la constante <span style="font-family:monospace">C</span>, <span style="font-family:monospace">y1M</span> et <span style="font-family:monospace">xM</span> avec <span style="font-family:monospace">y1M</span>
+est la valeur <span style="font-family:monospace">y’(xM)</span> qui est le maximum de <span style="font-style:italic">y</span>′ obtenu en <span style="font-style:italic">x</span>=<span style="font-style:italic">xM</span>, et 
+enfin le coefficient de correlation linéaire <span style="font-family:monospace">R</span> de <span style="font-style:italic">Y</span>=<span style="font-style:italic">y</span>′/<span style="font-style:italic">y</span> en fonction 
+de <span style="font-style:italic">y</span> avec la droite <span style="font-style:italic">Y</span>=<span style="font-style:italic">a</span>*<span style="font-style:italic">y</span>+<span style="font-style:italic">b</span>.<br>
+À partir de la liste <span style="font-family:monospace">L</span>, <span style="font-family:monospace">Xcas</span> calcule la liste <span style="font-family:monospace">Ly</span> en 
+utilisant la formule <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>+1)−<span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)=<span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>), donc, on a 
+<span style="font-family:monospace">Ly=[y0,y0+y0’,y0+y0’+y1’,....]</span>. Puis <span style="font-family:monospace">Xcas</span> fait une régression 
+linéaire de <span style="font-family:monospace">L/Ly</span> en fonction de <span style="font-family:monospace">Ly</span> pour avoir les valeurs de 
+<span style="font-style:italic">a</span> et <span style="font-style:italic">b</span> (<span style="font-style:italic">y</span>′/<span style="font-style:italic">y</span>=<span style="font-style:italic">a</span>*<span style="font-style:italic">y</span>+<span style="font-style:italic">b</span> et <span style="font-style:italic">y</span><sub>0</sub>=<span style="font-style:italic">y</span>(<span style="font-style:italic">x</span><sub>0</sub>)) puis touve la solution de cette 
+équation différentielle 
+On tape :
+</p><div class="center"><span style="font-family:monospace">logistic_regression([0.0,1.0,2.0,3.0,4.0],0,1)</span></div><p>On obtient avec écrit en bleu la signification des valeurs renvoyées :
+</p><div class="center"><span style="font-family:monospace">[(-17.77)/(1+exp(-0.496893925384*x+2.82232341488+3.14159265359*i)), (-2.48542227469)/(1+cosh(-0.496893925384*x+2.82232341488+3.14159265359*i)), -17.77,-1.24271113735,5.67993141131+6.32246138079*i, 0.307024935856] </span></div><p>On tape :
+</p><div class="center"><span style="font-family:monospace">evalf(logistic_regression([1,2,4,6,8,7,5],0,2))</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">logistic_regression(evalf([1,2,4,6,8,7,5]),0,2.0))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[64.8358166583/(1.0+exp(-0.551746244591*x+2.95837880348)), 14.4915280084/(1.0+cosh(-0.551746244591*x+2.95837880348)), 64.8358166583,7.24576400418,5.36184674112,-0.81176431297]</span></div><p>Pour retouver la valeur -0.81176431297 du coefficient de corrélation, 
+on tape :<br>
+<span style="font-family:monospace">L:=[1,2,4,6,8,7,5];</span><br>
+<span style="font-family:monospace">y0:=2.0;</span><br>
+<span style="font-family:monospace">Ly:=makelist(y0,1,size(L))+cumSum(L)</span><br>
+On obtient :
+<span style="font-family:monospace">[3,5,9,15,23,30,35]</span><br>
+puis <br>
+<span style="font-family:monospace">correlation(L/Ly,Ly)</span> qui renvoie<br>
+<span style="font-family:monospace">-0.81176431297</span>
+</p>
+<hr>
+<a href="cascmd_fr755.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr757.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

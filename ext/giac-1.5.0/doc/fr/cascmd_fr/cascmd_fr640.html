@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>La triple norme d’une matrice : matrix_norm et l1norm, l2norm ou norm ou specnorm, linfnorm</title>
+</head>
+<body >
+<a href="cascmd_fr639.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr641.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec788" class="subsection">6.56.4  La triple norme d’une matrice : <span style="font-family:monospace">matrix_norm</span> et <span style="font-family:monospace">l1norm</span>, <span style="font-family:monospace">l2norm</span> ou <span style="font-family:monospace">norm</span> ou <span style="font-family:monospace">specnorm</span>, <span style="font-family:monospace">linfnorm</span></h3>
+<p><a id="hevea_default1176"></a><a id="hevea_default1177"></a><a id="hevea_default1178"></a><a id="hevea_default1179"></a><a id="hevea_default1180"></a><a id="hevea_default1181"></a><a id="sec:l1normm"></a><a id="sec:l2normm"></a><a id="sec:maxnormm"></a>
+<span style="font-family:monospace">matrix_norm</span> a deux arguments : une matrice <span style="font-family:monospace">A</span> 
+et <span style="font-family:monospace">1</span> ou <span style="font-family:monospace">2</span> ou <span style="font-family:monospace">inf</span> et par défaut <span style="font-family:monospace">1</span>.<br>
+<span style="font-family:monospace">matrix_norm</span> renvoie la triple norme subordonnée à <span style="font-style:italic">l</span><sub>1</sub> 
+(resp <span style="font-style:italic">l</span><sub>2</sub> ou <span style="font-style:italic">l</span><sup>∞</sup>) si il n’y a pas de second argument ou si le second 
+argument est <span style="font-family:monospace">1</span> (resp <span style="font-family:monospace">2</span> ou <span style="font-family:monospace">inf</span>).<br>
+<span style="font-family:monospace">matrix_norm(A)</span> ou <span style="font-family:monospace">matrix_norm(A,1)</span> c’est aussi <span style="font-family:monospace">l1norm(A)</span> ou
+<span style="font-family:monospace">colnorm(A)</span>,<br>
+<span style="font-family:monospace">matrix_norm(A,2)</span> c’est aussi <span style="font-family:monospace">l2norm(A)</span> ou <span style="font-family:monospace">SPECNORM(A)</span> ou
+<span style="font-family:monospace">max(SVL(A))</span>,<br>
+<span style="font-family:monospace">matrix_norm(A,inf)</span> c’est aussi <span style="font-family:monospace">linfnorm(A)</span> ou <span style="font-family:monospace">rownorm(A)</span>.<br>
+Pour les différentes normes de vecteurs (voir aussi <a href="cascmd_fr552.html#sec%3Al1normv">6.43.1</a>,
+<a href="cascmd_fr552.html#sec%3Al2normv">6.43.1</a> et <a href="cascmd_fr552.html#sec%3Amaxnormv">6.43.1</a>).<br>
+Pour plus de détails sur la triple norme voir le <span style="font-weight:bold">Rappel</span> situé après
+les exemples.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">B:=[[1,2,3],[3,-9,6],[4,5,6]]</span></div><p>
+Puis
+</p><div class="center"><span style="font-family:monospace">matrix_norm(B)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">matrix_norm(B,1)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">l1norm(B)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">colnorm(B)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">16</span></div><p>
+En effet <span style="font-family:monospace">max</span>(1+3+4,2+9+5,3+6+6)=16<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">matrix_norm(B,2)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">l2norm(B)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">SPECNORM(B)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">max(SVL(B))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">11.2449175989</span></div><p>
+En effet <span style="font-family:monospace">max(SVL(B))</span> renvoie la plus grande racine carrée des valeurs 
+propres de <span style="font-family:monospace">trn(B)*B</span>.<br>
+<span style="font-family:monospace">sqrt(proot(pcar(trn(B)*B)))</span> ou <span style="font-family:monospace">sqrt(EIGENVAL(trn(B)*B))</span> renvoie :<br>
+<span style="font-family:monospace">[9.48552308331,0.759394515579,11.2449175989]</span><br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">matrix_norm(B,inf)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">linfnorm(B)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">rownorm(B)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">18</span></div><p>
+En effet <span style="font-family:monospace">max</span>(1+2+3,3+9+6,4+5+6)=18<br>
+
+<span style="font-weight:bold">Rappel</span><br>
+En mathématiques, et plus particulièrement en analyse fonctionnelle, une norme 
+d’opérateur ou norme subordonnée est une norme définie sur l’espace des 
+opérateurs bornés entre deux espaces vectoriels normés. Entre deux tels 
+espaces, les opérateurs bornés ne sont autres que les applications linéaires 
+continues.<br>
+On va considérer ici que les applications linéaires sur des espaces 
+vectoriels de dimension finie.<br>
+<span style="font-weight:bold">Théorème</span><br>
+ Soient <span style="font-style:italic">E</span> et <span style="font-style:italic">F</span> 2 espaces vectoriels normés (de norme ||  ||<sub><span style="font-style:italic">E</span></sub> et 
+||  ||<sub><span style="font-style:italic">F</span></sub>) de dimension finie et <span style="font-style:italic">f</span> une application linéaire de <span style="font-style:italic">E</span> 
+dans <span style="font-style:italic">F</span>.<br>
+Alors il existe une constante réelle <span style="font-style:italic">K</span> tel que pour tout <span style="font-style:italic">x</span>∈ <span style="font-style:italic">E</span> on ait :<br>
+|| <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)||<sub><span style="font-style:italic">F</span></sub>≤ <span style="font-style:italic">K</span>|| <span style="font-style:italic">x</span>||<sub><span style="font-style:italic">E</span></sub><br>
+<span style="font-style:italic">f</span> est donc lipschitzienne sur <span style="font-style:italic">E</span> et continue de <span style="font-style:italic">E</span> dans <span style="font-style:italic">F</span>.<br>
+<span style="font-weight:bold">Définition de la triple norme</span><br>
+D’après ce qui précéde, on a :<br>
+pour tout <span style="font-style:italic">x</span>∈ <span style="font-style:italic">E</span> si || <span style="font-style:italic">x</span>||<sub><span style="font-style:italic">E</span></sub>≤ 1 alors on a || <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)||<sub><span style="font-style:italic">F</span></sub>≤ <span style="font-style:italic">K</span>.<br>
+Donc l’ensemble {|| <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)||<sub><span style="font-style:italic">F</span></sub>  pour || <span style="font-style:italic">x</span>||<sub><span style="font-style:italic">E</span></sub>≤ 1} est une partie 
+non vide et majorée de ℝ. Cet ensemble admet donc une borne supérieure 
+que l’on appelle <span style="font-weight:bold">la triple norme</span>.<br>
+Ainsi 
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">|||<span style="font-style:italic">f</span> ||| =</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:center">sup</td></tr>
+<tr><td class="dcell" style="text-align:center">|| <span style="font-style:italic">x</span>||<sub><span style="font-style:italic">E</span></sub>≤ 1</td></tr>
+</table></td><td class="dcell"> || <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)||<sub><span style="font-style:italic">F</span></sub></td></tr>
+</table><p>
+<span style="font-weight:bold">Attention</span> La valeur de ||| <span style="font-style:italic">f</span> ||| dépend des normes 
+|| ||<sub><span style="font-style:italic">E</span></sub> et || ||<sub><span style="font-style:italic">F</span></sub> utilisées.<br>
+<span style="font-weight:bold">la triple norme</span> est donc une norme subordonnée aux normes de <span style="font-style:italic">E</span> et <span style="font-style:italic">F</span>.<br>
+
+Dans le cas où <span style="font-style:italic">E</span> = <span style="font-style:italic">F</span>, on choisit usuellement || ||<sub><span style="font-style:italic">E</span></sub>=|| ||<sub><span style="font-style:italic">F</span></sub> (même si
+ce n’est pas obligatoire).<br>
+Pour les normes usuelles, on dispose de formules pratiques : prenons <span style="font-style:italic">E</span> = ℝ<sup><span style="font-style:italic">n</span></sup>
+et <span style="font-style:italic">f</span>∈ <span style="font-style:italic">L</span>(<span style="font-style:italic">E</span>). Notons <span style="font-style:italic">x</span>=(<span style="font-style:italic">x</span><sub>1</sub>,... ,<span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>) un vecteur quelconque de ℝ<sup><span style="font-style:italic">n</span></sup> 
+et <span style="font-style:italic">A</span>=(<span style="font-style:italic">a</span><sub><span style="font-style:italic">jk</span></sub>) la matrice de <span style="font-style:italic">f</span> dans la base canonique. On a alors :
+</p><ul class="itemize"><li class="li-itemize">
+Si ||<span style="font-style:italic">x</span>||<sub><span style="font-style:italic">E</span></sub>=max<sub>0≤ <span style="font-style:italic">j</span>≤ <span style="font-style:italic">n</span>−1</sub>|<span style="font-style:italic">x</span><sub><span style="font-style:italic">j</span></sub>| (c’est la norme <span style="font-style:italic">l</span><sup>∞</sup>), 
+alors la norme de <span style="font-style:italic">f</span> vaut :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:center">max</td></tr>
+<tr><td class="dcell" style="text-align:center">0≤ <span style="font-style:italic">j</span>≤ <span style="font-style:italic">n</span>−1</td></tr>
+</table></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-size:xx-large">∑</span></td></tr>
+<tr><td class="dcell" style="text-align:center">0≤ <span style="font-style:italic">k</span>≤ <span style="font-style:italic">n</span>−1</td></tr>
+</table></td><td class="dcell">|<span style="font-style:italic">a</span><sub><span style="font-style:italic">jk</span></sub>|</td></tr>
+</table>
+C’est ce qui est défini dans <span style="font-family:monospace">Xcas</span> par <span style="font-family:monospace">rownorm(A)</span>
+</li><li class="li-itemize">Si ||<span style="font-style:italic">x</span>||<sub><span style="font-style:italic">E</span></sub>=∑<sub>1≤ <span style="font-style:italic">i</span>≤ <span style="font-style:italic">n</span></sub>|<span style="font-style:italic">x</span><sub><span style="font-style:italic">i</span></sub>| (c’est la norme <span style="font-style:italic">l</span><sub>1</sub>), alors 
+la norme de <span style="font-style:italic">f</span> vaut :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:center">max</td></tr>
+<tr><td class="dcell" style="text-align:center">0≤ <span style="font-style:italic">k</span>≤ <span style="font-style:italic">n</span>−1</td></tr>
+</table></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-size:xx-large">∑</span></td></tr>
+<tr><td class="dcell" style="text-align:center">0≤ <span style="font-style:italic">j</span>≤ <span style="font-style:italic">n</span>−1</td></tr>
+</table></td><td class="dcell">|<span style="font-style:italic">a</span><sub><span style="font-style:italic">jk</span></sub>|</td></tr>
+</table>
+C’est ce qui est noté dans <span style="font-family:monospace">Xcas</span> : <span style="font-family:monospace">colnorm(A)</span>
+</li><li class="li-itemize">Si ||<span style="font-style:italic">x</span>||<sub><span style="font-style:italic">E</span></sub>=√<span style="text-decoration:overline">∑</span><sub><span style="text-decoration:overline">0≤ </span><span style="text-decoration:overline"><span style="font-style:italic">j</span></span><span style="text-decoration:overline">≤ </span><span style="text-decoration:overline"><span style="font-style:italic">n</span></span><span style="text-decoration:overline">−1</span></sub><span style="text-decoration:overline"><span style="font-style:italic">x</span></span><sub><span style="text-decoration:overline"><span style="font-style:italic">j</span></span></sub><sup><span style="text-decoration:overline">2</span></sup> (c’est la norme <span style="font-style:italic">l</span><sub>2</sub> 
+ou euclidienne, associée au produit scalaire canonique), alors la norme triple
+de <span style="font-style:italic">f</span> est la racine carrée de la plus grande valeur propre de <span style="font-style:italic">f</span><sup>*</sup>∘ <span style="font-style:italic">f</span>, où 
+<span style="font-style:italic">f</span><sup>*</sup> désigne l’adjoint de <span style="font-style:italic">f</span>. <br>
+La norme triple de <span style="font-style:italic">f</span> est donc sa plus grande valeur singulière. Ceci se 
+généralise en remplaçant ℝ<sup><span style="font-style:italic">n</span></sup> par n’importe quel espace de Hilbert.<br>
+C’est ce qui est noté dans <span style="font-family:monospace">Xcas</span> : <span style="font-family:monospace">max(SVL(A))</span> : c’est la plus 
+grande valeur singulière de <span style="font-family:monospace">A</span> i.e la plus grande 
+valeur de la racine carrée des valeurs propres de <span style="font-family:monospace">trn(A)*A</span>.<br>
+Pour tout endomorphisme symétrique <span style="font-style:italic">g</span> (en particulier pour <span style="font-style:italic">g</span> = <span style="font-style:italic">f</span><sup>*</sup>∘ <span style="font-style:italic">f</span>),
+la norme de <span style="font-style:italic">g</span> est égale à son rayon spectral, qui est la plus grande des 
+valeurs absolues de ses valeurs propres.
+</li></ul><p>
+<span style="font-weight:bold">Démonstration</span>
+Soient <span style="font-style:italic">E</span>=<span style="font-style:italic">R</span><sup><span style="font-style:italic">n</span></sup> et <span style="font-style:italic">F</span>=<span style="font-style:italic">R</span><sup><span style="font-style:italic">p</span></sup> munis de leur base canonique<br>
+Soit <span style="font-style:italic">e</span><sub>1</sub>..<span style="font-style:italic">e</span><sub><span style="font-style:italic">n</span></sub> est la base canonique de <span style="font-style:italic">E</span><br>
+Soit <span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span>,<span style="font-style:italic">k</span></sub> la matrice associée à <span style="font-style:italic">f</span> dans les bases canoniques de <span style="font-style:italic">E</span> et <span style="font-style:italic">F</span>.</p><p>Montrons que pour la norme <span style="font-family:monospace">l1norm</span>, la triple norme de <span style="font-family:monospace">A</span> nommée 
+ici <span style="font-family:monospace">matrix_norm(A,1)</span> c’est <span style="font-family:monospace">colnorm</span>.<br>
+Soit <span style="font-style:italic">x</span>=∑<sub><span style="font-style:italic">k</span></sub>(<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>*<span style="font-style:italic">e</span><sub><span style="font-style:italic">k</span></sub>)<br>
+On a donc :<br>
+<span style="font-family:monospace">l1norm</span>(<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>))=<span style="font-family:monospace">l1norm</span>(∑<sub><span style="font-style:italic">k</span></sub><span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>*<span style="font-style:italic">f</span>(<span style="font-style:italic">e</span><sub><span style="font-style:italic">k</span></sub>))≤ ∑<sub><span style="font-style:italic">k</span></sub>|<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>|*<span style="font-family:monospace">l1norm</span>(<span style="font-style:italic">f</span>(<span style="font-style:italic">e</span><sub><span style="font-style:italic">k</span></sub>))<br>
+<span style="font-family:monospace">l1norm</span>(<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)) ≤ ∑<sub><span style="font-style:italic">k</span></sub>|<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>|*max<sub><span style="font-style:italic">k</span></sub>(<span style="font-family:monospace">l1norm</span>(<span style="font-style:italic">f</span>(<span style="font-style:italic">e</span><sub><span style="font-style:italic">k</span></sub>)))=<span style="font-family:monospace">l1norm</span>(<span style="font-style:italic">x</span>)*max<sub><span style="font-style:italic">k</span></sub>(∑<sub><span style="font-style:italic">j</span></sub>|<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span>,<span style="font-style:italic">k</span></sub>|)<br>
+donc <br>
+<span style="font-family:monospace">matrix_norm(A,1)&lt;=colnorm(A)</span><br>
+Montrons que ce maximum est atteint.<br>
+Soit <span style="font-style:italic">k</span><sub>0</sub> tel que :<br>
+max<sub><span style="font-style:italic">k</span></sub>(∑<sub><span style="font-style:italic">j</span></sub>|<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span>,<span style="font-style:italic">k</span></sub>|)=∑<sub><span style="font-style:italic">j</span></sub>|<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span>,<span style="font-style:italic">k</span><sub>0</sub></sub>|=<span style="font-family:monospace">colnorm(A)</span><br>
+On a alors <span style="font-family:monospace">l1norm</span>(<span style="font-style:italic">e</span><sub><span style="font-style:italic">k</span><sub>0</sub></sub>)=1 et <span style="font-family:monospace">l1norm</span>(<span style="font-style:italic">f</span>(<span style="font-style:italic">e</span><sub><span style="font-style:italic">k</span><sub>0</sub></sub>))=∑<sub><span style="font-style:italic">j</span></sub>|<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span>,<span style="font-style:italic">k</span><sub>0</sub></sub>|<br>
+donc <span style="font-family:monospace">matrix_norm(A,1)=colnorm(A)</span>.</p><p>Montrons que pour la norme du maximum la triple norme de <span style="font-family:monospace">A</span> nommée ici 
+<span style="font-family:monospace">matrix_norm(A,inf)</span> c’est <span style="font-family:monospace">rownorm</span>.<br>
+Soit <span style="font-style:italic">x</span>=∑<sub><span style="font-style:italic">k</span></sub><span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>*<span style="font-style:italic">e</span><sub><span style="font-style:italic">k</span></sub> avec max<sub><span style="font-style:italic">k</span></sub>(|<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>|)≤ 1<br>
+On a :<br>
+<span style="font-family:monospace">maxnorm</span>(<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>))=<span style="font-family:monospace">maxnorm</span>(∑<sub><span style="font-style:italic">k</span></sub><span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>*<span style="font-style:italic">f</span>(<span style="font-style:italic">e</span><sub><span style="font-style:italic">k</span></sub>))=<br>
+<span style="font-family:monospace">maxnorm</span>(<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>))=max<sub><span style="font-style:italic">j</span></sub>(|∑<sub><span style="font-style:italic">k</span></sub><span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>*<span style="font-style:italic">ajk</span>|)≤max<sub><span style="font-style:italic">j</span></sub>(∑<sub><span style="font-style:italic">k</span></sub>|<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>|*|<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span>,<span style="font-style:italic">k</span></sub>|) 
+puisque max<sub><span style="font-style:italic">k</span></sub>|<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>)≤ 1<br>
+<span style="font-family:monospace">maxnorm</span>(<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>))≤ max<sub><span style="font-style:italic">j</span></sub>(∑<sub><span style="font-style:italic">k</span></sub>|<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span>,<span style="font-style:italic">k</span></sub>|)=<span style="font-family:monospace">colrow(A)</span><br>
+Montrons que ce maximum est atteint.<br>
+Soit <span style="font-style:italic">j</span><sub>0</sub> tel que max<sub><span style="font-style:italic">j</span></sub>(∑<sub><span style="font-style:italic">k</span></sub>|<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span>,<span style="font-style:italic">k</span></sub>|)=∑<sub><span style="font-style:italic">k</span></sub>|<span style="font-style:italic">a</span><span style="font-style:italic">j</span><sub>0</sub>,<span style="font-style:italic">k</span>|=<span style="font-family:monospace">rownorm(A)</span>.<br>
+Soit <span style="font-style:italic">x</span><sub><span style="font-style:italic">O</span></sub>=∑<sub><span style="font-style:italic">k</span></sub><span style="font-family:monospace">sign</span>(<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span><sub>0</sub>,<span style="font-style:italic">k</span></sub>)*<span style="font-style:italic">e</span><sub><span style="font-style:italic">k</span></sub> alors <span style="font-family:monospace">maxnorm</span>(<span style="font-style:italic">x</span><sub>0</sub>)=1 et<br>
+<span style="font-family:monospace">maxnorm</span>(<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub>0</sub>))=max<sub><span style="font-style:italic">j</span></sub>(<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub>0</sub>))=max<sub><span style="font-style:italic">j</span></sub>(|∑<sub><span style="font-style:italic">k</span></sub><span style="font-family:monospace">sign</span>(<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span><sub>0</sub>,<span style="font-style:italic">k</span></sub>)*<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span>,<span style="font-style:italic">k</span></sub>|)=<br>
+max(∑<sub><span style="font-style:italic">k</span></sub>|<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span><sub>0</sub>,<span style="font-style:italic">k</span></sub>|,max<sub><span style="font-style:italic">j</span>!=<span style="font-style:italic">j</span><sub>0</sub></sub>(|∑<sub><span style="font-style:italic">k</span></sub><span style="font-family:monospace">sign</span>(<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span><sub>0</sub>,<span style="font-style:italic">k</span></sub>)*<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span>,<span style="font-style:italic">k</span></sub>|))<br>
+si <span style="font-style:italic">j</span>!=<span style="font-style:italic">j</span><sub>0</sub> on a :<br>
+|∑<sub><span style="font-style:italic">k</span></sub><span style="font-family:monospace">sign</span>(<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span><sub>0</sub>,<span style="font-style:italic">k</span></sub>)*<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span>,<span style="font-style:italic">k</span></sub>)|≤ ∑<sub><span style="font-style:italic">k</span></sub>|<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span>,<span style="font-style:italic">k</span></sub>|≤∑<sub><span style="font-style:italic">k</span></sub>|<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span><sub>0</sub>,<span style="font-style:italic">k</span></sub>|<br>
+Donc<br>
+<span style="font-family:monospace">maxnorm</span>(<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub>0</sub>))=∑<sub><span style="font-style:italic">k</span></sub>|<span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span><sub>0</sub>,<span style="font-style:italic">k</span></sub>|=<span style="font-family:monospace">rownorm(A)</span> <br>
+Donc <span style="font-family:monospace">matrix_norm(A,inf)=rownorm(A)</span>.<br>
+
+Montrons que pour la norme <span style="font-family:monospace">l2norm</span>, la triple norme de la matrice <span style="font-family:monospace">A</span>
+nommée ici <span style="font-family:monospace">matrix_norm(A,2)</span> c’est <span style="font-family:monospace">max(SVL(A))</span> c’est à dire la 
+plus grande racine carrée des valeurs propres de <span style="font-family:monospace">trn(A)*A</span>.<br>
+Soit <span style="font-style:italic">x</span>=∑<sub><span style="font-style:italic">k</span></sub>(<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>*<span style="font-style:italic">e</span><sub><span style="font-style:italic">k</span></sub>)<br>
+On a :<br>
+<span style="font-family:monospace">l2norm(x)=sqrt(scalar_product(x,x))</span><br>
+0n note
+&lt;<span style="font-style:italic">x</span>,<span style="font-style:italic">x</span>&gt;=√<span style="text-decoration:overline">∑</span><sub><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub><span style="text-decoration:overline"><span style="font-style:italic">x</span></span><sub><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub><sup><span style="text-decoration:overline">2</span></sup>=<span style="font-family:monospace">scalar_product(x,x)</span> <br>
+<span style="font-family:monospace">l2norm(f(x))=sqrt(scalar_product(A*x,A*x))</span><br>
+On a : &lt;<span style="font-style:italic">Ax</span>,<span style="font-style:italic">Ax</span>&gt;=&lt;<span style="font-style:italic">x</span>,(<span style="font-style:italic">A</span>)<sup><span style="font-style:italic">t</span></sup><span style="font-style:italic">Ax</span>&gt; donc<br>
+<span style="font-family:monospace">l2norm(f(x))=sqrt(scalar_product(x,trn(A)*A*x))</span><br>
+La matrice <span style="font-style:italic">M</span>=<span style="font-style:italic">trn</span>(<span style="font-style:italic">A</span>)*<span style="font-style:italic">A</span> est symétrique donc diagonalisable et ses valeurs 
+propres λ<sub><span style="font-style:italic">k</span></sub> sont réelles.<br>
+Il existe une matrice <span style="font-style:italic">B</span> diagonale et <span style="font-style:italic">P</span> une matrice de passage orthogonale 
+(i.e. <span style="font-family:monospace">inv(P)=trn(P)</span>) tels que :<br>
+<span style="font-style:italic">B</span>=<span style="font-style:italic">tran</span>(<span style="font-style:italic">P</span>)*<span style="font-style:italic">M</span>*<span style="font-style:italic">P</span> i.e. <span style="font-style:italic">M</span>=<span style="font-style:italic">trn</span>(<span style="font-style:italic">A</span>)*<span style="font-style:italic">A</span>=<span style="font-style:italic">P</span>*<span style="font-style:italic">B</span>*<span style="font-style:italic">trn</span>(<span style="font-style:italic">P</span>)<br>
+On a de plus :<br>
+<span style="font-style:italic">Mv</span><sub><span style="font-style:italic">k</span></sub>=λ<sub><span style="font-style:italic">k</span></sub><span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub> et<br>
+ &lt;<span style="font-style:italic">Av</span><sub><span style="font-style:italic">k</span></sub>,<span style="font-style:italic">Av</span><sub><span style="font-style:italic">k</span></sub>&gt;=&lt;<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>,<span style="font-style:italic">Mv</span><sub><span style="font-style:italic">k</span></sub>&gt;=&lt;<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>,λ<sub><span style="font-style:italic">k</span></sub><span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>&gt;=λ<sub><span style="font-style:italic">k</span></sub>&lt;<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>,<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>&gt;<sub><span style="font-style:italic">k</span></sub><br>
+Comme &lt;<span style="font-style:italic">Av</span><sub><span style="font-style:italic">k</span></sub>,<span style="font-style:italic">Av</span><sub><span style="font-style:italic">k</span></sub>&gt;≥ 0 on en déduit que
+les λ<sub><span style="font-style:italic">k</span></sub> sont positifs.<br>
+Donc <span style="font-family:monospace">l2norm(f(x))=sqrt(scalar_product(trn(P)*x,B*trn(P)*x))</span><br>
+Si <span style="font-style:italic">y</span>=<span style="font-style:italic">trn</span>(<span style="font-style:italic">P</span>)*<span style="font-style:italic">x</span>=(<span style="font-style:italic">y</span><sub>0</sub>...<span style="font-style:italic">y</span><sub><span style="font-style:italic">n</span>−1</sub>) on a :<br>
+&lt;<span style="font-style:italic">y</span>,<span style="font-style:italic">y</span>&gt;=&lt;<span style="font-style:italic">x</span>,<span style="font-style:italic">P</span>*<span style="font-style:italic">trn</span>(<span style="font-style:italic">P</span>)<span style="font-style:italic">x</span>&gt;=&lt;<span style="font-style:italic">x</span>,<span style="font-style:italic">x</span>&gt;<br>
+<span style="font-style:italic">B</span>*<span style="font-style:italic">y</span>=∑<sub><span style="font-style:italic">k</span></sub> λ<sub><span style="font-style:italic">k</span></sub>*<span style="font-style:italic">y</span><sub><span style="font-style:italic">k</span></sub> et &lt;<span style="font-style:italic">y</span>,<span style="font-style:italic">B</span>*<span style="font-style:italic">y</span>&gt;=∑<sub><span style="font-style:italic">k</span></sub> λ<sub><span style="font-style:italic">k</span></sub>*<span style="font-style:italic">y</span><sub><span style="font-style:italic">k</span></sub><sup>2</sup><br>
+Donc :<br>
+<span style="font-family:monospace">l2norm(f(x))</span>=√<span style="text-decoration:overline">∑</span><sub><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub><span style="text-decoration:overline"> λ</span><sub><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub><span style="text-decoration:overline">*</span><span style="text-decoration:overline"><span style="font-style:italic">y</span></span><sub><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub><sup><span style="text-decoration:overline">2</span></sup><br>
+Or puisque λ<sub><span style="font-style:italic">k</span></sub>&gt;0 on a :<br>
+∑<sub><span style="font-style:italic">k</span></sub> λ<sub><span style="font-style:italic">k</span></sub>*<span style="font-style:italic">y</span><sub><span style="font-style:italic">k</span></sub><sup>2</sup>≤ <span style="font-style:italic">max</span><sub><span style="font-style:italic">k</span></sub>(λ<sub><span style="font-style:italic">k</span></sub>)∑<sub><span style="font-style:italic">k</span></sub> <span style="font-style:italic">y</span><sub><span style="font-style:italic">k</span></sub><sup>2</sup>
+et<br>
+√<span style="text-decoration:overline">λ</span><sub><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub> existe<br>
+ et<br>
+√<span style="text-decoration:overline">∑</span><sub><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub><span style="text-decoration:overline"> </span><span style="text-decoration:overline"><span style="font-style:italic">y</span></span><sub><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub><sup><span style="text-decoration:overline">2</span></sup>=&lt;<span style="font-style:italic">y</span>,<span style="font-style:italic">y</span>&gt;=&lt;<span style="font-style:italic">x</span>,<span style="font-style:italic">x</span>&gt;=√<span style="text-decoration:overline">∑</span><sub><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub><span style="text-decoration:overline"> </span><span style="text-decoration:overline"><span style="font-style:italic">x</span></span><sub><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub><sup><span style="text-decoration:overline">2</span></sup><br>
+Donc :<br>
+<span style="font-family:monospace">l2norm(f(x))</span>≤ max<sub><span style="font-style:italic">k</span></sub>(√<span style="text-decoration:overline">λ</span><sub><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub>)*√<span style="text-decoration:overline">∑</span><sub><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub><span style="text-decoration:overline"> </span><span style="text-decoration:overline"><span style="font-style:italic">x</span></span><sub><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub><sup><span style="text-decoration:overline">2</span></sup><br>
+Montrons que ce maximum est atteint.<br>
+Soit λ<sub><span style="font-style:italic">m</span></sub>=<span style="font-style:italic">max</span><sub><span style="font-style:italic">k</span></sub>(λ<sub><span style="font-style:italic">k</span></sub>) et <span style="font-style:italic">v</span><sub><span style="font-style:italic">m</span></sub> le vecteur propre associé.<br>
+On a alors :<br>
+<span style="font-family:monospace">l2norm(f(vm))= sqrt(scalar_product(A*vm,A*vm))</span><br>
+<span style="font-family:monospace">l2norm(f(vm))=</span> √<span style="text-decoration:overline">λ</span><sub><span style="text-decoration:overline"><span style="font-style:italic">m</span></span></sub><span style="text-decoration:overline">*&lt;</span><span style="text-decoration:overline"><span style="font-style:italic">v</span></span><sub><span style="text-decoration:overline"><span style="font-style:italic">m</span></span></sub><span style="text-decoration:overline">,</span><span style="text-decoration:overline"><span style="font-style:italic">v</span></span><sub><span style="text-decoration:overline"><span style="font-style:italic">m</span></span></sub><span style="text-decoration:overline">&gt;</span>=√<span style="text-decoration:overline">λ</span><sub><span style="text-decoration:overline"><span style="font-style:italic">m</span></span></sub>*<span style="font-family:monospace">l2norm(vm)</span>.
+Donc puisque √<span style="text-decoration:overline">λ</span><sub><span style="text-decoration:overline"><span style="font-style:italic">m</span></span></sub> est la plus 
+grande racine carrée des valeurs propres de <span style="font-family:monospace">trn(A)*A</span>, on a :<br>
+√<span style="text-decoration:overline">λ</span><sub><span style="text-decoration:overline"><span style="font-style:italic">m</span></span></sub>=<span style="font-family:monospace">max(SVL(A))</span>.<br>
+Donc : <span style="font-family:monospace">matrix_norm(A,2)=max(SVL(A))</span></p>
+<hr>
+<a href="cascmd_fr639.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr641.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

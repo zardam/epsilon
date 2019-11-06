@@ -1,0 +1,114 @@
+\documentclass{slides}
+\begin{document}
+\title{Introduction to xcas/giac}
+\author{B. Parisse \\ R. De Graeve \\ \ \\ 
+\small www-fourier.ujf-grenoble.fr/\~{ }parisse/giac.html}
+\maketitle
+
+\pagebreak
+
+Project status~:
+\begin{itemize}
+\item GPL license
+\item general CAS + interactive geometry. First target is educational.
+\item 2 years old (started as a project over GiNaC), 70 000 lines of C(++) 
+code, 
+\item compiled under Unix/Linux (x86, ARM) and Windows (using GNU
+autoconfiguration thanks to R. Kreckel)
+\item Built over GMP and the C++ STL (Standard Template Library);
+User-interface with FLTK/FLVW or GNU readline, 3-d plotting with gnuplot, 
+latex output.
+\item Library (libgiac) + user interfaces (GUI xcas, text cas, under texmacs)
+\item On-line help + Documentation
+\item Partial internationalization support (J.M.L. de la Fuente)\\
+\verb|export LANGUAGE=en, fr, es|
+\item Interfaces in progress with C/C++ libraries (numeric GSL, 
+number theory PARI, 1-d polynomial NTL, realsolving RS (?)...)
+\item Programmable in C++ (standalone or loadable module) or with restricted
+maple/mupad-like language with an interactive debugger.
+\item Scriptable regression tests and benchmarks
+\end{itemize}
+
+\pagebreak
+
+Example of xcas session~:
+\begin{itemize}
+\item Using menus, on-line help, configuration
+\item Compute an integral \\
+\verb|int(1/(x^2+1)^10,x,0,1)|
+\item Plot a 2-d/3-d function, \\
+\verb|plotfunc(sin(x),x)|\\
+\verb|plotfunc(x^2-y^2,[x,y])|
+\item Eigenvectors of a matrix\\
+\verb|egv([[1,2,3],[4,5,6],[7,8,9]])|
+\item Draw 3 points $A,B,C$ then an ellipsis with focus
+$A,B$ containing $C$\\
+\verb|ellipse(A,B,C)|\\
+move the points 
+\item \LaTeX\ output of the session
+\end{itemize}
+
+\pagebreak
+
+Example of program~:
+\begin{itemize}
+\item The integer gcd with xcas language (hello world for a CAS
+language!)
+\begin{verbatim}
+pgcd(a,b):={
+  local r;
+  for (;b!=0;){
+    r:=irem(a,b);
+    a:=b;
+    b:=r;
+  }
+  return(a);
+}
+\end{verbatim}
+\item Maple/Mupad-like translation
+\item step-by-step execution\\
+\verb|debug(pgcd(15,25))|
+\item 
+\begin{verbatim}
+#include <giac/giac.h>
+using namespace std;
+using namespace giac;
+
+gen pgcd(gen a,gen b){
+  gen q,r;
+  for (;b!=0;){
+    r=irem(a,b,q);
+    a=b;
+    b=r;
+  }
+  return a;
+}
+
+int main(){
+  cout << "Enter 2 integers";
+  gen a,b;
+  cin >> a >> b;
+  cout << pgcd(a,b) << endl;
+  return 0;
+}
+\end{verbatim}
+
+\item Example of loadable module \verb|pgcd.cpp|
+\end{itemize}
+
+\pagebreak
+
+Future directions~:
+\begin{itemize}
+\item ``Pretty print'', equationwriter (?)
+\item numbering versions, CVS, rpm/deb packages
+\item Calculator language support (TI89/92, HP49)
+\item Improve maths (modular, mrv preprocessing, Risch, ode, Gosper, 
+Zeilberger, ...)
+\item More Maple instructions support
+\item Improve spreadsheet, add statistics, units
+\item More connections to other libraries
+\item Semi-classical analysis
+\end{itemize}
+
+\end{document}

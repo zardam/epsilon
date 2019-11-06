@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Προσεγγιστική επίλυση της y′=f(t,y) :  odesolve</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el485.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el487.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc563">3.3.4</A>  Προσεγγιστική επίλυση της <TT>y</TT><TT>′</TT><TT>=f(t,y)</TT> : <TT> odesolve</TT></H3><P><A NAME="@default829"></A>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Έστω <I>f</I> μια συνάρτηση από το ℝ<SUP>2</SUP> στο ℝ.<BR>
+ 	
+<TT>odesolve(f(t,y),[t,y],[t0,y0],t1)</TT> ή<BR>
+	
+<TT>odesolve(f(t,y),t=t0..t1,y,y0)</TT> ή<BR>
+	
+<TT>odesolve(t0..t1,f,y0)</TT> ή<BR>
+	
+<TT>odesolve(t0..t1,(t,y)-&gt;f(t,y),y0)</TT><BR>
+επιστρέφει μια προσεγγιστική τιμή του <I>y</I>(<I>t</I>1) όπου <I>y</I>(<I>t</I>) είναι 
+η λύση του:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>′(<I>t</I>)=<I>f</I>(<I>t</I>,<I>y</I>(<I>t</I>)),     <I>y</I>(<I>t</I>0)=<I>y</I>0 </TD></TR>
+</TABLE>
+</LI><LI CLASS="li-itemize">	
+<TT>odesolve</TT> δέχεται ένα προαιρετικό όρισμα για
+τη διακριτοποίηση του 	
+<TT>t</TT> (<TT>	
+tstep</TT><TT>=τιμή</TT>). 
+Αυτή η τιμή περνιέται σαν αρχική τιμή βήματος στον αριθμητικό επιλυτή
+της 	
+<TT>GSL (Gnu Scientific Library)</TT>, αλλά μπορεί να αλλαχθεί από τον
+επιλυτή. Χρησιμοποιείται επίσης για να ελέγχεται ο αριθμός των επαναλήψεων
+του επιλυτή με τον τύπο 	
+<TT>2*(t1-t0)/tstep</TT> (εάν ο αριθμός των επαναλήψεων
+υπερβαίνει αυτή την τιμή, ο επιλυτής θα σταματήσει σε <I>t</I>&lt;<I>t</I>1).
+</LI><LI CLASS="li-itemize">	
+<TT>odesolve</TT> δέχεται σαν προαιρετικό όρισμα την 	
+<TT>curve</TT>.
+Σε αυτήν την περίπτωση, 
+	
+<TT>odesolve</TT> επιστρέφει την λίστα όλων των τιμών [<I>t</I>,[<I>y</I>(<I>t</I>)]]
+που έχουν υπολογιστεί.
+</LI></UL><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>odesolve(sin(t*y),[t,y],[0,1],2)</TT></DIV><P>
+ή :
+</P><DIV CLASS="center">	
+<TT>odesolve(sin(t*y),t=0..2,y,1)</TT></DIV><P>
+ή :
+</P><DIV CLASS="center">	
+<TT>odesolve(0..2,(t,y)-&gt;sin(t*y),1)</TT></DIV><P>
+ή ορίστε τη συνάρτηση :
+</P><DIV CLASS="center">	
+<TT>f(t,y):=sin(t*y)</TT> </DIV><P>
+και εισάγετε :
+</P><DIV CLASS="center">	
+<TT>odesolve(0..2,f,1)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[1.822413]</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>odesolve(0..2,f,1,tstep=0.3)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[1.822413]</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>odesolve(sin(t*y),t=0..2,y,1,tstep=0.5)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[1.822413]</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>odesolve(sin(t*y),t=0..2,y,1,tstep=0.5,curve)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[[0.0,[1.0]],[0.3906,[1.078118]],[0.7609631,[1.309724]],</TT></DIV><DIV CLASS="center">	
+<TT>[1.070868,[1.604761]],[1.393346,[1.864171]]]</TT></DIV><HR>
+<A HREF="cascmd_el485.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el487.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

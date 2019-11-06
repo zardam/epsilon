@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Construction d’un corps de Galois : GF</title>
+</head>
+<body >
+<a href="cascmd_fr460.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr462.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec579" class="subsection">6.35.18  Construction d’un corps de Galois : <span style="font-family:monospace">GF</span></h3>
+<p><a id="hevea_default840"></a>
+Dans sa forme la plus simple,
+<span style="font-family:monospace">GF</span> a comme arguments un nombre premier <span style="font-style:italic">p</span> et un entier <span style="font-style:italic">n</span>&gt;1
+ou la puissance d’un nombre premier <span style="font-style:italic">p</span><sup><span style="font-style:italic">n</span></sup> et un argument optionnel qui
+est le nom de variable choisi pour le générateur du corps 
+(la variable doit être purgée au préalable).<br>
+<span style="font-family:monospace">GF</span> crée un corps de Galois de caractéristique <span style="font-style:italic">p</span> et ayant <span style="font-style:italic">p</span><sup><span style="font-style:italic">n</span></sup> 
+éléments, les éléments du corps sont alors 0 et les puissances de 0 à
+<span style="font-style:italic">p</span><sup><span style="font-style:italic">n</span></sup>−2 du générateur. Le corps lui-même est stocké dans une variable
+libre (par défaut <span style="font-style:italic">K</span>, cette variable est affichée par le système, en même
+temps que le nom du générateur et de la variable libre, par défaut <span style="font-style:italic">k</span>, 
+servant à représenter les élements du corps comme le quotient 
+ℤ/<span style="font-style:italic">p</span>ℤ[<span style="font-style:italic">k</span>]/<span style="font-style:italic">P</span>(<span style="font-style:italic">k</span>) où <span style="font-style:italic">P</span> est un polynôme irréductible et primitif).<br>
+Par exemple :
+</p><ul class="itemize"><li class="li-itemize">
+<code>GF(3,5)</code> ou <code>GF(3^5)</code>
+crée un corps ayant 3<sup>5</sup>  éléments dont le générateur
+est <code>g</code> (ou <code>h</code>, ... si <span style="font-style:italic">g</span> est affectée). On peut créer un
+élément du corps en prenant un polynôme en fonction de <span style="font-style:italic">g</span>, par
+exemple <span style="font-style:italic">g</span><sup>10</sup>+5<span style="font-style:italic">g</span>+1.
+</li><li class="li-itemize"><code>GF(2,8,a)</code> crée un corps ayant 2<sup>8</sup> éléments, et utilise
+la variable <code>a</code> pour en désigner le générateur (attention, faire
+<code>purge(a)</code> auparavant si nécessaire). 
+</li><li class="li-itemize">La commande <code>pmin</code> permet de connaitre le polynôme minimal
+d’un élément du corps.
+</li></ul><p>
+On peut ensuite créer des polynômes ou des matrices
+ayant des coefficients dans le corps, et les manipuler
+avec les instructions habituelles <code>+ - * / inv sqrt</code>,
+<code>quo, rem, quorem, diff, factor, gcd. egcd, ...</code> par exemple :
+</p><ul class="itemize"><li class="li-itemize">
+<code>GF(3,5,b); A:=[[1,b],[b,1]]; inv(A)</code> calcule l’inverse
+d’une matrice à coefficients dans le corps à 3<sup>5</sup> éléments
+</li><li class="li-itemize"><code>GF(5,3,c); p:=x^2-c-1; factor(p)</code> factorise le polynôme
+<span style="font-style:italic">p</span> comme polynôme à coefficients dans le corps à 5<sup>3</sup> éléments,
+on en déduit une valeur de racine carrée de <span style="font-style:italic">c</span>+1.
+</li><li class="li-itemize"><code>p:=randpoly(x,5,g); q:=diff(p); gcd(p,q)</code> génère un
+polynôme à coefficients aléatoires puis calcule sa dérivée et
+le PGCD ce qui permet de savoir si <code>p</code> a des racines multiples.
+</li></ul><p>
+Il y a encore quelques limitations dues à une implémentation incomplète
+de certains algorithmes (par exemple factorisation à plusieurs variables
+lorsque le polynôme n’est pas unitaire).</p><p>Dans sa forme la plus complète (mais plus difficile à manipuler
+et moins lisible),
+les éléments de ce corps et le corps lui-même sont représentés par 
+<span style="font-family:monospace">GF(...)</span> où <span style="font-family:monospace">...</span> est une séquence composée de :
+</p><ul class="itemize"><li class="li-itemize">
+la caractéristique <span style="font-style:italic">p</span> (<span style="font-style:italic">px</span>=0),
+</li><li class="li-itemize">le polynôme minimal irréductible (primitif s’il est
+créé par giac) engendrant un
+idéal <span style="font-style:italic">I</span> dans ℤ/<span style="font-style:italic">p</span>ℤ[<span style="font-style:italic">X</span>], le corps de Galois est alors le quotient
+de ℤ/<span style="font-style:italic">p</span>ℤ[<span style="font-style:italic">X</span>] par <span style="font-style:italic">I</span>,
+</li><li class="li-itemize">le nom de la variable du polynôme, par défaut <span style="font-family:monospace">x</span>,
+</li><li class="li-itemize">un polynôme (un reste modulo le polynôme minimal) pour désigner
+un élément du corps (ces éléments ont une représentation additive)
+ou <span style="font-family:monospace">undef</span> pour désigner tout le corps qui est le quotient des 
+polynômes à coefficients dans <span style="font-style:italic">Z</span>/<span style="font-style:italic">pZ</span> par <span style="font-style:italic">I</span>.
+</li></ul><p>
+Habituellement on donne un nom au corps crée (par exemple <span style="font-family:monospace">G:=GF(p,n)</span>), 
+afin de construire un élément particulier du groupe à partir d’un 
+polynôme de ℤ/<span style="font-style:italic">p</span>ℤ[<span style="font-style:italic">X</span>], on écrira par
+exemple <span style="font-family:monospace">G(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+x)</span>. Notez que <span style="font-family:monospace">G(x)</span>
+est un générateur du groupe multiplicatif <span style="font-style:italic">G</span><sup>*</sup> lorsque
+le polynôme minimal est généré par giac.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">G:=GF(2,8)</span></div><p>
+On obtient (par exemple) :
+</p><div class="center"><span style="font-family:monospace">GF(2,k</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">8-k</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">7-k</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">6-k-1,k,undef)</span></div><p>
+Le corps <span style="font-style:italic">G</span> a 2<sup>8</sup>=256 éléments et <span style="font-style:italic">g</span>=<span style="font-style:italic">G</span>(<span style="font-style:italic">k</span>) engendre le groupe 
+multiplicatif de ce corps ({ 1,<span style="font-style:italic">g</span>,<span style="font-style:italic">g</span><sup>2</sup>,...<span style="font-style:italic">g</span><sup>254</sup> }).<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">K(k</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">9)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">g</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">6+g</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1)</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">K(k)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">255</span></div><p>
+On obtient 1.
+Comme vous pouvez le constater sur les exemples précédents, lorsque l’on 
+travaille avec le même corps, les réponses
+contiennent des informations redondantes. C’est pourquoi la définition d’un 
+corps peut avoir un troisième argument : le nom du générateur
+ou une liste contenant deux noms 
+ou trois noms de variable formelle, (le nom de l’indéterminée du polynôme
+irréductible et le nom du corps de Galois que l’on doit mettre entre quote 
+pour que ces variables ne soient pas évaluées ainsi que le nom
+du générateur). Cela permet d’obtenir un 
+affichage plus compact des éléments du corps.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">G:=GF(2,2,[’w’,’G’]):; G(w</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">Done, G(w+1)</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">G(w</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">G(1)</span></div><p>
+Les éléments de <span style="font-family:monospace">GF(2,2)</span> sont donc :
+<span style="font-family:monospace">0,1,w,w</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2=w+1</span>.</p><p>On peut enfin indiquer quel polynôme irréductible on souhaite
+utiliser, en l’indiquant en 2-ième paramètre (au lieu de <span style="font-style:italic">n</span>), 
+par exemple :
+</p><div class="center"><code>G:=GF(2,w^8+w^6+w^3+w^2+1,['w','G'])</code></div><p>
+Si on donne un polynôme irréductible non primitif, <span style="font-family:monospace">Xcas</span> l’indique et
+propose un remplacement par un 
+polynôme primitif, par exemple :
+</p><div class="center"><code>G:=GF(2,w^8+w^7+w^5+w+1,['w','G'])</code></div><p>
+On obtient :
+</p><div class="center"><code>G:=GF(2,w^8-w^6-w^3-w^2-1,['w','G'],undef)</code></div>
+<hr>
+<a href="cascmd_fr460.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr462.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

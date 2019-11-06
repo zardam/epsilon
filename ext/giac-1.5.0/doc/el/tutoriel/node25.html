@@ -1,0 +1,219 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others 
+  Translation to greek : George Nassopoulos-->
+<HTML>
+<HEAD>
+<TITLE>Γραμμικά συστήματα</TITLE>
+<META NAME="description" CONTENT="Syst&#232;mes lin&#233;aires">
+<META NAME="keywords" CONTENT="tutoriel">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutoriel.css">
+
+<LINK REL="next" HREF="node26.html">
+<LINK REL="previous" HREF="node24.html">
+<LINK REL="up" HREF="node20.html">
+<LINK REL="next" HREF="node26.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html419"
+  HREF="node26.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html413"
+  HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html407"
+  HREF="node24.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html415"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html417"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html420"
+  HREF="node26.html">Αναγωγή πινάκων</A>
+<B> εμφάνιση:</B> <A NAME="tex2html414"
+  HREF="node20.html">Εργαλεία για την Άλγεβρα</A>
+<B> προηγούμενο:</B> <A NAME="tex2html408"
+  HREF="node24.html">Διανύσματα και πίνακες</A>
+ &nbsp; <B>  <A NAME="tex2html416"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html418"
+  HREF="node47.html">Ευρετήριο</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00045000000000000000"></A>
+<A NAME="626"></A>
+<BR>
+Γραμμικά συστήματα
+</H2>
+<A NAME="1724"></A>
+<A NAME="1725"></A>
+<A NAME="1726"></A>
+Η συνάρτηση <code>linsolve</code> επιλύει ένα σύστημα (μία λίστα) 
+γραμμικών εξισώσεων. Η σύνταξη είναι ίδια με την solve. 
+<P>
+Μπορούμε επίσης να χρησιμοποιήσουμε την συνάρτηση
+<code>simult</code>  για να επιλύσουμε ένα ή πολλά συστήματα γραμμικών εξισώσεων 
+τα οποία διαφέρουν <I>μόνο</I> ως προς το δεύτερο μέλος τους. 
+Στην περίπτωση αυτή το πρώτο όρισμα της <code>simult</code> είναι ο (κοινός)
+ πίνακας του (των) συστήματος(-των), ενώ το δεύτερο όρισμα είναι ένας πίνακας
+ του οποίου  η (οι) στήλη(-ες) είναι το (τα) δεύτερο(-α) μέλος(-η) 
+ του (των) συστήματος(-των).
+ <P>
+Τέλος υπάρχει και η συνάρτηση <code>rref</code> με όρισμα ένα πίνακα που 
+παίρνουμε συνενώνοντας τον πίνακα του συστήματος
+με το δεύτερο μέλος  (<TT>border(A,b)</TT> όπου <TT>b</TT> είναι 
+το <I>διάνυσμα</I> του δεύτερου μέρους).
+ <P>
+Όταν το σύστημα είναι αδύνατο να λυθεί, η συνάρτηση <code>linsolve</code> 
+επιστρέφει 
+μία άδεια λίστα, η <code>simult</code> επιστρέφει  μόνο μία λύση, και 
+η <code>rref</code>
+επιστρέφει ένα πίνακα του οποίου μία των γραμμών είναι μηδενική, 
+εκτός του τελευταίου στοιχείου.
+<P>
+Όταν το σύστημα είναι απροσδιόριστο, η συνάρτηση  <code>linsolve</code>
+επιστρέφει μία άδεια λίστα, η <code>simult</code>
+επιστρέφει μόνο μία λύση, και η <code>rref</code> επιστρέφει ένα πίνακα 
+του οποίου μία ή περισσότερες γραμμές 
+είναι μηδενικές. 
+<P>
+Τα παραδείγματα που ακολουθούν αφορούν το σύστημα
+<!-- MATH
+ \begin{displaymath}
+\left\{ \begin{array}{llllllr}
+ x &+& y &+& az&=&1\\
+ x & +& a y&+& z&=&1 \\
+ ax & +&y &+& z&=&-2
+\end{array}\right.
+\end{displaymath}
+ -->
+<P></P>
+<DIV ALIGN="CENTER">
+<IMG
+ WIDTH="19" HEIGHT="74" ALIGN="MIDDLE" BORDER="0"
+ SRC="img15.png"
+ ALT="$\displaystyle \left\{\vphantom{ \begin{array}{llllllr}
+x &amp;+&amp; y &amp;+&amp; az&amp;=&amp;1\\
+x &amp; +&amp; a y&amp;+&amp; z&amp;=&amp;1 \\
+ax &amp; +&amp;y &amp;+&amp; z&amp;=&amp;-2
+\end{array}}\right.$"><IMG
+ WIDTH="216" HEIGHT="74" ALIGN="MIDDLE" BORDER="0"
+ SRC="img16.png"
+ ALT="$\displaystyle \begin{array}{llllllr}
+x &amp;+&amp; y &amp;+&amp; az&amp;=&amp;1\\
+x &amp; +&amp; a y&amp;+&amp; z&amp;=&amp;1 \\
+ax &amp; +&amp;y &amp;+&amp; z&amp;=&amp;-2
+\end{array}$">
+</DIV><P></P>
+Το σύστημα αυτό έχει μία μόνο μοναδική λύση για <I>a</I> <IMG
+ WIDTH="15" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img17.png"
+ ALT="$ \neq$"> 1 και για <I>a</I> <IMG
+ WIDTH="15" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img17.png"
+ ALT="$ \neq$"> - 2. Για  <I>a</I> = 1 το σύστημα 
+ είναι αδύνατο και  για <I>a</I> = - 2 είναι απροσδιόριστο.
+<PRE>
+linsolve([x+y+a*z=1,x+a*y+z=1,x+a*y+z=-2],[x,y,z])
+a:=1
+linsolve([x+y+a*z=1,x+a*y+z=1,x+a*y+z=-2],[x,y,z])
+a:=-2
+linsolve([x+y+a*z=1,x+a*y+z=1,x+a*y+z=-2],[x,y,z])
+purge(a)
+A:=[[1,1,a],[1,a,1],[a,1,1]]
+solve(det(A),a)
+A1:=subst(A,a=1)
+rank(A1)
+image(A1)
+ker(A1)
+A2:=subst(A,a=-2)
+rank(A2)
+image(A2)
+ker(A2)
+b:= [1,1,-2]
+B:=tran(b)
+simult(A,B)
+simult(A1,B)
+simult(A2,B)
+M:=blockmatrix(1,2,[A,B])
+rref(M)
+rref(border(A,b))
+rref(border(A1,b))
+rref(border(A2,b))
+</PRE>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><B>Γραμμικά συστήματα</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>linsolve</code></TD>
+<TD ALIGN="LEFT">επίλυση ενός συστήματος</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>simult</code></TD>
+<TD ALIGN="LEFT">επίλυση πολλών συστημάτων ταυτόχρονα </TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>rref</code></TD>
+<TD ALIGN="LEFT">αναγωγή Gauss-Jordan</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>rank</code></TD>
+<TD ALIGN="LEFT">τάξη</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>det</code></TD>
+<TD ALIGN="LEFT">ορίζουσα του συστήματος</TD>
+</TR>
+</TABLE>
+</DIV>
+<A NAME="645"></A>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html419"
+  HREF="node26.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html413"
+  HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html407"
+  HREF="node24.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html415"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html417"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html420"
+  HREF="node26.html">Αναγωγή πινάκων</A>
+<B> εμφάνιση:</B> <A NAME="tex2html414"
+  HREF="node20.html">Εργαλεία για την Άλγεβρα</A>
+<B> προηγούμενο:</B> <A NAME="tex2html408"
+  HREF="node24.html">Διανύσματα και πίνακες</A>
+ &nbsp; <B>  <A NAME="tex2html416"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html418"
+  HREF="node47.html">Ευρετήριο</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Βιβλιογραφία του <A HREF="http://www-fourier.ujf-grenoble.fr/~parisse/giac_fr.html">giac</A> από τους Renee De Graeve, Bernard Parisse και Bernard Ycart
+</ADDRESS>
+Μετάφραση στα Ελληνικά : Γιώργος Νασόπουλος. Διασκευή : Αλκιβιάδης Γ. Ακρίτας
+</BODY>
+</HTML>

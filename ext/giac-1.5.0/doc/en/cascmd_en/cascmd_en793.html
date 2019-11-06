@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Infixed assignments: =&gt;, :=, =&lt;</title>
+</head>
+<body >
+<a href="cascmd_en792.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en794.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1020" class="subsection">11.2.8  Infixed assignments: <span style="font-family:monospace">=&gt;, :=, =&lt;</span></h3>
+<p>
+<a id="hevea_default1402"></a><a id="hevea_default1403"></a><a id="hevea_default1404"></a></p><p>The infixed operators <span style="font-family:monospace">=&gt;</span>, <span style="font-family:monospace">:=</span>, and <span style="font-family:monospace">=&lt;</span> can
+all store a value in a variable, but their arguments are in different
+order. Also, <span style="font-family:monospace">:=</span> and <span style="font-family:monospace">=&lt;</span> have different effects when
+the first argument is an element of a list stored in a variable, since
+<span style="font-family:monospace">=&lt;</span> modifies list elements by reference. (See section
+<a href="cascmd_en795.html#ssec%3Aassignmentdiffs">11.2.10</a>.)
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">=&gt;</span> is the infixed version of <span style="font-family:monospace">sto</span>, it stores
+the value in the first argument in the variable in the second
+argument. Both<br>
+ Input:
+<div class="center">
+<span style="font-family:monospace">4 =&gt; a
+</span></div>
+and:
+<div class="center">
+<span style="font-family:monospace">sto(4,a)
+</span></div>
+store the value 4 in the variable <span style="font-family:monospace">a</span>.
+</li><li class="li-itemize"><span style="font-family:monospace">:=</span> and <span style="font-family:monospace">=&lt;</span> both have a variable as the first
+argument and the value to store in the variable as the second
+argument. Both<br>
+ Input:
+<div class="center">
+<span style="font-family:monospace">a := 4
+</span></div>
+and:
+<div class="center">
+<span style="font-family:monospace">a =&lt; 4
+</span></div>
+store the value 4 in the variable <span style="font-family:monospace">a</span>.<p>However, suppose<br>
+ Input:
+</p><div class="center">
+<span style="font-family:monospace">A := [0,1,2,3,4]<br>
+ B := A
+</span></div><p>
+and you want to change <span style="font-family:monospace">A[3]</span>.<br>
+ Input:
+</p><div class="center">
+<span style="font-family:monospace">A[3] =&lt; 33
+</span></div><p>
+will change both <span style="font-family:monospace">A</span> and <span style="font-family:monospace">B</span><br>
+ Input:
+</p><div class="center">
+<span style="font-family:monospace">A, B
+</span></div><p>
+Output:
+</p><div class="center">
+<span style="font-family:monospace">[0,1,2,33,4], [0,1,2,33,4] 
+</span></div><p>
+Here, <span style="font-family:monospace">A</span> pointed to the list <span style="font-family:monospace">[0,1,2,3,4]</span> and
+setting <span style="font-family:monospace">B</span> to <span style="font-family:monospace">A</span>, <span style="font-family:monospace">B</span> also pointed to
+<span style="font-family:monospace">[0,1,2,3,4]</span>. Changing an element of <span style="font-family:monospace">A</span> by
+reference changes the list that <span style="font-family:monospace">A</span> points to, which
+<span style="font-family:monospace">B</span> points to.
+</p></li></ul><p>Note that multiple assigments can be made using sequences or lists. Both<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">[a, b, c] := [1, 2, 3]
+</span></div><p>
+and:
+</p><div class="center">
+<span style="font-family:monospace">(a, b, c) := (1, 2, 3)
+</span></div><p>
+assign <span style="font-family:monospace">a</span> the value 1, <span style="font-family:monospace">b</span> the value 2, and <span style="font-family:monospace">c</span>
+the value 3. If multiple assignments are made this way and variables
+are on the right hand side, they will be replaced by their values
+before the assignment. If <span style="font-family:monospace">a</span> contains 5, then<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">(a,b) := (2,a)
+</span></div><p>
+then <span style="font-family:monospace">b</span> will get the previous value of <span style="font-family:monospace">a</span>, 5, and not
+the new value of <span style="font-family:monospace">a</span>, 2.</p>
+<hr>
+<a href="cascmd_en792.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en794.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

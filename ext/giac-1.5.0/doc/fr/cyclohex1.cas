@@ -1,0 +1,16 @@
+// a1:=71*pi/360; t:=tan(a1/2);
+ca1:=(1-t^2)/(1+t^2); sa1:=2*t/(1+t^2);
+cb:=-(2*ca1^2-1);
+cA:=coordinates(point(0,0,0));
+cC:=coordinates(point(2*ca1,0,0));
+cB:=normal(coordinates(point(ca1,sa1*(1-u^2)/(1+u^2),sa1*2*u/(1+u^2))));
+cE:=normal(coordinates(point(ca1,ca1*sqrt(3),0)));
+cF:=normal(coordinates(rotation(line(x=0,y=0),pi/3,point(ca1,-sa1*(1-v^2)/(1+v^2),sa1*2*v/(1+v^2)))));
+cD:=normal(coordinates(rotation(line(x=2*ca1,y=0),-pi/3,point(ca1,-sa1*(1-w^2)/(1+w^2),sa1*2*w/(1+w^2)))));
+P:=numer(cB*cF-cb);
+Q:=numer((cD-cE)*(cF-cE)-cb);
+R:=numer((cB-cC)*(cD-cC)-cb);
+normal(evalf(P,lcoeff(P)/lcoeff(Q)*Q,R));
+PQ:=resultant(P,Q,v);
+PQR:=resultant(PQ,R,w);
+gcd(PQ,R);

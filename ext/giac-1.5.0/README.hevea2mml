@@ -1,0 +1,63 @@
+DESCRIPTION:
+============
+hevea2mml is a forked hack of the itex2MML project by Jacques Distler,
+(see README.itex2MML file). 
+This fork is released under the GPL version 3 (see the COPYING file).
+It was hacked by B. Parisse in order to convert LaTeX files to HTML5+MathML
+in 2 steps: 
+1/ convert LaTeX to HTML5+mathjax with hevea -mathjax, either with
+the latest unstable version of hevea written by Luc Maranget, or with
+hevea-mathjax a fork of hevea written by Yannick Chevalier
+2/ convert HTML5+mathjax to HTML5+mathml with itex2MML
+This package also includes files in order to make CAS-computation
+enabled HTML5 files.
+
+INSTALL:
+=========
+First install latest hevea with mathjax support from
+  http://hevea.inria.fr
+or install hevea-mathjax
+  git clone https://github.com/YannickChevalier/hevea-mathjax
+then 
+  cd hevea-mathjax 
+and 
+  make
+
+USAGE:
+======
+In your yourfilename.tex file add in preamble
+\usepackage{hevea} 
+\giacmathjax
+
+Then run 
+  hevea2mml yourfilename.tex 
+Or in 2 steps:
+  hevea yourfilename.tex
+or (hevea-mathjax fork)
+  hevea -mathjax yourfilename.tex
+and after that run
+  hevea2mml yourfilename
+
+You can now open yourfilename.html in your browser, inside Firefox mathml 
+is rendered natively, inside Chrome or IE, Mathjax is called to render 
+mathml which is (much) slower on (large) document.
+
+*************************************************************************
+
+CHANGES
+=======
+Changes with respect to the original itex2MML (see README.orig):
+1/ Support for \begin{equation} \label{} \end{equation} 
+and \begin{eqnarray} \label{} \end{eqnarray}
+and \ref{}
+2/ default option --forbid-markup + inline maths are inside \( ... \)
+instead of $ ... $, (a single $ in the input file is converted 
+to HTML code &#36;)
+Use --nohevea to revert to original default options.
+3/ --d option: show cross-references
+4/ Input and output filename passed as arguments instead of redirecting streams
+If the input filename does not exist, add .html to it, and in that
+case if the output filename is not specified it is the same as the input file.
+5/ Same rendering as in latex for $ab$ (a and b in italic 
+with implicit multiplication)
+6/ A few new latex commands are recognized \overrightarrow \mbox \ 

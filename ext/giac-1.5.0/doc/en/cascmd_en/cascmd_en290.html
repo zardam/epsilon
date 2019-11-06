@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Cross-correlation of two signals : cross_correlation</title>
+</head>
+<body >
+<a href="cascmd_en289.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en291.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec360" class="subsection">5.27.5  Cross-correlation of two signals : <span style="font-family:monospace">cross_correlation</span><a id="hevea_default508"></a></h3>
+<p>
+<a id="sec:crosscorr"></a>
+<span style="font-family:monospace">cross_correlation</span> takes two arguments, a complex vector  <span style="font-weight:bold"><span style="font-style:italic">v</span></span>  of length  <span style="font-style:italic">n</span>  and a complex vector  <span style="font-weight:bold"><span style="font-style:italic">w</span></span>  of length  <span style="font-style:italic">m</span> . The returned value is the complex vector  <span style="font-weight:bold"><span style="font-style:italic">z</span></span>=<span style="font-weight:bold"><span style="font-style:italic">v</span></span>⋆<span style="font-weight:bold"><span style="font-style:italic">w</span></span>  of length  <span style="font-style:italic">N</span>=<span style="font-style:italic">n</span>+<span style="font-style:italic">m</span>−1  which is the cross-correlation of the two input vectors, i.e. such that the following holds :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">z</span><sub><span style="font-style:italic">k</span></sub>=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">N</span>−1</td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-size:xx-large">∑</span></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">i</span>=<span style="font-style:italic">k</span></td></tr>
+</table></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">v</span><sub><span style="font-style:italic">i</span>−<span style="font-style:italic">k</span></sub><sup>∗</sup></td></tr>
+</table></td><td class="dcell"> <span style="font-style:italic">w</span><sub><span style="font-style:italic">i</span></sub><sup>∗</sup>,   <span style="font-style:italic">k</span>=0,1,…,<span style="font-style:italic">N</span>−1, </td></tr>
+</table><p>
+where
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-weight:bold"><span style="font-style:italic">v</span></span><sup>∗</sup>=[<span style="font-style:italic">v</span><sub>0</sub>,<span style="font-style:italic">v</span><sub>1</sub>,…,<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span>−1</sub>,</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:center"><table class="display" style="width:100%;"><tr><td class="dcell"  colspan="5" style="text-align:center"> </td></tr>
+<tr><td class="dcell"  colspan="5" style="text-align:center">0,0,…,0</td></tr>
+<tr><td class="dcell"   style="width:5%;text-align:center">◥</td><td class="dcell"   style="width:40%;text-align:center"><hr class="hbar"></td><td class="dcell"   style="width:10%;text-align:center">▼</td><td class="dcell"   style="width:40%;text-align:center"><hr class="hbar"></td><td class="dcell"   style="width:5%;text-align:center">◤</td></tr>
+</table></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">m</span>−1</td></tr>
+</table></td><td class="dcell">]  and  <span style="font-weight:bold"><span style="font-style:italic">w</span></span><sup>∗</sup>=[</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:center"><table class="display" style="width:100%;"><tr><td class="dcell"  colspan="5" style="text-align:center"> </td></tr>
+<tr><td class="dcell"  colspan="5" style="text-align:center">0,0,…,0</td></tr>
+<tr><td class="dcell"   style="width:5%;text-align:center">◥</td><td class="dcell"   style="width:40%;text-align:center"><hr class="hbar"></td><td class="dcell"   style="width:10%;text-align:center">▼</td><td class="dcell"   style="width:40%;text-align:center"><hr class="hbar"></td><td class="dcell"   style="width:5%;text-align:center">◤</td></tr>
+</table></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">n</span>−1</td></tr>
+</table></td><td class="dcell">,<span style="font-style:italic">w</span><sub>0</sub>,<span style="font-style:italic">w</span><sub>1</sub>,…,<span style="font-style:italic">w</span><sub><span style="font-style:italic">m</span>−1</sub>]. </td></tr>
+</table><p>Cross-correlation is typically used for measuring similarity between signals.</p><p>For example, input :
+</p><div class="center">
+	<span style="font-family:monospace">cross_correlation([1,2],[3,4,5])
+</span></div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[6.0,11.0,14.0,5.0]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">v:=[2,1,3,2]:; w:=[1,-1,1,2,2,1,3,2,1]:;
+round(cross_correlation(v,w))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[2,1,0,8,9,12,15,18,13,11,5,2]
+</span></div><p>
+Observe that the cross-correlation of <span style="font-family:monospace">v</span> and <span style="font-family:monospace">w</span> is peaking at position 8 with the value 18, indicating that the two signals are best correlated when the last sample in <span style="font-family:monospace">v</span> is aligned with the eighth sample in <span style="font-family:monospace">w</span>. Indeed, there is an occurrence of <span style="font-family:monospace">v</span> in <span style="font-family:monospace">w</span> precisely at that point.</p>
+<hr>
+<a href="cascmd_en289.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en291.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

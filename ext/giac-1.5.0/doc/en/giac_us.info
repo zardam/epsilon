@@ -1,0 +1,1282 @@
+This is giac_us.info, produced by makeinfo version 4.13 from
+giac_us.texinfo.
+
+INFO-DIR-SECTION Math
+START-INFO-DIR-ENTRY
+* Giac : (giac_us).         Computer Algebra System Library
+END-INFO-DIR-ENTRY
+
+
+
+File: giac_us.info,  Node: Top,  Next: Installation,  Up: (dir)
+
+   Giac is a C++ library that has types for symbolic algebraic
+manipulations.  Xcas is a GUI linked with Giac that provides the
+functionnalities of a general purpose computer algebra system.  Giac's
+name derive from `http://www.ginac.de', another C++ library for
+symbolic algebraic computations.
+
+* Menu:
+
+* Installation::     How to install giac/icas/xcas
+* Xcas::             Describes the xcas user-interface to giac
+* Giac::             How to program in C++ using giac.
+* Examples::         Some examples of xcas script and C++ program using giac
+* Concept Index::    Index.
+
+
+File: giac_us.info,  Node: Installation,  Next: Xcas,  Prev: Top,  Up: Top
+
+1 Installing Giac/Xcas
+**********************
+
+* Menu:
+
+* Binaries::         Installing xcas binaries only
+* Requirements::     Compiling xcas requires libraries and program
+* Options::          Optionnal libraries that enhance giac behaviour
+* Configure::        Options for the configure shell script
+* Compiling::        Compilation of giac
+* Troubles::         Some tips if you are in trouble
+
+
+File: giac_us.info,  Node: Binaries,  Next: Requirements,  Prev: Installation,  Up: Installation
+
+1.1 Installing binaries
+=======================
+
+If you want to use `xcas/giac' like another CAS and your OS is Intel
+x86 GNU/Linux or Intel StrongARM GNU/Linux or Windows 9x or Mac OS
+X.4(+), then you don't need to worry about compilation. Instead you can
+install precompiled binaries:
+   * x86 GNU/Linux as a normal user:
+     `ftp://ftp-fourier.ujf-grenoble.fr/xcas/xcas_user.tgz'
+
+     Unpack the archive with `tar xvfz xcas_user.tgz'
+
+     then `cd xcas'
+
+     and `./xcas'
+
+   * x86 GNU/Linux if you have root access:
+     `ftp://ftp-fourier.ujf-grenoble.fr/xcas/xcas_root.tgz' Unpack the
+     archive from the `/' directory
+
+   * ARM GNU/Linux:
+     `ftp://ftp-fourier.ujf-grenoble.fr/xcas/xcas_ipaq.tgz'
+
+   * Windows 9x: `ftp://ftp-fourier.ujf-grenoble.fr/xcas/xcasinst.exe'.
+     Run `xcas' from the Start menu.
+
+   * Mac OS X:
+     `ftp://ftp-fourier.ujf-grenoble.fr/xcas/xcas_osx4.dmg.gz'.  Run
+     `xcas' from the Applications.
+
+
+File: giac_us.info,  Node: Requirements,  Next: Options,  Prev: Binaries,  Up: Installation
+
+1.2 Requirements
+================
+
+Get Giac source at
+`ftp://ftp-fourier.ujf-grenoble.fr/xcas/giac_stable.tgz' or
+`http://perso.wanadoo.fr/bernard.parisse/'.  Check that your C++
+compiler understand the C++ ANSI 3 norm. For example `gcc' version 2.95
+or later will work. If the GMP GNU Math Precision Library is not
+installed on your system, install it:
+`http://www.gnu.org/directory/gnump.html'. If you are using GNU/Linux,
+the GMP library is most probably installed but the headers files might
+not, check for a package named something like `gmp-devel'.
+
+
+File: giac_us.info,  Node: Options,  Next: Configure,  Prev: Requirements,  Up: Installation
+
+1.3 Options
+===========
+
+  1. If you want numerical functions you should install the Gnu
+     Scientific Library available at `http://sources.redhat.com/gsl'
+
+  2. If you want to use NTL for some polynomial operations (currently
+     factorization), get version >= 5.2 at `http://www.shoup.net'. Then
+     check that you configured with namespace enabled (this is not the
+     default) and with GMP enabled (not the default, but this is not
+     mandatory) If you are not sure of your install go in the NTL
+     directory and type
+           make clean
+           ./configure NTL_GMP_LIP=on NTL_STD_CXX=on
+           make
+           make install
+
+  3. If you want advanced arithmetic functions, get PARI at
+     `http://www.parigp-home.de'.  If you plan to use an old version of
+     PARI WITHOUT NTL then you MUST MAKE THE FOLLOWING PATCHES in the
+     PARI source directory:
+        * File `src/basemath/polarit2.c': remove the word `static' from
+          the declaration:
+                 static GEN
+                 combine_factors(...)
+
+        * File `src/headers/paridecl.h': Add the line
+
+          `GEN     combine_factors(GEN a, GEN famod, GEN p, long klim,
+          long hint);'
+
+          in the `* polarit2.c' section.
+
+        * Recompile (`make all') and reinstall PARI (`make install')
+          and check that `libpari.a' has been updated or copy it
+          explicitely from the `O<your_os>' directory.
+
+        * Replace in `/usr/local/include/pari/pariinl.h' `labs' by
+          `std::abs' otherwise you might get compiler errors.
+     Check in the giac src directory, file pari.cc that the memory
+     allocated to the PARI stack suit your needs (default is 10M of
+     RAM) or modify: `  long pari_mem_size=10000000;'
+
+  4. If you want GUI support, check that you have FLTK 1.1 installed
+     (available at `http://www.fltk.org').
+
+  5. TeXmacs provides an interface for giac. You can get it at
+     `http://www.texmacs.org'.  After installing giac, run texmacs and
+     use Insert->Session->giac.
+
+
+
+File: giac_us.info,  Node: Configure,  Next: Compiling,  Prev: Options,  Up: Installation
+
+1.4 Configure options
+=====================
+
+The `./configure ' shell-script recognizes the following options:
+  1. -enable-debug   Allow vecteurs printing and add some debugging code
+
+  2. -enable-fltk   GUI support
+
+  3. -enable-gsl   Use the Gnu Scientific Library for floating point
+     (e.g. special functions..)
+
+  4. -enable-sscl   Allow inclusion of code for semi-classical
+     algorithms (Moyal product, ...)    Not available yet
+
+  5. -enable-ntl   Allow inclusion of NTL code
+
+  6. -enable-pari   Allow inclusion of PARI code
+
+   These options can be turned off using `--disable-option-name'
+instead of `--enable-option-name'. By default `configure' will use these
+options if the libraries are available on your system.
+
+   For full speed binaries, before calling `configure' do (with bash as
+shell)
+
+   `$ export CXXFLAGS="-O3 -fexpensive-optimizations -malign-loops=2
+-malign-jumps=2 -malign-functions=2"'
+
+   or (with tcsh as shell)
+
+   `$ setenv CXXFLAGS "-O3 -fexpensive-optimizations -malign-loops=2
+-malign-jumps=2 -malign-functions=2"'
+
+
+File: giac_us.info,  Node: Compiling,  Next: Troubles,  Prev: Configure,  Up: Installation
+
+1.5 Compiling
+=============
+
+Like with any autoconfiguring GNU software, you can type :
+
+   ` ./configure '
+
+   [add options as needed: try `./configure -help' for option info]
+
+   ` make '
+
+   ` make check '
+
+   [become root if necessary]
+
+   ` make install '
+
+   Tips:
+   * If you don't want optimizations, set the environment variable
+     `CXXFLAGS' to `-g' before calling configure, with tcsh ` setenv
+     CXXFLAGS -g', with bash `export CXXFLAGS=-g'.
+
+   * If you want the commandline icas only run
+
+     ` ./configure --disable-gui'
+
+     ` make '
+
+   * If you want to build xcas for the ARM processor with the Linux
+     familiar distribution (e.g. for an iPaq `http://www.handhelds.org')
+     assuming you have the skiff toolchain installed and FLTK installed.
+     Check that `config.h' defines HAVE_LIBFLTK and does not define
+     HAVE_LIBGSL and HAVE_LIBGSLCBLAS unless you have these libraries
+     too, then
+
+     ` make -f Makefile.ipaq'
+
+     Note that I never succeded to build with optimization for the iPaq.
+
+   * Windows
+
+     You can compile the library version of giac like under Unix.  Or
+     assuming you have the cygwin tools, gmp and FLTK installed (see
+     `http://sources.redhat.com/cygwin' for cygwin, run cygwin, go in
+     the `src' directory and run
+
+     ` make -f Makefile.win'
+
+     After that, you may run `xcas.exe' standalone, provided
+     `/usr/bin/cygwin1.dll' has been copied in the path (e.g. in the
+     same directory as `xcas.exe')
+
+
+File: giac_us.info,  Node: Troubles,  Prev: Compiling,  Up: Installation
+
+1.6 Troubles
+============
+
+   * If you test giac after compilation with `make check', please note
+     that the answer assume PARI and NTL are enabled.  Otherwise you
+     will get some errors because factoring will not return the factors
+     in the same order.
+
+   * Optimization requires much memory for compilation. If you are low
+     in memory edit `src/Makefile' and if necessary replace the line :
+
+     `CXXFLAGS = -g -O2' by :
+
+     `CXXFLAGS = -g'
+
+   * If you get an error like
+
+     `autoheader: Symbol 'CONSTANT_DEBUG_SUPPORT' is not covered by ...'
+
+     run
+
+     `autoheader --localdir=.'
+
+   * If you get error when compiling `modpoly.cc', it's most certainly
+     because you compiled NTL without namespaces. Recompile it (see
+     section)
+
+   * If you get a linker error about combine_factors not found in
+     `modfactor.o' it's because you did not modify PARI correctly or
+     forgot to re-install the PARI libraries (see section)
+
+   * Cygwin compilation of Giac with PARI 2.1.1 requires you to make
+     some hand work. I could not get the dynamic version of PARI
+     library compiling.  Therefore I had to do the install by hand
+          cp libpari.a /usr/local/lib
+          mkdir /usr/local/include/pari
+          cp src/headers/*.h /usr/local/include/pari
+          cp Ocygwin/*.h /usr/local/include/pari
+     Then I got an error compiling `pari.cc' that dispeared by
+     commenting the offending line in the header
+     `/usr/local/include/pari/paricom.h' After that all went OK.
+
+
+File: giac_us.info,  Node: Xcas,  Next: Giac,  Prev: Installation,  Up: Top
+
+2 Using xcas, an user-interface to giac
+***************************************
+
+`xcas' is an user-interface to giac that is similar to a calculator.  A
+readline interface named `cas' is also available.
+
+* Menu:
+
+* Interface::
+* CAS::
+* Geometry::
+* Spreadsheet::
+* Scripting::
+* Environment::
+
+
+File: giac_us.info,  Node: Interface,  Next: CAS,  Up: Xcas
+
+2.1 The interface
+=================
+
+You can use but you don't need to have a keyboard to use xcas, it is
+designed to be used on a PDA as well. Use the green shift button to get
+the button-keyboard.
+
+   The window is composed from left and up to right and down of:
+  1. The main menu-bar: at the left: session management, configuration
+     and help, at the right the commands by theme
+
+  2. The session menu: file and edit operations. In the Edit menu, the
+     Add item lets you add levels of different kinds: commandlines,
+     comments, 2-d and 3-d geometry and graphs, spreadsheet, program
+     editor
+
+  3. The session, with a blank commandline at startup
+
+  4. The buttons: help (?), switch for scientific keyboard (kbd),
+     status button (in red, click here to change the CAS configuration)
+
+   The on-line help gives a short description of all the CAS commands
+with examples that can be pasted to the commandline. A more complete
+description is available by clicking on Details. Command completion is
+enabled in commandlines with the Tab key.
+
+   Printing may be done natively to Postscript or with a working
+`LaTeX' installation (with `pstricks' for 2-d graphs).
+
+
+File: giac_us.info,  Node: CAS,  Next: Geometry,  Prev: Interface,  Up: Xcas
+
+2.2 Computer algebra system commands
+====================================
+
+A list of commands of the CAS system.
+
+* Menu:
+
+* Math menu::
+* Arithmetic::
+* Cas menu::
+* Linear algebra::
+
+
+File: giac_us.info,  Node: Math menu,  Next: Arithmetic,  Up: CAS
+
+2.2.1 Basic mathematic commands
+-------------------------------
+
+
+File: giac_us.info,  Node: Arithmetic,  Next: Cas menu,  Prev: Math menu,  Up: CAS
+
+2.2.2 Arithmetic of integers and polynomials
+--------------------------------------------
+
+The `gcd' and `lcm' commands apply to both argument types : they return
+the greatest common divisor or the least common multiplicator.  Other
+arithmetic commands must begin with an `i' if you want to use them with
+integers, otherwise the arguments will be considered as constant
+polynomials.
+
+* Menu:
+
+* Integer arithmetic::
+* Polynomial arithmetic::
+
+
+File: giac_us.info,  Node: Integer arithmetic,  Next: Polynomial arithmetic,  Up: Arithmetic
+
+2.2.2.1 Integer arithmetic functions
+....................................
+
+* Menu:
+
+* Division::      Euclidean division
+* Gcd::           Gcd, lcm, extended gcd, chinese remainder
+* Primality::     Primality test, factorization, Euler characteristic
+* Other integer:: Jacobi, Legendre symbol...
+
+
+File: giac_us.info,  Node: Division,  Next: Gcd,  Up: Integer arithmetic
+
+2.2.2.2 Euclidean integer division
+..................................
+
+Given two integers `a' and `b', the euclidean integer division is
+defined by the equality :
+     a=b*q+r
+   where usually `r' is taken between 0 and `b-1', or in the symmetric
+representation, between `-b/2' and `b/2'.  The functions `iquo(a,b)'
+and `irem(a,b)' return respectively `q' and `r', or `iquorem(a,b)'
+return both in a vector.  The `smod(a,b)' function will return `r'
+using the symmetric remainder convention.
+
+
+File: giac_us.info,  Node: Gcd,  Next: Primality,  Prev: Division,  Up: Integer arithmetic
+
+2.2.2.3 Integer gcd
+...................
+
+The `gcd(a,b)' function returns the greatest common divisor `d' of two
+integers `a' and `b'. If you need two integers `u' and `v' such that:
+     a*u+b*v=d
+   you should call `egcd(a,b)' instead, it will return `[u,v,d]'.
+
+   The `ichinrem([a,n],[b,m])' call where `n' and `m' are prime
+together will return a vector `[c,n*m]' such that `c=a (mod n)' and
+`c=b (mod m)'.
+
+
+File: giac_us.info,  Node: Primality,  Next: Other integer,  Prev: Gcd,  Up: Integer arithmetic
+
+2.2.2.4 Primality and factorization
+...................................
+
+The `is_prime(a)' function will return 0 if `a' is not prime.  It will
+return 2 if `a' is known to be prime, and 1 if `a' is a (strong)
+pseudo-prime. If you have compiled `xcas' with PARI support, you will
+get a prime certificate instead (see PARI documentation for more
+information).
+
+   The `nextprime(a)' and `prevprime(a)' will return the next or
+previous (pseudo-)prime, given an integer `a'.
+
+   The `ifactor(a)' function returns a factorization of `a'.  It is a
+good idea to compile with PARI support if you plan to factor relatively
+large integers (with prime factors having more than 20 digits).
+
+
+File: giac_us.info,  Node: Other integer,  Prev: Primality,  Up: Integer arithmetic
+
+2.2.2.5 Other integer functions (Legendre, Jacobi, ...)
+.......................................................
+
+Additional integer functions provided by `xcas' are
+   * `jacobi(a,b)' and `legendre(a,b)', see the GMP documentation for
+     more details.
+
+   * `pa2b2(p)' return `[a,b]' so that `p=a*a+b*b' if `p=1 (mod 4)' is
+     prime.
+
+
+File: giac_us.info,  Node: Polynomial arithmetic,  Prev: Integer arithmetic,  Up: Arithmetic
+
+2.2.2.6 Polynomial arithmetic functions
+.......................................
+
+Polynomials have two representations: symbolic representation or by a
+vector of coefficients. In the symbolic representation you might add
+the variable name as an additionnal parameter to the functions you
+call, otherwise the default variable is used. For the vector
+representation, it is recommended to use the right delimiter `poly1['
+instead of `[' so that usual operations (addition, ...) behave
+correctly (i.e. not like vectors or matrices).
+  1. `quo(a,b)' `rem(a,b)' and `quorem(a,b)' return respectively `q',
+     `r' and `[q,r]' polynomials so that `a=b*q+r' and
+     `degree(r)<degree(b)'
+
+  2. `gcd(a,b)' return the greatest common divisor of two polynomials
+
+  3. `egcd(a,b)' is the extended euclidean GCD algorithm, like for
+     integers it returns a list of 3 polynomials `u,v,d' such that
+     `au+bv=d'.
+
+  4. `chinrem' return the chinese remainder for polynomials written as
+     lists. The 2 arguments are two lists made of a polynomial modulo
+     another polynomial (where the modulo polynomials must be prime
+     together).  The answer is the polynomial modulo the product of the
+     modulo polynomials that reduce to the original polynomials modulo
+     the original modulo polynomials
+
+  5. `cyclotomic' takes an integer n as argument and returns the n-th
+     cyclotomic polynomial.
+
+
+File: giac_us.info,  Node: Cas menu,  Next: Linear algebra,  Prev: Arithmetic,  Up: CAS
+
+2.2.3 Algebra, calculus, ...
+----------------------------
+
+* Menu:
+
+* Rewriting::
+* Diff and integrate::
+* Limits and series::
+* Solving equations::
+* Other cas functions::
+
+
+File: giac_us.info,  Node: Rewriting,  Next: Diff and integrate,  Up: Cas menu
+
+2.2.3.1 Rewriting expressions
+.............................
+
+The `normal' command rewrites a rational fraction as a ratio of two
+coprime polynomials. If an expression is not rational, it is first
+rationalized by substitution of transcendental expressions (e.g.
+`sin(x)' by a temporary identifier. Algebraic expressions (e.g.
+`sqrt(x)') are normalized too.
+
+   The `factor' command factorize polynomials. Like above a non
+polynomial expression is first rationalized. You can choose the main
+variable with respect to which the polynomial will be factorized by
+adding it as second argument of `factor'.
+
+   The `texpand' function is called to expand transcendental
+expressions like `exp(x+y)=exp(x)*exp(y)' or similar rules for
+trigonometric functions. The `tlin' function does the reverse operation
+for trigonometric functions, as the `lin' function does it for
+exponentials.
+
+   The `halftan' function rewrites trigonometric expressions in terms
+of the tangent of the half angle. The `hyp2exp' function rewrites
+hyperbolic functions in terms of exponentials.
+
+
+File: giac_us.info,  Node: Diff and integrate,  Next: Limits and series,  Prev: Rewriting,  Up: Cas menu
+
+2.2.3.2 Derivation, integration
+...............................
+
+The differentiation instruction is `diff(expression,variable)'.  The
+undefined antiderivative is obtained using
+`integrate(expression,variable)'. If you need defined integration
+between bounds `a' and `b', choose `integrate(expression,variable,a,b)'
+for exact integration or `romberg(expression,variable,a,b)' for numeric
+integration.
+
+   Example of defined integration are Fourier coefficients of periodic
+functions. They are provided using `fourier_an' and `fourier_bn' for
+trigonometric coefficients or using `fourier_cn' for complex
+exponentials coefficients.
+
+   Some discrete antiderivatives may be obtained using the
+`sum(variable,expression)' call.
+
+
+File: giac_us.info,  Node: Limits and series,  Next: Solving equations,  Prev: Diff and integrate,  Up: Cas menu
+
+2.2.3.3 Limits, series expansion.
+.................................
+
+For a limit the syntax is
+`limit(expression,variable,limitpoint[,direction])'.  For a series
+expansion `series(expression,variable,limitpoint,order[,direction])'.
+`giac' implementation of `limit' and `series' is based on the mrv
+algorithm.
+
+
+File: giac_us.info,  Node: Solving equations,  Next: Other cas functions,  Prev: Limits and series,  Up: Cas menu
+
+2.2.4 Solving equations
+-----------------------
+
+The `solve(expression,variable)' call is used to find exact solutions
+of (polynomial-)like equations. Use `newton' instead for numeric
+solutions (of a wider range of equations).
+
+
+File: giac_us.info,  Node: Other cas functions,  Prev: Solving equations,  Up: Cas menu
+
+
+File: giac_us.info,  Node: Linear algebra,  Prev: Cas menu,  Up: CAS
+
+2.2.5 Linear algebra
+--------------------
+
+Arithmetic operations on matrices and vectors are done using the usual
+operators. The scalar product of two vectors is obtained using the `*'
+operator.
+
+   Gaussian elimination (Gauss-Bareiss) over a matrix is performed
+using `rref(m)'. The kernel of a linear application with matrix m is
+obtained with `ker(m)'. A system of linear equations (written
+symbolically in a vector) can be solved via
+`linsolve([equations],[variables])'.
+
+   The determinant of a matrix may be obtained using two algorithms,
+either Gauss-Bareiss invoking `det(m)', or by computing minors
+`det_minor(m)'. Actually, a last method is provided using the
+computation of the constant coefficient of the characteristic polynomial
+using Fadeev-Leverrier algorithm.
+
+   The characteristic polynomial of a matrix may be computed by
+Fadeev-Leverrier algorithm calling `pcar(m)'. For matrices withe
+coefficients in a finite field, `pcar_hessenberg(m)' is a better choice
+(`O(n^3)' complexity where `n' is the size of the matrix).
+
+   Eigenvalues and eigenvectors are computed using respectively
+`egvl(m)' and `egv(m)'. The Jordan normal form is obtained invoking
+`jordan(m)'.
+
+   Quadratic forms (written symbolically) can be reduced to sum and
+differences of squares using `gauss(expression,[variables])'.
+
+   There is some support for isometries: `mkisom' may be used to make
+an isometry from its proper elements as `isom(m)' return the proper
+elements of an isometry.
+
+
+File: giac_us.info,  Node: Geometry,  Next: Spreadsheet,  Prev: CAS,  Up: Xcas
+
+2.3 Geometry
+============
+
+Add a figure (Edit menu of the session, Add item, then select geometry
+and graph 2-d or 3-d).  As other objects, you can create geometrical
+objects anatically using the commandlines at the left. You may also
+create points, segments, etc. with the mouse (or the stylus) or move a
+geometrical object depending on the mouse mode (Pointer, point,
+segment, circle, etc.)
+
+   To configure or print a graph, use the menu at the right of the
+graph.
+
+
+File: giac_us.info,  Node: Spreadsheet,  Next: Scripting,  Prev: Geometry,  Up: Xcas
+
+2.4 Spreadsheet
+===============
+
+Add a spreadsheet (Edit menu of the session, Add item, spreadsheet).
+Cells may have a formal value, or eval to a geometric 2-d object that
+will be displayed in a dynamically linked 2-d graph.
+
+
+File: giac_us.info,  Node: Scripting,  Next: Environment,  Prev: Spreadsheet,  Up: Xcas
+
+2.5 The xcas scripting language
+===============================
+
+The xcas and icas program provide an interpreted language that is
+similar to popular other CAS programming language. This scripting
+language is available in 4 flavours: C-like syntax (default) or
+compatibility mode for simple Maple, Mupad or TI programs. We describe
+only the C-like syntax. Instructions must end with a semi-column `;'.
+Groups of instructions may be combined like in C with brackets.
+
+   You can define a program in a commandline, but it is recommended to
+use a Program Editor (Edit->Add->Program menuitem of the session
+menubar) if it is larger than a few lines.
+
+* Menu:
+
+* Language mode::
+* Data::
+* Loops and conditionnals::
+* Functions::
+
+
+File: giac_us.info,  Node: Language mode,  Next: Data,  Up: Scripting
+
+2.6 Selecting the language mode
+===============================
+
+Click on the status button and select the programming style.
+Alternatively, the command `maple_mode(0)' or `maple_mode(1)' or
+`maple_mode(2)' may be used to switch the language flavour respectively
+from C-like to Maple-like or Mupad-like mode. Note that this command
+takes effect only when the current parser session is finished which
+means when the next command is processed in interative mode or at the
+end of the current file in batch mode, hence you should not begin a
+script file with this command. In batch mode you can achieve the mode
+switch by setting the environment variable `GIAC_MAPLE_MODE', for
+example with tcsh: `setenv GIAC_MAPLE_MODE 1' or with bash `export
+GIAC_MAPLE_MODE=1' will switch to the Maple-like language.
+Additionnally you can enter the `maple_mode(1)' command in the
+`.xcasrc' of your home directory to change the default behavior. Or
+inside `xcas' you can run the `Import' command of the `File' menu and
+select the flavour.  The `Export' command can be used to translate the
+current level of the history inside `xcas' to a file, or the `View as'
+command of the `Edit' menu to translate to the Help output window.
+
+
+File: giac_us.info,  Node: Data,  Next: Loops and conditionnals,  Prev: Language mode,  Up: Scripting
+
+2.7 Data
+========
+
+The language accept local and global variables, variables are not typed.
+Global variables do not need to be declared, local variables must be
+declared at the beginning of a function by the keyword `local' followed
+by the names of the local variables separated by commas `,' with a final
+semi-columns `;'
+
+   The affectation sign is `:=' like popular CAS and unlike C.  For
+large vectors, lists and matrices, you may also use `=<' to make
+in-place modifications (in other words by reference), but be aware that
+all references of the object will be modified.  Other operations (e.g.
+{+ - * /}) and function calls are done like in C or like in an
+interactive session.  As in C, the equality test is `=='. The single
+equal sign `=' is used to return an equation (note that an equation
+will be transformed in a test in some situations where an equation
+could not be expected).  The other tests are `!=' for non equal, `< <=
+> >=' for real value comparisons. You can combine tests with `&&' or
+`and', and `||' or `or'. The boolean negation is `!' or `not'.
+
+
+File: giac_us.info,  Node: Loops and conditionnals,  Next: Functions,  Prev: Data,  Up: Scripting
+
+   The loop keywoard is like in C
+
+   `for (initialization;while_condition;increment){ loop_block }'
+
+   You can break a loop inside the loop block with `break;'.  You can
+skip immediately to the next iteration with `continue;'.
+
+   The conditionnal keywoard is like in C
+
+   `if (condition) { bloc_if_true } [ else { bloc_if_false } ]'
+
+   Additionnaly, multiple-cases is translated like in C
+
+   `swith (variable){ case (value_1): ... break; default: ... ; } '
+
+
+File: giac_us.info,  Node: Functions,  Prev: Loops and conditionnals,  Up: Scripting
+
+   Functions are declared and implemeted together like this
+
+   `function_name(parameters):={ definition }'
+
+   Parameters are like local variables with an additional initialization
+from the values of the parameters inside the calling instruction.
+
+   `return return_value;' should be used to return the value of the
+function.
+
+   It is not possible to pass arguments by reference, only by value.
+
+
+File: giac_us.info,  Node: Environment,  Prev: Scripting,  Up: Xcas
+
+2.8 Environment variables
+=========================
+
+If one of these variables `GIAC_MAPLE', `GIAC_MUPAD', `GIAC_C' or
+`GIAC_TI' is defined, the corresponding syntax mode will be in effect.
+If `XCAS_RPN' is defined, then xcas will start in RPN mode.
+
+   The variable `XCAS_ROOT' may be used for a custom xcas installation,
+it should point to the directory where xcas is installed. `XCAS_LOCALE'
+should point to the directory where the locales are. `XCAS_TMP' may be
+defined for temporary exchange files between xcas processes, if not
+defined it will use the home directory.
+
+   The variable `PARI_SIZE' may be used to define the memory available
+for pari.
+
+   The variable `BROWSER' may be used for the HTML documentation
+browser.
+
+   The variable `LANG' may be used for internationalization.
+
+   The variable `GIAC_TIME' and `GIAC_TEX' may be used in giac readline
+interface to ask for timing and tex output.  `GIAC_DEBUG' will give
+some info on the internals used.
+
+
+File: giac_us.info,  Node: Giac,  Next: Examples,  Prev: Xcas,  Up: Top
+
+   In this chapter we will first describe the generic data type of giac,
+the `gen' class. Then we describe the most important data types than
+`gen' dispatches to (polynomials, vectors, symbolic objects and gen
+unary functions). At this point, the reader should be able to code
+using `giac', hence we describe how to integrate code to `giac' by
+inclusion in the library or as a separate runtime loadable library
+(called module). The last item describes how you can add new
+mathematical objects, e.g. quaternions, inside the `gen' type.
+
+* Menu:
+
+* C++::                       Why we choosed C++
+* Gen::                       The generic class used everywhere in giac
+* Polynomials::               Polynomials.
+* Vectors and matrices::      Vectors and matrices.
+* Symbolics::                 Symbolics.
+* Unary functions::           Functions taking a gen and returning a gen
+* Making a library function:: Add functionnalities to giac
+* Making modules::            Add dynamically loadable functions to giac
+* User defined data::         Define your own data inside giac
+
+
+File: giac_us.info,  Node: C++,  Next: Gen,  Up: Giac
+
+   Giac uses the C++ language because it is easier to write algebraic
+operations using usual operators, for example `a+b*x' is easier to
+understand and modify than `add(a,mul(b,x))', but it does not require
+that you learn object oriented programming. In fact it is more a C
+library using C++ features that makes programming easier (like the I/O
+streams and the Standard Template Library). However you will need a
+recent C++ compiler, e.g. `gcc' version 2.95 or later.
+
+
+File: giac_us.info,  Node: Gen,  Next: Polynomials,  Prev: C++,  Up: Giac
+
+3 The gen class
+***************
+
+`gen' is the class used to represent mathematical objects (`#include
+<giac/gen.h>'). It's a C union, made either of "direct" objects like
+`int' or `double' or of pointers to heap allocated objects that are
+reference counted.  Memory allocation is handled by the class itself
+(except for user-defined object types). You can check the actual type
+of a variable of type `gen', e.g. `gen e;', using it's `type' field
+(e.g. `if (e.type==...)'). This `type' field of a `gen' is an `int'.
+
+   The `gen' might be~:
+  1. an immediate int (`e.type==_INT_')
+
+  2. a double (`e.type==_DOUBLE_')
+
+  3. an arbitrary precision integer (`e.type==_ZINT')
+
+  4. a complex number (`e.type==_CPLX'), a pointer to two objects of
+     type `gen' the real and imaginary parts
+
+  5. a global name (`e.type==_IDNT'), with a pointer to an
+     `identificateur' type
+
+  6. a symbolic object (`e.type==_SYMB'), with a pointer to a
+     `symbolic' type
+
+  7. a vector object (in fact it is a list) (`e.type==_VECT'), with a
+     pointer to a `vecteur' type
+
+  8. a function object (`e.type==_FUNC'), with a pointer to a
+     `unary_function_ptr' type
+
+   Some other types are available (e.g. a pointer to `gen_user' an
+object you can derive to make your own class, or arbitrary precision
+floating point numbers `_REAL'), for a complete description look at
+`giac/gen.h' (if you have installed `giac' the path to the include
+files is `/usr/local/include/giac' unless you override the default, if
+you did not install it, the path is the path to the `src' directory of
+the source code distribution).
+
+   If you want to access the underlying type, after checking that the
+type is correct, you can do the following:
+  1. for immediate int: `int i=e.val;'
+
+  2. for double: `double d=e._DOUBLE_val;'
+
+  3. for arbitray precision integers: `mpz_t * m=e._ZINTptr;'
+
+  4. for complex numbers: `gen
+     realpart=*e._CPLXptr,impart=*(e._CPLXptr+1); '
+
+  5. for identificateur: `identificateur i=*e._IDNTptr; '
+
+  6. for symbolics: `symbolic s=*e._SYMBptr;'
+
+  7. for composites: `vecteur v=*e._VECTptr;'
+
+  8. for function objects: `unary_function_ptr u=*e._FUNCptr'
+
+   In addition to the main `type', each `gen' has a `subtype'.  This
+subtype is used sometimes to select different behaviour, e.g.  adding a
+constant to a vector might add the constant to all terms for some
+geometric objects represented using vectors, only to the term of the
+diagonal of a square matrix, or to the last term for dense polynomials.
+See `giac/dispatch.h' for the description of the subtypes.
+
+
+File: giac_us.info,  Node: Polynomials,  Next: Vectors and matrices,  Prev: Gen,  Up: Giac
+
+3.1 Polynomials
+===============
+
+Polynomials are available as:
+   * sparse multivariate polynomials `polynome', header files are
+     `gausspol.h', `poly.h', `monomial.h'
+
+   * dense univariate polynomials: `poly1' or alias `modpoly' used for
+     modular univariate polynomials. The type used is the same as for
+     vectors and matrices.  Header files are `giac/modfactor.h' and
+     `giac/modpoly.h'.
+
+   A `gen' can be a polynomials if it's `type' field is respectively
+`_POLY' (sparse) or `_VECT' (dense).  Conversion functions to and from
+the symbolic representation with respect to global names are declared
+in `giac/sym2poly.cc/h'.
+
+
+File: giac_us.info,  Node: Vectors and matrices,  Next: Symbolics,  Prev: Polynomials,  Up: Giac
+
+3.2 Vectors and matrices
+========================
+
+The type used for vectors and matrices is the same, it's a
+`std::vector<gen>' (unless you have configured with `--enable-debug').
+The header file is `giac/vecteur.h'.  A `gen' can be a vector if it's
+`type' field is `_VECT'.
+
+
+File: giac_us.info,  Node: Symbolics,  Next: Unary functions,  Prev: Vectors and matrices,  Up: Giac
+
+3.3 Symbolics
+=============
+
+Symbolic objects are trees. The `sommet' is a `unary_function_ptr' (a
+class pointing to the function). The `feuille' is either an atomic
+`gen' (for a function with one argument) or a composite
+(`feuille.type==_VECT') for a function with more than one argument
+(these functions appears therefore as a function with one argument which
+is the list of all it's arguments).
+
+
+File: giac_us.info,  Node: Unary functions,  Next: Making a library function,  Prev: Symbolics,  Up: Giac
+
+3.4 Unary functions
+===================
+
+In the giac library, every function is viewed as a function taking one
+argument and returning one argument. Almost every Xcas functions have a
+C++ equivalent with the same name preceded by a _.  If a Xcas function
+has more than one argument, these arguments are packed in a vector
+which is the first argument of the C++ function.  Most C++ functions
+require a second argument, which is a context pointer. This context
+pointer encapsulate all the context (e.g. complex vs real mode, or all
+the variables that are assigned or assumed). You can use
+`giac::context0' as global context pointer or define a context
+`giac::context ct;' and use `&ct' as last argument to the function.
+
+   The files `usual.cc/.h' give examples of declaration e.g. for
+exponential and trigonometric functions. Unary functions have the
+following members~:
+   * a fonction taking a `gen' and a `context *' and returning an `gen'
+     which does the job
+
+   * partial derivatives of this function if they exist
+
+   * a special Taylor expansion if it's needed (see e.g. `taylor_asin').
+     This is always the case if your function is defined at infinity.
+     Note that this function is called at initialization so that you
+     can include code in it for example to add your function to the
+     symbolic preprocessing step of the `limit/series' algorithm.
+
+   * a string identifier for printing. If you want the parser to
+     recognize your function you must add a line in `input_lexer.ll'
+     (see for example `"sin"') or you must register it (see below).
+
+   * two special printing function if normal printing (normal printing
+     means printing the function name followed by the argument(s) in
+     parentheses) is not the right way to print. A null pointer means
+     using normal printing.
+   Once your `unary_function_eval' is defined, you must construct a
+`unary_function_ptr' to be able to use it inside symbolics.  When
+declaring the `unary_function_ptr', you may give an optional argument
+to specify a behavior for the evaluation of arguments (quoting or
+special parser rules).  In this case, you may give a second optionnal
+argument to register your function dynamically in the list of function
+names recognized by the lexer. Be sure to link the object file so that
+initialization occurs after the initialization of `input_lexer.ll', it
+means you must put your object file before `input_lexer.o' when linking
+(see for example the position of `moyal.o' in the `Makefile.am' file,
+`moyal' is one example where dynamic registering is done).
+
+   You have of course the option to declare the function name
+statically in the file `input_lexer.ll' but this is not recommended.
+
+
+File: giac_us.info,  Node: Making a library function,  Next: Making modules,  Prev: Unary functions,  Up: Giac
+
+   Here is one example of a dynamically linkable function named
+`example' which takes 2 arguments and returns the sum divided by the
+product if the argument are integers and return itself otherwise.  The
+C++ header `example.h' code looks like
+     #ifndef __EXAMPLE_H
+     #define __EXAMPLE_H
+     #include <giac/config.h>
+     #include <giac/gen.h>
+     #include <giac/unary.h>
+
+     #ifndef NO_NAMESPACE_GIAC
+     namespace giac {
+     #endif // ndef NO_NAMESPACE_GIAC
+
+       gen example(const gen & a,const gen & b,GIAC_CONTEXT);
+       gen _example(const gen & args,GIAC_CONTEXT);
+       extern const unary_function_ptr * const at_example ;
+
+     #ifndef NO_NAMESPACE_GIAC
+     } // namespace giac
+     #endif // ndef NO_NAMESPACE_GIAC
+     #endif // __EXAMPLE_H
+
+   The C++ source code looks like:
+     using namespace std;
+     #include "example.h"
+     #include <giac/giac.h>
+
+     #ifndef NO_NAMESPACE_GIAC
+     namespace giac {
+     #endif // ndef NO_NAMESPACE_GIAC
+
+       gen example(const gen & a,const gen & b,GIAC_CONTEXT){
+         if (is_integer(a) && is_integer(b))
+           return (a+b)/(a*b);
+         return symbolic(at_example,makesequence(a,b));
+       }
+
+       gen _example(const gen & args,GIAC_CONTEXT){
+         if ( (args.type!=_VECT) || (args._VECTptr->size()!=2) )
+           return gensizeerr(contextptr); // type checking : args must be a vector of size 2
+         vecteur & v=*args._VECTptr;
+         return example(v[0],v[1],contextptr);
+       }
+       const string _example_s("example");
+       static define_unary_function_eval (__example,&_example,_example_s);
+       define_unary_function_ptr5( at_example ,alias_at_example,&__example,0,true);
+
+     #ifndef NO_NAMESPACE_GIAC
+     }
+     #endif // ndef NO_NAMESPACE_GIAC
+
+   Compile it with
+     c++ -g -c example.cc
+
+   To test your code, you should write the following `test.cc' program
+     #include "example.h"
+
+     using namespace std;
+     using namespace giac;
+
+     int main(){
+       gen args;
+       context ct;
+       cout << "Enter arguments of example function, for example 2,3 ";
+       cin >> args;
+       cout << "Result: " << _example(args,&ct) << endl;
+     }
+   Compile it with the command
+     c++ -g example.o test.cc -lgiac -lgmp
+   You might need to link to other libraries e.g.  `-lreadline
+-lhistory -lcurses' depedning on your installation.  Then run `a.out'.
+Here you would test e.g. with `[1,2]'.
+
+   You can debug your program as usual, e.g. with `gdb a.out', it is
+recommended to create a `.gdbinit' file in the current directory so
+that you can use the `v' command to print giac data, the `.gdbinit'
+file should contain :
+     echo Defining v as print command for giac types\n
+     define v
+     print ($arg0).dbgprint()
+     end
+
+   When your function is tested, you can add it to the library. Edit
+the file `Makefile.am' of the `src' subdirectory of `giac' : just add
+`example.cc' before `input_lexer.cc' in the `libgiac_la_SOURCES' line
+and add `example.h' in the `giacinclude_HEADERS' line.
+
+   To rebuild the library go in the `giac' directory and type
+`automake; make'
+
+   If you want to share your function(s) with other people, you must
+license it under the GPL (because it will be linked to GPL-ed code).
+Add the GPL header to the files, and send them to the `giac'
+contribution e-mail, currently `mailto:parisse@fourier.ujf-grenoble.fr'
+     /*
+      *  Copyright (C) 2007 Your name
+      *
+      *  This program is free software; you can redistribute it and/or modify
+      *  it under the terms of the GNU General Public License as published by
+      *  the Free Software Foundation; either version 3 of the License, or
+      *  (at your option) any later version.
+      *
+      *  This program is distributed in the hope that it will be useful,
+      *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+      *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      *  GNU General Public License for more details.
+      *
+      *  You should have received a copy of the GNU General Public License
+      *  along with this program; if not, write to the Free Software
+      *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+      */
+
+
+File: giac_us.info,  Node: Making modules,  Next: User defined data,  Prev: Making a library function,  Up: Giac
+
+   Another way to share your code could be to build a dynamic library
+that can be loaded at runtime using facilities of `<dlfcns.h>'.
+Warning: modules do not work with static binaries. Be sure to have
+dynamic binaries (this is the default when you compile giac, but the
+packaged `xcas' distributed as a binary is build static to avoid
+incompatible libraries).
+
+   Let us define a function named `mydll' in the file `mydll.cc' like
+this :
+     #include <giac/config.h>
+     #include <giac/giac.h>
+
+     #ifndef NO_NAMESPACE_GIAC
+     namespace giac {
+     #endif // ndef NO_NAMESPACE_GIAC
+
+       const string _mydll_s("mydll");
+       gen _mydll(const gen & args,GIAC_CONTEXT){
+         return sin(ln(args,contextptr),contextptr);
+       }
+       unary_function_eval __mydll(0,&giac::_mydll,_mydll_s);
+       unary_function_ptr at_mydll (&__mydll,0,true); // auto-register
+
+     #ifndef NO_NAMESPACE_GIAC
+     } // namespace giac
+     #endif // ndef NO_NAMESPACE_GIAC
+
+   Compile it like this
+     c++ -fPIC -DPIC -g -c mydll.cc -o mydll.lo
+     cc -shared  mydll.lo  -lc  -Wl,-soname -Wl,libgiac_mydll.so.0 -o libgiac_mydll.so.0.0.0
+     rm -f libgiac_mydll.so.0 && ln -s libgiac_mydll.so.0.0.0 libgiac_mydll.so.0
+     rm -f libgiac_mydll.so && ln -s libgiac_mydll.so.0.0.0 libgiac_mydll.so
+
+   The library is loadable at runtime in a session using the command
+`insmod("mydll")' assuming it is stored in a directory available from
+`LD_LIBRARY_PATH' or in `/etc/ld.so.conf' otherwise you must put a path
+to the library file (beginning with `./' if it is in the current
+directory), something like `insmod("/path_to/libgiac_mydll.so")'
+
+   A nice way to test your code is to add the following line in your
+`~/.xcasrc' file :
+     insmod("path_to_libmydll/libmydll.so");
+   where you replace `path_to_libmydll.so' with the actual path to
+`libmydll.so' for example `/home/joe' if your login name is `joe' and
+`mydll' is in your home directory.  Then if you are using `emacs' as
+editor, put as first line of the file `mydll.cc'
+     // -*- mode:C++ ; compile-command: "g++ -I.. -fPIC -DPIC -g -c mydll.cc -o mydll.lo && ln -sf mydll.lo mydll.o && gcc -shared mydll.lo -lc  -Wl,-soname -Wl,libmydll.so.0 -o libmydll.so.0.0.0 && ln -sf libmydll.so.0.0.0 libmydll.so.0 && ln -sf libmydll.so.0.0.0 libmydll.so" -*-
+   Now you can compile it with `Compile' of the menu `Tools' and the
+resulting code is automatically loaded when you launch a new session
+with `xcas' or `cas' which makes testing a breath.
+
+
+File: giac_us.info,  Node: User defined data,  Prev: Making modules,  Up: Giac
+
+3.5 User defined data
+=====================
+
+The class `gen_user' can be derived so that you can include your own
+data inside `gen'. Look at the declaration of `gen_user' in the file
+`gen.h' and at the example of the quaternions in the files `quater.h'
+and `quater.cc'.
+
+
+File: giac_us.info,  Node: Examples,  Next: Concept Index,  Prev: Giac,  Up: Top
+
+4 Some examples of C++ program using giac
+*****************************************
+
+* Menu:
+
+* First example::
+
+
+File: giac_us.info,  Node: First example,  Up: Examples
+
+5 A first simple example
+************************
+
+Type the following text with your favorite editor
+
+     #include <giac/config.h>
+     #include <giac/giac.h>
+     using namespace std;
+     using namespace giac;
+
+     int main(){
+       context ct;
+       gen e("x^2-1",&ct);
+       e=eval(e,1,&ct);
+       cout << _factor(e,&ct) << endl;
+     }
+
+   save it e.g. as `tryit.cc' and compile it with
+
+   `c++ -g tryit.cc -lgiac -lgmp'
+
+   If you get unresolved symbol, then `readline' is probably enabled
+and you should compile like that
+
+   `c++ -g tryit.cc -lgiac -lgmp -lreadline -lcurses'
+
+   You can now run `a.out' which will print the factorisation of
+`x^2-1'.
+
+   You can also run the program step by step using gdb. We recommended
+that you copy the file `.gdbinit' from the `src' directory of the giac
+distribution, because it enables using `v varname' to print the
+variable `varname' of type `gen'.
+
+   Some explanations of the code:
+   * the `#include <giac/giac.h>' directive includes all the headers of
+     giac (which includes some STL headers like `string' or `vector').
+
+   * The `using namespace' directive are not mandatory, if you don't
+     use them, you need to modify some of the code, e.g. use
+     `std::string' instead of `string' or `giac::gen' instead of `gen'.
+
+   * Variables of type `gen' can be constructed from strings (using the
+     parser), from some C types (like `int' or `double'), from the STL
+     type `std::complex<double>' or from streams (using the parser).
+
+   * Operations like `+, -, *' are defined on the `gen' type but the
+     division is not redefined to avoid confusion between integers (use
+     `iquo') and double C division (use `rdiv'). For powers, use `pow'
+     as usual.
+
+
+File: giac_us.info,  Node: Concept Index,  Prev: Examples,  Up: Top
+
+Concept Index
+*************
+
+ [index ]
+* Menu:
+
+* gen:                                   Gen.                   (line 6)
+* Matrices:                              Vectors and matrices.  (line 3)
+* Polynomials:                           Polynomials.           (line 3)
+* Symbolics:                             Symbolics.             (line 3)
+* Unary functions:                       Unary functions.       (line 3)
+* User defined data:                     User defined data.     (line 3)
+* Vectors:                               Vectors and matrices.  (line 3)
+
+
+
+Tag Table:
+Node: Top203
+Node: Installation851
+Node: Binaries1327
+Node: Requirements2370
+Node: Options3021
+Node: Configure5142
+Node: Compiling6293
+Node: Troubles7870
+Node: Xcas9461
+Node: Interface9835
+Node: CAS11074
+Node: Math menu11339
+Node: Arithmetic11473
+Node: Integer arithmetic12002
+Node: Division12395
+Node: Gcd12964
+Node: Primality13470
+Node: Other integer14248
+Node: Polynomial arithmetic14674
+Node: Cas menu16162
+Node: Rewriting16427
+Node: Diff and integrate17568
+Node: Limits and series18399
+Node: Solving equations18825
+Node: Other cas functions19170
+Node: Linear algebra19261
+Node: Geometry20813
+Node: Spreadsheet21364
+Node: Scripting21678
+Node: Language mode22495
+Node: Data23779
+Node: Loops and conditionnals24955
+Node: Functions25520
+Node: Environment26006
+Node: Giac27045
+Node: C++28191
+Node: Gen28717
+Node: Polynomials31363
+Node: Vectors and matrices32098
+Node: Symbolics32475
+Node: Unary functions32978
+Node: Making a library function35786
+Node: Making modules40124
+Node: User defined data42736
+Node: Examples43089
+Node: First example43286
+Node: Concept Index45075
+
+End Tag Table
+
+
+Local Variables:
+coding: iso-8859-1
+End:

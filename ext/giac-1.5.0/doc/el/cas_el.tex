@@ -1,0 +1,206 @@
+\documentclass{article}
+\begin{document}
+\section{Instalaci\'on}
+Aseg\'urese que tienes instalado GMP, FLTK, y opcionalmente GSL, NTL y PARI 
+y una versi\'on reciente de {\tt gcc} (p.e. 2.95, 2.96, not\'ese
+que GCC 3.0 compilar\'a GMP pero no FLTK).
+Entonces~:\\
+{\tt tar xvfz giac-0.2.2.tar.gz}\\
+{\tt cd giac-0.2.2} \\
+{\tt ./configure --enable-fltk-support --enable-debug-support} \\
+{\tt make}\\
+Ahora entra como {\tt root}:\\
+{\tt su}\\
+y eventualmente~:\\
+{\tt make install}
+
+\section{Usando el comando {\tt cas} }
+Puedes invocar {\tt cas} directamente desde la l\'inea de comandos  (en una ventana {\tt xterm}
+por ejemplo). Pero (excepto para entradas muy simples) debes
+entrecomillar {\tt ' '} los argumentos, as\'i el shell no malinterpretar\'a los par\'entesis
+o {\tt *}, ....
+Por ejemplo~:
+\verb|cas 'factor(x^3-1)'|\\
+O puedes llamar \verb|factor| como un comando, como~:\\
+\verb|factor x^3-1|\\
+N\'otese que no necesitas entrecomillar aqu\'i puesto que el argumento no puede ser interpretado por el shell.
+
+Tambi\'en puedes poner un nombre de fichero como argumento. Entonces todos los comandos en este fichero ser\'an ejecutados. Por ejemplo, usando tu editor favorito (p.e. emacs) crea un fichero llamado {\tt test} conteniendo:
+\begin{verbatim}
+factor(x^100-1);
+rref([[1,2,3],[4,5,6]])
+\end{verbatim}
+(n\'otese que no tienes que entrecomillar dentro de un fichero) y ejecuta~:\\
+{\tt cas test}
+
+Si quieres asignar valores a variables, crea un fichero con el nombre de la variable que contenga el valor de la misma. Por ejemplo, edita un fichero llamado {\tt mat}, escribe {\tt [[1,2,3],[4,5,6]]}, guarda el fichero e intenta el comando siguiente~:\\
+{\tt cas 'ker(mat)'}\\
+{\tt ker mat}
+
+Puedes guardar el resultado de un comando {\tt cas} usando el s\'imbolo de redirecci\'on habitual, por ejemplo~:\\
+{\tt ker mat > kermat}
+crear\'a un fichero llamado {\tt kermat} que podr\'as usar como nombre de variable m\'as adelante. Tambi\'en puedes pasar el resultado de un comando como argumento de otro comando, p.e.~:\\
+\verb?gcd x^4-1 x^6-1 | factor?
+
+La sint\'asis es similar a habituales CAS (especialmente HP49/40G CAS). 
+Los vectores est\'an delimitados por {\tt [ ]} y las coordenadas est\'an separadas por {\tt ,}.
+Las matrices son vectores de vectores.
+
+Si quieres saber cuanto tiempo ha sido necesario para evaluar tu orden,
+define la variable de entorno \verb|SHOW_TIME|, si tu shell es
+\verb|tcsh|~:\\
+\verb|setenv SHOW_TIME 1|\\
+definir\'a la variable de entorno y\\
+\verb|unsetenv SHOW_TIME|\\
+la indefinir\'a. Con \verb|bash|,\\
+\verb|export SHOW_TIME=1|\\
+defines la variable y\\
+\verb|unset SHOW_TIME|\\
+indefines la variable.
+
+Actualmente implementado~:
+\begin{enumerate}
+\item aritm\'etica habitual en enteros, reales, complejos, vectores y matrices:
+{\tt abs},  {\tt arg},  {\tt conj},
+{\tt evalf},  {\tt im}, {\tt inv},  {\tt max}, {\tt min}, 
+{\tt re}, {\tt sign},  {\tt sqrt}.
+Para las operaciones habituales, puesto que {\tt *} es interpretado por el shell, 
+debes entrecomillar {\tt '*'} o escape \verb|\*| el s\'imbolo de la multiplicaci\'on. 
+Para la divisi\'on, uso actualmente el s\'imbolo entrecomillado o escape {\tt \%}, esto cambiar\'a.
+\item aritm\'etica m\'as avanzada: {\tt cyclotomic}, {\tt egcd}, {\tt gcd}, 
+{\tt ichinrem}, {\tt iquo}, {\tt irem}, \verb|is_prime| (devuelve 2 si
+es seguro primo, 0 si no es primo, 1 si es probablemente primo), 
+{\tt nextprime}, {\tt prevprime}, {\tt jacobi}, {\tt legendre}, {\tt smod}.
+\item funciones transcendentales : {\tt acos}, {\tt acosh}, {\tt alog},  
+{\tt asin}, {\tt asinh}, {\tt atan}, {\tt atanh}, 
+{\tt cos}, {\tt cosh}, {\tt exp}, {\tt Log}, {\tt log10},  
+{\tt sin}, {\tt sinh}, {\tt tan}, {\tt tanh}. 
+\item funciones polin\'omicas: {\tt normal}: simplificaci\'on racional\\
+{\tt factor}: factorizaci\'on de enteros o enteros de Gau\ss\ \\
+{\tt partfrac}:  expansi\'on parcial de fracciones \\
+{\tt resultant}: resultante de 2 polin\'omios \\
+{\tt solve}: resolver ecuaciones polin\'omicas
+\item re-escribiendo funciones: {\tt fdistrib} (completa distribuci\'on de $\times$ sobre la $+$)\\
+ {\tt simplify}: actualmente s\'olo simplificaci\'on racional \\
+{\tt texpand}, {\tt tlin}: expansi\'on trigonom\'etrica y linealizaci\'on
+\item c\'alculo: {\tt derive}: derivaci\'on\\
+{\tt lim}, {\tt series} : l\'imites y desarrollo en serie \\
+{\tt integrate}: integraci\'on de fracciones racionales
+\item \'algebra lineal: {\tt rref}, {\tt ker}, {\tt image}, {\tt det}, 
+{\tt pcar}, {\tt trace}, {\tt tran}, {\tt egv}, {\tt egvl}, 
+{\tt jordan}.
+\item funciones de conversi\'on: {\tt e2r} (entero a racional) y
+{\tt r2e} (racional a entero). Esperan una lista de variables con respecto a las cuales la expresi\'on deber\'ia ser una fracci\'on racional, puedes usar {\tt lname} o {\tt lvar} para obtener esta lista. El formato interno para fracciones racionales es interpretado directamente de la l\'inea de comandos:
+\begin{itemize}
+\item enteros, enteros de Gau\ss\ : notaci\'on habitual ({\tt 2}, {\tt 3-5*i})  
+\item polin\'omios densos univariables : como un vector con coeficientes
+en orden descendiente de potencias ({\tt [1,2,3]} para $x^2+2x+3$) 
+\item polin\'omios univariables en potencias racionales y desarrolos en serie: una suma de
+monomios, cada monomio es un par con coeficiente y exponente separados
+por {\tt ,}, p.e. {\tt \{1,1/2\}+\{2,3\}} para $x^{1/2}+2x^3$. Para
+un desarrollo en seire, usa {\tt undef} como coeficiente para el t\'ermino restante.
+\item polin\'omios multivariables en potencias racionales: misma notaci\'on, pero el segundo t\'ermino del par es un vector de \'indices, las potencias de las variables
+en el monomio, p.e. {\tt \{ 2,[1,3]\} }, para el polin\'omio
+$2xy^3$ respecto a la lista de variables $[x,y]$.
+\item (interna) extensi\'on de objectos algebraicos . Notaci\'on similar, pero 
+usa {\tt :} en vez de {\tt ,}. El primer t\'ermino de la pareja es un 
+polin\'omio respecto a un entero algebraico $\theta$, definido por el segundo t\'ermino del par. Este segundo t\'ermino puede ser el polin\'omio m\'inimo de $\theta$ u otra extensi\'on con como el primer t\'ermino un valor aproximado o un \'indice y segundo t\'ermino el polin\'omio m\'inimo en orden para diferenciar las diferentes ra\'ices del polin\'omio m\'inimo. El polin\'omio m\'inimo es una polin\'omio denso univariable.
+Para extensiones de segundo orden, s\'olo hay usados dos modelos de m\'inimo m\'omio: $x^2-d$ if $d \neq 1 \pmod 4$ y $x^2-x=\frac{d-1}{4}$
+Si no, y por convenio $\theta=\sqrt{d}$ en el primer caso
+o $\theta=\frac{1+\sqrt{d}}{2}$. \'Esto es para asegurar que cada mon\'omio de segundo orden puede ser factorizado sobre una extensi\'on sin introducir fracciones.
+\item Fracciones: usando el signo de divisi\'on {\tt /} .
+\end{itemize}
+\end{enumerate}
+
+Un ejemplo algo m\'as complicado~:\\
+\verb? ( sin x ; tan x ) | \% | lim?\\
+Primero calculamos $\sin(x)$ y $\tan(x)$, despu\'es pasamos ambas respuestas a la funci\'ion divisi\'on, y pasamos el resultado a la funci\'on l\'imite.
+\'Esto es equivalente a~:\\
+\verb|lim 'sin(x)/tan(x)'|\\
+pero demuestra c\'omo es posible construir expresiones usando la sint\'asis del shell: el shell es usado como una calculadora con notaci\'on polaca inversa con sint\'asis mixta (infija para sin y tan, notaci\'on polaca inversa cuando pasamos resultados).
+\'Esto da m\'as flexibilidad para hacer peque\~nos programas usando el shell.
+
+Un ejemplo final: abre un fichero {\tt testjordan} y escribe~:
+\begin{verbatim}
+[[1,1,-1,2,-1],\
+ [2,0,1,-4,-1],\
+ [0,1,1,1,1],\
+ [0,1,2,0,1],\
+ [0,0,-3,3,-1]]
+\end{verbatim}
+despu\'es escribe el comando~:\\
+{\tt ( jordan testjordan ; cas p j ) | sto }\\
+o {\tt cas 'sto(jordan(testjordan),[p,j])'}
+que calcular\'a la descomposici\'on de Jordan de la matriz y guardar\'a la matriz de paso en {\tt p} y la forma normal de Jordan en {\tt j}.
+Si quieres comprobar que $p j p^{-1}$ es la matriz original,
+puedes escribir el comando siguiente~:\\
+\verb?cas p j 'inv(p)' | \* | normal ?\\
+o {\tt cas 'normal(p*j*inv(p))'}
+
+\section{Traducci\'on a \TeX\ }
+La traducci\'on al \LaTeX\ de los comandos es guardada en el fichero
+{\tt session.tex} en el directorio actual, salvo cuando se activan las 
+variables de entorno \verb|SHOW_TIME|. Requieren un pre\'ambulo que puede ser copiado del archivo {\tt doc/preamble.tex}.
+
+N\'otese que cada comando nuevo es a\~nadido a {\tt session.tex}, es una buena idea borrar este fichero de vez en cuando.
+
+Puedes convertir f\'ormulas a \LaTeX\ usando el comando {\tt cas2tex} y obtener directamente a fichero fuente compilable directamente en \LaTeX\ .
+Por ejemplo~:\\
+{\tt cas2tex '[[1,2],[3,4]]' > essai.tex}\\
+seguido de~:\\
+{\tt latex essai.tex}\\
+O en un s\'olo paso~:\\
+{\tt cas2tex '[[1,2],[3,4]]' | latex --}\\
+(produce el archivo {\tt texput.dvi})
+
+\section{Programando en C++}
+Primer ejemplo~:
+\begin{verbatim}
+#include <giac/giac.h>
+using namespace std;
+using namespace giac;
+
+int main(){
+  gen e(string("x^2-1"));
+  cout << factor(e) << endl;
+}
+\end{verbatim}
+Escribe esto como {\tt essai.cc} y comp\'ilalo~:\\
+{\tt g++ -g essai.cc -lgiac -lgmp}\\
+y ejec\'utalo~:\\
+{\tt ./a.out}
+
+\subsection{Organizaci\'on del c\'odigo fuente}
+N\'otese que puedes usar \verb|#include <giac/giac.h>| para incluir todas las cabeceras de la librer\'ia.
+\begin{itemize}
+\item \verb|gen.cc/.h|: operaciones artim\'eticas en la clase base entera
+\item \verb|identificateur.cc/.h|: nombre global 
+\item \verb|unary.cc/.h|: clase operadores unarios incluyendo operadores no unarios vistos como operaci\'on unaria sobre un vector de sus argumentos
+\item \verb|symbolic.cc/.h|: clase objetos simb\'olicos
+\item \verb|usual.cc/.h| Operaciones unarias habituales
+\item \verb|vecteur.cc/.h|: algebra lineal
+\item \verb|derive.cc intg.cc lin.cc series.cc subst.cc/.h|: C\'alculo. Derivaci\'on est\'a bien, as\'i como integraci\'on de fraciones racionales, el resto tiene que ser implementado
+\item \verb|moyal.cc/.h|: operadores pseudo-diferenciales
+\item \verb|tex.cc/.h|: conversi\'on a \LaTeX\ 
+\item \verb|sym2poly.cc/.h|: conversi\'on de polin\'omios a simb\'olicos
+\item \verb|index.cc/index.h|: clase para indexaci\'on de tensores multivariables
+\item \verb|poly.h, monomial.h|: clase plantilla de tensores multivariables
+\item \verb|gausspol.cc/.h|: especializaci\'on de la plantilla de tensores para coeficientes enteros
+\item \verb|input_parser.yy input_lexer.ll input_lexer.h|: int\'erprete
+\item \verb|modpoly.cc/.h|: polin\'omios densos univariables de enteros y enteros modulares (Atenci\'on: funciones tipo gcd no funcionan si no es aritm\'etica modular)
+\item \verb|modfactor.cc/.h|: 
+factorizaci\'on de polin\'omios univariables densos sin cuadrados
+(Requiere NTL o PARI para lll y knapsack para ser r\'apido y funcional)
+\item \verb|series.cc/.h|: 
+desarrollo en series y l\'imites usando el algor\'itmo mrv .
+\end{itemize}
+
+L\'ee {\tt giac.texinfo} para obtener una corta descripci\'on de las clases disponibles.
+Algunos ejemplos de programas est\'an incluidos: {\tt src/factor.cc}, 
+{\tt src/normalize.cc},
+{\tt src/cas.cc}, {\tt src/partfrac.cc} and {\tt src/integrate.cc}.
+Para compilar estos programas, puedes, o bien usar~:\\
+\verb|g++ -g |{\em name.cc\/} \verb| -lgmp -lgiac|\\
+o lanzar \verb|emacs| y ejecutar su comando de compilaci\'on (men\'u Herramientas).
+
+\end{document}

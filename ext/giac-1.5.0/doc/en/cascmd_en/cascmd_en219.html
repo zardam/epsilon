@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Define a function with the history : as_function_of</title>
+</head>
+<body >
+<a href="cascmd_en218.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en220.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec269" class="subsection">5.17.6  Define a function with the history : <span style="font-family:monospace">as_function_of</span></h3>
+<p><a id="hevea_default383"></a>
+If an entry defines the variable <span style="font-family:monospace">a</span> and if a later
+entry defines the variable <span style="font-family:monospace">b</span> (supposed to be dependent on
+<span style="font-family:monospace">a</span>), then
+<span style="font-family:monospace">c:=as_function_of(b,a)</span> will define a function <span style="font-family:monospace">c</span> such that 
+<span style="font-family:monospace">c(a)=b</span>.<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">a:=sin(x)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">sin(x)</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">b:=sqrt(1+a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">sqrt(1+sin(x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">c:=as_function_of(b,a)</span></div><p>
+Output :
+</p><div class="flushleft"><span style="font-family:monospace">(a)-&gt; <br>
+{ local NULL;<br>
+ return(sqrt(1+a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2));<br>
+}</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">c(x)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">sqrt(1+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">a:=2</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">2</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">b:=1+a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">5</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">c:=as_function_of(b,a)</span></div><p>
+Output :
+</p><div class="flushleft"><span style="font-family:monospace">(a)-&gt; <br>
+{ local NULL;<br>
+ return(sqrt(1+a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2));<br>
+}</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">c(x)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">1+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2</span></div><p><span style="font-weight:bold">Warning !!</span><br>
+If the variable <span style="font-family:monospace">b</span> has been assigned
+several times, the first assignment of <span style="font-family:monospace">b</span> following the last 
+assignment of <span style="font-family:monospace">a</span> will be used. Moreover, the order used is the
+order of validation of the commandlines, 
+which may not be reflected by the Xcas interface
+if you reused previous commandlines.<br>
+Input for example :<br>
+<span style="font-family:monospace">a:=2</span> then<br>
+<span style="font-family:monospace">b:=2*a+1</span> then<br>
+<span style="font-family:monospace">b:=3*a+2</span> then<br>
+<span style="font-family:monospace">c:=as_function_of(b,a)</span><br>
+Output :
+</p><div class="center"><span style="font-family:monospace">(a)-&gt; {local NULL; return(2*a+1);}</span></div><p>
+i.e. <span style="font-family:monospace">c(x)</span> is equal to <span style="font-family:monospace">2*x+1</span>. <br>
+But, input :<br>
+<span style="font-family:monospace">a:=2</span> then<br>
+<span style="font-family:monospace">b:=2*a+1</span> then<br>
+<span style="font-family:monospace">a:=2</span> then<br>
+<span style="font-family:monospace">b:=3*a+2</span> then<br>
+<span style="font-family:monospace">c:=as_function_of(b,a)</span><br>
+Output :
+</p><div class="center"><span style="font-family:monospace">(a)-&gt; {local NULL; return(3*a+2);}</span></div><p>
+i.e. <span style="font-family:monospace">c(x)</span> is equal to <span style="font-family:monospace">3*x+2</span>. <br>
+Hence the line where <span style="font-family:monospace">a</span> is defined must be reevaluated before the good
+definition of <span style="font-family:monospace">b</span>. </p>
+<hr>
+<a href="cascmd_en218.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en220.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

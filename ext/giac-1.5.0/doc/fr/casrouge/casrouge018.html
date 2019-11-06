@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Quelques compléments</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casrouge017.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge019.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc429">Chapitre 18</A>  Quelques compléments</H1><H2 CLASS="section"><A NAME="toc119"></A><A NAME="htoc430">18.1</A>  Pour réutiliser le graphe d’une fonction utilisateur</H2><P>
+Lorsque <TT>Xcas</TT> fait le graphe <TT>G</TT> d’une fonction utilisateur <TT>g</TT>, 
+dans la réponse, il va figurer l’expression formelle de <TT>g(x)</TT> et si 
+cette fonction contient des tests, lorsque on va reutiliser <TT>G</TT> il y aura 
+un message d’erreur car il ne sait pas évaluer les tests contenus dans 
+<TT>g(x)</TT>. Pour ne pas avoir ce genre d’erreurs, il faut alors commencer 
+l’écriture de la fonction <TT>g</TT> par un test sur le type de ses
+arguments qui est : si les arguments ne sont pas réels on renvoie la fonction 
+quotée.<BR>
+<B>Exemple</B>
+</P><PRE CLASS="verbatim">g(x):={
+si type(x)!=DOM_FLOAT alors 
+  retourne 'g'(x); 
+fsi;
+si x&lt;=-1 alors 
+  retourne -1;
+fsi;
+si -1&lt;x  et x&lt;1 alors 
+  retourne sin(pi*x/2);
+fsi;
+si 1&lt;= x alors 
+retourne 1;
+fsi;
+}:;
+f(x,y):={
+si type(x)!=DOM_FLOAT et type(y)!=DOM_FLOAT alors 
+  retourne 'f'(x,y) 
+fsi;
+si x^2+y^2&lt;=2 alors 
+  retourne 2
+fsi;
+si x^2+y^2&gt;2 alors 
+  retourne x^2+y^2 
+fsi;
+}
+:;
+</PRE><P>On tape par exempple :<BR>
+<TT>G:=plotfunc(g(x))</TT> ou<BR>
+<TT>F:=plotfunc(f(x,y),[x=-4..4,y=-4..4]);</TT>
+et pour voir le cercle <I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP>=2 :<BR>
+<TT>plotparam([x,sqrt(2-x</TT><CODE><TT>^</TT></CODE><TT>2),2],[x,y],affichage=1);</TT><BR>
+<TT>plotparam([x,-sqrt(2-x</TT><CODE><TT>^</TT></CODE><TT>2),2],[x,y],affichage=1)</TT>
+</P><H2 CLASS="section"><A NAME="toc120"></A><A NAME="htoc431">18.2</A>  Les programmes de quadrillage</H2><P>
+Voici les programmes qui permettent de paire du papier quadrillé 
+(<TT>papierq</TT>), du papier triangulé (<TT>papiert</TT>), du papier pointé 
+(<TT>papierp</TT>).</P><P><TT>u</TT> est le pas en <TT>x</TT>,<BR>
+<TT>v</TT> est le pas en <TT>y</TT>,<BR>
+les lignes sont parallèles à <TT>y=x*tan(t)</TT> avec <TT>0&lt;t&lt;pi</TT> 
+et à <TT>y=cste</TT> 
+dans le rectangle <TT>[x1,x2]*[y1,y2]</TT>
+</P><PRE CLASS="verbatim">papierq(u,v,t,x1,x2,y1,y2):={
+  local x3,y3,y4,L,k,q,j,j0;
+  si normal(t-pi)&gt;=0 ou normal(t)&lt;=0  alors return "0&lt;=t&lt;=pi";fsi;
+  si x2&lt;x1 alors j:=x1;x1:=x2;x2:=j;fsi;
+  si y2&lt;y1 alors j:=y1;y1:=y2;y2:=j;fsi;
+  L:=polygone(x1+i*y1,x1+i*y2,x2+i*y2,x2+i*y1);
+  pour k de y1 jusque y2 pas v faire 
+    L:=L,segment(x1+i*k,x2+i*k);
+  fpour;
+  si normal(t-pi/2)==0 alors
+    pour j de x1 jusque x2 pas u faire 
+      L:=L,segment(j+i*y1,j+i*y2);
+    fpour;
+    return L;
+  fsi;
+  k:=evalf((y2-y1)/tan(t));
+  si normal(t-pi/2)&lt;0 alors
+    q:=floor(k/u+1e-12);
+    pour j de x1-q*u jusque x1 pas u faire
+      y3:=tan(t)*(x2-j)+y1;
+      y4:=tan(t)*(x1-j)+y1;
+      x3:=(y2-y1)/tan(t)+j;
+      si y3&lt;y2 alors L:=L,segment (x1+i*y4,x2+i*y3); fsi;
+      si x3&lt;x2 alors L:=L,segment (x1+i*y4,x3+i*y2); fsi;
+    fpour;
+    pour j de x1 jusque x2 pas u faire
+      y3:=tan(t)*(x2-j)+y1;
+      x3:=(y2-y1)/tan(t)+j;
+      si y3&lt;y2 alors L:=L,segment (j+i*y1,x2+i*y3); fsi;
+      si x3&lt;x2 alors L:=L,segment (j+i*y1,x3+i*y2); fsi;
+    fpour;
+    return L;
+  fsi;
+  si normal(t-pi/2)&gt;0 alors
+    j:=x1; tantque j&lt;=x2 faire
+      y3:=tan(t)*(x1-j)+y1;
+      x3:=(y2-y1)/tan(t)+j;
+      si y3&lt;y2 alors L:=L,segment (j+i*y1,x1+i*y3); fsi;
+      si x3&gt;x1 alors L:=L,segment (j+i*y1,x3+i*y2); fsi;
+      j:=j+u;
+    ftantque;
+    q:=ceil(k/u-1e-12);
+    tantque j&lt;=x2-q*u faire
+      y3:=tan(t)*(x1-j)+y1;
+      y4:=tan(t)*(x2-j)+y1;
+      x3:=(y2-y1)/tan(t)+j;
+      si normal(y3-y2)&lt;0 alors L:=L,segment (x2+i*y4,x1+i*y3); fsi;
+      si normal(x3-x1)&gt;0 alors L:=L,segment (x2+i*y4,x3+i*y2); fsi;
+      j:=j+u;
+    ftantque;
+    return L;
+  fsi;
+}
+:;
+papiert(u,v,t,x1,x2,y1,y2):={
+  local x3,y3,y4,L,k,q,j,u1,t1,L;
+  //si normal(t-pi/2)==0 alors retourne -atan(v/u)+pi; fsi;
+  u1:=v/tan(t);
+  si normal(u1-u)==0 alors t1:=pi/2; fsi;
+  si normal(u1-u)&gt;0 alors t1:=atan(v/(u1-u)); fsi;
+  si normal(u1-u)&lt;0 alors t1:=atan(v/(u1-u))+pi; fsi;
+  L:=papierq(u,v,t,x1,x2,y1,y2);
+  L:=L,papierq(u,v,t1,x1,x2,y1,y2);
+  retourne L;
+}:;
+papierp(u,v,t,x1,x2,y1,y2):={
+  local j,k,L,q,q2,x3;
+  si normal(t-pi)&gt;=0 ou normal(t)&lt;=0  alors return "0&lt;t&lt;pi";fsi;
+  L:=NULL;
+  L:=L,polygone(x1+i*y1,x2+i*y1,x2+i*y2,x1+i*y2);
+  si x2&lt;x1 alors j:=x1;x1:=x2;x2:=j;fsi;
+  si y2&lt;y1 alors j:=y1;y1:=y2;y2:=j;fsi;
+  pour j de y1 jusque y2 pas v faire 
+    x3:=evalf((j-y1)/tan(t));
+    q:=floor(x3/u+1e-12);
+    pour k de x1-q*u+x3 jusque x2 pas u faire 
+      L:=L,point(k+i*j);
+    fpour;
+  fpour;
+  retourne L;
+}:;
+</PRE><HR>
+<A HREF="casrouge017.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge019.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

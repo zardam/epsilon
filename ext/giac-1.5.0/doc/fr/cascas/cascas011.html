@@ -1,0 +1,1467 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>Pour s’amuser en géométrie plane</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascas010.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas012.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc159">Chapitre 11</A>  Pour s’amuser en géométrie plane</H1><H2 CLASS="section"><A NAME="toc63"></A><A NAME="htoc160">11.1</A>  Des problèmes de plus court trajet</H2><P>
+Les problème de plus court trajet sont souvent difficiles...
+En voici quelques uns plutôt faciles. 
+</P><H3 CLASS="subsection"><A NAME="htoc161">11.1.1</A>  Comment placer un pont</H3><P>
+Deux villages assimilés à deux points <I>A</I> et <I>B</I> sont situés de part et 
+d’autre d’une rivière assimilée à deux droites parallèles <I>D</I>1 et <I>D</I>2.
+Où doit-on placer un pont <I>PQ</I> (perpendiculairement aux berges) sur la 
+rivière pour minimiser le trajet allant de <I>A</I> à <I>B</I> ?<BR>
+On veut que le trajet <I>AP</I>+<I>PQ</I>+<I>QB</I> soit minimum, on remarque que dans le trajet 
+<I>PQ</I> est constant et est égal à la largeur de la rivière. On 
+dessine le parallélogramme <I>APQR</I> et ainsi, <I>AP</I>+<I>PQ</I>=<I>AR</I>+<I>RQ</I>. 
+On a donc :<BR>
+<I>AP</I>+<I>PQ</I>+<I>QB</I>= <I>AR</I>+<I>RQ</I>+<I>QB</I> où <I>AR</I>=<I>PQ</I>=cste<BR>
+La solution est maintenanant évidente : pour rendre minimum <I>RQ</I>+<I>QB</I> il suffit 
+de choisir <I>A</I>,<I>Q</I>,<I>B</I> alignés.<BR>
+Le dessin avec <TT>Xcas</TT> :<BR>
+On clique deux points <TT>A</TT> à gauche de <I>x</I>=−1 et <TT>B</TT> à droite 
+de <I>x</I>=1.
+</P><PRE CLASS="verbatim">D1:=droite(-1,-1+i);
+D2:=droite(1,1+i);
+R:=translation(2,A);
+Q:=inter(droite(B,R),D2)[0];
+P:=translation(-2,Q);
+segment(A,P);
+segment(Q,P);
+segment(R,B);
+segment(R,A);
+</PRE><P>On peut ensuite faire bouger les points <TT>A</TT> ou <TT>B</TT> et visualiser les 
+trajets <TT>APQB</TT> et <TT>ARQB</TT>. </P><H3 CLASS="subsection"><A NAME="htoc162">11.1.2</A>  Comment placer deux ponts</H3><P>
+Deux villages assimilés à deux points <I>A</I> et <I>B</I> sont situés de part et 
+d’autre de deux rivières, l’une est assimilée à deux droites 
+parallèles <I>D</I>1 et <I>D</I>2 et l’autre est assimilée à deux droites 
+parallèles <I>D</I>3 et <I>D</I>4.<BR>
+Où doit-on placer deux ponts <I>P</I>1<I>P</I>2 et <I>P</I>3<I>P</I>4 sur les rivières 
+(perpendiculairement aux berges) pour minimiser le trajet allant de <I>A</I> à 
+<I>B</I>.<BR>
+?<BR>
+On fait le dessin avec <TT>Xcas</TT> :<BR>
+On clique deux points <TT>A</TT> en bas à gauche de l’écran et <TT>B</TT> 
+en haut et à droite de l’écran et on tape :<BR>
+</P><PRE CLASS="verbatim">assume(a:=1);
+D1:=droite(-2,-2+i);
+D2:=droite(-1,-1+i);
+D3:=droite(-1,a-1-i);
+D4:=droite(0,a-i);
+R:=translation(1,A);
+segment(A,R);
+Q:=translation(-(1+a*i)/(1+a^2),B);
+segment(B,Q);
+P2:=inter(droite(R,Q),D2)[0];
+P1:=translation(-1,P2);
+P3:=inter(droite(R,Q),D3)[0];
+P4:=translation((1+a*i)/(1+a^2),P3);
+segment(A,P1);
+segment(P1,P2);
+segment(P2,P3);
+segment(P3,P4);
+segment(P4,B);
+segment(R,P2);
+segment(P3,Q);
+</PRE><P>Il reste à observer le dessin en faisant bouger <TT>a</TT> ou <TT>A</TT>
+ou <TT>B</TT> pour voir que :<BR>
+<I>AR</I>=<I>AP</I>1=largeur d’une rivière<BR>
+<I>BQ</I>=<I>BP</I>4=largeur de l’autre rivière<BR>
+<I>AP</I>1+<I>P</I>1<I>P</I>2+<I>P</I>2<I>P</I>3+<I>P</I>3<I>P</I>4+<I>P</I>4<I>B</I>=<I>AR</I>+<I>RP</I>2+<I>P</I>2<I>P</I>3+<I>P</I>3<I>Q</I>+<I>QB</I>=<I>AR</I>+<I>RQ</I>+<I>QB</I><BR>
+ et comprendre comment on fait la construction des deux ponts. 
+</P><H3 CLASS="subsection"><A NAME="htoc163">11.1.3</A>  Minimiser <I>AMB</I> avec <I>M</I> sur une droite</H3><P>
+Soient une droite <TT>d</TT> et deux points <TT>A</TT> et <TT>B</TT>. On veut 
+minimiser la distance <TT>AM+MB</TT> lorsque <TT>M</TT>∈<TT>d</TT>.<BR>
+Si les deux points sont de part et d’autre de <TT>d</TT>, c’est facile on trace 
+la droite <TT>AB</TT>,<BR>
+si les deux points sont situés 
+dans le même demi-plan défini par <TT>d</TT>, on se raméne à la 
+situation précédente en prenant le symétrique <TT>C</TT> de <TT>B</TT> par
+rapport à <TT>d</TT>. 
+Ainsi, <TT>AM+MB=AM+MC</TT> et <TT>A</TT> et <TT>C</TT> sont de part et d’autre 
+de <TT>d</TT>.
+Le dessin avec <TT>Xcas</TT> :<BR>
+On clique deux points <TT>A</TT> et <TT>B</TT> à droite 
+de <I>x</I>=−1.
+</P><PRE CLASS="verbatim">d:=droite(-1,-1+i);
+C:=symetrie(d,B);
+M:=inter(droite(A,C),d)[0];
+segment(A,M);
+segment(M,B);
+segment(C,M);
+N:=element(d);
+segment(A,N);
+segment(N,B);
+segment(C,N);
+</PRE><P>On peut ensuite faire bouger les points <TT>N</TT> ou <TT>B</TT> et visualiser les 
+trajets <TT>AMB</TT> et <TT>AMC</TT> en les comparant à <TT>ANB</TT> et <TT>ANC</TT>. 
+</P><H3 CLASS="subsection"><A NAME="htoc164">11.1.4</A>  Minimiser AMNB avec M et N chacun sur une droite</H3><P>
+Soient deux droites <TT>d1, d2</TT> et deux points <TT>A</TT> et <TT>B</TT>. On veut 
+minimiser la distance <TT>AM+MN+NB</TT> lorsque <TT>M</TT>∈<TT>d1</TT> et 
+<TT>N</TT>∈<TT>d2</TT>.<BR>
+Les deux droites définissent quatre portions de plan (I,II,III,IV) 
+(I et III étant opposés par le sommet). 
+Il y a plusieurs cas à distinguer et selon la position de <TT>A</TT> et <TT>B</TT>
+par rapport à ces portions de plan. Selon les cas pour trouver la solution 
+il faut tracer le symétrique <TT>A1</TT> de <TT>A</TT> par
+rapport à <TT>d1</TT> et le symétrique <TT>B2</TT> de <TT>B</TT> par
+rapport à <TT>d2</TT>, puis tracer soit <TT>AB</TT>, soit <TT>AB2</TT>,
+soit <TT>A1B</TT>, soit <TT>A1B2</TT>. 
+</P><H3 CLASS="subsection"><A NAME="htoc165">11.1.5</A>  Minimiser AMNB avec M et N sur une droite d en imposant MN=L</H3><P>
+Ici le vecteur <I>MN</I> est constant car il est parallèle à
+<I>d</I> il est de longueur constante <I>L</I> est a la même direction que le vecteur 
+<I>ab</I> où <I>a</I> et <I>b</I> sont les projection orthogonales de <I>A</I> 
+et <I>B</I> sur <I>d</I>.<BR>
+Soit <I>R</I> le translaté de <I>A</I> par le vecteur <I>MN</I>. On a donc 
+<I>AMNR</I> est un parallélogramme et <I>AM</I>=<I>RN</I> et <I>AR</I>=<I>MN</I>.
+Le trajet a minimiser est donc : <I>AM</I>+<I>MN</I>+<I>NB</I>=<I>RN</I>+<I>AR</I>+<I>NB</I>=<I>AR</I>+<I>RN</I>+<I>NB</I>.<BR>
+Puisque <I>A</I> et <I>R</I> sont fixes il faut minimiser <I>RN</I>+<I>NB</I>.<BR>
+Deux cas de figures :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<I>B</I> et <I>A</I> sont de part et d’autres de <I>d</I>. Il suffit de choisir <I>N</I> 
+comme intersection de <I>RB</I> et de <I>d</I>.
+</LI><LI CLASS="li-itemize"><I>B</I> et <I>A</I> sont d’un même côté de <I>d</I>. Il suffit de construire le
+symétrique <I>B</I>1 de <I>B</I> par rapport à <I>d</I>, puis de choisir <I>N</I> 
+comme intersection de <I>RB</I>1 et de <I>d</I>.
+</LI></UL><H3 CLASS="subsection"><A NAME="htoc166">11.1.6</A>  Un trajet difficile : minimiser AMB avec M sur un cercle</H3><P>
+Soient deux points <TT>A</TT> et <TT>B</TT>.<BR>
+Un point <TT>M</TT> se déplace sur le cercle <TT>C</TT> de centre <TT>O</TT> et de 
+rayon <TT>1</TT>. On choisit <TT>A</TT> et <TT>B</TT> pour que la droite <TT>AB</TT>
+ne coupe pas le cercle <TT>C</TT>.<BR>
+On cherche dans ce cas, à minimiser le trajet <TT>AMB</TT>.<BR>
+Avec <TT>Xcas</TT> on va faire apparaître sur le même écran, le dessin 
+géométrique et le graphe de la fonction <TT>longueur(AM)+longueur(MB)-2</TT>
+lorsque <TT>M</TT> varie (on enlève <TT>2</TT> pour pouvoir voir 
+le graphe en entier).<BR>
+On régle la fenêtre graphique pour voir :<BR>
+<TT>[-3.5,6.5] × [-1,4.4] </TT><BR>
+On clique sur deux points pour définir <TT>A</TT> et <TT>B</TT>.<BR>
+On tape :<BR>
+</P><PRE CLASS="verbatim">C:=cercle(0,1);
+t:=element(0..2*pi);
+M:=point(exp(i*t)); // ou M:=element(C,t);
+L(A,B,t):=evalf(longueur(A,exp(i*t))+longueur(B,exp(i*t)));
+G:=plotfunc(L(A,B,x)-2,x);
+N:=element(G,t);
+bissectrice(M,A,B);
+exbissectrice(M,A,B)
+</PRE><P>Ensuite lorsque l’on fait bouger <TT>t</TT> les points <TT>M</TT> et <TT>N</TT> bougent,
+l’un sur le cercle <TT>C</TT>, l’autre sur le graphe <TT>G</TT> et l’on peut voir que
+le minimum est atteint quand la bissectrice de l’angle <TT>M</TT> passe par 
+<TT>O</TT>.<BR>
+On peut aussi faire varier <TT>B</TT> pour voir ce qu’il se passe quand la droite 
+<TT>AB</TT> coupe <TT>C</TT> c’est à dire quand la solution est evidente...<BR>
+<B>Cas particulier</B>
+On peut démontrer que lorsque le triangle <TT>OAB</TT> est isocéle de sommet 
+<TT>O</TT> le point <TT>M</TT> du cercle <TT>C</TT> qui rend le trajet <TT>AM+MB</TT> 
+minimum se trouve sur la bissectrice intérieure de l’angle 
+<TT><I>AMB</I></TT>. En effet soit deux points <TT>N1</TT> et <TT>N2</TT>
+du cercle <TT>C</TT> symétriques par rapport à cette bissectrice (qui est 
+aussi la médiatrice de <TT>AB</TT>). On a donc <TT>AN1=BN2</TT> et <TT>AN2=BN1</TT> 
+et donc <TT>AN1+N1B=AN1+AN2</TT>.<BR>
+Soient <TT>I</TT> le milieu de <TT>N1N2</TT> et <TT>J</TT> le milieu de <TT>AB</TT>.
+Les points <TT>O, I, M, J</TT> sont tous sur la médiatrice de <TT>AB</TT> et 
+puisque <TT>JI&gt;JM</TT> (<TT>I</TT> milieu de la corde <TT>N1N2</TT> et 
+<TT>J</TT> milieu de l’arc <TT>N1N2</TT>) et on en déduit que <TT>AI&gt;AM</TT>.<BR>
+<TT><I>AN</I>1 +<I>AN</I>2=2<I>AI</I></TT> et 
+donc d’aprés l’inégalité triangulaire on a <TT>2AI&lt;AN1+AN2</TT> et donc<BR>
+<TT>AM+MB=2AM&lt;2AI&lt;AN1+AN2</TT> ce qui prouve que <TT>AM+MB</TT> est minimum.
+</P><H2 CLASS="section"><A NAME="toc64"></A><A NAME="htoc167">11.2</A>  Des problèmes de construction</H2><H3 CLASS="subsection"><A NAME="htoc168">11.2.1</A>  Construire un triangle connaissant <I>a</I>, <I>b</I> et <I>m</I> la longueur de la bissectrice de l’angle des côtés <I>a</I> et <I>b</I></H3><P>
+Soit un triangle <I>ABC</I> et <I>CM</I> la bissectrice intérieure de l’angle <I>C</I>.<BR>
+On pose <I>a</I>=<I>CB</I>, <I>b</I>=<I>CA</I> et <I>m</I>=<I>CM</I>. Calculer en fonction de <I>a</I> et <I>b</I>.<BR>
+On se donne trois longueurs <I>a</I>, <I>b</I> et <I>m</I>. On veut construire le triangle 
+direct <I>ABC</I> dont <I>m</I> est la longueur de la bissectrice de l’angle des 
+côtés <I>a</I> et <I>b</I>.<BR>
+A quelle condition cela est-il possible ?<BR>
+Lorsque cela est possible, faire cette construction avec <TT>Xcas</TT> comme si on
+utilisait le règle et le compas.<BR>
+<B>Une solution</B><BR>
+On fait le dessin en tapant par exemple :
+</P><PRE CLASS="verbatim">A:=point(4);
+B:=point([1.536,1.865);
+C:=point(0);
+d:=bissectrice(C,A,B);
+M:=inter_unique(droite(A;N),d)
+</PRE><P>On obtient :
+<IMG SRC="cascas065.png">
+0n pose : <I>a</I>=<I>CB</I>, <I>b</I>=<I>CA</I>, <I>m</I>=<I>CM</I>, <I>x</I>=<I>AM</I> et <I>y</I>=<I>BM</I><BR>
+Puisque <I>CM</I> est la bissectrice de l’angle <I>C</I> on a :<BR>
+ <I>x</I>/<I>y</I>=<I>b</I>/<I>a</I>
+D’après le théorème d’Al Kashi, on a :<BR>
+<I>x</I><SUP>2</SUP>=<I>AM</I><SUP>2</SUP>=<I>b</I><SUP>2</SUP>+<I>m</I><SUP>2</SUP>−2<I>bm</I>cos(<I>C</I>/2) et<BR>
+<I>y</I><SUP>2</SUP>=<I>BM</I><SUP>2</SUP>=<I>a</I><SUP>2</SUP>+<I>m</I><SUP>2</SUP>−2<I>am</I>cos(<I>C</I>/2)<BR>
+Donc :<BR>
+ <I>x</I><SUP>2</SUP>/<I>y</I><SUP>2</SUP>=<I>b</I><SUP>2</SUP>/<I>a</I><SUP>2</SUP>=<I>b</I><SUP>2</SUP>+<I>m</I><SUP>2</SUP>−2<I>bm</I>cos(<I>C</I>/2)/<I>a</I><SUP>2</SUP>+<I>m</I><SUP>2</SUP>−2<I>am</I>cos(<I>C</I>/2)<BR>
+Donc .<BR>
+<I>b</I><SUP>2</SUP>(<I>a</I><SUP>2</SUP>+<I>m</I><SUP>2</SUP>−2<I>am</I>cos(<I>C</I>/2))=<I>a</I><SUP>2</SUP>(<I>b</I><SUP>2</SUP>+<I>m</I><SUP>2</SUP>−2<I>bm</I>cos(<I>C</I>/2))<BR>
+et puisque <I>m</I> n’est pas nul on en déduit :<BR>
+<I>m</I>(<I>b</I><SUP>2</SUP>−<I>a</I><SUP>2</SUP>)=2<I>ab</I>cos(<I>C</I>/2)(<I>b</I>−<I>a</I>) ou encore<BR>
+ <I>m</I>=2<I>ab</I>cos(<I>C</I>/2)/<I>a</I>+<I>b</I> ou encore<BR>
+ cos(<I>C</I>/2)=<I>m</I>(<I>a</I>+<I>b</I>)/2<I>ab</I>.<BR>
+Puisqie l’angle <I>C</I>/2 est compris entre −π/2 et π/2, cos(<I>C</I>/2) est dans l’intervalle ]0,1[ donc la condition cherchée est :<BR>
+ <I>m</I>(<I>a</I>+<I>b</I>)/2<I>ab</I>&lt;1 ou encore  <I>m</I>&lt;2<I>ab</I>/(<I>a</I>+<I>b</I>).<BR>
+Comment faire la construcrtion du triangle <I>ABC</I> connaissant <I>a</I>, <I>b</I> et <I>m</I> ?
+Avec <TT>Xcas</TT>, il suffirait de définir l’angle <I>C</I> par :
+ 2acos(<I>m</I>(<I>a</I>+<I>b</I>)/2<I>ab</I>)<BR>
+Mais on veut que cette construction se fasse comme avec la régle et le compas.
+On va donc mettre en évidence l’égalité :<BR>
+ <I>x</I>/<I>y</I>=<I>AM</I>/<I>BM</I>=<I>AC</I>/<I>BC</I>=<I>b</I>/<I>a</I><BR>
+Pour cela on méne par <I>B</I> la parallèle à <I>CM</I>, cette parallèle coupe 
+<I>AC</I> en <I>B</I>1.<BR>
+Puisque  <I>AM</I>/<I>BM</I>=<I>AC</I>/<I>BC</I> et que 
+ <I>AM</I>/<I>BM</I>=<I>AC</I>/<I>CB</I>1 on en déduit que :<BR>
+<I>CB</I>1=<I>CB</I>=<I>a</I> et  <I>BB</I>1=<I>m</I><I>a</I>+<I>b</I>/<I>b</I>.<BR>
+La longueur <I>BB</I>1 est facile à construire avec la règle et le compas, la 
+construction du triangle <I>CBB</I>1 est facile à construire avec la règle et 
+le compas puisqu’on connait la longueur de ses 3 côtés.
+On en déduit ensuite le point <I>A</I> puisque <I>B</I>1,<I>C</I>,<I>A</I> sont alignés et <I>CA</I>=<I>a</I>.
+D’où la construction du triangle <I>ABC</I>.<BR>
+Avec <TT>Xcas</TT>, on tape :
+</P><PRE CLASS="verbatim">supposons(a=[3.0,0,5,0.1]);
+supposons(b=[4,0,5,0.1]);
+supposons(m=[2.6,0,5,0.1]);
+A:=point(a);
+B1:=point(-b);
+C:=point(0);
+M1:=point(i*m);
+D:=inter_unique(droite(A,M1),droite(B1,-b+i));
+d:=normal(factor(longueur(B1,D)));
+c1:=cercle(C,b):;c1;
+c2:=cercle(B1,d):;c2;
+B:=inter(c1,c2,M1);
+triangle(A,B,C,affichage=1);
+d:=bissectrice(C,A,B);
+M:=inter_unique(d,droite(A,B),affichage=1);
+normal(longueur(C,M));
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas066.png"><BR>
+On voit :<BR>
+en noir la construction de la longueur <I>m</I><I>a</I>+<I>b</I>/<I>b</I> (on a 
+<I>CM</I>1=<I>m</I> et <I>B</I>1<I>D</I>=<I>m</I><I>a</I>+<I>b</I>/<I>b</I>.<BR>
+en rouge le triangle <I>ABC</I> et <I>M</I> le pied de la bissectrice intérieure de 
+l’angle <I>C</I> et<BR>
+<TT>normal(longueur(C,M))</TT> renvoie <I>m</I>.
+</P><H3 CLASS="subsection"><A NAME="htoc169">11.2.2</A>  Comment placer un pont</H3><P>
+Deux villages assimilés à deux points <I>A</I> et <I>B</I> sont situés de part et 
+d’autre d’une rivière assimilée à deux droites parallèles <I>D</I>1 et <I>D</I>2.
+Où doit-on placer un pont <I>PQ</I> sur la rivière pour que <I>AP</I>=<I>QB</I>, lorsque <I>PQ</I>
+est perpendiculaire aux berges et <I>P</I> est sur la berge du côté de <I>A</I> ?<BR>
+On remarque que <I>PQ</I> est constant et a pour norme
+égal à la largeur de la rivière. Soit <I>R</I> le translaté de <I>A</I> dans la translation de vecteur <I>PQ</I>.<BR>
+On a <I>AR</I>=<I>PQ</I> donc <I>APQR</I> est un 
+parallélogramme. 
+Donc <I>AP</I>=<I>RQ</I>. On veut avoir <I>AP</I>=<I>BQ</I> donc il faut que <I>RQ</I>=<I>Bq</I> c’est à dire que <I>Q</I> se trouve sur la médiatrice de <I>RB</I>. Donc <I>Q</I> est l’intersection de la 
+médiatrice de <I>RB</I> avec la berge se trouvant du côté de <I>B</I>.<BR>
+Le dessin avec <TT>Xcas</TT> :<BR>
+On clique deux points <TT>A</TT> à gauche de <I>x</I>=−1 et <TT>B</TT> à droite 
+de <I>x</I>=1, par exemple :
+</P><PRE CLASS="verbatim">A:=point([-5/2,1,'affichage'=0]);
+B:=point([5,-2,'affichage'=0]);
+D1:=droite(-1,-1+i):;D1;
+D2:=droite(1,1+i):;D2;
+R:=translation(2,A);
+polygone_ouvert(A,R,Q,affichage=1);
+segment(R,B,affichage=ligne_tiret_point+ 4);
+d:=mediatrice(R,B);
+Q:=inter_unique(d,D2);
+P:=translation(-2,Q);
+polygone_ouvert(A,P,Q,B);
+supposons(a=[-2.86,-5,5,0.01]);
+p:=point(-1+i*a);
+q:=point(1+i*a);
+polygone_ouvert(A,p,q,B);
+segment(R,q,affichage=1);
+legende(-6+4i,"Ap="+string(evalf(longueur(A,p))));
+legende(-6+3i,"Bq="+string(evalf(longueur(B,q))));
+</PRE><P>On peut ensuite faire bouger les points <TT>p</TT> et <TT>q</TT> et visualiser les 
+trajets <TT>ApqB</TT> et <TT>ARqB</TT>. 
+On obtient :<BR>
+<IMG SRC="cascas067.png"></P><H2 CLASS="section"><A NAME="toc65"></A><A NAME="htoc170">11.3</A>  Une transformation</H2><P>
+Quelles sont les transformations du plan qui transforme toute droite en une 
+droite parallèle ?
+Ce qui veut dire que, si on connait un point <TT>A</TT> et son transformé 
+<TT>A1</TT>, le transformé <TT>B1</TT> de <TT>B</TT>, est sur la parallèle à la 
+<TT>droite(A,B)</TT> passant par <TT>A1</TT>.
+Si <TT>A</TT> et <TT>A1</TT> sont confondus en <TT>O</TT>, <TT>B1</TT> se trouve sur la 
+<TT>droite(O,B)</TT> : <TT>B</TT>,<TT>B1</TT> et <TT>O</TT> sont alignes si <TT>O</TT>
+est un point fixe.<BR>
+On va essayer de déterminer ces transformations en les classant selon le
+nombre de points fixes.<BR>
+Soit <TT>T</TT> est une transformation du plan qui transforme toute droite en une 
+droite parallèle et si, 
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<TT>T</TT> a au moins deux points fixes <TT>O1</TT> et <TT>O2</TT>, alors le 
+transformé d’un point <TT>A</TT> situé en dehors de la <TT>droite(O1,O2)</TT>
+est sur la <TT>droite(A,O1)</TT> et sur la <TT>droite(A,O2)</TT>, donc est en 
+<TT>A</TT>. On en déduit que <TT>A</TT> est aussi un point fixe et que tous les 
+points sont fixes puisque les points de la <TT>droite(O2,O1)</TT> sont en 
+dehors de la droite la <TT>droite(A,O1)</TT> ou de la droite la 
+<TT>droite(A,O2)</TT>.<BR>
+)
+Donc si <TT>T</TT> a au moins deux points fixes, c’est que <TT>T</TT> est 
+l’identité. </LI><LI CLASS="li-itemize"><TT>T</TT> a un seul point fixe <TT>O</TT>, et soient deux points <TT>A</TT> et 
+<TT>B</TT> non alignés avec <TT>O</TT>, et leur transformé <TT>A1</TT> et 
+<TT>B1</TT>.<BR>
+<TT>A1</TT> n’est pas confondu avec <TT>O</TT> car sinon <TT>A1</TT> et <TT>B1</TT>
+seraient confondus avec <TT>O</TT> car :<BR>
+<TT>B1:=inter_droite(droite(B,O),parallele(A1,droite(A,B)))</TT><BR>
+et la <TT>droite(A,B)</TT> serait transformée en le <TT>point(O)</TT> !
+<TT>A1</TT> est sur la 
+<TT>droite(A,O)</TT> et <TT>B1</TT> est sur la <TT>droite(B,O)</TT>. On sait de plus 
+que les <TT>droite(A,B)</TT> et <TT>droite(A1,B1)</TT> sont paralléles.
+Donc si <TT>T</TT> a au moins un seul point fixe, c’est que <TT>T</TT> est une 
+homotétie.<BR>
+Avec <TT>xcas</TT>, on clique pour définir deux points <TT>A</TT> et <TT>B</TT> et
+on tape :
+<PRE CLASS="verbatim">O:=point(0);
+t:=element(-2..5);
+A1:=element(droite(A,O),t);
+B1:=inter_droite(droite(B,O),parallele(A1,droite(A,B)));
+</PRE>puis on fait bouger <TT>t</TT> et <TT>B</TT>.</LI><LI CLASS="li-itemize"><TT>T</TT> n’a pas de point fixe et soient deux points <TT>A</TT> et 
+<TT>B</TT>, et leur transformé <TT>A1</TT> et <TT>B1</TT>.<BR>
+
+La <TT>droite(A,A1)</TT> ne coupe pas la <TT>droite(B,B1)</TT> car sinon le point 
+d’intersection <TT>O</TT> serait un point fixe :
+<TT>O1:=inter_droite(droite(A,O),droite(B,O))</TT>
+car <TT>parallele(A1,droite(A,O))=droite(A,O)</TT> et<BR>
+<TT>parallele(B1,droite(B,O))=droite(B,O)</TT>.<BR>
+Donc :<BR>
+<TT>B1:=inter_droite(parallele(A1,droite(A,B)),parallele(B,droite(A,A1)))</TT>
+donc <TT>ABA1B1</TT> est un parallélogramme.<BR>
+Donc si <TT>T</TT> n’a pas de point fixe, c’est que <TT>T</TT> est une translation.<BR>
+Avec <TT>Xcas</TT>, on clique pour définir deux points <TT>A</TT> et <TT>B</TT> et
+on tape :
+<PRE CLASS="verbatim">O:=point(0);
+t:=element(-2..5);
+A1:=element(droite(A,O),t);
+B1:=inter_droite(parallele(A1,droite(A,B)),parallele(B,droite(A,A1)));
+</PRE>puis on fait bouger <TT>t</TT> et <TT>B</TT>.</LI></UL><H2 CLASS="section"><A NAME="toc66"></A><A NAME="htoc171">11.4</A>  L’inverseur de Peaucellier</H2><P>
+Charles Peaucellier est un général français (1832-1913).<BR>
+On appelle inverseur tout système articulé qui permet de tracer 
+mécaniquement la figure inverse d’une figure plane donnée.
+L’inverseur de Peaucellier est constitué d’un losange articulé <I>AMBN</I> de 
+côté <I>a</I>. Aux sommets <I>A</I> et <I>B</I> sont articulés deux tiges <I>OA</I> et <I>OB</I> 
+de longueur <I>d</I> avec <I>d</I>≥ <I>a</I>. Le point <I>O</I> est fixe.<BR>
+<B>Propriété</B> :<BR>
+Quand on fait bouger <I>A</I> et <I>B</I>, les points <I>M</I> et <I>N</I> restent alignés avec 
+<I>O</I> et sont inverses l’un de l’autre dans l’inversion de centre <I>O</I> et de 
+puissance <I>d</I><SUP>2</SUP>−<I>a</I><SUP>2</SUP> .
+</P><H3 CLASS="subsection"><A NAME="htoc172">11.4.1</A>  Observation lorsque <I>M</I> décrit un cercle passant par <I>O</I></H3><P>
+On suppose que <I>O</I> est à l’origine, que <I>d</I>=3, <I>a</I>=2 et que <I>M</I> reste sur le 
+cercle de centre 1 et de rayon 1.<BR>
+On tape dans un écran de géométrie :
+</P><PRE CLASS="verbatim">O:=point(0);
+C:=cercle(0,point(2)):;C;
+M:=element(C)
+C1:=cercle(0,3.):;
+C2:=cercle(M,2.):;
+K:=inter(C1,C2):;
+A:=K[0];
+B:=K[1];
+segment(O,A,affichage=4);
+segment(O,B,affichage=4);
+N:=symetrie(droite(A,B),M);
+L:=lieu(N,M);
+quadrilatere(A,M,B,N,affichage=1);
+</PRE><P>On obtient :
+</P><DIV CLASS="center"><IMG SRC="cascas068.png"></DIV><P>
+On se met en mode <TT>Pointeur</TT> et on déplace <I>M</I> qui décrit le cercle. 
+Le losange se déforme et <I>N</I> se déplace sur la droite inverse du cercle 
+dans l’inversion de centre <I>O</I> et de puissance  5/2
+</P><H3 CLASS="subsection"><A NAME="htoc173">11.4.2</A>  Démonstration</H3><P>
+Les points <I>M</I> et <I>N</I> restent alignés avec <I>O</I> car <I>O</I>,<I>M</I> et <I>N</I> sont 
+équidistants de <I>A</I> et <I>B</I>, ils sont donc sur la médiatrice de <I>AB</I>.<BR>
+La puissance de <I>O</I> par rapport au cercle de centre <I>A</I> et de rayon <I>AM</I>=<I>AN</I>=<I>a</I> 
+est donc : <SPAN style="text-decoration:overline"><I>OM</I></SPAN>.<SPAN style="text-decoration:overline"><I>ON</I></SPAN>=<I>OA</I><SUP>2</SUP>−<I>AM</I><SUP>2</SUP>=<I>d</I><SUP>2</SUP>−<I>a</I><SUP>2</SUP>.<BR>
+Revenons l’exemple précédent (<I>O</I> à l’origine, <I>d</I>=3, <I>a</I>=2).
+Le transformé du cercle de centre 1 et de rayon 1 par l’inversion de centre 
+<I>O</I> et de puissance 3<SUP>2</SUP>−2<SUP>2</SUP>=5 est une droite puisque ce cercle passe par <I>O</I>.
+Cette droite a pour équation  <I>x</I>=5/2 puisque le point 
+du cercle d’abscisse 2 se transforme en le point de l’axe des <I>x</I> d’abscisse 
+ 5/2.
+</P><H2 CLASS="section"><A NAME="toc67"></A><A NAME="htoc174">11.5</A>  Un pavage</H2><H3 CLASS="subsection"><A NAME="htoc175">11.5.1</A>  Construction d’un pavage invariant par des translations</H3><P>
+Soient 5 points <TT>A,B,C,E,F</TT>, On construit 3 points <TT>D,G,H</TT> par 
+translation : <TT>D</TT> (resp <TT>G</TT>) est le transformé de <TT>A</TT> (resp 
+<TT>E</TT>) dans la translation de vecteur <TT>BC</TT> et <TT>H</TT> est le 
+transformé de <TT>F</TT> dans la translation de vecteur <TT>BA</TT>.<BR>
+Le pavé de base est <TT>P0=polygone([A,E,B,F,C,G,D,H])</TT>.<BR>
+Pour vous convaincre, on va exécuter le script suivant qui se trouve dans
+le fichier <TT>pavage1.cxx</TT> :
+</P><PRE CLASS="verbatim">//un pave le polygone([A,E,B,F,C,G,D,H])
+A:=point(-1.84,-1.83);
+B:=point(0.22,-1.93);
+C:=point(0,0);
+E:=point(-1,-2);
+F:=point(1.05,-0.857);
+D:=translation(C-B,A);
+G:=translation(C-B,E);
+H:=translation(A-B,F);
+nodisp(P0:=polygone(A,E,B,F,C,G,D,H));
+nodisp(P1:=translation(B-A,P0));
+P1;
+translation(B-C,[P0,P1]);
+</PRE><P>vous pouvez faire bouger les points <TT>A,B,C,E,F</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc176">11.5.2</A>  Avec un quadrilatère quelconque</H3><P>
+Tout quadrilatère plan non croisé pave le plan.<BR>
+Le pavé de base est <TT>Q:=quadrilatere(A,B,C,D)</TT>
+</P><H4 CLASS="subsubsection">Avec un script</H4><P>
+Pour vous convaincre on va exécuter le script suivant qui dessine un quadrilatère quelconque <TT>A,B,C,E</TT> et ses représentants 
+(son symétrique par rapport au milieu <TT>O</TT> de <TT>AB</TT> et ses 
+translatés) formant un pavage.<BR>
+</P><PRE CLASS="verbatim">//un quadrilatere quelconque pave le plan
+A:=point(-1.84,-1.83);
+B:=point(0.22,-1.93);
+AB:=segment(A,B);
+C:=point(1.05,-0.857);
+BC:=segment(B,C);
+D:=point(-0.0943,0.0178)+-0.0314-1.62*(i);
+CD:=segment(C,D);
+DA:=segment(D,A);
+O:=milieu(A,B);
+nodisp(Q:=quadrilatere(A,B,C,D));
+nodisp(Q1:=symetrie(O,Q));
+nodisp(Q2:=op(translation(D-B,[Q,Q1])));
+Q;
+Q1;
+Q2;
+translation(C-A,[Q,Q1,Q2]);
+</PRE><P>On met ce script comme commandes dans un niveau de géométrie (si vous avez 
+tapé ce script est dans un èditeur de programme, en ayant pris soin de 
+n’écrire qu’une seule commande (terminée par <TT>;</TT>) par ligne, vous 
+pouvez mettre ces commandes d’un coup de souris dans les lignes de commandes 
+dans un niveau de géométrie : on sélectionne le script et on clique sur 
+le numero d’une ligne de commandes dans un niveau de géométrie et cela 
+recopie le script à partir de cette ligne). Puis on coche le bouton 
+<TT>Step</TT> pour exécuter le script pas à pas.<BR>
+Vous pouvez déformer ce quadrilatère en faisant bouger 
+l’un des points <TT>A,B,C,E</TT>.<BR>
+
+Sur le même principe, on peut réaliser un pavage en remplacant les côtés
+du quadrilatère par des lignes brisées admettant un centre de symétrie.<BR>
+Pour vous convaincre on va exécuter le script suivant :
+</P><PRE CLASS="verbatim">//un "quadrilatere" chaque cote est invariant par symetrie centrale
+A:=point(-1.84,-1.83);
+B:=point(0.22,-1.93);
+C:=point(1.05,-0.857);
+D:=point(-0.0943,0.0178)
+M:=milieu(A,B);
+N:=milieu(C,B);
+O:=milieu(C,D);
+P:=milieu(A,D);
+E:=point(-1.2,-2);
+F:=point(0.6,-1.8);
+G:=point(0.8,-0.5);
+H:=point(-0.5,0);
+nodisp(E1:=symetrie(M,E));
+nodisp(F1:=symetrie(N,F));
+nodisp(G1:=symetrie(O,G));
+nodisp(H1:=symetrie(P,H));
+nodisp(P0:=polygone(A,E,M,E1,B,F,N,F1,C,G,O,G1,D,H,P,H1,A));
+P0;
+translation(A-C,P0);
+</PRE><P>vous pouvez faire bouger les points <TT>A,B,C,D,E,F,G,H</TT>.<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc177">11.5.3</A>  Avec une animation</H3><P>
+On peut aussi écrire le programme <TT>pavage</TT> dans un éditeur de 
+programmes qui va réaliser à partir du quadrilatère <I>A</I>,<I>B</I>,<I>C</I>,<I>D</I>, un pavage 
+de <I>l</I> lignes et de <I>c</I> colonnes :
+</P><PRE CLASS="verbatim">pavage(A,B,C,D,l,c):={
+local k,LP,LQ,LLP,LLQ,,P,Q;
+P:=polygone(A,B,C,D);
+Q:=symetrie(milieu(A,B),P);
+LP:=P;
+LQ:=Q;
+pour k de 1 jusque c-1 faire 
+P:=translation(C-A,P);
+Q:=translation(C-A,Q);
+LP:=LP,P;
+LQ:=LQ,Q;
+fpour;
+LLP:=LP;
+LLQ:=LQ;
+LP:=[LP];
+LQ:=[LQ];
+pour k de 1 jusque l-1 faire 
+LP:=translation(B-D,LP);
+LLP:=LLP,op(LP);
+LQ:=translation(B-D,LQ);
+LLQ:=LLQ,op(LQ);
+fpour;
+return [affichage(LLP,1+rempli),affichage(LLQ,2+rempli)];
+}:;
+</PRE><P>On compile ce programme avec <TT>F9</TT> et on ouvre un écran de géométrie :
+On se met en mode <TT>point</TT> et on clique pour obtenir 4 points <TT>A,B,C,D</TT>.
+On tape ensuite <TT>pavage( A,B,C,D,6,8)</TT><BR>
+On peut enlever les légendes <TT>A,B,C,D</TT> et les axes (bouton <TT>cfg</TT>, 
+puis décocher <TT>Montrer les noms</TT> et décocher <TT>Montrer les axes</TT>).<BR>
+On se met en mode <TT>pointeur</TT> et on déplace un des points <TT>A,B,C,D</TT>.
+ou bien on rajoute un paramètre <TT>t</TT> et on tape par exemple :
+<TT>t:=element(0 .. 6.3,1.8,0.1)</TT><BR>
+<TT>pavage(0,1,0.5+i*0.5,0.25+i*0.75+0.25*sqrt(2)*exp(i*t),5,5)</TT><BR>
+et on fait bouger le curseur <TT>t</TT><BR>
+ou encore on fait une animation et on tape :<BR>
+<TT>L:=seq(pavage(0,1,0.5+i*0.5,0.25+i*0.75+0.25*sqrt(2)*exp(i*t),5,5),t=0..6.3,0.1)</TT><BR>
+<TT>animation(L);</TT><BR>
+Le temps entre 2 images est défini dans <TT>cfg-&gt;animate</TT>.</P><P>On peut aussi ouvrir un niveau de géométrie 2-d et écrire les commandes :
+</P><PRE CLASS="verbatim">A:=point(0);
+B:=point(1);
+C:=point(0.5+i*0.5);
+t:=element(0 .. 12.6,12.6,0.1);
+D:=point(,0.25+i*0.75+0.25*sqrt(2)*exp(i*t));
+pavage(A,B,C,D,5,8)
+</PRE><P>Puis on fait bouger <TT>t</TT> et le pavage se déforme. Pour que cette 
+déformation se fasse automatiquement, on utilise le menu 
+<TT>M-&gt;Animation-&gt;Gaph off</TT> pour enlever le dessin, puis 
+<TT>M-&gt;Animation-&gt;Creer animation</TT> pour créer l’animation (on vous demande 
+combien vous voulez d’images (<TT>frame</TT>) différentes), la vitesse de 
+défilement est définie par <TT>cfg-&gt;animate</TT>.
+</P><H3 CLASS="subsection"><A NAME="htoc178">11.5.4</A>  Construction d’un pavage triangulaire</H3><P>
+Le pavé de base est <TT>P0=polygone([A,E,B,F,C,H,J,G])</TT>
+Pour vous convaincre on va exécuter le script suivant qui se trouve dans
+le fichier <TT>pavage3.cxx</TT> :
+</P><PRE CLASS="verbatim">//un pave P0= polygone([A,E,B,F,C,H,J,G])([A,E,B,F,C,H,J,G])
+A:=point(-1.84,-1.83);
+B:=point(0.22,-1.93);
+nodisp(triangle_equilateral(A,B,C));
+E:=point(-1,-2);
+F:=point(0,0);
+G:=rotation(A,2*pi/3,E);
+H:=rotation(C,-2*pi/3,F);
+J:=rotation(C,-2*pi/3,B);
+nodisp(P:=[A,E,B,F,C,H,J,G]);
+nodisp(P0:=polygone(op(P)));
+nodisp(P1:=rotation(A,2*pi/3,P0));
+nodisp(P2:=rotation(A,4*pi/3,P0));
+[P0,P1,P2];
+translation(B-J,[P0,P1,P2]);
+translation(B-rotation(A,2*pi/3,J),[P0,P1,P2]);
+</PRE><P>vous pouvez faire bouger les points <TT>A,B,E,F</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc179">11.5.5</A>  Construction d’un pavage carre</H3><P>
+Le pavé de base est <TT>P0=polygone([A,E,B,F,C,H,J,G])</TT>
+Pour vous convaincre on va exécuter le script suivant qui se trouve dans
+le fichier <TT>pavage4.cxx</TT> :
+</P><PRE CLASS="verbatim">//un pave P0=polygone([A,E,B,F,C,H,J,G])
+A:=point(-1.84,-1.83);
+B:=point(0.22,-1.93);
+nodisp(C:=similitude(A,sqrt(2)/2,pi/4,B));
+E:=point(-1,-2);
+F:=point(0,-1.2);
+G:=rotation(A,pi/2,E);
+H:=rotation(C,-pi,F);
+J:=rotation(C,-pi,B);
+nodisp(P:=[A,E,B,F,C,H,J,G]);
+nodisp(P0:=polygone(op(P)));
+nodisp(P1:=rotation(A,pi/2,P0));
+nodisp(P2:=rotation(A,pi,P0));
+nodisp(P3:=rotation(A,3*pi/2,P0));
+[P0,P1,P2,P3];
+translation(B-J,[P0,P1,P2,P3]);
+translation(2*(B-A),[P0,P1,P2,P3]);
+translation(B-rotation(A,pi,J),[P0,P1,P2,P3]);
+</PRE><P>vous pouvez faire bouger les points <TT>A,B,E,F</TT></P><H2 CLASS="section"><A NAME="toc68"></A><A NAME="htoc180">11.6</A>  Le pentagone, sin(π/5), sin(2π/5), cos(π/5 et cos(2π/5)</H2><H3 CLASS="subsection"><A NAME="htoc181">11.6.1</A>  Calcul exact de sin(2π/5) et de cos(2π/5)</H3><P>
+Si <I>a</I>=exp(2<I>i</I>π/5)=cos(2π/5)+<I>i</I>sin(2π/5),on a :<BR>
+<I>a</I><SUP>5</SUP>−1=(<I>a</I>−1)(<I>a</I><SUP>4</SUP>+<I>a</I><SUP>3</SUP>+<I>a</I><SUP>2</SUP>+<I>a</I>+1)=0.<BR>
+Comme <I>a</I>≠ 1, on a <I>a</I> vérifie :<BR>
+<I>a</I><SUP>4</SUP>+<I>a</I><SUP>3</SUP>+<I>a</I><SUP>2</SUP>+<I>a</I>+1=<I>a</I><SUP>2</SUP>(<I>a</I><SUP>2</SUP>+1/<I>a</I><SUP>2</SUP>+<I>a</I>+1/<I>a</I>)=<I>a</I><SUP>2</SUP>((<I>a</I>+1/<I>a</I>)<SUP>2</SUP>+(<I>a</I>+1/<I>a</I>)−1)=0<BR>
+Comme <I>a</I>≠ 0, on a 2cos(2π/5)=<I>a</I>+1/<I>a</I> vérifie l’équation :<BR>
+<I>z</I><SUP>2</SUP>+<I>z</I>−1=0<BR>
+On tape :<BR>
+<TT>solve(z</TT><CODE><TT>^</TT></CODE><TT>2+z-1=0,z)</TT><BR>
+On obtient :<BR>
+<TT>[1/2*(-1-(sqrt(5))),1/2*(-1+sqrt(5))]</TT><BR>
+Comme 2cos(2π/5)&gt;0 et sin(2π/5)=√<SPAN style="text-decoration:overline">1−</SPAN><SPAN style="text-decoration:overline">cos</SPAN><SPAN style="text-decoration:overline">(2π/5)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP> on tape :<BR>
+<TT>normal(1-(1/4*(-1+sqrt(5)))</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient :<BR>
+<TT>(sqrt(5)+5)/8</TT><BR>
+et on en déduit que :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">cos(2π/5)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−1</TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">sin(2π/5)=</TD><TD CLASS="dcell"><TABLE CELLSPACING=0 CELLPADDING=0><TR><TD ALIGN="right"><DIV CLASS="vbar" STYLE="height:2em;"></DIV></TD></TR>
+<TR><TD><FONT SIZE=7>√</FONT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=0 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+5</TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">8</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On aurait aussi pu taper en mode complexe :<BR>
+<TT>solve(a+1/a=1/2*(-1+sqrt(5)),a)</TT><BR>
+On obtient comme valeur de <I>a</I> :<BR>
+<TT>[1/4*(sqrt(5)-1+sqrt(2*sqrt(5)+10)*(i)),<BR>
+1/4*(sqrt(5)-1-sqrt(2*sqrt(5)+10)*(i))] </TT><BR>
+Comme <I>a</I>=exp(2<I>i</I>π/5)=cos(2π/5)+<I>i</I>sin(2π/5), on a <I>re</I>(<I>a</I>&gt;0 donc :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I>=cos(2π/5)+<I>i</I>sin(2π/5)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>(</TD></TR>
+</TABLE></TD><TD CLASS="dcell">5)−1−<I>i</I></TD><TD CLASS="dcell"><TABLE CELLSPACING=0 CELLPADDING=0><TR><TD ALIGN="right"><DIV CLASS="vbar" STYLE="height:0em;"></DIV></TD></TR>
+<TR><TD><FONT SIZE=7>√</FONT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">2</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=0 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>(</TD></TR>
+</TABLE></TD><TD CLASS="dcell">5)+10</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc182">11.6.2</A>  Calcul exact de sin(π/5) et de cos(π/5)</H3><P>
+On déduit de ce qui précède les valeurs de cos(π/5) et de 
+sin(π/5) puisque :<BR>
+cos(2π/5)=2cos(π/5)<SUP>2</SUP>−1 et cos(2π/5)=1−2sin(π/5)<SUP>2</SUP>.<BR>
+On tape :<BR>
+<TT>normal(sqrt((sqrt(5)-1)/8+1/2))</TT><BR>
+On obtient la valeur de cos(π/5) :<BR>
+<TT>(sqrt(5)+1)/4</TT><BR>
+On tape :<BR>
+<TT>normal(-(sqrt(5)-1)/8+1/2)</TT><BR>
+On obtient sin(π/5)<SUP>2</SUP>:<BR>
+<TT>(-(sqrt(5))+5)/8</TT><BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">cos(π/5)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+1</TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">sin(π/5)=</TD><TD CLASS="dcell"><TABLE CELLSPACING=0 CELLPADDING=0><TR><TD ALIGN="right"><DIV CLASS="vbar" STYLE="height:2em;"></DIV></TD></TR>
+<TR><TD><FONT SIZE=7>√</FONT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">−</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=0 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+5</TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">8</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc183">11.6.3</A>  Construction du pentagone comme avec la règle et le compas</H3><P>
+On tape :
+</P><PRE CLASS="verbatim">R:=1;
+C:=cercle(0,R);
+A:=point(-R);
+B:=point(i*R);
+m:=milieu(0,B);
+c1:=cercle(m,R/2,affichage=2);
+segment(A,m,affichage=2);
+I:=inter(c1,segment(m,A));
+r:=longueur2(A,I);
+c:=cercle(A,sqrt(r));
+L:==simplify(inter(C,c)):;
+P:=L[0];
+Q:=L[1];
+segment(P,Q);
+c2:=cercle(P,longueur(P,Q)):;
+affichage(c2,4);
+M:=inter(C,c2,B);
+c3:=cercle(Q,longueur(P,Q)):;
+affichage(c3,4);
+T:=point(R);
+S:=inter(C,c3,T);
+polygone(T,M,P,Q,S,affichage=1);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas069.png"><BR>
+On trouve aussi que <TT>longueur2(A,I)</TT> vaut :<BR>
+<TT>(-1-(-4*sqrt(5))/20)</TT><CODE><TT>^</TT></CODE><TT>2+(-(-2*sqrt(5)+10)/20)</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+On tape :<BR>
+<TT>simplify(re(affixe(P)));</TT><BR>
+On obtient :<BR>
+<TT>(-(sqrt(5))-1)/4</TT><BR>
+c’est la vaeur de −cos(π/5)<BR>
+On tape :<BR>
+<TT>simplify(im(affixe(P))</TT><CODE><TT>^</TT></CODE><TT>2);</TT><BR>
+On obtient:<BR>
+<TT>(-(sqrt(5))+5)/8</TT><BR>
+c’est la vaeur de sin(π/5)<SUP>2</SUP><BR>
+<I>P</I> a donc comme coordonnèes : (−cos(π/5);sin(π/5))<BR>
+Donc le polygone <I>T</I>,<I>M</I>,<I>P</I>,<I>Q</I>,<I>S</I> est bien un pentagone régulier.
+</P><H2 CLASS="section"><A NAME="toc69"></A><A NAME="htoc184">11.7</A>  Des étoiles à 5 branches</H2><H3 CLASS="subsection"><A NAME="htoc185">11.7.1</A>  Une étoile à 5 branches</H3><P>
+On cherche tout d’abord la liste des sommets du polygone étoile à 5 
+branches: les pointes (resp les creux) se déduisent par rotation d’angle 
+2*π/5. On définit ainsi les sommets d’un polygone puis, on 
+affiche ce polygone avec le programme <TT>etoil</TT>. Si on remplit le polygone 
+<TT>etoil</TT>, il devient le polygone <TT>etoile</TT>.<BR>
+On va utiliser 3 paramètres :<BR>
+<TT>z0</TT> le centre de l’étoile,<BR>
+<TT>r</TT> le rayon de l’étoile,<BR>
+<TT>a</TT> l’argument d’un "sommet en creux" de l’étoile,<BR>
+Ces paramètres permettent de positionner l’étoile dans le plan. 
+On calcule la distance <TT>l</TT> d’un "sommet en creux" au centre de 
+l’étoile :<BR>
+on sait ou on retrouve (puisque 1+2*cos(2*π/5)+2*cos(4*π/5)=0) que :<BR>
+cos(2*π/5)=(√<SPAN style="text-decoration:overline">5</SPAN>−1)/4<BR>
+cos(π/5)<SUP>2</SUP>=(3+√<SPAN style="text-decoration:overline">5</SPAN>)/8<BR>
+cos(π/5)=(1+√<SPAN style="text-decoration:overline">5</SPAN>)/4<BR>
+ on a :<BR>
+<I>l</I>=cos(2*π/5)/cos(π/5)<BR>
+donc on a :<BR>
+<I>l</I>:=<I>r</I>(3−√<SPAN style="text-decoration:overline">(</SPAN>5))/2<BR>
+On a :
+(√<SPAN style="text-decoration:overline">5</SPAN>−1)/2∼ 0.61803398875</P><P><IMG SRC="cascas070.png"></P><P>On tape :
+</P><PRE CLASS="verbatim">etoil(z0,r,a):={
+  local j,l,somet,p,L,pa;
+  z0:=evalf(z0);r:=evalf(r);a:=evalf(a);
+  l:=evalf(r*(3-sqrt(5))/2);
+  somet:=[z0+l*exp(i*a),z0+r*exp(i*(a+evalf(pi)/5))];
+  L:=somet;
+  for (j:=1;j&lt;5;j++){
+    L:=concat(L,rotation(z0,2*j*evalf(pi)/5,somet));
+  }
+  p:=polygone(L);
+  return p;
+}:;
+
+etoile(z0,r,a):={
+  return affichage(etoil(z0,r,a),rempli);
+}:;
+</PRE><P>On tape :<BR>
+<TT>etoile(0,1,0)</TT><BR>
+<TT>etoile(3,2,pi/5)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="cascas071.png"></P><H3 CLASS="subsection"><A NAME="htoc186">11.7.2</A>  Une étoile faite d’étoiles</H3><P>
+On veut faire le dessin :<BR>
+
+<IMG SRC="cascas072.png"></P><P>Si le rayon de l’étoile centrale est <I>R</I> et celui de l’étoile suivante est 
+<I>r</I> on a la relation :
+<I>r</I>*sin(2*π/5)=<I>R</I>*sin(π/5) (<I>R</I>∼ 1.61803398875*<I>r</I>)<BR>
+et on a trouvé que les sommets en "creux" sont situés sur un cercle de 
+rayon : <I>l</I>=<I>R</I>*(3−√<SPAN style="text-decoration:overline">5</SPAN>)/2<BR>
+On sait que :
+sin(2*π/5)<SUP>2</SUP>=1−cos(2*π/5)<SUP>2</SUP>=(5+√<SPAN style="text-decoration:overline">5</SPAN>)/8  et<BR>
+sin(π/5)<SUP>2</SUP>=1−cos(π/5)<SUP>2</SUP>=(5−√<SPAN style="text-decoration:overline">5</SPAN>)/8<BR>
+donc (5+√<SPAN style="text-decoration:overline">5</SPAN>)*<I>r</I><SUP>2</SUP>=<I>R</I><SUP>2</SUP>*(5−√<SPAN style="text-decoration:overline">5</SPAN>)=20/(5+√<SPAN style="text-decoration:overline">5</SPAN>) soit<BR>
+<I>r</I>=2*<I>R</I>*√<SPAN style="text-decoration:overline">5</SPAN>/(5+√<SPAN style="text-decoration:overline">5</SPAN>)=2*<I>R</I>/(1+√<SPAN style="text-decoration:overline">5</SPAN>)=<I>R</I>*(√<SPAN style="text-decoration:overline">5</SPAN>−1)/2<BR>
+De plus le centre de l’étoile suivante est situé à :<BR>
+<I>l</I>+<I>r</I>=<I>R</I>*(3−√<SPAN style="text-decoration:overline">5</SPAN>)/2+<I>R</I>*(−1+√<SPAN style="text-decoration:overline">5</SPAN>)/2=<I>R</I>.<BR>
+On tape : 
+</P><PRE CLASS="verbatim">etoiles(z0,r,a):={
+  local j,k,R,L,nr,nz0;
+  L:=[etoile(z0,r,a)];
+  R:=r;
+  for (j:=0;j&lt;5;j++){
+    nr:=2*R/(1+sqrt(5));
+    nz0:=z0+R*exp(2*i*j*pi/5+i*a);
+    for (k:=1;k&lt;5;k++){
+      L:=append(L,etoile(evalf(nz0),nr,a));
+      r:=nr;
+      nr:=2*r/(1+sqrt(5));
+      nz0:=nz0+r*exp(2*i*j*pi/5+i*a);
+    }
+  }
+  return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>etoiles(0,1,0);</TT><BR>
+<TT>affichage(etoil(0,2/(3-sqrt(5)),pi/5),line_width_3)</TT><BR>
+On obtient le dessin voulu.<BR>
+On tape :<BR>
+<TT>etoiles(0,1,pi/4);</TT><BR>
+<TT>affichage(etoil(0,2/(3-sqrt(5)),pi/5+pi/4),line_width_3)</TT><BR>
+On obtient le même dessin tourné de π/4.<BR>
+
+Si on veut faire la même chose avec une ètoile à 7 branches on tape:
+</P><PRE CLASS="verbatim">etoil7(z0,r,a):={
+  local j,l,somet,p,L,pa;
+  z0:=evalf(z0);
+  r:=evalf(r);
+  a:=evalf(a);
+  //l:=evalf(r*(3-sqrt(5))/2);
+l:=evalf(r*cos(2*pi/7)/cos(pi/7));
+  somet:=[z0+l*exp(i*a),z0+r*exp(i*(a+evalf(pi)/7))];
+  L:=somet;
+  for (j:=1;j&lt;7;j++){
+    L:=concat(L,rotation(z0,2*j*evalf(pi)/7,somet));
+  }
+  p:=polygone(L);
+  return p;
+}:;
+
+etoile7(z0,r,a):={
+  return affichage(etoil7(z0,r,a),rempli);
+}:;
+etoiles7(z0,r,a):={
+  local j,k,R,L,nr,nz0,nl,l;
+  L:=[etoile7(z0,r,a)];
+  R:=r;
+  l:=evalf(R*cos(2*pi/7)/cos(pi/7));
+for (j:=0;j&lt;7;j++){
+    nr:=evalf(R*sin(pi/7)/sin(2*pi/7));
+    nz0:=z0+(l+nr)*exp(2*i*j*pi/7+i*a);
+    for (k:=1;k&lt;7;k++){
+      L:=append(L,etoile7(evalf(nz0),nr,a));
+      r:=nr;
+      nr:=r*sin(pi/7)/sin(2*pi/7);
+nl:=evalf(r*cos(2*pi/7)/cos(pi/7));
+      nz0:=nz0+(nl+nr)*exp(2*i*j*pi/7+i*a);
+    }
+  }
+  return L;
+}:;
+</PRE><H3 CLASS="subsection"><A NAME="htoc187">11.7.3</A>  Le logo de <TT>Xcas</TT></H3><P>
+Le logo de <TT>Xcas</TT> est obtenu en tapant :
+</P><PRE CLASS="verbatim">etoilo(z0,r,a):={
+  local j,l,somet,p,L,pa;
+  z0:=evalf(z0);
+  r:=evalf(r);
+  a:=evalf(a);
+  l:=evalf(r*(3-sqrt(7))/2);
+  somet:=[z0+l*exp(i*a),z0+r*exp(i*(a+evalf(pi/7)))];
+  L:=somet;
+  for (j:=1;j&lt;7;j++){
+    L:=concat(L,rotation(z0,2*j*evalf(pi/7),somet));
+  }
+  p:=polygone(L);
+  return p;
+}:;
+etoilog(z0,r,a):={
+  return affichage(etoilo(z0,r,a),rempli);
+}:;
+logox(z0,r,a,c):={
+  local j,k,R,L,nr,nz0;
+  L:=[affichage(etoilo(z0,r,a),c+rempli)];
+  R:=r;
+  for (j:=0;j&lt;7;j++){
+    nr:=2*R/(1+sqrt(7));
+    nz0:=z0+R*exp(2*i*j*pi/7+i*a);
+    for (k:=1;k&lt;7;k++){
+      L:=append(L,affichage(etoilo(evalf(nz0),nr,a),
+                            c+(j+1)*k+rempli));
+      r:=nr;
+      nr:=2*r/(1+sqrt(7));
+      nz0:=nz0+r*exp(2*i*j*pi/7+i*a);
+    }
+  }
+  return L;
+}:;
+ lx(z0,r):={ 
+  return(segment(z0+r*(-1-i),z0+r*(1+i)),
+         segment(z0+r*(1-i),z0+r*(-1+i)));  
+}:;
+lc(z0,r):={ 
+  return (cercle(z0,r,pi/4,7*pi/4));  
+}:;
+la(z0,r):={ 
+  return(segment(z0+r*(-1-i),z0+r*i),
+         segment(z0+r*(1-i),z0+r*i),
+         segment(z0+r*-0.5,z0+r*0.5));
+}:;
+ls(z0,r):={ 
+  return (segment(z0+r*(-1/2-i),z0-r*i),
+          segment(z0+r*(1/2+i),z0+r*i),
+          cercle(z0+r*i/2,r/2,pi/2,3*pi/2),
+          cercle(z0-r*i/2,r/2,-pi/2,pi/2));  
+}:;
+logoxcas(z0,r,a,c):={
+return logox(z0,r,a,c),
+affichage(lx(evalf(z0-2*r*exp(i*a),r*0.2)),
+           line_width_3+c+4),
+affichage(lc(evalf(z0-2*r*exp(-2*i*pi/7+i*a),0.2*r)),
+             line_width_3+c+3),
+affichage(la(evalf(z0-2*r*exp(-4*i*pi/7+i*a),0.2*r)),
+             line_width_3+c+2),
+affichage(ls(evalf(z0-2*r*exp(-6*i*pi/7+i*a),0.2*r)),
+             line_width_3+c+1);
+}:;
+</PRE><P>On tape :<BR>
+<TT>logoxcas(0,1,0,264);</TT><BR>
+On obtient les 7 branches de <TT>Xcas</TT> :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Calcul formel
+</LI><LI CLASS="li-itemize">Tableur formel
+</LI><LI CLASS="li-itemize">Géométrie 2D interactive
+</LI><LI CLASS="li-itemize">Géométrie 3D interactive
+</LI><LI CLASS="li-itemize">Géométrie Tortue
+</LI><LI CLASS="li-itemize">Langage de programmation
+</LI><LI CLASS="li-itemize">Documentation
+</LI></UL><P>
+<IMG SRC="cascas073.png">
+</P><H3 CLASS="subsection"><A NAME="htoc188">11.7.4</A>  La carte de visite de <TT>Xcas</TT></H3><P>
+Voici ce qu’il faut taper pour avoir la carte de visite de <TT>Xcas</TT> :
+</P><PRE CLASS="verbatim">logoxcas(0,0.9,pi/14,264);
+legende(-2.2+3i,": le couteau suisse des mathematiques");
+legende(-4.5+0.4i,"programmation",magenta);
+legende(1.2+1.8i,"geometrie 2d",cyan);
+legende(-4-1.2i," tableur formel",rouge);
+legende(-3+1.8i,"calcul formel",bleu);
+legende(2.3+0.4i,"geometrie 3d",jaune);
+legende(1.7-1.2i,"geometrie tortue",vert);
+legende(-1.1-2.1i,"documentation");
+legende(-4.6+2.5i,"http://www-fourier.ujf-grenoble.fr
+                          /~parisse/giac_fr.html");
+rectangle(-5-2.2i,5-2.2i,5/8.5);
+affichage([lx(-4+3.2i,0.2),lc(-3.5+3.1i,0.2),la(-3+3.2i,0.2),
+           ls(-2.5+3.1i,0.2)],epaisseur_ligne_3);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas074.png">
+</P><H3 CLASS="subsection"><A NAME="htoc189">11.7.5</A>  La carte de Noel de <TT>Xcas</TT></H3><P>
+Voici ce qu’il faut taper pour avoir la carte de Noel de <TT>Xcas</TT> :
+</P><PRE CLASS="verbatim">lx(z0,r):={ 
+  return(segment(z0+r*(-1-i),z0+r*(1+i)),
+         segment(z0+r*(1-i),z0+r*(-1+i)));  
+}:;
+lc(z0,r):={ 
+  return (cercle(z0,r,pi/4,7*pi/4));  
+}:;
+la(z0,r):={
+  return(segment(z0+r*(-1-i),z0+r*i),
+         segment(z0+r*(1-i),z0+r*i),
+         segment(z0+r*-0.5,z0+r*0.5));
+}:;
+ls(z0,r):={ 
+  return (segment(z0+r*(-0.6-i),z0+r*0.02-r*i),
+          segment(z0+r*(0.6+i),z0+r*i),
+          cercle(z0+r*i/2,r*1.02/2,pi/2,3*pi/2),
+          cercle(z0-r*1.01*i/2,r*1.02/2,-pi/2,pi/2));  
+}:;
+ls1(z0,r):={ 
+  return (segment(z0+r*(-1-i),z0+r*0.55-r*i),
+          segment(z0+r*(1+i),z0-0.5*r+r*i),
+           segment(z0-0.55*r,z0+0.55*r),
+          cercle(z0-r*0.5+r*i*0.5,r*0.51,pi/2,3*pi/2),
+          cercle(z0+r*0.5-r*i*0.5,r*0.52,-pi/2,pi/2));  
+}:;
+lm(z0,r):={
+  return polygone_ouvert(z0,z0+i*r,z0+(1+i)/2*r,z0+(1+i)*r,z0+r);
+}:;
+le(z0,r):={
+  return polygone_ouvert(z0+3*r/4,z0,z0+i*r,z0+r*i+r*3/4), 
+         segment(z0+r*i/2,z0+r*i/2+3*r/4);
+}:;
+ly(z0,r):={
+  return polygone_ouvert(z0+r*i,z0+(1+i)*r/2,z0+r/2,
+                         z0+(1+i)*r/2,z0+(1+i)*r);
+  }:;
+lr(z0,r):={
+  return cercle(z0+(0.5+i*0.75)*r,r*0.25,-pi/2,pi/2),
+  polygone_ouvert(z0+r/2+i*r,z0+i*r,z0,z0+i*r/2,
+                  z0+r/2+i*r/2,z0+r*3/4);
+}:;
+etoilo(z0,r,a):={
+  local j,l,somet,p,L,pa;
+  z0:=evalf(z0);r:=evalf(r);a:=evalf(a);
+  l:=evalf(r*(3-sqrt(7))/2);
+  somet:=[z0+l*exp(i*a),z0+r*exp(i*(a+evalf(pi/7)))];
+  L:=somet;
+  for (j:=1;j&lt;7;j++){
+    L:=concat(L,rotation(z0,2*j*evalf(pi/7),somet));
+  };
+  p:=polygone(L);
+  return p;
+}:;
+etoilog(z0,r,a):={
+  return affichage(etoilo(z0,r,a),rempli);
+}:;
+logox(z0,r,a,c):={
+  local j,k,R,L,nr,nz0;
+  L:=[affichage(etoilo(z0,r,a),c+rempli)];
+  R:=r;
+  for (j:=0;j&lt;7;j++){
+    nr:=2*R/(1+sqrt(7));
+    nz0:=z0+R*exp(2*i*j*pi/7+i*a);
+    for (k:=1;k&lt;7;k++){
+      L:=append(L,affichage(etoilo(evalf(nz0),nr,a),
+                            c+(j+1)*k+rempli));
+      r:=nr;
+      nr:=2*r/(1+sqrt(7));
+      nz0:=nz0+r*exp(2*i*j*pi/7+i*a);
+    }
+  }
+  return L;
+}:;
+logoxcas(z0,r,a,c):={
+  return logox(z0,r,a,c), 
+         affichage(lx(evalf(z0-2*r*exp(i*a),r*0.2)),
+           line_width_3+c+4),
+          affichage(lc(evalf(z0-2*r*exp(-2*i*pi/7+i*a),0.2*r)),
+             line_width_3+c+3),
+          affichage(la(evalf(z0-2*r*exp(-4*i*pi/7+i*a),0.2*r)),
+             line_width_3+c+2),
+          affichage(ls(evalf(z0-2*r*exp(-6*i*pi/7+i*a),0.2*r)),
+             line_width_3+c+1);
+}:;
+cartev(z0,r):={
+  local L;
+  L:=lm(z0+1+4*i,r),le(z0+1+3*r/2+4*i,r),lr(z0+1+11*r/4+4*i,r),
+     lr(z0+1+4*r+4*i,r),ly(z0+1+21*r/4+4*i,r);
+  L:=L,lx(z0+1+2*i,r),lc(z0+1+2r+r/2+2*i,r),
+       la(z0+1+4*r+r/2+2*i,r),ls(z0+1+13*r/2+2*i,r);
+    return L;
+  }:;
+support(z0,r):={
+  return segment(z0+r*(0.9+i*0.45),z0-r*(1.2+i*0.6)),
+            segment(z0,z0-2*r*i);
+  }:;
+bulle(z0,r):={
+  return affichage(support(z0,r),264+epaisseur_ligne_3),
+           logoxcas(z0-3*r*i,0.42*r,0,264),cercle(z0-3*r*i,r);
+  }:;
+cartev1(c1,c2):={
+local L;
+L:=affichage(cartev(-2,1),59+epaisseur_ligne_4),
+             rectangle(-4-i,8-i,0.67);
+L:=L,logox(j,0.3,-pi/7,c1)$(j=-3..7);
+L:=L,logox(j+6*i,0.3,pi/7,c1)$(j=-3..7);
+L:=L,logox(-3+j*i,0.3,pi/7,c2)$(j=1..5);
+L:=L,logox(7+j*i,0.3,pi/7,c2)$(j=1..5);
+return L;
+}:;
+cartev2():={
+  local L;
+  L:=rectangle(-4.25-0.5*i,8-0.5*i,0.67),bulle(-0.5+4*i,1);
+  L:=L,bulle(1.5+5*i,1),bulle(3.5+6*i,1),bulle(5.5+7*i,1);
+  L:=L,affichage([lx(-2.5+5*i,0.5),lc(-2.5+3.5*i,0.5),
+                  la(-2.5+2*i,0.5),ls1(-2.5+0.5*i,0.5)],
+                  264+epaisseur_ligne_4);
+  L:=L,affichage([lm(-3.75+6.3*i,0.75),le(-2.25+6.3*i,0.75),
+                lr(-1+6.3*i,0.75),lr(0.25+6.3*i,0.75),
+                ly(1.5+6.3*i,0.75)],232+epaisseur_ligne_4);
+return L;
+}:;
+sapin(z0,z1,t):={
+  local L,v;
+    L:=NULL;v:=z1-z0;
+    si abs(v)&lt;0.2 alors L:=L, segment(z0,z1);retourne L; fsi;
+    L:=L,sapin(z0+v/4.,z1,t);
+    L:=L,segment(z0,z0+v*0.25);
+    L:=L,sapin(z0,z0+v*exp(i*t)*0.5,t);
+    L:=L,sapin(z0,z0+v*exp(-i*t)*0.5,t); 
+    }:;
+cartev3():={
+ retourne  affichage([lx(-4.5+5*i,0.5),lc(-4.5+3.5*i,0.5),
+ la(-4.5+2*i,0.5),ls1(-4.5+0.5*i,0.5)],264+epaisseur_ligne_4),
+affichage([lm(-5.75+6.3*i,0.75),le(-4.37+6.3*i,0.75),
+lr(-3.06+6.3*i,0.75),lr(-1.72+6.3*i,0.75),
+ly(-0.375+6.3*i,0.75)],232+epaisseur_ligne_4),
+affichage(sapin(0,6.5*i,1),60),rectangle(-6.25-i,4-i,0.86),
+logoxcas(0+6.5*i,0.45,0,269),
+affichage(etoilog(-1.9+2.9*i,0.2,0),1),
+affichage(etoilog(1.9+2.9*i,0.2,0),3),
+affichage(etoilog(2.5+1.6*i,0.2,0),5),
+affichage(etoilog(0.5+1*i,0.2,0),1),
+affichage(etoilog(-1+0.5*i,0.2,0),3),
+affichage(etoilog(-2.5+i*1.6,0.2,0),6);
+}:;
+</PRE><P>Puis on tape :<BR>
+<TT>cartev1(86,88)</TT><BR>
+On obtient une carte de Noel.<BR>
+Puis on tape :
+<TT>cartev2(),logoxcas(-2.5+3.5*i,0.5,0,264)</TT><BR>
+On obtient une carte de Noel.
+Puis on tape :
+<TT>cartev3()</TT><BR>
+On obtient une carte de Noel.<BR>
+
+</P><H3 CLASS="subsection"><A NAME="htoc190">11.7.6</A>  Encore des étoiles à 5 branches</H3><P>
+On veut réaliser :<BR>
+<IMG SRC="cascas075.png"><BR>
+Pour cela, on va utiliser le programme précédent :
+</P><PRE CLASS="verbatim">//z0 centre, r rayon de l'etoile, 
+//a argument d'un "sommet en creux" de l'etoile
+etoil(z0,r,a):={
+  local j,l,somet,p,L,pa;
+  z0:=evalf(z0);r:=evalf(r);a:=evalf(a);
+  l:=evalf(r*(3-sqrt(5))/2);
+  somet:=[z0+l*exp(i*a),z0+r*exp(i*(a+evalf(pi)/5))];
+  L:=somet;
+  for (j:=1;j&lt;5;j++){
+    L:=concat(L,rotation(z0,2*j*evalf(pi)/5,somet));
+  }
+  p:=polygone(L);
+  return p;
+}:;
+etoile(z0,r,a):={
+  return affichage(etoil(z0,r,a),rempli);
+}:;
+
+</PRE><P>et les calculs précédents et écrire la procédure <TT>etoil10</TT> de 
+paramètre <TT>c</TT> le centre de l’étoile pour dessiner :<BR>
+<IMG SRC="cascas076.png"><BR>
+On pose :<BR>
+<I>a</I>:=2*cos(π/5)=sin(2*π/5)/sin(π/5)≃ 1.61803398875<BR>
+et on a :<BR>
+<I>R</I>=<I>a</I>*<I>r</I> si <I>r</I>,<I>R</I> sont les rayons des cercles circonscrits à 2 
+étoiles consécutives,<BR>
+Il faut maintenant trouver la relation entre le rayon <I>r</I> d’une ètoile et le 
+rayon ρ du cercle sur lequel on va placer le centre de 10 étoiles.<BR>
+Soit la figure ci-dessous :<BR>
+ il y a un pentagone (il définit une étoile à 5 
+branches) de côté <I>AB</I> et de rayon <I>r</I>=<I>OA</I>.
+Si on peut mettre 10 étoiles de rayon <I>r</I> sur le cercle de rayon ρ=<I>IO</I> 
+c’est que l’angle <I>AIB</I>=π/10 :<BR>
+<IMG SRC="cascas077.png"><BR>
+On cherche la relation qui existe entre <I>IO</I>=ρ et <I>r</I>=<I>OA</I>.<BR>
+On a :
+<I>AB</I>=2*<I>r</I>*sin(π/5) et <I>IA</I>=ρ+<I>r</I> donc :<BR>
+ <I>AB</I>/sin(π/10)= <I>IA</I>/sin(3π/5) donc :<BR>
+2*<I>r</I>*sin(π/5)*sin(3π/5)/sin(π/10)=ρ+<I>r</I><BR>
+donc :<BR>
+<I>r</I>=<I>cr</I>*ρ avec  <I>cr</I>=sin(π/10)/2sin(π/5)*sin(3π/5)−sin(π/10)≃ 0.38196601125<BR>
+On tape :
+</P><PRE CLASS="verbatim">etoil5(c):={
+local a,cr;
+a:=evalf(2*cos(pi/5));
+cr:=sin(pi/10.)/(2*sin(pi/5.)*sin(3*pi/5.)-sin(pi/10.));
+return (etoil(c+exp(i*k*pi/5),cr,(k+1)*pi/5))$(k=0..9),
+(etoil(c+a*exp(i*k*pi/5),cr*a,(k+1)*pi/5))$(k=0..9),
+(etoil(c+a^2*exp(i*k*pi/5),cr*a^2,(k+1)*pi/5))$(k=0..9),
+(etoil(c+1/a*exp(i*k*pi/5),cr/a,(k+1)*pi/5))$(k=0..9);
+</PRE><P>On tape :<BR>
+<TT>a:=evalf(2*cos(pi/5));b:=a</TT><CODE><TT>^</TT></CODE><TT>3</TT><BR>
+<TT>cr:=sin(pi/10.)/(2*sin(pi/5.)*sin(3*pi/5.)-sin(pi/10.));</TT><BR>
+<TT>etoil5(b*exp(i*k*2*pi/5))</TT><BR>
+On obtient :<BR>
+<TT>etoil5(b*exp(i*k*2*pi/5))$(k=0..4),etoil(0,b*cr,0)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="cascas078.png"><BR>
+
+On peut ainsi faire une sorte de pavage mais on est obligé de ruser pour qu’il
+n’y ait pas de chevauchement :<BR>
+<TT>etoil10</TT> on enleve la dernière couronne à <TT>etoil5</TT>.<BR>
+<TT>etoils5</TT> est formé de 5 <TT>etoil5</TT><BR>
+<TT>etoils15</TT> est formé de 1 <TT>etoil5</TT> et de 4 <TT>etoil10</TT> et 
+<TT>etoil5</TT> est à la <I>n</I>ième position.<BR>
+On tape :<BR>
+</P><PRE CLASS="verbatim">etoil10(c):={
+local cr,a:=evalf(2*cos(pi/5));
+cr:=sin(pi/10.)/(2*sin(pi/5.)*sin(3*pi/5.)-sin(pi/10.));
+return (etoil(c+exp(i*k*pi/5),cr,(k+1)*pi/5))$(k=0..9),
+(etoil(c+a*exp(i*k*pi/5),cr*a,(k+1)*pi/5))$(k=0..9),
+(etoil(c+1/a*exp(i*k*pi/5),cr/a,(k+1)*pi/5))$(k=0..9);
+}
+:;
+etoils5(c,t):={
+local a,b,cr;
+a:=evalf(2*cos(pi/5));
+b:=a^3;
+cr:=sin(pi/10.)/(2*sin(pi/5.)*sin(3*pi/5.)-sin(pi/10.));
+return etoil5(c+b*exp(i*k*2*pi/5+i*t))$(k=0..4),
+       etoil(c,b*cr,t);
+}:;
+etoils15(c,t,n):={
+local a,b,cr;
+a:=evalf(2*cos(pi/5));
+b:=a^3;
+cr:=sin(pi/10.)/(2*sin(pi/5.)*sin(3*pi/5.)-sin(pi/10.));
+return etoil10(c+b*exp(i*k*2*pi/5+i*t))$(k=n+1..n+4),
+       etoil(c,b*cr,t),etoil5(c+b*exp(i*n*2*pi/5+i*t));
+}:;
+</PRE><P>On tape :<BR>
+<TT>etoils5(0,0),(etoils15(2*b*sin(3*pi/10)*exp(i*pi/5+2*i*k*pi/5),pi/5,k))$(k=0..4)</TT><BR>
+On obtient :<BR>
+<IMG SRC="cascas079.png">
+</P><H3 CLASS="subsection"><A NAME="htoc191">11.7.7</A>  Le logo de <TT>l’UJF</TT></H3><PRE CLASS="verbatim">arcpoly(z0,r,a,b):={
+local L;
+return seq(z0+r*exp(i*t),t=a..b,0.05),z0+r*exp(i*b);
+}:;
+arc_poly(z0,r,a,b,ep,c):={
+local L;  
+L:=z0+(r-ep)*exp(i*a),z0+r*exp(i*a),arcpoly(z0,r,a,b),
+  z0+(r)*exp(i*b),z0+(r-ep)*exp(i*b),arcpoly(z0,r-ep,b,a);
+return affichage(polygone(L),c+rempli);
+}:;  
+ujf(z0,r):={
+local L;
+L:=carre(z0,z0+r,affichage=48+rempli),carre(z0+r/3*(-1+2*i),z0+2*r*i/3,affichage=3+rempli);
+L:=L,rectangle(z0+r/3*(-2+i),z0+r*i/3,0.5,affichage=1+rempli),rectangle(z0-r*i/3,z0+2*r/3-r*i/3,0.5,affichage=1+rempli);
+L:=L,rectangle(z0+-r/3*(1+i),z0-r*i/3,3,affichage=1+rempli),arc_poly(z0-r,r,-pi/3,0,r/3,1);
+L:=L,polygone(z0-r/6-r*i,z0+r/6-r*i,z0+r/3,z0,affichage=1+rempli);
+L:=L,affichage(polygone(z0+r*(0.9+i),arcpoly(z0+17*r/12,17*r/12,pi-atan(5/5),pi),z0+r/3,
+arcpoly(z0+17*r/12,13*r/12,pi,pi-atan(12/5))),1+rempli);
+L:=L,legende(z0+r+i*2r/3,"UNIVERSITE"),legende(z0+r+0.1*i,"JOSEPH FOURIER"),legende(z0-r+i*1.1*r,"Grenoble I"),
+legende(z0+r+i*0.1," ________________",affichage=1);
+return(L); 
+}:;
+</PRE><P>On tape :<BR>
+<TT>ujf(0,1)</TT><BR>
+On obtient :<BR>
+<IMG SRC="cascas080.png"></P><H2 CLASS="section"><A NAME="toc70"></A><A NAME="htoc192">11.8</A>  Puzzle : remplir un décagone avec des losanges</H2><PRE CLASS="verbatim">deca(O1,O2):={
+local R,l,L,A,k;
+R:=longueur(O1,O2);
+l:=2*R*sin(pi/10);
+L:=NULL;
+A:=O2;
+L:=L,A;
+pour k de 1 jusque 10 faire
+A:=A+2*(A-O1)*exp(3*i*pi/5)*sin(pi/10);
+L:=L,A;
+fpour;
+return L;
+}:;
+penta1(O1,O2):={
+local R,l,L,A,k;
+R:=longueur(O1,O2);
+l:=2*R*sin(pi/10);
+L:=NULL;
+A:=O1+2*(O2-O1)*sin(pi/10);
+L:=L,A;
+pour k de 1 jusque 13 faire
+A:=O1+(A-O1)*exp(i*pi/5);
+L:=L,A;
+fpour;
+return L;
+}:;
+penta2(O1,O2):={
+local R,l,L,A,k;
+R:=longueur(O1,O2);
+l:=2*R*sin(pi/10);
+L:=NULL;
+A:=O1+4*(O2-O1)*sin(pi/10)^2;
+L:=L,A;
+pour k de 1 jusque 10 faire
+A:=O1+(A-O1)*exp(i*pi/5);
+L:=L,A;
+fpour;
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>point(0);</TT><BR>
+<TT>deca(point(0),point(1));</TT><BR>
+<TT>penta1(point(0),point(1));</TT><BR>
+<TT>penta2(point(0),point(1));</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="cascas081.png"><BR>
+Cela permet de remplir un décagone avec des losanges en joignant à la souris
+les points du dessin ci-dessus.<BR>
+<IMG SRC="cascas082.png"><BR>
+Puis de colorer le dessin avec la souris :<BR>
+choisir le mode quadrilatere (Polygones-&gt;quadrilatere) et comme attribut de 
+l’objet le dessin plein (cliquer sur l’ellipse rempli et la couleur), 
+on obtient :<BR>
+<IMG SRC="cascas083.png"><BR>
+Voisi les programmes de différents remplissages :
+</P><PRE CLASS="verbatim">vasa1(O1,O2):={
+local L0,L1,L2,k,P,Q;
+L0:=deca(O1,O2);
+L1:=penta1(O1,O2);
+L2:=penta2(O1,O2);
+P:=NULL;
+Q:=NULL;
+pour k de 0 jusque 4 faire
+P:=P,polygone(L0[2k],L0[2k+1],L0[2k+2],L1[2*k+1],affichage=rempli+32*k+58);
+Q:=Q,polygone(O1,L1[2k+1],L0[2k+2],L1[2k+3],affichage=rempli+60+32*k);
+fpour;
+return P,Q;
+}
+:;
+vasa2(O1,O2):={
+local L0,L1,L2,k,P,Q;
+L0:=deca(O1,O2);
+L1:=penta1(O1,O2);
+L2:=penta2(O1,O2);
+P:=NULL;
+Q:=NULL;
+pour k de 0 jusque 3 faire
+P:=P,polygone(L0[2k],L0[2k+1],L0[2k+2],L1[2*k+1],affichage=rempli+k);
+fpour;
+pour k de 0 jusque 2 faire
+Q:=Q,polygone(O1,L1[2k+1],L0[2k+2],L1[2k+3],affichage=rempli+7*k+60);
+fpour;
+P:=P,polygone(O1,L1[7],L2[9],L1[11],affichage=rempli+4);
+Q:=Q,polygone(L0[8],L0[9],L2[9],L1[7],affichage=rempli+81);
+Q:=Q,polygone(L0[9],L0[10],L1[11],L2[9],affichage=rempli+88);
+return P,Q;
+}
+:;
+vasa3(O1,O2):={
+local L0,L1,L2,k,P,Q;
+L0:=deca(O1,O2);
+L1:=penta1(O1,O2);
+L2:=penta2(O1,O2);
+P:=NULL;
+Q:=NULL;
+P:=P,polygone(L0[0],L0[1],L0[2],L1[1],affichage=rempli+0);
+pour k de 2 jusque 3 faire
+P:=P,polygone(L0[2k],L0[2k+1],L0[2k+2],L1[2*k+1],affichage=rempli+k);
+fpour;
+Q:=Q,polygone(O1,L1[5],L0[6],L1[7],affichage=rempli+74);
+P:=P,polygone(O1,L1[1],L2[3],L1[5],affichage=rempli+1);
+P:=P,polygone(O1,L1[7],L2[9],L1[11],affichage=rempli+4);
+Q:=Q,polygone(L0[2],L0[3],L2[3],L1[1],affichage=rempli+60);
+Q:=Q,polygone(L0[3],L0[4],L1[5],L2[3],affichage=rempli+67);
+Q:=Q,polygone(L0[8],L0[9],L2[9],L1[7],affichage=rempli+81);
+Q:=Q,polygone(L0[9],L0[10],L1[11],L2[9],affichage=rempli+88);
+return P,Q;
+}
+:;
+vasa4(O1,O2):={
+local L0,L1,L2,k,P,Q;
+L0:=deca(O1,O2);
+L1:=penta1(O1,O2);
+L2:=penta2(O1,O2);
+P:=NULL;
+Q:=NULL;
+P:=P,polygone(L0[0],L0[1],L0[2],L1[1],affichage=rempli+0);
+P:=P,polygone(L0[2],L2[2],L2[9],L1[1],affichage=rempli+1);
+P:=P,polygone(L0[3],L0[4],L0[5],L1[4],affichage=rempli+2);
+Q:=Q,polygone(L0[2],L0[3],L1[4],L2[2],affichage=rempli+74);
+P:=P,polygone(L0[6],L0[7],L0[8],L1[7],affichage=rempli+3);
+P:=P,polygone(L0[6],L1[7],L2[9],L2[6],affichage=rempli+4);
+Q:=Q,polygone(L0[5],L0[6],L2[6],L1[4],affichage=rempli+60);
+Q:=Q,polygone(L1[4],L2[6],L2[9],L2[2],affichage=rempli+67);
+Q:=Q,polygone(L0[8],L0[9],L2[9],L1[7],affichage=rempli+81);
+Q:=Q,polygone(L0[9],L0[0],L1[1],L2[9],affichage=rempli+94);
+return P,Q;
+}
+:;
+vasa5(O1,O2):={
+local L0,L1,L2,k,P,Q;
+L0:=deca(O1,O2);
+L1:=penta1(O1,O2);
+L2:=penta2(O1,O2);
+P:=NULL;
+Q:=NULL;
+P:=P,polygone(L0[0],L0[1],L0[2],L1[1],affichage=rempli+0);
+P:=P,polygone(L0[3],L0[4],L0[5],L1[4],affichage=rempli+1);
+P:=P,polygone(L0[3],L1[4],L2[6],L2[3],affichage=rempli+2);
+Q:=Q,polygone(L0[2],L0[3],L2[3],L1[1],affichage=rempli+74);
+P:=P,polygone(L0[6],L0[7],L0[8],L1[7],affichage=rempli+3);
+P:=P,polygone(L0[6],L1[7],L2[9],L2[6],affichage=rempli+4);
+Q:=Q,polygone(L0[5],L0[6],L2[6],L1[4],affichage=rempli+60);
+Q:=Q,polygone(L1[1],L2[3],L2[6],L2[9],affichage=rempli+67);
+Q:=Q,polygone(L0[8],L0[9],L2[9],L1[7],affichage=rempli+81);
+Q:=Q,polygone(L0[9],L0[0],L1[1],L2[9],affichage=rempli+88);
+return P,Q;
+}
+:;
+
+</PRE><P>On tape :<BR>
+<TT>vasa1(0,1),vasa2((2*sin(pi/10)+1)*exp(i*pi/5),2*sin(pi/10)*exp(i*pi/5)),</TT><BR>
+<TT>vasa3((2*sin(pi/10)+1)*exp(-i*pi/5),2*sin(pi/10)*exp(-i*pi/5)),</TT><BR>
+<TT>vasa7((2*sin(pi/10)+1)*exp(2*i*pi/5)-1,2*sin(pi/10)*exp(2*i*pi/5)-1)</TT><BR>
+On obtient :<BR>
+<IMG SRC="cascas084.png">
+</P><H2 CLASS="section"><A NAME="toc71"></A><A NAME="htoc193">11.9</A>  Les deux hélices</H2><P>
+Ce problème aète donné aux olympiades académiques de 2005.
+</P><H3 CLASS="subsection"><A NAME="htoc194">11.9.1</A>  Le problème</H3><P>
+Un avion modèle réduit possède deux hélices de même longueur qui 
+tournent dans un même plan perpendiculaire à leurs axes, et à la même 
+vitesse. 
+Comment choisir la distance entre leurs axes <I>a</I> et l’angle de départ <I>b</I> des
+2 hélices pour que les deux hélices puissent tourner sans se heurter ?</P><H3 CLASS="subsection"><A NAME="htoc195">11.9.2</A>  La modélisation avec <TT>Xcas</TT></H3><P>
+On suppose les hélices de centres <TT>O1,O2</TT> et de longueur 2.
+On choisit comme paramètres, la 
+distance <TT>a</TT> des centres des 2 hélices, et la mesure <TT>b</TT> de l’angle 
+des 2 hélices. Plus précisemment, on note 
+l’hélice1 <TT>A1,A2</TT> et l’hélice2 <TT>B1,B2</TT> pour que l’angle
+β=(<I>A</I>1,<I>A</I>2,<I>B</I>1,<I>B</I>2) soit de mesure 
+<I>b</I>∈ [0;π[.<BR>
+On pourra tester différentes valeurs de <TT>a</TT> et <TT>b</TT> grâce aux 
+commandes :<BR>
+<TT>a:=element(0..2);</TT><BR>
+<TT>b:=element(0..pi);</TT><BR>
+qui font apparaitre des curseurs permettant de modifier <TT>a</TT> ou <TT>b</TT>.<BR>
+On va utiliser la commande <TT>animate</TT> qui permet de faire une animation.
+Il faut pour cela créer, pour chaque hélice, une séquence (de 40 ou 48 
+éléments) contenant les différentes positions qui seront dessinées.<BR>
+On définit pour la première hélice :<BR>
+<TT>h1:=seq(segment(exp(i*(t+pi)),exp(i*t)),t,0,2*pi,pi/20)</TT><BR>
+et pour la deuxième hélice :<BR>
+<TT>h2:=</TT><BR>
+<TT>       seq(segment(a+exp(i*(t+pi)),a+exp(i*t)),t,b,2*pi+b,pi/20)</TT><BR>
+Donc on tape pour avoir 40 positions différentes et avoir au départ 
+<TT>a=sqrt(2)</TT> et <TT>b=pi/4</TT> :
+</P><PRE CLASS="verbatim">h1:=seq(segment(exp(i*(t+pi)),exp(i*t)),t=0..2*pi,pi/20):;
+animation(h1);
+a:=element(0..2,sqrt(2));
+b:=element(0..pi,pi/4);
+h2:=seq(segment(a+exp(i*(t+pi)),a+exp(i*t)),
+        t=b..2*pi+b,pi/20):;
+animation(h2);
+</PRE><P>ou pour avoir 48 positions différentes et avoir au départ <TT>a=sqrt(3)</TT> 
+et <TT>b=pi/3</TT> :
+</P><PRE CLASS="verbatim">h1:=seq(segment(exp(i*(t+pi)),exp(i*t)),t=0..2*pi,pi/24):;
+animation(h1);
+a:=element(0..2,sqrt(3));
+b:=element(0..pi,pi/3);
+h2:=seq(segment(a+exp(i*(t+pi)),a+exp(i*t)),
+        t=b..2*pi+b,pi/24):;
+animation(h2);
+</PRE><H3 CLASS="subsection"><A NAME="htoc196">11.9.3</A>  Le raisonnement</H3><P>
+Il y a des cas simples :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+lorsque <I>a</I>≤ 1 on est sûr que les 2 hélices se touchent 
+quelquesoit <I>b</I>,
+</LI><LI CLASS="li-itemize">lorsque <I>a</I>&gt;2 on est sûr que les 2 hélices ne se touchent pas 
+quelquesoit <I>b</I>.
+</LI></UL><P>Il reste donc à étudier le cas 1&lt;<I>a</I>≤ 2.
+Supposons qu’à un moment donné les 2 hélices se touchent : par exemple 
+le point <TT>A1</TT> touche l’hélice2 en <TT>M</TT> avec <TT>O2M=c</TT> : cela forme 
+un triangle de côtés 
+<I>a</I>,<I>c</I>,1 (0&lt;<I>c</I>≤ 1 et d’angle <I>b</I> ou π−<I>b</I> opposé au côté <I>a</I>).<BR>
+On a donc la relation :<BR>
+<I>a</I><SUP>2</SUP>=1+<I>c</I><SUP>2</SUP>−2*<I>c</I>*cos(<I>b</I>)=(1−<I>c</I>)<SUP>2</SUP>+2*<I>c</I>*(1−cos(<I>b</I>))<BR>
+ou la relation :<BR>
+<I>a</I><SUP>2</SUP>=1+<I>c</I><SUP>2</SUP>+2*<I>c</I>*cos(<I>b</I>)=(1−<I>c</I>)<SUP>2</SUP>+2*<I>c</I>*(1+cos(<I>b</I>))<BR>
+Si il y a collision c’est qu’il existe 0&lt;<I>c</I> ≤ 1 vérifiant l’une de ces 2
+équations du second degré en <I>c</I> de discriminant 
+Δ=cos(<I>b</I>)<SUP>2</SUP>−1+<I>a</I><SUP>2</SUP>.<BR>
+Puisque <I>a</I>&gt;1, on a <I>a</I>&gt;sin(<I>b</I>) donc Δ&gt;0 : il y a donc 2 solutions de 
+signe contraire puisque le produit des racines vaut 1−<I>a</I><SUP>2</SUP>&lt;0, donc 0 se 
+trouve à l’intérieur des racines.<BR>
+Si il y a collision c’est qu’il existe une racine comprise entre 0 et 1, donc 
+1 se trouve à l’extérieur des racines.<BR>
+On a pour <I>c</I>=0, 1+<I>c</I><SUP>2</SUP>−2*<I>c</I>*cos(<I>b</I>)−<I>a</I><SUP>2</SUP> (resp 1+<I>c</I><SUP>2</SUP>+2*<I>c</I>*cos(<I>b</I>)−<I>a</I><SUP>2</SUP>)
+vaut 1−<I>a</I><SUP>2</SUP>&lt;0 puisque <I>a</I>&gt;1 et,<BR>
+pour <I>c</I>=1, on a 1+<I>c</I><SUP>2</SUP>−2*<I>c</I>*cos(<I>b</I>)−<I>a</I><SUP>2</SUP> (resp 1+<I>c</I><SUP>2</SUP>+2*<I>c</I>*cos(<I>b</I>)−<I>a</I><SUP>2</SUP>)
+vaut 2− 2cos(<I>b</I>)−<I>a</I><SUP>2</SUP> (resp2+ 2cos(<I>b</I>)−<I>a</I><SUP>2</SUP>).<BR>
+L’une de ces quantités est positive si il y a une solution entre 0 et 1, 
+donc<BR>
+<I>a</I><SUP>2</SUP> ≤ 2−2cos(<I>b</I>)−<I>a</I><SUP>2</SUP>=4*<I>c</I><SUP>2</SUP>*sin(<I>b</I>/2)<SUP>2</SUP> ou<BR>
+<I>a</I><SUP>2</SUP> ≤ 2+2cos(<I>b</I>)−<I>a</I><SUP>2</SUP>=4*<I>c</I><SUP>2</SUP>*cos(<I>b</I>/2)<SUP>2</SUP><BR>
+Donc si il y a collision, c’est que <I>a</I>≤ 2*sin(<I>b</I>/2) ou 
+<I>a</I>≤ 2*cos(<I>b</I>/2).<BR>
+Réciproquement supposons :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<I>a</I>≤ 2*sin(<I>b</I>/2)<BR>
+Il existe <I>c</I> entre 0 et 1 et un triangle de côtés <I>a</I>,1,<I>c</I>, d’angle 
+opposé au côté <I>a</I> égal à <I>b</I>. 
+En effet, l’équation :<BR>
+eq(<I>x</I>)=<I>x</I><SUP>2</SUP>−2*<I>x</I>*cos(<I>b</I>)+1−<I>a</I><SUP>2</SUP>=0 a une solution <I>c</I> comprise dans ]0;1] car
+eq(0)=1−<I>a</I><SUP>2</SUP>&lt;0 puisque <I>a</I>&gt;1 et<BR>
+eq(1)=1−2*cos(<I>b</I>)+1−<I>a</I><SUP>2</SUP>=4*sin(<I>b</I>/2)<SUP>2</SUP>−<I>a</I><SUP>2</SUP> ≥ 0
+d’après l’hypothèse. 
+</LI><LI CLASS="li-itemize"><I>a</I>≤ 2*cos(<I>b</I>/2)<BR>
+Il existe <I>c</I> entre 0 et 1 et un triangle de côtés <I>a</I>,1,<I>c</I>, d’angle 
+opposé au côté <I>a</I> égal à π−<I>b</I>.
+En effet l’équation :<BR>
+eq(<I>x</I>)=<I>x</I><SUP>2</SUP>−2*<I>x</I>*cos(π−<I>b</I>)+1−<I>a</I><SUP>2</SUP>=0 a une solution <I>c</I> comprise dans ]0;1] 
+puisque eq(0)=1−<I>a</I><SUP>2</SUP>&lt;0 car <I>a</I>&gt;1 et<BR>
+eq(1)=1+2*cos(<I>b</I>)+1−<I>a</I><SUP>2</SUP>=4*cos(<I>b</I>/2)<SUP>2</SUP>−<I>a</I><SUP>2</SUP> ≥ 0 d’après l’hypothèse. 
+</LI></UL><P>
+Si <I>a</I>≤ 2*sin(<I>b</I>/2) ou <I>a</I>≤ 2*cos(<I>b</I>/2), la construction d’un tel 
+triangle est possible ce qui prouve qu’il y a 
+collision entre les 2 hélices.<BR>
+Donc si on a <I>a</I>&gt;2*sin(<I>b</I>/2) et <I>a</I>&gt;2*cos(<I>b</I>/2), on est sûr que la 
+collision n’est pas possible.<BR>
+Cela veut dire que si l’on choisit <I>a</I>&gt;2*max(sin(<I>b</I>/2),cos(<I>b</I>/2)), il 
+n’y aura pas de collision possible.<BR>
+Par exemple :<BR>
+pour <I>b</I>=π/2 on doit choisir <I>a</I>&gt;√<SPAN style="text-decoration:overline">2</SPAN>,<BR>
+pour <I>b</I>=π/3 on doit choisir <I>a</I>&gt;√<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+</P><HR>
+<A HREF="cascas010.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas012.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

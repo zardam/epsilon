@@ -1,0 +1,1506 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casgeo.css">
+<TITLE>Quelques exemples de récursivité</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casgeo009.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo011.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc160">Chapitre 10</A>  Quelques exemples de récursivité</H1><H2 CLASS="section"><A NAME="toc52"></A><A NAME="htoc161">10.1</A>  Récursivité ayant un seul appel récursif</H2><P>
+On commence par des exemples simples.
+</P><H3 CLASS="subsection"><A NAME="htoc162">10.1.1</A>  Les carrés</H3><P>
+On trace un carré puis le carré qui joint les milieux des cotés etc...
+on s’arrête quand les segments à dessiner deviennent trop petits ou quand 
+on a un dessin de profondeur <I>n</I> (<I>n</I> est le nombre d’étapes necessaires
+pour réaliser le dessin).<BR>
+
+On tape dans un éditeur de programme (que l’on ouvre avec <TT>Alt+p</TT>),
+puis on valide avec <TT>OK</TT> :
+</P><PRE CLASS="verbatim"> 
+carres(A,B):={
+local L;
+L:=carre(A,B);
+if (longueur2(A,B)&gt;0.01) {
+  L:=L,carres(A+(B-A)/2,B+(B-A)*i/2);
+}
+return L;
+};
+</PRE><P>On tape :<BR>
+<TT>carres(point(-1),point(1))</TT> :<BR>
+On obtient :<BR>
+<IMG SRC="casgeo077.png"><BR>
+On obtient le dessin des carrés avec le tracé qui est fait du plus 
+grand au plus petit : le dessin 
+du carré (-1,1,1+2*i,-1+2*i) puis du carré (0,1+i,i,-1+i)....<BR>
+
+<TT>bf Remarque</TT>
+si on tape 
+</P><PRE CLASS="verbatim"> 
+carres2(A,B):={
+local L;
+if (longueur2(A,B)&gt;0.01) {
+  L:=L,carres2(A+(B-A)/2,B+(B-A)*i/2);
+}
+L:=L,carre(A,B);
+return L;
+};
+</PRE><P>puis :<BR>
+<TT>carres2(-1.0,1.0)</TT><BR>
+le dessin des carrés ne se fera pas dans le même ordre et se fera
+du plus petit au plus grand.<BR>
+
+<B>Autre test d’arrêt</B>
+On peut avoir besion de connaitre le nombre de <I>n</I> de fois que l’on fait 
+le ou les appels récursifs pour avoir un dessin de "profondeur" <I>n</I>. 
+On rajoute pour cela un paramètre qui sera la profondeur.<BR>
+Dans l’exemple ci-dessus, on tape dans un éditeur de programme (que l’on 
+ouvre avec <TT>Alt+p</TT>), puis on valide avec 
+<TT>OK</TT> le programme :
+</P><PRE CLASS="verbatim"> 
+carrep(A,B,n):={
+local L;
+L:=carre(A,B);
+ if (n==0) return NULL;
+ L:=L,carrep(A+(B-A)/2,B+(B-A)*i/2,n-1);
+return L;
+};
+</PRE><P>On tape :<BR>
+<TT>carrep(-1.0,1.0,5)</TT><BR>
+On obtient le dessin des carrés du plus grand au plus petit et de profondeur
+5<BR>
+<IMG SRC="casgeo078.png"><BR>
+
+<B>Généralisation</B><BR>
+On trace un carré <I>ABCD</I>, puis le carré <I>MNPQ</I> avec :<BR>
+<I>AM</I>=<I>a</I>*<I>AB</I>,<BR>
+<I>BN</I>=<I>a</I>*<I>BC</I>,<BR>
+<I>CO</I>=<I>a</I>*<I>CD</I>,<BR>
+<I>DP</I>=<I>a</I>*<I>DA</I>,<BR>
+ où <I>a</I> est un nombre réel entre 0 et 1.
+</P><PRE CLASS="verbatim"> 
+carresp(A,B,a):={
+local L;
+L:=carre(A,B);
+if (longueur2(A,B)&gt;0.01) {
+L:=L,carresp(A+(B-A)*a,B+(B-A)*i*a,a);
+}
+return L;
+}:;
+</PRE><P>On tape par exemple :<BR>
+<TT>carresp(-1.0,1.0,0.2)</TT>
+On obtient :<BR>
+
+<IMG SRC="casgeo079.png">
+</P><H3 CLASS="subsection"><A NAME="htoc163">10.1.2</A>  Les triangles</H3><P>
+On trace un triangle puis le triangle qui joint les milieux des cotés etc...on s’arrête quand les segments à dessiner deviennent trop petits.<BR>
+On tape dans un éditeur de programme (que l’on ouvre avec <TT>Alt+p</TT>),
+puis on valide avec <TT>OK</TT> :
+</P><PRE CLASS="verbatim"> 
+triangles(A,B,C):={
+local L;
+L:=triangle(A,B,C);
+if (longueur2(A,B)&gt;0.01) {
+   L:=L,triangles(A+(B-A)/2,B+(C-B)/2,C+(A-C)/2);
+}
+return L};
+</PRE><P>On tape :<BR>
+<TT>triangles(-2.0,1,2*i)</TT><BR>
+On obtient le dessin des triangles du plus grand au plus petit :le dessin 
+du triangle (-2,1,2*i) puis du triangle (-0.5,0.5+i,-1+i,)....<BR>
+
+<IMG SRC="casgeo080.png"><BR>
+
+<B>Remarque</B>
+si on tape 
+</P><PRE CLASS="verbatim"> 
+trianglesp(A,B,C):={
+local L;
+if (longueur2(A,B)&gt;0.01) {
+  L:=L,trianglesp(A+(B-A)/2,B+(C-B)/2,C+(A-C)/2);
+}
+L:=L,triangle(A,B,C);
+return L};
+</PRE><P>On tape :<BR>
+<TT>trianglesp(-2.0,1,2*i)</TT><BR>
+On obtient le même dessin, mais le tracé des triangles ne se fera pas dans 
+le même ordre et se feradu plus petit au plus grand.<BR>
+
+<B>Généralisation</B><BR>
+On trace un triangle <I>ABC</I>, puis le triangle <I>MNP</I> avec :<BR>
+<I>AM</I>=<I>a</I>*<I>AB</I>,<BR>
+<I>BN</I>=<I>a</I>*<I>BC</I>,<BR>
+<I>CO</I>=<I>a</I>*<I>CD</I>,<BR>
+ où <I>a</I> est un nombre réel entre 0 et 1.
+</P><PRE CLASS="verbatim"> 
+trianglea(A,B,C,a):={
+local L;
+L:=triangle(A,B,C);
+if (longueur2(A,B)&gt;0.01) {
+L:=L,trianglep(A+(B-A)*a,B+(C-B)*a,C+(A-C)*a,a);
+}
+return L}:;
+</PRE><P>On tape par exemple :<BR>
+<TT>trianglea(-2.0,1.0,2*i,0.2)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casgeo081.png">
+</P><H2 CLASS="section"><A NAME="toc53"></A><A NAME="htoc164">10.2</A>  Récursivité ayant plusieurs appels récursifs</H2><P>
+Voici des exemples encore assez simples.
+</P><H3 CLASS="subsection"><A NAME="htoc165">10.2.1</A>  Les triangles</H3><P>
+On trace un triangle puis on joint les milieux des cotés.<BR>
+On obtient ainsi 4 petits triangles semblables au précédent.<BR>
+On recommence le même processus avec les trois triangles qui ont un angle 
+commun avec le grand triangle et ainsi de suite.....on s’arrête quand les 
+segments à dessiner deviennent trop petits.<BR>
+On tape dans un éditeur de programme (que l’on ouvre avec <TT>Alt+p</TT>),
+puis on valide avec <TT>OK</TT> :
+</P><PRE CLASS="verbatim"> 
+triangle3(A,B,C):={
+local L;
+L:=triangle(A,B,C);
+ if (longueur2(A,B)&lt;0.005) return NULL;
+ L:=L,triangle3(A,A+(B-A)/2,C+(A-C)/2);
+ L:=L,triangle3(A+(B-A)/2,B,B+(C-B)/2);
+ L:=L,triangle3(C+(A-C)/2,B+(C-B)/2,C);
+return L;
+};
+</PRE><P>On tape par exemple :<BR>
+<TT>triangle3(-2.0,1.0,2*i)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casgeo082.png"><BR>
+
+<B>Remarque</B><BR>
+Le tracé du triangle ne peut se faire qu’a la fin car il suffit de tracer 
+les derniers petits triangles on écrit donc dans un éditeur de programme 
+(que l’on ouvre avec <TT>Alt+p</TT>), puis on valide avec <TT>OK</TT> :
+</P><PRE CLASS="verbatim"> 
+trianglep(A,B,C):={
+local L:=NULL;
+if (longueur2(A,B)&lt;0.01) {return triangle(A,B,C);}
+L:=L,trianglep(A,A+(B-A)/2,C+(A-C)/2);
+L:=L,trianglep(A+(B-A)/2,B,B+(C-B)/2);
+L:=L,trianglep(C+(A-C)/2,B+(C-B)/2,C);
+return L;
+};
+</PRE><P>On tape par exemple :<BR>
+<TT>trianglep(-2.0,1.0,2*i)</TT><BR>
+On obtient le même dessin.</P><P><B>Généralisation</B><BR>
+On trace un triangle <I>ABC</I>, puis le triangle <I>MNP</I> avec :<BR>
+<I>AM</I>=<I>a</I>*<I>AB</I>,<BR>
+<I>BN</I>=<I>a</I>*<I>BC</I>,<BR>
+<I>CO</I>=<I>a</I>*<I>CD</I>,<BR>
+ où <I>a</I> est un nombre réel entre 0 et 1.
+</P><PRE CLASS="verbatim"> 
+triangle3p(A,B,C,a):={
+local L:=NULL;
+if (longueur2(A,B)&lt;0.02) {return triangle(A,B,C);}
+L:=L,triangle3p(A,A+(B-A)*a,C+(A-C)*a,a);
+L:=L,triangle3p(A+(B-A)*a,B,B+(C-B)*a,a);
+L:=L,triangle3p(C+(A-C)*a,B+(C-B)*a,C,a);
+return L;
+}:;
+</PRE><P>On tape par exemple :<BR>
+<TT>triangle3p(-2.0,1.0,2*i,0.6)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casgeo083.png"></P><P>Et avec un autre test d’arrêt en utilisant la profondeur <I>n</I> du dessin :
+</P><PRE CLASS="verbatim"> 
+triangle3an(A,B,C,a,n):={
+local L;
+if (n==0) {return triangle(A,B,C);}
+L:=L,triangle3an(A,A+(B-A)*a,C+(A-C)*a,a,n-1);
+L:=L,triangle3an(A+(B-A)*a,B,B+(C-B)*a,a,n-1);
+L:=L,triangle3an(C+(A-C)*a,B+(C-B)*a,C,a,n-1);
+return L;
+}:;
+</PRE><P>On tape par exemple :<BR>
+<TT>triangle3an(-2.0,1.0,2*i,0.6,3)</TT><BR>
+0n obtient un dessin de profondeur 3 :<BR>
+
+<IMG SRC="casgeo084.png"></P><H3 CLASS="subsection"><A NAME="htoc166">10.2.2</A>  Les hexagones</H3><P>
+On considère un hexagone de coés de longueur <I>l</I>, on remplace cet hexagone 
+par 7 hexagones de cotés 
+de longueur <I>l</I>/3 qui sont :les 6
+hexagones ayant un angle commun avec l’hexagone de départ et un septième 
+hexagone se trouvant au centre comme sur la figure :<BR>
+<IMG SRC="casgeo085.png"><BR>
+On obtient ainsi 7 petits hexagones semblables au précédent et on 
+recommence le même processus.<BR>
+</P><P>On tape la fonction <TT>hexago</TT> ou on utilise la commande <TT>hexagone</TT>
+de <TT>Xcas</TT> :
+</P><PRE CLASS="verbatim"> 
+// dessin d'un hexagone
+hexago(x,y):={
+local a,b,c,L;
+a:=x;
+b:=y;
+L:=NULL;
+for (j:=1;j&lt;=6;j++) {
+c:=a+(b-a)*exp(evalf(i*pi*2/3));
+L:=L,segment(a,c);
+b:=a;
+a:=c;
+}
+return L;
+}:;
+</PRE><P>puis on fait un premier appel récursif correspondant à l’hexagone du 
+centre et avec la même itération que dans la fonction <TT>hexago</TT>, on 
+fait un appel récursif au lieu de tracer un segment pour les hexagones des angles, on tape :
+</P><PRE CLASS="verbatim">hexagones(a,b,n):={
+local j,c,L;
+L:=NULL;
+if (n==0) {return hexago(a,b);}
+c:=a+(b-a)*2/3*exp(evalf(i*pi/3));
+// dessin de l'hexagone central
+L:=L,hexagones(c,c+(b-a)/3, n-1);
+//dessin des 6 hexagones dans les angles
+for (j:=1;j&lt;=6;j++) {
+c:=a+(b-a)*exp(evalf(i*pi*2/3));
+L:=L,hexagones(c,c+(a-c)/3,n-1);
+b:=a;
+a:=c;
+} 
+return L;};
+</PRE><P>On tape :<BR>
+<TT>hexagone(point(-1),point(1)),hexagones(-1,1,3)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casgeo086.png">
+</P><H3 CLASS="subsection"><A NAME="htoc167">10.2.3</A>  Les polygones réguliers</H3><P>
+On part d’un polygone régulier <I>P</I> à <I>k</I> sommets et on le remplace par <I>k</I> 
+polygones réguliers à <I>k</I> sommets de façon à ce que ces <I>k</I> 
+polygones aient chacun un angle commun avec <I>P</I> et de façon à ce qu’ils
+ne se chevauchent pas. Puis on contine le processus et on ne dessine que les 
+derniers petits polygones.<BR>
+Par exemple un hexagone <I>H</I> de coté <I>a</I> est remplacé par 6 hexagones de 
+côtés <I>a</I>/3 obtenus par homothétie de rapport 1/3 et de centre les
+sommets de l’hexagone <I>H</I>.<BR>
+Pour écrire une procédure générale il faut faire un peu de 
+trigonométrie.<BR>
+Le calcul du coté <I>h</I> du petit polygone <I>k</I>-régulier doit vérifier :<BR>
+- si <I>k</I>=3, 4 on a <I>h</I>=(<I>b</I>−<I>a</I>)/2<BR>
+- si <I>k</I>=5, 6, 7, 8 on a <I>h</I>+<I>h</I>cos(2π/<I>k</I>)=(<I>b</I>−<I>a</I>)/2<BR>
+- si <I>k</I>=9, 10, 11, 12, 13, 14, 15, 16 on a :<BR>
+ <I>h</I>+<I>h</I>cos(2π/<I>k</I>)+<I>h</I>cos(4π/<I>k</I>)=(<I>b</I>−<I>a</I>)/2 
+- si <I>p</I>=<TT>iquo</TT>(<I>k</I>-1,4), on a :<BR>
+<I>h</I>∑<SUB><I>l</I>=0</SUB><SUP><I>p</I></SUP> <I>cos</I>(2<I>p</I>π/<I>k</I>)=(<I>b</I>−<I>a</I>)/2<BR>
+On a donc :<BR>
+<I>s</I>=∑<SUB><I>l</I>=0</SUB><SUP><I>p</I></SUP> <I>cos</I>(2<I>p</I>π/<I>k</I>)=(sin((2<I>p</I>+1)π/<I>k</I>)+sin(π/<I>k</I>))/(2sin(π/<I>k</I>))<BR>
+donc <I>h</I>=(<I>b</I>−<I>a</I>)/2/<I>s</I><BR>
+et on tape :<BR>
+</P><PRE CLASS="verbatim">//napperon de Cantor ou de Sierpinski k=3,4...
+//utilise isopolygone(a,b,k) k&gt;0 
+//ex polyserp(-1-2*i,1-2*i,5,3); polyserp(-2*i,1-2*i,9,2)
+polyserp(a,b,k,n):={
+local c,h,j,q,p,s,L;
+if (n==0) {return isopolygone(a,b,k);}
+//pour k=3 ou 4  h:=(b-a)/3;
+//pour k=5,6,7,8 h:=(b-a)/2/(cos(evalf(2*pi/k))+1);
+//pour autre k il faut calculer s avec la trigo ou avec
+//s:=1;for (l:=1;l&lt;=iquo(k-1,4);l++){s:=s+cos(2*l*evalf(pi)/k);} 
+p:=iquo(k-1,4);
+s:=(sin(evalf(pi)/k)+sin((2*p+1)*evalf(pi)/k))/
+    2/sin(evalf(pi)/k);
+for (j:=1;j&lt;=k;j++) {
+h:=(b-a)/2/s;
+L:=L,polyserp(a,a+h,k,n-1);
+c:=a+(b-a)*exp(evalf(i*pi*(k-2)/k));
+b:=a;
+a:=c;
+}
+retourne L;
+};
+</PRE><P>On tape :<BR>
+<TT>polyserp(-1-2*i,1-2*i,5,3)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo087.png"><BR>
+
+On tape :<BR>
+<TT>polyserp(-2*i,1-2*i,9,2)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo088.png"></P><P>Le programme du dessin d’un polygone régulier à <I>k</I> cotés peut vous aider
+á comprendre le programme précédent.
+</P><PRE CLASS="verbatim"> 
+// dessin d'un polygone regulier de k cotes
+polyreg(x,y,k):={
+local a,b,c;
+a:=x;
+b:=y;
+DispG();
+for (j:=1;j&lt;=k;j++) {
+c:=a+(b-a)*exp(evalf(i*pi*(k-2)/k));
+segment(a,c);
+b:=a;
+a:=c;
+}
+};
+</PRE><P>Dans <TT>Xcas</TT>, pour tracer un polygone régulier, on utilise la commande 
+<TT>isopolygone</TT>.
+<B>Remarque</B><BR>
+Une faute de signe peut vous faire voir de jolis dessins pour k=7,8...et n=2
+</P><PRE CLASS="verbatim">//utilise polyreg(a,b,k) k&gt;0 k=nb de cotes
+//ex polyserr(-2*i,1-2*i,8,2); polyserr(-2*i,1-2*i,9,2)
+polyserr(a,b,k,n):={
+local c,h,j,q,p,s,L;
+L:=NULL;
+if (n==0) return isopolygone(a,b,k);
+//if (n==0) {return polyreg(a,b,k);}
+p:=iquo(k-1,4);
+s:=(sin(evalf(pi)/k)-sin((2*p+1)*evalf(pi)/k))/
+    2/sin(evalf(pi)/k);
+for (j:=1;j&lt;=k;j++) {
+if ( s!=0) h:=(b-a)/2/s; else h:=(b-a)/3;
+L:=L,polyserr(a,a+h,k,n-1);
+c:=a+(b-a)*exp(evalf(i*pi*(k-2)/k));
+b:=a;
+a:=c;
+}
+return L;
+};
+</PRE><P>On tape :<BR>
+<TT>polyserr(-2*i,1-2*i,8,2)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo089.png"><BR>
+
+Un autre dessin avec des octogones en traçant un octogone au centre et 8 
+octogones dans les angles :
+</P><PRE CLASS="verbatim">polyserp8(a,b,n):={
+local c,h,j,q,p,s,k,L;
+if (n==0) return isopolygone(a,b,8);
+k:=8;
+//if (n==0) {return polyreg(a,b,k);}
+p:=iquo(k-1,4);
+s:=(sin(evalf(pi)/k)+sin((2*p+1)*evalf(pi)/k))/
+    2/sin(evalf(pi)/k);
+h:=(b-a)/2/s;
+L:=polyserp8(a+h+i*h*(sqrt(2)+1),a+h*(sqrt(2)+1)+i*h*(sqrt(2)+1),n-1);
+for (j:=1;j&lt;=k;j++) {
+L:=L,polyserp8(a,a+h,n-1);
+c:=a+(b-a)*exp(evalf(i*pi*(k-2)/k));
+b:=a;
+a:=c;
+h:=(b-a)/2/s;
+}
+return L;
+};
+</PRE><P>On tape :<BR>
+<TT>polyserp8(-2*i,1-2*i,3)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo090.png"><BR>
+</P><H3 CLASS="subsection"><A NAME="htoc168">10.2.4</A>  Le napperon de Cantor ou de Sierpinski avec des points aléatoires</H3><P>
+On tape :
+</P><PRE CLASS="verbatim">Sierpinski(n):={
+local T,j,N,x,y,r;
+T:=triangle_equilateral(-1/2-i*sqrt(3)/4,1/2-i*sqrt(3)/4,affichage=rouge);
+z:=0;
+N:=[0$n];
+N[0]=&lt;point(0,affichage=point_point)
+pour j de 1 jusque n faire
+r:=alea(3);
+si r==0 alors
+  x:=(-1/2+x)/2.;
+  y:=(-sqrt(3)/4+y)/2.;
+sinon
+  si r==1 alors
+    x:=(1/2+x)/2.;
+    y:=(-sqrt(3)/4+y)/2.;
+  sinon
+    x:=x/2.;
+    y:=(sqrt(3)/4+y)/2.;
+  fsi;
+fsi;
+N[j]=&lt;point(x,y,affichage=point_point)
+fpour
+retourne(T,N);
+}
+:;
+</PRE><P>On tape :<BR>
+<TT>Sierpinski(10000)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo091.png"><BR>
+Pour comprendre on reprend le programme :
+</P><PRE CLASS="verbatim">polyserp(a,b,k,n):={
+local c,h,j,q,p,s,L;
+if (n==0) {return isopolygone(a,b,k);}
+//pour k=3 ou 4  h:=(b-a)/3;
+//pour k=5,6,7,8 h:=(b-a)/2/(cos(evalf(2*pi/k))+1);
+//pour autre k il faut calculer s avec la trigo ou avec
+//s:=1;for (l:=1;l&lt;=iquo(k-1,4);l++){s:=s+cos(2*l*evalf(pi)/k);} 
+p:=iquo(k-1,4);
+s:=(sin(evalf(pi)/k)+sin((2*p+1)*evalf(pi)/k))/
+    2/sin(evalf(pi)/k);
+for (j:=1;j&lt;=k;j++) {
+h:=(b-a)/2/s;
+L:=L,polyserp(a,a+h,k,n-1);
+c:=a+(b-a)*exp(evalf(i*pi*(k-2)/k));
+b:=a;
+a:=c;
+}
+retourne L;
+}:;
+</PRE><P>et on tape :<BR>
+<TT>Sierpinski(6),polyserp(-1/2-i*sqrt(3)/4,1/2-i*sqrt(3)/4,3,4)</TT>
+avec pour <TT>Sierpinski(6)</TT> 7 gros points aléatoires de couleurs 
+0,1...6. On a fait 6 tirages qui sont : 2, 1, 1, 1, 0 ,0.<BR>
+ On obtient :<BR>
+<IMG SRC="casgeo092.png">
+</P><H3 CLASS="subsection"><A NAME="htoc169">10.2.5</A>  Le flocon</H3><P>
+Tous les programmes qui sont dans cette section se trouve dans le fichier :<BR>
+<TT>flocon.cas</TT>
+On considère un segment <I>AB</I> et on place las points <I>PQR</I> tels que :<BR>
+3*<I>AP</I>=<I>AB</I><BR>
+3*<I>BQ</I>=<I>BA</I><BR>
+et le triangle <I>PQR</I> est équilatèral direct.<BR>
+On remplace alors le tracé du segment <I>AB</I> par le tracé <I>APRQB</I>.<BR>
+On continue en faisant subir le même traitement aux 4 segments <I>AP</I>,<I>PR</I>,<I>RQ</I>,<I>QB</I>...on s’arrête quand la longueur des segments devient trop petite ou 
+quand la profondeur est nulle.<BR>
+Il y a donc 4 appels récursifs. 
+</P><PRE CLASS="verbatim"> 
+flocon(A,B):={
+local L;
+L:=NULL;
+if (longueur2(A,B)&lt;0.005) {return segment(A,B);}
+L:=L,flocon(A,A+(B-A)/3);
+L:=L,flocon(A+(B-A)/3,A+(B-A)/3*(1+exp(i*pi/3)));
+L:=L,flocon(A+(B-A)/3*(1+exp(i*pi/3)),A+2*(B-A)/3);
+L:=L,flocon(A+2*(B-A)/3,B);
+return L;
+}:;
+</PRE><P>On tape par exemple :<BR>
+<TT>flocon(-1.0,1.0)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casgeo093.png"><BR>
+
+ou avec la profondeur :
+</P><PRE CLASS="verbatim"> 
+floconp(A,B,n):={
+local h,L;
+L:=NULL;
+if (n==0) {return segment(A,B);}
+h:=(B-A)/3;
+L:=L,floconp(A,A+h,n-1);
+L:=L,floconp(A+h,A+h*(1+exp(i*pi/3)),n-1);
+L:=L,floconp(A+h*(1+exp(i*pi/3)),A+2*h,n-1);
+L:=L,floconp(A+2*h,B,n-1);
+return L;
+}:;
+</PRE><P>On tape par exemple :<BR>
+<TT>floconp(-2.0,2.0,5)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casgeo094.png"><BR>
+
+<B>Généralisation</B><BR>
+On coupe le segment initial <I>AB</I> en trois en placant <I>P</I> et <I>Q</I> de façon
+à avoir :<BR>
+<I>AP</I>=<I>a</I>*<I>AB</I><BR>
+<I>BQ</I>=<I>a</I>*<I>BA</I><BR>
+avec 0.25&lt; <I>a</I> &lt;0.5. puis on construit un triangle isocéle <I>PQR</I> tel
+que <I>PR</I>=<I>QR</I>=<I>AP</I> . On remplace le segment <I>AB</I> par les segments <I>APRQB</I> et on recommence le processus. Il y a donc 4 appels récursifs.<BR>
+</P><PRE CLASS="verbatim"> 
+flocong(A,B,a,n):={
+local h,t,L;
+L:=NULL;
+if (n==0) {return segment(A,B);}
+t:=acos((0.5-a)/a);
+h:=(B-A)*a;
+L:=L,flocong(A,A+h,a,n-1);
+L:=L,flocong(A+h,A+h*(1+exp(i*t)),a,n-1);
+L:=L,flocong(A+h*(1+exp(i*t)),B-h,a,n-1);
+L:=L,flocong(B-h,B,a,n-1);
+return L;
+}:;
+</PRE><P>On tape par exemple :<BR>
+<TT>flocong(-2.0,2.0,0.4,4)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casgeo095.png">
+</P><H3 CLASS="subsection"><A NAME="htoc170">10.2.6</A>  Le tapis carré</H3><P>
+Ces programmes se trouvent dans <TT>examples/recur/carre.cxx</TT>.<BR>
+On trace un carré puis puis on partage les cotés de ce carré en trois
+partie égales. On obtient ainsi 9 carrés.<BR>
+On recommence le même processus avec les 8 carrés qui ont un coté 
+commun avec le grand carré et ainsi de suite.....on s’arrête quand les segments à dessiner deviennent trop petits. Il y a donc 8 appels récursifs.<BR>
+On tape dans un éditeur de programme (que l’on ouvre avec <TT>Alt+p</TT>),
+puis on valide avec <TT>OK</TT> :
+</P><PRE CLASS="verbatim"> 
+carre8(A,B):={
+local h,L;
+L:=carre(A,B);
+if (longueur2(A,B)&lt;0.005) return NULL;
+h:=(B-A)/3;
+L:=L,carre8(A,A+h);
+L:=L,carre8(A+h,A+2*h);
+L:=L,carre8(A+2*h,B);
+L:=L,carre8(A+i*h,A+i*h+h);
+L:=L,carre8(A+i*h+2*h,B+i*h);
+L:=L,carre8(A+2*i*h,A+2*i*h+h);
+L:=L,carre8(A+2*i*h+h,A+2*i*h+2*h);
+L:=L,carre8(A+2*i*h+2*h,B+2*i*h);
+return L;
+}:;
+</PRE><P>On tape par exemple :<BR>
+<TT>carre8(-1.0,1.0)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casgeo096.png"><BR>
+
+<B>Autre test d’arrêt</B><BR>
+On peut avoir besion de connaitre le nombre de <I>n</I> de fois que l’on fait 
+le ou les appels récursifs pour avoir un dessin de "profondeur" <I>n</I>. 
+On rajoute pour cela un paramètre qui sera la profondeur.<BR>
+Dans l’exemple ci-dessus, on tape dans un éditeur de programme (que l’on 
+ouvre avec <TT>Alt+p</TT>), puis on valide avec <TT>OK</TT> le programme :
+</P><PRE CLASS="verbatim"> 
+carre8p(A,B,n):={
+local h,L;
+h:=(B-A)/3;
+L:=carre(A,B);
+if (n==0)  return NULL;
+h:=(B-A)/3;
+L:=L,carre8p(A,A+h,n-1);
+L:=L,carre8p(A+h,A+2*h,n-1);
+L:=L,carre8p(A+2*h,B,n-1);
+L:=L,carre8p(A+i*h,A+i*h+h,n-1);
+L:=L,carre8p(A+i*h+2*h,B+i*h,n-1);
+L:=L,carre8p(A+2*i*h,A+2*i*h+h,n-1);
+L:=L,carre8p(A+2*i*h+h,A+2*i*h+2*h,n-1);
+L:=L,carre8p(A+2*i*h+2*h,B+2*i*h,n-1);
+return L;
+}:;
+</PRE><P>On tape par exemple :<BR>
+<TT>carre8p(-1.0,1.0,4)</TT>
+On obtient le même dessin
+</P><H3 CLASS="subsection"><A NAME="htoc171">10.2.7</A>  Une courbe de Péano</H3><P>
+Ces programmes se trouvent dans <TT>examples/recur/peano.cxx</TT>.<BR>
+On trace la diagonale <I>AC</I> d’un carré <I>ABCD</I>.<BR>
+Puis puis on partage les cotés de ce carrés en trois
+partie égales. On obtient ainsi 9 carrés.<BR>
+On remplace alors la diagonale du carré précédent par les
+diagonales des 9 carrés de façon à avoir une ligne continue allant de <I>A</I> à <I>C</I>. On recommence le même processus avec les 9 carrés de façon à avoir une ligne continue allant de <I>A</I> à <I>C</I>, et ainsi de suite.....on s’arrête quand les segments à dessiner deviennent trop petits.<BR>
+On a choisit comme paramètre les affixes des points <I>A</I> et <I>B</I> et d’utiliser la profondeur comme test d’arrêt.<BR>
+On tape dans un éditeur de programme (que l’on ouvre avec <TT>Alt+p</TT>),
+puis on valide avec <TT>OK</TT> :
+ou on utilise la commande :<BR>
+<TT>read("peano.cas")</TT> car ce progrmme se trouve dans le fichier 
+<TT>peano.cas</TT>.
+</P><PRE CLASS="verbatim"> 
+//arc qui remplit le carre de cote x,y 
+peano(x,y,n):={
+local u,v,L;
+u:=(y-x)/3;
+v:=i*u;
+L:=NULL;
+if (n==0) {return segment(x,y+3*v);}
+L:=L,peano(x,x+u,n-1);
+L:=L,peano(x+u+v,x+u,n-1);
+L:=L,peano(x+2*u,y,n-1);
+L:=L,peano(y+v,y+2*v,n-1);
+L:=L,peano(x+2*(u+v),x+u+2*v,n-1);
+L:=L,peano(x+(u+v),x+u+2*v,n-1);
+L:=L,peano(x+2*v,x+2*v+u,n-1);
+L:=L,peano(x+3*v+u,x+u+2*v,n-1);
+L:=L,peano(x+2*(u+v),y+2*v,n-1);
+return L;
+}:;
+</PRE><P>On tape par exemple :<BR>
+<TT>peano(-i,3-i,3)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casgeo097.png"></P><P>Vous pouvez voir les différentes étapes de la construction en faisant 
+successivement <I>n</I>=1,2,3,4 en utilisant le bouton <TT>stop</TT> si le tracé est 
+trop long.</P><H2 CLASS="section"><A NAME="toc54"></A><A NAME="htoc172">10.3</A>  Quelques dessins doublement récursifs</H2><P>
+Dans ce chapitre on va faire des dessins qui obligent à écrire
+plusieurs procédures récursives qui s’appellent l’une l’autre.
+</P><H3 CLASS="subsection"><A NAME="htoc173">10.3.1</A>  Les trapèzes</H3><P>
+On considère les trapèzes <I>ABCD</I> rectangle en <I>A</I> et <I>D</I> et tel que 
+<I>AB</I>=2<I>DC</I>=2<I>AD</I>. On dira que l’on a un trapèze droit si l’angle 
+<I>AB</I>,<I>AS</I>=+π/2 et sinon ce sera un trapèze
+gauche.
+Voici le programme du dessin du trapèze gauche et du trapèze droit :
+(le paramètre <I>a</I> est l’affixe de <I>A</I> et <I>b</I> est l’affixe de <I>B</I>) 
+</P><PRE CLASS="verbatim">trapd(a,b):={
+local c,d,L;
+L:=segment(a,b);
+L:=L,segment(a,a+i*(b-a)/2);
+L:=L,segment(a+i*(b-a)/2,(a+b)/2+i*(b-a)/2);
+L:=L,segment(b,(a+b)/2+i*(b-a)/2);
+retourne L;
+}:;
+trapg(a,b):={
+local c,d,L;
+L:=segment(a,b);
+L:=L,segment(a,a-i*(b-a)/2);
+L:=L,segment(a-i*(b-a)/2,(a+b)/2-i*(b-a)/2);
+L:=L,segment(b,(a+b)/2-i*(b-a)/2);
+retourne L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>trapg(0,10),trapd(10,20)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo098.png"><BR>
+On partage le trapèze droit en 3 trapèzes droits et un trapèze gauche et
+le trapèze gauche en 3 trapèzes gauches et un trapèze droit :<BR>
+<IMG SRC="casgeo099.png"><BR>
+Puis on continue le même processus, on tape :
+(<I>a</I> et <I>b</I> sont les affixes de <I>A</I> et de <I>B</I>, <I>n</I>=1 trace un trapèze, <I>n</I>=2 
+dessine le partage (soit 4 trapèzes), <I>n</I>=3 dessine 16=4<SUP>2</SUP> trapèzes et
+<I>n</I>=4 en dessine 64=4<SUP>3</SUP> etc...)
+</P><PRE CLASS="verbatim">trapdr(a,b,n):={
+local L;
+L:=NULL;
+si n==0 alors retourne NULL; fsi;
+L:=L,trapd(a,b);
+L:=L,trapgr((a+b)/2,a,n-1);
+L:=L,trapdr(a+i*(b-a)/2,a,n-1);
+L:=L,trapdr(a+(b-a)/4+i*(b-a)/4,a+3*(b-a)/4+i*(b-a)/4,n-1);
+L:=L,trapdr((a+b)/2,b,n-1);
+return L;
+}:;
+trapgr(a,b,n):={
+local L;
+L:=NULL;
+si n==0 alors return NULL; fsi;
+L:=trapg(a,b);
+L:=L,trapdr((a+b)/2,a,n-1);
+L:=L,trapgr(a-i*(b-a)/2,a,n-1);
+L:=L,trapgr(b+3*(a-b)/4+i*(a-b)/4,b+(a-b)/4+i*(a-b)/4,n-1);
+L:=L,trapgr((a+b)/2,b,n-1);
+return L;
+}:;
+</PRE><P>On tape :
+<TT>trapgr(10,0,4);trapdr(10,20,4);</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo100.png">
+</P><H3 CLASS="subsection"><A NAME="htoc174">10.3.2</A>  Les sphinx</H3><P>
+Voici un sphinx droit et un sphinx gauche :
+</P><PRE CLASS="verbatim">sphinxd(x,y):={
+local z,u,t,L;
+L:=NULL;
+z:=x+2*(y-x)/3*exp(evalf(pi)*i/3);
+t:= y+(x-y)/3*exp(-evalf(pi)*i/3);
+u:=t+(x-y)/3;
+L:=L,segment(x,z);
+L:=L,segment(z,u);
+L:=L,segment(u,t);
+L:=L,segment(t,y);
+L:=L,segment(y,x);
+return L;
+}:;
+sphinxg(x,y):={
+local z,u,t,L;
+L:=NULL;
+z:=y+2*(x-y)/3*exp(-evalf(pi)*i/3);
+t:= x+(y-x)/3*exp(evalf(pi)*i/3);
+u:=t+(y-x)/3;
+L:=L,segment(y,z);
+L:=L,segment(z,u);
+L:=L,segment(u,t);
+L:=L,segment(t,x);
+L:=L,segment(x,y);
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>sphinxd(0,1),sphinxg(1.2,2.2)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo101.png"><BR>
+
+Voici un sphinx droit et ses 4 petits (composé de trois sphinx gauches et 
+d’un sphinx droit) et un sphinx gauche et ses 4 petits (composé d’un sphinx 
+gauches et de trois sphinx droit) :
+</P><PRE CLASS="verbatim">sphinxd4(x,y):={
+local z,u,t,L;
+L:=NULL;
+z:=x+2*(y-x)/3*exp(3.14*i/3);
+t:= y+(x-y)/3*exp(-3.14*i/3);
+u:=t+(x-y)/3;
+L:=L,segment(x,z);
+L:=L,segment(z,u);
+L:=L,segment(u,t);
+L:=L,segment(t,y);
+L:=L,segment(y,x);
+L:=L,sphinxg(x,(x+y)/2);
+L:=L,sphinxg((x+y)/2,y);
+L:=L,sphinxg(t,t+(x-y)/2);
+L:=L,sphinxd(z,(3*x+z)/4);
+return L;
+}:;
+sphinxg4(x,y):={
+local z,u,t,L;
+L:=NULL;
+z:=y+2*(x-y)/3*exp(-evalf(pi)*i/3);
+t:= x+(y-x)/3*exp(evalf(pi)*i/3);
+u:=t+(y-x)/3;
+L:=L,segment(y,z);
+L:=L,segment(z,u);
+L:=L,segment(u,t);
+L:=L,segment(t,x);
+L:=L,segment(x,y);
+L:=L,sphinxd(x,(x+y)/2);
+L:=L,sphinxd((x+y)/2,y);
+L:=L,sphinxd(t+(y-x)/2,t);
+L:=L,sphinxg((3*y+z)/4,z);
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>sphinxd4(0,1),sphinxg4(1.2,2.2)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo102.png"><BR>
+
+Et voici toute la famille des sphinx droits et toute la famille des sphinx 
+gauches : (<TT>sphinxds(x,y,n)</TT> est une fonction récursive qui utilise la 
+fonction récursive <TT>sphinxgs(x,y,n)</TT> et <TT>sphinxgs(x,y,n)</TT> est une 
+fonction récursive qui utilise la fonction récursive <TT>sphinxds(x,y,n)</TT>).
+</P><PRE CLASS="verbatim">sphinxds(x,y,n):={
+local z,u,t,L;
+if (n==0) return NULL;
+z:=x+2*(y-x)/3*exp(evalf(pi)*i/3);
+t:= y+(x-y)/3*exp(-evalf(pi)*i/3);
+u:=t+(x-y)/3;
+L:=NULL;
+L:=L,segment(x,z);
+L:=L,segment(z,u);
+L:=L,segment(u,t);
+L:=L,segment(t,y);
+L:=L,segment(y,x);
+L:=L,sphinxgs(x,(x+y)/2,n-1);
+L:=L,sphinxgs((x+y)/2,y,n-1);
+L:=L,sphinxgs(t,t+(x-y)/2,n-1);
+L:=L,sphinxds(z,(3*x+z)/4,n-1);
+return L;
+}:;
+
+sphinxgs(x,y,n):={
+local z,u,t,p,L;
+if (n==0) return NULL;
+L:=NULL;
+z:=y+2*(x-y)/3*exp(-evalf(pi)*i/3);
+t:= x+(y-x)/3*exp(evalf(pi)*i/3);
+u:=t+(y-x)/3;
+L:=L,segment(y,z);
+L:=L,segment(z,u);
+L:=L,segment(u,t);
+L:=L,segment(t,x);
+L:=L,segment(x,y);
+L:=L,sphinxds(x,(x+y)/2,n-1);
+L:=L,sphinxds((x+y)/2,y,n-1);
+L:=L,sphinxds(t+(y-x)/2,t,n-1);
+L:=L,sphinxgs((3*y+z)/4,z,n-1);
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>sphinxds(0,1,4),sphinxgs(1.2,2.2,4)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo103.png">
+ou encore en ne dessinant que la dernière génération du sphinx droit ou
+la dernière génération du sphinx gauche :<BR>
+sphindps(-2,2,4) met 0.52s alors que sphinds(-2,2,4) met 0.83s 
+</P><PRE CLASS="verbatim">sphinxdps(x,y,n):={
+local z,u,t,L;
+L:=NULL;
+if (n==1) {return sphinxd(x,y);}
+z:=x+2*(y-x)/3*exp(evalf(pi)*i/3);
+t:= y+(x-y)/3*exp(-evalf(pi)*i/3);
+u:=t+(x-y)/3;
+L:=L,sphinxgps(x,(x+y)/2,n-1);
+L:=L,sphinxgps((x+y)/2,y,n-1);
+L:=L,sphinxgps(t,t+(x-y)/2,n-1);
+L:=L,sphinxdps(z,(3*x+z)/4,n-1);
+return L;
+}:;
+sphinxgps(x,y,n):={
+local z,u,t,p,L;
+L:=NULL;
+if (n==1) {return sphinxg(x,y);}
+z:=y+2*(x-y)/3*exp(-evalf(pi)*i/3);
+t:= x+(y-x)/3*exp(evalf(pi)*i/3);
+u:=t+(y-x)/3;
+L:=L,sphinxdps(x,(x+y)/2,n-1);
+L:=L,sphinxdps((x+y)/2,y,n-1);
+L:=L,sphinxdps(t+(y-x)/2,t,n-1);
+L:=L,sphinxgps((3*y+z)/4,z,n-1);
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>sphinxdps(0,1,4),sphinxgps(1.2,2.2,4)</TT><BR>
+On obtient le même dessin que précédemment.<BR>
+
+Mais si on remplace dans le sphinx droit, un sphinx gauche par un segment et
+dans le sphinx gauche, un sphinx droit par un segment on n’obtient pas la 
+même chose !!!
+</P><PRE CLASS="verbatim">sphinxdpst(x,y,n):={
+local z,u,t,L;
+L:=NULL;
+if (n==1) return sphinxd(x,y);
+z:=x+2*(y-x)/3*exp(evalf(pi)*i/3);
+t:= y+(x-y)/3*exp(-evalf(pi)*i/3);
+u:=t+(x-y)/3;
+L:=L,sphinxgpst(x,(x+y)/2,n-1);
+L:=L,sphinxgpst((x+y)/2,y,n-1);
+L:=L,segment(t,t+(x-y)/3);
+L:=L,sphinxdpst(z,(3*x+z)/4,n-1);
+return L;
+}:;
+
+sphinxgpst(x,y,n):={
+local z,u,t,p,L;
+L:=NULL;
+if (n==1) return sphinxg(x,y);
+z:=y+2*(x-y)/3*exp(-evalf(pi)*i/3);
+t:= x+(y-x)/3*exp(evalf(pi)*i/3);
+u:=t+(y-x)/3;
+L:=L,sphinxdpst(x,(x+y)/2,n-1);
+L:=L,sphinxdpst((x+y)/2,y,n-1);
+L:=L,segment(t+(y-x)/3,t);
+L:=L,sphinxgpst((3*y+z)/4,z,n-1);
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>sphinxdpst(0,1,4),sphinxgpst(1.2,2.2,4)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo104.png">
+</P><H3 CLASS="subsection"><A NAME="htoc175">10.3.3</A>  Le dragon</H3><P>
+On se donne deux points <I>A</I> et <I>B</I> (ou deux nombres complexes <I>a</I> et <I>b</I> qui 
+sont l’affixe de ces points) et on considère le carré <I>ACBD</I> direct ayant
+pour diagonale <I>AB</I>.<BR>
+Le segment <I>AB</I> peut donner naissance à un dragon gauche, pour cela, on 
+remplace le segment <I>AB</I> par les deux côtés
+<I>AD</I> et <I>DB</I> du carré <I>ACBD</I> situé à gauche du vecteur <I>AB</I> ou,<BR>
+le segment <I>AB</I> peut donner naissance à un dragon droit, pour cela, on 
+remplace le segment <I>AB</I> par les deux côtés
+<I>AC</I> et <I>CB</I> du carré <I>ACBD</I> situé à droite du vecteur <I>AB</I>.
+Pour la fabrication du dragon gauche, ces deux segments sont considérés 
+comme allant donner naissance à un dragon gauche (<I>AD</I>) et à un dragon 
+droit (<I>DB</I>) et<BR>
+pour la fabrication du dragon droit, ces deux segments sont considérés 
+comme allant donner naissance à un dragon gauche (<I>AC</I>) et à un dragon
+droit (<I>CB</I>).<BR>
+On a :<BR>
+<I>b</I>−<I>c</I>=<I>i</I>*(<I>a</I>−<I>c</I>) et <I>b</I>−<I>d</I>=−<I>i</I>*(<I>a</I>−<I>d</I>) donc :<BR>
+<I>c</I>=(<I>b</I>−<I>i</I>*<I>a</I>)*(1+<I>i</I>)/2 et <I>d</I>=(<I>b</I>+<I>i</I>*<I>a</I>)*(1−<I>i</I>)/2.<BR>
+On écrit donc en prenant comme test d’arrêt la profondeur <I>n</I> c’est à 
+dire le nombre de générations. 
+</P><PRE CLASS="verbatim">// dessine un dragon dragong(-i,2+i,10)
+//x=a,y=b et d=u
+ dragong(x,y,n):={
+local u,L;
+L:=NULL;
+if (n==0){return segment(x,y);}
+u:=(y+i*x)*(1-i)/2;
+L:=L,dragong(x,u,n-1);
+L:=L,dragond(u,y,n-1);
+return L;
+}:;
+// dessine un dragon dragond(-i,2+i,10)
+//x=a,y=b et c=u
+dragond(x,y,n):={
+local u,L;
+L:=NULL;
+if (n==0){return segment(x,y);}
+u:=(y-i*x)*(1+i)/2;
+L:=L,dragong(x,u,n-1);
+L:=L,dragond(u,y,n-1);
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>dragong(-i,2+i,10)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo105.png"><BR>
+
+<B>Remarque</B><BR>
+Il est facile d’obtenir la courbe du dragon en prenant une longue bande de
+papier que l’on plie <I>n</I> fois sur elle même, toujours dans le même sens.
+Lorsqu’on a pris soin de bien marquer les plis, on obtient un dragon
+lorsqu’on déplie la bande en disposant les plis à angle droit.<BR>
+Ce n’est pas tout à fait ce que l’on a programmer car dans le programme à
+chaque étape on multiplie la longueur du dragon par √<SPAN style="text-decoration:overline">2</SPAN>.<BR>
+Sauriez vous programmer le dragon de la bande de papier ? </P><P>Voici la solution : on remarquera que le dragon droit est réalisé par la
+deuxième moitié de la bande de papier et donc la fonction 
+<TT>dragonpapierd</TT> est la fonction 
+<TT>dragonpapierg</TT> en changeant gauche en droite, et en 
+commençant par la dernière instruction.
+</P><PRE CLASS="verbatim">dragonpapierg(x,y,n):={
+local u,v,a,b;
+DispG();
+if (n==0){segment(x,y);return y;}
+u:=x+(y-x)/2;
+a:=dragonpapierg(x,u,n-1);
+v:=a+(y-x)*i/2;
+b:=dragonpapierd(a,v,n-1);
+return b
+}:;
+
+dragonpapierd(x,y,n):={
+local u,v,a,b;
+DispG();
+if (n==0){segment(x,y); return y;}
+v:=x+(y-x)*i/2;
+b:=dragonpapierg(x,v,n-1);
+u:=b+(y-x)/2;
+a:=dragonpapierd(b,u,n-1);
+return a;
+}:;
+</PRE><P>On tape :<BR>
+<TT>dragonpapierg(-3.0,13,5)</TT><BR>
+On obtient le dragon dans l’écran <TT>DispG</TT> :</P><P>Voici une autre solution où on repère l’arrivée et la direction du 
+dernier trait. Dans ce cas on connait le départ et la direction de départ 
+du dragon droit....mais c’est nettement plus compliqué.
+</P><PRE CLASS="verbatim">dragonpaperg(x,y,n):={
+local u,v,a,b;
+DispG();
+if (n==0){segment(x,y); return (x,y);}
+u:=x+(y-x)/2;
+a:=dragonpaperg(x,u,n-1);
+v:=a[1]+abs((y-x)/(a[1]-a[0]))*(a[1]-a[0])*i/2;
+b:=dragonpaperd(a[1],v,n-1);
+return b;
+}:;
+
+dragonpaperd(x,y,n):={
+local u,v,a,b;
+DispG();
+if (n==0){segment(x,y); return (x,y);}
+u:=x+(y-x)/2;
+a:=dragonpaperg(x,u,n-1);
+v:=a[1]-abs((y-x)/(a[1]-a[0]))*(a[1]-a[0])*i/2;
+b:=dragonpaperd(a[1],v,n-1);
+return b;
+}:;
+</PRE><P>On tape par exemple :<BR>
+<TT>dragonpaperg(-3,13,5)</TT><BR>
+On obtient le dragon dans l’écran <TT>DispG</TT>.
+</P><H3 CLASS="subsection"><A NAME="htoc176">10.3.4</A>  Deux courbes de Péano formée d’arcs de cercle</H3><P>
+Parmi les nombreuses courbes inventées par Péano on va en décrire deux 
+qui sont des courbes rècursives formées par des arcs de cercle.<BR>
+Ces programmes se trouvent dans <TT>examples/recur/peano.cxx</TT>
+</P><H4 CLASS="subsubsection">Une courbe de Péano formée par 13 arcs</H4><P> 
+On écrit la fonction <TT>arcg</TT> (resp <TT>arcd</TT>) qui dessine des arcs 
+définit par le début de l’arc, la fin de l’arc, et de mesure π/3
+(resp −π/3).
+</P><PRE CLASS="verbatim">//arc x y  de mesure +pi/3
+arcg(x,y):={
+return arc(x,y,pi/3);
+};
+//arc x y de de mesure -pi/3
+arcd(x,y):={
+return arc(x,y,-pi/3);
+}:;
+</PRE><P>Puis on écrit la fonction <TT>peanog</TT> (resp <TT>peanod</TT>) :<BR>
+Soient deux points <I>A</I> d’affixe <I>a</I> et <I>B</I> d’affixe <I>b</I>.<BR>
+Pour la fonction <TT>peanog</TT>, on débute par l’arc 
+<I>AB</I> de mesure π/3, situé sur le cercle de centre <I>Cg</I> d’affixe 
+<I>cg</I>=(<I>b</I>−<I>a</I>*<I>exp</I>(<I>i</I>*π/3))*(1−<I>exp</I>(−<I>i</I>*π/3)) que l’on appellera <TT>arcg</TT>.<BR>
+Pour la fonction <TT>peanod</TT>, on débute par l’arc 
+<I>AB</I> de mesure −π/3, situé sur le cercle de centre <I>Cd</I> d’affixe 
+<I>cd</I>=(<I>b</I>−<I>a</I>*<I>exp</I>(−<I>i</I>*π/3))*(1−<I>exp</I>(<I>i</I>*π/3)) que l’on appellera <TT>arcd</TT>.<BR>
+On remplace ensuite <TT>arcg</TT> (resp <TT>arcd</TT>) par 13 arcs de mesure 
+π/3 ou de mesure −π/3 selon le dessin que l’on obtient en tapant :<BR>
+<TT>peanog(-2-2*i,2-2*i,1)</TT> (resp <TT>peanod(-2-2*i,2-2*i,1)</TT>).<BR>
+Ces deux figures sont symétriques.<BR>
+Et on continue en appliquant le même traitement à chacun de ses 13 arcs 
+en remplacant les <TT>arcg</TT> (resp <TT>arcd</TT>) par 13 arcs.
+</P><PRE CLASS="verbatim">// courbe de peano avec 13 arcs
+//par ex peanod(-2-2*i,2-2*i,3)
+peanod(x,y,n):={
+local c1,b,c,d,e1,f,g,h,i1,j,k,l,m,L;
+L:=NULL;
+if (n==0) {return arc(x,y,-pi/3);}
+c1:=x+(y-x)*exp(evalf(pi)*2*i/3)/3;
+b:=x+(y-x)/3*exp(evalf(pi)*i/3);
+c:=x+(y-x)/3*2*exp(evalf(pi)*i/3);
+d:=c+(y-x)/3;
+e1:=b+2*(y-x)/3;
+f:=c1+(y-x)*(15+i*sqrt(3))/18;
+g:=c1+(y-x)*(6+i*sqrt(3))/9;
+h:=f-(y-x)/3;
+i1:=h-i*(y-x)/9*sqrt(3);
+j:=i1+(y-x)/3;
+k:=g-i*2*(y-x)/9*sqrt(3);
+l:=x+(y-x)/3;
+m:=x+2*(y-x)/3;
+L:=L,peanog(x,b,n-1);
+L:=L,peanod(b,c,n-1);
+L:=L,peanod(c,d,n-1);
+L:=L,peanod(d,e1,n-1);
+L:=L,peanod(e1,f,n-1);
+L:=L,peanog(f,g,n-1);
+L:=L,peanog(g,h,n-1);
+L:=L,peanog(h,i1,n-1);
+L:=L,peanod(i1,j,n-1);
+L:=L,peanod(j,k,n-1);
+L:=L,peanog(k,l,n-1);
+L:=L,peanog(l,m,n-1);
+L:=L,peanod(m,y,n-1);
+return L;
+}:;
+peanog(x,y,n):={
+local c1,b,c,d,e1,f,g,h,i1,j,k,l,m,L;
+L:=NULL;
+if (n==0) {return arc(x,y,pi/3);}
+c1:=x+(y-x)*exp(evalf(-2*pi)*i/3)/3;
+b:=x+(y-x)/3*exp(evalf(-pi)*i/3);
+c:=x+(y-x)/3*2*exp(evalf(-pi)*i/3);
+d:=c+(y-x)/3;
+e1:=b+2*(y-x)/3;
+f:=c1+(y-x)*(15-i*sqrt(3))/18;
+g:=c1+(y-x)*(6-i*sqrt(3))/9;
+h:=f-(y-x)/3;
+i1:=h+i*(y-x)/9*sqrt(3);
+j:=i1+(y-x)/3;
+k:=g+i*2*(y-x)/9*sqrt(3);
+l:=x+(y-x)/3;
+m:=x+2*(y-x)/3;
+L:=L,peanod(x,b,n-1);
+L:=L,peanog(b,c,n-1);
+L:=L,peanog(c,d,n-1);
+L:=L,peanog(d,e1,n-1);
+L:=L,peanog(e1,f,n-1);
+L:=L,peanod(f,g,n-1);
+L:=L,peanod(g,h,n-1);
+L:=L,peanod(h,i1,n-1);
+L:=L,peanog(i1,j,n-1);
+L:=L,peanog(j,k,n-1);
+L:=L,peanod(k,l,n-1);
+L:=L,peanod(l,m,n-1);
+L:=L,peanog(m,y,n-1);
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>peanod(-2-2*i,2-2*i,3)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casgeo106.png">
+</P><H4 CLASS="subsubsection">Une courbe <FONT COLOR=red><I>C</I></FONT><SUP>1</SUP> de Péano qui remplit un carré </H4><P>
+On va maintenant décrire la courbe de Péano ternaire qui remplit un carré
+direct de coté <I>XY</I>, en étant <FONT COLOR=red><I>C</I></FONT><SUP>1</SUP> .<BR>
+Soient <I>x</I> est l’affixe de <I>X</I> et <I>y</I> est l’affixe de <I>Y</I>.<BR>
+Le dessin de base est obtenu en tapant:<BR>
+<TT>bases(x,y)</TT><BR>
+il est composé de 8 arcs de cercle de mesure π/2 ou de mesure −π/2
+et débute au point <I>A</I> d’affixe <I>a</I>:=<I>x</I>+(<I>y</I>−<I>x</I>)/6*1+<I>i</I>) et se termine au point
+<I>K</I> d’affixe <I>k</I>, symétrique de <I>A</I> par rapport au centre du carré.<BR>
+Á partir de ce dessin de base on fait la figure un :<BR>
+<TT>un(x,y)</TT><BR>
+qui est composée d’un arc de mesure π/2 commençant au point
+d’affixe :<BR>
+<I>a</I>−(<I>y</I>−<I>x</I>)/3 et se terminant au point <I>A</I> suivi du dessin de base.<BR>
+Á partir de ce dessin de base on fait la figure deux :<BR>
+<TT>deux(x,y)</TT><BR>
+qui est composée d’un arc de mesure π/2 commençant au point
+d’affixe :<BR>
+ <I>a</I>−<I>i</I>*(<I>y</I>−<I>x</I>)/3 et se terminant au point <I>A</I> suivi du dessin de base.<BR>
+On partage le carré en 9 petits carrés et dans chacun des petits carrés
+on trace la figure de base ou la figure de baseun ou la figure de basedeux de façon à obtenir une ligne continue etc....<BR>
+On écrit ensuite les procédures :<BR>
+<TT>peano0</TT> qui débute par la figure <TT>bases</TT>,<BR>
+<TT>peano1</TT> qui débute par la figure <TT>un</TT>,<BR>
+<TT>peano2</TT> qui débute par la figure de <TT>deux</TT>,<BR>
+Taper par exemple <TT>peano0(-1,2,1)</TT> pour voir l’étape 1.<BR>
+</P><PRE CLASS="verbatim">//motif de base
+bases(x,y):={
+local a,b,c,d,e1,f,g,h,i1,k,L;
+L:=NULL;
+h:=(y-x)/3;
+a:=x+h/2+i*h/2;
+b:=a+i*h;
+c:=b+i*h;
+d:=c+h
+e1:=b+h;
+f:=a+h;
+g:=f+h;
+k:=e1+h;
+i1:=d+h;
+L:=L,arc(a,b,pi/2);
+L:=L,arc(c,b,pi/2);
+L:=L,arc(d,c,pi/2);
+L:=L,arc(e1,d,pi/2);
+L:=L,arc(e1,f,pi/2);
+L:=L,arc(f,g,pi/2);
+L:=L,arc(g,k,pi/2);
+L:=L,arc(i1,k,pi/2);
+return L;
+}:;
+//un arc et le motif de base
+un(x,y):={
+local h,a,L;
+L:=NULL;
+h:=(y-x)/3;
+a:=x+h/2+i*h/2;
+L:=L,arc(a-h,a,pi/2);
+L:=L,bases(x,y);
+return L;
+}:;
+//un  autre arc et le motif de base
+deux(x,y):={
+local h,a,L;
+L:=NULL;
+h:=(y-x)/3;
+a:=x+h/2+i*h/2;
+L:=L,arc(a,a-h*i,pi/2);
+L:=L,bases(x,y);
+return L;}:;
+
+//courbe qui remplit un carre debute par le motif bases
+// ex peano0(-1,2,1) ou  peano0(-1,2,3)  
+// utilise bases un deux peano1 peano2
+peano0(x,y,n):={
+local a,h,L;
+if (n==0) {return bases(x,y);}
+L:=NULL;
+h:=(y-x)/3;
+a:=x+h;
+L:=L,peano0(x,a,n-1);
+L:=L,peano2(a+i*h,a,n-1);
+L:=L,peano1(a+h,y,n-1);
+L:=L,peano1(y+i*h,y+2*i*h,n-1);
+L:=L,peano1(a+h+2*i*h,a+2*i*h,n-1);
+L:=L,peano2(a+i*h,a+2*i*h,n-1);
+L:=L,peano2(x+2*i*h,a+2*i*h,n-1);
+L:=L,peano2(a+3*i*h,a+2*i*h,n-1);
+L:=L,peano1(a+h+2*i*h,y+2*i*h,n-1);
+return L;
+}:;
+//courbe qui remplit un carre debute par le motif un
+// ex peano1(-1,2,1) 
+// utilise bases un deux peano2
+peano1(x,y,n):={
+local a,h,L;
+if (n==0) {return un(x,y);}
+L:=NULL;
+h:=(y-x)/3;
+a:=x+h;
+L:=L,peano1(x,a,n-1);
+L:=L,peano2(a+i*h,a,n-1);
+L:=L,peano1(a+h,y,n-1);
+L:=L,peano1(y+i*h,y+2*i*h,n-1);
+L:=L,peano1(a+h+2*i*h,a+2*i*h,n-1);
+L:=L,peano2(a+i*h,a+2*i*h,n-1);
+L:=L,peano2(x+2*i*h,a+2*i*h,n-1);
+L:=L,peano2(a+3*i*h,a+2*i*h,n-1);
+L:=L,peano1(a+h+2*i*h,y+2*i*h,n-1);
+return L;
+}:;
+//courbe qui remplit un carre debute par le motif deux
+// ex peano2(-1,2,1) 
+// utilise bases un deux peano1
+peano2(x,y,n):={
+local a,h,L;
+if (n==0) {return deux(x,y);}
+L:=NULL;h:=(y-x)/3;
+a:=x+h;
+L:=L,peano2(x,a,n-1);
+L:=L,peano2(a+i*h,a,n-1);
+L:=L,peano1(a+h,y,n-1);
+L:=L,peano1(y+i*h,y+2*i*h,n-1);
+L:=L,peano1(a+h+2*i*h,a+2*i*h,n-1);
+L:=L,peano2(a+i*h,a+2*i*h,n-1);
+L:=L,peano2(x+2*i*h,a+2*i*h,n-1);
+L:=L,peano2(a+3*i*h,a+2*i*h,n-1);
+L:=L,peano1(a+h+2*i*h,y+2*i*h,n-1);
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>peano0(-1,2,3)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casgeo107.png"></P><H4 CLASS="subsubsection">Autres courbes : des programmes sans commentaires</H4><H4 CLASS="subsubsection">La courbe de Hibert</H4><P>
+Voici les programmes composées de 4 fonctions, qui dessine la courbe de
+Hilbert dans l’écran <TT>DispG</TT> :
+</P><PRE CLASS="verbatim">//courbe de hilbert par exemple hilg(-2,0,4) est 
+//compos\'e par 4 morceaux hilg hild berg et berd
+//ou hild(0,2,4) ou berg(2,2-2*i,4) ou berd(2,2-2*i,4)
+//le morceau 1
+hilg(x,y,n):={
+local u,v,a,b;
+DispG();
+if (n==0) {segment(x,y);return 0;}
+u:=(y-x)/2;
+v:=u*i;
+hild(x,x+v,n-1);
+hilg(x+v,x+v+u,n-1);
+a:=berg(x+v+u,x+u,n-1);
+b:=berd(a,a+u,n-1);
+};
+//le morceau 2
+hild(x,y,n):={
+local u,v,a,b;
+DispG();
+if (n==0) {segment(x,y);return 0;}
+u:=(y-x)/2;
+v:=u*i;
+hilg(x,x-v,n-1);
+hild(x-v,x-v+u,n-1);
+b:=berd(x-v+u,x+u,n-1);
+a:=berg(b,b+u,n-1);
+};
+//le morceau 3
+berg(x,y,n):={
+local u,v,b;
+DispG();
+if (n==0) {segment(x,y);return y;}
+v:=(x-y)/2;
+u:=-v*i;
+hild(x,x+v,n-1);
+hilg(x+v,x+v+u,n-1);
+b:=berg(x+v+u,x+u,n-1);
+hild(b,b-v,n-1);
+return(b-v);
+};
+//le morceau 4
+berd(x,y,n):={
+local u,v,a;
+DispG();
+if (n==0) {segment(x,y);return y;}
+v:=(x-y)/2;
+u:=-v*i;
+hilg(x,x+v,n-1);
+hild(x+v,x+v-u,n-1);
+a:=berd(x+v-u,x-u,n-1);
+hilg(a,a-v,n-1);
+return a-v;
+};
+</PRE><P>Voici les programmes composées de 4 fonctions, qui dessine la courbe de
+Hilbert dans l’écran de réponse :
+</P><PRE CLASS="verbatim">hilg(x,y,n):={
+local u,v,a,b,L;
+L:=NULL;
+if (n==0) {return segment(x,y);}
+u:=(y-x)/2;
+v:=u*i;
+L:=L,hild(x,x+v,n-1);
+L:=L,hilg(x+v,x+v+u,n-1);
+a:=berg(x+v+u,x+u,n-1);
+L:=L,tail(a);
+a:=a[0];
+b:=berd(a,a+u,n-1);
+L:=L,tail(b);
+b:=b[0];
+return L;
+}:;
+//le morceau 2
+hild(x,y,n):={
+local u,v,a,b,L;
+L:=NULL;
+if (n==0) {return segment(x,y);}
+u:=(y-x)/2;
+v:=u*i;
+L:=L,hilg(x,x-v,n-1);
+L:=L,hild(x-v,x-v+u,n-1);
+b:=berd(x-v+u,x+u,n-1);
+L:=L,tail(b);
+b:=b[0];
+a:=berg(b,b+u,n-1);
+L:=L,tail(a);
+a:=a[0];
+return L;
+}:;
+//le morceau 3
+berg(x,y,n):={
+local u,v,b,L;
+L:=NULL;
+if (n==0) {return y,segment(x,y);}
+v:=(x-y)/2;
+u:=-v*i;
+L:=L,hild(x,x+v,n-1);
+L:=L,hilg(x+v,x+v+u,n-1);
+b:=berg(x+v+u,x+u,n-1);
+L:=L,tail(b);
+b:=b[0];
+L:=L,hild(b,b-v,n-1);
+return (b-v),L;
+}:;
+//le morceau 4
+berd(x,y,n):={
+local u,v,a,L;
+L:=NULL;
+if (n==0) {return y,segment(x,y);}
+v:=(x-y)/2;
+u:=-v*i;
+L:=L,hilg(x,x+v,n-1);
+L:=L,hild(x+v,x+v-u,n-1);
+a:=berd(x+v-u,x-u,n-1);
+L:=L,tail(a);
+a:=a[0];
+L:=L,hilg(a,a-v,n-1);
+return a-v,L;
+}
+:;
+</PRE><P>On tape :<BR>
+<TT>hilg(-2,0,4)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo108.png"><BR>
+ 
+On tape :<BR>
+<TT>hilg(-2,0,5)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo109.png"><BR>
+</P><H4 CLASS="subsubsection">La courbe de Gosper</H4><PRE CLASS="verbatim">//gosper(-2-2*i,2-2*i,2)ou gosper(-2-2*i,2-2*i,3)
+gosper(x,y,n):={
+local a,b,c,d,f,g,L;
+L:=NULL;
+if (n==0) return segment(x,y);
+a:=x+(y-x)/sqrt(7)*exp(evalf(-i*acos(5*sqrt(7)/14)));
+c:=x+(a-x)*exp(evalf(i*pi/3));
+b:=c+a-x;
+d:=c+(a-x)*exp(evalf(2*i*pi/3));
+f:=d+2*(a-x);
+g:=(d+f)/2;
+L:=L,gosper(x,a,n-1);
+L:=L,gosper(b,a,n-1);
+L:=L,gosper(c,b,n-1);
+L:=L,gosper(c,d,n-1);
+L:=L,gosper(d,g,n-1);
+L:=L,gosper(g,f,n-1);
+L:=L,gosper(y,f,n-1);
+};
+</PRE><P>On tape :<BR>
+<TT>gosper(-2-2*i,2-2*i,3)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casgeo110.png"><BR>
+
+On tape :<BR>
+<TT>gosper(-2-2*i,2-2*i,4)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casgeo111.png">
+</P><H4 CLASS="subsubsection">Des plantes et des arbres</H4><P>
+Voici des sapins :
+</P><PRE CLASS="verbatim">//Voici des sapins....sapin(0,2*i)
+sapin(x,y):={
+ local L;
+ L:=NULL;
+ if (abs(x-y)&lt;0.05) {return segment(x,y);}
+ L:=L,sapin(x,x+(y-x)*0.5*exp(i));
+ L:=L,sapin(x,x+(y-x)*0.5*exp(-i));
+ L:=L,segment(x,(3*x+y)/4);
+ L:=L,sapin((3*x+y)/4,y);
+return L;
+}:;
+</PRE><P>On tape : <TT>sapin(0,2*i)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo112.png"><BR>
+
+Voici des fleurs :
+</P><PRE CLASS="verbatim">//Voici des fleurs....fleur(0,2*i)
+fleur(x,y):={
+ local L;
+ L:=NULL;
+ if (abs(x-y)&lt;0.05) {return segment(x,y),cercle(y,(y-x)*0.3);}
+ L:=L,segment(x,y),cercle(y,(y-x)*0.3),cercle(y,(y-x)*0.2);
+ L:=L,fleur(x,x+(y-x)*0.5*exp(i*0.5));
+ L:=L,fleur(x,x+(y-x)*0.5*exp(-i*0.5));
+}:;
+</PRE><P>On tape : <TT>fleur(0,2*i)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo113.png"><BR>
+
+Voici des arbres :
+</P><PRE CLASS="verbatim">arbre1(x,y):={
+ local L;
+ L:=NULL;
+ if (abs(x-y)&lt;0.1) {return segment(x,y);}
+ L:=L,segment(x,(x+y)/2);
+ L:=L,arbre1((x+y)/2,(x+y)/2+(y-x)*0.5*exp(i*0.5));
+ L:=L,arbre1((x+y)/2,(x+y)/2+(y-x)*0.5*exp(-i*0.5));
+return L;
+}:;
+</PRE><P>On tape : <TT>arbre1(0,2*i)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo114.png"><BR>
+et des arbres moins déplumés :
+</P><PRE CLASS="verbatim">arbre2(x,y):={
+ local L;
+ L:=NULL;
+ if (abs(x-y)&lt;0.1) {return segment(x,y);}
+ L:=L,segment(x,(x+y)/2);
+ L:=L,arbre2((x+y)/2,(x+y)/2+(y-x)*0.5*exp(i*0.5));
+ L:=L,arbre2((x+y)/2,(x+y)/2+(y-x)*0.5*exp(-i*0.5));
+ L:=L,arbre2((x+y)/2,(x+y)/2+(y-x)*0.5*exp(i));
+ L:=L,arbre2((x+y)/2,(x+y)/2+(y-x)*0.5*exp(-i));
+return L;
+}:;
+</PRE><P>On tape : <TT>arbre2(0,2*i)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo115.png"><BR>
+et un epineux :
+</P><PRE CLASS="verbatim">arbre3(x,y):={
+ local L;
+ L:=NULL;
+ if (abs(x-y)&lt;0.1) {return segment(x,y);}
+ L:=L,segment(x,(x+y)*0.5);
+ L:=L,arbre3((3*x+y)/4,(3*x+y)/4+(y-x)*0.25*exp(i*0.5));
+ L:=L,arbre3((3*x+y)/4,(3*x+y)/4+(y-x)*0.25*exp(-i*0.5));
+ L:=L,arbre3((x+y)/2,(x+y)/2+(y-x)*0.5*exp(i));
+ L:=L,arbre3((x+y)/2,(x+y)/2+(y-x)*0.5*exp(-i));
+return L;
+}:;
+</PRE><P>On tape : <TT>arbre3(0,2*i)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo116.png"><BR><BR>
+Voici des fougères :
+</P><PRE CLASS="verbatim">//une fougere par ex fougere(-2*i,2*i)
+fougere(x,y):={
+local a,L;
+L:=NULL;
+ if (abs(x-y)&lt;0.2) {return segment(x,y);}
+a:=x+(y-x)*0.15*exp(-i*0.2);
+L:=L,segment(x,a);
+L:=L,fougere(a,a+(y-x)*0.33*exp(i*1.2));
+L:=L,fougere(a,a+(y-x)*0.33*exp(-i*1.2));
+L:=L,fougere(a,a+(y-x)*0.85*exp(-i*0.2));
+return L;
+}:;
+//par ex fougeres(-2*i,2*i,0.05,6)
+fougeres(x,y,t,n):={
+local a,L;
+if (n==0) {return segment(x,(x+y)/2);}
+//a:=x+(y-x)*0.15*exp(-i*t);
+a:=x+(y-x)*0.15;
+L:=NULL;
+L:=L,segment(x,a);
+L:=L,fougeres(a,a+(y-x)*0.33*exp(i*1.2),t,n-1);
+L:=L,fougeres(a,a+(y-x)*0.33*exp(-i*1.2),t,n-1);
+L:=L,fougeres(a,a+(y-x)*0.85*exp(-i*t),t,n-1);
+return L;
+}:;
+</PRE><P>On tape : <TT>fougere(-2*i,2*i)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo117.png"><BR>
+
+On tape : <TT>fougeres(-2*i,2*i,0.05,6)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo118.png"><BR>
+
+Et enfin, le bouquet final :
+</P><PRE CLASS="verbatim">//et le bouquet final bouquet(0,2*i)
+bouquet(x,y):={
+ local L;
+ L:=NULL;
+ if (abs(x-y)&lt;0.1) {return segment(x,y);}
+ L:=L,segment(x,(x+y)*0.5);
+ L:=L,bouquet((3*x+y)/4,(3*x+y)/4+(y-x)*0.25*exp(i*0.5));
+ L:=L,bouquet((3*x+y)/4,(3*x+y)/4+(y-x)*0.25*exp(-i*0.5));
+ L:=L,bouquet((x+y)/2,(x+y)/2+(y-x)*0.5*exp(i));
+ L:=L,bouquet((x+y)/2,(x+y)/2+(y-x)*0.5*exp(-i));
+ L:=L,bouquet((x+y)/2,(x+y)/2+(y-x)*0.5);
+ return L;
+}:;
+</PRE><P>On tape : <TT>bouquet(0,2*i)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casgeo119.png">
+</P>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casgeo009.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo011.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

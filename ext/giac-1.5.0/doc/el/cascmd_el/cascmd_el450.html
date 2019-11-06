@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Εύρεση γραμμικών αναδρομών :  reverse_rsolve</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el449.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el451.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc503">1.52.7</A>  Εύρεση γραμμικών αναδρομών : <TT> reverse_rsolve</TT></H3><P><A NAME="@default737"></A>
+	
+<TT>reverse_rsolve</TT> παίρνει σαν όρισμα ένα διάνυσμα 
+<I>v</I>=[<I>v</I><SUB>0</SUB>,…, <I>v</I><SUB>2<I>n</I>−1</SUB>] των πρώτων 2<I>n</I> όρων μιας ακολουθίας (<I>v</I><SUB><I>n</I></SUB>)
+που υποτίθεται ότι ικανοποιεί μια γραμμική αναδρομική σχέση
+βαθμού το πολύ <I>n</I>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I><SUB><I>n</I></SUB>*<I>v</I><SUB><I>n</I>+<I>k</I></SUB>+⋯+<I>x</I><SUB>0</SUB>*<I>v</I><SUB><I>k</I></SUB>=0 </TD></TR>
+</TABLE><P>
+όπου τα <I>x</I><SUB><I>j</I></SUB> είναι <I>n</I>+1 άγνωστα.<BR>
+	
+<TT>reverse_rsolve</TT> επιστρέφει την λίστα <I>x</I>=[<I>x</I><SUB><I>n</I></SUB>,…,<I>x</I><SUB>0</SUB>]
+των <I>x</I><SUB><I>j</I></SUB> συντελεστών (εάν το <I>x</I><SUB><I>n</I></SUB>≠ 0 ανάγεται στο 1).</P><P>Με άλλα λόγια 	
+<TT>reverse_rsolve</TT> λύνει το γραμμικό σύστημα των 
+<I>n</I> εξισώσεων:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>x</I><SUB><I>n</I></SUB>*<I>v</I><SUB><I>n</I></SUB>+⋯+<I>x</I><SUB>0</SUB>*<I>v</I><SUB>0</SUB></TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>⋮</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>x</I><SUB><I>n</I></SUB>*<I>v</I><SUB><I>n</I>+<I>k</I></SUB>+⋯+<I>x</I><SUB>0</SUB>*<I>v</I><SUB><I>k</I></SUB></TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>⋮</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>x</I><SUB><I>n</I></SUB>*<I>v</I><SUB>2*<I>n</I>−1</SUB>+⋯+<I>x</I><SUB>0</SUB>*<I>v</I><SUB><I>n</I>−1</SUB></TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP>0</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Ο πίνακας <I>A</I> του συστήματος έχει <I>n</I> γραμμές και <I>n</I>+1 στήλες :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>A</I>=[[<I>v</I><SUB>0</SUB>,<I>v</I><SUB>1</SUB>,…,<I>v</I><SUB><I>n</I></SUB>],[<I>v</I><SUB>1</SUB>,<I>v</I><SUB>2</SUB>,…,<I>v</I><SUB><I>n</I>−1</SUB>],…,[<I>v</I><SUB><I>n</I>−1</SUB>,<I>v</I><SUB><I>n</I></SUB>,…,<I>v</I><SUB>2<I>n</I>−1</SUB>]] </TD></TR>
+</TABLE><P>
+	
+<TT>reverse_rsolve</TT> επιστρέφει την λίστα <I>x</I>=[<I>x</I><SUB><I>n</I></SUB>,…,<I>x</I><SUB>1</SUB>,<I>x</I><SUB>0</SUB>] με <I>x</I><SUB><I>n</I></SUB>=1
+και <I>x</I> λύση του συστήματος <I>A</I>*	
+ <TT><I>revlist</I></TT>(<I>x</I>), δηλαδή <I>A</I> επί την ανεστραμένη λίστα <I>x</I>.</P><P><B>Παραδείγματα</B>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Βρείτε μια ακολουθία που ικανοποιεί μια γραμμική αναδρομή βαθμού το πολύ
+2 και της οποίας τα πρώτα στοιχεία είναι 1, -1, 3, 3.<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>reverse_rsolve([1,-1,3,3])</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[1,-3,-6]</TT></DIV> 
+Έτσι, <I>x</I><SUB>0</SUB>=−6, <I>x</I><SUB>1</SUB>=−3, <I>x</I><SUB>2</SUB>=1 και η αναδρομική σχέση είναι
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>v</I><SUB><I>k</I>+2</SUB> −3<I>v</I><SUB><I>k</I>+1</SUB> −6 <I>v</I><SUB><I>k</I></SUB> =0</TD></TR>
+</TABLE>
+Χωρίς την εντολή 	
+<TT>reverse_rsolve</TT>, θα γράφαμε τον πίνακα του συστήματος:
+	
+<TT>[[1,-1,3],[-1,3,3]]</TT> και θα χρησιμοποιούσαμε την εντολή 	
+<TT>rref</TT>:<BR>
+	
+<TT>rref([[1,-1,3],[-1,3,3]]).</TT><BR>
+Η έξοδος είναι ο πίνακας 	
+<TT>[[1,0,6],[0,1,3]]</TT> και επομένως <I>x</I><SUB>0</SUB>=−6 και <I>x</I><SUB>1</SUB>=−3 
+(επειδή <I>x</I><SUB>2</SUB>=1).</LI><LI CLASS="li-itemize">Βρείτε μια ακολουθία που επαληθεύει μια γραμμική αναδρομή βαθμού το πολύ
+3 και της οποίας τα πρώτα στοιχεία είναι 1, -1, 3, 3,-1, 1.<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>reverse_rsolve([1,-1,3,3,-1,1])</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[1,(-1)/2,1/2,-1]</TT></DIV> 
+Επομένως, <I>x</I><SUB>0</SUB>=−1, <I>x</I><SUB>1</SUB>=1/2, <I>x</I><SUB>2</SUB>=−1/2, <I>x</I><SUB>3</SUB>=1, και η αναδρομική
+σχέση είναι
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>v</I><SUB><I>k</I>+3</SUB> −</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>v</I><SUB><I>k</I>+2</SUB> +</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>v</I><SUB><I>k</I>+1</SUB> −<I>v</I><SUB><I>k</I></SUB> =0 </TD></TR>
+</TABLE>
+Χωρίς την 	
+<TT>reverse_rsolve</TT>, θα γράφαμε τον πίνακα του συστήματος :<BR>
+<TT>[[1,-1,3,3],[-1,3,3,-1],[3,3,-1,1]]</TT> και θα χρησιμοποιούσαμε την εντολή 	
+<TT>rref</TT> :<BR>
+	
+<TT>rref([[1,-1,3,3],[-1,3,3,-1],[3,3,-1,1]])</TT><BR>
+Η έξοδος είναι ο πίνακας 	
+<TT>[1,0,0,1],[0,1,0,1/-2],[0,0,1,1/2]]</TT>
+και επομένως <I>x</I><SUB>0</SUB>=−1, <I>x</I><SUB>1</SUB>=1/2 και <I>x</I><SUB>2</SUB>=−1/2 (επειδή <I>x</I><SUB>3</SUB>=1).
+</LI></UL><HR>
+<A HREF="cascmd_el449.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el451.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Pour recréer ou créer une image : writergb</title>
+</head>
+<body >
+<a href="cascmd_fr1116.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr1118.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1353" class="subsection">12.2.4  Pour recréer ou créer une image : <span style="font-family:monospace">writergb</span></h3>
+<p><a id="hevea_default2162"></a>
+<span style="font-family:monospace">writergb</span> permet de stocker une image lue avec <span style="font-family:monospace">readrgb</span> dans
+un fichier de suffixe <span style="font-family:monospace">.png</span><br>
+ou <br>
+de créer une image et de la stocker dans un fichier de suffixe <span style="font-family:monospace">.png</span>.<br>
+On peut créer cette image avec des niveaux de gris ou avec des
+niveaux de différentes couleurs.
+</p><ul class="itemize"><li class="li-itemize">
+On posséde une variable (par exemple <span style="font-family:monospace">a</span>) contenant une image lue
+avec <span style="font-family:monospace">readrgb</span>. <br>
+<span style="font-family:monospace">writergb</span> a deux arguments : le nom du fichier dans lequel on veut stocker
+la nouvelle image et une liste contenant <span style="font-family:monospace">a[0]</span> (liste contenant le nombre
+de canaux et les dimensions de la matrice des pixels de cette image), puis les
+couleurs de cette image qui sont les matrices <span style="font-family:monospace">a[1]</span> pour la couleur rouge,
+<span style="font-family:monospace">a[2]</span> pour la couleur verte, <span style="font-family:monospace">a[3]</span> pour la transparence et <span style="font-family:monospace">a[4]</span>
+pour la couleur bleu.<br>
+La transparence permet de superposer plusieurs images : sa valeur va de 0 à
+255 (si la transparence vaut 0 c’est un cache !).<br>
+On tape pour créer une image avec <span style="font-family:monospace">Xcas</span> :
+<pre class="verbatim">affichage(rectangle(0,100,1/4),1+rempli);
+affichage(rectangle(100,200,1/4),2+rempli);
+affichage(rectangle(25*i,100+25*i,1/4),3+rempli);
+affichage(rectangle(100+25*i,200+25*i,1/4),4+rempli)
+</pre>
+On obtient :<br>
+<img src="cascmd_fr011.png"><br>
+On sauve cette image (bouton <span style="font-family:monospace">M</span> situé à gauche) sous le nom
+<span style="font-family:monospace">image1234</span>, ce qui crèe :<br>
+<span style="font-family:monospace">image1234.eps</span>, <span style="font-family:monospace">image1234.jpg</span>, <span style="font-family:monospace">image1234.png</span>,
+<span style="font-family:monospace">image1234.pdf</span>.
+On tape :
+<div class="center"><span style="font-family:monospace">a:=readrgb("image1234.jpg")</span></div>
+<div class="center"><span style="font-family:monospace">a[0]</span></div>
+On obtient : <span style="font-family:monospace">[4,363,908]</span><br>
+Puis on tape :
+<div class="center"><span style="font-family:monospace">writergb("image2134.png",[a[0],a[2],a[1],a[3],a[4]])</span></div>
+On obtient (le rouge est devenu vert et le vert est devenu rouge) :<br>
+<img src="cascmd_fr012.png"><br>
+Ou on tape dans un terminal :
+<div class="center"><span style="font-family:monospace">gimp "image2134.png"</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">l’image de départ dans laquelle le rouge est devenu vert et le vert est devenu rouge</span></div>
+Essayer de crèer une image :
+<div class="center"><span style="font-family:monospace">writergb("essai1.png",[[4,2,2],[[255,0],[0,0]], [[0,255],[0,0]],[[255,125],[255,255]], [[0,0],[255,0]]])</span></div>
+vous obtenez (avec un vert attenué du au 125 de la 3ième matrice):<br>
+<img src="cascmd_fr013.png">
+ou encore essayer :
+<div class="center"><span style="font-family:monospace">writergb("image1.png",[[4,2,3],[[255,0,255],[0,255,0]], [[0,0,255],[0,0,0]],[[255,125,125],[255,255,255]], [[0,0,0],[255,255,0]]])</span></div>
+</li><li class="li-itemize">On peut aussi créer et stocker des images, au format PNG avec une
+version simplifiée de la syntaxe : pas d’argument correspondant au nombre
+de canaux et aux dimensions de la matrice des pixels de cette image ni de
+matrice correspondant à la transparence.<br>
+<span style="font-family:monospace">writergb</span> a alors deux ou quatre arguments : le nom du fichier dans lequel
+on veut stocker la nouvelle image et la matrice des niveaux de gris des pixels,
+ou 3 matrices (du rouge, du vert et du bleu) donnant la couleur RGB des
+pixels.<br>
+Par exemple :
+<div class="center"><span style="font-family:monospace">writergb("image2.png",[[65,125],[185,200]])</span></div>
+crée et affiche une image 2x2 pixels au format PNG en 4 niveaux de gris
+(0 noir, 255 blanc)
+<div class="center"><span style="font-family:monospace">writergb("image3.png",[[255,250],[0,120]],[[0,255],[0,0]], [[0,0],[255,100]])</span></div>
+crée et affiche une image 2x2 pixels au format PNG en RGBA avec 256 niveaux
+pour chaque couleur (rouge, bleu, vert). Ici la première ligne rouge, jaune 
+(mélange de rouge (240) et vert (255)) et la deuxième ligne est bleu,violet (mélange de rouge(120) et de bleu (100)).<br>
+Essayez :
+<div class="center"><span style="font-family:monospace">writergb("essai2.png",[[4,300,300],makemat(0,300,300), makemat(0,300,300), makemat(255,300,300), makemat(0,300,300)+idn(300)*255])</span></div>
+<div class="center"><span style="font-family:monospace">writergb("essai3.png",[[4,300,300],makemat(250,100,100)+ranm(100,100), makemat(0,100,100)+ranm(100,100), makemat(255,100,100), makemat(0,100,100)+ranm(100,100)])</span></div>
+<span style="font-weight:bold">Remarque</span><br>
+Il y a 2 choses distinctes: le nombre de points de l’image numerisée et la 
+représentation graphique dans <span style="font-family:monospace">Xcas</span> qui se fait dans un rectangle avec 
+des coordonnées. Dans [4,300,100] il y a 300 points horizontalement et 100 
+verticalement, si on met l’image dans un rectangle du plan, selon l’echelle 
+choisie pour le graphique horizontalement et verticalement, l’image 300x100 
+peut être toute petite ou très grande. Si c’est tres grand chaque point de 
+l’image numerisée originale sera représenté par un petit rectangle qui 
+occupera plusieurs pixels physiques sur l’écran.
+</li></ul>
+<hr>
+<a href="cascmd_fr1116.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr1118.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

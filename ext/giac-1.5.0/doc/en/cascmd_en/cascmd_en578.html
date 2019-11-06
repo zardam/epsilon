@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Simplex algorithm: simplex_reduce</title>
+</head>
+<body >
+<a href="cascmd_en577.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en579.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec681" class="subsection">5.52.1  Simplex algorithm: <span style="font-family:monospace">simplex_reduce</span></h3>
+<p>
+<span style="font-weight:bold">The simple case</span><br>
+The function <span style="font-family:monospace">simplex_reduce</span> makes the reduction
+by the simplex algorithm to find :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">max(<span style="font-style:italic">c</span>.<span style="font-style:italic">x</span>),     <span style="font-style:italic">A</span>.<span style="font-style:italic">x</span> ≤ <span style="font-style:italic">b</span>, <span style="font-style:italic">x</span> ≥ 0, <span style="font-style:italic">b</span>≥ 0 </td></tr>
+</table><p>
+where <span style="font-style:italic">c</span>,<span style="font-style:italic">x</span> are vectors of ℝ<sup><span style="font-style:italic">n</span></sup>, <span style="font-style:italic">b</span>≥ 0 is a vector in
+ℝ<sup><span style="font-style:italic">p</span></sup> and <span style="font-style:italic">A</span> is a matrix of <span style="font-style:italic">p</span> rows and <span style="font-style:italic">n</span> columns.<br>
+<span style="font-family:monospace">simplex_reduce</span> takes as argument <span style="font-family:monospace">A,b,c</span> and
+returns <span style="font-family:monospace">max(c.x)</span>, the augmented solution of <span style="font-family:monospace">x</span>
+(augmented since the algorithm works by adding rows(<span style="font-style:italic">A</span>) auxiliary
+variables) and the reduced matrix.<br>
+<span style="font-weight:bold">Example</span><br>
+Find </p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">max(<span style="font-style:italic">X</span>+2<span style="font-style:italic">Y</span>)   where 
+</td><td class="dcell">⎧<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" >(<span style="font-style:italic">X</span>,<span style="font-style:italic">Y</span>)</td><td style="text-align:center;white-space:nowrap" >≥</td><td style="text-align:left;white-space:nowrap" >0 </td></tr>
+<tr><td style="text-align:right;white-space:nowrap" >−3<span style="font-style:italic">X</span> +2<span style="font-style:italic">Y</span></td><td style="text-align:center;white-space:nowrap" >≤</td><td style="text-align:left;white-space:nowrap" >3</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">X</span> +<span style="font-style:italic">Y</span></td><td style="text-align:center;white-space:nowrap" >≤</td><td style="text-align:left;white-space:nowrap" >4
+</td></tr>
+</table></td><td class="dcell">
+</td></tr>
+</table><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">simplex_reduce([[-3,2],[1,1]],[3,4],[1,2])</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">7,[1,3,0,0],[[0,1,1/5,3/5,3],[1,0,(-1)/5,2/5,1], [0,0,1/5,8/5,7]]</span></div><p>
+Which means that the maximum of <span style="font-family:monospace">X+2Y</span> under these conditions
+is <span style="font-family:monospace">7</span>, it is obtained for <span style="font-family:monospace">X=1,Y=3</span>
+because <span style="font-family:monospace">[1,3,0,0]</span> is the augmented solution and the reduced matrix is :<br>
+<span style="font-family:monospace">[[0,1,1/5,3/5,3],[1,0,(-1)/5,2/5,1], [0,0,1/5,8/5,7]]</span>.</p><p><span style="font-weight:bold">A more complicated case that reduces to the simple case</span><br>
+With the former call of <span style="font-family:monospace">simplex_reduce</span>, we have to :
+</p><ul class="itemize"><li class="li-itemize">
+rewrite constraints to the form <span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub> ≥ 0,
+</li><li class="li-itemize">remove variables without constraints,
+</li><li class="li-itemize">add variables such that all the constraints have positive components.
+</li></ul><p>
+For example, find :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><a id="eq:lpexample"></a>
+min(2<span style="font-style:italic">x</span>+<span style="font-style:italic">y</span>−<span style="font-style:italic">z</span>+4)      where 
+</td><td class="dcell">⎧<br>
+⎪<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">x</span></td><td style="text-align:center;white-space:nowrap" >≤</td><td style="text-align:left;white-space:nowrap" >1 </td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">y</span></td><td style="text-align:center;white-space:nowrap" >≥</td><td style="text-align:left;white-space:nowrap" >2 </td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">x</span>+3<span style="font-style:italic">y</span>−<span style="font-style:italic">z</span></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" >2 </td></tr>
+<tr><td style="text-align:right;white-space:nowrap" >2<span style="font-style:italic">x</span>−<span style="font-style:italic">y</span>+<span style="font-style:italic">z</span></td><td style="text-align:center;white-space:nowrap" >≤</td><td style="text-align:left;white-space:nowrap" >8</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" >−<span style="font-style:italic">x</span>+<span style="font-style:italic">y</span></td><td style="text-align:center;white-space:nowrap" >≤</td><td style="text-align:left;white-space:nowrap" >5
+</td></tr>
+</table></td><td class="dcell">
+</td><td class="dcell">
+    (6)</td></tr>
+</table><p>
+Let <span style="font-style:italic">x</span>=1−<span style="font-style:italic">X</span>, <span style="font-style:italic">y</span>=<span style="font-style:italic">Y</span>+2, <span style="font-style:italic">z</span>=5−<span style="font-style:italic">X</span>+3<span style="font-style:italic">Y</span>
+the problem is equivalent to finding the minimum of
+(−2<span style="font-style:italic">X</span>+<span style="font-style:italic">Y</span>−(5−<span style="font-style:italic">X</span>+3<span style="font-style:italic">Y</span>)+8)
+where :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">X</span></td><td style="text-align:center;white-space:nowrap" >≥</td><td style="text-align:left;white-space:nowrap" >0 </td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">Y</span></td><td style="text-align:center;white-space:nowrap" >≥</td><td style="text-align:left;white-space:nowrap" >0 </td></tr>
+<tr><td style="text-align:right;white-space:nowrap" >2(1−<span style="font-style:italic">X</span>)−(<span style="font-style:italic">Y</span>+2)+ 5−<span style="font-style:italic">X</span>+3<span style="font-style:italic">Y</span></td><td style="text-align:center;white-space:nowrap" >≤</td><td style="text-align:left;white-space:nowrap" >8</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" >−(1−<span style="font-style:italic">X</span>) +(<span style="font-style:italic">Y</span>+2)</td><td style="text-align:center;white-space:nowrap" >≤</td><td style="text-align:left;white-space:nowrap" >5
+</td></tr>
+</table></td><td class="dcell">
+</td></tr>
+</table><p>
+or to find the minimum of :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">(−<span style="font-style:italic">X</span>−2<span style="font-style:italic">Y</span>+3)     where 
+</td><td class="dcell">⎧<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">X</span></td><td style="text-align:center;white-space:nowrap" >≥</td><td style="text-align:left;white-space:nowrap" >0 </td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">Y</span></td><td style="text-align:center;white-space:nowrap" >≥</td><td style="text-align:left;white-space:nowrap" >0 </td></tr>
+<tr><td style="text-align:right;white-space:nowrap" >−3<span style="font-style:italic">X</span>+2<span style="font-style:italic">Y</span></td><td style="text-align:center;white-space:nowrap" >≤</td><td style="text-align:left;white-space:nowrap" >3</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">X</span> +<span style="font-style:italic">Y</span></td><td style="text-align:center;white-space:nowrap" >≤</td><td style="text-align:left;white-space:nowrap" >4
+</td></tr>
+</table></td><td class="dcell">
+</td></tr>
+</table><p>
+i.e. to find the maximum of −(−<span style="font-style:italic">X</span>−2<span style="font-style:italic">Y</span>+3)=<span style="font-style:italic">X</span>+2<span style="font-style:italic">Y</span>−3
+under the same conditions, hence it is the same problem as
+to find the maximum of <span style="font-style:italic">X</span>+2<span style="font-style:italic">Y</span> seen before. We found <span style="font-family:monospace">7</span>,
+hence, the result here is <span style="font-family:monospace">7-3=4</span>.</p><p><span style="font-weight:bold">The general case</span><br>
+A linear programming problem may not in general be directly
+reduced like above to the simple case. The reason is that
+a starting vertex must be found before applying the simplex
+algorithm. Therefore,
+<span style="font-family:monospace">simplex_reduce</span> may be called by specifying this starting
+vertex, in that case, all the arguments including the starting
+vertex are grouped in a single matrix.</p><p>We first illustrate this kind
+of call in the simple case where the starting point does not
+require solving an auxiliary problem.
+If <span style="font-family:monospace">A</span> has <span style="font-style:italic">p</span> rows and <span style="font-style:italic">n</span> columns and if we define :
+</p><div class="center">
+<span style="font-family:monospace">B:=augment(A,idn(p));</span> <span style="font-family:monospace">C:=border(B,b);</span> <br>
+<span style="font-family:monospace">d:=append(-c,0$(p+1));</span> <span style="font-family:monospace">D:=augment(C,[d]);</span>
+</div><p>
+<span style="font-family:monospace">simplex_reduce</span> may be called with <span style="font-family:monospace">D</span> as single argument.<br>
+For the previous example, input :
+</p><div class="center"><span style="font-family:monospace">A:=[[-3,2],[1,1]];B:=augment(A,idn(2)); C:=border(B,[3,4]);
+D:=augment(C,[[-1,-2,0,0,0]])</span></div><p>
+Here
+<span style="font-family:monospace">C=[[-3,2,1,0,3],[1,1,0,1,4]]</span><br>
+and <span style="font-family:monospace">D=[[-3,2,1,0,3],[1,1,0,1,4],[-1,-2,0,0,0]]</span><br>
+Input :
+</p><div class="center"><span style="font-family:monospace">simplex_reduce(D)</span></div><p>
+Output is the same result as before.</p><p><span style="font-weight:bold">Back to the general case.</span><br>
+The standard form of a linear programming problem is similar
+to the simplest case above, but with <span style="font-style:italic">Ax</span>=<span style="font-style:italic">b</span> (instead of <span style="font-style:italic">Ax</span>≤ <span style="font-style:italic">b</span>)
+under the conditions <span style="font-style:italic">x</span>≥ 0. We may further assume that <span style="font-style:italic">b</span>≥ 0
+(if not, one can change the sign of the corresponding line).
+</p><ul class="itemize"><li class="li-itemize">
+The first problem is to find an <span style="font-style:italic">x</span> in the <span style="font-style:italic">Ax</span>=<span style="font-style:italic">b</span>, <span style="font-style:italic">x</span>≥ 0 domain.
+Let <span style="font-style:italic">m</span> be the number of lines of <span style="font-style:italic">A</span>. Add artificial variables
+<span style="font-style:italic">y</span><sub>1</sub>,...,<span style="font-style:italic">y</span><sub><span style="font-style:italic">m</span></sub> and maximize
+−∑<span style="font-style:italic">y</span><sub><span style="font-style:italic">i</span></sub> under the conditions <span style="font-style:italic">Ax</span>=<span style="font-style:italic">b</span>, <span style="font-style:italic">x</span> ≥ 0, <span style="font-style:italic">y</span> ≥ 0
+starting with initial value 0 for <span style="font-style:italic">x</span> variables
+and <span style="font-style:italic">y</span>=<span style="font-style:italic">b</span>
+(to solve this with <span style="font-family:monospace">Xcas</span>, call <code>simplex_reduce</code> with
+a single matrix argument obtained by augmenting <span style="font-style:italic">A</span> by the
+identity, <span style="font-style:italic">b</span> unchanged and an artificial
+<span style="font-style:italic">c</span> with 0 under <span style="font-style:italic">A</span> and 1 under the identity).
+If the maximum exists and is 0, the identity submatrix above the last
+column corresponds to an <span style="font-style:italic">x</span> solution, we may forget the artificial
+variables (they are 0 if the maximum is 0).
+</li><li class="li-itemize">Now we make a second call to <code>simplex_reduce</code>
+with the original <span style="font-style:italic">c</span> and the value of <span style="font-style:italic">x</span> we found in the domain.
+</li><li class="li-itemize">Example : find the minimum of 2<span style="font-style:italic">x</span>+3<span style="font-style:italic">y</span>−<span style="font-style:italic">z</span>+<span style="font-style:italic">t</span> with
+<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>,<span style="font-style:italic">t</span>≥ 0 and :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎨<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" >−<span style="font-style:italic">x</span>−<span style="font-style:italic">y</span>+<span style="font-style:italic">t</span></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">y</span>−<span style="font-style:italic">z</span>+<span style="font-style:italic">t</span></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" >3
+</td></tr>
+</table></td><td class="dcell">
+</td></tr>
+</table>
+This is equivalent to find the opposite of the maximum of −(2<span style="font-style:italic">x</span>+3<span style="font-style:italic">y</span>−<span style="font-style:italic">z</span>+<span style="font-style:italic">t</span>).
+Let us add two artificial variables <span style="font-style:italic">y</span><sub>1</sub> and <span style="font-style:italic">y</span><sub>2</sub>,
+<pre class="verbatim">simplex_reduce([[-1,-1,0,1,1,0,1],
+[0,1,-1,1,0,1,3],
+[0,0,0,0,1,1,0]])
+</pre>
+Output: optimum=0, artificial variables=0, and the matrix
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎛<br>
+⎜<br>
+⎜<br>
+⎝</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >−1/2</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >−1/2</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >1/2</td><td style="text-align:center;white-space:nowrap" >1/2</td><td style="text-align:center;white-space:nowrap" >2 </td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >1/2</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >−1/2</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >−1/2</td><td style="text-align:center;white-space:nowrap" >1/2</td><td style="text-align:center;white-space:nowrap" >1 </td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >0
+</td></tr>
+</table></td><td class="dcell">⎞<br>
+⎟<br>
+⎟<br>
+⎠</td></tr>
+</table>
+Columns 2 and 4 are the columns of the identity (in lines 1 and 2).
+Hence <span style="font-style:italic">x</span>=(0,1,0,2) is an initial point in the domain.
+We are reduced to solve the initial problem, after replacing the
+lines of <span style="font-style:italic">Ax</span>=<span style="font-style:italic">b</span> by the two first lines of the answer above,
+removing the last columns corresponding to the artificial variables.
+We add <span style="font-style:italic">c</span>.<span style="font-style:italic">x</span> as last line
+<pre class="verbatim">simplex_reduce([[-1/2,0,-1/2,1,2],
+[1/2,1,-1/2,0,1],[2,3,-1,1,0]])
+</pre>
+Output: maximum=-5, hence the minimum of the opposite is 5,
+obtained for (0,1,0,2), after replacement
+<span style="font-style:italic">x</span>=0, <span style="font-style:italic">y</span>=1, <span style="font-style:italic">z</span>=0 and <span style="font-style:italic">t</span>=2.
+</li></ul><p>For more details, search google for <code>simplex algorithm</code>.</p>
+<hr>
+<a href="cascmd_en577.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en579.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

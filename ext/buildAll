@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -e
+
+function build {
+  (
+    cd gmp-6.1.2
+    ./configure --host=arm-none-eabi --disable-assembly CFLAGS="$2"
+    make -j $(nproc)
+    cp .libs/libgmp.a ../$1/lib/
+    make distclean
+  )
+
+  (
+    cd mpfr-4.0.0
+    ./configure --with-gmp=../$1 --host=arm-none-eabi --disable-shared CFLAGS="$2"
+    make -j $(nproc)
+    cp src/.libs/libmpfr.a ../$1/lib/
+    make distclean
+  )
+
+  (
+    cd mpfi-1.5.3
+    ./configure --with-mpfr=$(pwd)/../$1 --with-gmp=$(pwd)/../$1 --host=arm-none-eabi CFLAGS="$2"
+    make -j $(nproc)
+    cp src/.libs/libmpfi.a ../$1/lib/
+    make distclean
+  )
+
+  (
+    cd giac-1.5.0/src
+    rm -f *.o *.a
+    make -f Makefile.numworks.$1 -j $(nproc)
+    cp libgiac.a ../../$1/lib/
+    rm -f *.o *.a
+  )
+}
+
+build n0100 "-Os -fdata-sections -ffunction-sections -DNDEBUG -mthumb -march=armv7e-m -mfloat-abi=hard -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -fno-strict-aliasing --specs=nosys.specs"
+build n0110 "-Os -fdata-sections -ffunction-sections -DNDEBUG -mthumb -march=armv7e-m -mfloat-abi=hard -mcpu=cortex-m7 -mfpu=fpv5-sp-d16 -fno-strict-aliasing --specs=nosys.specs"

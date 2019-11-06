@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>Pour s’amuser avec le tableur de Xcas</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascas005.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas007.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc101">Chapitre 6</A>  Pour s’amuser avec le tableur de <TT>Xcas</TT></H1><H2 CLASS="section"><A NAME="toc37"></A><A NAME="htoc102">6.1</A>  Nombre de carrés dans un échiquier</H2><P>
+On cherche le nombre de carrés <I>NC</I>(<I>n</I>) que l’on peut former sur un échiquier
+de dimension <I>n</I>*<I>n</I>.<BR>
+On veut faire une fiche de travail pour que les élèves devine et démontre
+que :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>NC</I>(<I>n</I>)=1<SUP>2</SUP>+2<SUP>2</SUP>+3<SUP>2</SUP>+...+<I>n</I><SUP>2</SUP>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I>(<I>n</I>+1)(2<I>n</I>+1)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">6</TD></TR>
+</TABLE></TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc103">6.1.1</A>  L’énoncé</H3><P>
+On rappelle que 1+2+...<I>n</I>=<I>n</I>(<I>n</I>+1)/2.
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Combien peut-on former de carrés de côtés égal à 1 sur un 
+échiquier de dimension <I>p</I>*<I>p</I> ?
+</LI><LI CLASS="li-enumerate">Combien peut-on former de carrés de côtés égal à <I>n</I> sur un 
+échiquier de dimension <I>n</I>*<I>n</I> ?
+</LI><LI CLASS="li-enumerate">Expliquer pourquoi le nombre de carrés de côtés égal à <I>n</I>−1 
+sur un échiquier de dimension <I>n</I>*<I>n</I> est égal au nombre de carrés de 
+côtés égal à 1 sur un échiquier de dimension 2*2.
+</LI><LI CLASS="li-enumerate">Expliquer pourquoi le nombre de carrés de côtés égal à <I>n</I>−2 
+sur un échiquier de dimension <I>n</I>*<I>n</I> est égal au nombre de carrés de 
+côtés égal à 1 sur un échiquier de dimension 3*3?
+</LI><LI CLASS="li-enumerate">Sur le tableur de <TT>Xcas</TT> remplir :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+la première colonne avec les nombres de 0 à <I>n</I> (par exemple <I>n</I>=39).
+</LI><LI CLASS="li-itemize">la deuxième colonne avec le nombre de carrés de côtés égal à 
+1, sur un échiquier de dimension <I>p</I>*<I>p</I> (<I>p</I>=1..<I>n</I>) qui est aussi le nombre de 
+carrés de dimension <I>n</I>−<I>p</I>+1 sur un échiquier de dimension <I>n</I>*<I>n</I>.
+</LI><LI CLASS="li-itemize">la troisième colonne avec avec les sommes partielles de la deuxième 
+colonne. Dire pourquoi cette colonne donne <I>NC</I>(<I>k</I>) lorsque <I>A</I>(<I>k</I>)=<I>k</I>.
+</LI><LI CLASS="li-itemize">la quatrième colonne avec les sommes partielles de la première 
+colonne.
+</LI><LI CLASS="li-itemize">la cinquième colonne avec le quotient de la la troisième colonne
+par la quatrième colonne.
+</LI><LI CLASS="li-itemize">Deviner l’expression de la cinquième colonne et en déduire 
+la valeur de l’expression de <I>NC</I>(<I>n</I>).
+</LI></UL>
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc104">6.1.2</A>  La correction avec <TT>Xcas</TT></H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On a 0,1,2,3..<I>n</I> sur la colonne <I>A</I>
+</LI><LI CLASS="li-enumerate">On a 0,1,4,9...<I>n</I><SUP>2</SUP> sur la colonne <I>B</I>
+</LI><LI CLASS="li-enumerate">On a 0,1,5,14,30.... sur la colonne <I>C</I>
+</LI><LI CLASS="li-enumerate">On a 0,1,3,6,10,15.... sur la colonne <I>D</I> c’est à dire <I>k</I>(<I>k</I>+1)/2
+pour <I>k</I>=1..<I>n</I>. Donc <I>D</I>(<I>k</I>)=1<SUP>2</SUP>+2<SUP>2</SUP>+...<I>k</I><SUP>2</SUP>=<I>NC</I>(<I>k</I>). 
+</LI><LI CLASS="li-enumerate">On a 0,1,5/3,7/3,3,11/3,13/2,5.... sur la colonne <I>E</I>.<BR>
+On devine que la colonne <I>E</I> vaut (2<I>k</I>+1)/3 pour <I>k</I>=1..<I>n</I>.<BR>
+Puisque la colonne <I>D</I> vaut <I>k</I>(<I>k</I>+1)/2 pour <I>k</I>=1..<I>n</I>, on en déduit que
+<I>NC</I>(<I>k</I>)=<I>k</I>(<I>k</I>+1)/2*(2<I>k</I>+1)/3=<I>k</I>(<I>k</I>+1)(2<I>k</I>+1)/6.<BR>
+On peut maintenant montrer par récurrence que :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">1<SUP>2</SUP>+2<SUP>2</SUP>+...<I>k</I><SUP>2</SUP>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>k</I>(<I>k</I>+1)(2<I>k</I>+1)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">6</TD></TR>
+</TABLE></TD></TR>
+</TABLE> car<BR>
+1<SUP>2</SUP>=(1*2*3)/6 et<BR>
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">1<SUP>2</SUP>+...<I>k</I><SUP>2</SUP>+(<I>k</I>+1)<SUP>2</SUP>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(<I>k</I>+1)(2<I>k</I><SUP>2</SUP>+<I>k</I>+6<I>k</I>+6)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">6</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(<I>k</I>+1)(<I>k</I>+2)(2<I>k</I>+3)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">6</TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+</LI></OL><H2 CLASS="section"><A NAME="toc38"></A><A NAME="htoc105">6.2</A>  Étude d’une suite</H2><H3 CLASS="subsection"><A NAME="htoc106">6.2.1</A>  L’énoncé</H3><P>
+On considère la suite récurrente :<BR>
+<I>u</I><SUB>0</SUB>=<I>a</I><BR>
+<I>u</I><SUB>1</SUB>=<I>b</I><BR>
+pour <I>n</I>&gt;1 <I>u</I><SUB><I>n</I></SUB>=|<I>u</I><SUB><I>n</I>−1</SUB>|−<I>u</I><SUB><I>n</I>−2</SUB><BR>
+Étudiez cette suite.<BR>
+Faites des essais avec le tableur prendre par exemple :<BR>
+<I>a</I>=3 avec <I>b</I>=4, <I>b</I>=5,<I>b</I>=7 etc...<BR>
+<I>a</I>=−3 avec <I>b</I>=4, <I>b</I>=5,<I>b</I>=7 etc...<BR>
+Que remarquez-vous ?<BR>
+
+</P><H3 CLASS="subsection"><A NAME="htoc107">6.2.2</A>  La démarche mathématique</H3><P>
+On va montrer que cette suite est périodique (<I>u</I><SUB>9</SUB>=<I>u</I><SUB>0</SUB> et <I>u</I><SUB>10</SUB>=<I>u</I><SUB>1</SUB>).<BR>
+Pour cela on considère 9 cas :<BR>
+6 cas lorsque <I>b</I>&gt;=0 et 3 cas lorsque <I>b</I>&lt;0:<BR>
+<B>cas 1</B> : <I>b</I> ≥ 2<I>a</I> ≥ 0<BR>
+On obtient :<BR>
+<TT>a,b,b-a,-a,-b+2a,b-a,2b-3a,-2a+b,a-b,a,b....</TT><BR>
+<B>cas 2</B> : 2<I>a</I> &gt; <I>b</I> ≥ <I>a</I><BR>
+On obtient :<BR>
+<TT>a,b,b-a,-a,-b+2a,3a-b,a,2a+b,a-b,a,b.....</TT><BR>
+<B>cas 3</B> : <I>a</I>/2 &gt;<I>b</I> ≥ 0<BR>
+On obtient :<BR>
+<TT>a,b,b-a,a-2b,-3b+2a,a-b,2b-a,-b,-b+a,a,b....</TT><BR>
+<B>cas 4</B> : <I>a</I>&gt; <I>b</I> ≥ <I>a</I>/2<BR>
+On obtient :<BR>
+<TT>a,b,b-a,a-2b,b,3b-a,2b-a,-b,a-b,a,b...</TT><BR>
+<B>cas 5</B> : <I>b</I> ≥ −<I>a</I> ≥ 0<BR>
+On obtient :<BR>
+<TT>a,b,b-a,-a,-b,b+a,2b+a,b,b-a,a,b....</TT><BR>
+<B>cas 6</B> : −<I>a</I> ≥ <I>b</I> ≥ 0<BR>
+On obtient :<BR>
+<TT>a,b,b-a,-a,-b,b+a,-a,-2a-b,-a-b,a,b....</TT><BR>
+<B>cas 7</B> : −<I>b</I> ≥ <I>a</I> &gt;0<BR>
+On obtient :<BR>
+<TT>a,b,-b-a,-2b-a,-b,b+a,-a,-b,-b+a,a,b....</TT><BR>
+<B>cas 8</B> : <I>a</I> &gt;−<I>b</I> &gt;0<BR>
+On obtient :<BR>
+<TT>a,b,-b-a,a,2a+b,a+b,-a,-b,-b+a,a,b....</TT><BR>
+<B>cas 9</B> : −<I>b</I> &gt;0 ≥ <I>a</I><BR>
+On obtient :<BR>
+<TT>a,b,-b-a,-2b-a,-b,a+b,-a,-2a-b,-b-a,a,b....</TT><BR>
+</P><H3 CLASS="subsection"><A NAME="htoc108">6.2.3</A>  La correction avec <TT>Xcas</TT></H3><P>
+Avec <TT>Xcas</TT> on tape (cf <B>cas9</B>):<BR>
+<TT>assume(a&lt;0)</TT> et la réponse est <TT>a</TT><BR>
+<TT>assume(b&lt;0)</TT> et la réponse est <TT>b</TT><BR>
+<TT>normal(abs(ans())-ans(-2))</TT> et la réponse est <TT>-b-a</TT><BR>
+puis <TT>enter</TT>, <TT>enter</TT>...:<BR>
+la réponse est <TT>-2*b-a</TT><BR>
+la réponse est <TT>-b</TT><BR>
+la réponse est <TT>b+a</TT><BR>
+la réponse est <TT>-a</TT><BR>
+la réponse est <TT>-b-2*a</TT><BR>
+la réponse est <TT>-b-a</TT><BR>
+la réponse est <TT>a</TT><BR>
+la réponse est <TT>b</TT><BR>
+<B>Attention</B> La commande <TT>assume</TT> ne doit utiliser que des noms de 
+variables sans opérateur. Pour faire les différents cas avec <TT>Xcas</TT> 
+il faut donc faire des changements 
+de variables, par exemple pour traiter le <B>cas1</B> (<I>b</I> ≥ 2<I>a</I> ≥ 0),
+on pose <I>c</I>=<I>b</I>−2*<I>a</I> donc <I>b</I>=<I>c</I>+2*<I>a</I>.<BR>
+Avec <TT>Xcas</TT> on tape (cf <B>cas9</B>):<BR>
+<TT>assume(a&gt;0)</TT> et la réponse est <TT>a</TT><BR>
+<TT>assume(c&gt;0)+2*a</TT> et la réponse est <TT>c+2*a</TT><BR>
+<TT>normal(abs(ans())-ans(-2))</TT> et la réponse est <TT>c+a</TT><BR>
+puis <TT>enter</TT>, <TT>enter</TT>...:<BR>
+la réponse est <TT>-a</TT><BR>
+la réponse est <TT>-c</TT><BR>
+la réponse est <TT>c+a</TT><BR>
+la réponse est <TT>2*c+a</TT><BR>
+la réponse est <TT>c</TT><BR>
+la réponse est <TT>-c-a</TT><BR>
+la réponse est <TT>a</TT><BR>
+la réponse est <TT>c+2*a</TT><BR>
+On peut aussi utiliser le tableur :<BR>
+on tape (cf <B>cas9</B>):<BR>
+<TT>assume(a&gt;0)</TT>; <TT>assume(c&gt;0)</TT><BR>
+Puis on ouvre le tableur, et on remplit :<BR>
+<TT>A0</TT> avec <TT>a</TT>, <TT>A1</TT> avec <TT>c+2*a</TT>, <TT>A2</TT> avec <TT>=normal(abs(A1)-A0)</TT><BR>
+puis on appuie sur le bouton <TT>remplir</TT> (ou <TT>fill</TT>)
+et on peut voir les différentes valeurs de la suite.<BR>
+On peut aussi avec le tableur mettre les 9 cas dans les colonnes <TT>A</TT>...<TT>I</TT>.</P><P>Il faut taper <TT>purge(a)</TT> si on a fait aupparavant <TT>assume(a&gt;0)</TT><BR>
+Puis on tape : <TT>assume(c&gt;0)</TT>; <TT>assume(d&gt;0)</TT><BR>
+et on pose :<BR>
+<B>cas1</B> (<I>b</I> ≥ 2<I>a</I> ≥ 0)<BR>
+<TT><I>A</I>0=<I>d</I>, <I>A</I>1=<I>c</I>+2*<I>d</I></TT> (ie <I>a</I>=<I>d</I>, <I>c</I>=<I>b</I>−2<I>a</I>)<BR>
+<B>cas2</B> (2<I>a</I> ≥ <I>b</I> ≥ <I>a</I>)<BR>
+<TT><I>B</I>0=<I>d</I>+<I>c</I>, <I>B</I>1=<I>c</I>+2*<I>d</I></TT> (ie <I>d</I>=<I>b</I>−<I>a</I>,<I>c</I>=−<I>b</I>+2<I>a</I>)<BR>
+<B>cas3</B> (<I>a</I>/2 &gt;<I>b</I> ≥ 0)<BR>
+<TT><I>C</I>0=<I>d</I>+2<I>c</I>, <I>C</I>1=<I>c</I></TT> (ie <I>d</I>=<I>a</I>−2<I>b</I>,<I>c</I>=<I>b</I>)<BR>
+<B>cas4</B> (<I>a</I>&gt; <I>b</I> ≥ <I>a</I>/2)<BR>
+<TT><I>D</I>0=2*<I>d</I>+2*<I>c</I>, <I>D</I>1=2*<I>c</I>+<I>d</I></TT> (ie <I>d</I>=<I>a</I>−<I>b</I>,2*<I>c</I>=2*<I>b</I>−<I>a</I>)<BR>
+<B>cas5</B> (<I>b</I> ≥ −<I>a</I> ≥ 0)<BR>
+<TT><I>E</I>0=-<I>d</I>, <I>E</I>1=<I>c</I>+<I>d</I></TT> (ie <I>d</I>=−<I>a</I>,<I>c</I>=<I>b</I>+<I>a</I>)<BR>
+<B>cas6</B> (−<I>a</I> ≥ <I>b</I> ≥ 0)<BR>
+<TT><I>F</I>0=-<I>c</I>-<I>d</I>, <I>F</I>1=<I>d</I></TT> (ie <I>c</I>=−<I>a</I>−<I>b</I>, <I>b</I>=<I>d</I>)<BR>
+<B>cas7</B> (−<I>b</I> ≥ <I>a</I> &gt;0)<BR>
+<TT><I>G</I>0=<I>d</I>, <I>G</I>1=-<I>c</I>-<I>d</I></TT> (ie <I>c</I>=−<I>a</I>−<I>b</I>,<I>d</I>=<I>a</I>)<BR>
+<B>cas8</B> (<I>a</I> &gt;−<I>b</I> &gt;0 )<BR>
+<TT><I>H</I>0=<I>c</I>+<I>d</I>, <I>H</I>1=-<I>d</I></TT> (ie <I>d</I>=−<I>b</I>,<I>c</I>=<I>a</I>+<I>b</I>)<BR>
+<B>cas9</B> (−<I>b</I> &gt;0 ≥ <I>a</I> )<BR>
+<TT><I>I</I>0=-<I>d</I>, <I>I</I>1=-<I>c</I></TT> (ie <I>d</I>=−<I>a</I>,<I>b</I>=−<I>c</I>)<BR>
+On met dans <TT>A2</TT> la formule <TT>=normal(abs(A1)-A0)</TT><BR>
+Puis on recopie cette formule vers le bas (bouton <TT>remplir</TT>) et sur le 
+coté (menu <TT>Edit</TT> sous-menu <TT>mtrw(Editeur de matrices)</TT> et 
+<TT>copier-&gt;</TT>).<BR>
+On obtient :<BR><BR>
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>A</TD><TD ALIGN=center NOWRAP>B</TD><TD ALIGN=center NOWRAP>C</TD><TD ALIGN=center NOWRAP>D</TD><TD ALIGN=center NOWRAP>E</TD><TD ALIGN=center NOWRAP>F</TD><TD ALIGN=center NOWRAP>G</TD><TD ALIGN=center NOWRAP>H</TD><TD ALIGN=center NOWRAP>I</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>d</TD><TD ALIGN=center NOWRAP>d+c</TD><TD ALIGN=center NOWRAP>d+2*c</TD><TD ALIGN=center NOWRAP>2*d+2*c</TD><TD ALIGN=center NOWRAP>-d</TD><TD ALIGN=center NOWRAP>-c-d</TD><TD ALIGN=center NOWRAP>d</TD><TD ALIGN=center NOWRAP>c+d</TD><TD ALIGN=center NOWRAP>-d</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>c+2*d</TD><TD ALIGN=center NOWRAP>c+2*d</TD><TD ALIGN=center NOWRAP>c</TD><TD ALIGN=center NOWRAP>2*c+d</TD><TD ALIGN=center NOWRAP>c+d</TD><TD ALIGN=center NOWRAP>d</TD><TD ALIGN=center NOWRAP>-c-d</TD><TD ALIGN=center NOWRAP>-d</TD><TD ALIGN=center NOWRAP>-c</TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>c+d</TD><TD ALIGN=center NOWRAP>d</TD><TD ALIGN=center NOWRAP>-d-c</TD><TD ALIGN=center NOWRAP>-d</TD><TD ALIGN=center NOWRAP>c+2*d</TD><TD ALIGN=center NOWRAP>c+2*d</TD><TD ALIGN=center NOWRAP>c</TD><TD ALIGN=center NOWRAP>-c</TD><TD ALIGN=center NOWRAP>c+d</TD></TR>
+<TR><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>-d</TD><TD ALIGN=center NOWRAP>-c-d</TD><TD ALIGN=center NOWRAP>d</TD><TD ALIGN=center NOWRAP>-(2*c)</TD><TD ALIGN=center NOWRAP>d</TD><TD ALIGN=center NOWRAP>c+d</TD><TD ALIGN=center NOWRAP>2*c+d</TD><TD ALIGN=center NOWRAP>c+d</TD><TD ALIGN=center NOWRAP>2*c+d</TD></TR>
+<TR><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>-c</TD><TD ALIGN=center NOWRAP>c</TD><TD ALIGN=center NOWRAP>2*d+c</TD><TD ALIGN=center NOWRAP>2*c+d</TD><TD ALIGN=center NOWRAP>-c-d</TD><TD ALIGN=center NOWRAP>-d</TD><TD ALIGN=center NOWRAP>c+d</TD><TD ALIGN=center NOWRAP>2*c+d</TD><TD ALIGN=center NOWRAP>c</TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>c+d</TD><TD ALIGN=center NOWRAP>2*c+d</TD><TD ALIGN=center NOWRAP>d+c</TD><TD ALIGN=center NOWRAP>4*c+d</TD><TD ALIGN=center NOWRAP>c</TD><TD ALIGN=center NOWRAP>-c</TD><TD ALIGN=center NOWRAP>-c</TD><TD ALIGN=center NOWRAP>c</TD><TD ALIGN=center NOWRAP>-c-d</TD></TR>
+<TR><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>2*c+d</TD><TD ALIGN=center NOWRAP>c+d</TD><TD ALIGN=center NOWRAP>-d</TD><TD ALIGN=center NOWRAP>2*c</TD><TD ALIGN=center NOWRAP>2*c+d</TD><TD ALIGN=center NOWRAP>c+d</TD><TD ALIGN=center NOWRAP>-d</TD><TD ALIGN=center NOWRAP>-c-d</TD><TD ALIGN=center NOWRAP>d</TD></TR>
+<TR><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>c</TD><TD ALIGN=center NOWRAP>-c</TD><TD ALIGN=center NOWRAP>-c</TD><TD ALIGN=center NOWRAP>-2*c-d</TD><TD ALIGN=center NOWRAP>c+d</TD><TD ALIGN=center NOWRAP>2*c+d</TD><TD ALIGN=center NOWRAP>d+c</TD><TD ALIGN=center NOWRAP>d</TD><TD ALIGN=center NOWRAP>c+2*d</TD></TR>
+<TR><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>-c-d</TD><TD ALIGN=center NOWRAP>-d</TD><TD ALIGN=center NOWRAP>c+d</TD><TD ALIGN=center NOWRAP>d</TD><TD ALIGN=center NOWRAP>-c</TD><TD ALIGN=center NOWRAP>c</TD><TD ALIGN=center NOWRAP>2*d+c</TD><TD ALIGN=center NOWRAP>c+2*d</TD><TD ALIGN=center NOWRAP>c+d</TD></TR>
+<TR><TD ALIGN=center NOWRAP>9</TD><TD ALIGN=center NOWRAP>d</TD><TD ALIGN=center NOWRAP>d+c</TD><TD ALIGN=center NOWRAP>2*c+d</TD><TD ALIGN=center NOWRAP>2*c+2*d</TD><TD ALIGN=center NOWRAP>-d</TD><TD ALIGN=center NOWRAP>-c-d</TD><TD ALIGN=center NOWRAP>d</TD><TD ALIGN=center NOWRAP>c+d</TD><TD ALIGN=center NOWRAP>-d</TD></TR>
+<TR><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>c+2*d</TD><TD ALIGN=center NOWRAP>2*d+c</TD><TD ALIGN=center NOWRAP>c</TD><TD ALIGN=center NOWRAP>2*c+d</TD><TD ALIGN=center NOWRAP>d+c</TD><TD ALIGN=center NOWRAP>d</TD><TD ALIGN=center NOWRAP>-d-c</TD><TD ALIGN=center NOWRAP>-d</TD><TD ALIGN=center NOWRAP>-c</TD></TR>
+<TR><TD ALIGN=center NOWRAP>11</TD><TD ALIGN=center NOWRAP>c+d</TD><TD ALIGN=center NOWRAP>d</TD><TD ALIGN=center NOWRAP>-c-d</TD><TD ALIGN=center NOWRAP>-d</TD><TD ALIGN=center NOWRAP>2*d+c</TD><TD ALIGN=center NOWRAP>c+2*d</TD><TD ALIGN=center NOWRAP>c</TD><TD ALIGN=center NOWRAP>-c</TD><TD ALIGN=center NOWRAP>c+d</TD></TR>
+</TABLE><P>On remarque que les colonnes se déduisent les unes des autres :<BR>
+si on considère la colonne <TT>I</TT> on a<BR>
+<TT>I1, I2</TT> est égal à <TT>F0, F1</TT> (puisque <TT>c</TT> er <TT>d</TT> jouent 
+le même rôle) de même,<BR>
+<TT>I2, I3</TT> est égal à <TT>B0, B1</TT>,<BR>
+<TT>I3, I4</TT> est égal à <TT>C0, C1</TT>,<BR>
+<TT>I4, I5</TT> est égal à <TT>G0, G1</TT>,<BR>
+<TT>I5, I6</TT> est égal à <TT>F0, F1</TT>,<BR>
+<TT>I6, I7</TT> est égal à <TT>A0, A1</TT>,<BR>
+<TT>I7, I8</TT> est égal à <TT>D0, D1</TT>,<BR>
+<TT>I8, I9</TT> est égal à <TT>H0, H1</TT>.<BR>
+On peut donc considérer la fonction <I>f</I> de ℝ<SUP>2</SUP> dans ℝ<SUP>2</SUP>
+définie par :<BR>
+<I>f</I>(<I>x</I>,<I>y</I>)=(<I>y</I>,|<I>y</I>|−<I>x</I>)<BR>
+On peut montrer que <I>f</I><SUP>9</SUP>=<I>id</I> en effet :<BR>
+si <I>A</I>0={(<I>x</I>,<I>y</I>)∈ ℝ<SUP>2</SUP>, <I>x</I>&lt;0, <I>y</I> ≤ 0}, on pose :<BR>
+<I>A</I>1=<I>f</I>(<I>A</I>0), <I>A</I>2=<I>f</I>(<I>A</I>1)=<I>f</I><SUP>2</SUP>(<I>A</I>0)...
+<I>A</I>8=<I>f</I><SUP>8</SUP>(<I>A</I>0)<BR>
+alors <I>A</I>0,<I>A</I>1,<I>A</I>2..,<I>A</I>8 forment une partition de ℝ<SUP>2</SUP>,<BR>
+de plus si (<I>a</I>,<I>b</I>)∈ <I>A</I>0 alors <I>f</I><SUP>9</SUP>(<I>a</I>,<I>b</I>)=(<I>a</I>,<I>b</I>).<BR>
+Avec <TT>Xcas</TT> on tape :<BR>
+<TT>f(L):={
+return([L[1],normal(abs(L[1])-L[0])]);<BR>
+};</TT><BR>
+<TT>assume(a&lt;0);assume(b&lt;=0)</TT><BR>
+<TT>f(f(f(f(f(f(f(f(f(([a,b])))))))))</TT><BR>
+On obtient : <TT>[a,b]</TT><BR>
+Cela prouve que la suite récurrente <I>U</I> définie par :<BR>
+(<I>U</I><SUB>0</SUB>,<I>U</I><SUB>1</SUB>)=(<I>x</I>,<I>y</I>)<BR>
+(<I>U</I><SUB><I>n</I></SUB>,<I>U</I><SUB><I>n</I>+1</SUB>)=<I>f</I>(<I>U</I><SUB><I>n</I>−1</SUB>, <I>U</I><SUB><I>n</I></SUB>)=(<I>U</I><SUB><I>n</I></SUB>,|<I>U</I><SUB><I>n</I></SUB>|−<I>U</I><SUB><I>n</I>−1</SUB>) pour <I>n</I>&gt;0<BR>
+est périodique de période 9 (<I>U</I><SUB><I>n</I></SUB>=<I>U</I><SUB><I>n</I>+9</SUB> pour tout <I>n</I>≥ 0)).<BR>
+On peut visualiser en trois temps que <TT>A0,A1...A8</TT> forment une partition.<BR>
+ On tape :
+</P><PRE CLASS="verbatim">for (j:=0;j&lt;300;j:=j+1) {
+  c:=rand(0..2);
+  d:=rand(0..3);
+  point(-c+i*(c+d));
+  point(c+d+i*(2*c+d));
+  point(2*c+d+i*c);
+  point(c-i*(c+d));
+}
+</PRE><P>et on voit les régions <TT>A1,A2,A3,A4</TT> sur l’écran de géométrie.<BR>
+ On tape :
+</P><PRE CLASS="verbatim"> 
+for (j:=0;j&lt;300;j:=j+1) {
+  c:=rand(0..2);
+  d:=rand(0..3);
+  point(-c-d+i*d);
+  point(d+i*(2*d+c));
+  point(2*d+c+i*(c+d));
+  point(c+d-i*d);
+}
+</PRE><P>et on voit les régions <TT>A5,A6,A7,A8</TT> sur l’écran de géométrie.<BR>
+</P><HR>
+<A HREF="cascas005.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas007.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

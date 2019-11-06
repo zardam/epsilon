@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>PGCD de polynômes par l’algorithme d’Euclide : gcd igcd</title>
+</head>
+<body >
+<a href="cascmd_fr401.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr403.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec514" class="subsection">6.29.7  PGCD de polynômes par l’algorithme d’Euclide : <span style="font-family:monospace">gcd igcd</span></h3>
+<p><a id="hevea_default762"></a><a id="hevea_default763"></a><a id="sec:gcd"></a>
+<span style="font-family:monospace">gcd</span> désigne le PGCD (plus grand commun diviseur) de deux 
+polynômes pouvant avoir plusieurs variables et aussi le PGCD d’une liste de 
+polynômes ou d’une séquence de polynômes pouvant avoir plusieurs 
+variables (voir <a href="cascmd_fr162.html#sec%3Aigcd">6.7.2</a> pour le PGCD d’entiers).
+On peut aussi mettre comme paramètres deux listes de même longueur (ou une 
+matrice ayant 2 lignes), dans ce cas <span style="font-family:monospace">gcd</span> renvoie le PGCD des 
+éléments de même indice (ou d’une même colonne).
+On tape :
+</p><div class="center"><span style="font-family:monospace">gcd([x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-4,x*y-y],[x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-8,y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*y])</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">gcd([[x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-4,x*y-y],[x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-8,y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*y]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[x-2,y]</span></div><p><span style="font-weight:bold">Exemples</span><br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">gcd(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+2*x+1,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">x+1 </span></div><p> 
+On tape :
+</p><div class="center"><span style="font-family:monospace">gcd(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2*x+1,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-1,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+x-2)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">gcd([x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2*x+1,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-1,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+x-2])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">x-1</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">A:=z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+(-(y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2))*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+(-(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2))*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2</span></div><div class="center"><span style="font-family:monospace">B:=x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*z+(-(y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3))*z+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*z-z</span></div><div class="center"><span style="font-family:monospace">C:=gcd(A,B)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">z*x*y+z*x-z*y-z</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">factor(A)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(y-1)*(y+1)*(x-1)*(x+1)*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">factor(B)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+x+1)*(x-1)*(y+1)*(y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-y+1)*z</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">factor(C)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(y+1)*(x-1)*z</span></div><p>Pour les polynômes à coefficients modulaire, on tape par exemple :
+On tape :
+</p><div class="center"><span style="font-family:monospace">gcd((x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+2*x+2) mod 5,(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1) mod 5)</span></div><p> 
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(1 % 5)*x-1 % 5</span></div><p>
+Mais si on tape :
+</p><div class="center"><span style="font-family:monospace">gcd(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+2*x+2,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1) mod 5)</span></div><p> 
+On obtient :
+</p><div class="center"><span style="font-family:monospace">1%5</span></div><p>
+car l’opération modulaire se fait après le calcul du PGCD qui a èté 
+calculé dans ℤ[<span style="font-style:italic">X</span>].</p>
+<hr>
+<a href="cascmd_fr401.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr403.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

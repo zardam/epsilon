@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Les lieux : locus lieu</title>
+</head>
+<body >
+<a href="cascmd_fr1014.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr1016.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1229" class="subsection">10.20.1  Les lieux : <span style="font-family:monospace">locus lieu</span></h3>
+<p><a id="hevea_default1992"></a><a id="hevea_default1993"></a><a id="sec:lieudroite"></a> 
+<span style="font-family:monospace">lieu</span> permet de tracer le lieu d’un point qui dépend d’un autre
+point qui doit être défini avec la fonction <span style="font-family:monospace">element</span> et <span style="font-family:monospace">lieu</span> 
+permet aussi de tracer l’enveloppe d’une droite qui dépend d’un
+point qui doit être défini avec la fonction <span style="font-family:monospace">element</span> (voir aussi <span style="font-family:monospace">enveloppe</span> pour l’enveloppe d’une famille de droites qui dépendent d’un 
+paramètre <a href="cascmd_fr1016.html#sec%3Aenvelope">10.20.2</a>).<br>
+</p><ul class="itemize"><li class="li-itemize">
+lieu d’un point.<br>
+<span style="font-family:monospace">lieu</span> a 2 à 4 arguments.<br>
+Les deux premiers argument sont deux noms de variables : <br>
+le premier argument est le nom du point dont on veut 
+connaitre le lieu et ce point est fonction du deuxième argument, <br>
+le deuxième argument est le nom du point qui se déplace sur une courbe 
+<span style="font-family:monospace">C</span> et qui doit être défini par <span style="font-family:monospace">element(C)</span>.<br>
+On peut préciser éventuellement en troisième argument l’intervalle où 
+se trouve le paramètre <span style="font-family:monospace">t</span> utilisé pour le paramétrage de <span style="font-family:monospace">C</span>
+lorsque le deuxième argument décrit <span style="font-family:monospace">C</span> et en quatrième argument
+préciser la valeur de <span style="font-family:monospace">tstep</span>.<br>
+<span style="font-weight:bold">Remarque</span><br>
+Pour connaitre le paramétrage de la courbe <span style="font-family:monospace">C</span> on utilise la commande
+<span style="font-family:monospace">parameq(C)</span>.<br>
+
+<span style="font-family:monospace">lieu</span> dessine le lieu du premier argument quand le deuxième argument se 
+déplace selon ce que l’on a spécifié comme argument de <span style="font-family:monospace">element</span>.<br>
+<span style="font-weight:bold">L’algorithme</span><br>
+Si on cherche le lieu de <span style="font-style:italic">N</span> lorsque <span style="font-style:italic">M</span> se déplace sur une courbe <span style="font-style:italic">C</span>,
+l’algorithme cherche les niveaux qui se trouvent entre le niveau où se trouve
+la définition de <span style="font-style:italic">M</span> et celui où se trouve la définition de <span style="font-style:italic">N</span> et 
+choisit un paramétrage rationnel de la courbe où <span style="font-style:italic">M</span> se déplace, puis 
+effectue les calculs de ces niveaux intermédiaires, puis trace une courbe 
+paramétrée <span style="font-family:monospace">X(t)+i*Y(t)</span> qui dépend du <span style="font-style:italic">t</span> défini dans <span style="font-family:monospace">cfg</span>, 
+puis affiche l’équation du lieu par le calcul de 
+<span style="font-family:monospace">resultant(X(t)-x,Y(t)-y,t)</span>.<br>
+Il ne faut donc pas avoir d’autres instructions <span style="font-family:monospace">lieu</span> dans les 
+instructions intermédiaires.<br>
+<span style="font-weight:bold">Conseils</span><br>
+ Il faut avoir le moins possible d’instructions entre 
+la définition de <span style="font-style:italic">M</span> et l’instruction <span style="font-family:monospace">lieu</span>.<br>
+ On tape, pour avoir le lieu du centre de gravité <span style="font-style:italic">G</span> du triangle de sommets
+<span style="font-style:italic">A</span> point(-1), <span style="font-style:italic">B</span> point(1) et <span style="font-style:italic">P</span> lorsque <span style="font-style:italic">P</span> décrit la droite d’équation 
+<span style="font-style:italic">y</span>=1 :
+<div class="center"><span style="font-family:monospace">P:=element(droite(i,1+i))</span></div>
+<div class="center"><span style="font-family:monospace">G:=isobarycentre(-1,1,P)</span></div>
+<div class="center"><span style="font-family:monospace">lieu(G,P)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">La droite parallèle à l’axe des x passant par i/3</span></div>
+<span style="font-weight:bold">Attention</span> <br>
+Il faut régler correctement le paramètre <span style="font-style:italic">t</span>, c’est à dire les valeurs 
+<span style="font-family:monospace">t-</span> et <span style="font-family:monospace">t+</span> de la fenêtre de configuration graphique
+pour avoir le lieu entièrement!!!
+On tape, pour avoir le lieu du centre de gravité <span style="font-style:italic">G</span> du triangle de sommets
+<span style="font-style:italic">A</span> point(-1), <span style="font-style:italic">B</span> point(1) et <span style="font-style:italic">P</span> lorsque <span style="font-style:italic">P</span> décrit le segment 
+[-3+i; 3+i]. Pour connaitre le paramétrage de la droite 
+<span style="font-family:monospace">d:=droite(i,1+i)</span> on utilise <span style="font-family:monospace">parameq(d)</span> :
+<div class="center"><span style="font-family:monospace">d:=droite(i,1+i):;parameq(d)</span></div>
+On obtient comme paramétrage :
+<div class="center"><span style="font-family:monospace">t+i</span></div>
+<div class="center"><span style="font-family:monospace">P:=element(d)</span></div>
+<div class="center"><span style="font-family:monospace">G:=isobarycentre(-1,1,P)</span></div>
+<div class="center"><span style="font-family:monospace">lieu(G,P,t=-3..3)</span></div>
+<div class="center"><span style="font-family:monospace">plotparam(t+i,t=-3..3);triangle(-1,1,P)</span></div>
+On obtient comme lieu :
+<div class="center"><span style="font-family:monospace">Le segment [-1+i/3; 1+i/3]</span></div>
+On peut préciser la valeur de <span style="font-family:monospace">tstep</span> en quatrième argument, 
+on tape :<br>
+<div class="center"><span style="font-family:monospace">lieu(G,P,t=-3..3,tstep=0.1)</span></div>
+</li><li class="li-itemize">enveloppe d’une droite fonction d’un point qui se déplace sur une courbe.<br>
+<span style="font-family:monospace">lieu</span> a comme arguments deux noms de variables : le premier 
+argument est le nom de la droite dont on veut connaitre l’enveloppe et cette 
+droite est fonction du deuxième argument. Le deuxième argument est le nom 
+du point qui se déplace et qui doit être défini avec la fonction
+<span style="font-family:monospace">element</span>.<br>
+<span style="font-family:monospace">lieu</span> dessine l’enveloppe du premier argument quand le deuxième 
+argument se déplace selon ce que l’on a spécifié comme argument de 
+<span style="font-family:monospace">element</span>.<br>
+On tape, pour avoir le l’enveloppe de la médiatrice de <span style="font-style:italic">FH</span> lorsque <span style="font-style:italic">H</span> 
+décrit la droite d’équation <span style="font-style:italic">x</span>=0 :
+<div class="center"><span style="font-family:monospace">F:=point(1)</span></div>
+<div class="center"><span style="font-family:monospace">H:=element(droite(x=0))</span></div>
+<div class="center"><span style="font-family:monospace">d:=mediatrice(F,H)</span></div>
+<div class="center"><span style="font-family:monospace">lieu(d,H)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">La parabole de foyer F et de directrice l’axe des y dont l’èquation est 2*x-y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1=0</span></div>
+</li><li class="li-itemize">enveloppe d’une droite donnée par une équation dépendant d’un paramètre (voir aussi la commande <span style="font-family:monospace">enveloppe</span> <a href="cascmd_fr1016.html#sec%3Aenvelope">10.20.2</a>),<br>
+Dans ce cas, il faut dire que la paramètre est l’affixe d’un point de la 
+droite <span style="font-style:italic">y</span>=0.<br>
+Par exemple, enveloppe d’une famille de droites d’équation
+<span style="font-style:italic">y</span>+<span style="font-style:italic">x</span>tan(<span style="font-style:italic">t</span>)−2sin(<span style="font-style:italic">t</span>)=0 lorsque <span style="font-style:italic">t</span>∈ ℝ. (cf <a href="cascmd_fr1017.html#sec%3Atracegeo">10.20.3</a>)<br>
+On tape :
+<div class="center"><span style="font-family:monospace">H:=element(droite(y=0));</span></div>
+<div class="center"><span style="font-family:monospace">D:=droite(y+x*tan(affixe(M))-2*sin(affixe(M)))</span></div>
+<div class="center"><span style="font-family:monospace">lieu(D,H)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">L’astroide d’équation paramérique 2*cos(t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+2*i*sin(t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3</span></div>
+Si on veut l’enveloppe lorsque <span style="font-style:italic">t</span>=0..π, on tape :<br>
+<div class="center"><span style="font-family:monospace">lieu(D,H,t=0..pi)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">La partie au dessus de </span><span style="font-style:italic">y</span>=0<span style="font-family:monospace"> de l’astroide d’équation paramérique 2*cos(t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+2*i*sin(t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3</span></div>
+On peut aussi chercher l’intersection de <span style="font-family:monospace">D</span> et de <span style="font-family:monospace">E</span> (voir leur définition ci-dessous) pour avoir l’équation paramétrique du lieu.
+<div class="center"><span style="font-family:monospace">D:=y+x*tan(t)-2*sin(t)</span></div>
+<div class="center"><span style="font-family:monospace">E:=diff(D,t)</span></div>
+<div class="center"><span style="font-family:monospace">M:=linsolve([D=0,E=0],[x,y])</span></div>
+<div class="center"><span style="font-family:monospace">P:=plotparam(affixe(M))</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">L’astroide d’équation paramérique 2*cos(t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+2*i*sin(t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3</span></div>
+en effet <span style="font-family:monospace">simplify(M)</span> renvoie :<br>
+<span style="font-family:monospace">[2*cos(t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,2*sin(t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3]</span>
+</li></ul>
+<hr>
+<a href="cascmd_fr1014.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr1016.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

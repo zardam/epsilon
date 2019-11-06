@@ -1,0 +1,23 @@
+//par ex fougeres(-2*i,2*i)
+fougere(x,y):={
+local a;
+DispG();
+ if (abs(x-y)<0.2) {segment(x,y); return 0;}
+a:=x+(y-x)*0.15*exp(-i*0.2);
+segment(x,a);
+fougere(a,a+(y-x)*0.33*exp(i*1.2));
+fougere(a,a+(y-x)*0.33*exp(-i*1.2));
+fougere(a,a+(y-x)*0.85*exp(-i*0.2));
+};
+//par ex fougeres(-2*i,2*i,0.05,6)
+fougeres(x,y,t,n):={
+local a;
+DispG();
+if (n==0) {segment(x,(x+y)/2); return 0;}
+//a:=x+(y-x)*0.15*exp(-i*t);
+a:=x+(y-x)*0.15;
+segment(x,a);
+fougeres(a,a+(y-x)*0.33*exp(i*1.2),t,n-1);
+fougeres(a,a+(y-x)*0.33*exp(-i*1.2),t,n-1);
+fougeres(a,a+(y-x)*0.85*exp(-i*t),t,n-1);
+};

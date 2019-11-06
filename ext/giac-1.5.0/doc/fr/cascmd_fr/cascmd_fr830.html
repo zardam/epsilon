@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>La forme d’une fonction</title>
+</head>
+<body >
+<a href="cascmd_fr829.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr831.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1011" class="subsection">9.1.2  La forme d’une fonction</h3>
+<p><a id="hevea_default1477"></a><a id="hevea_default1478"></a><a id="hevea_default1479"></a><a id="hevea_default1480"></a><a id="hevea_default1481"></a><a id="hevea_default1482"></a><a id="hevea_default1483"></a><a id="hevea_default1484"></a><a id="hevea_default1485"></a>
+Une fonction renvoie une valeur : l’instruction <span style="font-family:monospace">return valeur;</span> ou 
+<span style="font-family:monospace">retourne valeur;</span> fait sortir du programme et renvoie <span style="font-family:monospace">valeur</span>.<br>
+Une fonction a un nom (par exemple <span style="font-family:monospace">toto</span>), puis on met entre des
+parenthèses les arguments de la fonction (par exemple si 
+<span style="font-family:monospace">toto</span> a besion de deux paramètres <span style="font-family:monospace">a</span> et <span style="font-family:monospace">b</span> on met
+<span style="font-family:monospace">toto(a,b)</span>). <br>
+On peut définir une fonction :
+</p><ol class="enumerate" type=1><li class="li-enumerate">
+soit avec les mots clés <span style="font-family:monospace">fonction....ffonction</span> <br>
+<span style="font-family:monospace">fonction toto(a,b) ....ffonction</span> entourent le 
+bloc qui définit la fonction <span style="font-family:monospace">toto</span> c’est à dire les instructions qui 
+définissent la fonction. 
+</li><li class="li-enumerate">soit avec <span style="font-family:monospace">:=</span><br>
+on met <span style="font-family:monospace">toto(a,b):=</span> puis les accolades <span style="font-family:monospace">{</span> et <span style="font-family:monospace">}</span> (ou 
+<span style="font-family:monospace">begin</span> et <span style="font-family:monospace">end</span>) entourent le 
+bloc qui définit la fonction <span style="font-family:monospace">toto</span> c’est à dire les instructions qui 
+définissent la fonction.
+</li><li class="li-enumerate">soit si on utilise le langage <span style="font-family:monospace">Python</span>, on utilise le mot-clé 
+<span style="font-family:monospace">def</span> (voir la compatibilité de Python dans <span style="font-family:monospace">Xcas</span>). 
+</li></ol><p>
+Dans le bloc qui définit la fonction chaque instuction se termine par <span style="font-family:monospace">;</span><br>
+Si l’algorithme qui définit la fonction a besoin de 
+variables locales, ces variables devront être déclarées en mettant 
+au début du bloc <span style="font-family:monospace">local</span> (ou <span style="font-family:monospace">var</span>) puis, 
+les noms des variables locales séparés par des virgules puis, <span style="font-family:monospace">;</span> pour 
+terminer cette déclaration. Ces variables locales peuvent être 
+initialisées lors de leur déclaration.
+On écrit par exemple :
+</p><pre class="verbatim">fonction toto(a,b)
+local s,p;
+s:=a+b;
+p:=a*b;
+return [s,p];
+ffonction:;
+</pre><p>
+ou
+</p><pre class="verbatim">toto(a,b):={
+local s,p;
+s:=a+b;
+p:=a*b;
+return [s,p];
+}:;
+</pre><p>
+<span style="font-weight:bold">Attention</span> Les variables locales ne sont pas des variables formelles et 
+doivent toujours être affectèes dans le corps du programme : on ne 
+définira donc pas les variables formelles,avec <span style="font-family:monospace">local</span> (ou <span style="font-family:monospace">var</span>).<br>
+Si on veut qu’une variable déclarèe avec <span style="font-family:monospace">local</span> (ou <span style="font-family:monospace">var</span>) soit 
+formelle (par ex <span style="font-family:monospace">a</span>), il faudra mettre dans le corps du programme soit 
+<span style="font-family:monospace">purge(a)</span> soit <span style="font-family:monospace">assume(a,symbol)</span>.<br>
+<span style="font-weight:bold">Exemple</span>
+</p><pre class="verbatim">kk(a):={
+local x,c;
+c:=4*a;
+return solve((x-c)^2-a=0,x);
+}:;
+f(a):={
+local x,c;
+c:=4*a;
+assume(x,symbol);
+return solve((x-c)^2-a=0,x);
+}:;
+g(a):={
+local c;
+c:=4*a;
+return solve((x-c)^2-a=0,x);
+}:;
+</pre><p>
+On tape :<br>
+<span style="font-family:monospace">kk(1),f(1),g(1)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">list[],list[3,5],list[3,5]</span>
+Il ne faut pas tenir compte du message renvoyé pas <span style="font-family:monospace">Xcas</span> lors de la compilation :<br>
+"<span style="font-weight:bold">Attention</span> : x, declarée(s) comme variable(s) globale(s) en compilant g"
+car dans <span style="font-family:monospace">solve</span> la variable <span style="font-family:monospace">x</span> est toujours symbolique.</p><p><span style="font-weight:bold">Remarque</span> on peut initialiser les variables locales en même temps que
+leur déclaration à condition de mettre des parenthèses, par exemple :<br>
+<span style="font-family:monospace">local (q:=1),(r:=0),s;</span></p><p><span style="font-weight:bold">Attention</span> Il est important de déclarer les variables locales car une
+variable globale est évaluée avant l’execution de la fonction qui s’en sert
+lorsque cette fonction est appelée par une autre fonction...on risque donc 
+d’avoir des ennuis si une fonction qui utilise une variable globale est 
+appelée par une autre fonction, par exemple :
+</p><pre class="verbatim">  truc(a,b):={
+    if (b!=0) {
+      r:=irem(a,b);
+    } else {
+      r:=b;
+    }
+    return r;
+  };
+
+machin(a,b):={
+local rr;
+rr:=truc(a,b);
+return rr;
+}
+</pre><p>
+L’exécution de <span style="font-family:monospace">truc(45,6)</span> ne pose pas de problème et renvoie <span style="font-family:monospace">3</span>,
+mais l’exécution de <span style="font-family:monospace">machin(45,6)</span> renvoie le message d’erreurs :<br>
+<span style="font-family:monospace">sto 3 not allowed! Error: Bad Argument Type</span><br>
+car lorsque <span style="font-family:monospace">truc</span> est appelé par <span style="font-family:monospace">machin</span> <span style="font-family:monospace">r</span> qui est une
+variable globale est evaluée et alors <span style="font-family:monospace">r:=irem(a,b)</span> n’est pas possible
+car <span style="font-family:monospace">r</span> vaut <span style="font-family:monospace">3</span>....<br>
+Il est donc important de tenir compte du message donné par <span style="font-family:monospace">Xcas</span>
+lors de la compilation de <span style="font-family:monospace">truc</span> :<br>
+<span style="font-family:monospace">//Parsing truc</span>
+<span style="font-family:monospace">//Warning, check that the following variables are global: r compiling truc</span>
+à condition que les variables signalées ne soient pas des variables 
+formelles. Voici comme exemple le programme qui donne la valeur de la suite de 
+Fibonnacci définie par <span style="font-style:italic">u</span><sub>0</sub>=<span style="font-style:italic">u</span>0,<span style="font-style:italic">u</span><sub>1</sub>=<span style="font-style:italic">u</span>1,<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+2</sub>=<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>+<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>. Dans ce programme
+on utilise les variables formelles <span style="font-family:monospace">x,A,B</span> qui doivent être purgées.<br>
+On tape :
+</p><pre class="verbatim">u(n,uo,u1):={
+local L,a,b;
+//verifier que A,B,x ne sont pas affect\'ees
+[a,b]:=solve(x^2-x-1,x);
+L:=linsolve([A+B=uo,A*a+B*b=u1],[A,B]);
+return normal(L[0]*a^n+L[1]*b^n);
+};
+</pre><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">u(3,0,1)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">2</span></div><p>
+Dans ce programme, les variables <span style="font-family:monospace">x,A,B</span> ne doivent pas être 
+déclarées comme variables locales car ce sont des variables formelles : il 
+ne faut donc pas tenir compte lors de la compilation du warning :
+<span style="font-family:monospace">// Warning: x A B declared as global variable(s) compiling u</span>
+</p>
+<hr>
+<a href="cascmd_fr829.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr831.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

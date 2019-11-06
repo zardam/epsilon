@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casexo.css">
+<TITLE>Exercices de probabilités</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casexo029.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo031.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc414">Chapitre 30</A>  Exercices de probabilités</H1><H2 CLASS="section"><A NAME="toc163"></A><A NAME="htoc415">30.1</A>  Loi géométrique</H2><H3 CLASS="subsection"><A NAME="htoc416">30.1.1</A>  Exercice</H3><P>
+Une urne contient 5 boules blanches et 5 boules rouges. On les tire une à
+une avec remise jusqu’à ce que l’on obtienne une boule blanche.
+Soit <I>X</I> la variable aléatoire "rang de la première boule blanche".
+Déterminer la loi de <I>X</I>, son espérance et sa variance.<BR>
+
+<I>X</I> suit une loi géométrique de paramètre <I>p</I>=1/2.<BR>
+On a :<BR>
+<I>Proba</I>(<I>X</I>=<I>n</I>)=(1−<I>p</I>)<SUP><I>n</I>−1</SUP>*<I>p</I>=1/2<SUP><I>n</I></SUP><BR>
+On a bien :<BR>
+∑<SUB><I>k</I>=1</SUB><SUP>+∞</SUP> 1/2<SUP><I>k</I></SUP>=1/2*
+∑<SUB><I>k</I>=0</SUB><SUP>+∞</SUP>1/2<SUP><I>k</I>−1</SUP>=1/2*2=1<BR>
+La fonction de répartition de <I>X</I> est :<BR>
+<I>F</I>(<I>n</I>)=<I>Proba</I>(<I>X</I>≤ <I>n</I>)=∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>1/2<SUP><I>k</I></SUP>=1−1/2<SUP><I>n</I>+1</SUP><BR>
+On sait que :
+<I>E</I>(<I>X</I>)=1/<I>p</I>=2<BR>
+σ<SUP>2</SUP>(<I>X</I>)=1/<I>p</I>=2<BR>
+On vérifie avec <TT>Xcas</TT> :<BR>
+<TT>sum(k/2</TT><CODE><TT>^</TT></CODE><TT>k,k=0..inf)</TT> renvoie 2<BR>
+<I>E</I>(<I>X</I><SUP>2</SUP>)=1/<I>p</I>=2<BR>
+On vérifie avec <TT>Xcas</TT> :<BR>
+<TT>sum(k</TT><CODE><TT>^</TT></CODE><TT>2/2</TT><CODE><TT>^</TT></CODE><TT>k,k=0..inf)</TT> renvoie 6<BR>
+donc σ<SUP>2</SUP>(<I>X</I>)=<I>E</I>(<I>X</I><SUP>2</SUP>)−<I>E</I>(<I>X</I>)<SUP>2</SUP>=2<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc417">30.1.2</A>  Exercice variante non géométrique</H3><P>
+Une urne contient 5 boules blanches et 5 boules rouges. On les tire une à
+une sans remise jusqu’à ce que l’urne soit vide.<BR>
+Soit <I>X</I> la variable aléatoire "rang de la première boule blanche".
+Déterminer la loi de <I>X</I>, son espérance et sa variance. </P><P>La loi de Bernouilli que l’on repète n’est pas la même car on ne remet 
+pas les boules dans l’urne : ce n’est donc pas une loi géométrique.
+Trouver la loi de <I>X</I> c’est trouver :
+<I>Proba</I>(<I>X</I>=<I>n</I>) puis sa fonction de repartition <I>F</I>.<BR>
+<I>X</I> ne peut prendre que les valeurs 1,2,3,4,5,6.<BR>
+On a (on fait les calculs avec <B>Xcas</B>) :<BR>
+<I>Proba</I>(<I>X</I>=1)=5/10=1/2 (car on a 10 boules dont 5 blanches)<BR>
+<I>Proba</I>(<I>X</I>=2)=1/2*5/9=5/18=comb(5,1)/comb(10,1)*5/9 (car au 2ième tirage il 
+reste 9 boules dont 5 blanches)<BR>
+<I>Proba</I>(<I>X</I>=3)=1/2*4/9*5/8=5/36=comb(5,2)/comb(10,2)*5/8 (car au 3ième tirage 
+il reste 8 boules dont 5 blanches)<BR>
+<I>Proba</I>(<I>X</I>=4)=1/2*4/9*3/8*5/7=5/84=comb(5,3)/comb(10,3)*5/7<BR>
+<I>Proba</I>(<I>X</I>=5)=1/2*4/9*3/8*2/7*5/6=5/252=comb(5,4)/comb(10,4)*5/6<BR>
+<I>Proba</I>(<I>X</I>=6)=1/2*4/9*3/8*2/7*1/6*5/5=1/252=comb(5,5)/comb(10,5)*5/5<BR>
+On a la formule :
+<I>Proba</I>(<I>X</I>=<I>n</I>)=<I>comb</I>(5,<I>n</I>−1)/<I>comb</I>(10,<I>n</I>−1)*5/(11−<I>n</I>)
+Donc :<BR>
+<I>F</I>(1)=1/2<BR>
+<I>F</I>(2)=1/2+5/18=7/9<BR>
+<I>F</I>(3)=7/9+5/36 =11/12<BR>
+<I>F</I>(4)=11/12+5/84=41/42<BR>
+<I>F</I>(5)=41/42+5/252=251/252<BR>
+<I>F</I>(6)=251/252+1/252=1<BR>
+On vérifie avec <B>Xcas</B> par exemple :<BR>
+<TT>sum(comb(5,n-1)/comb(10,n-1)*5/(11-n),n=1..2)</TT> renvoie <TT>7/9</TT><BR>
+<TT>sum(comb(5,n-1)/comb(10,n-1)*5/(11-n),n=1..2)</TT> renvoie <TT>41/42</TT><BR>
+<I>E</I>(<I>X</I>)=1/2+5/9+5/12+4/21+25/252+6/252=25/14<BR>
+<I>E</I>(<I>X</I><SUP>2</SUP>)=1/2+10/9+15/12+16/21+125/252+36/252=179/42<BR>
+σ<SUP>2</SUP>(<I>X</I>)=179/42-25*25/14/14=631/588
+</P><H2 CLASS="section"><A NAME="toc164"></A><A NAME="htoc418">30.2</A>  La loi négbinomiale</H2><H3 CLASS="subsection"><A NAME="htoc419">30.2.1</A>  Définition</H3><P>
+La loi binomiale négative est une distribution de probabilité 
+discrète. Elle dépend de 2 paramètres : un entier <I>n</I> (le nombre de 
+succès attendus) et un réel <I>p</I> de ]0,1[ (la probabilité d’un succés).<BR>
+On la note <FONT COLOR=red><I>N</I></FONT><I>eg</I><FONT COLOR=red><I>B</I></FONT><I>in</I>(<I>n</I>,<I>p</I>).<BR>
+Elle permet de décrire la situation suivante : on fait une suite de tirages 
+indépendants (avec pour chaque tirage, la probabilité <I>p</I> d’avoir un 
+succès) jusqu’à obtenir <I>n</I> succès.
+La variable aléatoire représentant le nombre d’échecs qu’il a fallut avant 
+d’avoir <I>n</I> succès, suit alors une loi binomiale négative.<BR>
+Si on définit <TT>comb(n,k)</TT> pour <I>n</I>&lt;0 par <TT>comb(n,k)=n*(n-1)*..*(n-k-1)/k!</TT>, alors
+Si <I>X</I> ∈ <FONT COLOR=red><I>N</I></FONT><I>eg</I><FONT COLOR=red><I>B</I></FONT><I>in</I>(<I>n</I>,<I>p</I>) (<I>n</I> ∈ ℕ et <I>p</I> ∈ ]0;1[) alors
+<TT><I>Proba</I>(<I>X</I>=<I>k</I>)=<I>p</I></TT><SUP><TT><I>n</I></TT></SUP><TT>*(<I>p</I>-1)</TT><SUP><TT><I>k</I></TT></SUP><TT>*<I>comb</I>(-<I>n</I>,<I>k</I>)</TT>
+ce qui justifie le nom de loi binomiale négative et qui facilite le calcul de
+l’espérance (égale à <I>n</I>(1−<I>p</I>)/<I>p</I>) et de la variance (égale à 
+<I>n</I>(1−<I>p</I>)/<I>p</I><SUP>2</SUP>).<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc420">30.2.2</A>  Exercice</H3><P>
+Dans un pays imaginaire on impose aux familles d’avoir des enfants jusquà la
+naissance d’un garçon et de ne plus avoir d’enfants après 
+la naissance de ce garçon.<BR>
+Est-ce que cette loi favorise la naissance des filles ?
+On répondra à cette question en supposant que dans ce pays :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+la probabilité d’avoir un garçon est égale à 0.5 et qu’une 
+famille peut avoir un nombre infini d’enfants.
+</LI><LI CLASS="li-itemize">la probabilité d’avoir un garçon est égale à 0.5 et qu’une 
+famille ne peut pas avoir plus de 10 enfants.
+</LI><LI CLASS="li-itemize">la probabilité d’avoir un garçon est égale à <I>p</I> (par exemple 
+<I>p</I>=105/205=21/41) et qu’une famille ne peut pas avoir plus de <I>n</I> enfants (par
+exemple <I>n</I>=10).
+</LI></UL><P>
+<B>Une solution</B>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Soit <I>X</I> la variable aléatoire égale au nombre de filles d’une 
+famille. <I>X</I> suit une loi négbinomiale <FONT COLOR=red><I>N</I></FONT><I>eg</I><FONT COLOR=red><I>B</I></FONT><I>in</I>(1,0.5) 
+Donc <I>E</I>(<I>X</I>)=(1−0.5)/0.5=1.<BR>
+Soit <I>Y</I> la variable aléatoire égale au nombre de 
+garçons d’une famille. <I>Y</I> est constant et on a <I>Y</I>=1 donc <I>E</I>(<I>Y</I>)=1
+Donc cette loi ne favorise pas la naissance des filles ni celle des garçons.
+</LI><LI CLASS="li-itemize">Soit <I>X</I> la variable aléatoire égale au nombre de filles d’une 
+famille. Notons <I>p</I>=1/2.<BR>
+On a <I>p</I>=1−<I>p</I> donc :<BR>
+<I>Proba</I>(<I>X</I>=0)=<I>p</I><BR>
+<I>Proba</I>(<I>X</I>=1)=<I>p</I><SUP>2</SUP><BR>
+....<BR>
+<I>Proba</I>(<I>X</I>=<I>k</I>)=<I>p</I><SUP><I>k</I>+1</SUP> pour <I>k</I>=0..9<BR>
+<I>Proba</I>(<I>X</I>=10)=<I>p</I><SUP>10</SUP><BR>
+Donc :<BR>
+<I>E</I>(<I>X</I>)=∑<SUB><I>k</I>=0</SUB><SUP>9</SUP><I>kp</I><SUP><I>k</I>+1</SUP>+10*<I>p</I><SUP>10</SUP><BR>
+On peut faire en exercice le calcul de ∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>(<I>ka</I><SUP><I>k</I>−1</SUP> en dérivant 
+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP><I>a</I><SUP><I>k</I></SUP>=(<I>a</I><SUP>(</SUP><I>n</I>+1)−1)/(<I>a</I>−1).<BR>
+On obtient :<BR>
+∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>(<I>ka</I><SUP><I>k</I>−1</SUP>=(<I>n</I>*<I>a</I><SUP><I>n</I>+1</SUP>−(<I>n</I>+1)*<I>a</I><SUP><I>n</I></SUP>+1)/(<I>a</I>−1)<SUP>2</SUP><BR>
+Calculons avec <TT>Xcas</TT> ∑<SUB><I>k</I>=0</SUB><SUP>9</SUP><I>kp</I><SUP><I>k</I>+1</SUP>+10*<I>p</I><SUP>10</SUP>, on tape :<BR>
+<TT>p:=1/2</TT><BR>
+<TT>sum(k*p</TT><CODE><TT>^</TT></CODE><TT>(k+1),k=0..9)+10*p</TT><CODE><TT>^</TT></CODE><TT>10</TT><BR>
+On obtient :<BR>
+<TT>1023/1024</TT><BR>
+On a bien :<BR>
+<I>p</I><SUP>2</SUP>∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP>(<I>kp</I><SUP><I>k</I>−1</SUP>=<I>p</I><SUP>2</SUP>(9<I>p</I><SUP>10</SUP>−10<I>p</I><SUP>9</SUP>+1)/<I>p</I><SUP>2</SUP>+10*<I>p</I><SUP>10</SUP>=19*<I>p</I><SUP>10</SUP>−10*<I>p</I><SUP>9</SUP>+1=<I>p</I><SUP>10</SUP>*(19−20)+1=1−<I>p</I><SUP>10</SUP>=1023/1024
+Avec <TT>evalf</TT> on obtient :<BR>
+<TT>0.990234375</TT><BR>
+Soit <I>Y</I> la variable aléatoire égale au nombre de 
+garçons d’une famille.<BR>
+On a :<BR>
+<I>Proba</I>(<I>Y</I>=0)=<I>p</I><SUP>10</SUP><BR>
+<I>Proba</I>(<I>Y</I>=1)=1−<I>p</I><SUP>10</SUP><BR>
+Donc :<BR>
+<I>E</I>(<I>Y</I>)=1−<I>p</I><SUP>10</SUP>
+On tape :<BR>
+<TT>1-p</TT><CODE><TT>^</TT></CODE><TT>10</TT><BR>
+On obtient :<BR>
+<TT>1023/1024</TT><BR>
+Avec <TT>evalf</TT> on obtient :<BR>
+<TT>0.990234375</TT><BR>
+Donc cette loi ne favorise pas la naissance des filles ni celle des garçons.</LI><LI CLASS="li-itemize">Soit <I>X</I> la variable aléatoire égale au nombre de filles d’une 
+famille. Notons <I>p</I> la probabilité d’avoir un garçon.<BR>
+On a :<BR>
+<I>Proba</I>(<I>X</I>=0)=<I>p</I><BR>
+<I>Proba</I>(<I>X</I>=1)=<I>p</I>(1−<I>p</I>)<BR>
+....<BR>
+<I>Proba</I>(<I>X</I>=<I>k</I>)=<I>p</I>(1−<I>p</I>)<SUP><I>k</I></SUP> pour <I>k</I>=0..<I>n</I>−1<BR>
+<I>Proba</I>(<I>X</I>=<I>n</I>)=(1−<I>p</I>)<SUP><I>n</I></SUP><BR>
+Donc :<BR>
+<I>E</I>(<I>X</I>)=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP>(<I>kp</I>(1−<I>p</I>)<SUP><I>k</I></SUP>)+<I>n</I>(1−<I>p</I>)<SUP><I>n</I></SUP><BR>
+Calculons ∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP>(<I>kp</I>(1−<I>p</I>)<SUP><I>k</I></SUP>)+<I>n</I>(1−<I>p</I>)<SUP><I>n</I></SUP>, on tape :<BR>
+<TT>EX:=simplify(sum(k*p*(1-p)</TT><CODE><TT>^</TT></CODE><TT>k,k=0..n-1)+1n*(1-p)</TT><CODE><TT>^</TT></CODE><TT>n)</TT><BR>
+On obtient :<BR>
+<TT>(p*(1-p)</TT><CODE><TT>^</TT></CODE><TT>n-p-(1-p)</TT><CODE><TT>^</TT></CODE><TT>n+1)/p</TT><BR>
+Donc :<BR>
+<I>E</I>(<I>X</I>)=1−<I>p</I>/<I>p</I>(1−(1−<I>p</I>)<CODE>^</CODE><I>n</I>)<BR>
+Soit <I>Y</I> la variable aléatoire égale au nombre de 
+garçons d’une famille.<BR>
+On a :<BR>
+<I>Proba</I>(<I>Y</I>=0)=(1−<I>p</I>)<SUP><I>n</I></SUP><BR>
+<I>Proba</I>(<I>Y</I>=1)=1−(1−<I>p</I>)<SUP><I>n</I></SUP><BR>
+Donc :<BR>
+<I>E</I>(<I>Y</I>)=1−(1−<I>p</I>)<SUP><I>n</I></SUP><BR>
+On a donc :
+<I>E</I>(<I>X</I>+<I>Y</I>)=<I>E</I>(<I>X</I>)+<I>E</I>(<I>Y</I>)=1−(1−<I>p</I>)<SUP><I>n</I></SUP>)/<I>p</I><BR>
+Donc :<BR>
+<I>E</I>(<I>X</I>)/<I>E</I>(<I>X</I>+<I>Y</I>)=1−<I>p</I> et <I>E</I>(<I>Y</I>)/<I>E</I>(<I>X</I>+<I>Y</I>)=<I>p</I><BR>
+Donc cette loi ne change pas rien quant aux nombres de naissances de filles et 
+de garçons.<BR>
+<B>Application numérique</B><BR>
+On tape :<BR>
+<TT>p:=21/41</TT><BR>
+<TT>(1-p)*(1-(1-p)</TT><CODE><TT>^</TT></CODE><TT>10)/p</TT><BR>
+On obtient <I>E</I>(<I>X</I>) :<BR>
+<TT>12773732676335620/13422659310152401</TT><BR>
+Avec <TT>evalf</TT> on obtient <I>E</I>(<I>X</I>) :<BR>
+<TT>0.951654391367</TT><BR>
+<TT>1-(1-p)</TT><CODE><TT>^</TT></CODE><TT>10</TT><BR>
+On obtient <I>E</I>(<I>Y</I>) :<BR>
+<TT>13412419310152401/13422659310152401</TT><BR>
+Avec <TT>evalf</TT> on obtient <I>E</I>(<I>Y</I>) :<BR>
+<TT>0.999237110936</TT><BR>
+On tape (calcul de <I>E</I>(<I>X</I>)+<I>E</I>(<I>Y</I>)) :<BR>
+<TT>12773732676335620/13422659310152401+13412419310152401/13422659310152401</TT>
+On obtient :<BR>
+<TT>638686633816781/327381934393961</TT><BR>
+On tape (calcul de <I>E</I>(<I>X</I>)/(<I>E</I>(<I>X</I>)+<I>E</I>(<I>Y</I>))) :<BR>
+<TT>12773732676335620/13422659310152401/(638686633816781/327381934393961)</TT><BR>
+On obtient :<BR>
+<TT>20/41</TT><BR>
+On retrouve la probabilité 1−<I>p</I>.
+On tape (calcul de <I>E</I>(<I>Y</I>)/(<I>E</I>(<I>X</I>)+<I>E</I>(<I>Y</I>))) :<BR>
+<TT>13412419310152401/13422659310152401/(638686633816781/327381934393961)</TT><BR>
+On obtient :<BR>
+<TT>21/41</TT><BR>
+On retrouve la probabilité <I>p</I>.<BR>
+Donc cette loi ne change pas rien quant aux nombres de naissances de filles et 
+de garçons.
+</LI></UL><H2 CLASS="section"><A NAME="toc165"></A><A NAME="htoc421">30.3</A>  La loi uniforme</H2><H2 CLASS="section"><A NAME="toc166"></A><A NAME="htoc422">30.4</A>  La loi uniforme</H2><H3 CLASS="subsection"><A NAME="htoc423">30.4.1</A>  Définition</H3><H3 CLASS="subsection"><A NAME="htoc424">30.4.2</A>  Exercice1</H3><P>
+On considère un point aléatoire <I>M</I> uniformément réparti sur le disque 
+de centre <I>O</I> et de rayon <I>R</I> c’est à dire que la probabilité pour que <I>M</I> 
+appartienne à un domaine <I>G</I> du disque est proportionnelle à l’aire de <I>G</I>.</P><P>On a donc <I>Proba</I>(<I>x</I>∈ <I>G</I>)=(aire de <I>G</I>)/(<I>R</I><SUP>2</SUP>).<BR>
+Étude de la variable aléatoire <I>X</I>=<I>OM</I><BR>
+
+<I>X</I> varie de 0 à <I>R</I> et la fonction de répartition de <I>X</I> est donc :<BR>
+<I>F</I>(<I>x</I>)=0 si <I>x</I>≤ 0<BR>
+<I>F</I>(<I>x</I>)=π <I>x</I><SUP>2</SUP>/π <I>R</I><SUP>2</SUP>=<I>x</I><SUP>2</SUP>/<I>R</I><SUP>2</SUP>= si 0&lt;<I>x</I> ≤ <I>R</I><BR>
+<I>F</I>(<I>x</I>)=1 si <I>x</I> &gt; <I>R</I><BR>
+La densité de probabilité est donc :<BR>
+<I>f</I>(<I>x</I>)=0 si <I>x</I>≤ 0 ou <I>x</I>&gt; <I>R</I><BR>
+<I>f</I>(<I>x</I>)=2<I>x</I>/<I>R</I><SUP>2</SUP> si 0&lt;<I>x</I>≤ <I>R</I><BR>
+L’éspérance de <I>X</I> est :<BR>
+<I>E</I>(<I>X</I>)=∫<SUB>0</SUB><SUP><I>R</I></SUP><I>xf</I>(<I>x</I>)<I>dx</I>=∫<SUB>0</SUB><SUP><I>R</I></SUP>2<I>x</I><SUP>2</SUP>/<I>R</I><SUP>2</SUP><I>dx</I>=2<I>R</I>/3
+On calcule <I>E</I>(<I>X</I><SUP>2</SUP>) :
+<I>E</I>(<I>X</I><SUP>2</SUP>)=∫<SUB>0</SUB><SUP><I>R</I></SUP><I>x</I><SUP>2</SUP><I>f</I>(<I>x</I>)<I>dx</I>=∫<SUB>0</SUB><SUP><I>R</I></SUP>2<I>x</I><SUP>3</SUP>/<I>R</I><SUP>2</SUP><I>dx</I>=<I>R</I><SUP>2</SUP>/2
+La variance de <I>X</I> est :<BR>
+σ<SUP>2</SUP>(<I>X</I>)=<I>E</I>(<I>X</I><SUP>2</SUP>)−<I>E</I>(<I>X</I>)<SUP>2</SUP>=<I>R</I><SUP>2</SUP>/2−4<I>R</I><SUP>2</SUP>/9=<I>R</I><SUP>2</SUP>/18
+</P><H3 CLASS="subsection"><A NAME="htoc425">30.4.3</A>  Exercice2</H3><P>
+Soit la variable aléatoire à 2 dimensions (<I>X</I>,<I>Y</I>) uniformément distribué
+sur le quart de disque <I>D</I> de centre <I>O</I>, de rayon <I>R</I> situé dans le quart de
+plan <I>x</I>&gt;0 et <I>y</I>&gt;0.<BR>
+On demande la fonction de répartition de (<I>X</I>,<I>Y</I>).<BR>
+La probabilité pour que <I>M</I>=(<I>x</I>,<I>y</I>) appartienne à un domaine <I>G</I> du quart de
+disque <I>D</I> est proportionnelle à l’aire de <I>G</I>.<BR>
+
+Pour calculer la fonction de répartition, on va calculer :
+l’aire <I>A</I> du quart de disque : <I>A</I>=π <I>R</I><SUP>2</SUP>/4 et<BR>
+l’aire <I>AS</I><SUB><I>a</I></SUB> du secteur :
+<I>S</I><SUB><I>a</I></SUB>={(<I>x</I>,<I>y</I>)∈ <I>D</I> : <I>a</I>&lt;<I>x</I>&lt;<I>R</I>} qui est aussi l’aire du secteur 
+{(<I>x</I>,<I>y</I>)∈ <I>D</I> : <I>a</I>&lt;<I>y</I>&lt;<I>R</I>}.<BR>
+Soit α l’angle <I>OxM</I> où <I>M</I> est le point du quart de cercle d’abscisse 
+<I>x</I>. 
+On a :
+α=  acos (<I>x</I>/<I>R</I>)
+aire de <I>S</I><SUB><I>a</I></SUB>=<I>AS</I><SUB><I>a</I></SUB>=α <I>R</I><SUP>2</SUP>/2−<I>x</I>√<SPAN style="text-decoration:overline">(</SPAN><I>R</I><SUP>2</SUP>−<I>ax</I><SUP>2</SUP>)/2
+<I>X</I> et <I>Y</I> varient de 0 à <I>R</I> et la fonction de répartition de <I>X</I>,<I>Y</I> est 
+donc :<BR>
+<I>F</I>(<I>x</I>,<I>y</I>)=0 si <I>x</I>≤ 0 ou <I>y</I>≤ 0<BR>
+<I>F</I>(<I>x</I>,<I>y</I>)=1 si <I>x</I>≥ <I>R</I> et <I>y</I>≥ <I>R</I><BR>
+<I>F</I>(<I>x</I>,<I>y</I>)=4<I>xy</I>/π <I>R</I><SUP>2</SUP>/<I>A</I> si <I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP>≤ <I>R</I><SUP>2</SUP><BR>
+<I>F</I>(<I>x</I>,<I>y</I>)=(π <I>R</I><SUP>2</SUP>/4−<I>AS</I><SUB><I>x</I></SUB>)/<I>A</I> si <I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP>&gt; <I>R</I><SUP>2</SUP> et <I>x</I>≤ <I>R</I> et <I>y</I>≥ <I>R</I><BR>
+<I>F</I>(<I>x</I>,<I>y</I>)=(π <I>R</I><SUP>2</SUP>/4−<I>AS</I><SUB><I>y</I></SUB>)/<I>A</I> si <I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP>&gt; <I>R</I><SUP>2</SUP> et <I>x</I>≥ <I>R</I> et <I>y</I>≤ <I>R</I><BR>
+ 
+<I>F</I>(<I>x</I>,<I>y</I>)=(4<I>xy</I>/π <I>R</I><SUP>2</SUP>−<I>AS</I><SUB><I>x</I></SUB>−<I>AS</I><SUB><I>y</I></SUB>)/<I>A</I> si <I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP>&gt; <I>R</I><SUP>2</SUP> et <I>x</I>&lt;<I>R</I> et <I>y</I>&lt;<I>R</I>
+</P><PRE CLASS="verbatim">F(x,y,R):={
+  local a,b,AS,BS,A;
+  si type(x)!=DOM_FLOAT ou  type(y)!=DOM_FLOAT alors 
+    retourne 'F'(x,y,R); 
+  fsi;
+  si x&lt;=0 ou y&lt;=0 alors retourne 0; fsi;
+  si x&gt;=R et y&gt;=R alors retourne 1; fsi;
+  A:=pi*R^2/4;
+  si (x^2+y^2&lt;=R^2) alors retourne x*y/A; fsi;
+  si x^2+y^2&gt;R^2 et x&lt;R et y&gt;R alors 
+    a:=acos(x/R); 
+    AS:=a*R^2/2-x*sqrt(R^2-x^2)/2;
+    retourne (pi*R^2/4-AS)/A; 
+  fsi;
+  si x^2+y^2&gt;R^2 et y&lt;R et x&gt;R alors 
+    a:=acos(y/R); 
+    AS:=a*R^2/2-y*sqrt(R^2-y^2)/2;
+    retourne (pi*R^2/4-AS)/A; 
+  fsi;
+  si x^2+y^2&gt;R^2 et x&lt;R et y&lt;R alors 
+    a:=acos(x/R); b:=acos(y/R); 
+    AS:=a*R^2/2-x*sqrt(R^2-x^2)/2;
+    BS:=b*R^2/2-y*sqrt(R^2-y^2)/2;
+    retourne (pi*R^2/4-AS-BS)/A; 
+  fsi;
+}:;
+</PRE><P>On tape :<BR>
+<TT>plotfunc(F(x,y,1),[x=-1..2,y=-1..2]);</TT><BR>
+<TT>affichage(plotparam([x,sqrt(1-x</TT><CODE><TT>^</TT></CODE><TT>2),0],x=0..1),
+4+epaisseur_ligne_2)</TT><BR>
+On obtient :
+</P><DIV CLASS="center"><IMG SRC="casexo112.png"></DIV>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casexo029.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo031.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

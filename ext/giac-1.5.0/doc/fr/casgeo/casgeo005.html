@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casgeo.css">
+<TITLE>Des exercices sur les transformations</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casgeo004.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo006.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc104">Chapitre 5</A>  Des exercices sur les transformations</H1><H2 CLASS="section"><A NAME="toc36"></A><A NAME="htoc105">5.1</A>  Exercice 1 sur les rotations</H2><H3 CLASS="subsection"><A NAME="htoc106">5.1.1</A>  L’énoncé et sa figure</H3><P>
+Soit un triangle direct quelconque <I>ABC</I>. On construit à l’extérieur de 
+<I>ABC</I> les carrés <I>ACDE</I> et <I>AGHB</I> et le parallélogramme <I>AEFG</I>.<BR>
+Montrer que <I>BE</I>=<I>CG</I> et que <I>CG</I> est perpendiculaire à <I>EB</I><BR>
+Montrer que <I>AF</I>=<I>BC</I> et que <I>AF</I> est perpendiculaire à <I>BC</I><BR>
+Pour faire la figure, on définit le triangle direct <I>ABC</I> avec les 3 points 
+<I>A</I>,<I>B</I>,<I>C</I> obtenus en cliquant en mode <TT>point</TT>, puis on tape :
+</P><PRE CLASS="verbatim">carre(A,C,D,E);
+carre(B,A,G,H);
+F:=translation(G-A,E);
+parallelogramme(A,E,F);
+segment(B,E,affichage=1);
+segment(C,G,affichage=1);
+segment(B,C,affichage=2);
+segment(A,F,affichage=2);
+K:=projection(droite(B,C),A):;
+segment(A,K,affichage=4+ligne_tiret_point);
+</PRE><P>On obtient :
+</P><DIV CLASS="center"><IMG SRC="casgeo047.png"></DIV><H3 CLASS="subsection"><A NAME="htoc107">5.1.2</A>  La démonstration géométrique</H3><P>
+La rotation de centre <I>A</I> et d’angle π/2 transforme <I>C</I> en <I>E</I> et 
+<I>G</I> en <I>B</I>. Donc <I>CG</I>=<I>EB</I> et <I>CG</I> est perpendiculaire à <I>EB</I><BR>
+Soit <I>I</I> le symétrique de <I>G</I> par rapport à <I>A</I> :
+</P><DIV CLASS="center"><IMG SRC="casgeo048.png"></DIV><P>
+On a donc :<BR>
+<I>IA</I>=<I>AG</I>=<I>EF</I> donc le 
+quadrilatère <I>AIEF</I> est un parallélogramme donc :<BR>
+<I>AF</I>=<I>IE</I>
+La rotation de centre <I>A</I> et d’angle π/2 transforme <I>B</I> en <I>I</I> donc
+<I>BC</I>=<I>IE</I> et <I>BC</I> est perpendiculaire à <I>IE</I> et comme
+<I>AF</I>=<I>IE</I>, on en déduit que :
+<I>BC</I>=<I>AF</I> et <I>BC</I> est perpendiculaire à <I>AF</I>.
+</P><H3 CLASS="subsection"><A NAME="htoc108">5.1.3</A>  La démonstration avec les nombres complexes</H3><P>
+On choisit un repère d’origine <I>A</I>.<BR>
+La rotation de centre <I>A</I> et d’angle π/2 transforme <I>C</I> en <I>E</I> et 
+<I>G</I> en <I>B</I>. Donc si <I>zb</I>,<I>zc</I>,... désigne les affixes de <I>B</I>,<I>C</I>... on a :<BR>
+<I>ze</I>=<I>i</I>*<I>zc</I> et <I>zb</I>=<I>i</I>*<I>zg</I> donc <I>zg</I>=−<I>i</I>*<I>zb</I><BR>
+<I>AF</I>=<I>AE</I>+<I>AG</I> donc<BR>
+<I>zf</I>=<I>ze</I>+<I>zg</I>=<I>i</I>(<I>zc</I>−<I>zb</I>) donc
+<I>AF</I>=<I>BC</I> et <I>BC</I> est perpendiculaire à <I>AF</I>.
+</P><H3 CLASS="subsection"><A NAME="htoc109">5.1.4</A>  La démonstration avec <TT>Xcas</TT></H3><P>
+On choisit un repère d’origine <I>A</I> et <I>C</I> sur l’axe des <I>y</I>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">assume(a=[-2,-5,5,0.1]);
+assume(b=[1,-5,5,0.1]);
+assume(c=[-5/2,-5,5,0.1]);
+A:=point([0,0,'affichage'=0]);
+B:=point([a,b,'affichage'=0]);
+C:=point([0,c,'affichage'=0]);
+carre(A,C,D,E);
+carre(B,A,G,H);
+F:=translation(G-A,E);
+parallelogramme(A,E,F);
+</PRE><P>Puis on demande à <TT>Xcas</TT> :<BR>
+<TT>longueur2(C,G)</TT>, on obtient <TT>(-b)</TT><CODE><TT>^</TT></CODE><TT>2+(c+a)</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+<TT>longueur2(B,E)</TT>, on obtient <TT>(a+c)</TT><CODE><TT>^</TT></CODE><TT>2+(b-c+c)</TT><CODE><TT>^</TT></CODE><TT>2 </TT><BR>
+<TT>longueur2(A,F)</TT>, on obtient <TT>(c-b)</TT><CODE><TT>^</TT></CODE><TT>2+a</TT><CODE><TT>^</TT></CODE><TT>2 </TT><BR>
+<TT>longueur2(B,C)</TT>, on obtient <TT>a</TT><CODE><TT>^</TT></CODE><TT>2+(b-c)</TT><CODE><TT>^</TT></CODE><TT>2 </TT><BR>
+<TT>equation(droite(C,G))</TT>, on obtient <TT>y=((-a-c)*1/b*x+c) </TT><BR>
+<TT>equation(droite(B,E))</TT>, on obtient <TT>y=(b*1/(a+c)*x+(b*c)/(a+c)) </TT><BR>
+le produit des pentes vaut bien -1.<BR>
+<TT>equation(droite(A,F))</TT>, on obtient <TT>y=((-a)*1/(b-c)*x)</TT><BR>
+<TT>equation(droite(B,C))</TT>, on obtient <TT>y=((b-c)*1/a*x+c)</TT><BR>
+le produit des pentes vaut bien -1.<BR>
+On peut aussi utiliser directement :<BR>
+<TT>normal(pente(droite(C,G))*pente(droite(B,E)))</TT> et<BR>
+<TT>normal(pente(droite(A,F))*pente(droite(B,C)))</TT> et obtenir <TT>-1</TT><BR>
+ou<BR>
+<TT>est_perpendiculaire(droite(C,G),droite(B,E))</TT> et<BR>
+<TT>est_perpendiculaire(droite(A,F),droite(B,C))</TT> et obtenir <TT>1</TT>
+</P><H2 CLASS="section"><A NAME="toc37"></A><A NAME="htoc110">5.2</A>  Exercice 2 sur les similitudes</H2><H3 CLASS="subsection"><A NAME="htoc111">5.2.1</A>  L’énoncé et sa figure</H3><P>
+Soit un carré direct <I>ABCD</I> de centre <I>I</I> et de côté <I>a</I>. Soit <I>J</I> le 
+milieu de <I>IB</I>.
+On construit le carré direct <I>IJKL</I>.<BR>
+Trouver le centre, le rapport et l’angle de la similitude qui transforme :<BR>
+<I>A</I> en <I>I</I>,<BR>
+<I>B</I> en <I>J</I><BR>
+<I>C</I> en <I>K</I> et<BR>
+<I>D</I> en <I>L</I>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">A:=point(0);
+assume(a=[5,0,10,0.1]);
+B:=point(a);
+c:=carre(A,B,C,D):;c
+I:=milieu(A,C);
+J:=milieu(B,I);
+carre(I,J,K,L);
+segment(A,C);
+segment(B,D);
+</PRE><P>On obtient :
+</P><DIV CLASS="center"><IMG SRC="casgeo049.png"></DIV><H3 CLASS="subsection"><A NAME="htoc112">5.2.2</A>  La démonstration géométrique</H3><P> 
+Si cette similitude existe on a :<BR>
+le rapport de la similitude est 
+<I>k</I>=<I>a</I>*√<SPAN style="text-decoration:overline">2</SPAN>/4.puisque <I>IJ</I>=<I>a</I>*√<SPAN style="text-decoration:overline">2</SPAN>/4=<I>AB</I>*√<SPAN style="text-decoration:overline">2</SPAN>/4,<BR>
+L’angle est de −π/4 puisque 
+(<I>AB</I>,<I>IJ</I>)=−π/4<BR>
+Cherchons son centre <I>O</I>.<BR>
+On doit avoir (<I>OA</I>,<I>OI</I>)=−π/4
+donc <I>O</I> se trouve sur l’arc <I>ABI</I> du cercle de diamètre <I>AB</I> (arc capable 
+interceptant <I>AI</I> et d’angle −π/4 puisque
+l’angle au centre de ce cercle qui intercepte l’arc <I>AI</I> est droit).<BR>
+On doit avoir (<I>OB</I>,<I>OJ</I>)=−π/4
+donc <I>O</I> se trouve sur l’arc <I>BKJ</I> du cercle de diamètre <I>BK</I> (arc capable
+interceptant <I>BJ</I> et d’angle −π/4 puisque l’angle au centre de ce 
+cercle qui intercepte l’arc <I>BJ</I> est droit).<BR>
+Soit <I>O</I> l’intersection de ces 2 arcs : <I>O</I> est donc la projection de <I>B</I> sur
+<I>AK</I> (puisque l’angle (<I>OA</I>,<I>OB</I>)=π/2
+et l’angle (<I>OB</I>,<I>OK</I>)=π/2, on a
+(<I>OA</I>,<I>OK</I>)=π).<BR>
+La similitude de centre <I>O</I>, d’angle
+−π/4 et de rapport <I>k</I>=<I>a</I>*√<SPAN style="text-decoration:overline">2</SPAN>/4 transforme <I>A</I> en <I>I</I> et <I>B</I> en
+<I>J</I>. Comme une similitude transforme des longueurs égales en des longueurs 
+égales et conserve aussi les angles, cette similitude transforme le carré
+direct <I>ABCD</I> en le carré direct <I>IJKL</I>.<BR>
+On peut donc en déduire que les 4 cercles :<BR>
+<TT>cercle(A,B),cercle(B,K),circonscrit(I,K,C),circonscrit(ADL)</TT><BR>
+sont concourants en <I>O</I>.<BR>
+En effet :<BR>
+(<I>IC</I>,<I>IK</I>)=−π/4 donc <I>I</I> et <I>O</I> sont sur l’arc capable interceptant <I>CK</I> et d’angle −π/4. On en déduit que <I>O</I> est sur le cercle circonscrit à <I>IKC</I>.<BR>
+De même (<I>AD</I>,<I>AL</I>)=−π/4 donc <I>A</I> 
+et <I>O</I> sont sur l’arc capable interceptant <I>CK</I> et d’angle −π/4. 
+On en déduit que <I>O</I> est sur le cercle circonscrit à <I>JAD</I>.
+</P><DIV CLASS="center"><IMG SRC="casgeo050.png"></DIV><H3 CLASS="subsection"><A NAME="htoc113">5.2.3</A>  La démonstration avec les nombres complexes et <TT>Xcas</TT></H3><P>
+On choisit <I>A</I> à l’origine et <I>B</I> sur l’axe des <I>x</I>.<BR>
+Si cette similitude existe on a :<BR>
+le rapport de la similitude est 
+<I>k</I>=<I>a</I>*√<SPAN style="text-decoration:overline">2</SPAN>/4.puisque <I>IJ</I>=<I>a</I>*√<SPAN style="text-decoration:overline">2</SPAN>/4=<I>AB</I>*√<SPAN style="text-decoration:overline">2</SPAN>/4,<BR>
+L’angle est de −π/4 puisque 
+(<I>AB</I>,<I>IJ</I>)=−π/4<BR>
+Cherchons <I>O</I> le centre de la similitude d’affixe <I>z</I>0, on a :<BR>
+−<I>z</I>0*√<SPAN style="text-decoration:overline">2</SPAN>/4*<I>exp</I>(−<I>i</I>*π/4)=<I>a</I>*(1+<I>i</I>)/2−<I>z</I>0
+On tape :<BR>
+<TT>normal(solve(-z0*sqrt( 2)/4*exp(-i*pi/4)=a*(1+i)/2-z0,z0))</TT><BR>
+On obtient :<BR>
+<TT>[(4+2*i)/5*a]</TT><BR>
+donc <I>z</I>0=(4+2*<I>i</I>)/5*<I>a</I>
+On tape :<BR>
+<TT>I:=similitude(point((4+2*i)/5*a),sqrt(2)/4,-pi/4,A,<BR>
+affichage=1+epaisseur_point_2)</TT><BR>
+<TT>J:=similitude(point(4+2*i),sqrt( 2)/4,-pi/4,B,<BR>
+affichage=1+epaisseur_point_2)</TT><BR>
+<TT>K:=similitude(point(4+2*i),sqrt( 2)/4,-pi/4,C,<BR>
+affichage=1+epaisseur_point_2)</TT><BR>
+<TT>L:=similitude(point(4+2*i),sqrt( 2)/4,-pi/4,D,<BR>
+affichage=1+epaisseur_point_2)</TT><BR>
+On obtient :<BR>
+</P><DIV CLASS="center"><IMG SRC="casgeo051.png"></DIV><H2 CLASS="section"><A NAME="toc38"></A><A NAME="htoc114">5.3</A>  Exercice 3 : lieu et similitude</H2><H3 CLASS="subsection"><A NAME="htoc115">5.3.1</A>  L’énoncé et sa figure</H3><P>
+Soit un triangle direct <I>OAB</I> rectangle en <I>O</I> avec <I>OA</I>=<I>a</I> et <I>OB</I>=<I>b</I>.<BR>
+Soit <I>D</I>=<I>At</I> une demi droite variable telle que :<BR>
+(<I>OA</I>,<I>At</I>)=<I>c</I>, 0 ≤ <I>c</I> ≤ π/2.<BR>
+Soient <I>A</I>1 et <I>B</I>1 les projections respectives de <I>A</I> et <I>B</I> sur <I>D</I>.<BR>
+Quelle est la valeur de <I>c</I> pour laquelle <I>A</I>1 et <I>B</I>1 sont confondus en un 
+point que l’on nommera <I>P</I> ?
+Trouver les lieux de <I>A</I>1 et de <I>B</I>1 quand <I>c</I> varie.<BR>
+Montrer que le triangle <I>PA</I>1<I>B</I>1 reste semblable au triangle <I>OAB</I> quand <I>c</I> 
+varie.<BR>
+Trouver le lieu de <I>M</I> milieu de <I>A</I>1<I>B</I>1 quand <I>c</I> varie.<BR>
+On tape (on choisit <I>a</I>=3 et <I>b</I>=5):
+(les instructions <TT>carre</TT> sont la pour voir les droites perpendiculaires)
+</P><PRE CLASS="verbatim">assume(a=3);
+assume(b=5);
+O:=point(0);
+A:=point(a);
+B:=point(b*i);
+d:=segment(A,B);
+supposons(c=[0.8,0,1.57,0.1]);
+D:=droite(y=(tan(c)*x));
+A1:=projection(D,A);
+B1:=projection(D,B);
+P:=projection(d,O);
+carre(P,O+(P-0)*0.9);
+segment(O,P,affichage=3+point_tiret);
+carre(P,O+(P-0)*0.9);
+carre(O+(P-0)*0.93,P);
+segment(A,A1,affichage=3+point_tiret);
+carre(A1,O+(A1-0)*0.9);
+segment(B,B1,affichage=3+point_tiret);
+carre(B1,O+(B1-0)*1.05);
+triangle(P,A1,B1);
+M:=milieu(A1,B1);
+C1:=cercle(1.5,1.5,0,pi);
+C2:=cercle(2.5*i,2.5,-pi/2,pi/2);
+C3:=similitude(P,sqrt(a^2+b^2)/(2*b),atan(a/b),C2,affichage=5)
+</PRE><P>On obtient :
+</P><DIV CLASS="center"><IMG SRC="casgeo052.png"></DIV><H3 CLASS="subsection"><A NAME="htoc116">5.3.2</A>  La démonstration géométrique</H3><P> 
+<I>A</I>1 et <I>B</I>1 sont confondus lorsque <I>D</I> est perpendiculaire à <I>AB</I>.
+<I>P</I> est donc la projection de <I>O</I> sur <I>AB</I>.<BR>
+Quand <I>c</I> varie, l’angle (<I>A</I>1<I>O</I>,<I>A</I>1<I>A</I>)=π/2 donc le lieu de <I>A</I>1 est le demi-cercle <I>C</I>1 de diamètre <I>OA</I> contenant <I>P</I>.<BR>
+Quand <I>c</I> varie l’angle (<I>B</I>1<I>B</I>,<I>B</I>1<I>O</I>)=π/2 donc le lieu de <I>B</I>1 est le demi-cercle <I>C</I>2 de diamètre <I>OB</I> contenant <I>P</I>.<BR>
+Ces deux demi-cercles se coupent en <I>P</I>.<BR>
+Les triangles <I>POA</I> et <I>PBO</I> sont semblables au triangle <I>OBA</I>.<BR>
+Si <I>B</I>1 est sur l’arc <I>OP</I> de <I>C</I>2 alors <I>A</I> est sur l’arc <I>AP</I> de <I>C</I>1.<BR>
+alors l’angle 
+Si <I>B</I>1 est sur l’arc <I>PB</I> de <I>C</I>2 alors <I>A</I> est sur l’arc <I>OP</I> de <I>C</I>1.<BR>
+Dans les 2 cas l’angle <I>B</I>1 de <I>PA</I>1<I>B</I>1 est égal à l’angle <I>B</I> de <I>OAB</I> et 
+<I>A</I>1 de <I>PA</I>1<I>B</I>1 est égal à l’angle <I>A</I> de <I>OAB</I>.<BR>
+Donc le triangle <I>PB</I>1<I>A</I>1 est direct et est semblable au triangle <I>OBA</I>.<BR>
+On en déduit que <I>A</I>1 se déduit de <I>B</I>1 par une similitude de centre <I>P</I>,
+d’angle π/2 et de rapport <I>PA</I>1/<I>PB</I>1=<I>OA</I>/<I>OB</I>=<I>a</I>/<I>b</I>. <I>C</I>1 est donc l’image de 
+<I>C</I>2 par cette similitude.<BR>
+Le milieu <I>M</I> de <I>A</I>1<I>B</I>1 se déduit de <I>B</I>1 par une similitude de centre <I>P</I>,
+d’angle :<BR>
+<I>B</I>1 (égal à l’angle <I>B</I> de <I>OAB</I> valant atan(<I>a</I>/<I>b</I>)) et de rapport :<BR>
+<I>PM</I>/<I>PB</I>1=<I>AB</I>/(2*<I>OB</I>)=√<SPAN style="text-decoration:overline"><I>a</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>b</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>/(2<I>b</I>) (car la médiane <I>OK</I> de <I>OAB</I> a pour 
+longueur <I>AB</I>/2=√<SPAN style="text-decoration:overline"><I>a</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>b</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>/2).<BR>
+Donc le lieu de <I>M</I> est le demi cercle <I>C</I>3 qui se déduit de <I>C</I>2 par cette 
+similitude : c’est le demi-cercle diamètre le segment joingnant les milieux de <I>OA</I> et <I>OB</I> (car si <I>c</I>=0 <I>A</I>1 est en <I>A</I> et <I>B</I>1 est en <I>O</I> et si
+<I>c</I>=π/2 <I>A</I>1 est en <I>O</I> et <I>B</I>1 est en <I>B</I>) 
+qui passe par <I>P</I> (puisque quand <I>A</I>1 et <I>B</I>1 sont en <I>P</I>, <I>M</I>milieu de <I>A</I>1<I>B</I>1 
+est aussi en <I>P</I>). 
+</P><DIV CLASS="center"><IMG SRC="casgeo053.png"></DIV><H3 CLASS="subsection"><A NAME="htoc117">5.3.3</A>  La démonstration avec les nombres complexes et <TT>Xcas</TT></H3><P>
+<I>P</I> est la projection de <I>O</I> sur <I>AB</I>.<BR>
+On <I>PO</I>*<I>AB</I>=<I>a</I>*<I>b</I>=<I>PO</I>*√<SPAN style="text-decoration:overline"><I>a</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>b</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP> donc <I>O</I>−<I>P</I>=(<I>B</I>−<I>A</I>)*(<I>iab</I>/(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>))
+si <I>p</I> est l’affixe de <I>P</I> on a :<BR>
+<I>p</I>=(<I>a</I>−<I>ib</I>)(<I>iab</I>/(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>))=(<I>ab</I><SUP>2</SUP>+<I>ia</I><SUP>2</SUP><I>b</I>)/(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)<BR>
+<I>A</I>1 a pour affixe <I>a</I>1=<I>a</I>cos(<I>c</I>)exp(<I>ic</I>)<BR>
+<I>B</I>1 a pour affixe <I>b</I>1=<I>b</I>sin(<I>c</I>)exp(<I>ic</I>)<BR>
+<I>M</I> a pour affixe <I>m</I>=(<I>a</I>1+<I>b</I>1)/2=(<I>a</I>cos(<I>c</I>)+<I>b</I>sin(<I>c</I>))exp(<I>ic</I>)/2<BR>
+On pose :<BR>
+<I>x</I>1=re(<I>m</I>)=(<I>a</I>cos(<I>c</I>)+<I>b</I>sin(<I>c</I>))cos(<I>c</I>)/2 et<BR>
+<I>y</I>1=im(<I>m</I>)=(<I>a</I>cos(<I>c</I>)+<I>b</I>sin(<I>c</I>))sin(<I>c</I>)/2<BR>
+On a <I>x</I>1≥ 0 et <I>y</I>1≥ 0 car <I>c</I>∈ [0;π/2].<BR>
+On tape :<BR>
+<TT>x1,y1:=op(normal(coordonnees(M)))</TT><BR>
+<TT>factor(equation(plotparam(x1+i*y1,c)))</TT><BR>
+On obtient :<BR>
+<TT>(b</TT><CODE><TT>^</TT></CODE><TT>2+a</TT><CODE><TT>^</TT></CODE><TT>2)*(2*x</TT><CODE><TT>^</TT></CODE><TT>2-x*a-b*y+2*y</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+qui est l’équation du cercle de centre d’affixe (<I>a</I>+<I>ib</I>)/2 passant par <I>O</I>.<BR>
+Comme <I>A</I>1 et <I>B</I>1 se trouve dans l’angle 
+(<I>OA</I>,<I>OB</I>) c’est le demi-cercle se trouvant dans cet angle qui est le lieu de <I>M</I>.<BR>
+ou bien, on calcule :<BR>
+<I>x</I>1<SUP>2</SUP>+<I>y</I>1<SUP>2</SUP>=(<I>a</I>cos(<I>c</I>)+<I>b</I>sin(<I>c</I>))<SUP>2</SUP>/4=<BR>
+<I>a</I>/4*cos(<I>c</I>)(<I>a</I>cos(<I>c</I>)++<I>b</I>sin(<I>c</I>))+<I>b</I>/4sin(<I>c</I>)(<I>a</I>cos(<I>c</I>)++<I>b</I>sin(<I>c</I>))=<BR>
+<I>a</I>*<I>x</I>1/2+<I>b</I>*<I>y</I>1/2<BR>
+Donc le lieu de <I>M</I> a pour équation pour <I>x</I>≥ 0 et <I>y</I>≥ 0 :<BR>
+<I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP>−<I>ax</I>/2−<I>by</I>/2=(<I>x</I>−<I>a</I>/4)<SUP>2</SUP>+(<I>y</I>−<I>b</I>/4)<SUP>2</SUP>−(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)/16<BR>
+qui est l’équation du demi-cercle <I>C</I>3.
+</P>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casgeo004.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo006.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

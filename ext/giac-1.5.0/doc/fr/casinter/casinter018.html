@@ -1,0 +1,449 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casinter.css">
+<TITLE>Le tableur</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casinter017.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casinter019.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour &#XE0; la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H2 CLASS="section"><A NAME="htoc68">15</A>  Le tableur</H2><H3 CLASS="subsection"><A NAME="toc45"></A><A NAME="htoc69">15.1</A>  Généralités</H3><P>
+Le niveau tableur est obtenu avec le raccourci <TT>Alt+t</TT> et contient :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+en haut la barre de menu de ce niveau :<BR>
+<SPAN CLASS="textboxed"><TT>Table Edit Statistics</TT></SPAN> et<BR>
+à coté de cette barre de menus les boutons :<BR>
+<SPAN CLASS="textboxed"><TT>eval</TT></SPAN> <SPAN CLASS="textboxed"><TT>val</TT></SPAN> <SPAN CLASS="textboxed"><TT>2-d</TT></SPAN> <SPAN CLASS="textboxed"><TT>3-d</TT></SPAN> et
+une ligne vide qui deviendra après une sauvegarde du tableur (faite par 
+exemple sous le nom <TT>aa.tab</TT>) un bouton
+<SPAN CLASS="textboxed"><TT>Save aa.tab</TT></SPAN> (sauvegarde que l’on fait la première fois avec le
+menu <TT>Table</TT><TT>▸</TT><TT>Sauver tableur comme du texte</TT>).
+</LI><LI CLASS="li-itemize">en dessous, le tableur avec une case sélection, une ligne de commandes,
+une ligne d’état et les cellules,
+</LI><LI CLASS="li-itemize">en dessous du tableur, l’écran de représentation graphique du tableur.
+</LI></UL><P>
+<B>Remarque</B> On peut utiliser la barre de menu du tableur mais pour cela il 
+faut déplacer la souris sur un des menus. On peut aussi obtenir la barre de 
+menu du tableur, plus directement, en utilisant le bouton droit de la souris : 
+en effet, lorsqu’on clique sur le bouton droit de la souris n’importe où dans
+le tableur, on fait apparaitre les menus du tableur ce qui évite un déplacement de la souris.<BR>
+Le tableur de <TT>Xcas</TT> utilise les conventions habituelles des tableurs :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Nom de cellule<A NAME="@default47"></A>.<BR>
+Le tableur est une matrice dont on numérote les lignes par des nombres
+et les colonnes par une ou plusieurs lettres. 
+Le nom d’une cellule est composé d’abord
+de la (des) lettre(s) (donc du numéro de colonne) puis du nombre.
+Par exemple ligne 2, colonne 3 se note <CODE>C2</CODE>.
+Les numéros de lignes commencent à 0 en mode Xcas, 1 sinon.
+</LI><LI CLASS="li-itemize">Valeur et formule de calcul.<BR>
+La valeur d’une cellule peut être une constante ou être calculée par une 
+formule pouvant faire
+intervenir les autres cellules, qui sont alors désignées par une
+référence (cf. ci-dessous). Lorsqu’on modifie une cellule,
+on entre soit une valeur constante, soit une formule de calcul
+commencant par <CODE>=</CODE>.
+</LI><LI CLASS="li-itemize">Référence relative et absolue.<BR>
+Lorsqu’on désigne une cellule depuis une formule, on peut la désigner
+relativement à la cellule que l’on définit, ou
+de manière absolue. Cela affecte les copies de la formule dans d’autres
+cellules, les références absolues copiées correspondront au même
+numéro de ligne ou colonne, alors que les références relatives correspondent
+au même décalage de lignes ou colonnes. Une référence absolue se note
+en précédant la (les) lettre(s) ou/et le nombre de la cellule par le signe $.
+</LI><LI CLASS="li-itemize">Plage de cellules.<A NAME="@default48"></A>
+Cela permet de faire référence à un ensemble rectangulaire de cellules,
+par exemple pour en calculer la moyenne. On indique les noms
+des cellules des sommets en haut à gauche et en bas à droite du rectangle 
+séparés par le signe <TT>:</TT> (par exemple <TT>mean(A0:B5)</TT>).
+</LI></UL><H3 CLASS="subsection"><A NAME="toc46"></A><A NAME="htoc70">15.2</A>  Comment avoir un tableur</H3><P>
+Pour créer un tableur, 
+il faut utiliser le menu <TT>Tableur</TT>, 
+puis <TT>Nouveau tableur</TT> ou le raccourci <TT>Alt+t</TT>.</P><P><B>Remarque</B><BR>
+À l’ouverture du tableur, la fenêtre de configuration du tableur s’ouvre
+et vous pouvez donner ou ne pas donner un nom au tableur dans la case 
+<TT>Variable</TT> :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+vous avez mis un nom dans la case <TT>Variable</TT> (par exemple <TT>M</TT>),<BR>
+Alors cette variable contiendra la matrice définie par le tableur. De 
+plus, cette variable évolue avec le tableur automatiquement.
+Lors de la sauvegarde du tableur, c’est ce nom avec le suffixe 
+<TT>.tab</TT> qui servira de nom de fichier (par exemple <TT>M.tab</TT>) et ce 
+fichier contiendra le tableur avec ses formules.
+</LI><LI CLASS="li-itemize">vous n’avez pas mis de nom dans la case <TT>Variable</TT>,<BR>
+Lors de la sauvegarde du tableur, on vous demande un nom de fichier (par 
+exemple <TT>MM.tab</TT>) (<TT>.tab</TT> sera rajouté automatiquement si vous 
+l’avez omis) et c’est ce nom sans son extension (par exemple <TT>MM</TT>) qui 
+servira de nom de variable : le nom dans la case <TT>Variable</TT> devient
+<TT>MM</TT> automatiquement.
+</LI><LI CLASS="li-itemize">vous avez mis un nom dans la case <TT>Variable</TT> (par exemple <TT>M</TT>) et
+vous voulez sauver le tableur et ses formules sous un autre nom par exemple 
+<TT>A.tab</TT>. Vous faites cela avec <TT>Table</TT><TT>▸</TT><TT>Sauver comme</TT>
+Dans ce cas le nom dans la case <TT>Variable</TT> change automatiquement et 
+devient<TT>A</TT>.
+</LI></UL><P>
+On obtient un niveau contenant :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+en haut la barre de menu de ce niveau :<BR>
+<SPAN CLASS="textboxed"><TT>Table Edit Statistics</TT></SPAN> et<BR>
+à coté de cette barre de menus les boutons :<BR>
+<SPAN CLASS="textboxed"><TT>eval</TT></SPAN> <SPAN CLASS="textboxed"><TT>val</TT></SPAN> <SPAN CLASS="textboxed"><TT>2-d</TT></SPAN> <SPAN CLASS="textboxed"><TT>3-d</TT></SPAN> <SPAN CLASS="textboxed"><TT>Save as &lt;No filename&gt;</TT></SPAN>
+</LI><LI CLASS="li-itemize">en dessous, le tableur avec une case sélection, une ligne de commandes,
+une ligne d’état et les cellules,
+</LI><LI CLASS="li-itemize">en dessous du tableur, l’écran de représentation graphique du tableur.
+</LI></UL><P>
+<B>Remarque</B><A NAME="@default49"></A><A NAME="@default50"></A><BR>
+On peut choisir de :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+ne pas avoir d’écran graphique, il faut alors choisir
+<TT>Cacher graphe</TT> dans <TT>Edit</TT><TT>▸</TT><TT>Configuration</TT> du 
+tableur, ou encore ne pas cocher <TT>Graphe</TT> dans 
+l’écran de configuration du
+tableur (que l’on obtient en cliquant sur la ligne d’état du tableur),
+</LI><LI CLASS="li-itemize">d’avoir l’écran de représentation graphique du tableur à droite du 
+tableur il faut alors choisir <TT>Graphe portrait</TT> dans 
+<TT>Edit</TT><TT>▸</TT><TT>Configuration</TT> du tableur, ou encore ne pas 
+cocher <TT>Graphe paysage</TT> dans l’écran de configuration du tableur (que 
+l’on obtient en cliquant sur la ligne d’état du tableur),
+</LI><LI CLASS="li-itemize">d’avoir l’écran de représentation graphique du tableur en dessous du 
+tableur il faut alors choisir <TT>Graphe paysage</TT> dans 
+<TT>Edit</TT><TT>▸</TT><TT>Configuration</TT> du tableur ou encore cocher
+<TT>Graphe paysage</TT> dans l’écran de configuration du tableur 
+(cet écran de configuration du tableur s’obtient en cliquant sur la ligne 
+d’état du tableur ou avec 
+<TT>Edit</TT><TT>▸</TT><TT>Configuration</TT><TT>▸</TT><TT> Fenetre cfg</TT>).
+</LI><LI CLASS="li-itemize">On peut enfin faire apparaitre le graphe 2-d ou 3-d associé
+à l’ensemble des commandes du tableur ayant une sortie graphique 
+en cliquant sur le bouton <TT>2d</TT> ou <TT>3d</TT>.
+</LI></UL><H3 CLASS="subsection"><A NAME="toc47"></A><A NAME="htoc71">15.3</A>  Description du tableur</H3><P>
+Les deux premières lignes du tableur sont : 
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+une ligne composée 
+de deux cases :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+une case de sélection qui permet soit de sélectionner une cellule 
+(en tapant par exemple <TT>B0</TT>) ou un sous tableau (en tapant par exemple 
+<TT>B0..D3</TT>), ou des colonnes non contigües (par exemple 
+<TT>B0..3,D</TT>), soit de savoir ce que l’on a sélectionné. 
+</LI><LI CLASS="li-itemize">une ligne de commandes qui permet de modifier une cellule du tableur ou 
+de savoir ce qui se trouve dans cette cellule.<P><B>Attention</B>
+Si le curseur
+est dans cette ligne de commandes, lorsqu’on clique dans une case, c’est le 
+nom de cette case qui va s’afficher dans cette ligne, sans changer la case de 
+sélection. Pour enlever le curseur tapez sur <TT>Echap</TT> ou <TT>Escape</TT> ou
+encore sur la touche d’effacement ←— jusqu’au début
+de ligne puis encore une fois.</P><P>Si le curseur n’est pas dans la ligne de commandes, lorsqu’on clique dans une 
+case, c’est la formule de cette case qui va s’afficher dans cette ligne, en
+mettant son nom dans la case de sélection (pour avoir la valeur de cette case
+il faut appuyer sur le bouton <TT>val</TT>). 
+</P></LI></UL>
+</LI><LI CLASS="li-itemize">la ligne d’état rappelant la configuration choisie et servant aussi de 
+bouton permettant de changer cette configuration.
+On détermine la configuration dans le menu 
+<TT>Edit</TT><TT>▸</TT><TT>Configuration</TT> du tableur ou en cliquant sur 
+cette ligne d’état.
+On a par exemple dans la ligne d’état :<BR>
+<TT>* Spreadsheet A R40C6 auto down fill</TT><BR>
+cela veut dire que l’on a un tableur qui a été modifié depuis la 
+dernière sauvegarde (<TT>*</TT>), de nom de variable <TT>A</TT> qui a 40 lignes
+et 6 colonnes, il est réévalué automatiquement, le curseur se déplace 
+vers le bas lorsqu’on vient de remplir une cellule et une matrice remplit 
+plusieurs cellules.<P>Autre exemple :<BR>
+<TT>- Matrix &lt;&gt; R4C6 manual right cell</TT><BR>
+cela veut dire que l’on a une matrice qui n’a pas été modifiée depuis la 
+dernière sauvegarde (<TT>-</TT>), il ne lui correspond pas de nom de variable
+(<TT>&lt;&gt;</TT>), elle a 4 lignes et 6 colonnes, elle n’est réévaluée que si on 
+appuie sur le bouton <TT>eval</TT>, le curseur se déplace vers la droite 
+lorsqu’on vient de remplir une cellule et une matrice remplit une seule 
+cellule.
+</P></LI></UL><H3 CLASS="subsection"><A NAME="toc48"></A><A NAME="htoc72">15.4</A>  L’écran de représentation graphique du tableur</H3><P>
+Tous les résultats des commandes graphiques situées dans les cellules du 
+tableur s’afficheront dans l’écran de représentation graphique du tableur.
+Si on met <TT>1</TT> dans <TT>A0</TT>,
+<TT>2</TT> dans <TT>B0</TT>, <TT>=cercle(A0,B0)</TT> dans <TT>C0</TT> et 
+<TT>=cercle(B0,A0)</TT>
+dans <TT>D0</TT>, alors on obtient le tracé de deux cercles et une modification
+de l’une des deux cases <TT>A0</TT> ou <TT>B0</TT> modifira ce tracé. </P><H3 CLASS="subsection"><A NAME="toc49"></A><A NAME="htoc73">15.5</A>  La barre de menu du tableur</H3><P>
+On peut aussi obtenir cette barre de menus en utilisant le bouton droit de la 
+souris : lorsqu’on clique sur le bouton droit n’importe où dans le tableur, 
+on fait apparaitre la barre des menus du tableur ce qui évite un 
+déplacement de la souris.<BR>
+Le menu <TT>Table</TT> est composé de :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<TT>Sauver</TT> pour sauver le tableur dans un fichier d’extension 
+<TT>.tab</TT>.
+</LI><LI CLASS="li-itemize"><TT>Sauver comme</TT> pour sauver le tableur sous un autre nom (d’extension
+<TT>.tab</TT>) que celui noté à coté du bouton <TT>Save</TT>,
+</LI><LI CLASS="li-itemize"><TT>Save selection to variable</TT> pour stocker dans une variable
+la matrice mise en surbrillance et pouvoir ainsi utiliser cette variable 
+ailleurs (calcul formel par exemple). Par exemple si le nom de la variable est
+<TT>a</TT>, <TT>a[0,2]</TT> donnera la valeur de la colonne 2 de la 
+ligne 0 de la sous-matrice sélectionnée
+(cette méthode d’export est plus robuste que l’utilisation de 
+la commande <TT>current_sheet</TT>)
+</LI><LI CLASS="li-itemize"><TT>Inserer</TT> pour insérer 
+à partir de la cellule mise en surbrillance 
+un tableur sauvé précédemment,
+</LI><LI CLASS="li-itemize"><TT>Cfg</TT> pour ouvrir la fenêtre de configuration du tableur ce qui 
+permet de donner (ou non) un nom de variable à la matrice définie par le 
+tableur et de choisir d’associer (ou non) un graphe au tableur.<BR>
+Si le nom de la variable est <TT>tab</TT>, <TT>tab[0,1]</TT> renvera la valeur 
+située en <TT>B0</TT>,
+</LI><LI CLASS="li-itemize"><TT>Exporter/Imprimer</TT> pour imprimer le tableur. Vous pouvez 
+prévisualiser avant d’imprimer.
+</LI></UL><P>
+Le menu <TT>Edit</TT> est composé de :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<TT>Eval sheet</TT> ou <TT>F9</TT> pour réévaluer la feuille du tableur ou
+encore on appuie sur le bouton <TT>eval</TT>.
+</LI><LI CLASS="li-itemize"><TT>Copier la cellule</TT> pour mettre le contenu d’une cellule dans le 
+buffer. En effet la sélection d’une plage avec la souris n’est possible que 
+si la plage a au moins deux cellules. On clique dans la cellule à copier, 
+puis on clique sur <TT>Copier la cellule</TT>. On peut aussi cliquer dans la 
+cellule à copier et taper <TT>Ctrl+c</TT>, puis cliquer dans la cellule oú 
+l’on veut faire la copie, et taper <TT>Ctrl+v</TT>. 
+</LI><LI CLASS="li-itemize"><TT>Coller</TT> pour copier le buffer dans une cellule. Sous Linux, on peut
+utiliser le bouton du milieu de la souris pour copier le buffer. On peut copier
+le buffer dans la ligne de commandes du tableur ou d’une autre entrée, mais 
+on ne peut pas copier directement dans une cellule : il faut passer 
+obligatoirement par la ligne de commandes. 
+</LI><LI CLASS="li-itemize"><TT>Configuration</TT> 
+La ligne d’état rappelle la configuration choisie et est aussi un bouton 
+ouvrant un écran de configuration du tableur.<BR>
+Les sous menus sont :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+<TT>Fenetre cfg</TT> permet d’ouvrir l’écran de configuration du tableur
+(on peut aussi cliquer sur la ligne d’état du tableur),
+</LI><LI CLASS="li-itemize"><TT>Format</TT> permet d’avoir un tableur ou un éditeur de matrice 
+qui édite facilement des matrices symétriques, antisymétriques,
+hermitiennes, antihermitiennes,
+</LI><LI CLASS="li-itemize"><TT>Changer le nombre de lignes</TT> permet de choisir le nombre de lignes,
+</LI><LI CLASS="li-itemize"><TT>Changer le nombre de colonnes</TT> permet de choisir le nombre de 
+colonnes,
+</LI><LI CLASS="li-itemize"><TT>Deplacer -&gt;</TT> permet de choisir de diriger le curseur automatiquement
+vers la gauche lors du remplissage d’une cellule (on peut aussi utiliser la 
+souris au coup par coup),
+</LI><LI CLASS="li-itemize"><TT>Deplacer vers le bas</TT> permet de choisir de diriger le curseur 
+automatiquement vers le bas lors du remplissage d’une cellule (on peut aussi 
+utiliser la souris au coup par coup),
+</LI><LI CLASS="li-itemize"><TT>Recalculer automatiquement</TT> pour que le tableur soit recalculé
+automatiquement,
+</LI><LI CLASS="li-itemize"><TT>Ne pas recalculer automatiquement</TT> pour que le tableur ne soit 
+pas recalculé automatiquement : le recalcul ne se fait alors que si on appuie
+sur le bouton <TT>eval</TT>,
+</LI><LI CLASS="li-itemize"><TT>Distribuer une matrice sur plusieurs cellules</TT> va permettre de 
+remplir 
+plusieurs cellules avec une matrice : par exemple si on sélectionne <TT>A0</TT>
+et que l’on tape dans la ligne de commandes du tableur <TT>[1,2,3]</TT>, cela 
+remplira 3 cellules, en mettant 1 dans <TT>A0</TT>, 2 dans <TT>B0</TT> et 3 dans 
+<TT>C0</TT>, par contre si on tape dans la ligne de commandes du tableur
+<TT>=[1,2,3]</TT> cela mettra [1,2,3] dans <TT>A0</TT>.
+</LI><LI CLASS="li-itemize"><TT>Conserver une matrice dans une seule cellule</TT> permet de remplir une 
+cellule avec une matrice : par exemple si on sélectionne <TT>A0</TT>
+et que l’on tape dans la ligne de commandes du tableur <TT>[1,2,3]</TT> ou 
+<TT>=[1,2,3]</TT>, cela mettra [1,2,3] dans <TT>A0</TT>.
+</LI><LI CLASS="li-itemize"><TT>Portrait</TT> pour avoir l’écran de représentation graphique du 
+tableur à droite du tableur,
+</LI><LI CLASS="li-itemize"><TT>Paysage</TT> pour avoir l’écran de représentation graphique du 
+tableur en dessous du tableur,
+</LI><LI CLASS="li-itemize"><TT>Cacher graph</TT> pour ne pas avoir d’écran de représentation
+graphique associé au tableur.
+</LI></UL>
+</LI><LI CLASS="li-itemize"><TT>Trier</TT> pour trier par ordre croissant ou décroissant par rapport
+à une ligne ou une colonne (on vous demande laquelle) la sous-matrice mise 
+en surbrillance (mais attention cela ne respecte pas les références),
+</LI><LI CLASS="li-itemize"><TT>Remplir</TT> :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+pour copier automatiquement dans la colonne 
+(<TT>Copier vers le bas</TT>) ou dans la ligne (<TT>Copier vers la droite</TT>) la 
+formule relative située dans la cellule mise en surbrillance ou,
+</LI><LI CLASS="li-itemize">pour remplir toute la matrice mise en surbrillance avec la formule ou 
+la valeur située dans la première cellule enfoncée lors de la mise en 
+surbrillance c’est à dire située dans un des "coins" de la matrice : on 
+sélectionne la matrice en commençant par le coin où se trouve la valeur
+ou la formule à recopier, puis 
+<TT>Edit</TT><TT>▸</TT><TT>Copier la cellule enfoncee vers la selection</TT> 
+remplira cette matrice avec ce qui se trouve dans ce "coin". On peut aussi 
+placer la souris dans le coin en bas à droite de la cellule : le curseur se 
+transforme en une petite flèche rouge ⇐, puis on clique et on 
+bouge la souris sans relacher le bouton de la souris pour mettre la matrice que
+l’on veut remplir en surbrillance, puis on relache le bouton de la souris,
+</LI><LI CLASS="li-itemize"><TT>Remplir le tableur de 0</TT> ou <TT>Remplir selection de 0</TT><BR>
+pour remplir tout le tableur ou la matrice mise en surbrillance avec des 
+zéros,
+</LI><LI CLASS="li-itemize"><TT>tablefunc</TT> ou <TT>tableseq</TT> pour avoir dans le tableur, le tableau 
+de valeurs d’une fonction (avec la fonction <TT>tablefunc</TT>) ou d’une suite 
+(avec la fonction <TT>tableseq</TT>).
+</LI></UL>
+</LI><LI CLASS="li-itemize"><TT>Add/Delete</TT> permet de gérer le nombre de lignes et de colonnes du 
+tableur 
+(on peut en inserer, en effacer etc..),
+</LI><LI CLASS="li-itemize"><TT>Col+grande</TT> pour avoir la colonne d’une cellule sélectionnée
+plus large,
+</LI><LI CLASS="li-itemize"><TT>Col+petite</TT> pour avoir la colonne d’une cellule sélectionnée
+moins large,
+</LI></UL><P>Le menu <TT>Statistics</TT> ouvre pour chaque item une boite de dialogue où l’on
+peut préciser : la sélection, la cellule cible (c’est dans cette cellule 
+que s’inscrira la commande choisie), si on doit considérer les lignes ou les 
+colonnes de la sélection comme argument de la commande (en cochant ou non
+<TT>Lignes</TT>) et 
+si on doit mettre les valeurs ou les références de la sélection 
+(en cochant ou non <TT>valeur</TT>).<BR>
+Le menu <TT>Statistics</TT> est composé de :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<TT>1-d</TT><A NAME="@default51"></A>
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+<TT>Boite à moustache</TT> <A NAME="@default52"></A> permet de tracer, 
+sur l’écran graphique,
+associé au tableur, les boites à moustaches des colonnes (ou des lignes si 
+<TT>Lignes</TT> est cochée) des données qui ont été sélectionnées. C’est dans la 
+cellule cible que s’inscrit la commande <TT>moustache</TT> avec comme argument
+les valeurs ou les références de la plage sélectionnée selon que 
+l’on coche ou non <TT>valeur</TT>.
+</LI><LI CLASS="li-itemize"><TT>Classes</TT> <A NAME="@default53"></A> permet de regrouper en classes la colonne 
+de données sélectionnée (ou la ligne si on a coché <TT>Lignes</TT>) 
+ou les deux colonnes (ou les deux lignes si <TT>Lignes</TT> est 
+cochée) sélectionnées representant les
+données et leurs effectifs : il faut remplir la valeur minimum de la classe,
+la largeur des classes et aussi la cellule cible qui est la première cellule 
+à partir de laquelle on écrira les classes sur deux colonnes,</LI><LI CLASS="li-itemize"><TT>Histogramme</TT><A NAME="@default54"></A> permet de tracer, sur l’écran graphique, 
+l’histogramme de deux colonnes sélectionnées representant les intervalles 
+de données et leurs effectifs,
+</LI></UL>
+</LI><LI CLASS="li-itemize"><TT>2-d</TT>
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+<TT>Scatterplot</TT> <A NAME="@default55"></A> permet de tracer sur l’écran graphique :<BR>
+si <TT>lignes</TT> n’est pas coché, les points 
+d’abscisse la première colonne sélectionnée et d’ordonnée les autres 
+colonnes sélectionnées ou,<BR>
+si <TT>lignes</TT> est coché, les points d’abscisse la première ligne 
+sélectionnée et d’ordonnée les autres lignes sélectionnées.<BR>
+ Les couleurs seront différentes pour les points
+dont les ordonnées sont dans des colonnes (resp lignes) différentes.<BR>
+Par exemple,
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+si <TT>lignes</TT> n’est pas coché, on remplit :<BR>
+<TT>A0,A1,A2,A3</TT> avec <TT>1,2,3,4</TT> et<BR>
+<TT>B0,B1,B2,B3</TT> avec <TT>1,4,9,16</TT>, puis<BR>
+on sélectionne la matrice <TT>A0:B3</TT> et on ouvre le menu 
+<TT>Statistiques 2-d Scatterplot</TT>.
+</LI><LI CLASS="li-itemize">si <TT>lignes</TT> est coché, on remplit :<BR>
+<TT>A0,B0,C0,D0</TT> avec <TT>1,2,3,4</TT> et<BR>
+<TT>A1,B1,C1,D1</TT> avec <TT>1,4,9,16</TT>, puis<BR>
+on sélectionne la matrice <TT>A0:D1</TT> et on ouvre le menu 
+<TT>Statistiques 2-d Scatterplot</TT>.<A NAME="@default56"></A>
+</LI></UL>
+Une boite de dialogue s’ouvre où la plage sélectionnée est marquée 
+(si vous n’avez rien sélectionné il faut remplir cette case) puis,
+il faut donner le nom de la <TT>cellule cible</TT> là où la commande 
+<TT>scatterplot</TT> va s’inscrire. Selon que l’on coche ou non <TT>valeur</TT>, ce 
+sont soient les valeurs soient les références de la plage 
+sélectionnée qui seront en argument de la commande <TT>scatterplot</TT>.<BR>
+Supposons que <TT>lignes</TT> n’est pas coché.
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+Si <TT>valeur</TT> n’est pas coché dans la boite de dialogue et si la 
+cellule cible est <TT>C0</TT>, dans la ligne de 
+commandes du tableur et dans <TT>C0</TT> il s’inscrit alors :<BR>
+<TT>=scatterplot(matrix(4,2,(A0):(B3)))</TT>
+</LI><LI CLASS="li-itemize">Si <TT>valeur</TT> est coché dans la
+boite de dialogue et si la cellule cible est <TT>C1</TT>, dans la ligne de 
+commandes du tableur et dans <TT>C1</TT> il s’inscrit alors :<BR>
+<TT>=scatterplot([[1,1],[2,4],[3,9],[4,16]])</TT>.
+</LI></UL>
+Ainsi une modification des 
+valeurs de <TT>A0:B3</TT> modifira, lors d’une réévaluation du tableur, le 
+graphique commandé par la case <TT>C0</TT> 
+mais ne modifira pas le graphique commandé par la case <TT>C1</TT>. Autrement 
+dit, si vous ne travaillez pas en valeur, c’est à dire avec des 
+références, à chaque modification, on aura
+une modification du graphique et si vous travailler en valeur à chaque 
+modification il faudra inscrire dans une nouvelle cellule cible la commande 
+<TT>scatterplot</TT> et on aura alors plusieurs graphiques correspondant chacun 
+aux commandes <TT>scatterplot</TT> situés dans les cellules cibles.<BR>
+<B>Attention</B><BR>
+Lorsqu’on sélectionne une plage avec la souris on ne peut sélectionner que 
+des colonnes contigües. On peut néanmoins remplir la plage de sélection
+de la boite de dialogue avec des colonnes non contigües par exemple :<BR>
+si <TT>lignes</TT> n’est pas coché, on mettra <TT>C0..5,A,D</TT> pour dire, que les
+points que l’on veut représenter ont pour abscisses la colonnes <TT>C</TT> et 
+pour ordonnées la colonne <TT>A</TT> d’une part et pour abscisses la colonnes 
+<TT>C</TT> et pour ordonnées la colonne <TT>D</TT> d’autre part.<BR>
+Mais dans ce cas <TT>scatterplot</TT> s’affichera comme si 
+<TT>valeur</TT> etait coché (même si ce n’est pas le cas). 
+</LI><LI CLASS="li-itemize"><TT>Polygonplot</TT><A NAME="@default57"></A> permet de tracer sur l’écran graphique les points 
+d’abscisse la première colonne sélectionnée et d’ordonnée les autres 
+colonnes sélectionnées, en reliant entre eux les points dont les 
+ordonnées sont dans une même colonne.<BR>
+La même boite de dialogue que pour <TT>scatterplot</TT> s’ouvre. Dans la ligne
+de commandes du tableur il s’inscrit alors, par exemple, dans <TT>D5</TT> :<BR>
+<TT>=polygonplot(matrix(3,3,A0:C2))</TT> si ni <TT>lignes</TT> ni <TT>valeur</TT> ne 
+sont cochés, si la cellule cible est <TT>D5</TT> et si la plage sélectionnée
+est <TT>A0:C2</TT>.
+</LI></UL>
+</LI></UL><H3 CLASS="subsection"><A NAME="toc50"></A><A NAME="htoc74">15.6</A>  Les boutons eval val Save</H3><UL CLASS="itemize"><LI CLASS="li-itemize">
+<TT>eval</TT> permet de réévaluer le tableur.
+</LI><LI CLASS="li-itemize"><TT>val</TT> permet d’afficher la valeur de la case au lieu de la formule
+dans la ligne de commandes située à coté de la case de sélection.
+Il faut bien sur que cette valeur existe. Cette case doit donc être 
+calculée en cliquant auparavant sûr <TT>eval</TT> si on n’est pas en recalcul 
+automatique.
+</LI><LI CLASS="li-itemize"><TT>save</TT> permet de sauver le tableur sous le nom indiqué à droite
+de <TT>Save</TT>, si c’est <TT>No filename</TT> on vous demande le nom choisi qui
+doit être un <TT>.tab</TT>. 
+</LI></UL><H3 CLASS="subsection"><A NAME="toc51"></A><A NAME="htoc75">15.7</A>  Pour recopier, à la souris, une cellule dans toute une zone du tableur</H3><P>
+Il s’agit ici de recopier avec la souris le contenu de la cellule c’est à 
+dire sa formule dans toute une zone du tableur.
+Pour cela :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+On remplit la cellule qui sera recopiée :
+pour cela, si le curseur n’est pas dans la ligne de commandes, 
+on clique dans la cellule à remplir, puis on tape <TT>=</TT> suivi de la 
+formule en désignant les éventuelles références avec la
+souris, puis on valide par <TT>Entree</TT> ; sinon,
+il faut au préalable enlever le curseur de la ligne de commandes
+en tapant sur la touche <TT>esc</TT>,
+</LI><LI CLASS="li-itemize">On recopie le contenu de cette cellule : 
+pour cela, on clique sur cette cellule, puis
+on appuie sur un bouton de la souris dans le coin en bas à droite quand 
+le curseur de la souris change de forme de(il devient ⇐ ), 
+on déplace alors la souris (bouton 
+enfoncé) pour sélectionner la
+zone où l’on veut recopier cette cellule, 
+puis on relache le bouton de la souris. 
+Cela a le même effet que l’un des menus obtenus avec 
+<TT>Edit</TT><TT>▸</TT><TT>Remplir</TT><TT>▸</TT><TT>Copier la cellule...</TT>.
+</LI></UL><H3 CLASS="subsection"><A NAME="toc52"></A><A NAME="htoc76">15.8</A>  Pour recopier, à la souris, une ou plusieurs cellule dans le 
+tableur</H3><P>
+Il s’agit ici de recopier avec la souris le contenu d’un sous tableau ou d’une 
+cellule c’est à dire les différentes formules du sous tableau ou de la 
+cellule à un autre endroit du tableur.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Pour recopier, à la souris, un sous tableau du tableur, dans le 
+tableur il suffit de sélectionner ce sous tableau à la souris, puis de 
+cliquer avec le bouton du milieu sur la case qui débutera le nouveau 
+sous tableau ou encore d’utiliser <TT>Edit</TT><TT>▸</TT><TT>Coller</TT> 
+lorsqu’on a cliqué sur la case qui débutera le nouveau sous tableau.
+</LI><LI CLASS="li-itemize">Pour recopier, à la souris, une cellule du tableur, dans une cellule 
+tableur on clique dans la cellule à copier, puis on utilise :<BR>
+<TT>Edit</TT><TT>▸</TT><TT>Copier la cellule</TT><BR>
+puis on clique avec le bouton du milieu sur la cellule où l’on veut faire la 
+recopie ou encore on utilise <TT>Edit</TT><TT>▸</TT><TT>Coller</TT> 
+lorsqu’on a cliqué dans la cellule où l’on veut faire la recopie.
+</LI></UL><P>
+<B>Remarque</B>
+Si on recopie un sous tableau ou une cellule à l’extérieur du tableur, 
+<TT>Xcas</TT> transforme la recopie en une matrice dont les éléments sont 
+les valeurs du sous tableau ou de la cellule. Ainsi si la valeur d’une cellule
+est <TT>[1,2,3]</TT>, la recopie de cette cellule à l’extérieur du tableur
+la transformera en la matrice ayant 1 ligne et 1 colonne : <TT>[[[1,2,3]]]</TT>.</P>Retour &#XE0; la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casinter017.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casinter019.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

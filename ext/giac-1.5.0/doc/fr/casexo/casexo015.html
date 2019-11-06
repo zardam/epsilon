@@ -1,0 +1,326 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casexo.css">
+<TITLE>Calcul d’intégrales par la méthode des résidus</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casexo014.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo016.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc198">Chapitre 15</A>  Calcul d’intégrales par la méthode des résidus</H1><H2 CLASS="section"><A NAME="toc71"></A><A NAME="htoc199">15.1</A>  Calcul pour <I>b</I>≠ 0 de <I>J</I>(<I>b</I>)=∫<SUB>0</SUB><SUP>2π</SUP>tan(<I>t</I>+<I>ib</I>)<I>dt</I></H2><H3 CLASS="subsection"><A NAME="htoc200">15.1.1</A>  L’énoncé</H3><P>
+Soit <I>a</I> un nombre réel positif non nul différent de 1.<BR>
+On considère la fonction :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>(<I>z</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>z</I><SUP>2</SUP>−<I>a</I><SUP>2</SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>z</I>(<I>z</I><SUP>2</SUP>+<I>a</I><SUP>2</SUP>)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Calculer  <I>I</I>(<I>a</I>)=∫<SUB>∂ <I>D</I>(0,1)</SUB> <I>f</I>(<I>z</I>)<I>dz</I>
+</LI><LI CLASS="li-enumerate">Déterminer les pôles de la fonction <I>t</I>(<I>z</I>)=tan(<I>z</I>) et en déduire 
+que si <I>b</I>∈ ℝ et <I>b</I>≠ 0 l’intégrale 
+ <I>J</I>(<I>b</I>)=∫<SUB>0</SUB><SUP>2π</SUP>tan(<I>t</I>+<I>ib</I>)<I>dt</I> existe.
+</LI><LI CLASS="li-enumerate">Exprimer tan(<I>t</I>+<I>ib</I>) à l’aide de  <I>e</I><SUP>2<I>it</I></SUP>−<I>a</I><SUP>2</SUP>/<I>e</I><SUP>2<I>it</I></SUP>+<I>a</I><SUP>2</SUP> pour un <I>a</I> convenable.<BR>
+En déduire la valeur de <I>J</I>(<I>b</I>) pour <I>b</I>∈ ℝ et <I>b</I>≠ 0.
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc201">15.1.2</A>  La solution</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On cherche la valeur des résidus de <I>f</I> en <I>z</I>=0, <I>z</I>=<I>ia</I>, <I>z</I>=−<I>ia</I>.<BR>
+On tape :<BR>
+<TT>f(z,a):=(z</TT><CODE><TT>^</TT></CODE><TT>2-a</TT><CODE><TT>^</TT></CODE><TT>2)/(z*(z</TT><CODE><TT>^</TT></CODE><TT>2+a</TT><CODE><TT>^</TT></CODE><TT>2))</TT><BR>
+<TT>series(f(z,a),z=0,1)</TT><BR>
+On obtient :<BR>
+<TT>-1/z+2*1/(a</TT><CODE><TT>^</TT></CODE><TT>2)*z+z</TT><CODE><TT>^</TT></CODE><TT>2*order_size(z)</TT><BR>
+On tape :<BR>
+<TT>series(f(z,a),z=i*a,1)</TT><BR>
+On obtient :<BR>
+<TT>(z-(i)*a)</TT><CODE><TT>^</TT></CODE><TT>-1+(i)/(2*a)-3*1/(4*a</TT><CODE><TT>^</TT></CODE><TT>2)*(z-(i)*a)+<BR>
+(-7*i)*1/(8*a</TT><CODE><TT>^</TT></CODE><TT>3)*(z-(i)*a)</TT><CODE><TT>^</TT></CODE><TT>2+(z-(i)*a)</TT><CODE><TT>^</TT></CODE><TT>3*order_size(z-(i)*a)</TT><BR>
+On tape :<BR>
+<TT>series(f(z,a),z=-i*a,1)</TT><BR>
+On obtient :<BR>
+<TT>(z-(-i)*a)</TT><CODE><TT>^</TT></CODE><TT>-1+(-i)/(2*a)-3*1/(4*a</TT><CODE><TT>^</TT></CODE><TT>2)*(z-(-i)*a)+<BR>
+(7*i)*1/(8*a</TT><CODE><TT>^</TT></CODE><TT>3)*(z-(-i)*a)</TT><CODE><TT>^</TT></CODE><TT>2+(z-(-i)*a)</TT><CODE><TT>^</TT></CODE><TT>3*order_size(z-(-i)*a)</TT><BR>
+Ou on tape :<BR>
+<TT>residue(f(z,a),z=0)</TT><BR>
+On obtient :<BR>
+<TT>-1</TT><BR>
+On tape :<BR>
+<TT>residue(f(z,a),z=i*a)</TT><BR>
+On obtient :<BR>
+<TT>1</TT><BR>
+On tape :<BR>
+<TT>residue(f(z,a),z=-i*a)</TT><BR>
+On obtient :<BR>
+<TT>1</TT><BR>
+Donc :<BR>
+si <I>a</I>&gt;1 on a <I>I</I>(<I>a</I>)=−2<I>i</I>π et
+si <I>a</I>&lt;1 on a <I>I</I>(<I>a</I>)=2<I>i</I>π
+</LI><LI CLASS="li-enumerate">On tape :<BR>
+<TT>solve(cos(z)=0,z)</TT><BR>
+On obtient :<BR>
+<TT>[pi/2,(-pi)/2]</TT><BR>
+Donc les les pôles de la fonction <I>t</I>(<I>z</I>)=tan(<I>z</I>) sont π/2+<I>k</I>π 
+avec <I>k</I>∈ℤ.
+Donc si <I>b</I>∈ ℝ et <I>b</I>≠ 0 l’intégrale <I>J</I>(<I>b</I>)=∫<SUB>0</SUB><SUP>2π</SUP>tan(<I>t</I>+<I>ib</I>)<I>dt</I> 
+existe car les pôles de tan(<I>z</I>) sont en dehors de l’axe réel.
+</LI><LI CLASS="li-enumerate">On tape pour écrire autrement tan(<I>t</I>+<I>i</I>*<I>b</I>) :<BR>
+<TT>T:=tan(t+i*b)</TT><BR>
+<TT>T:=trig2exp(T)</TT><BR>
+On obtient :<BR>
+<TT>(exp((i)*(t+(i)*b))</TT><CODE><TT>^</TT></CODE><TT>2-1)/((i)*(exp((i)*(t+(i)*b))</TT><CODE><TT>^</TT></CODE><TT>2+1))</TT><BR>
+On tape :<BR>
+<TT>T:=normal(lin(T))</TT><BR>
+On obtient :<BR>
+<TT>((-i)*exp(-(2*b+(-2*i)*t))+i)/(exp(-(2*b+(-2*i)*t))+1)</TT><BR>
+On tape :<BR>
+<TT>T:=lin(numer(T)*exp(2*b))/lin(denom(T)*exp(2*b))</TT><BR>
+On obtient :<BR>
+<TT>((-i)*exp((2*i)*t)+(i)*exp(2*b))/(exp((2*i)*t)+exp(2*b))</TT><BR>
+On pose donc exp(<I>b</I>)=<I>a</I>.<BR>
+On tape :<BR>
+<TT>subst(T,exp(2*b)=a</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient :<BR>
+<TT>((-i)*exp((2*i)*t)+(i)*a</TT><CODE><TT>^</TT></CODE><TT>2)/(exp((2*i)*t)+a</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On a donc pour <I>a</I>=exp(<I>b</I>):<BR>
+ <I>J</I>(<I>b</I>)=−<I>i</I>*∫<SUB>0</SUB><SUP>2π</SUP><I>e</I><SUP>2<I>it</I></SUP>−<I>a</I><SUP>2</SUP>/<I>e</I><SUP>2<I>it</I></SUP>+<I>a</I><SUP>2</SUP><I>dt</I>=−<I>i</I>*∫<SUB>0</SUB><SUP>2π</SUP><I>e</I><SUP>2<I>it</I></SUP>−<I>a</I><SUP>2</SUP>/<I>e</I><SUP><I>i</I>*<I>t</I></SUP>(<I>e</I><SUP>2<I>it</I></SUP>+<I>a</I><SUP>2</SUP>)<I>e</I><SUP><I>i</I>*<I>t</I></SUP><I>dt</I><BR>
+Donc :<BR>
+ <I>J</I>(<I>b</I>)=−∫<SUB>0</SUB><SUP>2π</SUP><I>f</I>(exp(<I>i</I>*<I>t</I>),<I>a</I>)*<I>i</I>*exp(<I>i</I>*<I>t</I>)<I>dt</I>=−∫<SUB>∂ <I>D</I>(0,1)</SUB> <I>f</I>(<I>z</I>)<I>dz</I><BR>
+Donc :
+Si <I>b</I>&gt;0 on a <I>J</I>(<I>b</I>)=2<I>i</I>π et si <I>b</I>&lt;0 on a  <I>J</I>(<I>b</I>)=−2<I>i</I>π.
+</LI></OL><P>
+<B>Remarques</B><BR>
+Si on tape directement :<BR>
+<TT>normal(int(f(e</TT><CODE><TT>^</TT></CODE><TT>i*t,a)*i*e</TT><CODE><TT>^</TT></CODE><TT>i*t,t=0..2*pi))</TT><BR>
+On trouve :<BR>
+<TT>(-2*i)*a*atan((2*pi*exp(i))/a)*exp(-i)+(2*i)*pi*exp(-i)*exp(i)</TT>
+Si on tape directement :<BR>
+<TT>normal(int(f(exp(i*t),a)*i*exp(i*t),t=0..2*pi))</TT><BR>
+On trouve car <TT>Xcas</TT> suppose <I>a</I>&gt;1 :<BR>
+"Searching int of ((−<I>i</I>)*<I>a</I><SUP>2</SUP>+(<I>i</I>)*<I>t</I>)/(<I>a</I><SUP>2</SUP>*<I>t</I>+<I>t</I><SUP>2</SUP>) where <I>t</I> is on the unit circle, using residues"<BR>
+<TT>(-2*i)*pi</TT><BR>
+On tape maintenant :<BR>
+<TT>assume(a&gt;0 and a&lt;1)</TT><BR>
+<TT>normal(int(f(exp(i*t),a)*i*exp(i*t),t=0..2*pi))</TT><BR>
+On obtient :<BR>
+<TT>(2*i)*pi</TT><BR>
+
+</P><H2 CLASS="section"><A NAME="toc72"></A><A NAME="htoc202">15.2</A>  Calcul de ∫<SUB>0</SUB><SUP>+∞</SUP>1/1+<I>x</I><SUP>5</SUP><I>dx</I></H2><H3 CLASS="subsection"><A NAME="htoc203">15.2.1</A>  L’énoncé</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Soit <I>a</I>∈ ℂ.<BR>
+Calculer le développement en série de Laurent de 1/<I>z</I><SUP>5</SUP>−<I>a</I><SUP>5</SUP> en <I>z</I>=<I>a</I> et en déduire le résidu de 1/<I>z</I><SUP>5</SUP>−<I>a</I><SUP>5</SUP> en <I>z</I>=<I>a</I>∈ ℂ
+</LI><LI CLASS="li-enumerate">En déduire le residu de <I>f</I>(<I>z</I>)=1/<I>z</I><SUP>5</SUP>+1 en 
+<I>z</I>=exp(<I>frac</I><I>i</I>π5)
+</LI><LI CLASS="li-enumerate">Calculer ∫<SUB>Γ</SUB><I>dz</I>/<I>z</I><SUP>5</SUP>+1 lorsque Γ est le bord
+(parcouru dans le sens direct) du secteur angulaire de rayon <I>R</I> d’angle 
+<I>frac</I>2π5 et ayant comme côtés les segments [0,<I>R</I>] et 
+[0,<I>R</I>*exp(<I>frac</I>2<I>i</I>π5)]
+</LI><LI CLASS="li-enumerate">En déduire ∫<SUB>0</SUB><SUP>+∞</SUP>1/1+<I>x</I><SUP>5</SUP><I>dx</I>
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc204">15.2.2</A>  La solution</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On tape :<BR>
+<TT>series(1/(z</TT><CODE><TT>^</TT></CODE><TT>5-a</TT><CODE><TT>^</TT></CODE><TT>5),z=a,1)</TT><BR>
+On obtient :<BR>
+<TT>1/(5*a</TT><CODE><TT>^</TT></CODE><TT>4)*(z-a)</TT><CODE><TT>^</TT></CODE><TT>-1+((-2)/a)/(5*a</TT><CODE><TT>^</TT></CODE><TT>4)+<BR>
+2/(a</TT><CODE><TT>^</TT></CODE><TT>2)*1/(5*a</TT><CODE><TT>^</TT></CODE><TT>4)*(z-a)+(z-a)</TT><CODE><TT>^</TT></CODE><TT>2*order_size(z-a)</TT><BR>
+Ou on tape :<BR>
+<TT>residue(1/(z</TT><CODE><TT>^</TT></CODE><TT>-a</TT><CODE><TT>^</TT></CODE><TT>5),z=a)</TT><BR>
+On obtient :<BR>
+<TT>1/(5*a</TT><CODE><TT>^</TT></CODE><TT>4)</TT>
+</LI><LI CLASS="li-enumerate">On pose  <I>a</I>=exp(<I>i</I>π/5) on a alors <I>a</I><SUP>5</SUP>=−1 donc :<BR>
+le résidu de <I>f</I> en a est : 1/5*exp(4<I>i</I>π/5)
+</LI><LI CLASS="li-enumerate">D’après le th des résidus on a :
+ ∫<SUB>Γ</SUB><I>dz</I>/<I>z</I><SUP>5</SUP>+1=2<I>i</I>π/5*exp(4<I>i</I>π/5)
+</LI><LI CLASS="li-enumerate">Sur l’arc de cercle γ on a <I>z</I>=<I>R</I>exp(<I>it</I>) avec <I>t</I>=0..2<I>i</I>π/5.<BR>
+Donc :<BR>
+ ∫<SUB>γ</SUB><I>dz</I>/<I>z</I><SUP>5</SUP>+1=<I>iR</I> ∫<SUB>0</SUB><SUP>2<I>i</I>π/5</SUP>exp(<I>it</I>)<I>dt</I>/<I>R</I><SUP>5</SUP>exp(5<I>it</I>)+1<BR>
+Comme  1/<I>R</I><SUP>5</SUP>exp(5<I>it</I>)+1&lt;1/<I>R</I><SUP>5</SUP>−1 pour <I>R</I>&gt;1, on 
+en déduit que 
+ ∫<SUB>γ</SUB><I>dz</I>/<I>z</I><SUP>5</SUP>+1 tend vers 0 quand <I>R</I> tend vers 
+l’infini.<BR>
+Donc :<BR>
+ lim<SUB><I>R</I>−&gt;+∞</SUB>(∫<SUB>0</SUB><SUP><I>R</I></SUP><I>dx</I>/<I>x</I><SUP>5</SUP>+1−∫<SUB>0</SUB><SUP><I>R</I></SUP>exp(2<I>i</I>π/5)<I>dx</I>/<I>x</I><SUP>5</SUP>+1)=2<I>i</I>π/5*exp(4<I>i</I>π/5).<BR>
+Soit :<BR>
+<I>lim</I><SUB><I>R</I>−&gt;+∞</SUB>((1−exp(2<I>i</I>π/5))∫<SUB>0</SUB><SUP><I>R</I></SUP><I>dx</I>/<I>x</I><SUP>5</SUP>+1)=2<I>i</I>π/5*exp(4<I>i</I>π/5)<BR>
+En faisant tendre <I>R</I> vers l’infini on obtient :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">1+<I>x</I><SUP>5</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>dx</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">5sin(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+Pour le détail des calculs :<BR>
+On tape :<BR>
+<TT>normal(2*i*pi/5/a</TT><CODE><TT>^</TT></CODE><TT>4/(1-a</TT><CODE><TT>^</TT></CODE><TT>2))</TT><BR>
+On obtient :<BR>
+<TT>((-2*i)*pi)/(5*a</TT><CODE><TT>^</TT></CODE><TT>6-5*a</TT><CODE><TT>^</TT></CODE><TT>4)</TT><BR>
+comme  <I>a</I>=exp(<I>i</I>π/5) on a <I>a</I><SUP>5</SUP>=−1 donc :<BR>
+ −2<I>i</I>π/5(<I>a</I><SUP>6</SUP>−<I>a</I><SUP>4</SUP>)=−2<I>i</I>π/−5(<I>a</I>+1/<I>a</I>) et 
+ −5(<I>a</I>+1/<I>a</I>)=−10<I>i</I>sin(π/5) donc<BR>
+ −10<I>i</I>π/5*<I>a</I><SUP>6</SUP>−5*<I>a</I><SUP>4</SUP>=π/5sin(π/5)
+</LI></OL><H2 CLASS="section"><A NAME="toc73"></A><A NAME="htoc205">15.3</A>  Calcul d’une intégale</H2><P> 
+On veut calculer pour <I>a</I>∈ ℂ tel que |<I>a</I>|∉ {0,1/2,2} l’intégrale :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">|<I>z</I>|=2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>dz</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">(<I>z</I>−<I>a</I>)(<I>z</I>−1/<I>a</I>)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+<B>La solution</B><BR>
+Les pôles de  <I>f</I>(<I>z</I>)=1/(<I>z</I>−<I>a</I>)(<I>z</I>−1/<I>a</I>) sont <I>a</I> et 1/<I>a</I>.<BR>
+Le résidu de <I>f</I> en <I>z</I>=<I>a</I> vaut  1/(<I>a</I>−1/<I>a</I>)=<I>a</I>/<I>a</I><SUP>2</SUP>−1<BR>
+Le résidu de <I>f</I> en  <I>z</I>=1/<I>a</I> vaut  1/(1/<I>a</I>−<I>a</I>)=<I>a</I>/1−<I>a</I><SUP>2</SUP>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Si  |<I>a</I>|&lt;1/2 alors 1/<I>a</I> se trouve à l’extérieur du disque 
+<I>D</I>={<I>z</I>∈ ℂ |<I>z</I>|&lt;2}.<BR>
+Donc si  |<I>a</I>|&lt;1/2:<BR>
+∫<SUB>|<I>z</I>|=2</SUB><I>dz</I>/(<I>z</I>−<I>a</I>)(<I>z</I>−1/<I>a</I>)=2<I>i</I><I>a</I>/<I>a</I><SUP>2</SUP>−1
+</LI><LI CLASS="li-itemize">Si  1/2&lt;|<I>a</I>|&lt;2 alors <I>a</I> et 
+ 1/<I>a</I> se trouvent à l’intérieur du disque <I>D</I>={<I>z</I>∈ ℂ |<I>z</I>|&lt;2}.<BR>
+Donc si 1/2&lt;|<I>a</I>|&lt;2 :<BR>
+∫<SUB>|<I>z</I>|=2</SUB><I>dz</I>/(<I>z</I>−<I>a</I>)(<I>z</I>−1/<I>a</I>)=2<I>i</I>(<I>a</I>/<I>a</I><SUP>2</SUP>−1+<I>a</I>/1−<I>a</I><SUP>2</SUP>)=0
+</LI><LI CLASS="li-itemize">Si |<I>a</I>|&gt;2 alors 1/<I>a</I> se trouve à l’intérieur du disque 
+<I>D</I>={<I>z</I>∈ ℂ |<I>z</I>|&lt;2}.<BR>
+Donc si |<I>a</I>|&gt;2 :<BR>
+∫<SUB>|<I>z</I>|=2</SUB><I>dz</I>/(<I>z</I>−<I>a</I>)(<I>z</I>−1/<I>a</I>)=2<I>i</I><I>a</I>/1−<I>a</I><SUP>2</SUP>=0
+</LI></UL><P>
+Vérifions avec <TT>Xcas</TT><BR>
+On tape :<BR>
+<TT>residue(f(z),z=a)</TT><BR>
+On obtient :<BR>
+<TT>a/(a</TT><CODE><TT>^</TT></CODE><TT>2-1)</TT>
+On tape :<BR>
+<TT>residue(f(z),z=1/a)</TT><BR>
+On obtient :<BR>
+<TT>-a/(a</TT><CODE><TT>^</TT></CODE><TT>2-1)</TT>
+On pose <I>z</I>=2exp(<I>it</I>) et on a :<BR>
+ <I>I</I>=2<I>i</I>∫<SUB>0</SUB><SUP>2π</SUP>exp(<I>it</I>)/(2exp(<I>it</I>)−<I>a</I>)(2exp(<I>it</I>)−1/<I>a</I>)<BR>
+On tape :<BR>
+<TT>a:=3/2</TT><BR>
+<TT>int(2*i*exp(i*t)/((2*exp(i*t)-a)*(2*exp(i*t)-1/a)),t=0..2*pi)</TT><BR>
+On obtient :<BR>
+<TT>0</TT><BR>
+On tape :<BR>
+<TT>a:=1/3</TT><BR>
+<TT>int(2*i*exp(i*t)/((2*exp(i*t)-a)*(2*exp(i*t)-1/a)),t=0..2*pi)</TT><BR>
+On obtient :<BR>
+<TT>(2*pi*(-3*i))/8</TT><BR>
+On a bien 2*<I>i</I>*π/3/(−8/9)=−3*<I>i</I>π/4<BR>
+On tape :<BR>
+<TT>a:=4</TT><BR>
+<TT>int(2*i*exp(i*t)/((2*exp(i*t)-a)*(2*exp(i*t)-1/a)),t=0..2*pi)</TT><BR>
+On obtient :<BR>
+<TT>(2*pi*(-4*i))/15</TT><BR>
+On a bien 2<I>i</I>4/(−15)=−8<I>i</I>π/15</P><H2 CLASS="section"><A NAME="toc74"></A><A NAME="htoc206">15.4</A>  Calcul de ∫<SUB>0</SUB><SUP>+∞</SUP>(cos(<I>x</I>)−sin(<I>x</I>))exp(−<I>x</I>)/(1+4<I>x</I><SUP>4</SUP>)<SUP>2</SUP><I>dx</I></H2><P>
+Soit <I>R</I> un réel strictement positif.<BR>
+On considère le triangle <I>T</I><SUB><I>R</I></SUB> défini par :<BR>
+ <I>T</I><SUB><I>R</I></SUB>={<I>z</I> ∈ ℂ |  <I>re</I>(<I>z</I>)≥ <I>R</I>  −<I>re</I>(<I>z</I>) ≤ <I>im</I>(<I>z</I>) ≤ <I>re</I>(<I>z</I>)}<BR>
+Soit :<BR>
+ <I>I</I>(<I>R</I>)=∫<SUB>∂ <I>T</I><SUB><I>R</I></SUB></SUB>exp(−<I>z</I>)/(1−<I>z</I><SUP>4</SUP>)<SUP>2</SUP><I>dz</I><BR>
+Montrer que  lim<SUB><I>R</I>−&gt;+∞</SUB><I>I</I>(<I>R</I>) existe et calculer cette limite.<BR>
+En déduire la valeur de :<BR>
+ <I>I</I>=∫<SUB>0</SUB><SUP>+∞</SUP>(cos(<I>x</I>)−sin(<I>x</I>))exp(−<I>x</I>)/(1+4<I>x</I><SUP>4</SUP>)<SUP>2</SUP><I>dx</I></P><P><B>La solution</B>
+<I>T</I><SUB><I>R</I></SUB> est le triangle <I>OAB</I> de côtés :<BR>
+<I>AB</I>=<I>R</I>+<I>iy</I> avec −<I>R</I>≤ <I>y</I> ≤ <I>R</I>,<BR>
+<I>OB</I>=<I>x</I>(1+<I>i</I>) avec 0 ≤ <I>x</I> ≤ <I>R</I><BR>
+<I>OA</I>=<I>x</I>(1−<I>i</I>) avec 0 ≤ <I>x</I> ≤ <I>R</I><BR>
+Cherchons les zéros de (1−<I>z</I><SUP>4</SUP>), on tape :<BR>
+<TT>factor(1-z</TT><CODE><TT>^</TT></CODE><TT>4)</TT><BR>
+On obtient :<BR>
+<TT>-(z-1)*(z+1)*(z+i)*(z-i)</TT><BR>
+Donc sur <I>T</I><SUB><I>R</I></SUB>, la fonction  <I>f</I>(<I>z</I>)=exp(−<I>z</I>)/(1−<I>z</I><SUP>4</SUP>)<SUP>2</SUP> a un pôle 
+d’ordre 2 en <I>z</I>=1.<BR>
+0n cherche la valeur du résidu de <I>f</I> en <I>z</I>=1 et on tape :<BR>
+<TT>residue(exp(-z)/(1-z</TT><CODE><TT>^</TT></CODE><TT>4)</TT><CODE><TT>^</TT></CODE><TT>2,z=1)</TT><BR>
+On obtient :<BR>
+<TT>-(1/4)*exp(-1)</TT><BR>
+0u bien on tape :<BR>
+<TT>h(z):=exp(-z)/((1+z)*(1+z</TT><CODE><TT>^</TT></CODE><TT>2))</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+<TT>normal(function_diff(h)(1))</TT><BR>
+On obtient :<BR>
+<TT>-1/4*exp(-1)</TT><BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>I</I>(<I>R</I>)=−2<I>i</I>π </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">exp(−1)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Montrons que ∫<SUB><I>AB</I></SUB><I>f</I>(<I>z</I>)<I>dz</I> tend vers 0 quand <I>R</I> tend vers +∞ :<BR>
+Sur <I>AB</I>, on a <I>z</I>=<I>R</I>+<I>iy</I> avec −<I>R</I>≤ <I>y</I> ≤ <I>R</I> donc :<BR>
+ |∫<SUB><I>AB</I></SUB><I>f</I>(<I>z</I>)<I>dz</I>|=|∫<SUB>−<I>R</I></SUB><SUP><I>R</I></SUP>exp(−<I>R</I>)exp(−<I>iy</I>)/(1−(<I>R</I>+<I>iy</I>)<SUP>4</SUP>)<SUP>2</SUP><I>dy</I>|≤ 2<I>R</I>exp(−<I>R</I>)/(<I>R</I><SUP>4</SUP>−1)<SUP>2</SUP><BR>
+puisque |exp(−<I>R</I>)exp(−<I>iy</I>)|=exp(−<I>R</I>) et<BR>
+ |(<I>R</I>+<I>iy</I>)<SUP>4</SUP>−1|≥ ||<I>R</I>+<I>iy</I>|<SUP>4</SUP>−1|=<I>R</I><SUP>4</SUP>−1 pour <I>R</I>&gt;1<BR>
+Donc  |∫<SUB><I>AB</I></SUB><I>f</I>(<I>z</I>)<I>dz</I>| tend vers 0 quand <I>R</I> tend vers l’infini.<BR>
+Calculons :<BR>
+ ∫<SUB>0<I>A</I></SUB><I>f</I>(<I>z</I>)<I>dz</I>+∫<SUB><I>B</I>0</SUB><I>f</I>(<I>z</I>)<I>dz</I>=∫<SUB>0</SUB><SUP><I>R</I></SUP>((1−<I>i</I>)exp(−<I>x</I>(1−<I>i</I>))/(1−<I>x</I><SUP>4</SUP>(1−<I>i</I>)<SUP>4</SUP>)<SUP>2</SUP>−(1+<I>i</I>)exp(−<I>x</I>(1+<I>i</I>))/(1−<I>x</I><SUP>4</SUP>(1+<I>i</I>)<SUP>4</SUP>)<SUP>2</SUP>)<I>dx</I>.<BR>
+0n tape :<BR>
+<TT>(1-i)</TT><CODE><TT>^</TT></CODE><TT>4,(1+i)</TT><CODE><TT>^</TT></CODE><TT>4</TT><BR>
+On obtient :<BR>
+<TT>-4,-4</TT><BR>
+0n tape :<BR>
+<TT>factor(exp2trig((1-i)*exp(-x*(1-i))-(1+i)*exp(-x*(1+i))))</TT><BR>
+On obtient :<BR>
+<TT>2*((-i)*cos(x)+(i)*sin(x))*exp(-x)</TT><BR>
+Donc<BR>
+(1−<I>i</I>)<SUP>4</SUP>=(1+<I>i</I>)<SUP>4</SUP>=−4 et<BR>
+(1−<I>i</I>)exp(−<I>x</I>(1−<I>i</I>))−(1+<I>i</I>)exp(−<I>x</I>(1+<I>i</I>))=2<I>i</I> exp(−<I>x</I>)(sin(<I>x</I>)−cos(<I>x</I>))<BR>
+on a :<BR>
+ ∫<SUB>0<I>A</I></SUB><I>f</I>(<I>z</I>)<I>dz</I>+∫<SUB><I>B</I>0</SUB><I>f</I>(<I>z</I>)<I>dz</I>=2<I>i</I>∫<SUB>0</SUB><SUP><I>R</I></SUP> exp(−<I>x</I>)(sin(<I>x</I>)−cos(<I>x</I>))/(1+4<I>x</I><SUP>4</SUP>)<SUP>2</SUP><I>dx</I></P><P>En conclusion :<BR>
+ <I>I</I>(<I>R</I>)=−2<I>i</I>πexp(−1)/4= lim<SUB><I>R</I>−&gt;+∞</SUB>2<I>i</I>∫<SUB>0</SUB><SUP><I>R</I></SUP> exp(−<I>x</I>)(sin(<I>x</I>)−cos(<I>x</I>))/(1+4<I>x</I><SUP>4</SUP>)<SUP>2</SUP><I>dx</I><BR>
+Donc 
+ −2<I>i</I>πexp(−1)/4=−2<I>i</I>∫<SUB>0</SUB><SUP>+∞</SUP>(cos(<I>x</I>)−sin(<I>x</I>))exp(−<I>x</I>)/(1+4<I>x</I><SUP>4</SUP>)<SUP>2</SUP><I>dx</I><BR>
+En conclusion :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>I</I>=</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(cos(<I>x</I>)−sin(<I>x</I>))exp(−<I>x</I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">(1+4<I>x</I><SUP>4</SUP>)<SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>dx</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>e</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P><B>Prolongement</B><BR>
+Refaire le même exercice avec <I>g</I>(<I>z</I>)=exp(−<I>z</I>)/(1−<I>z</I><SUP>4</SUP>) et<BR>
+calculer <I>J</I>=∫<SUB>0</SUB><SUP>+∞</SUP>(cos(<I>x</I>)−sin(<I>x</I>))exp(−<I>x</I>)/1+4<I>x</I><SUP>4</SUP><I>dx</I><BR>
+0n cherche la valeur du résidu de <I>g</I> en <I>z</I>=1 et on tape :<BR>
+<TT>residue(exp(-z)/(1-z</TT><CODE><TT>^</TT></CODE><TT>4),z=1)</TT><BR>
+On obtient la même valeur que précédement :<BR>
+<TT>-1/4*exp(-1)</TT><BR>
+On déduit de l’exercice précédent que :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>J</I>=</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(cos(<I>x</I>)−sin(<I>x</I>))exp(−<I>x</I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">1+4<I>x</I><SUP>4</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>dx</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4<I>e</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casexo014.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo016.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

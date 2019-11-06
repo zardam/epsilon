@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Make a sequence or a list : seq $</title>
+</head>
+<body >
+<a href="cascmd_en452.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en454.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec541" class="subsection">5.41.5  Make a sequence or a list : <span style="font-family:monospace">seq $</span></h3>
+<p><a id="hevea_default705"></a><a id="hevea_default706"></a>
+<span style="font-family:monospace">seq</span> takes two, three, four or five arguments : the first 
+argument is an expression depending of a parameter (for example <span style="font-style:italic">j</span>) and 
+the remaining argument(s) describe which values of <span style="font-style:italic">j</span> will be used to
+generate the sequence. More precisely <span style="font-style:italic">j</span> is assumed to move 
+from <span style="font-style:italic">a</span> to <span style="font-style:italic">b</span>:
+</p><ul class="itemize"><li class="li-itemize">
+with a default step of 1 or -1: <span style="font-family:monospace">j=a..b</span> or 
+<span style="font-family:monospace">j,a..b</span> (Maple-like syntax), <span style="font-family:monospace">j,a,b</span> (TI-like syntax)
+</li><li class="li-itemize">or with a specific step: 
+<span style="font-family:monospace">j=a..b,p</span> (Maple-like syntax), <span style="font-family:monospace">j,a,b,p</span> (TI-like syntax).
+</li></ul><p>
+If the Maple-like syntax is used, <span style="font-family:monospace">seq</span> returns a sequence,
+if the TI-like syntax is used, <span style="font-family:monospace">seq</span> returns a list.</p><p><span style="font-family:monospace">$</span> is the infixed version of <span style="font-family:monospace">seq</span> when <span style="font-family:monospace">seq</span> has only two 
+arguments and always returns a sequence.<br>
+<span style="font-weight:bold">Remark:</span> 
+</p><ul class="itemize"><li class="li-itemize">
+In <span style="font-family:monospace">Xcas</span> mode, the precedence of <span style="font-family:monospace">$</span> is not the same as
+for example in <span style="font-family:monospace">Maple</span>, in case of doubt 
+put the arguments of <span style="font-family:monospace">$</span> in parenthesis.
+For example, the equivalent of <span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,j=-1..3)</span> is
+<span style="font-family:monospace">(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)$(j=-1..3)</span> and
+returns <span style="font-family:monospace">(1,0,1,4,9)</span>. 
+The equivalent of <span style="font-family:monospace">seq(4,3)</span> is <span style="font-family:monospace">4$3</span> and returns 
+<span style="font-family:monospace">(4,4,4)</span>.
+</li><li class="li-itemize">With <span style="font-family:monospace">Maple</span> syntax, <span style="font-family:monospace">j,a..b,p</span> is not valid.
+To specify a step <span style="font-style:italic">p</span> for the variation of 
+<span style="font-style:italic">j</span> from <span style="font-style:italic">a</span> to <span style="font-style:italic">b</span>, use <span style="font-family:monospace">j=a..b,p</span> or use the <span style="font-family:monospace">TI</span> syntax
+<span style="font-family:monospace">j,a,b,p</span> and get the sequence from the list with <span style="font-family:monospace">op(...)</span>.
+</li></ul><p>
+In summary, the different way to build a sequence are :
+</p><ul class="itemize"><li class="li-itemize">
+with <span style="font-family:monospace">Maple</span>-like <span style="font-weight:bold">syntax</span> 
+<ol class="enumerate" type=1><li class="li-enumerate">
+<span style="font-family:monospace">seq</span> has two arguments, 
+either an expression depending on a parameter 
+(for example <span style="font-style:italic">j</span>) and <span style="font-style:italic">j</span>=<span style="font-style:italic">a</span>..<span style="font-style:italic">b</span> where <span style="font-style:italic">a</span> and <span style="font-style:italic">b</span> are reals, 
+or a constant expression and an integer <span style="font-style:italic">n</span>.<br>
+<span style="font-family:monospace">seq</span> returns the sequence where <span style="font-style:italic">j</span> is replaced in the 
+expression by <span style="font-style:italic">a</span>, <span style="font-style:italic">a</span>+1,...,<span style="font-style:italic">b</span> if <span style="font-style:italic">b</span>&gt;<span style="font-style:italic">a</span> and by <span style="font-style:italic">a</span>, <span style="font-style:italic">a</span>−1,...,<span style="font-style:italic">b</span> if <span style="font-style:italic">b</span>&lt;<span style="font-style:italic">a</span>,
+or <span style="font-family:monospace">seq</span> returns the sequence made by copying the constant <span style="font-style:italic">n</span> times.
+</li><li class="li-enumerate"><span style="font-family:monospace">seq</span> has three arguments, an expression depending on a parameter 
+(for example <span style="font-style:italic">j</span>) and <span style="font-style:italic">j</span>=<span style="font-style:italic">a</span>..<span style="font-style:italic">b</span>,<span style="font-style:italic">p</span> where <span style="font-style:italic">a</span>, <span style="font-style:italic">b</span> are reals and <span style="font-style:italic">p</span> is a 
+real number.<br>
+<span style="font-family:monospace">seq</span> returns the sequence where <span style="font-style:italic">j</span> is replaced in the 
+expression by <span style="font-style:italic">a</span>, <span style="font-style:italic">a</span>+<span style="font-style:italic">p</span>,...,<span style="font-style:italic">b</span> if <span style="font-style:italic">b</span>&gt;<span style="font-style:italic">a</span> and by <span style="font-style:italic">a</span>, <span style="font-style:italic">a</span>−<span style="font-style:italic">p</span>,...,<span style="font-style:italic">b</span> 
+if <span style="font-style:italic">b</span>&lt;<span style="font-style:italic">a</span>.<br>
+Note that <span style="font-style:italic">j</span>,<span style="font-style:italic">a</span>..<span style="font-style:italic">b</span> is also valid but <span style="font-style:italic">j</span>,<span style="font-style:italic">a</span>..<span style="font-style:italic">b</span>,<span style="font-style:italic">p</span> is not valid. 
+</li></ol>
+</li><li class="li-itemize"><span style="font-family:monospace">TI</span> <span style="font-weight:bold">syntax</span>
+<ol class="enumerate" type=1><li class="li-enumerate">
+<span style="font-family:monospace">seq</span> has four arguments, an expression depending on a parameter (for 
+example <span style="font-style:italic">j</span>), the name of the parameter (for example <span style="font-style:italic">j</span>), <span style="font-style:italic">a</span> and <span style="font-style:italic">b</span> where
+<span style="font-style:italic">a</span> and <span style="font-style:italic">b</span> are reals.<br>
+<span style="font-family:monospace">seq</span> returns the list where <span style="font-style:italic">j</span> is replaced in the 
+expression by <span style="font-style:italic">a</span>, <span style="font-style:italic">a</span>+1,...,<span style="font-style:italic">b</span> if <span style="font-style:italic">b</span>&gt;<span style="font-style:italic">a</span> and by <span style="font-style:italic">a</span>, <span style="font-style:italic">a</span>−1,...,<span style="font-style:italic">b</span> if <span style="font-style:italic">b</span>&lt;<span style="font-style:italic">a</span>.
+</li><li class="li-enumerate"><span style="font-family:monospace">seq</span> has five arguments, an expression depending on a parameter (for 
+example <span style="font-style:italic">j</span>), the name of the parameter (for example <span style="font-style:italic">j</span>), <span style="font-style:italic">a</span>, <span style="font-style:italic">b</span> and <span style="font-style:italic">p</span> 
+where <span style="font-style:italic">a</span>, <span style="font-style:italic">b</span> and <span style="font-style:italic">p</span> are reals.<br>
+<span style="font-family:monospace">seq</span> returns the list where 
+<span style="font-style:italic">j</span> is substituted in the 
+expression by <span style="font-style:italic">a</span>, <span style="font-style:italic">a</span>+<span style="font-style:italic">p</span>,...,<span style="font-style:italic">a</span>+<span style="font-style:italic">k</span>*<span style="font-style:italic">p</span> (<span style="font-style:italic">a</span>+<span style="font-style:italic">k</span>*<span style="font-style:italic">p</span> ≤ <span style="font-style:italic">b</span> &lt;<span style="font-style:italic">a</span>+(<span style="font-style:italic">k</span>+1)*<span style="font-style:italic">p</span> or 
+<span style="font-style:italic">a</span>+<span style="font-style:italic">k</span>*<span style="font-style:italic">p</span> ≥ <span style="font-style:italic">b</span>&gt; <span style="font-style:italic">a</span>+(<span style="font-style:italic">k</span>+1)*<span style="font-style:italic">p</span>). 
+By default, <span style="font-style:italic">p</span>=1 if <span style="font-style:italic">b</span>&gt;<span style="font-style:italic">a</span> and <span style="font-style:italic">p</span>=-1 if <span style="font-style:italic">b</span>&lt;<span style="font-style:italic">a</span>. 
+</li></ol>
+</li></ul><p>
+<span style="font-weight:bold">Note</span> that
+in <span style="font-family:monospace">Maple</span> syntax, <span style="font-family:monospace">seq</span> takes no more than 3 arguments and
+returns a sequence,
+while in <span style="font-family:monospace">TI</span> syntax, <span style="font-family:monospace">seq</span> takes at least 4 arguments 
+and returns a list.<br>
+Input to have a sequence with same elements :
+</p><div class="center"><span style="font-family:monospace">seq(t,4)</span></div><p>
+or : 
+</p><div class="center"><span style="font-family:monospace">seq(t,k=1..4)</span></div><p>
+or :
+</p><div class="center"><span style="font-family:monospace">t$4</span></div><p> 
+Output :
+</p><div class="center"><span style="font-family:monospace">(t,t,t,t)</span></div><p>
+Input to have a sequence :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j=1..4)</span></div><p>
+or : 
+</p><div class="center"><span style="font-family:monospace">(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3)$(j=1..4)</span></div><p> 
+or :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j,1..4)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">(1,8,27,64)</span></div><p>
+Input to have a sequence :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j=-1..4,2)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">(-1,1,27)</span></div><p>
+Or to have a list,<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j,1,4)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">[1,8,27,64]</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j,0,5,2)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">[0,8,64]</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j,5,0,-2)</span></div><p>
+or
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j,5,0,2)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">[125,27,1]</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j,1,3,0.5)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">[1,3.375,8,15.625,27]</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j,1,3,1/2)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">[1,27/8,8,125/8,27]</span></div><p>
+<span style="font-weight:bold">Examples</span>
+</p><ul class="itemize"><li class="li-itemize">
+Find the third derivative of  ln(<span style="font-style:italic">t</span>), input:
+<div class="center"><span style="font-family:monospace">diff(log(t),t$3)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">-((-(2*t))/t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4)</span></div>
+</li><li class="li-itemize">Input :
+<div class="center"><span style="font-family:monospace">l:=[[2,3],[5,1],[7,2]]</span></div>
+<div class="center"><span style="font-family:monospace">seq((l[k][0])$(l[k][1]),k=0 .. size(l)-1)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">2,2,2,seq[5],7,7</span></div>
+then <span style="font-family:monospace">eval(ans())</span> returns:
+<div class="center"><span style="font-family:monospace">2,2,2,5,7,7</span></div>
+</li><li class="li-itemize">Input to transform a string into the list of its characters :
+<pre class="verbatim">f(chn):={
+ local l;
+ l:=size(chn);
+ return seq(chn[j],j,0,l-1);
+}
+</pre>
+then input:
+<div class="center"><span style="font-family:monospace">f("abracadabra")</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">["a","b","r","a","c","a","d","a","b","r","a"]</span></div>
+</li></ul>
+<hr>
+<a href="cascmd_en452.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en454.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

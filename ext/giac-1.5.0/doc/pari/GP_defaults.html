@@ -1,0 +1,879 @@
+<HTML>
+<HEAD>
+  <TITLE>
+    Catalogue of GP/PARI Functions: GP defaults
+  </TITLE>
+
+  <META NAME="author"       CONTENT="Nils-Peter Skoruppa">
+  <META NAME="created"      CONTENT="Sat Mar 22 18:13:28 2014">
+  <META NAME="author-email" CONTENT="skoruppa@math.uni-siegen.de">
+  <META NAME="keywords"     CONTENT="PARI, GP, DOC">
+  <link rel="stylesheet" href="/pari.css">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+
+<h3 align=center>GP defaults</h3>
+
+<a name="TeXstyle"></a>
+<h4>TeXstyle</h4>
+<p></p>
+<p>The bits of this default allow
+<code>gp</code> to use less rigid TeX formatting commands in the logfile. This
+default is only taken into account when <code>log</code> = 3. The bits of
+<code>TeXstyle</code> have the following meaning</p>
+<p>
+2: insert <code>\right</code> / <code>\left</code> pairs where appropriate.</p>
+<p>
+4: insert discretionary breaks in polynomials, to enhance the probability of
+a good line break.</p>
+<p>
+The default value is <code>0</code>.</p>
+
+<hr></hr>
+<a name="breakloop"></a>
+<h4>breakloop</h4>
+<p></p>
+<p>If true, enables the "break loop" debugging mode, see
+Section [<b>Label: se:break_loop</b>].</p>
+<p>
+The default value is <code>1</code> if we are running an interactive <code>gp</code>
+session, and <code>0</code> otherwise.</p>
+
+<hr></hr>
+<a name="colors"></a>
+<h4>colors</h4>
+<p></p>
+<p>This default is only usable if <code>gp</code>
+is running within certain color-capable terminals. For instance <code>rxvt</code>,
+<code>color_xterm</code> and modern versions of <code>xterm</code> under X Windows, or
+standard Linux/DOS text consoles. It causes <code>gp</code> to use a small palette of
+colors for its output. With xterms, the colormap used corresponds to the
+resources <code>Xterm*colorn</code> where n ranges from 0 to 15 (see the
+file <code>misc/color.dft</code> for an example). Accepted values for this
+default are strings <code>"a_1,...,a_k"</code> where k <code>&#60;=</code> 7 and each
+a_i is either</p>
+<p>
+<b>*</b> the keyword <code>no</code> (use the default color, usually
+black on transparent background)</p>
+<p>
+<b>*</b> an integer between 0 and 15 corresponding to the
+aforementioned colormap</p>
+<p>
+<b>*</b> a triple [c_0,c_1,c_2] where c_0 stands for foreground
+color, c_1 for background color, and c_2 for attributes (0 is default, 1
+is bold, 4 is underline).</p>
+<p>
+The output objects thus affected are respectively error messages,
+history numbers, prompt, input line, output, help messages, timer (that's
+seven of them). If k &#60; 7, the remaining a_i are assumed to be no. For
+instance</p>
+<p></p>
+<p>
+<pre class="code">  default(colors, "9, 5, no, no, 4")
+</pre></p>
+<p></p>
+<p>typesets error messages in color 9, history numbers in color 5, output in
+color 4, and does not affect the rest.</p>
+<p>
+A set of default colors for dark (reverse video or PC console) and light
+backgrounds respectively is activated when <code>colors</code> is set to
+<code>darkbg</code>, resp.&nbsp;<code>lightbg</code> (or any proper prefix: <code>d</code> is
+recognized as an abbreviation for <code>darkbg</code>). A bold variant of
+<code>darkbg</code>, called <code>boldfg</code>, is provided if you find the former too
+pale.</p>
+<p>
+ In the present version, this default is incompatible with PariEmacs.
+Changing it will just fail silently (the alternative would be to display
+escape sequences as is, since Emacs will refuse to interpret them).
+You must customize color highlighting from the PariEmacs side, see its
+documentation.</p>
+<p>
+The default value is <code>""</code> (no colors).</p>
+
+<hr></hr>
+<a name="compatible"></a>
+<h4>compatible</h4>
+<p></p>
+<p>The GP function names and syntax
+have changed tremendously between versions 1.xx and 2.00. To help you cope
+with this we provide some kind of backward compatibility, depending on the
+value of this default:</p>
+<p>
+&nbsp;&nbsp;<code>compatible</code> = 0: no backward compatibility. In this mode, a very
+handy function, to be described in Section [<b>Label: se:whatnow</b>], is <code>whatnow</code>,
+which tells you what has become of your favourite functions, which <code>gp</code>
+suddenly can't seem to remember.</p>
+<p>
+&nbsp;&nbsp;<code>compatible</code> = 1: warn when using obsolete functions, but
+otherwise accept them. The output uses the new conventions though, and
+there may be subtle incompatibilities between the behavior of former and
+current functions, even when they share the same name (the current function
+is used in such cases, of course!). We thought of this one as a transitory
+help for <code>gp</code> old-timers. Thus, to encourage switching to <code>compatible</code> = 0,
+it is not possible to disable the warning.</p>
+<p>
+&nbsp;&nbsp;<code>compatible</code> = 2: use only the old function naming scheme (as
+used up to version 1.39.15), but <em>taking case into account</em>. Thus
+<code>I</code> ( = sqrt{-1}) is not the same as <code>i</code> (user variable, unbound
+by default), and you won't get an error message using <code>i</code> as a loop
+index as used to be the case.</p>
+<p>
+&nbsp;&nbsp;<code>compatible</code> = 3: try to mimic exactly the former behavior. This
+is not always possible when functions have changed in a fundamental way.
+But these differences are usually for the better (they were meant to,
+anyway), and will probably not be discovered by the casual user.</p>
+<p>
+One adverse side effect is that any user functions and aliases that have
+been defined <em>before</em> changing <code>compatible</code> will get erased if this
+change modifies the function list, i.e.&nbsp;if you move between groups
+{0,1} and {2,3} (variables are unaffected). We of course strongly
+encourage you to try and get used to the setting <code>compatible</code> = 0.</p>
+<p>
+Note that the default <code>new_galois_format</code> is another compatibility setting,
+which is completely independent of <code>compatible</code>.</p>
+<p>
+The default value is <code>0</code>.</p>
+
+<hr></hr>
+<a name="datadir"></a>
+<h4>datadir</h4>
+<p></p>
+<p>The name of directory containing the optional data files. For now,
+this includes the <code>elldata</code>, <code>galdata</code>, <code>galpol</code>, <code>seadata</code>
+packages.</p>
+<p>
+The default value is \datadir (the location of installed precomputed data,
+can be specified via <code>Configure --datadir = </code>).</p>
+
+<hr></hr>
+<a name="debug"></a>
+<h4>debug</h4>
+<p></p>
+<p>Debugging level. If it is non-zero, some extra messages may be printed,
+according to what is going on (see&nbsp;<code>\g</code>).</p>
+<p>
+The default value is <code>0</code> (no debugging messages).</p>
+
+<hr></hr>
+<a name="debugfiles"></a>
+<h4>debugfiles</h4>
+<p></p>
+<p>File usage debugging level. If it is non-zero, <code>gp</code> will print
+information on file descriptors in use, from PARI's point of view
+(see&nbsp;<code>\gf</code>).</p>
+<p>
+The default value is <code>0</code> (no debugging messages).</p>
+
+<hr></hr>
+<a name="debugmem"></a>
+<h4>debugmem</h4>
+<p></p>
+<p>Memory debugging level. If it is non-zero, <code>gp</code> will regularly print
+information on memory usage. If it's greater than 2, it will indicate any
+important garbage collecting and the function it is taking place in
+(see&nbsp;<code>\gm</code>).</p>
+<p>
+<b>Important Note:</b> As it noticeably slows down the performance,
+the first functionality (memory usage) is disabled if you're not running a
+version compiled for debugging (see Appendix&nbsp;A).</p>
+<p>
+The default value is <code>0</code> (no debugging messages).</p>
+
+<hr></hr>
+<a name="echo"></a>
+<h4>echo</h4>
+<p></p>
+<p>This toggle is either 1 (on) or 0 (off). When <code>echo</code>
+mode is on, each command is reprinted before being executed. This can be
+useful when reading a file with the <code>\r</code> or <code>read</code> commands. For
+example, it is turned on at the beginning of the test files used to check
+whether <code>gp</code> has been built correctly (see <code>\e</code>).</p>
+<p>
+The default value is <code>0</code> (no echo).</p>
+
+<hr></hr>
+<a name="factor_add_primes"></a>
+<h4>factor_add_primes</h4>
+<p></p>
+<p>This toggle is either 1 (on) or 0 (off). If on,
+the integer factorization machinery calls <code>addprimes</code> on primes
+factor that were difficult to find (larger than 2^24), so they are
+automatically tried first in other factorizations. If a routine is performing
+(or has performed) a factorization and is interrupted by an error or via
+Control-C, this lets you recover the prime factors already found. The
+downside is that a huge <code>addprimes</code> table unrelated to the current
+computations will slow down arithmetic functions relying on integer
+factorization; one should then empty the table using <code>removeprimes</code>.</p>
+<p>
+The defaut value is <code>0</code>.</p>
+
+<hr></hr>
+<a name="factor_proven"></a>
+<h4>factor_proven</h4>
+<p></p>
+<p>This toggle is either 1 (on) or 0 (off). By
+default, the factors output by the integer factorization machinery are
+only pseudo-primes, not proven primes. If this toggle is
+set, a primality proof is done for each factor and all results depending on
+integer factorization are fully proven. This flag does not affect partial
+factorization when it is explicitly requested. It also does not affect the
+private table managed by <code>addprimes</code>: its entries are included as is in
+factorizations, without being tested for primality.</p>
+<p>
+The defaut value is <code>0</code>.</p>
+
+<hr></hr>
+<a name="format"></a>
+<h4>format</h4>
+<p></p>
+<p>Of the form x.n, where x (conversion style)
+is a letter in {<code>e</code>,<code>f</code>,<code>g</code>}, and n (precision) is an
+integer; this affects the way real numbers are printed:</p>
+<p>
+<b>*</b> If the conversion style is <code>e</code>, real numbers are printed in
+scientific format, always with an explicit exponent,
+e.g.&nbsp;<code>3.3 E-5</code>.</p>
+<p>
+<b>*</b> In style <code>f</code>, real numbers are generally printed in \idx{fixed
+floating point format} without exponent, e.g.&nbsp;<code>0.000033</code>. A large
+real number, whose integer part is not well defined (not enough significant
+digits), is printed in style&nbsp;<code>e</code>. For instance <code>10.^100</code> known to
+ten significant digits is always printed in style <code>e</code>.</p>
+<p>
+<b>*</b> In style <code>g</code>, non-zero real numbers are printed in <code>f</code> format,
+except when their decimal exponent is  &#60; -4, in which case they are printed in
+<code>e</code> format. Real zeroes (of arbitrary exponent) are printed in <code>e</code>
+format.</p>
+<p>
+The precision n is the number of significant digits printed for real
+numbers, except if n &#60; 0 where all the significant digits will be printed
+(initial default 28, or 38 for 64-bit machines). For more powerful formatting
+possibilities, see <code>printf</code> and <code>Strprintf</code>.</p>
+<p>
+The default value is <code>"g.28"</code> and <code>"g.38"</code> on 32-bit and
+64-bit machines, respectively.</p>
+
+<hr></hr>
+<a name="graphcolormap"></a>
+<h4>graphcolormap</h4>
+<p></p>
+<p>A vector of colors, to be
+used by hi-res graphing routines. Its length is arbitrary, but it must
+contain at least 3 entries: the first 3 colors are used for background,
+frame/ticks and axes respectively. All colors in the colormap may be freely
+used in <code>plotcolor</code> calls.</p>
+<p>
+A color is either given as in the default by character strings or by an RGB
+code. For valid character strings, see the standard <code>rgb.txt</code> file in X11
+distributions, where we restrict to lowercase letters and remove all
+whitespace from color names. An RGB code is a vector with 3 integer entries
+between 0 and 255. For instance <code>[250, 235, 215]</code> and
+<code>"antiquewhite"</code> represent the same color. RGB codes are cryptic but
+often easier to generate.</p>
+<p>
+The default value is [<code>"white"</code>, <code>"black"</code>, <code>"blue"</code>,
+<code>"violetred"</code>, <code>"red"</code>, <code>"green"</code>, <code>"grey"</code>,
+<code>"gainsboro"</code>].</p>
+
+<hr></hr>
+<a name="graphcolors"></a>
+<h4>graphcolors</h4>
+<p></p>
+<p>Entries in the
+<code>graphcolormap</code> that will be used to plot multi-curves. The successive
+curves are drawn in colors</p>
+<p>
+<code>graphcolormap[graphcolors[1]]</code>, <code>graphcolormap[graphcolors[2]]</code>,
+...</p>
+<p>
+cycling when the <code>graphcolors</code> list is exhausted.</p>
+<p>
+The default value is <code>[4,5]</code>.</p>
+
+<hr></hr>
+<a name="help"></a>
+<h4>help</h4>
+<p></p>
+<p>Name of the external help program to use from within <code>gp</code> when
+extended help is invoked, usually through a <code>??</code> or <code>???</code> request
+(see Section [<b>Label: se:exthelp</b>]), or <code>M-H</code> under readline (see
+Section [<b>Label: se:readline</b>]).</p>
+<p>
+The default value is the path to the <code>gphelp</code> script we install.</p>
+
+<hr></hr>
+<a name="histfile"></a>
+<h4>histfile</h4>
+<p></p>
+<p>Name of a file where
+<code>gp</code> will keep a history of all <em>input</em> commands (results are
+omitted). If this file exists when the value of <code>histfile</code> changes,
+it is read in and becomes part of the session history. Thus, setting this
+default in your gprc saves your readline history between sessions. Setting
+this default to the empty string <code>""</code> changes it to
+<code> &#60; undefined &#62; </code></p>
+<p>
+The default value is <code> &#60; undefined &#62; </code> (no history file).</p>
+
+<hr></hr>
+<a name="histsize"></a>
+<h4>histsize</h4>
+<p></p>
+<p><code>gp</code> keeps a history of the last
+<code>histsize</code> results computed so far, which you can recover using the
+<code>%</code> notation (see Section [<b>Label: se:history</b>]). When this number is exceeded,
+the oldest values are erased. Tampering with this default is the only way to
+get rid of the ones you do not need anymore.</p>
+<p>
+The default value is <code>5000</code>.</p>
+
+<hr></hr>
+<a name="lines"></a>
+<h4>lines</h4>
+<p></p>
+<p>If set to a positive value, <code>gp</code> prints at
+most that many lines from each result, terminating the last line shown with
+<code>[+++]</code> if further material has been suppressed. The various <code>print</code>
+commands (see Section [<b>Label: se:gp_program</b>]) are unaffected, so you can always type
+<code>print(%)</code> or <code>\a</code> to view the full result. If the actual screen width
+cannot be determined, a "line" is assumed to be 80 characters long.</p>
+<p>
+The default value is <code>0</code>.</p>
+
+<hr></hr>
+<a name="linewrap"></a>
+<h4>linewrap</h4>
+<p></p>
+<p>If set to a positive value, <code>gp</code> wraps every single line after
+printing that many characters.</p>
+<p>
+The default value is <code>0</code> (unset).</p>
+
+<hr></hr>
+<a name="log"></a>
+<h4>log(x)</h4>
+<p></p>
+<p>Principal branch of the natural logarithm of
+x belongs to <b>C</b>^*, i.e.&nbsp;such that {Im(log}(x)) belongs to  ]-<font color=#FF0000>Pi</font>,<font color=#FF0000>Pi</font>].
+The branch cut lies
+along the negative real axis, continuous with quadrant 2, i.e.&nbsp;such that
+lim_{b\to 0^+} log (a+bi) = log a for a belongs to <b>R</b>^*. The result is complex
+(with imaginary part equal to <font color=#FF0000>Pi</font>) if x belongs to <b>R</b> and x &#60; 0. In general,
+the algorithm uses the formula
+log(x)  ~  (<font color=#FF0000>Pi</font>)/(2{agm}(1, 4/s)) - m log 2, 
+if s = x 2^m is large enough. (The result is exact to B bits provided
+s &#62; 2^{B/2}.) At low accuracies, the series expansion near 1 is used.</p>
+<p>
+p-adic arguments are also accepted for x, with the convention that
+log(p) = 0. Hence in particular exp(log(x))/x is not in general equal to
+1 but to a (p-1)-th root of unity (or &#177;1 if p = 2) times a power of p.</p>
+<p>
+The library syntax is <code>GEN <b>glog</b>(GEN x, long prec)</code>.
+For a <code>t_PADIC</code> x, the function
+<code>GEN <b>Qp_log</b>(GEN x)</code> is also available.</p>
+
+<hr></hr>
+<a name="logfile"></a>
+<h4>logfile</h4>
+<p></p>
+<p>Name of the log file to be used when the <code>log</code> toggle is on.
+Environment and time expansion are performed.</p>
+<p>
+The default value is <code>"pari.log"</code>.</p>
+
+<hr></hr>
+<a name="nbthreads"></a>
+<h4>nbthreads</h4>
+<p></p>
+<p>Number of threads to use for parallel computing.
+The exact meaning an default depend on the <code>mt</code> engine used:</p>
+<p>
+<b>*</b> <code>single</code>: not used (always one thread).</p>
+<p>
+<b>*</b> <code>pthread</code>: number of threads (unlimited, default: number of core)</p>
+<p>
+<b>*</b> <code>mpi</code>: number of MPI process to use (limited to the number allocated by <code>mpirun</code>,
+default: use all allocated process).</p>
+
+<hr></hr>
+<a name="new_galois_format"></a>
+<h4>new_galois_format</h4>
+<p></p>
+<p>This toggle is either 1 (on) or 0 (off). If on,
+the <code>polgalois</code> command will use a different, more
+consistent, naming scheme for Galois groups. This default is provided to
+ensure that scripts can control this behavior and do not break unexpectedly.</p>
+<p>
+The defaut value is <code>0</code>. This value will change to 1 (set) in the next
+major version.</p>
+
+<hr></hr>
+<a name="output"></a>
+<h4>output</h4>
+<p></p>
+<p>There are three possible values: 0
+( = &nbsp;<em>raw</em>), 1 ( = &nbsp;<em>prettymatrix</em>), or 3
+( = &nbsp;<em>external</em> <em>prettyprint</em>). This
+means that, independently of the default <code>format</code> for reals which we
+explained above, you can print results in three ways:</p>
+<p>
+<b>*</b> <em>raw format</em>, i.e.&nbsp;a format which is equivalent to what you
+input, including explicit multiplication signs, and everything typed on a
+line instead of two dimensional boxes. This can have several advantages, for
+instance it allows you to pick the result with a mouse or an editor, and to
+paste it somewhere else.</p>
+<p>
+<b>*</b> <em>prettymatrix format</em>: this is identical to raw format, except
+that matrices are printed as boxes instead of horizontally. This is
+prettier, but takes more space and cannot be used for input. Column vectors
+are still printed horizontally.</p>
+<p>
+<b>*</b> <em>external prettyprint</em>: pipes all <code>gp</code>
+output in TeX format to an external prettyprinter, according to the value of
+<code>prettyprinter</code>. The default script (<code>tex2mail</code>) converts its input
+to readable two-dimensional text.</p>
+<p>
+Independently of the setting of this default, an object can be printed
+in any of the three formats at any time using the commands <code>\a</code> and <code>\m</code>
+and <code>\B</code> respectively.</p>
+<p>
+The default value is <code>1</code> (<em>prettymatrix</em>).</p>
+
+<hr></hr>
+<a name="parisize"></a>
+<h4>parisize</h4>
+<p></p>
+<p><code>gp</code>, and in fact any program using the PARI
+library, needs a <em>stack</em> in which to do its computations. <code>parisize</code>
+is the stack size, in bytes. It is strongly recommended you increase this
+default (using the <code>-s</code> command-line switch, or a <code>gprc</code>) if you can
+afford it. Don't increase it beyond the actual amount of RAM installed on
+your computer or <code>gp</code> will spend most of its time paging.</p>
+<p>
+In case of emergency, you can use the <code>allocatemem</code> function to
+increase <code>parisize</code>, once the session is started.</p>
+<p>
+The default value is 4M, resp.&nbsp;8M on a 32-bit, resp.&nbsp;64-bit machine.</p>
+
+<hr></hr>
+<a name="path"></a>
+<h4>path</h4>
+<p></p>
+<p>This is a list of directories, separated by colons ':'
+(semicolons ';' in the DOS world, since colons are preempted for drive names).
+When asked to read a file whose name is not given by an absolute path
+(does not start with <code>/</code>, <code>./</code> or <code>../</code>), <code>gp</code> will look for
+it in these directories, in the order they were written in <code>path</code>. Here,
+as usual, <code>.</code> means the current directory, and <code>..</code> its immediate
+parent. Environment expansion is performed.</p>
+<p>
+The default value is <code>".:~:~/gp"</code> on UNIX systems,
+<code>".;C:\;C:\GP"</code> on DOS, OS/2 and Windows, and <code>"."</code> otherwise.</p>
+
+<hr></hr>
+<a name="prettyprinter"></a>
+<h4>prettyprinter</h4>
+<p></p>
+<p>The name of an external prettyprinter to use when
+<code>output</code> is&nbsp;3 (alternate prettyprinter). Note that the default
+<code>tex2mail</code> looks much nicer than the built-in "beautified
+format" (<code>output</code> = 2).</p>
+<p>
+The default value is <code>"tex2mail -TeX -noindent -ragged -by_par"</code>.</p>
+
+<hr></hr>
+<a name="primelimit"></a>
+<h4>primelimit</h4>
+<p></p>
+<p><code>gp</code> precomputes a list of
+all primes less than <code>primelimit</code> at initialization time, and can build
+fast sieves on demand to quickly iterate over primes up to the <em>square</em>
+of <code>primelimit</code>. These are used by many arithmetic functions, usually for
+trial division purposes. The maximal value is 2^{32} - 2049 (resp 2^{64} -
+2049) on a 32-bit (resp.&nbsp;64-bit) machine, but values beyond 10^8,
+allowing to iterate over primes up to 10^{16}, do not seem useful.</p>
+<p>
+Since almost all arithmetic functions eventually require some table of prime
+numbers, PARI guarantees that the first 6547 primes, up to and
+including 65557, are precomputed, even if <code>primelimit</code> is 1.</p>
+<p>
+This default is only used on startup: changing it will not recompute a new
+table.</p>
+<p>
+<b>Deprecated feature.</b> <code>primelimit</code> was used in some
+situations by algebraic number theory functions using the
+<code>nf_PARTIALFACT</code> flag (<code>nfbasis</code>, <code>nfdisc</code>, <code>nfinit</code>,...):
+this assumes that all primes p &#62; <code>primelimit</code> have a certain
+property (the equation order is p-maximal). This is never done by default,
+and must be explicitly set by the user of such functions. Nevertheless,
+these functions now provide a more flexible interface, and their use
+of the global default <code>primelimit</code> is deprecated.</p>
+<p>
+<b>Deprecated feature.</b> <code>factor(N, 0)</code> was used to partially
+factor integers by removing all prime factors  <code>&#60;=</code>  <code>primelimit</code>.
+Don't use this, supply an explicit bound: <code>factor(N, bound)</code>,
+which avoids relying on an unpredictable global variable.</p>
+<p>
+The default value is <code>500k</code>.</p>
+
+<hr></hr>
+<a name="prompt"></a>
+<h4>prompt</h4>
+<p></p>
+<p>A string that will be printed as
+prompt. Note that most usual escape sequences are available there: <code>\e</code> for
+Esc, <code>\n</code> for Newline,..., <code>\\</code> for <code>\</code>. Time expansion is
+performed.</p>
+<p>
+This string is sent through the library function <code>strftime</code> (on a
+Unix system, you can try <code>man strftime</code> at your shell prompt). This means
+that <code>%</code> constructs have a special meaning, usually related to the time
+and date. For instance, <code>%H</code> = hour (24-hour clock) and <code>%M</code> = 
+minute [00,59] (use <code>%%</code> to get a real <code>%</code>).</p>
+<p>
+If you use <code>readline</code>, escape sequences in your prompt will result in
+display bugs. If you have a relatively recent <code>readline</code> (see the comment
+at the end of Section [<b>Label: se:def,colors</b>]), you can brace them with special sequences
+(<code>\[</code> and <code>\]</code>), and you will be safe. If these just result in
+extra spaces in your prompt, then you'll have to get a more recent
+<code>readline</code>. See the file <code>misc/gprc.dft</code> for an example.</p>
+<p>
+S&#60; &#62;<b>Caution</b>: PariEmacs needs to know about the prompt pattern to
+separate your input from previous <code>gp</code> results, without ambiguity. It is
+not a trivial problem to adapt automatically this regular expression to an
+arbitrary prompt (which can be self-modifying!). See PariEmacs's
+documentation.</p>
+<p>
+The default value is <code>"? "</code>.</p>
+
+<hr></hr>
+<a name="prompt_cont"></a>
+<h4>prompt_cont</h4>
+<p></p>
+<p>A string that will be printed
+to prompt for continuation lines (e.g. in between braces, or after a
+line-terminating backslash). Everything that applies to <code>prompt</code>
+applies to <code>prompt_cont</code> as well.</p>
+<p>
+The defaut value is <code>""</code>.</p>
+
+<hr></hr>
+<a name="psfile"></a>
+<h4>psfile</h4>
+<p></p>
+<p>Name of the default file where
+<code>gp</code> is to dump its PostScript drawings (these are appended, so that no
+previous data are lost). Environment and time expansion are performed.</p>
+<p>
+The default value is <code>"pari.ps"</code>.</p>
+
+<hr></hr>
+<a name="readline"></a>
+<h4>A (too) short introduction to readline</h4>
+<p></p>
+<p>In the following, <code>C-</code> stands for "the <code>Control</code> key combined with
+another" and the same for <code>M-</code> with the <code>Meta</code> key; generally
+<code>C-</code> combinations act on characters, while the <code>M-</code> ones operate on
+words. The <code>Meta</code> key might be called <code>Alt</code> on some keyboards, will
+display a black diamond on most others, and can safely be replaced by
+<code>Esc</code> in any case.</p>
+<p>
+Typing any ordinary key inserts text where the cursor stands, the arrow keys
+enabling you to move in the line. There are many more movement commands,
+which will be familiar to the Emacs user, for instance <code>C-a</code>/<code>C-e</code>
+will take you to the start/end of the line, <code>M-b</code>/<code>M-f</code> move the
+cursor backward/forward by a word, etc. Just press the <code> &#60; Return &#62; </code> key at
+any point to send your command to <code>gp</code>.</p>
+<p>
+  All the commands you type at the <code>gp</code> prompt are stored in a history,
+a multiline command being saved as a single concatenated line. The Up and Down
+arrows (or <code>C-p</code>/<code>C-n</code>) will move you through the history,
+<code>M- &#60; </code>/<code>M- &#62; </code> sending you to the start/end of the history.
+<code>C-r</code>/<code>C-s</code> will start an incremental backward/forward search. You
+can kill text (<code>C-k</code> kills till the end of line, <code>M-d</code> to the end of
+current word) which you can then yank back using the <code>C-y</code> key (<code>M-y</code>
+will rotate the kill-ring). <code>C-_</code> will undo your last changes
+incrementally (<code>M-r</code> undoes all changes made to the current line).
+<code>C-t</code> and <code>M-t</code> will transpose the character (word) preceding the
+cursor and the one under the cursor.</p>
+<p>
+  Keeping the <code>M-</code> key down while you enter an integer (a minus sign
+meaning reverse behavior) gives an argument to your next readline command
+(for instance <code>M-- C-k</code> will kill text back to the start of line). If you
+prefer Vi--style editing, <code>M-C-j</code> will toggle you to Vi mode.</p>
+<p>
+  Of course you can change all these default bindings. For that you need to
+create a file named <code>.inputrc</code> in your home directory. For instance
+(notice the embedding conditional in case you would want specific bindings
+for <code>gp</code>):</p>
+<p></p>
+<p>
+<pre class="code">  $if Pari-GP
+    set show-all-if-ambiguous
+    "\C-h": backward-delete-char
+    "\e\C-h": backward-kill-word
+    "\C-xd": dump-functions
+    (: "\C-v()\C-b"       #  can be annoying when copy-pasting!
+    [: "\C-v[]\C-b"
+  $endif
+</pre></p>
+<p>
+<code>C-x C-r</code> will re-read this init file, incorporating any
+changes made to it during the current session.</p>
+<p>
+<b>Note.</b> By default, <code>(</code> and <code>[</code> are bound to the function
+<code>pari-matched-insert</code> which, if "electric parentheses" are enabled
+(default: off) will automatically insert the matching closure (respectively
+<code>)</code> and <code>]</code>). This behavior can be toggled on and off by giving
+the numeric argument -2 to <code>(</code> (<code>M--2(</code>), which is useful if you
+want, e.g to copy-paste some text into the calculator. If you do not want a
+toggle, you can use <code>M--0</code> / <code>M--1</code> to specifically switch it on or
+off).</p>
+<p>
+<b>Note.</b> In some versions of readline (2.1 for instance), the
+<code>Alt</code> or <code>Meta</code> key can give funny results (output 8-bit accented
+characters for instance). If you do not want to fall back to the <code>Esc</code>
+combination, put the following two lines in your <code>.inputrc</code>:</p>
+<p></p>
+<p>
+<pre class="code">    set convert-meta on
+    set output-meta off
+</pre></p>
+<p></p>
+<p>
+<b>Command completion and online help.</b> Hitting
+<code> &#60; TAB &#62; </code> will complete words for you. This mechanism is context-dependent:
+<code>gp</code> will strive to only give you meaningful completions in a given
+context (it will fail sometimes, but only under rare and restricted
+conditions).</p>
+<p>
+  For instance, shortly after a <code>~</code>, we expect a user name, then a
+path to some file. Directly after <code>default(</code> has been typed, we would
+expect one of the <code>default</code> keywords. After <code>whatnow(</code> , we expect
+the name of an old function, which may well have disappeared from this
+version. After a '.', we expect a member keyword. And generally of course, we
+expect any GP symbol which may be found in the hashing lists: functions (both
+yours and GP's), and variables.</p>
+<p>
+  If, at any time, only one completion is meaningful, <code>gp</code> will provide it
+together with</p>
+<p>
+<b>*</b> an ending comma if we are completing a default,</p>
+<p>
+<b>*</b> a pair of parentheses if we are completing a function name. In
+that case hitting <code> &#60; TAB &#62; </code> again will provide the argument list as given
+by the online help\footnote{*}{recall that you can always undo the effect
+of the preceding keys by hitting <code>C-_</code>}.</p>
+<p>
+Otherwise, hitting <code> &#60; TAB &#62; </code> once more will give you the list of possible
+completions. Just experiment with this mechanism as often as possible,
+you will probably find it very convenient. For instance, you can obtain
+<code>default(seriesprecision,10)</code>, just by hitting <code>def &#60; TAB &#62; se &#60; TAB &#62; 10</code>,
+which saves 18 keystrokes (out of 27).</p>
+<p>
+  Hitting <code>M-h</code> will give you the usual short online help concerning the
+word directly beneath the cursor, <code>M-H</code> will yield the extended help
+corresponding to the <code>help</code> default program (usually opens a dvi
+previewer, or runs a primitive tex-to-ASCII program). None of these disturb
+the line you were editing.</p>
+
+<hr></hr>
+<a name="realprecision"></a>
+<h4>realprecision</h4>
+<p></p>
+<p>The number of significant digits used to convert exact inputs given to
+transcendental functions (see Section [<b>Label: se:trans</b>]), or to create
+absolute floating point constants (input as <code>1.0</code> or <code>Pi</code> for
+instance). Unless you tamper with the <code>format</code> default, this is also
+the number of significant digits used to print a <code>t_REAL</code> number;
+<code>format</code> will override this latter behaviour, and allow you to have a
+large internal precision while outputting few digits for instance.</p>
+<p>
+Note that PARI's internal precision works on a word basis (by increments of
+32 or 64 bits), hence may be a little larger than the number of decimal
+digits you expected. For instance to get 2 decimal digits you need one word
+of precision which, on a 64-bit machine, actually gives you 19 digits (19 &#60; 
+log_{10}(2^{64}) &#60; 20). The value returned when typing
+<code>default(realprecision)</code> is the internal number of significant digits,
+not the number of printed digits:</p>
+<p>
+<pre class="code">  ? default(realprecision, 2)
+        realprecision = 19 significant digits (2 digits displayed)
+  ? default(realprecision)
+  %1 = 19
+</pre></p>
+<p>
+The default value is <code>38</code>, resp.&nbsp;<code>28</code>, on a 64-bit, resp&nbsp;.32-bit,
+machine.</p>
+
+<hr></hr>
+<a name="recover"></a>
+<h4>recover</h4>
+<p></p>
+<p>This toggle is either 1 (on) or 0 (off). If you change this to 0, any
+error becomes fatal and causes the gp interpreter to exit immediately. Can be
+useful in batch job scripts.</p>
+<p>
+The default value is <code>1</code>.</p>
+
+<hr></hr>
+<a name="secure"></a>
+<h4>secure</h4>
+<p></p>
+<p>This toggle is either 1 (on) or 0 (off). If on, the <code>system</code> and
+<code>extern</code> command are disabled. These two commands are potentially
+dangerous when you execute foreign scripts since they let <code>gp</code> execute
+arbitrary UNIX commands. <code>gp</code> will ask for confirmation before letting
+you (or a script) unset this toggle.</p>
+<p>
+The default value is <code>0</code>.</p>
+
+<hr></hr>
+<a name="seriesprecision"></a>
+<h4>seriesprecision</h4>
+<p></p>
+<p>Number of significant terms
+when converting a polynomial or rational function to a power series
+(see&nbsp;<code>\ps</code>).</p>
+<p>
+The default value is <code>16</code>.</p>
+
+<hr></hr>
+<a name="simplify"></a>
+<h4>simplify(x)</h4>
+<p></p>
+<p>This function simplifies x as much as it can. Specifically, a complex or
+quadratic number whose imaginary part is the integer 0 (i.e.&nbsp;not <code>Mod(0,2)</code>
+or <code>0.E-28</code>) is converted to its real part, and a polynomial of degree 0
+is converted to its constant term. Simplifications occur recursively.</p>
+<p>
+This function is especially useful before using arithmetic functions,
+which expect integer arguments:</p>
+<p>
+<pre class="code">  ? x = 2 + y - y
+  %1 = 2
+  ? isprime(x)
+    ***   at top-level: isprime(x)
+    ***                 ^----------
+    *** isprime: not an integer argument in an arithmetic function
+  ? type(x)
+  %2 = "t_POL"
+  ? type(simplify(x))
+  %3 = "t_INT"
+</pre></p>
+<p>
+Note that GP results are simplified as above before they are stored in the
+history. (Unless you disable automatic simplification with <code>\y</code>, that is.)
+In particular</p>
+<p>
+<pre class="code">  ? type(%1)
+  %4 = "t_INT"
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>simplify</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="sopath"></a>
+<h4>sopath</h4>
+<p></p>
+<p>This is a list of directories, separated by colons ':'
+(semicolons ';' in the DOS world, since colons are preempted for drive names).
+When asked to <code>install</code> an external symbol from a shared library whose
+name is not given by an absolute path (does not start with <code>/</code>, <code>./</code>
+or <code>../</code>), <code>gp</code> will look for it in these directories, in the order
+they were written in <code>sopath</code>. Here, as usual, <code>.</code> means the current
+directory, and <code>..</code> its immediate parent. Environment expansion is
+performed.</p>
+<p>
+The default value is <code>""</code>, corresponding to an empty list of
+directories: <code>install</code> will use the library name as input (and look in
+the current directory if the name is not an absolute path).</p>
+
+<hr></hr>
+<a name="strictargs"></a>
+<h4>strictargs</h4>
+<p></p>
+<p>This toggle is either 1 (on) or 0 (off). If on, all arguments to <em>new</em>
+user functions are mandatory unless the function supplies an explicit default
+value.
+Otherwise arguments have the default value 0.</p>
+<p>
+In this example,</p>
+<p>
+<pre class="code">    fun(a,b=2)=a+b
+</pre></p>
+<p>
+<code>a</code> is mandatory, while <code>b</code> is optionnal. If <code>strictargs</code> is on:</p>
+<p>
+<pre class="code">  ? fun()
+   ***   at top-level: fun()
+   ***                 ^-----
+   ***   in function fun: a,b=2
+   ***                    ^-----
+   ***   missing mandatory argument 'a' in user function.
+</pre></p>
+<p>
+This applies to functions defined while <code>strictargs</code> is on. Changing <code>strictargs</code>
+does not affect the behavior of previously defined functions.</p>
+<p>
+The default value is <code>0</code>.</p>
+
+<hr></hr>
+<a name="strictmatch"></a>
+<h4>strictmatch</h4>
+<p></p>
+<p>This toggle is either 1 (on) or 0 (off). If on, unused characters after a
+sequence has been
+processed will produce an error. Otherwise just a warning is printed. This
+can be useful when you are unsure how many parentheses you have to close
+after complicated nested loops. Please do not use this; find a decent
+text-editor instead.</p>
+<p>
+The default value is <code>1</code>.</p>
+
+<hr></hr>
+<a name="threadsize"></a>
+<h4>threadsize</h4>
+<p></p>
+<p>In parallel mode, each threads needs its own private <em>stack</em> in which
+to do its computations, see <code>parisize</code>. This value determines the size
+in bytes of the stacks of each threads, so the total memory allocated will be
+<code>parisize</code>+<code>nbthreads</code> x <code>threadsize</code>.</p>
+<p>
+If set to 0, the value used is the same as <code>parisize</code>.</p>
+<p>
+The default value is 0.</p>
+
+<hr></hr>
+<a name="timer"></a>
+<h4>timer</h4>
+<p></p>
+<p>This toggle is either 1 (on) or 0 (off). Every instruction sequence
+in the gp calculator (anything ended by a newline in your input) is timed,
+to some accuracy depending on the hardware and operating system. When
+<code>timer</code> is on, each such timing is printed immediately before the
+output as follows:</p>
+<p>
+<pre class="code">  ? factor(2^2^7+1)
+  time = 108 ms.     \\ this line omitted if 'timer' is 0
+  %1 =
+  [     59649589127497217 1]
+  
+  [5704689200685129054721 1]
+</pre>
+(See also <code>#</code> and <code>##</code>.)</p>
+<p>
+The time measured is the user CPU time, <em>not</em> including the time
+for printing the results. If the time is negligible ( &#60; 1 ms.), nothing is
+printed: in particular, no timing should be printed when defining a user
+function or an alias, or installing a symbol from the library.</p>
+<p>
+The default value is <code>0</code> (off).</p>
+<p></p>
+<p></p>
+
+<hr></hr>
+
+</BODY>
+</HTML>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Supprimer des éléments d’une liste : remove</title>
+</head>
+<body >
+<a href="cascmd_fr531.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr533.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec659" class="subsection">6.42.27  Supprimer des éléments d’une liste : <span style="font-family:monospace">remove</span></h3>
+<p><a id="hevea_default952"></a>
+<span style="font-family:monospace">remove</span> a deux paramètres : une fonction booléenne <span style="font-family:monospace">f</span> et
+une liste <span style="font-family:monospace">L</span>.<br>
+<span style="font-family:monospace">remove</span> enlève les éléments <span style="font-family:monospace">c</span> de la liste <span style="font-family:monospace">L</span>, qui
+vérifie <span style="font-family:monospace">f(c)=true</span>.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">remove(x-&gt;(x&gt;=2),[0,1,2,3,4,5])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[0,1]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">L:=[0,1,2,3,4,5])</span></div><div class="center"><span style="font-family:monospace">L:=remove(x-&gt;(x&gt;=2),L)</span></div><p>
+On obtient comme nouvelle valeur de <span style="font-family:monospace">L</span> :
+</p><div class="center"><span style="font-family:monospace">[0,1]</span></div><p>
+<span style="font-weight:bold">Remarque</span> Pour faire la même chose avec une chaîne de catactères, 
+par exemple : enlever tous les caractères d’une chaîne qui se trouvent 
+après le caractère <span style="font-family:monospace">ch</span> (par ex <span style="font-family:monospace">"m"</span> selon l’alphabet.<br>
+On va écrire les fonction <span style="font-family:monospace">Enleve1</span> et <span style="font-family:monospace">Enleve2</span> : pour cela on a 
+besoin des fonctions :
+<span style="font-family:monospace">ord</span>, <span style="font-family:monospace">asc</span> et <span style="font-family:monospace">char</span> :
+</p><div class="center"><span style="font-family:monospace">ord("a"),char(97)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">97,"a"</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">asc("abc"),char([97,98,99])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[97,98,99],"abc"</span></div><p>
+On utilise <span style="font-family:monospace">seq</span>, on tape la fonction <span style="font-family:monospace">Enleve1</span> :
+</p><pre class="verbatim">Enleve1(chaine,ch):={
+local L,l:=length(chaine)-1;
+L:=remove(x-&gt;(ord(x)&gt;ord(ch)),seq(chaine[k],k,0,l));
+return char(ord(L));
+}:;
+</pre><p>
+ou bien on utilise <span style="font-family:monospace">asc</span> et on tape la fonction <span style="font-family:monospace">Enleve2</span>:
+</p><pre class="verbatim">Enleve2(chaine,ch):={
+local L,l:=length(chaine)-1;
+L:=remove(x-&gt;(x&gt;ord(ch)),asc(chaine));
+return char(L);
+}:;
+</pre><p>
+Puis on tape :
+</p><div class="center"><span style="font-family:monospace">Enleve1("manitou","m")</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">"mai"</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">Enleve2("manitou","m") )</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">"mai"</span></div><p>
+<span style="font-weight:bold">Autre exemple</span> : enlever tous les "a" d’une chaîne.
+On tape :<br>
+</p><div class="center"><span style="font-family:monospace">char(remove(ord("a"),asc("abracadabra"))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">"brcdbr"</span></div>
+<hr>
+<a href="cascmd_fr531.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr533.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

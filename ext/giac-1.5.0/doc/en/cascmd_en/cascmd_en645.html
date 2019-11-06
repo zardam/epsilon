@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Linear system solving: linsolve</title>
+</head>
+<body >
+<a href="cascmd_en644.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en646.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec770" class="subsection">5.61.6  Linear system solving: <span style="font-family:monospace">linsolve</span></h3>
+<p><a id="hevea_default1001"></a>
+<span style="font-family:monospace">linsolve</span> is used to solve a system of linear equations.<br>
+<span style="font-family:monospace">linsolve</span> takes its arguments in two different ways.<br>
+</p><ul class="itemize"><li class="li-itemize">
+It can take two arguments, the first is a list of equations or
+expressions (in that case the convention is that the equation 
+is <span style="font-style:italic">expression</span> = 0), and a list of variable names.<br>
+<span style="font-family:monospace">linsolve</span> returns the solution of the system in a list.<br>
+Input:
+<div class="center"><span style="font-family:monospace">linsolve([2*x+y+z=1,x+y+2*z=1,x+2*y+z=4],[x,y,z])</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[1/-2,5/2,1/-2]</span></div> 
+Which means that
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">x</span>=−</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">, <span style="font-style:italic">y</span>=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">5</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">, <span style="font-style:italic">z</span>=−</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell"> </td></tr>
+</table>
+is the solution of the system :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" >2<span style="font-style:italic">x</span>+<span style="font-style:italic">y</span>+<span style="font-style:italic">z</span></td><td style="text-align:left;white-space:nowrap" >=1</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">x</span>+<span style="font-style:italic">y</span>+2<span style="font-style:italic">z</span></td><td style="text-align:left;white-space:nowrap" >=1</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">x</span>+2<span style="font-style:italic">y</span>+<span style="font-style:italic">z</span></td><td style="text-align:left;white-space:nowrap" >=4
+</td></tr>
+</table></td><td class="dcell">
+</td></tr>
+</table> 
+</li><li class="li-itemize">It can take two arguments, the matrix of coefficients of a
+system and values of the right hand side in the form of a list.<br>
+Input:
+<div class="center">
+<span style="font-family:monospace">linsolve ([[2,1,1], [1,1,2], [1,2,1]], [1,1,4])
+</span></div>
+Output:
+<div class="center">
+<span style="font-family:monospace">[-1/2,5/2,-1/2] 
+</span></div>
+</li><li class="li-itemize">It can take four arguments; the matrices <span style="font-family:monospace">P</span>, <span style="font-family:monospace">L</span>,
+<span style="font-family:monospace">U</span> from the <span style="font-family:monospace">lu</span> decomposition and the values of the
+right hand side in the form of a list. This is useful when you have
+several systems of equations which only differ on their right hand side.<br>
+Input:
+<div class="center">
+<span style="font-family:monospace">p,l,u:=lu([[2,1,1],[1,1,2],[1,2,1]])<br>
+ linsolve(p,l,u,[1,1,4])
+</span></div>
+Output:
+<div class="center">
+<span style="font-family:monospace">[-1/2,5/2,-1/2] 
+</span></div>
+</li></ul><p>If the <span style="font-family:monospace">Step by step</span> option is checked in the general
+configuration, a window will also pop up showing:
+</p><pre class="verbatim"> Matrix [[1,1,2, -1], [0,1, -1, -3], [0, -1, -3,1]]
+ Row operation L2 &lt;- (1) * L1- (1) * L2
+ Matrix [[1,0,3,2], [0,1, -1, -3], [0, -1, -3,1]]
+ Row operation L2 &lt;- (1) * L3 - (- 1) * L2
+ Matrix [[1,0,3,2], [0,1, -1, -3], [0,0, -4, -2]]
+ Reducing column 3 using pivot -4 at row 3
+ Matrix [[1,0,3,2], [0,1, -1, -3], [0,0, -4, -2]]
+ Row operation L3 &lt;- (-4) * L1- (3) * L3
+ Matrix [[-4,0,0, -2], [0,1, -1, -3], [0,0, -4, -2]]
+ Row operation L3 &lt;- (-4) * L2 - (- 1) * L3
+ End reduction [[-4,0,0, -2], [0, -4,0,10], [0,0, -4, -2]]
+</pre><p>The <span style="font-family:monospace">linsolve</span> command also solves systems with coefficients in
+ℤ/<span style="font-style:italic">n</span>ℤ.<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">linsolve([2*x+y+z-1,x+y+2*z-1,x+2*y+z-4]%3,[x,y,z])
+</span></div><p>
+Output:
+</p><div class="center">
+<span style="font-family:monospace">[1 % 3,1 % 3,1 % 3] 
+</span></div>
+<hr>
+<a href="cascmd_en644.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en646.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

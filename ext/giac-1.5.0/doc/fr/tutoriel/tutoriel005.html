@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="tutoriel.css">
+<title>Repr&#XE9;sentations graphiques</title>
+</head>
+<body >
+<a href="tutoriel004.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel006.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h2 id="sec27" class="section">5&#XA0;&#XA0;Repr&#XE9;sentations graphiques</h2>
+<p>
+Pour obtenir une repr&#XE9;sentation graphique dans Xcas, il faut saisir une commande
+dont la sortie est un objet graphique.
+Pour vous aider &#XE0; effectuer les repr&#XE9;sentations graphiques les plus courantes,
+le menu <code>Graphic</code> vous propose des boites de dialogue qui se chargent
+de cr&#XE9;er une ligne de commande et de le valider pour afficher le graphique souhait&#XE9;.</p><p>Si vous souhaitez repr&#XE9;senter plusieurs objets graphiques dans une m&#XEA;me repr&#XE9;sentation,
+vous devez s&#XE9;parer les commandes les cr&#XE9;ant par un <code>;</code>. Vous pouvez aussi cr&#XE9;er
+une figure (menu <code>Geo</code>, <code>Nouvelle figure</code>) et utiliser le menu <code>Geo</code>
+pour cr&#XE9;er des objets g&#XE9;om&#XE9;triques.</p><p>Chaque commande graphique cr&#XE9;e un objet graphique 2-d ou 3-d, qui est traduit
+en r&#XE9;ponse par une image dans la fen&#XEA;tre <span style="font-family:monospace">Xcas</span>. A droite de cette
+image, des boutons de zoom <code>in</code> et <code>out</code> permettent
+d&#X2019;agrandir ou de rapetisser la repr&#XE9;sentation, des fl&#XE8;ches
+permettent de la d&#XE9;placer. </p><p>Les param&#XE8;tres par d&#XE9;faut (en
+particulier les intervalles de repr&#XE9;sentation en abscisse et
+ordonn&#XE9;e) peuvent &#XEA;tre chang&#XE9;s dans la fen&#XEA;tre de configuration
+graphique accessible depuis le menu
+<code>Cfg-&gt;Configuration graphique</code>.
+<a id="hevea_default305"></a>
+<a id="hevea_default306"></a></p><p>Notez enfin que les objets graphiques 2-d sont 
+aussi affich&#XE9;s dans une fen&#XEA;tre appel&#XE9;e
+<code>DispG</code> (Display Graphics) que vous pouvez faire appara&#XEE;tre par le 
+menu
+<code>Cfg-&gt;Montrer-&gt;DispG</code> ou avec la commande 
+<code>DispG</code>. La diff&#XE9;rence est que les graphiques successifs sont trac&#XE9;s
+individuellement dans chaque fen&#XEA;tre de r&#XE9;ponse, alors qu&#X2019;ils sont
+superpos&#XE9;s dans la fen&#XEA;tre <code>DispG</code>. Vous pouvez effacer la
+fen&#XEA;tre <code>DispG</code> par la commande <code>ClrGraph</code>.
+<a id="hevea_default307"></a>
+<a id="hevea_default308"></a> 
+<a id="hevea_default309"></a></p>
+<h3 id="sec28" class="subsection">5.1&#XA0;&#XA0;Trac&#XE9;s de courbes</h3>
+<p>
+Pour cr&#XE9;er rapidement des trac&#XE9;s de courbes simples, 
+il est conseill&#XE9; d&#X2019;utiliser le menu <code>Graphic</code>.</p><p>L&#X2019;instruction de trac&#XE9; d&#X2019;une courbe repr&#XE9;sentative de fonction est <code>plot</code> avec en
+param&#XE8;tres une expression ou une liste d&#X2019;expressions dont on
+veut la repr&#XE9;sentation graphique, puis la variable (&#XE9;ventuellement
+on indique l&#X2019;intervalle de valeurs de la variable). 
+<a id="hevea_default310"></a>
+<a id="hevea_default311"></a>
+Pour distinguer plusieurs courbes,
+on peut utiliser un troisi&#XE8;me argument par exemple
+<code>couleur=</code> suivi de la liste des couleurs &#XE0; utiliser. Les
+couleurs peuvent &#XEA;tre cod&#XE9;es par leur nom fran&#XE7;ais, leur nom
+anglais ou leur num&#XE9;ro. La fonction <code>couleur</code> change la couleur
+de base pour toutes les fonctions graphiques qui suivent.
+La fonction <code>tangent</code> permet d&#X2019;obtenir la tangente &#XE0; une courbe en un 
+point.
+<a id="hevea_default312"></a>
+<a id="hevea_default313"></a>
+</p><pre class="verbatim">E:=(2*x+1)/(x^2+1);plot(E)
+plot(E,x=-2..2,color=red)
+couleur(vert);plot(E,couleur=rouge);tangent(plot(E),0)
+DispG()
+plot([sin(x),x,x-x^3/6],x=-2..2,couleur=[rouge,bleu,vert])
+erase
+li:=[(x+k*0.5)^2$(k=-5..5)]:;
+plot(li,x=-8..8,couleur=[k$(k=0..10)])
+</pre><p>La fonction <code>plotparam</code> permet d&#X2019;effectuer le
+trac&#XE9; de (<span style="font-style:italic">x</span>(<span style="font-style:italic">t</span>),<span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)). Il faut d&#XE9;finir les deux coordonn&#XE9;es 
+comme une seule expression complexe dont <span style="font-style:italic">x</span>(<span style="font-style:italic">t</span>) est la partie r&#XE9;elle 
+et <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>) la partie imaginaire. La fonction <code>plotpolar</code> 
+trace les courbes en coordonn&#XE9;es polaires. La commande
+<code>plotimplicit(f(x,y),x,y)</code> trace l&#X2019;ensemble des solutions de
+<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>)=0.
+</p><pre class="verbatim">plotparam(sin(t)^3+i*cos(t)^3,t,0,2*pi)
+plotparam(t^2+i*t^3,t,-1,1)
+plotpolar(1/(1-2sin(t/2)),t,0,4*pi)
+plotpolar(tan(t)+tan(t/2),t,0,2*pi)
+plotimplicit(x^2+4*y^2-4,x,y)
+</pre><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Trac&#XE9;s de courbes</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>plot</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >graphe d&#X2019;une expression d&#X2019;une variable</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>plotfunc</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >graphe d&#X2019;une expression d&#X2019;1 ou 2 variable(s)</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>couleur</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >choisir la couleur d&#X2019;un trac&#XE9;</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>tangent</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >tangente &#XE0; une courbe</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>plotparam</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >courbe param&#XE9;trique</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>plotpolar</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >courbe en polaires</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>plotimplicit</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >courbe implicite</td></tr>
+</table>
+</div><p>
+<a id="hevea_default314"></a>
+<a id="hevea_default315"></a>
+<a id="hevea_default316"></a>
+<a id="hevea_default317"></a>
+<a id="hevea_default318"></a>
+<a id="hevea_default319"></a>
+</p>
+<h3 id="sec29" class="subsection">5.2&#XA0;&#XA0;Objets graphiques 2D</h3>
+<p>
+<span style="font-family:monospace">Xcas</span> &#XE9;tant aussi un logiciel de g&#XE9;om&#XE9;trie plane, de nombreuses
+figures peuvent &#XEA;tre trac&#XE9;es (dans un &#XE9;cran que l&#X2019;on obtient avec 
+<span style="font-family:monospace">Alt+g</span>) par des commandes du menu <code>Geo</code>, par exemple des polygones,
+des coniques&#X2026;&#XA0;
+Les arguments de ces commandes sont souvent des points (commande 
+<code>point</code>) qui peuvent en g&#XE9;n&#XE9;ral &#XEA;tre saisis 
+directement par leur affixe complexe. 
+Par exemple <code>cercle(2+3*i,2)</code> trace le cercle centr&#XE9; au point
+(2,3), de rayon 2.
+La commande <code>legende</code> permet de placer un texte &#XE0; un endroit,
+lui aussi sp&#XE9;cifi&#XE9; par un nombre complexe. Les fonctions
+<code>polygonplot</code> et <code>scatterplot</code> prennent en entr&#XE9;e une
+liste d&#X2019;abscisses et une liste d&#X2019;ordonn&#XE9;es.
+</p><pre class="verbatim">lx:=[k$(k=1..10)]
+ly:=apply(sin,lx)
+polygonplot(lx,ly)
+erase
+scatterplot(lx,ly)
+polygone_ouvert(lx+i*ly)
+</pre><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Objets graphiques 2D</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>legend</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >met du texte &#XE0; partir d&#X2019;un point donn&#XE9;</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>point</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >point donn&#XE9; par son affixe ou 2 coordonn&#XE9;es</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>segment</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >segment donn&#XE9;e par 2 points</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>droite</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >droite donn&#XE9;e par son &#XE9;quation ou 2 points</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>cercle</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >cercle donn&#XE9;e par centre et rayon</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>inter</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >intersection de courbes</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>equation</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >&#XE9;quation cart&#XE9;sienne</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>parameq</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >&#XE9;quation param&#XE9;trique</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>polygonplot</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >ligne polygonale</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>scatterplot</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >nuage de points</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>polygone</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >polygone ferm&#XE9;</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>polygone_ouvert</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >polygone ouvert</td></tr>
+</table>
+</div><p>
+<a id="hevea_default320"></a>
+<a id="hevea_default321"></a>
+<a id="hevea_default322"></a>
+<a id="hevea_default323"></a>
+<a id="hevea_default324"></a>
+<a id="hevea_default325"></a>
+<a id="hevea_default326"></a>
+<a id="hevea_default327"></a>
+<a id="hevea_default328"></a>
+<a id="hevea_default329"></a>
+<a id="hevea_default330"></a>
+<a id="hevea_default331"></a>
+<a id="hevea_default332"></a>
+</p>
+<h3 id="sec30" class="subsection">5.3&#XA0;&#XA0;Objets graphiques 3D</h3>
+<ul class="itemize"><li class="li-itemize">
+Pour tracer une surface d&#XE9;finie par l&#X2019;&#XE9;quation
+<span style="font-style:italic">z</span>=<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>), on utilise la commande <code>plotfunc</code>, avec
+en arguments l&#X2019;&#XE9;quation de la surface et la liste des deux variables.
+On peut aussi indiquer la plage de variable, et la discr&#XE9;tisation.
+<pre class="verbatim">plotfunc(x^2-y^2,[x,y])
+plotfunc(x+y^2,[x=-5..5,y=-2..2],xstep=0.5,ystep=0.1,
+affichage=vert+rempli)
+</pre>
+On obtient une surface en dimension 3.
+Pour modifier le point de vue, utilisez la souris en-dehors du cube de visualisation
+ou cliquez dans la figure 3-d, puis
+utilisez les touches x,X,y,Y,z,Z (rotations par rapport aux axes), 
++ et - pour les zooms, 
+les fl&#XE8;ches de direction et page up/down pour changer la
+fen&#XEA;tre de visualisation (la fen&#XEA;tre de calcul par d&#XE9;faut est 
+d&#XE9;finie par la configuration graphique si on ne l&#X2019;a pas indiqu&#XE9;e
+en param&#XE8;tre dans <code>plotfunc</code>)
+</li><li class="li-itemize">On peut aussi tracer une surface param&#XE9;tr&#XE9;e
+avec <code>plotparam</code> dont le premier
+argument est une liste de taille 3 contenant les coordonn&#XE9;es du point
+et les 2 arguments suivants les param&#XE8;tres&#XA0;:
+<pre class="verbatim">plotparam([u,v,u+v],u=-1..1,v=-2..2)
+</pre>
+</li><li class="li-itemize">Pour tracer des courbes param&#XE9;tr&#XE9;es dans l&#X2019;espace, on utilise
+aussi la commande <code>plotparam</code> mais avec un seul param&#XE8;tre&#XA0;:
+<pre class="verbatim">plotparam([u,u^2,u^3],u=-1..1)
+</pre>
+</li><li class="li-itemize">On peut aussi tracer des objets g&#XE9;om&#XE9;triques 3D dans une figure 3-d que l&#X2019;on 
+obtient avec <span style="font-family:monospace">Alt+h</span>, puis en utilisant des commandes du menu <code>Geo</code>, par exemple&#XA0;:
+point, droite ,plan, polygone, sphere&#X2026;<pre class="verbatim">plan(z=x+y);
+droite(x=y,z=y);
+A:=point(1,2,3); B:=point(2,-1,1); C:=point(1,0,0);
+plan(A,B,C,couleur=cyan);
+droite(A,B,affichage=line_width_3)
+</pre>
+</li></ul><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Objets graphiques 3D</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>plotfunc</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >surface par &#XE9;quation </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>plotparam</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >surface ou courbe param&#XE9;trique</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>point</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >point donn&#XE9; par 3 coordonn&#XE9;es</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>droite</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >droite donn&#XE9;e par 2 &#XE9;quations ou 2 points</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>plan</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >plan donn&#XE9; par 1 &#XE9;quation ou 3 points </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>sphere</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >sph&#XE8;re donn&#XE9;e par centre et rayon</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>cone</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >cone donn&#XE9; par centre, axe, angle d&#X2019;ouverture </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>inter</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >intersection </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>polygone</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >polygone </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>polygone_ouvert</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >polygone ouvert</td></tr>
+</table>
+</div><p>
+<a id="hevea_default333"></a>
+<a id="hevea_default334"></a>
+<a id="hevea_default335"></a>
+<a id="hevea_default336"></a>
+<a id="hevea_default337"></a>
+<a id="hevea_default338"></a>
+<a id="hevea_default339"></a>
+<a id="hevea_default340"></a>
+<a id="hevea_default341"></a> 
+<a id="hevea_default342"></a>
+<a id="hevea_default343"></a>
+<a id="hevea_default344"></a>
+<a id="hevea_default345"></a></p>
+<hr>
+<a href="tutoriel004.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel006.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

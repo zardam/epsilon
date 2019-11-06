@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Transform an expression into a function : unapply</title>
+</head>
+<body >
+<a href="cascmd_en211.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en213.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec255" class="subsection">5.16.2  Transform an expression into a function : <span style="font-family:monospace">unapply</span></h3>
+<p><a id="hevea_default330"></a>
+<span style="font-family:monospace">unapply</span> is used to transform an expression into a function.<br>
+<span style="font-family:monospace">unapply</span> takes two arguments an expression and the name of a variable.<br>
+<span style="font-family:monospace">unapply</span> returns the function defined by this expression and
+this variable.</p><p><span style="font-weight:bold">Warning</span> when a function is defined,
+the right member of the assignment is not evaluated,
+hence <code>g:=sin(x+1); f(x):=g</code> does not defined the function 
+<span style="font-style:italic">f</span>: <span style="font-style:italic">x</span> → sin(<span style="font-style:italic">x</span>+1) but defines the function
+<span style="font-style:italic">f</span>: <span style="font-style:italic">x</span> → <span style="font-style:italic">g</span>. To defined the former function, <span style="font-family:monospace">unapply</span>
+should be used, like in the following example:<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">g:= sin(x+1); f:=unapply(g,x)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">(sin(x+1), (x)-&gt;sin(x+1))</span></div><p> 
+hence, the variable <span style="font-family:monospace">g</span> is assigned to a symbolic expression
+and the variable <span style="font-family:monospace">f</span> is assigned to a function.<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">unapply(exp(x+2),x)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">(x)-&gt;exp(x+2)</span></div><p> 
+Input :
+</p><div class="center"><span style="font-family:monospace">f:=unapply(lagrange([1,2,3],[4,8,12]),x)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">(x)-&gt;4+4*(x-1)</span></div><p> 
+Input :
+</p><div class="center"><span style="font-family:monospace">f:=unapply(integrate(log(t),t,1,x),x)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">(x)-&gt;x*log(x)-x+1</span></div><p> 
+Input :
+</p><div class="center"><span style="font-family:monospace">f:=unapply(integrate(log(t),t,1,x),x)</span></div><div class="center"><span style="font-family:monospace">f(x)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">x*log(x)-x+1</span></div><p>
+<span style="font-weight:bold">Remark</span>
+Suppose that <span style="font-style:italic">f</span> is a function of 2 variables <span style="font-style:italic">f</span>:(<span style="font-style:italic">x</span>,<span style="font-style:italic">w</span>)→ <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">w</span>), 
+and that <span style="font-style:italic">g</span> is the function defined by
+<span style="font-style:italic">g</span>: <span style="font-style:italic">w</span> → <span style="font-style:italic">h</span><sub><span style="font-style:italic">w</span></sub> where <span style="font-style:italic">h</span><sub><span style="font-style:italic">w</span></sub> is the function defined by 
+<span style="font-style:italic">h</span><sub><span style="font-style:italic">w</span></sub>(<span style="font-style:italic">x</span>)=<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">w</span>).<br>
+<span style="font-family:monospace">unapply</span> is also used to define <span style="font-style:italic">g</span> with <span style="font-family:monospace">Xcas</span>.<br>
+Input : 
+</p><div class="center"><span style="font-family:monospace">f(x,w):=2*x+w</span></div><div class="center"><span style="font-family:monospace">g(w):=unapply(f(x,w),x)</span></div><div class="center"><span style="font-family:monospace">g(3)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">x-&gt;2</span>·<span style="font-family:monospace">x+3</span></div>
+<hr>
+<a href="cascmd_en211.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en213.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

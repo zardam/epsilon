@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Convolution of two signals or functions : convolution</title>
+</head>
+<body >
+<a href="cascmd_en291.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en293.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec362" class="subsection">5.27.7  Convolution of two signals or functions : <span style="font-family:monospace">convolution</span><a id="hevea_default510"></a></h3>
+<p>
+<span style="font-family:monospace">convolution</span> takes two arguments, a real vector  <span style="font-weight:bold"><span style="font-style:italic">v</span></span>  of length  <span style="font-style:italic">n</span>  and a real vector  <span style="font-weight:bold"><span style="font-style:italic">w</span></span>  of length  <span style="font-style:italic">m</span> , and returns their convolution  <span style="font-weight:bold"><span style="font-style:italic">z</span></span>=<span style="font-weight:bold"><span style="font-style:italic">v</span></span>∗<span style="font-weight:bold"><span style="font-style:italic">w</span></span>  which is the vector of length  <span style="font-style:italic">N</span>=<span style="font-style:italic">n</span>+<span style="font-style:italic">m</span>−1  defined as :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">z</span><sub><span style="font-style:italic">k</span></sub>=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">k</span></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-size:xx-large">∑</span></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">i</span>=0</td></tr>
+</table></td><td class="dcell"><span style="font-style:italic">v</span><sub><span style="font-style:italic">i</span></sub> <span style="font-style:italic">w</span><sub><span style="font-style:italic">k</span>−<span style="font-style:italic">i</span></sub>,   <span style="font-style:italic">k</span>=0,1,…,<span style="font-style:italic">N</span>−1, </td></tr>
+</table><p>
+such that  <span style="font-style:italic">v</span><sub><span style="font-style:italic">j</span></sub>=0  for  <span style="font-style:italic">j</span>≥ <span style="font-style:italic">n</span>  and  <span style="font-style:italic">w</span><sub><span style="font-style:italic">j</span></sub>=0  for  <span style="font-style:italic">j</span>≥ <span style="font-style:italic">m</span> . The two arguments may also be real functions  <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)  and  <span style="font-style:italic">g</span>(<span style="font-style:italic">x</span>) , with the variable  <span style="font-style:italic">x</span>  as an optional third argument, in which case the integral
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left">+∞</td></tr>
+<tr><td class="dcell" style="text-align:left"><br>
+<br>
+</td></tr>
+<tr><td class="dcell" style="text-align:left">−∞</td></tr>
+</table></td><td class="dcell"><span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>) <span style="font-style:italic">g</span>(<span style="font-style:italic">x</span>−<span style="font-style:italic">t</span>) <span style="font-style:italic">d</span><span style="font-style:italic">t</span> </td></tr>
+</table><p>
+is computed. It is assumed that  <span style="font-style:italic">f</span>  and  <span style="font-style:italic">g</span>  are causal functions, i.e.  <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)=<span style="font-style:italic">g</span>(<span style="font-style:italic">x</span>)=0  for  <span style="font-style:italic">x</span>&lt;0 . Therefore both  <span style="font-style:italic">f</span>  and  <span style="font-style:italic">g</span>  are multiplied by Heaviside function prior to integration.</p><p>For example, input :
+</p><div class="center">
+	<span style="font-family:monospace">convolution([1,2,3],[1,-1,1,-1])</span>
+</div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[1.0,1.0,2.0,-2.0,1.0,-3.0]</span>
+</div><p>To compute the convolution of  <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)=25 <span style="font-style:italic">e</span><sup>2 <span style="font-style:italic">x</span></sup> <span style="font-style:italic">u</span>(<span style="font-style:italic">x</span>)  and  <span style="font-style:italic">g</span>(<span style="font-style:italic">x</span>)=<span style="font-style:italic">x</span> <span style="font-style:italic">e</span><sup>−3 <span style="font-style:italic">x</span></sup> <span style="font-style:italic">u</span>(<span style="font-style:italic">x</span>) , where  <span style="font-style:italic">u</span>  is the Heaviside function, input :
+</p><div class="center">
+<span style="font-family:monospace">convolution(25*exp(2x),x*exp(-3x))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">Heaviside(x)*(-5*x*exp(-3*x)+exp(2*x)-exp(-3*x))
+</span></div><p>To compute the convolution of  <span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>)=ln(1+<span style="font-style:italic">t</span>) <span style="font-style:italic">u</span>(<span style="font-style:italic">t</span>)  and  <span style="font-style:italic">g</span>(<span style="font-style:italic">t</span>)=1/√<span style="text-decoration:overline"><span style="font-style:italic">t</span></span> , input :
+</p><div class="center">
+<span style="font-family:monospace">convolution(ln(1+t),1/sqrt(t),t)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2*Heaviside(t)*((t+1)*ln(abs(sqrt(t)-sqrt(t+1))/(sqrt(t)+sqrt(t+1)))+ 2*sqrt(t^2+t))/sqrt(t+1)
+</span></div><p>In the following example convolution is used for reverberation. Assume that the directory <span style="font-family:monospace">sounds</span> contains two files, a dry, mono recording of a guitar stored in <span style="font-family:monospace">guitar.wav</span> and a two-channel impulse response recorded in a French 18th century salon and stored in <span style="font-family:monospace">salon-ir.wav</span>. Files are loaded with the following command lines :
+</p><div class="center">
+<span style="font-family:monospace">clip:=readwav("/path/to/sounds/guitar.wav"):; ir:=readwav("/path/to/sounds/salon-ir.wav"):;
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">plotwav(clip)
+</span></div><p>
+Output :
+</p><div class="center">
+<img src="cascmd_en017.png">
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">plotwav(ir)
+</span></div><p>
+Output :
+</p><div class="center">
+<img src="cascmd_en018.png">
+</div><p>
+Convolving the data from <span style="font-family:monospace">clip</span> with both channels in <span style="font-family:monospace">ir</span> produces a reverberated variant of the recording, in stereo. Input :
+</p><div class="center">
+<span style="font-family:monospace">data:=channel_data(clip):; L:=convolution(data,channel_data(ir,1)):; R:=convolution(data,channel_data(ir,2)):;
+</span></div><p>
+The convolved signals <span style="font-family:monospace">L</span> and <span style="font-family:monospace">R</span> now become the left and right channel of a new audio clip, respectively. The <span style="font-family:monospace">normalize</span> option is used because convolution usually results in a huge increase of sample values (which is clear from the definition). Input :
+</p><div class="center">
+<span style="font-family:monospace">spatial:=createwav([L,R],normalize=-3):; playsnd(spatial)
+</span></div><p>
+The result sounds as it was recorded in the same salon as the impulse response. Furthermore, it is a true stereo sound. To visualize it, input :
+</p><div class="center">
+<span style="font-family:monospace">plotwav(spatial)
+</span></div><p>
+Output :
+</p><div class="center">
+<img src="cascmd_en019.png">
+</div><p>
+Note that the resulting audio is longer than the input (for the length of the impulse response).</p>
+<hr>
+<a href="cascmd_en291.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en293.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

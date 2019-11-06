@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Random variables : random_variable randvar</title>
+</head>
+<body >
+<a href="cascmd_en713.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en715.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec872" class="subsection">8.3.9  Random variables : <span style="font-family:monospace">random_variable</span><a id="hevea_default1218"></a><span style="font-family:monospace"> randvar</span><a id="hevea_default1219"></a></h3>
+<p><span style="font-family:monospace">randvar</span> (alias: <span style="font-family:monospace">random_variable</span>) takes a probability distribution specification as its argument and returns an object representing a random variable. Its value(s) can be generated subsequently by calling <span style="font-family:monospace">sample</span>, <span style="font-family:monospace">rand</span>, <span style="font-family:monospace">randvector</span> or <span style="font-family:monospace">randmatrix</span>.</p><p>The probability distribution is specified as a sequence of arguments. The supported types are : uniform, normal, binomial, multinomial, negbinomial, Poisson, Student, Fisher-Snedecor, Cauchy, Weibull, beta, gamma, chi-square, geometric, exponential and discrete.</p>
+<h5 id="sec873" class="paragraph">Continuous distributions.</h5>
+<p> The usual way to specify a continuous distribution is to pass the probability density function as the first argument, followed by one or more (numeric) parameters. However, it can also be defined by specifying its type and first and/or second moment (the mean and/or the standard deviation/variance); the supported types are : normal, uniform, binomial, Poisson, geometric, exponential, gamma, beta and Weibull. Additionally, a uniform distribution can be defined by specifying its range as an interval. The arguments are entered in form:
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">mean=</span>µ
+</li><li class="li-itemize"><span style="font-family:monospace">stddev=</span>σ
+</li><li class="li-itemize"><span style="font-family:monospace">variance=</span>σ<sup>2</sup>
+</li><li class="li-itemize"><span style="font-family:monospace">[range=]a..b</span> or <span style="font-family:monospace">range=[a,b]</span>
+</li></ul>
+<h5 id="sec874" class="paragraph">Discrete distributions.</h5>
+<p> To create a discrete random variable one can pass either
+</p><ul class="itemize"><li class="li-itemize">
+a list <span style="font-style:italic">W</span>=[<span style="font-style:italic">w</span><sub>1</sub>,<span style="font-style:italic">w</span><sub>2</sub>,…,<span style="font-style:italic">w</span><sub><span style="font-style:italic">n</span></sub>] of nonnegative weights as the first argument, optionally followed by a list of values <span style="font-style:italic">V</span>=[<span style="font-style:italic">v</span><sub>1</sub>,<span style="font-style:italic">v</span><sub>2</sub>,…,<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>],
+</li><li class="li-itemize">a list of of object-weight pairs : [[<span style="font-style:italic">v</span><sub>1</sub>,<span style="font-style:italic">w</span><sub>1</sub>],[<span style="font-style:italic">v</span><sub>2</sub>,<span style="font-style:italic">w</span><sub>2</sub>],…,[<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>,<span style="font-style:italic">w</span><sub><span style="font-style:italic">n</span></sub>]], or
+</li><li class="li-itemize">a nonnegative function <span style="font-style:italic">f</span> followed by a range specification <span style="font-family:monospace">[range=]a..b</span> and optionally either a positive integer <span style="font-style:italic">N</span> (with <span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>∈ℝ) or a list of values <span style="font-style:italic">V</span>=[<span style="font-style:italic">v</span><sub>0</sub>,<span style="font-style:italic">v</span><sub>1</sub>,<span style="font-style:italic">v</span><sub>2</sub>,…,<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>] where <span style="font-style:italic">n</span>=<span style="font-style:italic">b</span>−<span style="font-style:italic">a</span>, <span style="font-style:italic">a</span>&lt;<span style="font-style:italic">b</span> and <span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>∈ℤ.
+</li></ul><p>
+The weights are automatically scaled by the inverse of their sum to obtain the values of the probability mass function. If a function <span style="font-style:italic">f</span> is given instead of a list of weights, then <span style="font-style:italic">w</span><sub><span style="font-style:italic">k</span></sub>=<span style="font-style:italic">f</span>(<span style="font-style:italic">a</span>+<span style="font-style:italic">k</span>) for <span style="font-style:italic">k</span>=0,1,…,<span style="font-style:italic">b</span>−<span style="font-style:italic">a</span> unless <span style="font-style:italic">N</span> is given, in which case <span style="font-style:italic">w</span><sub><span style="font-style:italic">k</span></sub>=<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>) where <span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>=<span style="font-style:italic">a</span>+(<span style="font-style:italic">k</span>−1) <span style="font-style:italic">b</span>−<span style="font-style:italic">a</span>/<span style="font-style:italic">N</span> and <span style="font-style:italic">k</span>=1,2,…,<span style="font-style:italic">N</span>. The resulting random variable <span style="font-style:italic">X</span> has values in {0,1,…,<span style="font-style:italic">n</span>−1} for 0-based modes (e.g. Xcas) resp. in {1,2…,<span style="font-style:italic">n</span>} for 1-based modes (e.g. Maple). If the list <span style="font-style:italic">V</span> of custom objects is given, then <span style="font-style:italic">V</span>[<span style="font-style:italic">X</span>] is returned instead of <span style="font-style:italic">X</span>. If <span style="font-style:italic">N</span> is given, then <span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>=<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub> for <span style="font-style:italic">k</span>=1,2,…,<span style="font-style:italic">N</span>.</p>
+<h5 id="sec875" class="paragraph">Examples.</h5>
+<p> To define a random variable with a Fisher-Snedecor distribution (two degrees of freedom), input :
+</p><div class="center">
+<span style="font-family:monospace">X:=random_variable(fisher,2,3)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">fisherd(2,3)
+</span></div><p>
+To generate some values of <span style="font-style:italic">X</span>, input :
+</p><div class="center">
+<span style="font-family:monospace">rand(X) // alternative : sample(X)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2.0457
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">randvector(5,X) // alternative : sample(X,5)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[3.9823,0.50771,0.44836,0.79225,0.088813]
+</span></div><p>
+To define a random variable with multinomial distribution, input :
+</p><div class="center">
+<span style="font-family:monospace">M:=randvar(multinomial,[1/2,1/3,1/6],[a,b,c])
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">’multinomial’,[1/2,1/3,1/6],[a,b,c]
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">randvector(10,M)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[a,c,b,a,b,b,a,b,b,b]
+</span></div><p>
+Some continuous distributions can be defined by specifying its first and/or second moment. Input :
+</p><div class="center">
+<span style="font-family:monospace">randvector(10,randvar(poisson,mean=5))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[5,4,4,8,3,8,3,3,5,9]
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">randvector(5,randvar(weibull,mean=5.0,stddev=1.5))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[3.6483,3.4194,6.8166,4.3778,2.4178]
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">X:=randvar(binomial,mean=18,stddev=4)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">binomial(162,1/9)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">X:=randvar(weibull,mean=12.5,variance=1)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">weibulld(3.0857,13.98)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">mean(randvector(1000,X))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">12.582
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">G:=randvar(geometric,stddev=2.5)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">geometric(0.32792)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">evalf(stddev(randvector(1000,G)))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2.4245
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">randvar(gammad,mean=12,variance=4)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">gammad(36,3)
+</span></div><p>
+Uniformly distributed random variables can be defined by specifying the support as an interval. Input :
+</p><div class="center">
+<span style="font-family:monospace">randvector(5,randvar(uniform,range=15..81))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[61.97,76.427,37.939,69.639,40.325]
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">rand(randvar(uniform,e..pi))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">3.0434
+</span></div><p>
+The following examples demonstrate various ways to define a discrete random variable. Input :
+</p><div class="center">
+<span style="font-family:monospace">X:=randvar([["apple",1/3],["orange",1/4], ["pear",1/5],["plum",13/60]]):;<br>
+randvector(5,X)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">["apple","plum","pear","orange","apple","pear"]
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">W:=[1,4,5,3,1,1,1,2]:; X:=randvar(W):;<br>
+approx(W/sum(W))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[0.055556,0.22222,0.27778,0.16667, 0.055556,0.055556,0.055556,0.11111]
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">frequencies(randvector(10000,X))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[[0,0.0566],[1,0.2152],[2,0.2798],[3,0.1683], [4,0.0594],[5,0.0564],[6,0.0568],[7,0.1075]]
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">X:=randvar(k-&gt;1-(k/10)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,range=-10..10):;<br>
+histogram(randvector(10000,X),-10,0.33,display=filled)
+</span></div><p>
+Output :
+</p><div class="center">
+<img src="cascmd_en052.png">
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">X:=randvar([3,1,2,5],[alpha,beta,gamma,delta]):;<br>
+randmatrix(5,4,X)
+</span></div><p>
+Output :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">⎪<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎪</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >α</td><td style="text-align:center;white-space:nowrap" >β</td><td style="text-align:center;white-space:nowrap" >δ</td><td style="text-align:center;white-space:nowrap" >δ</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >δ</td><td style="text-align:center;white-space:nowrap" >α</td><td style="text-align:center;white-space:nowrap" >α</td><td style="text-align:center;white-space:nowrap" >α</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >δ</td><td style="text-align:center;white-space:nowrap" >γ</td><td style="text-align:center;white-space:nowrap" >α</td><td style="text-align:center;white-space:nowrap" >δ</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >δ</td><td style="text-align:center;white-space:nowrap" >α</td><td style="text-align:center;white-space:nowrap" >δ</td><td style="text-align:center;white-space:nowrap" >α</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >α</td><td style="text-align:center;white-space:nowrap" >β</td><td style="text-align:center;white-space:nowrap" >δ</td><td style="text-align:center;white-space:nowrap" >δ</td></tr>
+</table></td><td class="dcell">⎪<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎪</td></tr>
+</table></td></tr>
+</table><p>
+Discrete random variables can be used to approximate custom continuous random variables. For example, consider a probability density function <span style="font-style:italic">f</span> as a mixture of two normal distributions on the support <span style="font-style:italic">S</span>=[−10,10]. We sample <span style="font-style:italic">f</span> in <span style="font-style:italic">N</span>=10000 points in <span style="font-style:italic">S</span>. Input :
+</p><div class="center">
+<span style="font-family:monospace">F:=normald(3,2,x)+normald(-5,1,x):; c:=integrate(F,x=-10..10):;<br>
+ f:=unapply(1/c*F,x):;<br>
+ X:=randvar(f,range=-10..10,10000):;
+</span></div><p>
+Now we generate 25000 values of <span style="font-style:italic">X</span> and plot a histogram :
+</p><div class="center">
+<span style="font-family:monospace">R:=sample(X,25000):;<br>
+ hist:=histogram(R,-10,0.1):;<br>
+ PDF:=plot(f(x),display=red+line_width_2):;
+hist,PDF
+</span></div><p>
+Output :
+</p><div class="center">
+<img src="cascmd_en053.png">
+</div><p>
+Sampling from discrete distributions is fast : generating 25 million samples from the distribution of X which
+has about 10000 outcomes takes only couple of seconds. In fact, the sampling complexity is constant.
+Also observe that the process isn’t slowed down by spreading it across 1000 calls of randvector. Input :
+</p><div class="center">
+<span style="font-family:monospace">for k from 1 to 1000 do randvector(25000,X); od:;
+</span></div><p>
+<span style="font-family:monospace">Evaluation time: 2.12</span></p><p>Independent random variables can be combined in an expression, yielding a new random variable.
+In the example below, we define a log-normally distributed variable Y from a variable X with standard
+normal distribution. Input :
+</p><div class="center">
+<span style="font-family:monospace">X:=randvar(normal):; mu,sigma:=1.0,0.5:;<br>
+Y:=exp(mu+sigma*X):;<br>
+L:=randvector(10000,Y):; histogram(L,0,0.33)
+</span></div><p>
+Output :
+</p><div class="center">
+<img src="cascmd_en054.png">
+</div><p>
+It is known that <span style="font-style:italic">E</span>[<span style="font-style:italic">Y</span>]=<span style="font-style:italic">e</span><sup>µ+σ<sup>2</sup>/2</sup>. The mean of <span style="font-style:italic">L</span> should be close to that number. Input :
+</p><div class="center">
+<span style="font-family:monospace">mean(L); exp(mu+sigma</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/2)
+</span></div><p>
+Output:
+</p><div class="center">
+<span style="font-family:monospace">3.0789,3.0802
+</span></div><p>In case a compound random variable is defined as an expression containing several independent random variables <span style="font-style:italic">X</span>,<span style="font-style:italic">Y</span>,… of the same type, it is sometimes needed to prevent its evaluation when passing it to <span style="font-family:monospace">randvector</span> or <span style="font-family:monospace">randmatrix</span>. Input :
+</p><div class="center">
+<span style="font-family:monospace">Y:=randvar(normal):;
+</span></div><p>
+<span style="font-style:italic">X</span>/<span style="font-style:italic">Y</span> is wrapped by eval because otherwise it would automatically reduce to 1 as <span style="font-style:italic">X</span> and <span style="font-style:italic">Y</span> are both <span style="font-family:monospace">normald</span>(0,1). Input :
+</p><div class="center">
+<span style="font-family:monospace">randvector(5,eval(X/Y,0))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[0.2608,-0.056913,-4.7966,-1.2622,-1.2997]
+</span></div><p>
+To save typing, one can define Z with <span style="font-family:monospace">eval</span>(∗,0) and pass <span style="font-family:monospace">eval</span>(<span style="font-style:italic">Z</span>,1) to <span style="font-family:monospace">randvector</span> or <span style="font-family:monospace">randmatrix</span>. Input :
+</p><div class="center">
+<span style="font-family:monospace">Z:=eval(X/Y,0):; randvector(5,eval(Z,1))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[0.19015,-2.4509,-1.4277,-1.1452,1.2935]
+</span></div><p>
+Parameters of a distribution can be entered as symbols to allow (re)assigning them at any time. Input :
+</p><div class="center">
+<span style="font-family:monospace">purge(lambda):; X:=randvar(exp,lambda):;<br>
+lambda:=1:;
+</span></div><p>
+Now execute the following command line several times in a row. The parameter λ is updated in each iteration :
+</p><div class="center">
+<span style="font-family:monospace">r:=rand(X); lambda:=sqrt(r)
+</span></div><p>
+Output (by executing the above command line three times) :
+</p><div class="center">
+<span style="font-family:monospace">8.5682,2.9272<br>
+1.5702,1.2531<br>
+0.53244,0.72968
+</span></div>
+<hr>
+<a href="cascmd_en713.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en715.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

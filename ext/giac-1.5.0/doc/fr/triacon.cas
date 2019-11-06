@@ -1,0 +1,17 @@
+cercle(point([-2,0,0]),point([2.,0,0]), point([0,2.,0])):;;
+S:=point([0,0,1.]):;C:=NULL;
+P:=isopolygone(point([0,0,0]),point([2.,0, 0]),point([0,1.,0]),-5):;P:;;
+LS:=sommets(P):;LS:=op(LS),LS[0]:;;
+affichage(segment(S,LS[k])$(k=0..4),1+epaisseur_ligne_2) ;
+L1:=losange(S,LS[k],LS[k+1],C[k])$(k=0..4):; affichage(L1,1+epaisseur_ligne_2);
+C:=C[4],C:;;
+D:=NULL:;;
+L2:=losange(LS[k],C[k],C[k+1],D[k])$(k=0..4):; L2;
+D:=D,D[0]:;;
+C:=tail(C),head(C):;;
+G:=NULL:;;
+L3:=losange(C[k],D[k+1],D[k],G[k])$(k=0..4):; L3;;
+D:=tail(D),head(D):;G:=G,G[0]:;;
+L4:=losange(D[k],G[k+1],G[k])$(k=0..4):;;
+L:=losange(D[0],G[1],G[0],S2):;;
+affichage(rotation(droite(S,S2),2*k*pi/5,L)$(k=0..4), 4) ;

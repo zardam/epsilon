@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>La transformée de Fourier rapide : fft</title>
+</head>
+<body >
+<a href="cascmd_fr349.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr351.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec459" class="subsection">6.26.3  La transformée de Fourier rapide : <span style="font-family:monospace">fft</span></h3>
+<p><a id="hevea_default689"></a>
+<span style="font-family:monospace">fft</span> a comme argument une liste (ou une séquence)
+<span style="font-family:monospace">[</span><span style="font-family:monospace"><span style="font-style:italic">a</span></span><sub><span style="font-family:monospace">0</span></sub><span style="font-family:monospace">,..</span><span style="font-family:monospace"><span style="font-style:italic">a</span></span><sub><span style="font-family:monospace"><span style="font-style:italic">N</span></span><span style="font-family:monospace">-1</span></sub><span style="font-family:monospace">]</span> où <span style="font-family:monospace">N</span> est une puissance de deux.<br>
+<span style="font-family:monospace">fft</span> renvoie la liste <span style="font-family:monospace">[</span><span style="font-family:monospace"><span style="font-style:italic">b</span></span><sub><span style="font-family:monospace">0</span></sub><span style="font-family:monospace">,..</span><span style="font-family:monospace"><span style="font-style:italic">b</span></span><sub><span style="font-family:monospace"><span style="font-style:italic">N</span></span><span style="font-family:monospace">-1</span></sub><span style="font-family:monospace">]</span> tel que pour <span style="font-family:monospace">k=0..N-1</span>
+on ait :<br>
+<span style="font-family:monospace"><span style="font-style:italic">fft</span></span><span style="font-family:monospace">([</span><span style="font-family:monospace"><span style="font-style:italic">a</span></span><sub><span style="font-family:monospace">0</span></sub><span style="font-family:monospace">,..</span><span style="font-family:monospace"><span style="font-style:italic">a</span></span><sub><span style="font-family:monospace"><span style="font-style:italic">N</span></span><span style="font-family:monospace">-1</span></sub><span style="font-family:monospace">])</span><span style="font-family:monospace">[</span><span style="font-family:monospace"><span style="font-style:italic">k</span></span><span style="font-family:monospace">]=</span><span style="font-family:monospace"><span style="font-style:italic">b</span></span><sub><span style="font-family:monospace"><span style="font-style:italic">k</span></span></sub><span style="font-family:monospace">=∑</span><sub><span style="font-family:monospace"><span style="font-style:italic">j</span></span><span style="font-family:monospace">=0</span></sub><sup><span style="font-family:monospace"><span style="font-style:italic">N</span></span><span style="font-family:monospace">-1</span></sup><span style="font-family:monospace"><span style="font-style:italic">x</span></span><sub><span style="font-family:monospace"><span style="font-style:italic">j</span></span></sub><span style="font-family:monospace">ω</span><sub><span style="font-family:monospace"><span style="font-style:italic">N</span></span></sub><sup><span style="font-family:monospace">-</span><span style="font-family:monospace"><span style="font-style:italic">k</span></span><span style="font-family:monospace">· </span><span style="font-family:monospace"><span style="font-style:italic">j</span></span></sup> 
+avec ω<sub><span style="font-style:italic">N</span></sub> racine <span style="font-style:italic">N</span>-ième de l’unité.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">fft(0,1,1,0)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[2.0, -1-i, 0.0, -1+i]</span></div><p>On peut aussi travailler sur un corps fini ℤ/<span style="font-style:italic">p</span>ℤ, en indiquant une
+racine <span style="font-style:italic">N</span>-ième primitive de l’unité en 2ième argument
+et <span style="font-style:italic">p</span> en 3ième argument de <span style="font-family:monospace">fft</span>. Par exemple
+on verifie que 22798 est une racine primitive d’ordre 128 de 1
+modulo 35969. 
+Par exemple, calculons par FFT le carré d’un polynôme à
+coefficients
+entiers aléatoire inférieur à 10, de degré 60, 
+représenté par la liste de ses coefficients par ordre croissant
+complété par des 0 pour avoir une liste de taille <span style="font-style:italic">N</span>=128 :
+</p><div class="center">
+<span style="font-family:monospace">P:=poly1[op(ranm(1,60,10)[0]),0$68];<br>
+p:=fft(P,22798,35969)</span>
+</div><p>
+il suffit maintenant de calculer le produit terme à terme de <span style="font-family:monospace">p</span>
+avec
+lui-même et d’en calculer la FFT inverse
+</p><div class="center">
+<span style="font-family:monospace">Q:=ifft(p .* p,22798,35969)</span>
+</div>
+<hr>
+<a href="cascmd_fr349.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr351.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

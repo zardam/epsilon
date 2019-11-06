@@ -1,0 +1,1412 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>Les carrés magiques</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascas014.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas016.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc244">Chapitre 15</A>  Les carrés magiques</H1><H2 CLASS="section"><A NAME="toc88"></A><A NAME="htoc245">15.1</A>  Les matrices magiques d’odre 3</H2><H3 CLASS="subsection"><A NAME="htoc246">15.1.1</A>  Résultat préliminaire</H3><P>
+Soit <I>A</I> la matrice :<BR>
+<I>A</I>=[[<I>a</I><SUB>00</SUB>,<I>a</I><SUB>01</SUB>,<I>a</I><SUB>02</SUB>],[<I>a</I><SUB>10</SUB>,<I>a</I><SUB>11</SUB>,<I>a</I><SUB>12</SUB>],[<I>a</I><SUB>20</SUB>,<I>a</I><SUB>21</SUB>,<I>a</I><SUB>22</SUB>]]
+Montrer que :<BR>
+<I>B</I>=1/2*(<I>A</I>+tran(<I>A</I>)) est une matrice symértrique et<BR>
+ <I>C</I>=1/2*(<I>A</I>−tran(<I>A</I>)) est une matrice antisymértrique.<BR>
+En déduire que toute matrice se décompose de façon unique en la somme 
+d’une matrice symétrique et d’une matrice antisymétrique.<BR>
+On tape :<BR>
+<TT>A:=[[a00,a01,a02],[a10,a11,a12],[a20,a21,a22]]</TT><BR>
+<TT>B:=1/2*(A+tran(A));C:=1/2*(A-tran(A))</TT><BR>
+<TT>normal(B-tran(B)),normal(C+tran(C))</TT><BR>
+On obtient :<BR>
+<TT>[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]</TT><BR>
+Si <I>A</I>=<I>M</I>+<I>N</I> avec tran(<I>M</I>)=<I>M</I> et tran(<I>N</I>)=−<I>N</I> alors tran(<I>A</I>)=<I>M</I>−<I>N</I> donc<BR>
+<I>M</I>=1/2*(<I>A</I>+tran(<I>A</I>))=<I>B</I> et <I>N</I>=1/2*(<I>A</I>−tran(<I>A</I>))=<I>C</I> d’où l’unicité.
+</P><H3 CLASS="subsection"><A NAME="htoc247">15.1.2</A>  Les matrices magiques d’ordre 3</H3><P>
+Une matrice <I>A</I>=(<I>a</I><SUB><I>j</I>,<I>k</I></SUB>) d’ordre 3 est une matrice magique de somme <I>s</I> lorsque
+les 8 sommes :<BR>
+∑<SUB><I>j</I>=0</SUB><SUP>2</SUP><I>a</I><SUB><I>j</I>,<I>k</I></SUB>=<I>s</I> pour <I>k</I>=0,1,2 (somme de chaque colonne)<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>2</SUP><I>a</I><SUB><I>j</I>,<I>k</I></SUB>=<I>s</I> pour <I>j</I>=0,1,2 (somme de chaque ligne)<BR>
+∑<SUB><I>j</I>=0</SUB><SUP>2</SUP><I>a</I><SUB><I>j</I>,<I>j</I></SUB>=<I>a</I><SUB>1,3</SUB>+<I>a</I><SUB>2,2</SUB>+<I>a</I><SUB>3,1</SUB>=<I>s</I> (somme de chaque diagonale).<BR>
+Déterminer les matrices magiques d’ordre 3 qui sont antisymétriques.<BR>
+Déterminer les matrices magiques d’ordre 3 qui sont symétriques de somme 
+<I>s</I>=0.<BR>
+Déterminer une matrice magique d’ordre 3, symétrique, de somme <I>s</I> et la plus simple possible.<BR>
+Montrer que la différence de 2 matrices symétriques magiques de somme <I>s</I> est une matrices symétriques magiques de somme <I>s</I>=0.<BR>
+En déduire toutes les matrices magiques d’ordre 3, symétriques de somme <I>s</I>.<BR>
+Trouver toutes les matrices magiques d’ordre 3 de somme <I>s</I>=3.<BR>
+Trouver toutes les matrices magiques d’ordre 3 de somme <I>s</I>=9.<BR>
+Les matrices magiques d’ordre 3 qui sont antisymétriques sont de somme <I>s</I>=0 
+car la diagonale principale ne contient que des 0.<BR>
+Soit <I>A</I> une matrice antisymétrique d’ordre 3 et magique de somme <I>s</I>=0.<BR>
+On tape :<BR>
+<TT>A:=[[0,a,b],[-a,0,c],[-b,-c,0]]</TT><BR>
+<TT>linsolve([a+b=0,-a+c=0,b+c=0],[a,b,c])</TT><BR>
+On obtient :<BR>
+<TT>[c,-c,c]</TT><BR>
+Donc les matrices magiques <I>A</I> d’ordre 3 qui sont antisymétriques sont :<BR>
+<I>A</I>=(
+</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP><I>c</I></TD><TD ALIGN=center NOWRAP>−<I>c</I></TD></TR>
+<TR><TD ALIGN=center NOWRAP>−<I>c</I></TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP><I>c</I></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>c</I></TD><TD ALIGN=center NOWRAP>−<I>c</I></TD><TD ALIGN=center NOWRAP>0</TD></TR>
+</TABLE><P>
+)=<I>c</I>(
+</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>−1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>−1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>−1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+</TABLE><P>
+)<BR>
+On tape :<BR>
+<TT>A:=c*[[0,1,-1],[-1,0,1],[1,-1,0]]</TT><BR>
+Soit <I>S</I> une matrice symétrique d’ordre 3 et magique de somme <I>s</I>=0.<BR>
+On tape :<BR>
+<TT>S:=[[a,b,c],[b,d,e],[c,e,f]]</TT><BR>
+<TT>linsolve([a+b+c,a+d+f,b+d+e,c+e+f,2c+d],[a,b,c,d,e,f])</TT><BR>
+On obtient :<BR>
+<TT>[-f,f,0,0,-f,f]</TT><BR>
+Donc les matrices magiques <I>S</I> d’ordre 3 qui sont symétriques de somme <I>s</I>=0 
+sont :<BR>
+<I>S</I>=(
+</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>−<I>f</I></TD><TD ALIGN=center NOWRAP><I>f</I></TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>f</I></TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>−<I>f</I></TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>−<I>f</I></TD><TD ALIGN=center NOWRAP><I>f</I></TD></TR>
+</TABLE><P>
+)=<I>f</I>(
+</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>−1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>−1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>−1</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+</TABLE><P>
+)<BR>
+Soit <I>S</I><SUB>0</SUB> une matrice symétrique d’ordre 3 et magique de somme <I>s</I> la plus simple possible.<BR>
+On tape :<BR>
+<TT>S0:=s/3*[[1,1,1],[1,1,1],[1,1,1]]</TT><BR>
+Donc les matrices magiques <I>S</I> d’ordre 3 qui sont symétriques de somme <I>s</I> 
+sont <I>B</I>:=<I>S</I>+<I>S</I><SUB>0</SUB>:<BR>
+On tape :<BR>
+<TT>f*[[-1,1,0],[1,0,-1],[0,-1,1]]+s/3*[[1,1,1],[1,1,1],[1,1,1]]</TT></P><P>Donc les matrices magiques <I>M</I> d’ordre 3 qui sont de somme <I>s</I>=3 (resp <I>s</I>=12)
+sont <I>M</I>:=<I>A</I>+<I>S</I>+<I>S</I><SUB>0</SUB> et elles dépendent de 2 paramètres <I>c</I> et <I>f</I>.<BR>
+On tape :<BR>
+<TT>M:=c*[[0,1,-1],[-1,0,1],[1,-1,0]]+<BR>
+f*[[-1,1,0],[1,0,-1],[0,-1,1]]+[[1,1,1],[1,1,1],[1,1,1]]</TT><BR>
+On obtient :<BR>
+<TT>[[-f+1,c+f+1,-c+1],[-c+f+1,1,c-f+1],[c+1,-c-f+1,f+1]]</TT><BR>
+Par exemple <I>f</I>=1,<I>c</I>=0, on obtient 
+<TT>[[0,2,1],[2,1,0],[1,0,2]]</TT>.<BR>
+On tape :<BR>
+<TT>M:=c*[[0,1,-1],[-1,0,1],[1,-1,0]]+<BR>
+f*[[-1,1,0],[1,0,-1],[0,-1,1]]+4*[[1,1,1],[1,1,1],[1,1,1]]</TT><BR>
+On obtient :<BR>
+<TT>[[-f+4,c+f+4,-c+4],[-c+f+4,4,c-f+4],[c+4,-c-f+4,f+4]]</TT><BR>
+Par exemple <I>f</I>=1,<I>c</I>=3, on obtient un carré magique eulérien (les entiers 
+0..8 apparaissent dans les 9 cases du carré) :
+<TT>[[3,8,1],[2,4,6],[7,0,5]]</TT>.</P><H2 CLASS="section"><A NAME="toc89"></A><A NAME="htoc248">15.2</A>  Les carrés magiques eulériens et latins pandiagonaux</H2><P>
+Ce qui suit a èté inspiré par une épreuve à l’oral de l’agrégation
+externe de Mathématiques session 2005 dont voila le lien :<BR>
+http://agreg.dnsalias.org/Textes/561.pdf<BR>
+et par le livre Problèmes plaisants et délectables par Claude-Gaspar Bachet
+sieur de Mérignac.
+</P><H3 CLASS="subsection"><A NAME="htoc249">15.2.1</A>  Définitions</H3><P>
+<B>carré magique d’ordre </B><B><I>n</I></B> veut dire que l’on a une matrice carrèe de 
+dimension <I>n</I>, à coefficients dans ℕ et telle que les sommes des 
+éléments de chaque ligne, de chaque colonne et de chacune des 2 diagonales 
+sont égales :<BR>
+si <I>A</I>=<I>a</I><SUB><I>j</I>,<I>k</I></SUB> pour <I>j</I>=0..<I>n</I>−1,<I>k</I>=0..<I>n</I>−1 on a :<BR>
+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP><I>a</I><SUB><I>j</I>,<I>k</I></SUB>=<I>s</I> pour <I>j</I>=0..<I>n</I>−1<BR>
+∑<SUB><I>j</I>=0</SUB><SUP><I>n</I>−1</SUP><I>a</I><SUB><I>j</I>,<I>k</I></SUB>=<I>s</I> pour <I>k</I>=0..<I>n</I>−1<BR>
+∑<SUB><I>j</I>=0</SUB><SUP><I>n</I>−1</SUP><I>a</I><SUB><I>j</I>,<I>j</I></SUB>=<I>s</I><BR>
+∑<SUB><I>j</I>=0</SUB><SUP><I>n</I>−1</SUP><I>a</I><SUB><I>j</I>,<I>n</I>−<I>j</I>−1</SUB>=<I>s</I><BR>
+<B>carré latin d’ordre </B><B><I>n</I></B> veut dire que les entiers 0..<I>n</I>−1 apparaissent
+dans chaque ligne, dans chaque colonne et dans les 2 diagonales du carré. La 
+somme <I>s</I> est alors égale à <I>n</I>(<I>n</I>−1)/2<BR>
+<B>carré latin pandiagonal d’ordre </B><B><I>n</I></B> veut dire que l’on a un carré 
+magique latin qui possède en plus la propriété : les entiers 0..<I>n</I>−1 
+apparaissent aussi dans les <I>n</I> diagonales brisées du carré (lorsqu’on 
+considère le carré comme un tore). La somme <I>s</I> est égale à <I>n</I>(<I>n</I>−1)/2<BR>
+<B>carré eulérien d’ordre </B><B><I>n</I></B> veut dire que chacun 
+des entiers 0..<I>n</I><SUP>2</SUP>−1 apparaissent dans les <I>n</I><SUP>2</SUP> cases du carré. La somme 
+<I>s</I> est alors égale à <I>n</I>(<I>n</I><SUP>2</SUP>−1)/2<BR>
+<B>carré eulérien pandiagonal d’ordre </B><B><I>n</I></B> veut dire que l’on a un carré
+magique eulérien d’odre <I>n</I> qui possède en plus la propriété : la somme
+de chacune des 2<I>n</I>−2 diagonales brisées (lorsqu’on considère le carré 
+comme un tore) vaut aussi <I>n</I>(<I>n</I><SUP>2</SUP>−1)/2.
+</P><H3 CLASS="subsection"><A NAME="htoc250">15.2.2</A>  Les carrés magiques latins pandiagonaux</H3><P>
+Écrire un programme <TT>Xcas</TT> qui teste si une matrice est un carré 
+magique latin pandiagonal.<BR>
+On tape dans un éditeur de programme :
+</P><PRE CLASS="verbatim">estlatinp(A):={
+local s,n,j,k,L;
+n:=size(A);
+pour j de 0 jusque n-1 faire
+L:=A[j];
+si is_permu(L)==0 alors retourne faux; fsi;
+fpour;
+pour j de 0 jusque n-1 faire
+L:=col(A,j);
+si is_permu(L)==0 alors retourne faux; fsi;
+fpour;
+pour j de 0 jusque n-1 faire
+L:=A[k,irem(j+k,n)]$(k=0..n-1);
+si is_permu(L)==0 alors retourne faux; fsi;
+fpour;
+pour j de 0 jusque n-1 faire
+L:=A[k,irem(j-k,n)]$(k=0..n-1);
+si is_permu(L)==0 alors retourne faux; fsi;
+fpour;
+retourne vrai;
+}
+:;
+</PRE><H3 CLASS="subsection"><A NAME="htoc251">15.2.3</A>  Les carrés magiques eulériens pandiagonaux</H3><P>
+Écrire un programme <TT>Xcas</TT> qui teste si une matrice est un carré 
+magique eulérien pandiagonal.<BR>
+On tape dans un éditeur de programme :
+</P><PRE CLASS="verbatim">esteulerp(A):={
+local n,s,j,k,rep,L,C,D,M;
+L:=mat2list(A);
+si is_permu(L)==0 alors retourne faux fsi;
+rep:=true;
+n:=size(A);
+s:=n*(n^2-1)/2;
+L:=unapply(sum(A[j,k],k=0..n-1),j);
+C:=unapply(sum(A[j,k],j=0..n-1),k);
+D:=unapply(sum(A[j,irem(j+k,n)],j=0..n-1),k);
+M:=unapply(sum(A[j,irem(k-j,n)],j=0..n-1),k);
+pour j de 0 jusque n faire 
+  si L(j)!=s ou C(j)!=s ou D(j)!=s ou M(j)!=s alors 
+    rep:=faux; break;
+  fsi;
+fpour;
+retourne rep;
+}
+:;
+</PRE><P>On remarque que si les <I>n</I> lignes et <I>n</I>−1 colonnes (resp <I>n</I> lignes et <I>n</I>−1 
+diagomales montantes, <I>n</I> lignes et <I>n</I>−1 diagomales descendantes) sont de 
+même somme <I>s</I> alors les <I>n</I> colonnes (resp les <I>n</I> diagomales montantes, les
+<I>n</I> diagomales descendantes) sont de même somme <I>s</I>. 
+On tape plus simplement pour savoir si <I>A</I> est un carré eulérien 
+pandiagonal :<BR>
+</P><PRE CLASS="verbatim">estpandiage(A):={
+local j,k,n,s,L;
+L:=mat2list(A);
+si is_permu(L)==0 alors retourne faux fsi;
+n:=size(A);
+s:=n*(n^2-1)/2;
+si [sum(A[j,k],j,0,n-1)$(k=0..n-1)]!=[s $(k=0..n-1)] alors 
+retourne faux; 
+fsi;
+si [sum(A[k,j],j,0,n-1)$(k=0..n-2)]!=[s $(k=0..n-2)] alors 
+retourne faux; 
+fsi;
+si [sum(A[j,irem(j+k,n)],j,0,n-1)$(k=0..n-2)]!=[s $(k=0..n-2)] alors 
+retourne faux; 
+fsi;
+si [sum(A[j,irem(-j+k,n)],j,0,n-1)$(k=0..n-2)]!=[s $(k=0..n-2)] alors 
+retourne faux; 
+fsi;
+retourne vrai;
+}
+:;
+</PRE><H3 CLASS="subsection"><A NAME="htoc252">15.2.4</A>  La règle de Manuel Moscopule (14ième siécle) ou règle du 
+cavalier</H3><P>
+Cette règle permet d’écrire des carrés magiques eulériens pandiagonaux
+d’ordre <I>n</I> lorsque <I>n</I> est impair et non divisible par 3.<BR>
+On considère le carré comme un tore et on applique la règle :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Placez 0 dans la case de votre choix (case <I>l</I>,<I>c</I> du programme),
+</LI><LI CLASS="li-itemize">puis, avancez horizontalement de 2 cases et descendez verticalement d’une
+case et placez le 1 (mouvement du cavalier aux echecs),
+</LI><LI CLASS="li-itemize">faites de même pour les nombres suivants jusqu’au placement de <I>n</I>−1,
+</LI><LI CLASS="li-itemize">reculez horizontalement de 1 case et placez alors le nombre <I>n</I>,
+</LI><LI CLASS="li-itemize">refaites le même processus jusque 2<I>n</I>−1, puis reculez horizontalement 
+de 1 case et placez alors le nombre 2<I>n</I> etc...
+</LI></UL><P>
+Écrire un programme <TT>Xcas</TT> qui renvoie un carré magique eulérien
+construit selon cette règle.<BR>
+On tape dans un éditeur de programme :
+</P><PRE CLASS="verbatim">cavalier(n,l,c):={
+local j,k,A;
+si irem(n,2)==0 ou irem(n,3)==0 
+  alors retourne "n !=2k et n !=3k"; 
+fsi
+l:=irem(l,n);c:=irem(c,n);
+A:=idn(n);
+pour j de 0 jusque n-1 faire
+  pour k de 0 jusque n-2 faire
+    A[l,c]:=k+n*j;
+    l:=irem(l+1,n);
+    c:=irem(c+2,n);
+  fpour;
+A[l,c]:=k+n*j;
+c:=irem(c-1,n);
+fpour;
+return A;
+}
+:;
+</PRE><P>On tape : <TT>C:=cavalier(5,0,0)</TT><BR>
+On obtient :<BR>
+<TT>[[0,24,18,12,6],[13,7,1,20,19],[21,15,14,8,2], [9,3,22,16,10],[17,11,5,4,23]]</TT> c’est à dire :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>24</TD><TD ALIGN=center NOWRAP>18</TD><TD ALIGN=center NOWRAP>12</TD><TD ALIGN=center NOWRAP>6</TD></TR>
+<TR><TD ALIGN=center NOWRAP>13</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>20</TD><TD ALIGN=center NOWRAP>19</TD></TR>
+<TR><TD ALIGN=center NOWRAP>21</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>14</TD><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD ALIGN=center NOWRAP>9</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>22</TD><TD ALIGN=center NOWRAP>16</TD><TD ALIGN=center NOWRAP>10</TD></TR>
+<TR><TD ALIGN=center NOWRAP>17</TD><TD ALIGN=center NOWRAP>11</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>23</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On peut traduire cela avec des couleurs. On tape :
+</P><PRE CLASS="verbatim">lignec(n,k,C):={
+local j,L;
+L:=NULL;
+pour j de 0 jusque n-1 faire 
+L:=L,affichage(carre(j+i*k,j+1+i*k),C[j]+rempli);
+fpour;
+return L;
+}:;
+carrec(n,C):={
+local j,L,R;
+R:=NULL;
+pour j de 0 jusque n-1 faire
+L:=lignec(n,n-j,C[j]) 
+R:=R,L;
+fpour;
+return R;
+}:;
+</PRE><P>Puis, <TT>carrec(5,C)</TT> renvoie :
+</P><DIV CLASS="center"><IMG SRC="cascas125.png"> </DIV><P>
+<B>Remarque</B><BR>
+Si on affiche les nombres <I>k</I> modulo <I>n</I> (i.e. <TT>irem(k,n)</TT>), on obtient un 
+carré magique latin (latin veut dire que chacun des entiers 0..<I>n</I>−1 
+apparaissent dans chaque horizontale et verticale du carré et magique veut 
+dire que la somme des éléments de chaque ligne, de chaque colonne et des 2 
+diagonales sont identiques et égales à <I>n</I>(<I>n</I><SUP>2</SUP>−1)/2).
+Pour l’exemple précédent, on tape :<BR>
+<TT>CR:=irem(cavalier(5,0,0),5)</TT> et <TT>carrec(5,CR)</TT> on obtient :<BR>
+
+</P><DIV CLASS="minipage">
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD></TR>
+</TABLE>
+
+</DIV><DIV CLASS="minipage">
+<DIV CLASS="center"><IMG SRC="cascas126.png"></DIV>
+</DIV><P>On peut visualiser le déplacement du cavalier en mettant dans chaque case
+<TT>iquo(k,n)</TT> ce qui donne encore un carré latin.
+Pour l’exemple précédent, on tape :<BR>
+<TT>CQ:=(C-CQ)/5)</TT> et <TT>carrec(5,CQ)</TT>, on obtient :<BR>
+Pour l’exemple précédent, on obtient :<BR>
+
+</P><DIV CLASS="minipage">
+
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD></TR>
+<TR><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD></TR>
+</TABLE>
+
+</DIV><DIV CLASS="minipage">
+<DIV CLASS="center"><IMG SRC="cascas127.png"></DIV>
+</DIV><H3 CLASS="subsection"><A NAME="htoc253">15.2.5</A>  Produit de 2 carrés magiques</H3><P>
+Pour construire des carrés eulériens pandiagonaux, il est souvent plus 
+agéable d’écrire les coefficients du carré d’ordre <I>n</I> en base <I>n</I>. Tout 
+entier compris entre 0 et <I>n</I><SUP>2</SUP>−1 s’écrit de manière unique sous la forme 
+<I>n</I>*<I>a</I>+<I>b</I> où <I>a</I> et <I>b</I> sont des entiers compris entre 0 et <I>n</I>−1.<BR>
+<B>Définition</B><BR>
+On appelle produit <I>A</I>X<I>B</I> de 2 carrés magiques <I>A</I>=<I>a</I><SUB><I>j</I>,<I>k</I></SUB> et 
+<I>B</I>=<I>b</I><SUB><I>j</I>,<I>k</I></SUB> de taille <I>n</I> vérifiant <I>a</I><SUB><I>j</I>,<I>k</I></SUB> ∈ [0..<I>n</I>−1] et 
+<I>b</I><SUB><I>j</I>,<I>k</I></SUB> ∈ [0..<I>n</I>−1], le carré <I>C</I>=<I>c</I><SUB><I>j</I>,<I>k</I></SUB> de taille <I>n</I> tel que :<BR>
+<I>c</I><SUB><I>j</I>,<I>k</I></SUB>=<I>na</I><SUB><I>j</I>,<I>k</I></SUB>+<I>b</I><SUB><I>j</I>,<I>k</I></SUB> (i.e <I>a</I><SUB><I>j</I>,<I>k</I></SUB>,<I>b</I><SUB><I>j</I>,<I>k</I></SUB> est l’écriture en base <I>n</I>
+de <I>c</I><SUB><I>j</I>,<I>k</I></SUB>).<BR>
+Donc, <TT>C:=cavalier(5,0,0)</TT> se décompose en le produit de 2 carrés 
+latins pandiagonaux :<BR>
+
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>24</TD><TD ALIGN=center NOWRAP>18</TD><TD ALIGN=center NOWRAP>12</TD><TD ALIGN=center NOWRAP>6</TD></TR>
+<TR><TD ALIGN=center NOWRAP>13</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>20</TD><TD ALIGN=center NOWRAP>19</TD></TR>
+<TR><TD ALIGN=center NOWRAP>21</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>14</TD><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD ALIGN=center NOWRAP>9</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>22</TD><TD ALIGN=center NOWRAP>16</TD><TD ALIGN=center NOWRAP>10</TD></TR>
+<TR><TD ALIGN=center NOWRAP>17</TD><TD ALIGN=center NOWRAP>11</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>23</TD></TR>
+</TABLE><P>
+ = 
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD></TR>
+<TR><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD></TR>
+</TABLE><P>
+
+X 
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD></TR>
+</TABLE><P><BR>
+On peut traduire cela avec des couleurs.<BR>
+On tape :
+</P><PRE CLASS="verbatim">lignecc(n,k,C1,C2):={
+local j,L;
+L:=NULL;
+pour j de 0 jusque n-1 faire 
+L:=L,affichage(rectangle(j+i*k,j+1/2+i*k,2),C1[j]+rempli),
+     affichage(rectangle(j+1/2+i*k,j+1+i*k,2),C2[j]+rempli);
+fpour;
+return L;
+}:;
+carrecc(n,C1,C2):={
+local j,L,R;
+R:=NULL;
+pour j de 0 jusque n-1 faire
+L:=lignecc(n,n-j,C1[j],C2[j]) 
+R:=R,L;
+fpour;
+return R;
+}
+:;
+</PRE><P>Puis, <TT>C:=cavalier(5,0,0);CR1:=iquo(C,5);CR2:=irem(C,5)</TT>
+<TT>carrecc(5,CR1,CR2)</TT> renvoie :
+</P><DIV CLASS="center"><IMG SRC="cascas128.png"> </DIV><H3 CLASS="subsection"><A NAME="htoc254">15.2.6</A>  Démonstration de l’algorithme du cavalier</H3><P>
+Pour cela on va déterminer une expression générale de <I>A</I>[<I>j</I>,<I>k</I>] en 
+fonction de <I>j</I> et <I>k</I> lorsque l’on met <I>A</I>[0,0]=0 et que l’on applique 
+l’algorithme du cavalier.<BR>
+ Pour cela on écrit <I>A</I>[<I>j</I>,<I>k</I>] en base <I>n</I> :<BR>
+<I>A</I>[<I>j</I>,<I>k</I>]=<I>na</I><SUB><I>j</I>,<I>k</I></SUB>+<I>b</I><SUB><I>j</I>,<I>k</I></SUB> avec <I>a</I><SUB><I>j</I>,<I>k</I></SUB>∈ [0..<I>n</I>−1] et <I>b</I><SUB><I>j</I>,<I>k</I></SUB>∈ [0..<I>n</I>−1].<BR>
+On a d’après l’algorithme du cavalier :<BR>
+<I>a</I><SUB>0,0</SUB>=0 et <I>b</I><SUB>0,0</SUB>=0
+<I>a</I><SUB><I>j</I>+1,<I>k</I>+2</SUB>=<I>a</I><SUB><I>j</I>,<I>k</I></SUB> et <I>b</I><SUB><I>j</I>+1,<I>k</I>+2</SUB>=<I>b</I><SUB><I>j</I>,<I>k</I></SUB>+1 si 0≤ <I>b</I><SUB><I>j</I>,<I>k</I></SUB>&lt;<I>n</I>−1 et<BR>
+<I>a</I><SUB><I>j</I>,<I>k</I>−1</SUB>=<I>a</I><SUB><I>j</I>,<I>k</I></SUB>+1 et <I>b</I><SUB><I>j</I>,<I>k</I>−1</SUB>=<I>b</I><SUB><I>j</I>,<I>k</I></SUB>+1=0 mod<I>n</I> si <I>b</I><SUB><I>j</I>,<I>k</I></SUB>=<I>n</I>−1<BR>
+Le nombre <I>A</I>[<I>j</I>,<I>k</I>]=<I>na</I><SUB><I>j</I>,<I>k</I></SUB>+<I>b</I><SUB><I>j</I>,<I>k</I></SUB> a donc comme indice de ligne 
+<I>j</I>=<I>b</I><SUB><I>j</I>,<I>k</I></SUB>−<I>a</I><SUB><I>j</I>,<I>k</I></SUB> mod<I>n</I>.<BR>
+En effet, quand <I>a</I><SUB><I>j</I>,<I>k</I></SUB>=0 on a <I>j</I>=<I>b</I><SUB><I>j</I>,<I>k</I></SUB>, puis quand
+<I>a</I><SUB><I>j</I>,<I>k</I></SUB>=1 et <I>b</I><SUB><I>j</I>,<I>k</I></SUB>=0 on a <I>j</I>=<I>n</I>−1=<I>b</I><SUB><I>j</I>,<I>k</I></SUB>−<I>a</I><SUB><I>j</I>,<I>k</I></SUB> mod<I>n</I> etc...<BR>
+Le nombre <I>A</I>[<I>j</I>,<I>k</I>]=<I>na</I><SUB><I>j</I>,<I>k</I></SUB>+<I>b</I><SUB><I>j</I>,<I>k</I></SUB> a donc comme indice de colonne 
+<I>k</I>=2<I>b</I><SUB><I>j</I>,<I>k</I></SUB>−3<I>a</I><SUB><I>j</I>,<I>k</I></SUB> mod<I>n</I>.<BR>
+En effet, quand <I>a</I><SUB><I>j</I>,<I>k</I></SUB>=0 on a <I>k</I>=2<I>b</I><SUB><I>j</I>,<I>k</I></SUB> mod<I>n</I>,
+donc on a bien <I>k</I>=2<I>b</I><SUB><I>j</I>,<I>k</I></SUB>−3<I>a</I><SUB><I>j</I>,<I>k</I></SUB> mod<I>n</I><BR>
+puis quand <I>a</I><SUB><I>j</I>,<I>k</I></SUB>=1 et <I>b</I><SUB><I>j</I>,<I>k</I></SUB>=0 on a <I>b</I><SUB><I>j</I>,<I>k</I>+1</SUB>=<I>b</I><SUB><I>j</I>,<I>k</I></SUB>−1 mod<I>n</I> et 
+<I>a</I><SUB><I>j</I>,<I>k</I>+1</SUB>=<I>a</I><SUB><I>j</I>,<I>k</I></SUB>−1 donc :<BR>
+<I>b</I><SUB><I>j</I>,<I>k</I></SUB>=<I>b</I><SUB><I>j</I>,<I>k</I>+1</SUB>+1=0 mod<I>n</I> et<BR>
+<I>k</I>+1=2<I>b</I><SUB><I>j</I>,<I>k</I>+1</SUB>−3<I>a</I><SUB><I>j</I>,<I>k</I>+1</SUB>=2<I>b</I><SUB><I>j</I>,<I>k</I></SUB>−2−3<I>a</I><SUB><I>j</I>,<I>k</I></SUB>+3=2<I>b</I><SUB><I>j</I>,<I>k</I></SUB>−3<I>a</I><SUB><I>j</I>,<I>k</I></SUB>+1 mod<I>n</I> (car 
+<I>a</I><SUB><I>j</I>,<I>k</I>+1</SUB>=0 et d’après ce qui précéde si <I>a</I><SUB><I>j</I>,<I>k</I>+1</SUB>=0 on a <I>k</I>+1=2<I>b</I><SUB><I>j</I>,<I>k</I>+1</SUB> mod<I>n</I> et <I>b</I><SUB><I>j</I>,<I>k</I>−1</SUB>+1=0 mod<I>n</I>)
+donc <I>k</I>=2<I>b</I><SUB><I>j</I>,<I>k</I></SUB>−3<I>a</I><SUB><I>j</I>,<I>k</I></SUB> mod<I>n</I> etc...<BR>
+On a donc :<BR>
+<I>j</I>=<I>b</I><SUB><I>j</I>,<I>k</I></SUB>−<I>a</I><SUB><I>j</I>,<I>k</I></SUB> mod<I>n</I> et <I>k</I>=2<I>b</I><SUB><I>j</I>,<I>k</I></SUB>−3<I>a</I><SUB><I>j</I>,<I>k</I></SUB> mod<I>n</I> donc<BR>
+2<I>j</I>−<I>k</I>=<I>a</I><SUB><I>j</I>,<I>k</I></SUB>mod<I>n</I> et 3<I>j</I>−<I>k</I>=<I>b</I><SUB><I>j</I>,<I>k</I></SUB>mod<I>n</I> donc<BR>
+<I>a</I><SUB><I>j</I>,<I>k</I></SUB>=2<I>j</I>−<I>k</I> mod<I>n</I> et <I>b</I><SUB><I>j</I>,<I>k</I></SUB>=3<I>j</I>−<I>k</I> mod<I>n</I>.<BR>
+
+<I>A</I> est un carré eulérien pandiagonal.
+En effet, les nombres <I>A</I>[<I>j</I>,<I>k</I>] sont tous différents, car si
+<I>na</I><SUB><I>j</I>1,<I>k</I>1</SUB>+<I>b</I><SUB><I>j</I>1,<I>k</I>1</SUB>=<I>na</I><SUB><I>j</I>2,<I>k</I>2</SUB>+<I>b</I><SUB><I>j</I>2,<I>k</I>2</SUB> alors<BR>
+<I>a</I><SUB><I>j</I>1,<I>k</I>1</SUB>=<I>a</I><SUB><I>j</I>2,<I>k</I>2</SUB> et <I>b</I><SUB><I>j</I>1,<I>k</I>1</SUB>=<I>b</I><SUB><I>j</I>2,<I>k</I>2</SUB> donc<BR>
+2<I>j</I>1−<I>k</I>1 =2<I>j</I>2−<I>k</I>2 mod<I>n</I> et 3<I>j</I>1−<I>k</I>1 =3<I>j</I>2−<I>k</I>2 mod<I>n</I> donc<BR>
+<I>k</I>2−<I>k</I>1=2<I>j</I>2−2<I>j</I>1=3<I>j</I>2−3<I>j</I>1 donc j1=j2 <I>et</I> <I>k</I>1=<I>k</I>2.<BR>
+Sur les <I>a</I><SUB><I>j</I>,<I>k</I></SUB> et les <I>b</I><SUB><I>j</I>,<I>k</I></SUB> forment un carré latin pandiagonal d’odre 
+<I>n</I> car sur une même ligne les <I>a</I><SUB><I>j</I>,<I>k</I></SUB> (respectivement les <I>b</I><SUB><I>j</I>,<I>k</I></SUB>)
+sont tous différents en effet :
+si <I>a</I><SUB><I>j</I>1,<I>k</I>1</SUB>=<I>a</I><SUB><I>j</I>1,<I>k</I>2</SUB> (resp <I>b</I><SUB><I>j</I>1,<I>k</I>1</SUB>=<I>b</I><SUB><I>j</I>1,<I>k</I>2</SUB>) alors<BR>
+2<I>j</I>1−<I>k</I>1 =2<I>j</I>1−<I>k</I>2 mod<I>n</I> et 3<I>j</I>1−<I>k</I>1 =3<I>j</I>1−<I>k</I>2 mod<I>n</I> 
+donc <I>k</I>1=<I>k</I>2.
+Si <I>n</I> n’est pas un multiple de 2 ni un multiple de 3, sur une même colonne 
+les <I>a</I><SUB><I>j</I>,<I>k</I></SUB> (respectivement les <I>b</I><SUB><I>j</I>,<I>k</I></SUB>) sont tous différents en effet :
+si <I>a</I><SUB><I>j</I>1,<I>k</I>1</SUB>=<I>a</I><SUB><I>j</I>2,<I>k</I>1</SUB> (resp <I>b</I><SUB><I>j</I>1,<I>k</I>1</SUB>=<I>b</I><SUB><I>j</I>2,<I>k</I>1</SUB>) alors<BR>
+2<I>j</I>1−<I>k</I>1 =2<I>j</I>2−<I>k</I>1 mod<I>n</I> (resp 3<I>j</I>1−<I>k</I>1 =3<I>j</I>2−<I>k</I>1 mod<I>n</I>)<BR>
+donc 2(<I>j</I>1−<I>j</I>2)=0 mod<I>n</I> (resp 3(<I>j</I>1−<I>j</I>2)=0 mod<I>n</I>)
+comme 2 et ne divisent pas <I>n</I> on en déduit que <I>j</I>1=<I>j</I>2.
+Sur les diagonales descendantes les <I>a</I><SUB><I>j</I>,<I>k</I></SUB> (respectivement les <I>b</I><SUB><I>j</I>,<I>k</I></SUB>) sont tous différents en effet si :<BR>
+<I>a</I><SUB><I>j</I>1,<I>k</I>1+<I>j</I>1</SUB>=<I>a</I><SUB><I>j</I>2,<I>k</I>1+<I>j</I>2</SUB> (resp <I>b</I><SUB><I>j</I>1,<I>k</I>1+<I>j</I>1</SUB>=<I>b</I><SUB><I>j</I>2,<I>k</I>1+<I>j</I>2</SUB>) alors<BR>
+2<I>j</I>1−<I>k</I>1−<I>j</I>1 =2<I>j</I>2−<I>k</I>1−<I>j</I>2 mod<I>n</I> et 3<I>j</I>1−<I>k</I>1−<I>j</I>1 =3<I>j</I>2−<I>k</I>1−<I>j</I>2 mod<I>n</I> 
+donc <I>j</I>1=<I>j</I>2 (resp <I>j</I>1=<I>j</I>2 car 2 ne divise pas <I>n</I>)
+Sur les diagonales montantes les <I>a</I><SUB><I>j</I>,<I>k</I></SUB> (respectivement les <I>b</I><SUB><I>j</I>,<I>k</I></SUB>) sont 
+tous différents en effet si :<BR>
+<I>a</I><SUB><I>j</I>1,<I>k</I>1−<I>j</I>1</SUB>=<I>a</I><SUB><I>j</I>2,<I>k</I>1−<I>j</I>2</SUB> (resp <I>b</I><SUB><I>j</I>1,<I>k</I>1−<I>j</I>1</SUB>=<I>b</I><SUB><I>j</I>2,<I>k</I>1−<I>j</I>2</SUB>) alors<BR>
+2<I>j</I>1−<I>k</I>1+<I>j</I>1 =2<I>j</I>2−<I>k</I>1+<I>j</I>2 mod<I>n</I> et 3<I>j</I>1−<I>k</I>1+<I>j</I>1 =3<I>j</I>2−<I>k</I>1+<I>j</I>2 mod<I>n</I> 
+donc <I>j</I>1=<I>j</I>2 car 3 et 4 ne divisent pas <I>n</I>.
+Donc les carrés <I>a</I><SUB><I>j</I>,<I>k</I></SUB> et <I>b</I><SUB><I>j</I>,<I>k</I></SUB> sont des carrés latins pandiagonaux.
+Comme les nombres <I>A</I>[<I>j</I>,<I>k</I>] sont tous différents, on en déduit que <I>A</I> est 
+un carré eulérien pandiagonal.
+</P><H3 CLASS="subsection"><A NAME="htoc255">15.2.7</A>  Généralistion de l’algorithme du cavalier pour <I>n</I>≠ 2<I>p</I> et <I>n</I>≠ 3<I>p</I></H3><P>
+Lorsque <I>n</I>=5 l’algorithme du cavalier a produit un carré eulérien 
+pandiagonal qui était le produit de 2 carrés latins pandiagonaux. On va 
+donc essayer de produire des carrés eulériens pandiagonaux comme produit de
+2 carrés latins pandiagonaux.<BR>
+<B>Définition</B><BR>
+On dit que <I>p</I> est un générateur interne de ℤ/<I>n</I>ℤ si <I>p</I>, <I>p</I>−1 et <I>p</I>+1
+sont des générateurs de ℤ/<I>n</I>ℤ (i.e <I>p</I>, <I>p</I>−1 et <I>p</I>+1 doivent être 
+premier avec <I>n</I>).<BR>
+<B>Remarque</B> si <I>n</I> est pair ou si <I>n</I> est un multiple de 3, ℤ/<I>n</I>ℤ ne 
+posséde pas de générateur interne.<BR>
+Revenons à l’exemple obtenu avec la règle du cavalier pour <I>n</I>=5 :
+<I>C</I> = <I>A</I> X <I>B</I> =
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>24</TD><TD ALIGN=center NOWRAP>18</TD><TD ALIGN=center NOWRAP>12</TD><TD ALIGN=center NOWRAP>6</TD></TR>
+<TR><TD ALIGN=center NOWRAP>13</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>20</TD><TD ALIGN=center NOWRAP>19</TD></TR>
+<TR><TD ALIGN=center NOWRAP>21</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>14</TD><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD ALIGN=center NOWRAP>9</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>22</TD><TD ALIGN=center NOWRAP>16</TD><TD ALIGN=center NOWRAP>10</TD></TR>
+<TR><TD ALIGN=center NOWRAP>17</TD><TD ALIGN=center NOWRAP>11</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>23</TD></TR>
+</TABLE><P>
+ = 
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD></TR>
+<TR><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD></TR>
+</TABLE><P>
+
+X 
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>3</TD></TR>
+</TABLE><P>
+
+On remarque que :<BR>
+le carré <I>A</I> est obtenu en mettant sur la première ligne, une permutation 
+σ de 0..4 (ici σ([0,1,2,3,4])=[0,4,3,2,1]), puis la deuxième
+ligne est obtenue en décalant la première ligne vers la droite de 2 cases 
+(i.e. <I>A</I>[1,<I>k</I>)=<I>A</I>[0,<I>k</I>+2] pour <I>k</I>=0..4) ce qui donne [2,1,0,4,3] etc...<BR>
+le carré <I>B</I> est obtenu en mettant sur la première ligne la même 
+permutation de 0..4 [0,4,3,2,1], puis la deuxième ligne est obtenue
+en décalant la première ligne vers la droite de 3 cases 
+(i.e. <I>B</I>[1,<I>k</I>)=<I>A</I>[0,<I>k</I>+3] pour <I>k</I>=0..4) ce qui donne [3,2,1,0,4] etc...<BR>
+
+On établit les résultats suivants :<BR>
+<B>Théorème1</B>
+La donnée de toute permutation σ de 0..<I>n</I>−1 et de tout générateur
+<I>p</I> interne de ℤ/<I>n</I>ℤ définit un carré latin de taille <I>n</I>.<BR>
+<B>Définition</B> le carré latin ainsi construit est dit de type 
+(σ, <I>p</I>).<BR>
+Si <I>A</I> est un carré latin de taille <I>n</I> et de type (σ, <I>p</I>) on a :<BR>
+<I>A</I>[0,<I>k</I>)=σ([0,..<I>n</I>−1]) pour <I>k</I>=0..<I>n</I>−1<BR>
+<I>A</I>[<I>j</I>+1,<I>k</I>)=<I>A</I>[<I>j</I>,<I>k</I>+<I>p</I> mod<I>n</I>] pour <I>j</I>=0..<I>n</I>−1 et pour <I>k</I>=0..<I>n</I>−1<BR>
+<I>p</I> engendre ℤ/<I>n</I>ℤ donc <I>p</I> mod<I>n</I>, <I>p</I>+1 mod<I>n</I>, <I>p</I>+<I>n</I>−1 mod<I>n</I> est une 
+permutation de [0,..<I>n</I>−1].<BR>
+Donc les lignes de <I>A</I> sont des permutations de [0,..<I>n</I>−1]<BR>
+Les colonnes de <I>A</I> sont telles que :<BR>
+<I>A</I>[<I>j</I>,0]=<I>A</I>[<I>j</I>−1,<I>p</I>]=<I>A</I>[<I>j</I>−2,2<I>p</I> mod<I>n</I>]=..<I>A</I>[0,<I>j</I>*<I>p</I>mod<I>n</I>] et<BR>
+pour pour <I>j</I> fixé et <I>k</I>=0..<I>n</I>−1, on a :<BR>
+<I>A</I>[<I>j</I>,<I>k</I>]=<I>A</I>[<I>j</I>−1,<I>p</I>+<I>k</I>mod<I>n</I>]=<I>A</I>[<I>j</I>−2,2<I>p</I>+<I>k</I>mod<I>n</I>]=..=<I>A</I>[0,<I>j</I>*<I>p</I>+<I>k</I>mod<I>n</I>]<BR>
+Donc les colonnes de <I>A</I> sont des permutations de [0,1..<I>n</I>−1]<BR>
+Les diagonales descendantes de <I>A</I> sont telles que pour <I>k</I> fixé et
+<I>j</I>=0..<I>n</I>−1 on a :<BR>
+<I>A</I>[<I>j</I>,<I>j</I>+<I>k</I>mod<I>n</I>]=<I>A</I>[0,<I>j</I>*(<I>p</I>+1)+<I>k</I>mod<I>n</I>]<BR>
+<I>p</I>+1 engendre ℤ/<I>n</I>ℤ donc les diagonales descendantes de <I>A</I> sont des 
+permutations de [0,..<I>n</I>−1]<BR>
+Les diagonales montantes de <I>A</I> sont telles que pour <I>k</I> fixé et
+<I>j</I>=0..<I>n</I>−1 on a :<BR>
+<I>A</I>[<I>j</I>,−<I>j</I>+<I>k</I>mod<I>n</I>]=<I>A</I>[0,<I>j</I>*(<I>p</I>−1)+<I>k</I>mod<I>n</I>]<BR>
+<I>p</I>−1 engendre ℤ/<I>n</I>ℤ donc les diagonales montantes de <I>A</I> sont des 
+permutations de [0,..<I>n</I>−1].<BR>
+<B>Théorème2</B> Le produit de 2 carrés latins de taille <I>n</I> et de types
+(σ, <I>p</I>) et (σ, <I>q</I>) est un carré eulérien pandiagonal si 
+<I>p</I>−<I>q</I> mod<I>n</I> est un générateur de ℤ/<I>n</I>ℤ.<BR>
+En effet, soient <I>A</I> et <I>B</I> deux carrés d’ordre <I>n</I> où <I>A</I> est de type 
+(σ, <I>p</I>) et <I>B</I> est de type (σ, <I>q</I>). (où σ est une 
+bijection de [0,1..<I>n</I>−1] dans [0,1..<I>n</I>−1] et <I>p</I>−1mod<I>n</I>, <I>p</I>, <I>p</I>+1mod<I>n</I>,
+<I>q</I>−1mod<I>n</I>, <I>q</I>, <I>q</I>−1mod<I>n</I>, <I>p</I>−<I>q</I> mod<I>n</I> sont des générateurs de 
+ℤ/<I>n</I>ℤ).<BR>
+On a par construction de <I>A</I> et <I>B</I> :<BR>
+σ(<I>k</I>)=<I>A</I>[0,<I>k</I>]=<I>B</I>[0,<I>k</I>]<BR>
+<I>A</I>[1,<I>k</I>]=<I>A</I>[0,<I>k</I>−<I>p</I> mod<I>n</I>]=σ(<I>k</I>−<I>p</I>mod<I>n</I>) et<BR>
+<I>A</I>[<I>j</I>,<I>k</I>]=<I>A</I>[<I>j</I>,<I>k</I>−<I>p</I>*<I>j</I> mod<I>n</I>]=σ(<I>k</I>−<I>p</I>*<I>j</I>mod<I>n</I>)<BR>
+<I>B</I>[1,<I>k</I>]=<I>B</I>[0,<I>k</I>−<I>q</I> mod<I>n</I>]=σ(<I>k</I>−<I>q</I>mod<I>n</I>) et<BR>
+<I>B</I>[<I>j</I>,<I>k</I>]=<I>B</I>[<I>j</I>,<I>k</I>−<I>q</I>*<I>j</I> mod<I>n</I>]=σ(<I>k</I>−<I>q</I>*<I>j</I>mod<I>n</I>)<BR>
+On pose <I>C</I>[<I>j</I>,<I>k</I>]=<I>n</I>*<I>A</I>[<I>j</I>,<I>k</I>]+<I>B</I>[<I>j</I>,<I>k</I>] et montrons que <I>C</I> est un carré eulérien 
+pandiagonal.<BR>
+Chacun des entiers compris entre 0 et <I>n</I><SUP>2</SUP>−1 sont les coefficients de <I>C</I>.
+En effet les coefficients de <I>C</I> sont dans [0,1..<I>n</I>−1] et ils sont tous 
+différents car si :<BR>
+<I>C</I>[<I>j</I>1,<I>k</I>1]=<I>n</I>*<I>A</I>[<I>j</I>1,<I>k</I>1]+<I>B</I>[<I>j</I>1,<I>k</I>1]=<I>C</I>[<I>j</I>2,<I>k</I>2]=<I>n</I>*<I>A</I>[<I>j</I>2,<I>k</I>2]+<I>B</I>[<I>j</I>2,<I>k</I>2], on a :<BR>
+<I>A</I>[<I>j</I>1,<I>k</I>1]=<I>A</I>[<I>j</I>2,<I>k</I>2] et <I>B</I>[<I>j</I>1,<I>k</I>1]=<I>B</I>[<I>j</I>2,<I>k</I>2] (unicité de l’écriture en base 
+<I>n</I>) c’est à dire :<BR>
+σ(<I>k</I>1−<I>p</I>*<I>j</I>1mod<I>n</I>)=σ(<I>k</I>2−<I>p</I>*<I>j</I>2mod<I>n</I>) et<BR>
+σ(<I>k</I>1−<I>q</I>*<I>j</I>1mod<I>n</I>)=σ(<I>k</I>2−<I>q</I>*<I>j</I>2mod<I>n</I>)= et comme 
+σ est une bijection on a :<BR>
+<I>k</I>1−<I>k</I>2=<I>p</I>*(<I>j</I>1−<I>j</I>2)=<I>q</I>(<I>j</I>1−<I>j</I>2) mod<I>n</I> donc
+(<I>p</I>−<I>q</I>)(<I>j</I>1−<I>j</I>2)=0mod<I>n</I> donc <I>j</I>1=<I>j</I>2 (puisque <I>p</I>−<I>q</I> mod<I>n</I> est un 
+générateur de ℤ/<I>n</I>ℤ) et <I>k</I>1=<I>k</I>2.
+Le carré <I>C</I> est pandiagonal car les 4<I>n</I> sommes des lignes, des colonnes, 
+des diagonales de <I>A</I> et de <I>B</I> sont égales à <I>n</I>(<I>n</I>−1)/2 (d’après le th 1)
+donc les sommes des lignes, des colonnes, des diagonales de <I>C</I> sont égales 
+à (<I>n</I>+1)<I>n</I>(<I>n</I>−1)/2=<I>n</I>(<I>n</I><SUP>2</SUP>−1)/2 
+</P><H3 CLASS="subsection"><A NAME="htoc256">15.2.8</A>  Les programmes</H3><H4 CLASS="subsubsection">Le produit de 2 carrés de ℤ/<I>n</I>ℤ</H4><P>
+Voici le programme du produit de 2 carrés <I>A</I>=<I>a</I><SUB><I>j</I>,<I>k</I></SUB> et 
+<I>B</I>=<I>b</I><SUB><I>j</I>,<I>k</I></SUB> de taille <I>n</I> vérifiant <I>a</I><SUB><I>j</I>,<I>k</I></SUB> ∈ [0,1..<I>n</I>−1].
+On écrit le programme <TT>estdansnz(A)</TT> qui vérifie que les <I>A</I>[<I>j</I>,<I>k</I>] sont 
+dans 0,1,..<I>n</I>−1 lorsque <I>A</I> est une matrice carrée de dimension <I>n</I>.<BR>
+Puis, on écrit le programme <TT>produitcar(A,B)</TT> qui renvoie le produit de 
+2 carrés de dimension <I>n</I> dont les éléments sont dans 0,1,..<I>n</I>−1.<BR>
+On tape :
+</P><PRE CLASS="verbatim">estdansnz(A):={
+local L,j,n1,rep;
+L:=mat2list(A);
+n1:=dim(L)-1;
+rep:=vrai;
+pour j de 0 jusque n1 faire
+si L[j]&lt;0 ou L[j]&gt;n1 alors retourne faux; fsi;
+fpour;
+retourne vrai;
+}:;
+produitcar(A,B):={
+local j,k,C,sa,sb,n;
+n:=size(A);
+sa:=dim(A);
+sb:=dim(B);
+si sa!=[n,n] ou sb!=[n,n] ouestdansnz(A)==faux ou estdansnz(B)==faux alors 
+retourne "erreur"; fsi;
+C:=idn(n); 
+pour j de 0 jusque n-1 faire
+pour k de 0 jusque n-1 faire
+C[j,k]:=n*A[j,k]+B[j,k];
+fpour;
+fpour;
+retourne C;
+}:;
+</PRE><P>On tape :<BR>
+<TT>A:=[[0,4,3,2,1],[2,1,0,4,3],[4,3,2,1,0],[1,0,4,3,2],[3,2,1,0,4]]</TT><BR>
+<TT>B:=[[0,4,3,2,1],[3,2,1,0,4],[1,0,4,3,2],[4,3,2,1,0],[2,1,0,4,3]]</TT><BR>
+<TT>C:=produitcar(A,B)</TT><BR>
+On obtient :<BR>
+<TT>[[0,24,18,12,6],[13,7,1,20,19],[21,15,14,8,2],[9,3,22,16,10],[17,11,5,4,23]]</TT><BR>
+On tape :<BR>
+<TT>estpandiage(C)</TT><BR>
+On obtient :<BR>
+<TT>vrai</TT>
+</P><H4 CLASS="subsubsection">Les permutations de 0..<I>n</I></H4><P>
+Nous allons écrire un algorithme qui va renvoyer toutes les permutations de 
+<I>l</I>=[0..<I>n</I>−1]
+Les fonctions que l’on va écrire vont utiliser la fonction <TT>echange</TT>.
+</P><PRE CLASS="verbatim">//echange ds l les elements d'indices j et k
+echange(l,j,k):={
+local a;
+a:=l[j];
+l[j]:=l[k];
+l[k]:=a;
+return l;
+}:;
+</PRE><P>On peut décrire l’arbre des permutations de la liste <I>l</I>[0..<I>n</I>−1] :<BR>
+à partir de la racine on a <I>n</I>=<TT>size(l)</TT> branches. Chaque branche
+commence respectivement par chacun des éléments de la liste <I>l</I>.<BR>
+On va donc parcourir cet arbre de la racine (nœud de niveau 0) aux 
+différentes extrémités, en renvoyant la liste des branches parcourues 
+pour arriver à cette extrémité.<BR>
+On va parcourir cet arbre en parcourant les <I>n</I> branches. On numérote ces <I>n</I>
+branches par <I>p</I>=0..<I>n</I>−1 et le niveau des nœuds <I>q</I>=0..<I>n</I>−1.<BR>
+On aura donc <I>n</I> appels récursifs.<BR>
+Chaque branche <I>p</I> (<I>p</I>=0..<I>n</I>−1) peut être considérée à leur tour comme 
+un arbre ayant <I>n</I>−1 branches. La branche <I>p</I> aboutit aux permutations qui 
+laissent invariant le <I>p</I>-ième élément de <I>l</I> (<I>l</I>[<I>p</I>−1]). 
+C’est cet élément que l’on va échanger avec <I>l</I>[0] pour que chaque 
+branche <I>p</I> laisse invariant l’ élément <I>l</I>[0].<BR>
+On sait que l’on est arrivé au bout de la branche, quand on se trouve au
+nœud de niveau <I>n</I>−1, dans ce cas la permutation chechée est <I>l</I> (c’est 
+la permutation obtenue à partir de <I>l</I> en laissant ces <I>n</I>−1 premiers 
+éléments invariants).<BR>
+On utilise une variable locale <TT>lr</TT>, égale à la liste à renvoyer et 
+un paramètre <TT>k</TT>, pour que <TT>permuts(l,k)</TT> renvoie toutes les 
+permutations de <TT>l</TT> qui laissent invariant les k premiers éléments de 
+<TT>l</TT>. On tape :
+</P><PRE CLASS="verbatim">//permuts([1,2,3,4],0) utilise echange 
+permuts(l,k):={
+local lr,j;
+if (k==size(l)-1) return [l];
+lr:=[];
+for (j:=k;j&lt;size(l);j++){
+l:=echange(l,k,j);
+lr:=[op(lr),op(permuts(l,k+1))];
+}
+return lr;
+}:;
+</PRE><P><B>Remarque</B> On n’est pas obligé de remettre la suite <I>l</I> à sa valeur de 
+départ pour recommencer l’itération puisque le premier échange dans
+l’itération revient à transformer <I>l</I> en la liste où on a mis son 
+<I>j</I>-ième élément en tête (<I>j</I>=0..<I>n</I>−1).<BR>
+Comme il faut 2 paramètres pour écrire la fonction récursive 
+<TT>permuts</TT>, on écrit la fonction <TT>permutation</TT> qui utilise 
+<TT>permuts</TT>:
+</P><PRE CLASS="verbatim">//l:=[0,1,2,3];permutation(l); 
+//renvoie toutes les permutations de l
+//utilise permuts
+permutation(l):={
+return permuts(l,0);
+};
+</PRE><P>On tape :<BR>
+<TT>permutation([0,1,2])</TT><BR>
+On obtient :<BR>
+<TT>[[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]]</TT>
+</P><H4 CLASS="subsubsection">Les générateurs internes de ℤ/<I>n</I>ℤ</H4><P>
+<B>Définition</B><BR>
+On dit que <I>k</I>%<I>n</I> est un <B>générateur interne de </B><B>ℤ</B><B>/<I>n</I></B><B>ℤ</B> si 
+<I>k</I>%<I>n</I>,(<I>k</I>−1)%<I>n</I>,(<I>k</I>+1)%<I>n</I> sont des gérnérateurs de ℤ/<I>n</I>ℤ.
+Donc <I>k</I>%<I>n</I> est un générateur interne de ℤ/<I>n</I>ℤ si <I>k</I>,<I>k</I>−1,<I>k</I>+1 sont
+premiers avec <I>n</I>.<BR>
+Si <I>n</I> est un multiple de 2 ou 3 il n’y a donc pas de générateurs de 
+ℤ/<I>n</I>ℤ.<BR>
+Si <I>n</I> est premier les générateurs de ℤ/<I>n</I>ℤ sont tous les entiers entre 
+2 et <I>n</I>−2 :2,3..<I>n</I>−2.<BR>
+Pour faire le programme, on parcourt tous les entiers entre 1 et <I>n</I>−1.
+On compte combien d’entiers consécutifs sont premiers avec <I>n</I>. Ici c’est 
+<I>j</I>0,..<I>j</I>−1 le <I>j</I> étant celui qui a fait sortir du tantque :<BR>
+ <TT>tantque j&lt;=n-1 and d==1</TT> (i.e. <TT>j==n</TT> ou <TT>d=gcd(j,n)!=1</TT>)<BR>
+si ce nombre (qui est égal à <I>j</I>−<I>j</I>0) est supérieur ou égal à 3 on 
+rajoute comme générateur <TT>j0+1..j-2</TT>.<BR>
+puis on fait progresser <I>j</I> jusqu’à avoir <TT>d=gcd(j,n)==1</TT> ou <TT>j==n</TT>
+à la sortie du tantque :<BR>
+<TT>tantque j&lt;=n-1 and d!=1</TT>.<BR>
+Puis on recommence...jusqu’à <I>j</I>==<I>n</I>
+</P><PRE CLASS="verbatim">latin(P,p):={
+local A,j,k;
+n:=size(P);
+A:=idn(n);
+A[0]:=P;
+pour j de 1 jusque n-1 faire
+pour k de 0 jusque n-1 faire
+A[j,k]:=P[irem(k-j*p,n)];
+fpour;
+fpour;
+return A;
+}:;
+generateur(n):={
+local L,d,j,j0;
+L:=NULL;
+si irem(n,2)==0 or irem(n,3)==0 then return L;fsi;
+si isprime(n) alors return j$(j=2..n-2);fsi;
+j:=1;
+tantque j&lt;=n-1 faire
+j0:=j;
+d:=gcd(j,n);
+tantque j&lt;=n-1 and d==1 faire
+j:=j+1;
+d:=gcd(j,n);
+ftantque;
+si j-j0&gt;=3 alors 
+L:=L,j$(j=j0+1..j-2);
+fsi;
+j:=j+1;
+d:=gcd(j,n);
+tantque j&lt;=n-1 and d!=1 faire
+j:=j+1;
+d:=gcd(j,n);
+ftantque;
+ftantque;
+return L;
+}:;
+</PRE><H4 CLASS="subsubsection">Fabrication d’un carré eulérien pandiagonal</H4><P>
+On tape :
+</P><PRE CLASS="verbatim">estgenerateur(p,n):={
+local G;
+p:=irem(p,n);
+G:=generateur(n);
+si member(p,G)==0 alors return faux;fsi
+return vrai;
+}:;
+carrep(n):={
+local G,P,L,j,k,A,B,p,q,s;
+si irem(n,3)==0 ou irem(n,2)==0 alors renvoie "erreur2" fsi;
+G:=generateur(n);
+L:=[j$(j=0..n-1)];
+P:=permutation(L);
+s:=size(G);
+k:=alea(s);
+p:=G[k];
+k:=alea(s);
+q:=G[k];
+tantque estgenerateur(p-q,n)==0 faire
+k:=alea(s);
+q:=G[k];
+ftantque;
+s:=size(P);
+k:=alea(s);
+P:=P[k];
+A:=latin(P,p);
+B:=latin(P,q);
+retourne produitcar(A,B);
+}
+:;
+</PRE><P>Voici le regroupemenr de tous les programmes utilisés :
+</P><PRE CLASS="verbatim">estpandiage(A):={
+local j,k,n,s,L;
+L:=mat2list(A);
+si is_permu(L)==0 alors retourne faux fsi;
+n:=size(A);
+s:=n*(n^2-1)/2;
+si [sum(A[j,k],j,0,n-1)$(k=0..n-1)]!=[s $(k=0..n-1)] alors 
+retourne faux; 
+fsi;
+si [sum(A[k,j],j,0,n-1)$(k=0..n-2)]!=[s $(k=0..n-2)] alors 
+retourne faux; 
+fsi;
+si [sum(A[j,irem(j+k,n)],j,0,n-1)$(k=0..n-2)]!=[s $(k=0..n-2)] alors 
+retourne faux; 
+fsi;
+si [sum(A[j,irem(-j+k,n)],j,0,n-1)$(k=0..n-2)]!=[s $(k=0..n-2)] alors 
+retourne faux; 
+fsi;
+retourne vrai;
+}
+:;
+estdansnz(A):={
+local L,j,n1,rep;
+L:=mat2list(A);
+n1:=dim(L)-1;
+rep:=vrai;
+pour j de 0 jusque n1 faire
+si L[j]&lt;0 ou L[j]&gt;n1 alors retourne faux; fsi;
+fpour;
+retourne vrai;
+}:;
+produitcar(A,B):={
+local j,k,C,sa,sb,n;
+n:=size(A);
+sa:=dim(A);
+sb:=dim(B);
+si sa!=[n,n] ou sb!=[n,n] ou estdansnz(A)==faux ou estdansnz(B)==faux alors 
+retourne "erreur1"; fsi;
+C:=idn(n); 
+pour j de 0 jusque n-1 faire
+pour k de 0 jusque n-1 faire
+C[j,k]:=n*A[j,k]+B[j,k];
+fpour;
+fpour;
+retourne C;
+}:;
+echange(l,j,k):={
+local a;
+a:=l[j];
+l[j]:=l[k];
+l[k]:=a;
+return l;
+}:;
+permuts(l,k):={
+local lr,j;
+if (k==size(l)-1) return [l];
+lr:=[];
+for (j:=k;j&lt;size(l);j++){
+l:=echange(l,k,j);
+lr:=[op(lr),op(permuts(l,k+1))];
+}
+return lr;
+}:;
+permutation(l):={
+return permuts(l,0);
+}:;
+latin(P,p):={
+local A,j,k;
+n:=size(P);
+A:=idn(n);
+A[0]:=P;
+pour j de 1 jusque n-1 faire
+pour k de 0 jusque n-1 faire
+A[j,k]:=P[irem(k-j*p,n)];
+fpour;
+fpour;
+return A;
+}:;
+generateur(n):={
+local L,d,j,j0;
+L:=NULL;
+si irem(n,2)==0 or irem(n,3)==0 then return L;fsi;
+si isprime(n) alors return j$(j=2..n-2);fsi;
+j:=1;
+tantque j&lt;=n-1 faire
+j0:=j;
+d:=gcd(j,n);
+tantque j&lt;=n-1 and d==1 faire
+j:=j+1;
+d:=gcd(j,n);
+ftantque;
+si j-j0&gt;=3 alors 
+L:=L,j$(j=j0+1..j-2);
+fsi;
+j:=j+1;
+d:=gcd(j,n);
+tantque j&lt;=n-1 and d!=1 faire
+j:=j+1;
+d:=gcd(j,n);
+ftantque;
+ftantque;
+return L;
+}:;
+estgenerateur(p,n):={
+local G;
+p:=irem(p,n);
+G:=generateur(n);
+si member(p,G)==0 alors return faux;fsi
+return vrai;
+}:;
+carrep(n):={
+local G,P,L,j,k,A,B,p,q,s;
+si irem(n,3)==0 ou irem(n,2)==0 alors renvoie "erreur2" fsi;
+G:=generateur(n);
+L:=[j$(j=0..n-1)];
+P:=permutation(L);
+s:=size(G);
+k:=alea(s);
+p:=G[k];
+k:=alea(s);
+q:=G[k];
+tantque estgenerateur(p-q,n)==0 faire
+k:=alea(s);
+q:=G[k];
+ftantque;
+s:=size(P);
+k:=alea(s);
+P:=P[k];
+A:=latin(P,p);
+B:=latin(P,q);
+retourne produitcar(A,B);
+}
+:;
+</PRE><P>On tape :<BR>
+<TT>C:=carrep(7)</TT><BR>
+On obtient 
+<TT>[[16,48,24,8,0,40,32],[26,11,2,41,31,15,42],[1,35,33,18,44,27,10],
+[34,17,43,21,12,4,37],[46,23,13,3,36,28,19],[7,5,39,30,20,45,22],
+[38,29,14,47,25,9,6]]</TT><BR>
+On tape :<BR>
+<TT>estpandiage(C)</TT><BR>
+On obtient 
+<TT>vrai</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc257">15.2.9</A>  Les carrés eulériens pandiagonaux d’ordre 2,3 et 4</H3><P>
+Y-a-t-il des carres eulériens pandiagonaux d’ordre 2, d’ordre 3, d’ordre 4 ?<BR>
+<B>Rappel</B><BR>
+Dans <TT>Xcas</TT> il y a l’instruction <TT>is_permu</TT> 
+qui teste si une liste de dimension <I>n</I> est une permutation de 0..<I>n</I>−1.
+Dans <TT>Xcas</TT> il y a l’instruction <TT>mat2list</TT> qui transforme une matrice 
+en une liste. Ainsi <TT>is_permu(mat2list(A))</TT> nous dira si la matrice 
+carrée <TT>A</TT> de dimension <I>n</I> est un carré eulérien d’ordre <I>n</I> i.e. 
+chacun des nombres 0..<I>n</I><SUP>2</SUP>−1 apparait dans les <I>n</I><SUP>2</SUP> cases du carré. 
+<B>Remarque</B><BR>
+Si un carré d’ordre <I>n</I> est eulérien, pour qu’il soit pandiagonal il doit
+satisfaire à 4<I>n</I> équations. Mais comme la somme :<BR>
+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I><SUP>2</SUP>−1</SUP>=<I>n</I><SUP>2</SUP>(<I>n</I><SUP>2</SUP>−1)/2,
+la somme des éléments de chacune des 4<I>n</I> rangées (i.e lignes ou colonnes
+ou diagonales montantes ou descendantes) vaut donc <I>s</I>=<I>n</I>(<I>n</I><SUP>2</SUP>−1)/2. Il suffit 
+donc de satisfaire à 4<I>n</I>−3 équations (par exemple <I>n</I> équations pour les 
+lignes, <I>n</I>−1 pour les colonnes, <I>n</I>−1 pour les diagonales montantes et <I>n</I>−1
+pour les diagonales descendantes).</P><P>Cherchons si il y a des carrés magiques pandiagonaux d’ordre 2.
+Il y a 5 équations à satisfaire pour 4 inconnues.<BR>
+0n tape :<TT>A2:=[[x0,x1],[y0,y1]]; V2:=mat2list(A2)</TT><BR>
+<TT>VS2:=linsolve([x0+x1-3,y0+y1-3,x0+y0-3,x1+y1-3,x0+y1-3,x1+y0-3],V)</TT><BR>
+On obtient : <TT>[3/2,3/2,3/2,3/2]</TT><BR>
+Les 5 équations ne sont donc pas indépendantes.<BR>
+Il n’y a donc pas de carrés magiques eulériens pandiagonaux d’ordre 2.<BR>
+Cela était prévisible car la somme serait égale à 3 et donc on doit
+mettre 3 dans la ligne qui contient 0 et aussi 3 dans la colonne qui 
+contient 0.</P><P>Cherchons si il y a des carrés magiques pandiagonaux d’ordre 3.
+Il y a 9 équations à satisfaire pour 9 inconnues.<BR>
+0n tape :<TT>A3:=[[x0,x1,x2],[y0,y1,y2],[z0,z1,z2]];V3:=mat2list(A3);</TT><BR>
+<TT>VS3:=linsolve([x0+x1+x2+-12,y0+y1+y2-12,z0+z1+z2-12,x0+y0+z0-12,x1+y1+z1-12,x2+y2+z2-12,x0+y1+z2-12,x1+y2+z0-12,x2+y0+z1-12,x2+y1+z0-12,
+x0+y2+z1-12,x1+y0+z2-12],V3)</TT><BR>
+On obtient : <TT>[4,4,4,4,4,4,4,4,4]</TT><BR>
+Il n’y a donc pas de carrés magiques pandiagonaux d’ordre 3.<BR>
+Cela était encore prévisible car la somme serait égale à 12. On a :<BR>
+8+3+1=8+4+0=12 donc on ne peut pas mettre des nombres différents, dans la 
+colonne du 8, dans la ligne du 8 et dans les diagonales contenant 8.<BR>
+
+Cherchons si il y a des carrés magiques pandiagonaux d’ordre 4.
+0n tape :<BR>
+<TT>A4:=[[x0,x1,x2,x3],[y0,y1,y2,y3],[z0,z1,z2,z3],[t0,t1,t2,t3]];</TT><BR>
+<TT>V4:=mat2list(A4)</TT><BR>
+Il y a 13 équations à satisfaire pour 16 inconnues (<I>s</I>=30). On a donc nos 
+chances !<BR>
+<TT>linsolve([x0+x1+x2+x3-30,y0+y1+y2+y3-30,z0+z1+z2+z3-30, 
+t0+t1+t2+t3-30,x0+y0+z0+t0-30,x1+y1+z1+t1-30,x2+y2+z2+t2-30,
+x3+y3+z3+t3-30,x0+y1+z2+t3-30,x1+y2+z3+t0-30,x2+y3+z0+t1-30,
+x3+y0+z1+t2-30,x0+y3+z2+t1-30,x1+y0+z3+t2-30,x2+y1+z0+t3-30,
+x3+y2+z1+t0-30],V4)</TT><BR>
+On obtient :
+<TT>[t2+t3+z3-15,-z3+15,-t1-t2+z3+15,t1-t3-z3+15,-t2+15,
+-t3+15,t1+t2+t3-15,-t1+15,t1+t2-z3,-t1+t3+z3,-t2-t3-z3+30,
+z3,-t1-t2-t3+30,t1,t2,t3]</TT>
+On en déduit que les 13 équations ne sont pas indépendantes :
+On remarque que si on fait la sommes des 6 rangées ci-dessous la sommes des 
+cases notées par des points rouges est comptés 3 fois donc ces 4 cases
+ont aussi comme somme <I>s</I> ce qui entraine que la somme des 4 cases situées 
+aux sommets vaut aussi <I>s</I>.<BR><BR>
+</P><DIV CLASS="minipage">
+<IMG SRC="cascas129.png">
+</DIV><DIV CLASS="minipage">
+<IMG SRC="cascas130.png">
+</DIV><P>On en déduit que la somme des cases <I>A</I>,<I>B</I>,<I>C</I>,<I>D</I>,<I>E</I>,<I>F</I>,<I>G</I>,<I>H</I> vaut 2<I>s</I>,
+c’est à dire que si la somme des cases <I>A</I>,<I>B</I>,<I>C</I>,<I>D</I> vaut <I>s</I> cela entraine que
+la somme des cases <I>E</I>,<I>F</I>,<I>G</I>,<I>H</I> vaut aussi <I>s</I>.<BR>
+On tape :<BR>
+<TT>L4(z3,t1,t2,t3):=[t2+t3+z3-15,-z3+15,-t1-t2+z3+15,t1-t3-z3+15,
+-t2+15,-t3+15,t1+t2+t3-15,-t1+15,t1+t2-z3,-t1+t3+z3,-t2-t3-z3+30,
+z3,-t1-t2-t3+30,t1,t2,t3]</TT><BR>
+puis on va chercher avec un programme les valeurs de <I>z</I>3,<I>t</I>1,<I>t</I>2,<I>t</I>3 pour 
+lesquelles on a des carrés eulériens. Pour cela on va faire varier les 4 
+variables <I>z</I>3,<I>t</I>1,<I>t</I>2,<I>t</I>3 entre 0 et 15.<BR>
+On tape :
+</P><PRE CLASS="verbatim">carremp4(L):={
+local R,z3,t1,t2,t3;
+R:=[];
+pour z3 de 0 jusque 15 faire
+ pour t1 de 0 jusque 15 faire
+  pour t2 de 0 jusque 15 faire
+   pour t3 de 0 jusque 15 faire
+    //si listeab(L(z3,t1,t2,t3),0,15) alors
+    si is_permu(L(z3,t1,t2,t3)) alors 
+       R:=append(R,[z3,t1,t2,t3]);
+    fsi
+   fpour;
+  fpour;
+ fpour;
+fpour;
+return R;
+}:;
+</PRE><P>On tape :<BR>
+<TT>LS4:=carremp4(L4):;</TT><BR>
+Après "Evaluation time: 15.58", on obtient "Done"<BR>
+On tape : <TT>size(LS4)</TT> et on obtient <TT>384</TT><BR>
+On tape : <TT>list2mat(L4(op(LS4[0])),4)</TT><BR>
+On obtient <TT>[[2,15,8,5],[9,4,3,14],[7,10,13,0],[12,1,6,11]]</TT><BR>
+Si on échange 2 lignes (ou 2 colonnes) dans un carré pandiagonal, on obtient
+encore un carré pandiagonal : il y a donc 384/16=24 carrés pandiagonaux
+vraiement différents. On peut donc améliorer le programme précédent en 
+supposant que <I>t</I>3=15.<BR>
+On tape :<BR>
+<TT>L41(z3,t1,t2):=L4(z3,t1,t2,15)</TT>
+</P><PRE CLASS="verbatim">carremp41(L):={
+local R,z3,t1,t2;
+R:=[];
+pour z3 de 0 jusque 14 faire
+pour t1 de 0 jusque 14 faire
+pour t2 de 0 jusque 14 faire
+si is_permu(L(z3,t1,t2)) alors R:=append(R,[z3,t1,t2]);fsi;
+//si listeab(L(z3,t1,t2),0,15) alors R:=append(R,[z3,t1,t2]);fsi;
+fpour;
+fpour;
+fpour;
+return R;
+}:;
+</PRE><P>On tape :<BR>
+<TT>LS41:=carremp41(L41):;</TT><BR>
+Après "Evaluation time: 1.23" on obtient "Done"<BR>
+<TT>size(LS41)</TT> renvoie <TT>24</TT> et<BR>
+<TT>list2mat(L41(op(LS41[0])),4)</TT> renvoie<BR>
+<TT>[[5,14,9,2],[11,0,7,12],[6,13,10,1],[8,3,4,15]]</TT><BR>
+Soit :<BR>
+<TT>C:=[[5,14,9,2],[11,0,7,12],[6,13,10,1],[8,3,4,15]]</TT><BR>
+On écrit <TT>C</TT> en base 4 on obtient :<BR>
+<TT>[[11,32,21,2],[23,0,13,30],[12,31,22,1],[20,3,10,33]]</TT><BR><BR>
+c’est à dire :<BR>
+<I>C</I>=<I>A</I> X <I>B</I> = 
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>14</TD><TD ALIGN=center NOWRAP>9</TD><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD ALIGN=center NOWRAP>11</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>12</TD></TR>
+<TR><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>13</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>15</TD></TR>
+</TABLE><P>
+ = 
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>3</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>3</TD></TR>
+</TABLE><P>
+
+X </P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>3</TD></TR>
+</TABLE><P><BR>
+)=<BR>
+On tape :<BR>
+<TT>A:=[[1,3,2,0],[2,0,1,3],[1,3,2,0],[2,0,1,3]]</TT><BR>
+<TT>B:=[[1,2,1,2],[3,0,3,0],[2,1,2,1],[0,3,0,3]]</TT><BR>
+<TT>C:=produitcar(A,B)</TT><BR>
+On obtient :<BR>
+<TT>[[5,14,9,2],[11,0,7,12],[6,13,10,1],[8,3,4,15]]</TT><BR>
+On tape :<BR>
+<TT>estpandiage(C)</TT><BR>
+On obtient :<BR>
+<TT>vrai</TT><BR>
+<B>Remarque</B> Pour cet exemple (<I>n</I>=4), dans la décomposition de <I>C</I> en 
+produit <I>A</I>X<I>B</I> les carrés <I>A</I> et <I>B</I> ne sont pas latins.<BR>
+<B>Cherchons les 24 carrés d’ordre 4 se terminant par 0</B><BR>
+On tape :<BR>
+<TT>LL41(z3,t1,t2):=L4(z3,t1,t2,0)</TT><BR>
+<TT>LLS41:=carremp41(L41):;</TT><BR>
+<TT>size(LLS41)</TT><BR>
+On obtient :<BR>
+<TT>24</TT><BR>
+On tape :<BR>
+<TT>list2mat(LL41(op(LLS41[1])),4)$(k=0..23)</TT><BR>
+On obtient :<BR>
+</P><PRE CLASS="verbatim">[[5,8,6,11],[2,15,1,12],[9,4,10,7],[14,3,13,0]],
+[[6,8,5,11],[1,15,2,12],[10,4,9,7],[13,3,14,0]],
+[[3,8,6,13],[4,15,1,10],[9,2,12,7],[14,5,11,0]],
+[[6,8,3,13],[1,15,4,10],[12,2,9,7],[11,5,14,0]],
+[[3,8,5,14],[4,15,2,9],[10,1,12,7],[13,6,11,0]],
+[[5,8,3,14],[2,15,4,9],[12,1,10,7],[11,6,13,0]],
+[[9,4,10,7],[2,15,1,12],[5,8,6,11],[14,3,13,0]],
+[[10,4,9,7],[1,15,2,12],[6,8,5,11],[13,3,14,0]],
+[[3,4,10,13],[8,15,1,6],[5,2,12,11],[14,9,7,0]],
+[[10,4,3,13],[1,15,8,6],[12,2,5,11],[7,9,14,0]],
+[[3,4,9,14],[8,15,2,5],[6,1,12,11],[13,10,7,0]],
+[[9,4,3,14],[2,15,8,5],[12,1,6,11],[7,10,13,0]],
+[[9,2,12,7],[4,15,1,10],[3,8,6,13],[14,5,11,0]],
+[[12,2,9,7],[1,15,4,10],[6,8,3,13],[11,5,14,0]],
+[[5,2,12,11],[8,15,1,6],[3,4,10,13],[14,9,7,0]],
+[[12,2,5,11],[1,15,8,6],[10,4,3,13],[7,9,14,0]],
+[[5,2,9,14],[8,15,4,3],[6,1,10,13],[11,12,7,0]],
+[[9,2,5,14],[4,15,8,3],[10,1,6,13],[7,12,11,0]],
+[[10,1,12,7],[4,15,2,9],[3,8,5,14],[13,6,11,0]],
+[[12,1,10,7],[2,15,4,9],[5,8,3,14],[11,6,13,0]],
+[[6,1,12,11],[8,15,2,5],[3,4,9,14],[13,10,7,0]],
+[[12,1,6,11],[2,15,8,5],[9,4,3,14],[7,10,13,0]],
+[[6,1,10,13],[8,15,4,3],[5,2,9,14],[11,12,7,0]],
+[[10,1,6,13],[4,15,8,3],[9,2,5,14],[7,12,11,0]]
+</PRE><P>Dans la gravure Melancolia I d’Albrecht Dürer il y a un carré magique en 
+haut et a droite qui est eulérien (écrit avec les nombres de 1 à 16)
+mais il n’est pas pandiagonal. Il peut être représenté (avec les nombres 
+de 0 à 15) par :<BR>
+[[15,2,1,12],[4,9,10,7],[8,5,6,11],[3,14,13,0]]<BR>
+Ce carré a sur ces lignes les mêmes nombres que sur les lignes de ces 3 
+carrés pandiagonaux :<BR>
+</P><PRE CLASS="verbatim">[[5,8,6,11],[2,15,1,12],[9,4,10,7],[14,3,13,0]],
+[[9,4,10,7],[2,15,1,12],[5,8,6,11],[14,3,13,0]],
+[[10,4,9,7],[1,15,2,12],[6,8,5,11],[13,3,14,0]]
+</PRE><H3 CLASS="subsection"><A NAME="htoc258">15.2.10</A>  Existence de carrés eulériens pandiagonaux d’ordre 6</H3><P>
+Y-a-t-il des carres eulériens pandiagonaux d’ordre 6 ?
+On tape :<BR>
+<TT>V6:=[x0,x1,x2,x3,x4,x5,y0,y1,y2,y3,y4,y5,z0,z1,z2,z3,z4,z5,
+t0,t1,t2,t3,t4,t5,u0,u1,u2,u3,u4,u5,v0,v1,v2,v3,v4,v5]</TT><BR>
+<TT>M:=list2mat(V6,6)</TT><BR>
+<TT>L(j):=sum(M[j,k],k=0..5)</TT><BR>
+<TT>C(k):=sum(M[j,k],j=0..5)</TT><BR>
+<TT>D(k):=sum(M[j,irem(-j+k,6)],j=0..5)</TT><BR>
+<TT>T(k):=sum(M[j,irem(k+j,6)],j=0..5)</TT><BR>
+<TT>LL:=(L(j)-105)$(j=0..5)</TT><BR>
+<TT>CC:=(C(k)-105)$(k=0..4)</TT><BR>
+<TT>DD:=(D(k)-105)$(k=0..4)</TT><BR>
+<TT>TT:=(T(k)-105)$(k=0..4)</TT><BR>
+<TT>linsolve([LL,CC,DD,TT],V6)[0]</TT><BR>
+On obtient la valeur de <TT>x0</TT> :<BR>
+<TT>t4+t5+u3+u4+u5+v2+v3+v4+v5+z5+(-315)/2</TT><BR>
+Donc <TT>x0</TT> n’est jamais un nombre entier.<BR>
+Il n’y a donc pas de carrés eulériens pandiagonaux d’ordre 6. </P><H2 CLASS="section"><A NAME="toc90"></A><A NAME="htoc259">15.3</A>  Les hexagones magiques</H2><H3 CLASS="subsection"><A NAME="htoc260">15.3.1</A>  Le dessin</H3><P>
+Peut-on placer les entiers de 1 à <I>n</I> dans une structure hexagonale ayant <I>n</I>
+hexagones, de façon à ce que la somme des nombres alignés soit constante ?<BR>
+
+Pour une structure hexagonale ayant 7 hexagones:<BR>
+
+<IMG SRC="cascas131.png"><BR>
+ 0n voit facilement que cela est impossible puisque si
+<I>x</I>1+<I>x</I>3=<I>x</I>3+<I>x</I>6 alors <I>x</I>1=<I>x</I>6<BR>
+
+Pour une structure hexagonale ayant 19 hexagones, il faut que les nombres 
+1,2..19 remplissent les 19 cases afin que la somme de toutes les cases 
+alignèes soit égale à 38 (en tout 5*3 équations à satisfaire).
+Si il y a yne solution, puisque 1+2+...19=190 et qu’il y a en tout 5 rangées 
+disjointes de même somme, la somme de chaque rangèe vaut 190/5=38.
+</P><DIV CLASS="center"><IMG SRC="cascas132.png"></DIV><P>
+On choisit le nom des variables :<BR>
+
+<IMG SRC="cascas133.png"><BR>
+On tape :
+</P><PRE CLASS="verbatim">linsolve([x1+x2+x3=38,x4+x5+x6+x7=38,x8+x9+x10+x11+x12=38,
+x13+x14+x15+x16=38,x17+x18+x19=38,x1+x4+x8=38,x2+x5+x9+x13=38,
+x3+x6+x10+x14+x17=38,x7+x11+x15+x18=38,x12+x16+x19=38,
+x3+x7+x12=38,x2+x6+x11+x16=38,x1+x5+x10+x15+x19=38,
+x4+x9+x14+x18=38,x8+x13+x17=38],
+[x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,
+x11,x12,x13,x14,x15,x16,x17,x18,x19])
+</PRE><P>On obtient :
+</P><PRE CLASS="verbatim">[-x10-x11-x14-2*x15-x16-x18-x19+76,x10+x14+x15,
+x11+x15+x16+x18+x19-38,x10+x11+x15,x11+x14+x15+x16+x18-38,
+-x10-x11-x14-x15-x16+38,-x11-x15-x18+38,x14+x15+x16+x18+x19-38,
+-x10-x11-x14-x15-x18+38,x10,x11,-x16-x19+38,
+-x14-x15-x16+38,x14,x15,x16,-x18-x19+38,x18,x19]
+</PRE><P>On voit que les solutions réelles dépendent des 7 variables:<BR>
+ <I>x</I>10,<I>x</I>11,<I>x</I>14,<I>x</I>15,<I>x</I>16,<I>x</I>18,<I>x</I>19.<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc261">15.3.2</A>  Le programme</H3><P>
+On va donc écrire un programme pour chercher les solutions qui sont des 
+permutations de [1,2,...19].<BR>
+Pour éviter de faire 19<SUP>7</SUP>=893871739 itérations on remarque que :<BR>
+les variables <I>x</I>2 et <I>x</I>4 sont indépendantes de <I>x</I>16,<I>x</I>18,<I>x</I>19 :<BR>
+les variables <I>x</I>6 et <I>x</I>13 sont indépendantes de <I>x</I>18,<I>x</I>19 :<BR>
+les variables <I>x</I>5, <I>x</I>7 et <I>x</I>9,<I>x</I>2 et <I>x</I>4 sont indépendantes de <I>x</I>19<BR>
+On peut remarquer de plus que :
+<I>x</I>1 (resp <I>x</I>3,<I>x</I>8,<I>x</I>12,<I>x</I>17,<I>x</I>19) ne peut pas 
+être égal à 1 ou à 2 car <I>x</I>1+<I>x</I>2+<I>x</I>3=<I>x</I>1+<I>x</I>4+<I>x</I>8=38 :<BR>
+ si <I>x</I>1=1 cela entraine <I>x</I>2+<I>x</I>3=<I>x</I>4+<I>x</I>8=37. Mais l’équation <I>x</I>+<I>y</I>=37 a
+comme solution dans 1...19 que les couples (19,18) et (18,19) ce qui ne
+donne pas 4 solutions distinctes pour <I>x</I>2,<I>x</I>3,<I>x</I>4,<I>x</I>8.<BR>
+si <I>x</I>1=2 cela entraine <I>x</I>2+<I>x</I>3=<I>x</I>4+<I>x</I>8=36. Mais l’équation <I>x</I>+<I>y</I>=36 a 
+comme solution dans 1...19 les couples (19,17), (18,18) et (17,19) ce qui ne
+donne pas 4 solutions distinctes pour <I>x</I>2,<I>x</I>3,<I>x</I>4,<I>x</I>8.<BR>
+ On écrit sans trop chercher à optimiser :
+</P><PRE CLASS="verbatim">hexamagique():={
+local x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,
+      x13,x14,x15,x16,x17,x18,x19,L,nsol,nsol2;
+L:=NULL;
+nsol:=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
+nsol2:=[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
+pour x10 de 1 jusque 19 faire
+pour x11 de 1 jusque 19 faire
+pour x14 de 1 jusque 19 faire
+pour x15 de 1 jusque 19 faire
+ x2:=x10+x14+x15; x4:=x10+x11+x15;
+ si member(x2,nsol) and member(x4,nsol) and x2!=x4 alors
+  pour x16 de 1 jusque 19 faire
+   x13:=-x14-x15-x16+38;
+   x6:=-x10-x11+x13;//x6:=-x10-x11-x14-x15-x16+38
+   si member(x13,nsol) and member(x6,nsol) and x13!=x6  alors
+    pour x18 de 1 jusque 19 faire
+     x7:=-x11-x15-x18+38;
+     x5:=-x7+x14+x16;//x5:=x11+x14+x15+x16+x18-38;
+     x9:=-x10+x7-x14;//x9:=-x10-x11-x14-x15-x18+38;
+     si member(x5,nsol) and member(x7,nsol) and member(x9,nsol) 
+        and x5!=x7  and x5!=x9 and x9!=x7 alors
+      pour x19 de 3 jusque 19 faire
+       x17:=-x18-x19+38; x12:=-x16-x19+38;
+       si member(x17,nsol2) and member(x12,nsol2) and 
+        x12!=x17 alors
+        //x1:=-x10-x11-x14-2*x15-x16-x18-x19+76;
+        x1:=-x10-x11-x14-2*x15-x16+x17+38;
+        x8:=x14+x15+x16-x17;//x8:=x14+x15+x16+x18+x19-38;
+        x3:=x11+x15+x16-x17;//x3:=x11+x15+x16+x18+x19-38;
+        si is_permu([x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,
+               x13,x14,x15,x16,x17,x18,x19]-[1$19]) alors
+         L:=L,[x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,
+             x13,x14,x15,x16,x17,x18,x19];
+        fsi;
+       fsi;
+      fpour;
+     fsi;
+    fpour;
+   fsi;
+  fpour;
+ fsi;
+fpour;
+fpour;
+fpour;
+fpour;
+return L
+}:;
+</PRE><P>On tape :<BR>
+<TT>Rep:=hexamagique()</TT><BR>
+On obtient (Evaluation time: 1011.94 c’est long ! mais l’employé de chemin de 
+fer, Clifford W. Adams a mis 47 ans de 1910 à 1957 pour trouver une solution 
+avec des hexagones en céramique numérotés de 1 à 19...):
+</P><PRE CLASS="verbatim">[15,14,9,13,8,6,11,10,4,5,1,18,12,2,7,17,16,19,3],
+[16,19,3,12,2,7,17,10,4,5,1,18,13,8,6,11,15,14,9],
+[15,13,10,14,8,4,12,9,6,5,2,16,11,1,7,19,18,17,3],
+[18,17,3,11,1,7,19,9,6,5,2,16,14,8,4,12,15,13,10],
+[3,19,16,17,7,2,12,18,1,5,4,10,11,6,8,13,9,14,15],
+[9,14,15,11,6,8,13,18,1,5,4,10,17,7,2,12,3,19,16],
+[3,17,18,19,7,1,11,16,2,5,6,9,12,4,8,14,10,13,15],
+[10,13,15,12,4,8,14,16,2,5,6,9,19,7,1,11,3,17,18],
+[9,11,18,14,6,1,17,15,8,5,7,3,13,4,2,19,10,12,16],
+[10,12,16,13,4,2,19,15,8,5,7,3,14,6,1,17,9,11,18],
+[16,12,10,19,2,4,13,3,7,5,8,15,17,1,6,14,18,11,9],
+[18,11,9,17,1,6,14,3,7,5,8,15,19,2,4,13,16,12,10]
+</PRE><P>Ces 12 solutions représentent en faite la même solution puisque une 
+solution donne 5 solutions par rotation de <I>k</I>*π/3 pour (<I>k</I>=1..5) et donne 
+6 solutions par symétrie par rapport aux droites passant par le centre de 
+d’angle <I>k</I>*π/3 pour (<I>k</I>=0..5).<BR>
+Voici la première solution :<BR><BR>
+<IMG SRC="cascas134.png"><BR>
+
+On peut remarquer que l’on peut éliminer les solutions obtenues par rotation 
+en faisant un programme qui impose successivement, par exemple, <I>x</I>11=1, puis 
+<I>x</I>16=1. Mais si <I>x</I>16=1 alors <I>x</I>12+<I>x</I>16+<I>x</I>19=38 entraine 
+<I>x</I>12+<I>x</I>19=37 donc seuls le couples (18,19) et (19,18) sont solutions. Ces 2 
+solutions donneront des résultas symétriques, donc on va imposer
+successivement <I>x</I>11=1, puis <I>x</I>16=1, <I>x</I>12=18,  <I>x</I>19=19. On aura ainsi les 
+solutions symétriques pour <I>x</I>11=1 mais pas pour <I>x</I>16=1<BR>
+On va aussi, pour réduire le temps d’exécution, faire un test, à chaque 
+étape, qui vérifie que les valeurs obtenues sont différentes et comprises 
+entre 1 et 19.<BR>
+Pour cela, on tape <TT>tousdiff(L,LR)</TT> qui teste si les éléments de 
+<TT>L</TT> sont tous différents et sont dans la liste <TT>LR</TT> : 
+</P><PRE CLASS="verbatim">tousdiff(L,LR):={
+local s,a;
+s:=size(L);
+tantque s!=0 faire 
+a:=L[0];
+si member(a,LR) alors
+  L:=remove(a,L);
+  si s!=size(L)+1 alors return 0; fsi;
+  s:=s-1;
+sinon return 0;
+fsi
+ftantque;
+return 1;
+}:;
+</PRE><P>puis on utilise ce test dans <TT>hexamagique2()</TT> : 
+</P><PRE CLASS="verbatim">hexamagique2():={
+local x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,LR,
+      x13,x14,x15,x16,x17,x18,x19,L,nsol,nsol2;
+LR:=NULL;
+nsol:=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
+x11:=1;
+pour x10 de 2 jusque 19 faire
+pour x14 de 2 jusque 19 faire
+pour x15 de 2 jusque 19 faire
+ x2:=x10+x14+x15; x4:=x10+x11+x15;
+ L:=[x2,x4,x10,1,x14,x15];
+ si tousdiff(L,nsol) alors
+  pour x16 de 2 jusque 19 faire
+   x13:=-x14-x15-x16+38; x6:=-x10-x11+x13;
+   L:=[x2,x4,x6,x10,x11,x13,x14,x15,x16];
+   si  tousdiff(L,nsol) alors
+    pour x18 de 2 jusque 19 faire
+     x7:=-x11-x15-x18+38; x5:=-x7+x14+x16; x9:=-x10+x7-x14;
+     L:=[x2,x4,x5,x6,x7,x9,x10,1,x13,x14,x15,x16,x18];
+     si  tousdiff(L,nsol) alors
+      pour x19 de 3 jusque 19 faire
+       x17:=-x18-x19+38; x12:=-x16-x19+38;
+       x1:=-x10-x11-x14-2*x15-x16+x17+38;
+       x8:=x14+x15+x16-x17; x3:=x11+x15+x16-x17;
+       L:=[x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,1,x12,
+              x13,x14,x15,x16,x17,x18,x19];
+       si tousdiff(L,nsol) alors
+        LR:=LR,L;
+       fsi;
+      fpour;
+     fsi;
+    fpour;
+   fsi;
+  fpour;
+ fsi;
+fpour;
+fpour;
+fpour;
+x16:=1;x12:=18;x19:=19;
+pour x10 de 2 jusque 17 faire
+pour x11 de 2 jusque 17 faire
+pour x14 de 2 jusque 17 faire
+pour x15 de 2 jusque 17 faire
+ x2:=x10+x14+x15; x4:=x10+x11+x15;
+  x13:=-x14-x15+37;
+  x6:=-x10-x11+x13;
+  L:=[x2,x4,x6,x10,x11,18,x14,x15,1,x18,19];
+  si tousdiff(L,nsol) alors
+   pour x18 de 2 jusque 17 faire
+    x7:=-x11-x15-x18+38;
+    x5:=-x7+x14+x16;
+    x9:=-x10+x7-x14;
+    x17:=-x18-x19+38;
+    x1:=-x10-x11-x14-2*x15-x16+x17+38;
+    x8:=x14+x15+x16-x17;
+    x3:=x11+x15+x16-x17;
+    L:=[x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,18,
+              x13,x14,x15,1,x17,x18,19];
+    si  tousdiff(L,nsol) alors
+      LR:=LR,L;
+    fsi;
+   fpour;
+  fsi;
+fpour;
+fpour;
+fpour;
+fpour;
+return LR;
+}
+:;
+</PRE><P>On tape :<BR>
+<TT>Rep:=hexamagique2()</TT><BR>
+On obtient la première solution trouvée tout à l’heure et sa symétrique
+(Evaluation time: 25.39 on a divisé le temps du premier programme presque 
+par 40 mais on peut certainement faire encore mieux !!!!) :<BR>
+<TT>[15,14,9,13,8,6,11,10,4,5,1,18,12,2,7,17,16,19,3],</TT><BR>
+<TT>[16,19,3,12,2,7,17,10,4,5,1,18,13,8,6,11,15,14,9]</TT></P><H3 CLASS="subsection"><A NAME="htoc262">15.3.3</A>  Les programmes des figures</H3><P>
+Pour faire le dessin on tape :
+</P><PRE CLASS="verbatim">hexag2():={
+local L,j;
+L:=hexagone(-1/2-i*sqrt(3)/2,1/2-i*sqrt(3)/2);
+pour j de 0 jusque 5 faire
+ L:=L,hexagone((1/2+i*sqrt(3)/2)*exp(i*j*pi/3),exp(i*j*pi/3));
+fpour;
+L:=L,legende(i*1.73,"x3",red);
+L:=L,legende(-1.5+i*0.86,"x1",red);
+L:=L,legende(1.5+i*0.86,"x6",red);
+retourne L;
+}
+
+:;
+hexag():={
+local L,j;
+L:=hexagone(-1/2-i*sqrt(3)/2,1/2-i*sqrt(3)/2);
+pour j de 0 jusque 5 faire
+ L:=L,hexagone((1/2+i*sqrt(3)/2)*exp(i*j*pi/3),exp(i*j*pi/3)),
+hexagone((5/2+i*sqrt(3)/2)*exp(i*j*pi/3),2*exp(i*j*pi/3)),
+hexagone((2+i*sqrt(3))*exp(i*j*pi/3),(5/2+i*sqrt(3)/2)*exp(i*j*pi/3));
+fpour;
+retourne L;
+}
+:;
+hexag2():={
+local L,j;
+L:=hexagone(-1/2-i*sqrt(3)/2,1/2-i*sqrt(3)/2);
+pour j de 0 jusque 5 faire
+ L:=L,hexagone((1/2+i*sqrt(3)/2)*exp(i*j*pi/3),exp(i*j*pi/3)),
+fpour;
+L:=legende(-3.3+i*1.73,"x1",red);
+L:=legende(-3.3+i*1.73,"x1",red);
+L:=legende(-3.3+i*1.73,"x1",red);
+retourne L;
+}
+:;
+leg():={
+local L;
+L:=legende(-3.3+i*1.73,"x1",red);
+L:=L,legende(-3.3,"x2",red);
+L:=L,legende(-3.3-i*1.73,"x3",red);
+L:=L,legende(-1.8+2.5*i,"x4",red);
+L:=L,legende(-1.8+0.86*i,"x5",red);
+L:=L,legende(-1.8-0.86*i,"x6",red);
+L:=L,legende(-1.8-2.5*i,"x7",red);
+L:=L,legende(2.7+i*1.73,"x17",red);
+L:=L,legende(2.7,"x18",red);
+L:=L,legende(2.7-i*1.73,"x19",red);
+L:=L,legende(-0.3+i*3.5,"x8",red);
+L:=L,legende(-0.3+i*1.73,"x9",red);
+L:=L,legende(-0.3,"x10",red);
+L:=L,legende(-0.3-i*1.73,"x11",red);
+L:=L,legende(-0.3-i*3.5,"x12",red);
+L:=L,legende(1.2+2.5*i,"x13",red);
+L:=L,legende(1.2+0.86*i,"x14",red);
+L:=L,legende(1.2-0.86*i,"x15",red);
+L:=L,legende(1.2-2.5*i,"x16",red);
+L;}
+:;
+valleg(Rep):={
+local L,x1;
+[x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,
+ x15,x16,x17,x18,x19]:=Rep[0];
+L:=legende(-3.3+i*1.73,string(x1));
+L:=L,legende(-3.3,string(x2));
+L:=L,legende(-3.3-i*1.73,string(x3));
+L:=L,legende(-1.8+2.5*i,string(x4));
+L:=L,legende(-1.8+0.86*i,string(x5));
+L:=L,legende(-1.8-0.86*i,string(x6));
+L:=L,legende(-1.8-2.5*i,string(x7));
+L:=L,legende(2.7+i*1.73,string(x17));
+L:=L,legende(2.7,string(x18));
+L:=L,legende(2.7-i*1.73,string(x19));
+L:=L,legende(-0.3+i*3.5,string(x8));
+L:=L,legende(-0.3+i*1.73,string(x9));
+L:=L,legende(-0.3,string(x10));
+L:=L,legende(-0.3-i*1.73,string(x11));
+L:=L,legende(-0.3-i*3.5,string(x12));
+L:=L,legende(1.2+2.5*i,string(x13));
+L:=L,legende(1.2+0.86*i,string(x14));
+L:=L,legende(1.2-0.86*i,string(x15));
+L:=L,legende(1.2-2.5*i,string(x16));
+L;}:;
+</PRE><HR>
+<A HREF="cascas014.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas016.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,2894 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Algorithmes sur les suites et les séries</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casrouge012.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge014.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc348">Chapitre 13</A>  Algorithmes sur les suites et les séries</H1><P>
+L’objectif ici est de traduire les algorithmes en l’écriture de programmes.
+On écrit ici des programmes permettant d’avoir les termes d’une suite ou
+d’une série et de trouver des valeurs approchées de leur limites.<BR>
+Mais, pour édutier les suites et les séries, on peut aussi utiliser le 
+tableur ce qui est souvent plus facile que d’écrire un programme.</P><H2 CLASS="section"><A NAME="toc96"></A><A NAME="htoc349">13.1</A>  Les suites</H2><P>
+Soit <I>u</I><SUB><I>n</I></SUB> une suite de réels définie soit par <I>u</I><SUB><I>n</I></SUB>=<I>f</I>(<I>n</I>), soit
+par une relation de récurrence <I>u</I><SUB><I>n</I></SUB>=<I>f</I>(<I>u</I><SUB><I>n</I>−<I>m</I></SUB>,..,<I>u</I><SUB><I>n</I>−1</SUB>) et la donnée 
+de ses premiers termes. On veut ici, calculer les valeurs de <I>u</I><SUB><I>n</I></SUB>.
+Pour les fonctions qui suivent, il suffira de rajouter la fonction <TT>evalf</TT>
+dans le <TT>return</TT> pour avoir une valeur approchée de <I>u</I><SUB><I>n</I></SUB> : par exemple
+<TT>return evalf(uk)</TT>. 
+</P><H3 CLASS="subsection"><A NAME="htoc350">13.1.1</A>  Les suites <I>u</I><SUB><I>n</I></SUB>=<I>f</I>(<I>n</I>)</H3><P>
+Pour avoir le <I>n</I>-ième terme <I>u</I><SUB><I>n</I></SUB> il suffit :<BR>
+de définir la fonction <I>f</I> et de taper <TT>f(n)</TT>.<BR>
+On peut aussi mettre <I>f</I> comme paramètre et taper :
+</P><PRE CLASS="verbatim">u(f,n):=f(n)
+</PRE><P>Ainsi <TT>u(sq,3)</TT> vaut <TT>9</TT> et <TT>u(sqrt,3)</TT> vaut <TT>sqrt(3)</TT>.<BR>
+On remarquera qu’il est souvent préférable de simplifier 
+l’écriture de <TT>u(f,n)</TT> avec la commande <TT>normal</TT> : mettre plutôt
+<TT>normal</TT> dans la définition de <TT>f</TT>.<BR>
+Par exemple on définit :
+<TT>f(x):=normal(x/sqrt(3)+sqrt(3))</TT>).<BR>
+On tape :<BR>
+<TT>u(f,3)</TT><BR>
+On obtient :<BR>
+<TT>2*sqrt(3)</TT><BR>
+On peut aussi considérer qu’il n’y a qu’un paramètre <I>l</I> qui est la 
+séquence <I>f</I>,<I>n</I> et définir <TT>u</TT> par :
+</P><PRE CLASS="verbatim">u(l):=l[0](l[1])
+</PRE><P>Pour avoir la suite des termes <I>u</I><SUB><I>k</I></SUB>, pour <I>k</I> allant de <I>k</I>0 à <I>n</I>,
+on écrit :
+</P><PRE CLASS="verbatim">utermes(f,k0,n):={
+local k,lres;
+lres:=NULL;
+for (k:=k0;k&lt;=n;k++){
+     lres:=lres,f(k);
+}
+return lres;
+}
+</PRE><P>On a choisit de mettre tous les termes cherchés dans une séquence.<BR>
+On a : <TT>lres:=NULL;</TT> initialise la séquence à vide.<BR>
+Par exemple, avec la fonction :<BR>
+<TT>f(x):=normal(x/sqrt(3)+sqrt(3))</TT>).<BR>
+On tape :<BR>
+<TT>utermes(f,0,5)</TT><BR>
+On obtient :<BR>
+<TT>sqrt(3),4*sqrt(3)/3,5*sqrt(3)/3,2*sqrt(3),7*sqrt(3)/3,8*sqrt(3)/3</TT></P><H3 CLASS="subsection"><A NAME="htoc351">13.1.2</A>  La représentation des suites <I>u</I><SUB><I>n</I></SUB>=<I>f</I>(<I>n</I>)</H3><P>
+On va représenter une suite <I>u</I><SUB><I>n</I></SUB> par des segments verticaux : le terme 
+<I>u</I><SUB><I>p</I></SUB> sera représenté par le segment joignant le point (<I>p</I>,0) au point 
+(<I>p</I>,<I>f</I>(<I>p</I>)).<BR>
+Pour faire cette représentation, on définit la fonction <I>f</I> et on valide le
+programme suivant qui permet de représenter <I>u</I><SUB><I>j</I>1</SUB>=<I>f</I>(<I>j</I>1)..<I>u</I><SUB><I>j</I>2</SUB>=<I>f</I>(<I>j</I>2).
+</P><PRE CLASS="verbatim">plotsuite(f,j1,j2):={
+local j,P,L;
+L:=NULL;
+for (j:=j1;j&lt;=j2;j++) {
+P:=point(j+i*u(j),couleur=point_width_4+noir);
+L:=L,segment(j,P,couleur=ligne_tiret+rouge),P;
+}
+return L;
+};
+</PRE><P><B>Exemple</B><BR>
+<TT>u(n):=1+(-1)</TT><CODE><TT>^</TT></CODE><TT>n/n</TT><BR>
+puis,<BR>
+<TT>plotsuite(u,0,10)</TT><BR>
+puis,<BR>
+<TT>plotsuite(u,20,30)</TT></P><H3 CLASS="subsection"><A NAME="htoc352">13.1.3</A>  La représentation des suites récurrentes <I>u</I><SUB>0</SUB>=<I>a</I>,<I>u</I><SUB><I>n</I></SUB>=<I>f</I>(<I>u</I><SUB><I>n</I>−1</SUB>)</H3><P>
+Pour avoir les termes <I>u</I><SUB>0</SUB>=<I>a</I>,...<I>u</I><SUB><I>p</I></SUB>, on définit la fonction <I>f</I>
+puis on tape :
+</P><PRE CLASS="verbatim">plotsuiterec1(f,a,p):={
+local j,P,L;
+L:=NULL;
+a:=evalf(a);
+for (j:=0;j&lt;=p;j++) {
+P:=point(j+i*a,couleur=point_width_4+noir);
+L:=L,segment(j,P,couleur=ligne_tiret+rouge),P;
+a:=f(a);
+}
+return L;
+};
+</PRE><P><B>Exemple</B><BR>
+<TT>f(x):=x</TT><CODE><TT>^</TT></CODE><TT>2-2</TT><BR>
+puis,<BR>
+<TT>plotsuiterec1(f,0,10)</TT><BR>
+ou,<BR>
+<TT>plotsuiterec1(sq-2,0,10)</TT></P><H3 CLASS="subsection"><A NAME="htoc353">13.1.4</A>  La représentation des suites récurrentes [<I>u</I><SUB>0</SUB>,<I>u</I><SUB>1</SUB>,...<I>u</I><SUB><I>s</I>−1</SUB>]=<I>la</I>, <I>u</I><SUB><I>n</I></SUB>=<I>f</I>(<I>u</I><SUB><I>n</I>−<I>s</I></SUB>...,<I>u</I><SUB><I>n</I>−1</SUB>) si <I>n</I>&gt;=<I>s</I></H3><P>
+Pour avoir les termes <I>u</I><SUB>0</SUB>=<I>la</I>[0],<I>u</I><SUB>1</SUB>=<I>la</I>[1],...<I>u</I><SUB><I>p</I></SUB>, on définit la fonction
+<I>f</I> puis on tape :
+</P><PRE CLASS="verbatim">plotsuiterec(f,la,p):={
+local j,P,L,s,a;
+L:=NULL;
+s:=size(la);
+la:=evalf(la);
+for (j:=0;j&lt;s;j++) {
+P:=point(j+i*la[j],couleur=point_width_4+noir);
+L:=L,segment(j,P,couleur=ligne_tiret+rouge),P;
+}
+for (j:=s;j&lt;=p;j++) {
+a:=f(op(la));
+P:=point(j+i*a,couleur=point_width_4+noir);
+L:=L,segment(j,P,couleur=ligne_tiret+rouge),P;
+la:=append(tail(la),a);
+}
+return L;
+};
+</PRE><P><B>Exemple</B><BR>
+<TT>f(x,y):=x+y</TT><BR>
+puis,<BR>
+<TT>plotsuiterec(f,[0,1],6)</TT> </P><H3 CLASS="subsection"><A NAME="htoc354">13.1.5</A>  L’escargot des suites récurrentes <I>u</I>(0)=<I>a</I>, <I>u</I>(<I>n</I>)=<I>f</I>(<I>u</I>(<I>n</I>−1) si <I>n</I>&gt;0</H3><P>
+Cette session se trouve dans <TT>plottoile.xws</TT>.<BR>
+On rappelle que la commande <TT>plotseq(f(x),a,p)</TT> permet de visualiser les 
+<I>p</I> premiers termes de la suite récurrente <I>u</I><SUB>0</SUB>=<I>a</I>, <I>u</I><SUB><I>n</I></SUB>=<I>f</I>(<I>u</I><SUB><I>n</I>−1</SUB>) si 
+<I>n</I>&gt;0 en visualisant "l’escargot".
+On se propose de réécrire cette commande de façon a bien mettre en evidence
+la construction des différents termes de la suite.<BR>
+À la différence de <TT>plotseq</TT> la fonction <TT>plottoile</TT> a comme 
+premier argument la fonction <I>f</I> et non l’expression <I>f</I>(<I>x</I>).
+On représente le premier terme <I>u</I><SUB>0</SUB> par une croix noire sur l’axe des <I>x</I> 
+d’abscisse le deuxième argument. Pour avoir <I>u</I><SUB>1</SUB>, on trace le segment 
+vertical allant de la croix au graphe de <I>f</I>(<I>x</I>), puis le segment horizontal
+allant, du point du graphe de <I>f</I>(<I>x</I>) au graphe de la première bissectrice 
+(pour reporter la valeur de <I>f</I>(<I>u</I><SUB>0</SUB>) sur l’axe des <I>x</I>), 
+puis, un segment vertical en pointillés allant, du graphe de la première 
+bissectrice à l’axe des <I>x</I> pour tracer une croix rouge.<BR>
+Pour avoir les termes suivants, on trace 
+ensuite un segment vertical allant du point du graphe de la première 
+bissectrice, au graphe de <I>f</I>(<I>x</I>), puis le segment horizontal allant, du point 
+du graphe de <I>f</I>(<I>x</I>) au graphe de la première bissectrice, puis, un segment 
+vertical jusqu’à l’axe des <I>x</I> pour tracer une croix rouge etc...
+On s’arrête lorsque l’on a dessiné <I>p</I> croix rouges, <I>p</I> etant le 
+troisième argument.<BR>
+On tape :
+</P><PRE CLASS="verbatim">plottoile(f,u,n):={
+local j,v,L,P;
+u:=evalf(u);
+P:=point(u,couleur=point_width_4+noir);
+if (n&lt;=0 ) {return P;}
+v:=f(u);
+L:=segment(u,u+i*v,couleur=rouge),P;
+L:=L,segment(u+i*v,v+i*v,couleur=rouge);
+u:=v;
+v:=f(u);
+P:=point(u,couleur=point_width_4+rouge);
+L:=L,segment(u,u+i*u,couleur=ligne_tiret+rouge),P;
+for (j:=2;j&lt;=n;j++) {
+L:=L,segment(u+i*u,u+i*v,couleur=rouge);
+L:=L,segment(u+i*v,v+i*v,couleur=rouge);
+u:=v;
+v:=f(u);
+P:=point(u,couleur=point_width_4+rouge);
+L:=L,segment(u,u+i*u,couleur=ligne_tiret+rouge),P;}
+return plotfunc(f(x),x,couleur=vert),plotfunc(x,x,couleur=bleu),L;
+};
+</PRE><P>Par exemple pour voir les premiers termes de :<BR>
+<I>u</I><SUB>0</SUB>=2, si <I>n</I> ≥ 1, <I>u</I><SUB><I>n</I></SUB>=cos(<I>u</I><SUB><I>n</I>−1</SUB>), on tape :
+<TT>plottoile(cos,2,5)</TT><BR>
+
+On peut aussi noter les indices des termes de la suite pour la croix
+représentant <I>u</I><SUB><I>j</I></SUB> en rajoutant <TT>legende(u,j,quadrant4)</TT>. 
+</P><PRE CLASS="verbatim">plottoilegende(f,u,n):={
+local j,v,L,P;
+u:=evalf(u);
+P:=point(u,couleur=point_width_4+noir),legende(u,0,quadrant4);
+if (n&lt;=0 ) {return P;}
+v:=f(u);
+L:=segment(u,u+i*v,couleur=rouge),P;
+L:=L,segment(u+i*v,v+i*v,couleur=rouge);
+u:=v;
+v:=f(u);
+P:=point(u,couleur=point_width_4+rouge),legende(u,1,quadrant4);
+L:=L,segment(u,u+i*u,couleur=ligne_tiret+rouge),P;
+for (j:=2;j&lt;=n;j++) {
+L:=L,segment(u+i*u,u+i*v,couleur=rouge);
+L:=L,segment(u+i*v,v+i*v,couleur=rouge);
+u:=v;
+v:=f(u);
+P:=point(u,couleur=point_width_4+rouge),legende(u,j,quadrant4);
+L:=L,segment(u,u+i*u,couleur=ligne_tiret+rouge),P;}
+return plotfunc(f(x),x,couleur=vert),plotfunc(x,x,couleur=bleu),L;
+};
+</PRE><P>Par exemple pour voir les premiers termes avec leur indice de :<BR>
+<I>u</I><SUB>0</SUB>=2, si <I>n</I> ≥ 1, <I>u</I><SUB><I>n</I></SUB>=cos(<I>u</I><SUB><I>n</I>−1</SUB>), on tape :
+<TT>plottoilegende(cos,2,5)</TT><BR>
+
+On peut aussi faire une animation qui montrera la progression de la 
+construction. Pour cela on modifie la fonction <TT>plottoile</TT> en <TT>toile</TT>
+pour avoir dans <TT>LT</TT>, la progression du tracé. On remarquera que l’on met
+entre crochet les objets graphiques qui seront affichés simultanément lors 
+de l’animation.<BR>
+On tape :
+</P><PRE CLASS="verbatim">toile(f,u,n):={
+local j,v,L,P,LT;
+u:=evalf(u);
+P:=point(u,couleur=point_width_4+noir);
+v:=f(u);
+LT:=P;
+L:=segment(u,u+i*v,couleur=rouge);
+L:=L,segment(u+i*v,v+i*v,couleur=rouge);
+u:=v;
+v:=f(u);
+P:=point(u,couleur=point_width_4+rouge);
+L:=L,segment(u,u+i*u,couleur=ligne_tiret+rouge),P;
+LT:=LT,[LT,L];
+for (j:=2;j&lt;=n;j++) {
+L:=L,segment(u+i*u,u+i*v,couleur=rouge);
+L:=L,segment(u+i*v,v+i*v,couleur=rouge);
+u:=v;
+v:=f(u);
+P:=point(u,couleur=point_width_4+rouge);
+L:=L,segment(u,u+i*u,couleur=ligne_tiret+rouge),P;
+LT:=LT,[LT,L];
+}
+return LT;
+};
+</PRE><P>Puis on anime la liste <TT>LT</TT> renvoyée par <TT>toile</TT>.
+</P><PRE CLASS="verbatim">animtoile(f,u,n):={
+local LT;
+LT:=toile(f,u,n);
+return plotfunc(f(x),x,couleur=vert),
+       plotfunc(x,x,couleur=bleu),
+       animation(LT);
+};
+</PRE><P>Par exemple pour voir en animation les premiers termes de :<BR>
+<I>u</I><SUB>0</SUB>=2, si <I>n</I> ≥ 1, <I>u</I><SUB><I>n</I></SUB>=cos(<I>u</I><SUB><I>n</I>−1</SUB>), on tape :
+<TT>animtoile(cos,2,5)</TT><BR>
+On peut régler la vitesse d’animation avec <TT>Menu -&gt;Animation</TT> (situé 
+dans le pavé de boutons à droite de la fenêtre graphique).<BR>
+On peut arrêter l’animation avec le bouton ▸<B>|</B> (à 
+gauche de <TT>Menu</TT>) : il suffit alors, de cliquer dans la 
+fenêtre graphique, pour que l’animation se déroule au pas à pas.</P><H3 CLASS="subsection"><A NAME="htoc355">13.1.6</A>  Les suites récurrentes définies par une fonction de plusieurs variables</H3><H4 CLASS="subsubsection">Un exemple : la suite de Fibonnacci</H4><P>
+Commençons par un exemple : la suite de Fibonnacci définie par :<BR>
+<I>u</I><SUB>0</SUB>=<I>a</I><BR>
+<I>u</I><SUB>1</SUB>=<I>b</I><BR>
+<I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>−1</SUB>+<I>u</I><SUB><I>n</I>−2</SUB> pour <I>n</I> ≥ 2<BR>
+On écrit pour avoir <I>u</I><SUB><I>n</I></SUB>:
+</P><PRE CLASS="verbatim">fibon(a,b,n):={
+local k,uk;
+for (k:=2;k&lt;=n;k++) {
+    uk:=a+b;
+    a:=b;
+    b:=uk;
+}
+return uk;
+}
+</PRE><P>On écrit pour avoir <I>u</I><SUB>0</SUB>,<I>u</I><SUB>1</SUB>...<I>u</I><SUB><I>n</I></SUB>:
+</P><PRE CLASS="verbatim">fibona(a,b,n):={
+local k,uk,res;
+res:=a,b;
+for (k:=2;k&lt;=n;k++) {
+    uk:=a+b;
+    a:=b;
+    b:=uk
+    res:=res,uk;
+}
+return res;
+}
+</PRE><P>On écrit pour avoir <I>u</I><SUB><I>c</I></SUB>,<I>u</I><SUB><I>c</I>+1</SUB>...<I>u</I><SUB><I>n</I></SUB> pour <I>c</I> ≥ 0 :
+</P><PRE CLASS="verbatim">fibonac(a,b,c,n):={
+local k,uk,res;
+for (k:=2;k&lt;c;k++) {
+    uk:=a+b;
+    a:=b;
+    b:=uk
+};
+if c&gt;1 res:=NULL else 
+    if c==0 {res:=a,b;c:=2;} else 
+        if c==1 {res:=b;c:=2};
+for (k:=c;k&lt;=n;k++) {
+    uk:=a+b;
+    a:=b;
+    b:=uk
+    res:=res,uk;
+}
+return res;
+}
+</PRE><P><B>Remarque</B>
+On peut bien sûr écrire un programme récursif qui donne la valeur de
+<I>u</I><SUB><I>n</I></SUB>. Mais cela n’est pas efficace car on calcule plusieurs fois le même 
+terme. Car par exemple pour calculer <I>u</I><SUB>5</SUB> on doit calculer <I>u</I><SUB>3</SUB> et <I>u</I><SUB>4</SUB> et 
+pour calculer <I>u</I><SUB>4</SUB>, il faudra à nouveau calculer <I>u</I><SUB>3</SUB> et <I>u</I><SUB>2</SUB>, donc <I>u</I><SUB>3</SUB> 
+sera calculé 2 fois et <I>u</I><SUB>2</SUB> sera calculé 3 fois. 
+Pour s’en rendre compte on peut imprimer les valeurs des variables pour chacun des appels récursifs.</P><P>On a :<BR>
+<I>u</I><SUB>0</SUB>=<I>u</I>0<BR>
+<I>u</I><SUB>1</SUB>=<I>u</I>1<BR>
+<I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>−1</SUB>+<I>u</I><SUB><I>n</I>−2</SUB> pour <I>n</I> ≥ 2<BR>
+Donc
+</P><PRE CLASS="verbatim">fibonr(u0,u1,n):={
+if (n==0) {print(u0,u1,n);return u0;}
+if (n==1) {print(u0,u1,n)return u1;}
+print(u0,u1,n)
+return fibonr(u0,u1,n-2)+fibonr(u0,u1,n-1);
+}:;
+</PRE><P>On peut aussi compter le nombre de fois que la fonction a èté appelée 
+c’est à dire le nombre de <TT>print</TT> du programme <TT>fibonr</TT> 
+précédent:
+</P><PRE CLASS="verbatim">fibona(u0,u1,n):={
+if (n==0) {return [u0,1];}
+if (n==1) {return [u1,1];}
+print(u0,u1,n)
+return fibona(u0,u1,n-2)+fibona(u0,u1,n-1)+[0,1];
+}
+</PRE><P>On tape : <TT>fibona(1,1,6)</TT><BR>
+On obtient : <TT>[13,25]</TT><BR>
+On a :<BR>
+1 appel avec <I>n</I>=6,<BR>
+1 appel avec <I>n</I>=5,<BR>
+2 appels avec <I>n</I>=4,<BR>
+3 appels avec <I>n</I>=3,<BR>
+5 appels avec <I>n</I>=2,<BR>
+8 appels avec <I>n</I>=1,<BR>
+5 appels avec <I>n</I>=0,<BR>
+On remarque que le nombre d’appels est une suite de Fibonacci et on voit que 
+pour calculer <I>u</I><SUB><I>n</I></SUB> on doit calculer <I>u</I><SUB>2</SUB> <TT>fibon(1,1,n-2</TT> fois !
+</P><H4 CLASS="subsubsection">Suites récurrentes definies par une fonction de <I>m</I> variables</H4><P>
+On suppose maintenant que la suite est définie par une relation de 
+récurrence definie par une fonction <I>f</I> de <I>m</I> variables :
+pour définir la suite on se donne les <I>m</I> premiers termes :<BR>
+<I>u</I><SUB>0</SUB>,<I>u</I><SUB>1</SUB>,..,<I>u</I><SUB><I>m</I>−1</SUB> et la relation :<BR>
+<I>u</I><SUB><I>n</I></SUB>=<I>f</I>(<I>u</I><SUB><I>n</I>−<I>m</I></SUB>,<I>u</I><SUB><I>n</I>−<I>m</I>+1</SUB>,..,<I>u</I><SUB><I>n</I>−1</SUB>) pour <I>n</I>≥ <I>m</I>.<BR>
+On veut calculer <I>u</I><SUB><I>n</I></SUB>, et on suppose que les valeurs de 
+<I>u</I><SUB>0</SUB>,<I>u</I><SUB>1</SUB>,..,<I>u</I><SUB><I>m</I>−1</SUB> sont dans la liste <TT>l0</TT>.<BR>
+ On écrit :
+</P><PRE CLASS="verbatim">urec(f,n,l0):={
+local s,k,uk;
+s:=size(l0);
+l0:=op(l0);
+for (k:=s;k&lt;=n;k++) {
+    uk:=f(l0);
+    l0:=tail(l0),uk;
+}
+return uk;
+}
+</PRE><P>On utilise <TT>op</TT> au début, pour transformer la liste <TT>l0</TT> en une 
+séquence et <TT>tail(l0)</TT> pour enlever le premier élément et ainsi 
+<TT>l0:=tail(l0),uk</TT> est une séquence qui a toujours <TT>s</TT> éléments.<BR>
+
+On peut aussi considérer que le paramètre <I>l</I> contient toutes les 
+variables à savoir <I>l</I>=<I>f</I>,<I>n</I>,<I>u</I><SUB>0</SUB>,..,<I>u</I><SUB><I>m</I>−1</SUB> . On écrit mais c’est 
+inutilement compliqué (!) :
+</P><PRE CLASS="verbatim">urecs(l):={
+local f,n,s,k,uk;
+f:=l[0];
+n:=l[1];
+l:=tail(tail(l));
+s:=size(l);
+//f est une fonction de s variables
+for (k:=s;k&lt;=n;k++) {
+    uk:=f(l);
+    l:=tail(l),uk;
+}
+return uk;
+}
+</PRE><P>Pour avoir tous les termes <I>u</I><SUB><I>k</I></SUB> de la suite pour <I>k</I> allant de 0 à <I>n</I>,
+On considère que le paramètre <I>l</I> contient toutes les 
+variables à savoir <I>l</I>=<I>f</I>,<I>n</I>,<I>u</I><SUB>0</SUB>,..,<I>u</I><SUB><I>m</I>−1</SUB>.<BR>
+On écrit :<BR>
+</P><PRE CLASS="verbatim">urec_termes(l):={
+local f,n,s,k,uk,lres;
+f:=l[0];
+n:=l[2];
+l:=tail(tail(tail(l)));
+s:=size(l);
+//f est une fonction de s variables
+lres:=l;
+for (k:=s;k&lt;=n;k++) {
+    uk:=f(l);
+    lres:=lres,uk;
+    l:=tail(l),uk;
+}
+return lres;
+}
+</PRE><P>Par exemple on définit :<BR>
+<TT>f(x,y):=normal(x+y)</TT><BR>
+On tape :<BR>
+<TT>urec_termes(f,5,1,1)</TT><BR>
+On obtient la suite de Fibonacci :<BR>
+<TT>1,1,2,3,5,8</TT><BR>
+On tape :<BR>
+<TT>urec_termes(f,5,1,(sqrt(5)+1)/2)</TT><BR>
+On obtient :<BR>
+<TT>1,(sqrt(5)+1)/2,(sqrt(5)+3)/2,sqrt(5)+2,<BR>
+(3*sqrt(5)+7)/2,(5*sqrt(5)+11)/2</TT><BR>
+On tape, pour vérifier que l’on a obtenu la suite géométrique de raison 
+<TT>(sqrt(5)+1)/2</TT> :<BR>
+<TT>seq(normal(((sqrt(5)+1)/2)</TT><CODE><TT>^</TT></CODE><TT>k),k=0..5)</TT><BR>
+On obtient :<BR>
+<TT>1,(sqrt(5)+1)/2,(sqrt(5)+3)/2,sqrt(5)+2,<BR>
+(3*sqrt(5)+7)/2,(5*sqrt(5)+11)/2</TT></P><P>Pour avoir tous les termes <I>u</I><SUB><I>k</I></SUB> de la suite pour <I>k</I> allant de <I>k</I>0 à <I>n</I>,
+On considère que le paramètre <I>l</I> contient toutes les 
+variables à savoir <I>l</I>=<I>f</I>,<I>k</I>0,<I>n</I>,<I>u</I><SUB>0</SUB>,..,<I>u</I><SUB><I>m</I>−1</SUB>.<BR>
+On écrit :<BR>
+</P><PRE CLASS="verbatim">urec_termekn(l):={
+local f,n,s,k,uk,k0,lres;
+f:=l[0];
+k0:=l[1];
+n:=l[2];
+l:=tail(tail(tail(l)));
+s:=size(l);
+//f est une fonction de s variables
+for (k:=s;k&lt;k0;k++) {
+    uk:=f(l);
+    l:=tail(l),uk;
+};
+if k0&gt;1 res:=NULL else 
+  if k0==0 {res:=a,b;k0:=2;} else 
+    if k0==1 {res:=b;k0:=2};
+for (k:=k0;k&lt;=n;k++) {
+    uk:=f(l);
+    lres:=lres,uk;
+    l:=tail(l),uk;
+}
+return lres;
+}
+</PRE><P>Par exemple on définit :<BR>
+<TT>f(x,y):=normal(x+y)</TT><BR>
+On tape :<BR>
+<TT>urec_termekn(f,5,10,1,1)</TT><BR>
+On obtient la suite de Fibonacci :<BR>
+<TT>8,13,21,34,55,89</TT><BR>
+On tape :<BR>
+<TT>urec_termes(f,5,9,1,(sqrt(5)+1)/2)</TT><BR>
+On obtient :<BR>
+<TT>5*sqrt(5)+11)/2,4*sqrt(5)+9,(13*sqrt(5)+29)/2,<BR>
+ (21*sqrt(5)+47)/2,17*sqrt(5)+38</TT><BR>
+</P><H2 CLASS="section"><A NAME="toc97"></A><A NAME="htoc356">13.2</A>  Les séries</H2><P>
+Soit <I>u</I><SUB><I>n</I></SUB> une suite de réels telle que la série ∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>u</I><SUB><I>k</I></SUB>
+converge vers <I>S</I>. On veut ici, calculer une valeur appochée de cette somme.
+Si la série converge rapidement, il suffit de calculer ∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> <I>u</I><SUB><I>k</I></SUB>
+pour <I>n</I> assez grand, sinon il faut procéder à une accélération de 
+convergence, en construisant une série de même somme et convergeant plus 
+rapidement.
+</P><H3 CLASS="subsection"><A NAME="htoc357">13.2.1</A>  Les sommes partielles</H3><P> 
+On écrit :
+</P><PRE CLASS="verbatim">sum_serie(f,n0,n):={
+local s,k;
+//un=f(n) ou f est une fonction de 1 variable
+s:=0;
+for (k:=n0;k&lt;=n;k++) {
+    s:=s+evalf(f(k));
+}
+return s;
+}
+</PRE><P>Il est plus précis de faire le calcul de la somme en commençant
+par les plus petits termes, on écrit : 
+</P><PRE CLASS="verbatim">serie_sum(f,n0,n):={
+local s,k;
+//un=f(n) ou f est une fonction de 1 variable
+s:=0;
+for (k:=n;k&gt;=n0;k--) {
+    s:=s+evalf(f(k));
+}
+return s;
+}
+</PRE><P>On peut avoir aussi besoin de la suite des sommes partielles : par exemple 
+pour les séries alternées deux sommes partielles successives encadrent 
+la somme de la série.<BR>
+On écrit en utilisant un paramètre supplémentaire <TT>alt</TT> pour 
+repérer les séries alternées de la forme <TT><I>u</I></TT><SUB><TT><I>n</I></TT></SUB><TT>=<I>alt</I></TT><SUP><TT><I>n</I></TT></SUP><TT>*<I>f</I>(<I>n</I>)</TT> : 
+</P><PRE CLASS="verbatim">sums_serie(f,n0,n,alt):={
+local ls,s,k;
+//un=(alt)^n*f(n) ou f est une fonction de 1 variable
+s:=0;
+ls:=[];
+if (alt&lt;0){
+  if (irem(n0,2)==0) {alt:=-alt;}
+  for (k:=n0;k&lt;=n;k++) {
+    s:=s+evalf(alt*f(k));
+    alt:=-alt;
+    ls:=concat(ls,s);
+  }
+}
+else {
+  for (k:=n0;k&lt;=n;k++) {
+    s:=s+evalf(alt*f(k));
+    ls:=concat(ls,s);
+  } 
+}
+return ls;
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc358">13.2.2</A>  Un exemple simple : une approximation de <I>e</I></H3><P>
+On va calculer la somme :<BR>
+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP>1/<I>k</I>! en commencant par les plus petits termes :
+</P><PRE CLASS="verbatim">vale0(n):={
+local S,k;
+S:=0;
+for (k:=n;k&gt;=0;k--){
+S:=S+1/k!;
+}
+return S;
+}
+:;
+</PRE><P>On tape :<BR>
+<TT>SS:=vale0(22)</TT><BR>
+<TT>iquo(numer(SS)*10</TT><CODE><TT>^</TT></CODE><TT>22,denom(SS))</TT><BR>
+On obtient :<BR>
+<TT>27182818284590452353602</TT><BR>
+
+On va calculer la somme :<BR>
+<I>S</I>=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP>1/<I>k</I>! en calculant <I>k</I>! au fur et à mesure dans <I>f</I>
+</P><PRE CLASS="verbatim">vale1(n):={
+local S,f,k;
+f:=1;
+S:=1;
+for (k:=1;k&lt;=n;k++){
+f:=f*k;
+S:=S+1/f;
+}
+return S;
+}
+:;
+</PRE><P>On tape :<BR>
+<TT>S:=vale1(22)</TT><BR>
+<TT>iquo(numer(S)*10</TT><CODE><TT>^</TT></CODE><TT>22,denom(S))</TT><BR>
+On obtient :<BR>
+<TT>27182818284590452353602</TT><BR>
+
+On va calculer la somme :<BR>
+<I>S</I>=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP>1/<I>k</I>! en calculant son numérateur <I>p</I> et son 
+dénominateur <I>f</I> à chaque étape : on a <I>p</I>/(<I>k</I>−1)!+1/<I>k</I>!=(<I>p</I>*<I>k</I>+1)/<I>k</I>!
+et <I>k</I>!=<I>f</I>*<I>k</I>. Le résultat obtenu en cherchant le quotient de 10<SUP><I>n</I></SUP>*<I>p</I>
+par <I>f</I> donnera les <I>n</I> chiffres significatils de <I>e</I> i.e <I>e</I>=<I>vale</I>(<I>n</I>)*10<SUP>−<I>n</I></SUP>
+lorsque <I>n</I>≥ 22 car 1./23!&lt;4<I>e</I>−23
+</P><PRE CLASS="verbatim">vale(n):={
+local p,f,k;
+f:=1;
+p:=1;
+for (k:=1;k&lt;=n;k++){
+f:=f*k;
+p:=p*k+1;
+}
+return iquo(p*10^n,f);
+}
+:;
+</PRE><P>On tape :<BR>
+<TT>vale(22)</TT><BR>
+On obtient :<BR>
+<TT>27182818284590452353602</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc359">13.2.3</A>  Exemple d’accélération de convergence des séries à termes positifs</H3><P> 
+On suppose que <I>u</I><SUB><I>n</I></SUB>=<I>f</I>(<I>n</I>) et que <I>f</I>(<I>n</I>) admet un développement limité 
+à tous les ordres par rapport à 1/<I>n</I>.<BR>
+On suppose que <I>u</I><SUB><I>k</I></SUB>∼ <I>a</I>/<I>k</I><SUP><I>p</I></SUP> et on pose :<BR>
+ <I>v</I><SUB><I>k</I></SUB>=<I>u</I><SUB><I>k</I></SUB>−<I>a</I>/(<I>k</I>+1)(<I>k</I>+2)...(<I>k</I>+<I>p</I>)<BR>
+On a alors,  <I>v</I><SUB><I>k</I></SUB>=<I>O</I>(1/<I>k</I><SUP><I>p</I>+1</SUP>) et on connait :<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>a</I>/(<I>k</I>+1)(<I>k</I>+2)...(<I>k</I>+<I>p</I>)<BR>
+En effet :<BR>
+<I>a</I>/(<I>k</I>+1)(<I>k</I>+2)...(<I>k</I>+<I>p</I>)=<I>a</I>/<I>p</I>−1(1/(<I>k</I>+1)(<I>k</I>+2)...(<I>k</I>+<I>p</I>−1)−<I>a</I>/(<I>k</I>+2)(<I>k</I>+3)...(<I>k</I>+<I>p</I>)) 
+donc<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>a</I>/(<I>k</I>+1)(<I>k</I>+2)...(<I>k</I>+<I>p</I>)=<I>a</I>/<I>p</I>−1(1/1· 2·...· (<I>p</I>−1))=<I>a</I>/(<I>p</I>−1)(<I>p</I>−1)! et,<BR>
+∑<SUB><I>k</I>=<I>k</I>0</SUB><SUP>∞</SUP><I>a</I>/(<I>k</I>+1)(<I>k</I>+2)...(<I>k</I>+<I>p</I>)=<I>a</I>/(<I>p</I>−1)(<I>k</I>0+1)(<I>k</I>0+2)..(<I>k</I>0+<I>p</I>−1)<BR>
+On a :<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>u</I><SUB><I>k</I></SUB>=<I>a</I>/(<I>p</I>−1)(<I>p</I>−1)!+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>v</I><SUB><I>k</I></SUB><BR>
+On peut ensuite continuer à appliquer la même méthode à <I>v</I><SUB><I>k</I></SUB>.<BR>
+
+<B>Exercice</B><BR>
+Utiliser cette méthode pour calculer numériquement :
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP>1/(<I>k</I>+1)<SUP>2</SUP>.<BR>
+On va faire "à la main" trois accélérations successives.<BR>
+On pose :<BR>
+ <I>u</I><SUB><I>k</I></SUB> =1/(<I>k</I>+1)<SUP>2</SUP>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+1-ière accélération :<BR>
+ <I>u</I><SUB><I>k</I></SUB> =1/(<I>k</I>+1)<SUP>2</SUP>∼ 1/<I>k</I><SUP>2</SUP> donc on pose<BR>
+ <I>v</I><SUB><I>k</I></SUB>=<I>u</I><SUB><I>k</I></SUB> −1/(<I>k</I>+1)(<I>k</I>+2), et donc<BR>
+ <I>v</I><SUB><I>k</I></SUB>=1/(<I>k</I>+1)<SUP>2</SUP>(<I>k</I>+2)<BR>
+puisque 
+ 1/(<I>k</I>+1)(<I>k</I>+2)=1/(<I>k</I>+1)−1/(<I>k</I>+2), on a :<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP>1/(<I>k</I>+1)(<I>k</I>+2)=1 donc<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>u</I><SUB><I>k</I></SUB>=1+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>v</I><SUB><I>k</I></SUB>
+</LI><LI CLASS="li-itemize">2-ième accélération :<BR>
+ <I>v</I><SUB><I>k</I></SUB>=1/(<I>k</I>+1)<SUP>2</SUP>(<I>k</I>+2) ∼ 1/<I>k</I><SUP>3</SUP> donc on pose<BR>
+ <I>w</I><SUB><I>k</I></SUB>=<I>v</I><SUB><I>k</I></SUB> −1/(<I>k</I>+1)(<I>k</I>+2)(<I>k</I>+3), et donc<BR>
+ <I>w</I><SUB><I>k</I></SUB>=2/(<I>k</I>+1)<SUP>2</SUP>(<I>k</I>+2)(<I>k</I>+3)<BR>
+puisque 
+ 2/(<I>k</I>+1)(<I>k</I>+2)(<I>k</I>+3)=1/(<I>k</I>+1)(<I>k</I>+2)−1/(<I>k</I>+2)(<I>k</I>+3), on a :<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP>1/(<I>k</I>+1)(<I>k</I>+2)(<I>k</I>+3)=1/2*2!=1/4 donc<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>u</I><SUB><I>k</I></SUB>=1+1/2· 2!+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>w</I><SUB><I>k</I></SUB>
+</LI><LI CLASS="li-itemize">3-ième accélération :<BR>
+ <I>w</I><SUB><I>k</I></SUB>=2/(<I>k</I>+1)<SUP>2</SUP>(<I>k</I>+2)(<I>k</I>+3)∼ 2/<I>k</I><SUP>4</SUP> donc on pose<BR>
+ <I>t</I><SUB><I>k</I></SUB>=<I>w</I><SUB><I>k</I></SUB> −2/(<I>k</I>+1)(<I>k</I>+2)(<I>k</I>+3)(<I>k</I>+4), et donc<BR>
+ <I>t</I><SUB><I>k</I></SUB>=6/(<I>k</I>+1)<SUP>2</SUP>(<I>k</I>+2)(<I>k</I>+3)(<I>k</I>+4)<BR>
+puisque 
+ 3/(<I>k</I>+1)(<I>k</I>+2)(<I>k</I>+3)(<I>k</I>+4)=1/(<I>k</I>+1)(<I>k</I>+2)(<I>k</I>+3)−1/(<I>k</I>+2)(<I>k</I>+3)(<I>k</I>+4), on a :<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP>2/(<I>k</I>+1)(<I>k</I>+2)(<I>k</I>+3)(<I>k</I>+4)=2/3*3!=1/18 donc<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>u</I><SUB><I>k</I></SUB>=1+1/2* 2!+2/3*3!+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>t</I><SUB><I>k</I></SUB>
+</LI></UL><P>
+On tape :<BR>
+<TT>u(k):=1/(k+1)</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+On tape :<BR>
+<TT>v(k):=1/((k+1)</TT><CODE><TT>^</TT></CODE><TT>2*(k+2))</TT><BR>
+On tape :<BR>
+<TT>w(k):=2/((k+1)</TT><CODE><TT>^</TT></CODE><TT>2*(k+2)*(k+3))</TT><BR>
+On tape :<BR>
+<TT>t(k):=6/((k+1)</TT><CODE><TT>^</TT></CODE><TT>2*(k+2)(k+3)(k+4))</TT><BR>
+On compare π<SUP>2</SUP>/6 et les valeurs obtenues pour <I>n</I>=200, car on sait 
+que :<BR>
+ <I>S</I>=∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP>1/(<I>k</I>+1)<SUP>2</SUP>=π<SUP>2</SUP>/6≃ 1.64493406685<BR>
+On tape :<BR>
+<TT>serie_sum(u,0,200)</TT><BR>
+ou<BR>
+<TT>evalf(sum(1/(k+1)</TT><CODE><TT>^</TT></CODE><TT>2,k=0..200))</TT><BR>
+On obtient <I>S</I> à 5*10<SUP>−3</SUP> prés (1 décimale exacte) :<BR>
+<TT>1.63997129788</TT><BR>
+On tape :<BR>
+<TT>1+serie_sum(v,0,200)</TT><BR>
+ou<BR>
+<TT>evalf(1+sum(1/((k+1)</TT><CODE><TT>^</TT></CODE><TT>2*(k+2)),k=0..200))</TT><BR>
+On obtient <I>S</I> à 1.25*10<SUP>−5</SUP> prés (4 décimales exactes) :<BR>
+<TT>1.64492179293</TT><BR>
+On tape :<BR>
+<TT>1+1/4+serie_sum(w,0,200)</TT><BR>
+ou<BR>
+<TT>evalf(1+1/4+sum(2/((k+1)</TT><CODE><TT>^</TT></CODE><TT>2*(k+2)*(k+3)),k=0..200))</TT><BR>
+On obtient <I>S</I> à 8.3*10<SUP>−8</SUP> prés (5 décimales exactes) :<BR>
+<TT>1.64493398626</TT><BR>
+On tape :<BR>
+<TT>1+1/4+1/9+serie_sum(t,0,200)</TT><BR>
+ou<BR>
+<TT>evalf(1+1/4+1/9+sum(6/((k+1)</TT><CODE><TT>^</TT></CODE><TT>2*(k+2)*(k+3)*(k+4)),k=0..200))</TT><BR>
+On obtient <I>S</I> à 9.2*10<SUP>−10</SUP> prés (8 décimales exactes) :<BR>
+<TT>1.64493406596</TT><BR>
+
+<B>Les erreurs</B><BR>
+Si on compare la somme ∑<SUB><I>k</I>=<I>n</I>+1</SUB><SUP>∞</SUP>1/(<I>k</I>+1)<SUP>2</SUP> à une intégrale on a :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=<I>n</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">(<I>k</I>+1)<SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&lt;</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">(<I>x</I>+1)<SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>dx</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I>+1</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P><BR>
+Ou encore, on peut aussi remarquer que :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=<I>n</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">(<I>k</I>+1)<SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=<I>n</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>(<I>k</I>+1)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I>+1</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+puisque  1/<I>k</I>(<I>k</I>+1)=1/<I>k</I>−1/<I>k</I>+1.<BR>
+Au bout de la p-ième accéleration on calcule la somme de :<BR>
+ <I>u</I><SUB><I>k</I></SUB><SUP>(<I>p</I>)</SUP>=<I>p</I>!/(<I>k</I>+1)<SUP>2</SUP>(<I>k</I>+2)...(<I>k</I>+<I>p</I>+1) et on a :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=<I>n</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">(<I>k</I>+1)<SUP>2</SUP>(<I>k</I>+2)...(<I>k</I>+<I>p</I>+1)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=<I>n</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>(<I>k</I>+1)(<I>k</I>+2)...(<I>k</I>+<I>p</I>+1)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Et puisque :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>p</I>+1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>(<I>k</I>+1)(<I>k</I>+2)...(<I>k</I>+<I>p</I>+1)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>(<I>k</I>+1)(<I>k</I>+2)...(<I>k</I>+<I>p</I>)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">(<I>k</I>+1)(<I>k</I>+2)...(<I>k</I>+<I>p</I>+1)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On a :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=<I>n</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>u</I><SUB><I>n</I></SUB><SUP>(<I>p</I>)</SUP>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=<I>n</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>p</I>!</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">(<I>k</I>+1)<SUP>2</SUP>(<I>k</I>+2)...(<I>k</I>+<I>p</I>+1)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>p</I>!</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">(<I>p</I>+1)(<I>n</I>+1)(<I>n</I>+2)...(<I>n</I>+<I>p</I>+1)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Donc </P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=<I>n</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>u</I><SUB><I>n</I></SUB><SUP>(<I>p</I>)</SUP>&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>p</I>!</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">(<I>p</I>+1)(<I>n</I>+1)<SUP><I>p</I>+1</SUP></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On vérifie (π<SUP>2</SUP>/6≃ 1.64493406685) :<BR>
+ 1.63997129788&lt;π<SUP>2</SUP>/6&lt;1.63997129788+1/201=1.64494642226<BR>
+ 1.64492179293&lt;π<SUP>2</SUP>/6&lt;1.64492179293+1/(2*201<SUP>2</SUP>)=1.64493416886<BR>
+ 1.64493398626&lt;π<SUP>2</SUP>/6&lt;1.64493398626+2/(3*201<SUP>3</SUP>)=1.64493406836<BR>
+ 1.64493406596&lt;π<SUP>2</SUP>/6&lt;1.64493406596+6/(4*201<SUP>4</SUP>)=1.64493406688<BR>
+
+<B>Le programme</B><BR>
+On peut écrire un programme qui va demander le nombre d’accélérations
+pour calculer
+ ∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP>1/(<I>k</I>+1)<SUP>2</SUP></P><PRE CLASS="verbatim">serie_sumacc(n,acc):={
+local p,l,j,k,ls,sf,sg,gk,fact;
+ls:=[];
+//calcul sans acceleration
+sf:=0.0;
+for (k:=n;k&gt;=0;k--) {
+   sf:=sf+1/(k+1)^2;
+}
+ls:=[sf];
+sf:=0.0;
+fact:=1;
+for (p:=1;p&lt;=acc;p++){
+  //calcul de 1+1/4+..+1/p^2, le terme a rajouter
+  sf:=sf+evalf(1/p^2);
+  //calcul de p!
+  fact:=fact*(p);
+  //calcul de sg, somme(de 0 a n) de la serie acceleree p fois
+  sg:=0.0;
+  for (k:=0;k&lt;=n;k++) {
+    gk:=1/(k+1)^2;
+    //calcul du k-ieme terme gk de la serie acceleree p fois (sans p!)
+    for (j:=1;j&lt;=p;j++) {
+      gk:=evalf(gk/(k+j+1));
+    }
+    sg:=sg+gk;
+  }
+  ls:=concat(ls,sf+fact*sg);
+}
+return(ls);
+}
+</PRE><H2 CLASS="section"><A NAME="toc98"></A><A NAME="htoc360">13.3</A>  Méthodes d’accélération de convergence des séries alternées</H2><H3 CLASS="subsection"><A NAME="htoc361">13.3.1</A>  Un exemple d’accélération de convergence des séries alternées</H3><H4 CLASS="subsubsection">Un premier exemple</H4><P>
+On suppose que <I>u</I><SUB><I>k</I></SUB>=(−1)<SUP><I>k</I></SUP><I>f</I>(<I>k</I>) avec <I>f</I>(<I>k</I>) tend vers zéro quand <I>k</I> tend 
+vers +∞ et <I>f</I> décroissante de ℝ<SUP>+</SUP> dans ℝ<SUP>+</SUP>.<BR>
+On pose :<BR>
+<I>g</I>(<I>x</I>)=1/2(<I>f</I>(<I>x</I>)−<I>f</I>(<I>x</I>+1)) donc<BR>
+ <I>v</I><SUB><I>k</I></SUB>=(−1)<SUP><I>k</I></SUP><I>f</I>(<I>k</I>)−<I>f</I>(<I>k</I>+1)/2=<I>u</I><SUB><I>k</I></SUB>+<I>u</I><SUB><I>k</I>+1</SUB>/2=(−1)<SUP><I>k</I></SUP> <I>g</I>(<I>k</I>)<BR>
+On a :<BR>
+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> <I>v</I><SUB><I>k</I></SUB>=1/2(∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> <I>u</I><SUB><I>k</I></SUB>+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> <I>u</I><SUB><I>k</I>+1</SUB>)<BR>
+donc,<BR>
+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> <I>v</I><SUB><I>k</I></SUB>=1/2(∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> <I>u</I><SUB><I>k</I></SUB>+∑<SUB><I>k</I>=1</SUB><SUP><I>n</I>+1</SUP> <I>u</I><SUB><I>k</I></SUB>)<BR>
+donc,<BR>
+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> <I>v</I><SUB><I>k</I></SUB>=<I>u</I><SUB>0</SUB>/2+<I>u</I><SUB><I>n</I>+1</SUB>/2+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> <I>u</I><SUB><I>k</I></SUB><BR>
+Puisque <I>f</I>(<I>k</I>) tend vers zéro quand <I>k</I> tend vers +∞,
+<I>g</I>(<I>k</I>)=1/2(<I>f</I>(<I>k</I>)−<I>f</I>(<I>k</I>+1)) tend aussi vers zéro quand <I>k</I> tend vers 
++∞.<BR>
+Si la fonction <I>f</I> est convexe (<I>f</I>″(<I>x</I>)&gt;0), la série ∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>v</I><SUB><I>k</I></SUB>
+vérifie aussi le théorème des séries alternées.<BR>
+En effet, pour <I>x</I>&gt;0 on a :<BR>
+<I>g</I>(<I>x</I>)=1/2(<I>f</I>(<I>x</I>)−<I>f</I>(<I>x</I>+1)) ≥ 0 puisque <I>f</I> décroissante sur
+ℝ<SUP>+</SUP><BR>
+<I>g</I>′(<I>x</I>)=1/2(<I>f</I>′(<I>x</I>)−<I>f</I>′(<I>x</I>+1)) &lt; 0 puisque <I>f</I>″(<I>x</I>)&gt;0, <I>f</I>′ est
+négative et croissante sur ℝ<SUP>+</SUP><BR>
+donc <I>g</I> est décroissante de ℝ<SUP>+</SUP> dans ℝ<SUP>+</SUP> et 
+<I>g</I>(<I>k</I>) tend vers zéro quand <I>k</I> tend vers +∞.<BR>
+<B>Conclusion</B> : La série ∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>v</I><SUB><I>k</I></SUB> est une série
+alternée de somme <I>S</I>+<I>u</I><SUB>0</SUB>/2.<BR>
+Si de plus, <I>f</I>′(<I>x</I>)/<I>f</I>(<I>x</I>) tend vers zéro quand <I>x</I> tend vers l’infini,
+la série ∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>v</I><SUB><I>k</I></SUB> converge plus rapidement que 
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>u</I><SUB><I>k</I></SUB>, puisque il existe <I>c</I>, <I>x</I>&lt;<I>c</I>&lt;<I>x</I>+1 d’après le th des accroissements finis tel que:<BR>
+ 0&lt;<I>g</I>(<I>x</I>)=1/2(<I>f</I>(<I>x</I>)−<I>f</I>(<I>x</I>+1))=−1/2<I>f</I>′(<I>c</I>)<BR>
+on a donc, puisque <I>f</I>′ est négative et croissante:<BR>
+0&lt;<I>g</I>(<I>x</I>)&lt;−1/2<I>f</I>′(<I>x</I>)=<I>o</I>(<I>f</I>(<I>x</I>)).
+</P><H4 CLASS="subsubsection">Un exercice</H4><P>
+Utiliser cette méthode pour calculer numériquement :
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP>(−1)<SUP><I>k</I></SUP>/<I>k</I>+1.<BR>
+Toutes les dérivées de <I>f</I>(<I>x</I>)=1/(<I>x</I>+1) ont un signe constant sur 
+[0;+∞[ et tendent vers zéro à l’infini, ces dérivées sont donc 
+monotones et on peut donc faire plusieurs accélérations successives.<BR>
+On va faire "à la main " trois accélérations successives.<BR>
+On pose :<BR>
+ <I>u</I><SUB><I>k</I></SUB> =(−1)<SUP><I>k</I></SUP>/(<I>k</I>+1)
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+1-ière accélération :<BR>
+ <I>v</I><SUB><I>k</I></SUB>=(−1)<SUP><I>k</I></SUP>(1/2(<I>k</I>+1)−1/2(<I>k</I>+2)), et donc<BR>
+ <I>v</I><SUB><I>k</I></SUB>=(−1)<SUP><I>k</I></SUP>(1/2(<I>k</I>+1)(<I>k</I>+2))<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>u</I><SUB><I>k</I></SUB>=1/2+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>v</I><SUB><I>k</I></SUB>
+</LI><LI CLASS="li-itemize">2-ième accélération :<BR>
+ <I>w</I><SUB><I>k</I></SUB>= (−1)<SUP><I>k</I></SUP>(1/4(<I>k</I>+1)(<I>k</I>+2)−1/4(<I>k</I>+2)(<I>k</I>+3)), et 
+donc<BR>
+<I>w</I><SUB><I>k</I></SUB>= (−1)<SUP><I>k</I></SUP>(1/2(<I>k</I>+1)(<I>k</I>+2)(<I>k</I>+3))<BR>
+et comme <I>v</I><SUB>0</SUB>/2=1/8 on a :<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>u</I><SUB><I>k</I></SUB>=1/2+1/8+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>w</I><SUB><I>k</I></SUB>
+</LI><LI CLASS="li-itemize">3-ième accélération :<BR>
+ <I>t</I><SUB><I>k</I></SUB>=(−1)<SUP><I>k</I></SUP>(1/4(<I>k</I>+1)(<I>k</I>+2)(<I>k</I>+3)−1/4(<I>k</I>+2)(<I>k</I>+3)(<I>k</I>+4)), et donc<BR>
+ <I>t</I><SUB><I>k</I></SUB>=(−1)<SUP><I>k</I></SUP>(3/4(<I>k</I>+1)(<I>k</I>+2)(<I>k</I>+3)(<I>k</I>+4))<BR>
+et comme <I>w</I><SUB>0</SUB>/2=1/24 on a :<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>u</I><SUB><I>k</I></SUB>=1/2+1/8+1/24+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>t</I><SUB><I>k</I></SUB>
+</LI></UL><P>
+On tape :<BR>
+<TT>u(k):=(-1)</TT><CODE><TT>^</TT></CODE><TT>k/(k+1)</TT><BR>
+On tape :<BR>
+<TT>v(k):=(-1)</TT><CODE><TT>^</TT></CODE><TT>k/(2*(k+1)*(k+2))</TT><BR>
+On tape :<BR>
+<TT>w(k):=(-1)</TT><CODE><TT>^</TT></CODE><TT>k/(2*(k+1)*(k+2)*(k+3))</TT><BR>
+On tape :<BR>
+<TT>t(k):=(-1)</TT><CODE><TT>^</TT></CODE><TT>k*3/(4*(k+1)*(k+2)*(k+3)*(k+4))</TT><BR>
+On compare  ln(2) et les valeurs obtenues pour <I>n</I>=200, car on sait 
+que :<BR>
+ <I>S</I>=∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP>(−1)<SUP><I>k</I></SUP>1/(<I>k</I>+1)=ln(2)≃ 
+0.69314718056<BR>
+On tape :<BR>
+<TT>serie_sum(u,0,200)</TT><BR>
+On obtient <I>S</I> à 5*10<SUP>−3</SUP> prés (2 décimales exactes) :<BR>
+<TT>0.69562855486</TT><BR>
+On tape :<BR>
+<TT>1/2+serie_sum(v,0,200)</TT><BR>
+On obtient <I>S</I> à 1.23*10<SUP>−5</SUP> prés (4 décimales exactes) :<BR>
+<TT>0.693153307335</TT><BR>
+On tape :<BR>
+<TT>1/2+1/8+serie_sum(w,0,200)</TT><BR>
+On obtient <I>S</I> à 6.1*10<SUP>−8</SUP> prés (8 décimales exactes) :<BR>
+<TT>0.693147210666</TT><BR>
+On tape :<BR>
+<TT>1/2+1/8+1/24+serie_sum(t,0,200)</TT><BR>
+On obtient <I>S</I> à 4.6*10<SUP>−10</SUP> prés (10 décimales exactes) :<BR>
+<TT>0.693147180781</TT><BR>
+<B>Les erreurs</B><BR>
+Le reste d’une série alternée est du signe de son premier terme et 
+la valeur absolue du reste est inférieure à la valeur absolue de son
+premier terme :<BR>
+|∑<SUB><I>k</I>=<I>n</I>+1</SUB><SUP>∞</SUP>(−1)<SUP><I>k</I></SUP>1/(<I>k</I>+1)|&lt;1/(<I>n</I>+2)<BR>
+Au bout de la p-ième accéleration on calcule la somme de :<BR>
+ <I>u</I><SUB><I>k</I></SUB><SUP>(<I>p</I>)</SUP>=(−1)<SUP><I>k</I></SUP><I>p</I>!/2<SUP><I>p</I></SUP>(<I>k</I>+1)(<I>k</I>+2)...(<I>k</I>+<I>p</I>+1) et on a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">|</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=<I>n</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(−1)<SUP><I>k</I></SUP> <I>p</I>!</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2<SUP><I>p</I></SUP>(<I>k</I>+1)...(<I>k</I>+<I>p</I>+1)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">|&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>p</I>!</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2<SUP><I>p</I></SUP>(<I>n</I>+2)...(<I>n</I>+<I>p</I>+2)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>p</I>!</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2<SUP><I>p</I></SUP>(<I>n</I>+2)<SUP><I>p</I>+1</SUP></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On vérifie (ln(2)≃ 0.69314718055995) :<BR>
+ 0.69562855486&lt;ln(2)&lt;0.69562855486+1/202=0.70057904991<BR>
+ 0.693153307335&lt;ln(2)&lt;0.693153307335+1/(2*202<SUP>2</SUP>)=0.693165561036<BR>
+ 0.693147210666&lt;ln(2)&lt;0.693147210666+2/(4*202<SUP>3</SUP>)=0.693147271328<BR>
+ 0.693147180781&lt;ln(2)&lt;0.693147180781+6/(8*202<SUP>4</SUP>)=0.693147181231.
+</P><H4 CLASS="subsubsection">Le programme</H4><P>
+On peut écrire un programme qui va demander le nombre <I>p</I> 
+d’accélérations.<BR>
+Si  <I>u</I><SUB><I>k</I></SUB><SUP>(<I>p</I>)</SUP> désigne le <I>k</I>-ième terme de la série accélérée
+<I>p</I> fois, on a :<BR>
+ ∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP>(−1)<SUP><I>k</I></SUP>/(<I>k</I>+1)=∑<SUB><I>k</I>=0</SUB><SUP><I>p</I></SUP><I>u</I><SUB>0</SUB><SUP>(<I>k</I>−1)</SUP>/2+∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP><I>u</I><SUB><I>k</I></SUB><SUP>(<I>p</I>)</SUP><BR>
+avec<BR>
+  <I>u</I><SUB><I>k</I></SUB><SUP>(<I>p</I>)</SUP>=(−1)<SUP><I>k</I></SUP> <I>p</I>!/2<SUP><I>p</I></SUP>(<I>k</I>+1)...(<I>k</I>+<I>p</I>+1)<BR>
+On choisit de multiplier seulement à la fin par <I>p</I>!/2<SUP><I>p</I></SUP> et 
+de ne calculer que la somme des <I>n</I> premiers termes :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(−1)<SUP><I>k</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">(<I>k</I>+1)...(<I>k</I>+<I>p</I>+1)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P> 
+On met cette 
+somme dans la variable <TT>sg</TT>, pour cela on calcule 
+ (−1)<SUP><I>k</I></SUP>/(<I>k</I>+1)...(<I>k</I>+<I>p</I>+1) que l’on met dans la variable
+<TT>gk</TT> :<BR>
+au début <TT>sg=0</TT> et <TT>gk=</TT>1/(<I>p</I>+1)! (c’est la valeur pour <I>k</I>=0)<BR>
+ puis, on ajoute <TT>gk</TT> à la somme <TT>sg</TT>, ensuite on calcule 
+(−1)<SUP>1</SUP>1!/(<I>p</I>+2)! que l’on met dans <TT>gk</TT> 
+(c’est la valeur pour <I>k</I>=1) etc...<BR>
+La variable <TT>sf</TT> sert au début à calculer 
+ ∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> (−1)<SUP><I>k</I></SUP>/(<I>k</I>+1) puis,<BR>
+<TT>sf</TT> sert à calculer la somme à rajouter
+∑<SUB><I>k</I>=0</SUB><SUP><I>p</I></SUP><I>u</I><SUB>0</SUB><SUP>(<I>k</I>−1)</SUP>/2
+(qui vaut 1/2+1/8+1/24 pour <I>p</I>=3 accélerations).<BR>
+Dans le programme, on utilise la variable <TT>fact</TT> pour calculer 
+<TT>(p+1)!</TT> et la variable <TT>fact2</TT> pour calculer <TT><I>p</I>!/2</TT><SUP><TT><I>p</I></TT></SUP>.<BR>
+On écrit :
+</P><PRE CLASS="verbatim">seriealt_sumacc(n,acc):={
+local l,j,k,ls,sf,sg,gk,fact,fact2,alt,t0,p;
+//calcul sans acceleration
+sf:=0.0;
+alt:=1;
+for (k:=n;k&gt;=0;k--) {
+sf:=sf+alt/(k+1);
+alt:=-alt;
+}
+if (alt==1) {
+ls:=[-sf];} 
+else {
+ls:=[sf];
+}
+t0:=0.5;
+// sf maintenant est la somme a rajouter
+sf:=0.0;
+fact:=1;fact2:=1;
+for (p:=1;p&lt;=acc;p++){
+  sf:=sf+fact2*t0;
+  //calcul de p+1! et de p!/2^p
+  fact:=fact*(p+1);
+  fact2:=fact2*p/2;
+//sg, somme(de k=0 a n) de la serie gk acceleree p fois
+  sg:=0.0;
+//terme d'indice 0 (ds gk) de la serie acceleree p fois 
+//(sans p!/2^p=fact2)
+  gk:=1/fact;
+//on conserve gk/2 dans t0 car il faut rajouter t0 
+//au prochain sf 
+  t0:=gk/2;
+  sg:=sg+gk;
+  alt:=-1;
+  for (k:=1;k&lt;=n;k++) {
+     gk:=1/(k+1);
+//terme d'indice k (ds gk) de la serie acceleree p fois 
+//(sans p!/2^p=fact2)
+     for (j:=1;j&lt;=p;j++) {
+       gk:=evalf(gk/(k+j+1));
+     }
+     sg:=sg+alt*gk;
+     alt:=-alt;
+  } 
+ls:=concat(ls,sf+fact2*sg);
+}
+return(ls);
+}
+</PRE><P>On met ce programme dans un niveau éditeur de programmes (que l’on ouvre 
+avec <TT>Alt+p</TT>), puis on le teste et le valide avec <TT>OK</TT> et on tape 
+dans une ligne de commandes :<BR>
+<TT>seriealt_sumacc(200,3)</TT><BR>
+On obtient :<BR>
+<TT>[0.69562855486,0.693153307335,0.693147210666,0.693147180781]</TT>
+On tape :<BR>
+<TT>seriealt_sumacc(100,4)</TT><BR>
+On obtient :<BR>
+<TT>[0.698073169409,0.693171208625,0.693147412699,</TT><BR>
+<TT>0.693147183892,0.693147180623]</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc362">13.3.2</A>  La transformation d’Euler pour les series alternées</H3><H4 CLASS="subsubsection">La transformation d’Euler</H4><P>
+On cherche une approximation de :<BR>
+∑<SUB><I>n</I>=0</SUB><SUP>∞</SUP>(−1)<SUP><I>n</I></SUP>*<I>u</I>(<I>n</I>)=<TT>sum((-1)</TT><CODE><TT>^</TT></CODE><TT>n*u(n),n,0,infinity)</TT>
+lorsque <TT>u(n)</TT> tend vers 0 en décroissant.<BR>
+On pose :
+<TT>Delta(u))(n)=u(n+1)-u(n)</TT> et<BR>
+<TT>delta(u,p,n)=(Delta@@p(u))(n)</TT><BR>
+On a :<BR>
+<TT>delta(u,2,n)=u(n+2)-2*u(n+1)+u(n)</TT><BR>
+<TT>delta(u,3,n)=u(n+3)-3*u(n+2)+3*u(n+1)-u(n)</TT><BR>
+<TT>delta(u,p,N)=u(n+p)-comb(p,1)*u(n+p-1)+comb(p,2)*u(n+p-2)+</TT><BR>
+         <TT>....+(-1)</TT><CODE><TT>^</TT></CODE><TT>p*u(n)</TT><BR>
+c’est à dire :<BR>
+<TT>delta(u,p,n)=sum((-1)</TT><CODE><TT>^</TT></CODE><TT>(p-j)*comb(p,j)*u(n+j),j,0,p)</TT><BR>
+La transformation d’Euler consiste à écrire :<BR>
+<TT>sum((-1)</TT><CODE><TT>^</TT></CODE><TT>n*u(n),n,N,infinity)</TT><BR>
+sous la forme :<BR>
+<TT>(-1)</TT><CODE><TT>^</TT></CODE><TT>N*sum((-1)</TT><CODE><TT>^</TT></CODE><TT>p*delta(u,p,N)/2</TT><CODE><TT>^</TT></CODE><TT>(p+1),p,0,infinity)</TT><BR>
+Pour prouver cette égalité il suffit de développer la dernière 
+expression et de chercher le coefficient de <TT>u(N+k)</TT> dans la somme :<BR>
+ ∑<SUB><I>p</I>=0</SUB><SUP>∞</SUP>,(−1)<SUP><I>p</I></SUP>*<I>delta</I>(<I>u</I>,<I>p</I>,<I>N</I>)/2<SUP><I>p</I>+1</SUP><BR>
+Le coefficient de <TT>u(N+k)</TT> est :<BR>
+<TT>s(k)=(-1)</TT><CODE><TT>^</TT></CODE><TT>k*sum(comb(k+p,p)/2</TT><CODE><TT>^</TT></CODE><TT>(k+p+1),p,0,infinity)</TT><BR>
+et cette somme vaut <TT>(-1)</TT><CODE><TT>^</TT></CODE><TT>k</TT> quelque soit <TT>k</TT> entier.<BR>
+En effet par récurrence :<BR>
+pour <TT>k=0</TT>, <TT>comb(k+p,p)=1</TT> et<BR>
+<TT>sum(1/2</TT><CODE><TT>^</TT></CODE><TT>(p+1),p,0,infinity)=1/2+1/4+...1/2</TT><CODE><TT>^</TT></CODE><TT>n+...=1</TT><BR>
+On a de plus :<BR>
+- pour <TT>p=0</TT>, <TT>comb(k+p,p)=comb(k+1+p,p)=1</TT><BR>
+- pour <TT>p&gt;0</TT>, <TT>comb(k+p,p)=comb(k+1+p,p)-comb(k+1+p-1,p-1)</TT><BR>
+donc<BR>
+<TT>s(k)=(-1)</TT><CODE><TT>^</TT></CODE><TT>k*sum(comb(k+1+p,p)/2</TT><CODE><TT>^</TT></CODE><TT>(k+p+1),p,0,infinity)-</TT><BR>
+<TT>(-1)</TT><CODE><TT>^</TT></CODE><TT>k*sum(comb(k+1+p-1,p-1)/2</TT><CODE><TT>^</TT></CODE><TT>(k+1+p-1+1),p,1,infinity)=</TT><BR>
+<TT>-2*s(k+1)-</TT><BR>
+<TT>(-1)</TT><CODE><TT>^</TT></CODE><TT>k*sum(comb(k+1+p,p)/2</TT><CODE><TT>^</TT></CODE><TT>(k+1+p+1),p,0,infinity)=</TT><BR>
+<TT>-2*s(k+1)+s(k+1)=-s(k+1)</TT>.<BR>
+donc si <TT>s(k)=(-1)</TT><CODE><TT>^</TT></CODE><TT>k</TT> alors <TT>s(k+1)=(-1)</TT><CODE><TT>^</TT></CODE><TT>(k+1)</TT>.<BR>
+La transformation d’Euler permet une accélération de convergence car 
+la série :<BR>
+<TT>sum((-1)</TT><CODE><TT>^</TT></CODE><TT>p*delta(u,p,N)/2</TT><CODE><TT>^</TT></CODE><TT>(p+1),p,0,infinity)</TT><BR>
+converge plus rapidement.
+</P><H4 CLASS="subsubsection">Le programme</H4><P> 
+On définit, tout d’abord, la fonction <TT>delta</TT> :
+</P><PRE CLASS="verbatim">delta(u,p,n):={
+  local val,k,s;
+  val:=0;
+  s:=1;
+  for (k:=p;k&gt;=0;k--) {
+  val:=val+comb(p,k)*u(n+k)*s;
+  s:=s*-1;
+  }
+  return val;
+};
+</PRE><P>On écrit la transforpmation d’Euler :<BR>
+<TT>trans_euler(u,N,M)</TT> qui approche<BR>
+<TT>sum((-1)</TT><CODE><TT>^</TT></CODE><TT>n*u(n),n,0,infinity)</TT> et vaut :<BR>
+<TT>sum((-1)</TT><CODE><TT>^</TT></CODE><TT>n*u(n),n,0,N-1)+</TT><BR>
+<TT>(-1)</TT><CODE><TT>^</TT></CODE><TT>N*sum((-1/2)</TT><CODE><TT>^</TT></CODE><TT>p*delta(u,p,N)/2,p,0,M)</TT>.
+</P><PRE CLASS="verbatim">trans_euler(u,N,M):={
+  local S,T,k,s;
+  S:=0;
+  s:=1;
+  for (k:=0;k&lt;N;k++) {
+  S:=S+u(k)*s; 
+  s:=s*-1;
+  }
+  T:=0;
+  s:=s*1/2;
+for (k:=0;k&lt;=M;k++) {
+  T:=T+delta(u,k,N)*s; 
+  s:=s*-1/2;
+};
+  return evalf(normal(S+T));
+};
+</PRE><P>Par exemple pour <I>u</I>(<I>n</I>)=1/(<I>n</I>+1) avec 20 digits, on tape :<BR>
+<TT>u(n):=1/(n+1);</TT><BR>
+<TT>DIGITS:=20;</TT><BR>
+<TT>trans_euler(u,10,20);</TT><BR>
+On obtient :<BR>
+<TT>0.693147180559945056511</TT><BR>
+<TT>trans_euler(u,9,21);</TT><BR>
+On obtient :<BR>
+<TT>0.693147180559945594072</TT><BR>
+ On remarque que l’on a 16 decimales exactes car on a :<BR>
+<TT>evalf(ln(2))=0.693147180559945309415</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc363">13.3.3</A>  Autre approximation d’une série alternée</H3><P>
+La méthode présentée dans cette section est trés largement
+inspirée par le texte "Sommation de séries alternées" de 
+l’épreuve de modélisation de l’agrégation de mathématiques
+(session 2006).
+</P><H4 CLASS="subsubsection">Le problème</H4><P>
+On veut évaluer la somme <I>S</I> de la série alternée :
+<I>S</I>=∑<SUB><I>n</I>=0</SUB><SUP>∞</SUP>(−1)<SUP><I>n</I></SUP><I>a</I><SUB><I>n</I></SUB><BR>
+avec (<I>a</I><SUB><I>n</I></SUB>)<SUB><I>n</I>≥ 0</SUB> est une suite de nombres positifs qui tend vers 0 en 
+décroissant.<BR>
+On suppose que l’on a pour <I>n</I>≥ 0 :<BR>
+<I>a</I>−<I>n</I>=∫<SUB>0</SUB><SUP>1</SUP><I>x</I><SUP><I>n</I></SUP><I>d</I>µ<BR>
+où µ est une mesure positive sur [0,1].<BR>
+C’est en particulier le cas si <I>a</I><SUB><I>n</I></SUB>=<I>A</I>(<I>n</I>) avec <I>A</I> fonction indefiniment 
+dérivable pour laquelle les <I>k</I>ième dérivées <I>A</I><SUP>(<I>k</I>)</SUP> sont telles que
+(−1)<SUP><I>k</I></SUP>*<I>A</I><SUP>(<I>k</I>)</SUP>(<I>x</I>) soit positif pour <I>x</I>≥ 0 pour tout <I>k</I>≥ 0.</P><H4 CLASS="subsubsection">Le théorème</H4><P>
+Théorème :<BR>
+Soit <I>P</I><SUB><I>n</I></SUB> une suite de polynômes de degré <I>n</I> vérifiant 
+<I>P</I><SUB><I>n</I></SUB>(−1)≠ 0.<BR>
+À <I>P</I><SUB><I>n</I></SUB>, on associe les coefficients <I>c</I><SUB><I>n</I>,<I>k</I></SUB> pour 0 ≤ <I>k</I>&lt;<I>n</I> définis 
+par :<BR>
+ <I>P</I><SUB><I>n</I></SUB>(−1)−<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)/1+<I>x</I>=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP><I>c</I><SUB><I>n</I>,<I>k</I></SUB><I>x</I><SUP><I>k</I></SUP><BR>
+et le coefficient <I>d</I><SUB><I>n</I></SUB> défini par :<BR>
+<I>d</I><SUB><I>n</I></SUB>=<I>P</I><SUB><I>n</I></SUB>(−1)<BR>
+
+Soient <I>S</I>=∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP>(−1)<SUP><I>k</I></SUP><I>a</I><SUB><I>k</I></SUB> 
+et  <I>S</I><SUB><I>n</I></SUB>=1/<I>d</I><SUB><I>n</I></SUB>∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP><I>c</I><SUB><I>n</I>,<I>k</I></SUB><I>a</I><SUP><I>k</I></SUP><BR>
+Alors :<BR>
+ |<I>S</I>−<I>S</I><SUB><I>n</I></SUB>|≥ <I>sup</I><SUB><I>x</I> ∈ [0,1]</SUB> |<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)|/|<I>d</I><SUB><I>n</I></SUB>|<I>S</I><BR>
+On a, en effet, avec l’hypothèse faite sur les <I>a</I><SUB><I>k</I></SUB> :<BR>
+ <I>S</I>=∫<SUB>0</SUB><SUP>1</SUP> 1/1+<I>x</I><I>d</I>µ et<BR>
+ <I>S</I>−<I>S</I><SUB><I>n</I></SUB>=∫<SUB>0</SUB><SUP>1</SUP><I>P</I><SUB><I>n</I></SUB>(<I>x</I>)/<I>d</I><SUB><I>n</I></SUB>(1+<I>x</I>)<I>d</I>µ
+</P><H4 CLASS="subsubsection">Le choix des polynômes <I>P</I><SUB><I>n</I></SUB></H4><P>
+Pour calculer <I>S</I> il reste à choisir la suite des polynômes <I>P</I><SUB><I>n</I></SUB>.<BR>
+On peut choisir :<BR>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)=(1−<I>x</I>)<SUP><I>n</I></SUP><BR>
+on aura une convergence en 2<SUP>−<I>n</I></SUP> car <I>d</I><SUB><I>n</I></SUB>=2<SUP><I>n</I></SUP> et 
+<I>sup</I><SUB><I>x</I> ∈ [0,1]</SUB> |<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)|=1.<BR>
+On a :<BR>
+<I>P</I><SUB>0</SUB>(<I>x</I>)=1<BR>
+<I>P</I><SUB>1</SUB>(<I>x</I>)=1−<I>x</I><BR>
+<I>P</I><SUB><I>n</I>+1</SUB>(<I>x</I>)=<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)*(1−<I>x</I>) si <I>n</I>≥ 0<BR>
+<I>d</I><SUB><I>n</I></SUB>=2<SUP><I>n</I></SUP><BR>
+et la formule explicite de <I>P</I><SUB><I>n</I></SUB> :<BR>
+<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP>(−1)<SUP><I>k</I></SUP> <I>C</I><SUB><I>n</I></SUB><SUP><I>k</I></SUP><I>x</I><SUP><I>k</I></SUP>=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> <I>p</I><SUB><I>n</I>,<I>k</I></SUB> <I>x</I><SUP><I>k</I></SUP> si <I>n</I>≥ 0<BR>
+donc les coefficients <I>p</I><SUB><I>n</I>,<I>k</I></SUB> vérifient :<BR>
+ <I>p</I><SUB><I>n</I>,0</SUB>=1<BR>
+ <I>p</I><SUB><I>n</I>,<I>k</I></SUB>=<I>p</I><SUB><I>n</I>,<I>k</I>−1</SUB>*(<I>k</I>−1−<I>n</I>)/<I>k</I> pour 1 ≤ <I>k</I>&lt;<I>n</I><BR>
+On a :<BR>
+<I>d</I><SUB><I>n</I></SUB>−<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)=(1+<I>x</I>)∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP><I>c</I><SUB><I>n</I>,<I>k</I></SUB><I>x</I><SUP><I>k</I></SUP>=<I>c</I><SUB><I>n</I>,0</SUB>∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>(<I>c</I><SUB><I>n</I>,<I>k</I>−1</SUB>+<I>c</I><SUB><I>n</I>,<I>k</I></SUB>)<I>x</I><SUP><I>k</I></SUP><BR>
+donc<BR>
+<I>c</I><SUB><I>n</I>,0</SUB>=<I>d</I><SUB><I>n</I></SUB>−<I>p</I><SUB><I>n</I>,0</SUB>=<I>d</I><SUB><I>n</I></SUB>−1<BR>
+<I>c</I><SUB><I>n</I>,<I>k</I></SUB>=−<I>c</I><SUB><I>n</I>,<I>k</I>−1</SUB>−<I>p</I><SUB><I>n</I>,<I>k</I></SUB> pour 1 ≤ <I>k</I>&lt;<I>n</I></LI><LI CLASS="li-itemize"><I>P</I><SUB><I>n</I></SUB>(<I>x</I>)=<I>x</I><SUP><I>q</I></SUP>(1−<I>x</I>)<SUP>2<I>q</I></SUP> et <I>n</I>=3*<I>q</I><BR>
+on aura une convergence en 3<SUP>−<I>n</I></SUP> car<BR>
+|<I>d</I><SUB><I>n</I></SUB>|=2<SUP>2<I>q</I></SUP> et<BR>
+<I>sup</I><SUB><I>x</I> ∈ [0,1]</SUB> |<I>P</I><SUB><I>n</I></SUB>(<I>x</I>|)=<I>P</I><SUB><I>n</I></SUB>(1/3)=2<SUP>2<I>q</I></SUP>*3<SUP>−<I>n</I></SUP>.<BR>
+On a :<BR>
+<I>P</I><SUB>0</SUB>(<I>x</I>)=1<BR>
+<I>P</I><SUB>3</SUB>(<I>x</I>)=<I>x</I>(1−<I>x</I>)<SUP>2</SUP><BR>
+<I>P</I><SUB><I>n</I>+3</SUB>(<I>x</I>)=<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)*<I>x</I>*(1−<I>x</I>)<SUP>2</SUP> si <I>n</I>≥ 0<BR>
+<I>d</I><SUB><I>n</I></SUB>=(−1)<SUP><I>q</I></SUP>*2<SUP>2<I>q</I></SUP><BR>
+et la formule explicite de <I>P</I><SUB><I>n</I></SUB> :<BR>
+<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)=∑<SUB><I>k</I>=0</SUB><SUP>2<I>q</I></SUP>(−1)<SUP><I>k</I></SUP> <I>C</I><SUB>2<I>q</I></SUB><SUP><I>k</I></SUP><I>x</I><SUP><I>k</I>+<I>q</I></SUP>=∑<SUB><I>k</I>=<I>q</I></SUB><SUP><I>n</I></SUP>(−1)<SUP><I>k</I>−<I>q</I></SUP> <I>C</I><SUB>2<I>q</I></SUB><SUP><I>k</I>−<I>q</I></SUP><I>x</I><SUP><I>k</I></SUP>=<BR>
+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> <I>p</I><SUB><I>n</I>,<I>k</I></SUB> <I>x</I><SUP><I>k</I></SUP> si <I>n</I>≥ 0<BR>
+donc les coefficients <I>p</I><SUB><I>n</I>,<I>k</I></SUB> vérifient :<BR>
+<I>p</I><SUB><I>n</I>,<I>k</I></SUB>=0 si <I>k</I>&lt;<I>q</I><BR>
+<I>p</I><SUB><I>n</I>,<I>q</I></SUB>=1<BR>
+et comme <I>C</I><SUB><I>n</I></SUB><SUP><I>p</I></SUP>=<I>C</I><SUB><I>n</I></SUB><SUP><I>p</I>−1</SUP>*(<I>n</I>−<I>p</I>+1)/<I>p</I><BR>
+<I>p</I><SUB><I>n</I>,<I>k</I></SUB>=(−1)<SUP><I>k</I>−<I>q</I></SUP> <I>C</I><SUB>2<I>q</I></SUB><SUP><I>k</I>−<I>q</I></SUP> si <I>q</I> ≤ <I>k</I> ≤ <I>n</I><BR>
+<I>p</I><SUB><I>n</I>,<I>k</I></SUB>=−<I>p</I><SUB><I>n</I>,<I>k</I>−1</SUB>*(<I>k</I>−1−<I>n</I>)/(<I>k</I>−<I>q</I>) si <I>q</I> &lt; <I>k</I> ≤ <I>n</I><BR>
+On a :<BR>
+<I>d</I><SUB><I>n</I></SUB>−<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)=(1+<I>x</I>)∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP><I>c</I><SUB><I>n</I>,<I>k</I></SUB><I>x</I><SUP><I>k</I></SUP>=<I>c</I><SUB><I>n</I>,0</SUB>+∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>(<I>c</I><SUB><I>n</I>,<I>k</I>−1</SUB>+<I>c</I><SUB><I>n</I>,<I>k</I></SUB>)<I>x</I><SUP><I>k</I></SUP><BR>
+donc<BR>
+<I>c</I><SUB><I>n</I>,0</SUB>=<I>d</I><SUB><I>n</I></SUB>−<I>p</I><SUB><I>n</I>,0</SUB>=<I>d</I><SUB><I>n</I></SUB>−1<BR>
+<I>c</I><SUB><I>n</I>,<I>k</I></SUB>=−<I>c</I><SUB><I>n</I>,<I>k</I>−1</SUB>−<I>p</I><SUB><I>n</I>,<I>k</I></SUB> pour 1 ≤ <I>k</I>&lt;<I>n</I></LI><LI CLASS="li-itemize">Si le ploynôme <I>P</I><SUB><I>n</I></SUB> défini <I>P</I><SUB><I>n</I></SUB>(sin(<I>t</I>)<SUP>2</SUP>)=cos(2<I>nt</I>)<BR>
+<I>P</I><SUB><I>n</I></SUB> est défini à partir du ploynôme <I>T</I><SUB><I>n</I></SUB> de 
+Chebyshev (<I>T</I><SUB><I>n</I></SUB>(cos(<I>t</I>))=cos(<I>nt</I>)) :<BR>
+<I>P</I><SUB><I>n</I></SUB>(sin(<I>t</I>)<SUP>2</SUP>)=cos(2<I>nt</I>)<I>T</I><SUB><I>n</I></SUB>(cos(2<I>t</I>))<BR>
+on a donc puisque 1−2sin(<I>t</I>)<SUP>2</SUP>=cos(2<I>t</I>) :<BR>
+<I>T</I><SUB><I>n</I></SUB>(1−2sin(<I>t</I>)<SUP>2</SUP>)=cos(2<I>nt</I>) et<BR>
+<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)=<I>T</I><SUB><I>n</I></SUB>(1−2<I>x</I>)<BR>
+on aura une convergence meilleure que dans les cas précédents car la 
+convergence est en :<BR>
+2/((3+√<SPAN style="text-decoration:overline">8</SPAN>)<SUP><I>n</I></SUP>+(3−√<SPAN style="text-decoration:overline">8</SPAN>)<SUP><I>n</I></SUP>)≃ 2/((3+√<SPAN style="text-decoration:overline">8</SPAN>)<SUP><I>n</I></SUP>)≃ 2/(5.8)<SUP><I>n</I></SUP><BR>
+car<BR>
+<I>d</I><SUB><I>n</I></SUB>=((3+√<SPAN style="text-decoration:overline">8</SPAN>)<SUP><I>n</I></SUP>+(3−√<SPAN style="text-decoration:overline">8</SPAN>)<SUP><I>n</I></SUP>)/2 et <I>sup</I><SUB><I>x</I> ∈ [0,1]</SUB> |<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)|=1.<BR>
+Donc :<BR>
+<I>P</I><SUB>0</SUB>(<I>x</I>)=1<BR>
+<I>P</I><SUB>1</SUB>(<I>x</I>)=1−2<I>x</I><BR>
+<I>P</I><SUB><I>n</I>+2</SUB>(<I>x</I>)=2(1−2<I>x</I>)<I>P</I><SUB><I>n</I>+1</SUB>(<I>x</I>)−<I>P</I><SUB><I>n</I></SUB>(<I>x</I>) si <I>n</I>≥ 0<BR>
+<I>d</I><SUB><I>n</I></SUB>=((3+√<SPAN style="text-decoration:overline">8</SPAN>)<SUP><I>n</I></SUP>+(3−√<SPAN style="text-decoration:overline">8</SPAN>)<SUP><I>n</I></SUP>)/2<BR>
+et la formule explicite de <I>P</I><SUB><I>n</I></SUB> :<BR>
+<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> (−1)<SUP><I>k</I></SUP> <I>n</I>/<I>n</I>+<I>k</I><I>C</I><SUB><I>n</I>+<I>k</I></SUB><SUP>2<I>k</I></SUP>2<SUP>2<I>k</I></SUP><I>x</I><SUP><I>k</I></SUP>=<BR>
+∑<SUB><I>k</I>=0</SUB><SUP><I>n</I></SUP> <I>p</I><SUB><I>n</I>,<I>k</I></SUB> <I>x</I><SUP><I>k</I></SUP>  si <I>n</I>≥ 0<BR>
+donc les coefficients <I>p</I><SUB><I>n</I>,<I>k</I></SUB> vérifient :<BR>
+ <I>p</I><SUB><I>n</I>,0</SUB>=1
+<I>p</I><SUB><I>n</I>,<I>k</I></SUB>= <I>p</I><SUB><I>k</I>−1,<I>n</I></SUB>(<I>k</I>−1+<I>n</I>)(<I>k</I>−1−<I>n</I>)/((<I>k</I>−1/2)(<I>k</I>)) pour 1 ≤ <I>k</I>&lt;<I>n</I> 
+On a :<BR>
+<I>d</I><SUB><I>n</I></SUB>−<I>P</I><SUB><I>n</I></SUB>(<I>x</I>)=(1+<I>x</I>)∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP><I>c</I><SUB><I>n</I>,<I>k</I></SUB><I>x</I><SUP><I>k</I></SUP>=<I>c</I><SUB><I>n</I>,0</SUB>∑<SUB><I>k</I>=1</SUB><SUP><I>n</I></SUP>(<I>c</I><SUB><I>n</I>,<I>k</I>−1</SUB>+<I>c</I><SUB><I>n</I>,<I>k</I></SUB>)<I>x</I><SUP><I>k</I></SUP>
+donc<BR>
+<I>c</I><SUB><I>n</I>,0</SUB>=<I>d</I><SUB><I>n</I></SUB>−<I>p</I><SUB>0,<I>n</I></SUB>
+<I>c</I><SUB><I>n</I>,<I>k</I></SUB>=−<I>c</I><SUB><I>n</I>,<I>k</I>−1</SUB>−<I>p</I><SUB><I>n</I>,<I>k</I></SUB> pour 1 ≤ <I>k</I>&lt;<I>n</I>
+</LI></UL><H4 CLASS="subsubsection">Les formules de récurrences et le programme pour le polynôme Chebyshev</H4><UL CLASS="itemize"><LI CLASS="li-itemize">
+<B>Les formules de récurrences</B><BR>
+On va calculer les coefficients <I>c</I><SUB><I>n</I>,<I>k</I></SUB> de proche en proche pour 
+<I>n</I> fixé.<BR>
+On pose :<BR>
+<TT>p:=1;</TT><BR>
+<TT>d:=((3+sqrt(8))</TT><CODE><TT>^</TT></CODE><TT>n+(3-sqrt(8))</TT><CODE><TT>^</TT></CODE><TT>n)/2;</TT><BR>
+<TT>c:=d-p;</TT><BR>
+Le premier terme de <I>S</I><SUB><I>n</I></SUB> :<BR>
+<TT>S:=a(0)*c;</TT><BR>
+puis, pour <TT>k:= 1</TT> jusque <TT>k:= n-1</TT> on calcule <I>p</I><SUB><I>n</I>,<I>k</I></SUB> et 
+<I>c</I><SUB><I>n</I>,<I>k</I></SUB> :<BR>
+<TT>p:=p*(k+n-1)*(k-n-1)/(k-1/2)/k;</TT><BR>
+<TT>c:=-p-c;</TT><BR>
+On ajoute le <I>k</I>ième terme de <I>S</I><SUB><I>n</I></SUB> :<BR>
+<TT>S:=S+a(k)*c;</TT><BR>
+</LI><LI CLASS="li-itemize"><B>Le programme</B><BR>
+<PRE CLASS="verbatim">//n=nombres de termes et a fonction definissant a(n)
+//S_n(P_n) =seriealt(n,a) 
+//S_n(P_n) approche sum((-1)^k*a(k),k,0,+infinity)
+//avec P_n=poly de chebyshev
+seriealt1(n,a):={
+local k,d,c,p,S;
+d:=((3+sqrt(8))^n+(3-sqrt(8))^n)/2;
+p:=1;
+c:=d-p;
+S:=a(0)*c;
+for (k:=1;k&lt;n;k++) {
+p:=p*(k+n-1)*(k-n-1)/(k-1/2)/k;
+c:=-p-c;
+S:=S+a(k)*c;
+}
+return evalf(S/d);
+};
+</PRE></LI></UL><H4 CLASS="subsubsection">Les formules et le programme pour le polynôme <I>P</I><SUB><I>n</I></SUB>(<I>x</I>)=(1−<I>x</I>)<SUP><I>n</I></SUP></H4><UL CLASS="itemize"><LI CLASS="li-itemize">
+<B>Les formules de récurrences</B><BR>
+On va calculer les coefficients <I>c</I><SUB><I>n</I>,<I>k</I></SUB> de proche en proche pour 
+<I>n</I> fixé.<BR>
+On pose :<BR>
+<TT>p:=1;</TT><BR>
+<TT>d:=2</TT><CODE><TT>^</TT></CODE><TT>n;</TT><BR>
+<TT>c:=d-p;</TT><BR>
+Le premier terme de <I>S</I><SUB><I>n</I></SUB> :<BR>
+<TT>S:=a(0)*c;</TT><BR>
+puis, pour <TT>k:= 1</TT> jusque <TT>k:= n-1</TT> on calcule <I>p</I><SUB><I>n</I>,<I>k</I></SUB> et 
+<I>c</I><SUB><I>n</I>,<I>k</I></SUB> :<BR>
+<TT>p:=p*(k-n-1)/k;</TT><BR>
+<TT>c:=-p-c;</TT><BR>
+On ajoute le <I>k</I>ième terme de <I>S</I><SUB><I>n</I></SUB> :<BR>
+<TT>S:=S+a(k)*c;</TT>
+</LI><LI CLASS="li-itemize"><B>Le programme</B>
+<PRE CLASS="verbatim">//n=nombres de termes et a fonction definissant a(n)
+//S_n(P_n) =seriealt(n,a) 
+//S_n(P_n) approche sum((-1)^k*a(k),k,0,+infinity)
+//avec P_n(x)=poly (1-x)^n
+seriealt2(n,a):={
+local k,d,c,p,S;
+d:=2^n;
+p:=1;
+c:=d-p;
+S:=a(0)*c;
+for (k:=1;k&lt;n;k++) {
+p:=p*(k-n-1)/k;
+c:=-p-c;
+S:=S+a(k)*c;
+}
+return evalf(S/d);
+};
+</PRE></LI></UL><H4 CLASS="subsubsection">Les formules et le programme pour le polynôme <I>P</I><SUB>3<I>q</I></SUB>(<I>x</I>)=<I>x</I><SUP><I>q</I></SUP>(1−<I>x</I>)<SUP>2<I>q</I></SUP></H4><UL CLASS="itemize"><LI CLASS="li-itemize">
+<B>Les formules de récurrences</B><BR>
+On va calculer les coefficients <I>c</I><SUB><I>n</I>,<I>k</I></SUB> de proche en proche pour 
+<I>n</I> fixé.<BR>
+On pose :<BR>
+<TT>p:=0;</TT> si 0 ≤ <I>k</I>&lt;<I>q</I><BR>
+<TT>p:=1;</TT> si <I>k</I>=<I>q</I><BR>
+<TT>d:=(-1)</TT><CODE><TT>^</TT></CODE><TT>q*2</TT><CODE><TT>^</TT></CODE><TT>2q</TT><TT>;</TT><BR>
+<TT>c:=d-p;</TT><BR>
+Le premier terme de <I>S</I><SUB><I>n</I></SUB> :<BR>
+<TT>S:=a(0)*c;</TT><BR>
+pour <TT>k:=1</TT> jusque <TT>k:=q-1</TT> on a <I>p</I><SUB><I>n</I>,<I>k</I></SUB>=0 et on calcule
+<I>c</I><SUB><I>n</I>,<I>k</I></SUB> (<TT>c:=-p-c;</TT>) et on ajoute le <I>k</I>ième terme de <I>S</I><SUB><I>n</I></SUB> :<BR>
+<TT>S:=S+a(k)*c;</TT><BR>
+puis, pour <TT>k:=q</TT> on a <I>p</I><SUB><I>n</I>,<I>q</I></SUB>=1 et on calcule
+<I>c</I><SUB><I>n</I>,<I>q</I></SUB> (<TT>c:=-p-c;</TT>) et on ajoute le <I>q</I>ième terme de <I>S</I><SUB><I>n</I></SUB> :<BR>
+<TT>S:=S+a(q)*c;</TT><BR>
+puis, pour <TT>k:=q+1</TT> jusque <TT>k:= n-1</TT> on calcule <I>p</I><SUB><I>n</I>,<I>k</I></SUB> et 
+<I>c</I><SUB><I>n</I>,<I>k</I></SUB> :<BR>
+<TT>p:=p*(k-n-1)/k;</TT><BR>
+<TT>c:=-p-c;</TT><BR>
+On ajoute le <I>k</I>ième terme de <I>S</I><SUB><I>n</I></SUB> :<BR>
+<TT>S:=S+a(k)*c;</TT><BR>
+</LI><LI CLASS="li-itemize"><B>Le programme</B><BR>
+<PRE CLASS="verbatim">//n=nombres de termes et a fonction definissant a(n)
+//S_n(P_n) =seriealt(n,a) 
+//S_n(P_n) approche sum((-1)^k*a(k),k,0,+infinity)
+//avec P_n=poly de chebyshev
+seriealt3(n,a):={
+local k,d,c,p,q,S;
+q:=ceil(n/3);
+n:=3*q;
+d:=(-1)^q*2^(2*q);
+p:=0;
+c:=d-p;
+S:=a(0)*c;
+for (k:=1;k&lt;q;k++) {
+c:=-p-c;
+S:=S+a(k)*c;
+}
+p:=1;
+c:=-c-p;
+S:=S+a(q)*c;
+for (k:=q+1;k&lt;n;k++) {
+p:=p*(k-n-1)/(k-q);
+c:=-p-c;
+S:=S+a(k)*c;
+}
+return evalf(S/d);
+};
+</PRE></LI></UL><H4 CLASS="subsubsection">Les essais</H4><P>
+On choisit <TT>n=20</TT>.<BR>
+On tape :<BR>
+<TT>evalf(2/(3+sqrt(8))</TT><CODE><TT>^</TT></CODE><TT>20,2</TT><CODE><TT>^</TT></CODE><TT>-20,3</TT><CODE><TT>^</TT></CODE><TT>-21)=</TT><BR>
+<TT>9.77243031253e-16,9.53674316406e-07,9.55990663597e-11</TT><BR>
+On a donc pour n=20 une approximation en 10<SUP>−15</SUP> pour Chebyshev, en 
+10<SUP>−6</SUP> pour (1−<I>x</I>)<SUP>20</SUP> et en 10<SUP>−10</SUP> pour <I>x</I><SUP>7</SUP>(1−<I>x</I>)<SUP>1</SUP>4 :<BR>
+On choisit dans la suite <TT>Digits:=20</TT><BR>
+
+Pour calculer une approximation de π/4.<BR>
+On a :<BR>
+<TT>sum((-1)</TT><CODE><TT>^</TT></CODE><TT>n/(2*n+1),n,0,+infinity)=pi/4</TT><BR>
+On tape :<BR>
+<TT>b(n):=1/(2*n+1)</TT><BR>
+<TT>seriealt1(20,b);evalf(pi/4)</TT><BR>
+On obtient :<BR>
+<TT>0.785398163397448309926, 0.785398163397448309615</TT><BR>
+On tape :<BR>
+<TT>seriealt2(20,b);seriealt3(20,b);</TT><BR>
+On obtient :<BR>
+<TT>0.785397981918786731599, 0.785398163413201025973</TT><BR>
+
+Pour calculer une approximation de ln(2).<BR>
+On a :<BR>
+<TT>sum((-1)</TT><CODE><TT>^</TT></CODE><TT>n/(n+1),n,0,+infinity)=ln(2)</TT><BR>
+On tape :<BR>
+<TT>a(n):=1/(n+1)</TT><BR>
+<TT>seriealt1(30,a);evalf(ln(2))</TT><BR>
+On obtient :<BR>
+<TT>0.693147180559945311245, 0.693147180559945309415</TT><BR>
+On tape :<BR>
+<TT>seriealt2(20,a);seriealt3(20,a);</TT><BR>
+On obtient :<BR>
+<TT>0.693147137051028936275, 0.693147180577738915258</TT></P><H3 CLASS="subsection"><A NAME="htoc364">13.3.4</A>  Transformation d’une série en série alternée</H3><P>
+On a l’identité formelle :<BR>
+∑<SUB><I>n</I> ≥ 1</SUB><I>a</I><SUB><I>n</I></SUB>=∑<SUB><I>m</I> ≥ 1</SUB>(−1)<SUP><I>m</I>−1</SUP><I>b</I><SUB><I>m</I></SUB> avec<BR>
+<I>b</I><SUB><I>m</I></SUB>=∑<SUB><I>k</I> ≥ 0</SUB> 2<SUP><I>k</I></SUP> <I>a</I><SUB>2<SUP><I>k</I></SUP><I>m</I></SUB>.<BR>
+En effet, si <I>n</I>0 est un entier il existe un entier <I>p</I>0 et un entier impair 
+<I>m</I>0 uniques vérifiant <I>n</I>0=2<SUP><I>p</I>0</SUP>*<I>m</I>0 .
+Dans la somme ∑<SUB><I>m</I> ≥ 1</SUB>(−1)<SUP><I>m</I>−1</SUP>∑<SUB><I>k</I> ≥ 0</SUB> 2<SUP><I>k</I></SUP> <I>a</I><SUB>2<SUP><I>k</I></SUP><I>m</I></SUB> on 
+cherche le coefficient de <I>a</I><SUB><I>n</I>0</SUB>, on a soit :<BR>
+<I>k</I>=0 et <I>m</I>=<I>n</I>0=<I>m</I>0*2<SUP><I>p</I>0</SUP>, soit<BR>
+<I>k</I>=1 et <I>m</I>=<I>m</I>0*2<SUP><I>p</I>0−1</SUP>, soit<BR>
+................ soit<BR>
+<I>k</I>=<I>p</I>0 et <I>m</I>=<I>m</I>0.<BR>
+ On remarquera que toutes les valeurs, sauf la dernière, de <I>m</I> sont 
+paires, donc les différentes valeurs de (<SUB>1</SUB>)<SUP><I>m</I>−1</SUP> sont 
+(-1) sauf la dernière qui vaut +1.<BR>
+∑<SUB><I>m</I> ≥ 1</SUB>∑<SUB><I>k</I> ≥ 0</SUB> (−1)<SUP><I>m</I>−1</SUP>2<SUP><I>k</I></SUP> <I>a</I><SUB>2<SUP><I>k</I></SUP><I>m</I></SUB>=<BR>
+∑<SUB><I>n</I>0 ≥ 1</SUB><I>a</I><SUB><I>n</I>0</SUB>*(∑<SUB><I>k</I>=0</SUB><SUP><I>p</I>0−1</SUP>(−1)*2<SUP><I>k</I></SUP>+2<SUP><I>p</I>0</SUP>)=<BR>
+∑<SUB><I>n</I> ≥ 1</SUB><I>a</I><SUB><I>n</I></SUB> puisque 2<SUP><I>p</I>0</SUP>−∑<SUB><I>k</I>=0</SUB><SUP><I>p</I>0−1</SUP>2<SUP><I>k</I></SUP>=1<BR>
+</P><H4 CLASS="subsubsection">Application au calcul de ∑<SUB><I>n</I>=0</SUB><SUP>∞</SUP>1/<I>n</I><SUP><I>s</I></SUP></H4><P>
+Prenons comme exemple la série de terme général <I>a</I><SUB><I>n</I></SUB>=1/<I>n</I><SUP><I>s</I></SUP> avec 
+<I>s</I>&gt;1.<BR>
+pour <TT>s=2</TT><BR>
+si <TT>a(n)=1/n</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+on a :<BR>
+<TT>2</TT><CODE><TT>^</TT></CODE><TT>k*a(2</TT><CODE><TT>^</TT></CODE><TT>k*m)=1/(2</TT><CODE><TT>^</TT></CODE><TT>k*m</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+<TT>b(m)=1/m</TT><CODE><TT>^</TT></CODE><TT>2*sum(1/2</TT><CODE><TT>^</TT></CODE><TT>k,k,0,+infinity)=2/m</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+pour <TT>s</TT> quelconque<BR>
+si <TT>a(n)=1/n</TT><CODE><TT>^</TT></CODE><TT>s</TT><BR>
+On a <TT>2</TT><CODE><TT>^</TT></CODE><TT>k*a(2</TT><CODE><TT>^</TT></CODE><TT>k*m)=1/(2</TT><CODE><TT>^</TT></CODE><TT>(k*(s-1))*m</TT><CODE><TT>^</TT></CODE><TT>s)</TT><BR>
+<TT>b(m)=1/m</TT><CODE><TT>^</TT></CODE><TT>s*sum((1/2</TT><CODE><TT>^</TT></CODE><TT>(s-1))</TT><CODE><TT>^</TT></CODE><TT>k,k,0,+infinity)</TT><BR>
+Donc :<BR>
+<TT>b(m)=2</TT><CODE><TT>^</TT></CODE><TT>(s-1)/((2</TT><CODE><TT>^</TT></CODE><TT>(s-1)-1)*m</TT><CODE><TT>^</TT></CODE><TT>s)</TT><BR>
+pour s=2<BR>
+<TT>b(m):=2/(m</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+pour s=4<BR>
+<TT>b(m):=8/(7*m</TT><CODE><TT>^</TT></CODE><TT>4)</TT><BR>
+On a :<BR>
+<TT>sum((-1)</TT><CODE><TT>^</TT></CODE><TT>(m-1)*b(m),1,+infinity)=</TT><BR>
+<TT>sum((-1)</TT><CODE><TT>^</TT></CODE><TT>(m)*b(m+1),0,+infinity)</TT><BR>
+
+On choisit encore <TT>Digits:=20</TT><BR>
+
+pour s=2, ∑<SUB><I>n</I>=1</SUB><SUP>∞</SUP>1/<I>n</I><SUP>2</SUP>=π<SUP>2</SUP>/6<BR>
+On tape :<BR>
+<TT>t2(m):=2/(m+1)</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+<TT>seriealt1(20,t2),evalf(pi</TT><CODE><TT>^</TT></CODE><TT>2/6)</TT><BR>
+On obtient :<BR>
+<TT>1.64493406684822645248, 1.64493406684822643645</TT><BR>
+On tape :<BR>
+<TT>seriealt2(20,t2);seriealt3(20,t2);</TT><BR>
+On obtient :<BR>
+<TT>1.64493374613777534516, 1.64493406688805599300</TT><BR>
+
+pour s=4, ∑<SUB><I>n</I>=1</SUB><SUP>∞</SUP>1/<I>n</I><SUP>4</SUP>=π<SUP>4</SUP>/90<BR>
+On tape :<BR>
+<TT>t4(m):=8/(7*(m+1)</TT><CODE><TT>^</TT></CODE><TT>4)</TT><BR>
+<TT>seriealt1(20,t4);evalf(pi</TT><CODE><TT>^</TT></CODE><TT>4/90)</TT><BR>
+On obtient :<BR>
+<TT>1.08232323371113822384, 1.08232323371113819149</TT><BR>
+On tape :<BR>
+<TT>seriealt2(20,t4);seriealt3(20,t4);</TT><BR>
+On obtient :<BR>
+<TT>1.08232265198912440013, 1.08232323371697925335</TT><BR>
+</P><H4 CLASS="subsubsection">Application au calcul de la constante d’Euler</H4><P><A NAME="sec:gammaalt"></A>
+Pour calculer une approximation de la constante d’Euler, (voir aussi <A HREF="casrouge015.html#sec:gammarich">15.2.3</A> 
+et <A HREF="#sec:gammadiv">13.5.2</A>).<BR>
+γ=<TT>-psi(1)</TT>.<BR>
+On a :<BR>
+<TT>-psi(1)=sum((-1)</TT><CODE><TT>^</TT></CODE><TT>n*ln(n)/n,n,1,+infinity)/ln(2)+ln(2)/2</TT><BR>
+et<BR>
+<TT>sum((-1)</TT><CODE><TT>^</TT></CODE><TT>n*ln(n)/n,n,1,+infinity)=</TT><BR>
+<TT>-sum((-1)</TT><CODE><TT>^</TT></CODE><TT>n*ln(n+1)/(n+1),n,0,+infinity)</TT><BR>
+<TT>c(n):=log(n+1)/(n+1)</TT><BR>
+<TT>-seriealt1(20,c)/ln(2)+ln(2)/2;-evalf(psi(1),0)</TT><BR>
+On obtient :<BR>
+<TT>0.577215664901532859864, 0.57721566490153</TT><BR>
+On tape :<BR>
+<TT>-seriealt2(20,c)/ln(2)+ln(2)/2,-seriealt3(20,c)/ln(2)+ln(2)/2</TT><BR>
+On obtient :<BR>
+<TT>0.577215550220266823551, 0.577215664918305723256</TT>
+On tape :
+<TT>Digits:=24;</TT><BR>
+<TT>evalf(euler_gamma)</TT><BR>
+On obtient : <TT>0.5772156649015328606065119</TT>
+</P><H2 CLASS="section"><A NAME="toc99"></A><A NAME="htoc365">13.4</A>  Polynômes de Bernstein</H2><H3 CLASS="subsection"><A NAME="htoc366">13.4.1</A>  Définition et théorème</H3><P>
+<B>Définition</B><BR>
+Le <I>n</I>ième polynômes de Bernstein associé à <I>f</I> continuesur [0,1] est :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>B</I><SUB><I>n</I></SUB>(<I>f</I>)(<I>t</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>p</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>comb</I>(<I>n</I>,<I>p</I>)<I>f</I>(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>p</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)(1−<I>t</I>)<SUP><I>n</I>−<I>p</I></SUP><I>t</I><SUP><I>p</I></SUP></TD></TR>
+</TABLE><P>
+<B>Théorème</B><BR>
+Si <I>f</I> est continue la suite <I>B</I><SUB><I>n</I></SUB>(<I>f</I>) converge uniformément vers <I>f</I> dans 
+<I>I</I>=[0,1].<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc367">13.4.2</A>  Le programme</H3><P>
+bernstein(f,n,t) approche uniformement <I>f</I> continue sur [0,1].<BR>
+On tape :
+</P><PRE CLASS="verbatim">bernstein(f,n,t):={
+retourne sum(comb(n,p)*f(p/n)*(1-t)^(n-p)*t^p,p=0..n);
+  }:;
+
+</PRE><P>bernab(f,n,t,a,b) approche uniformement <I>f</I> continue sur [0,1].<BR>
+On tape :
+</P><PRE CLASS="verbatim">bernab(f,n,t,a,b):={
+ retourne  sum(comb(n,p)*f(a*(1-p/n)+b*p/n)*(b-t)^(n-p)*(t-a)^p/(b-a)^n,p=0..n)
+   }:;
+</PRE><P>On tape :<BR>
+<TT>plotfunc([bernstein(sin,12,x),sin(x)],x)</TT><BR>
+On obtient :<BR>
+<TT>Un graphe proche de sin(x) sur 0,1</TT><BR>
+On tape :<BR>
+<TT>plotfunc([bernstein(sin,12,x,-pi/2,pi/2),sin(x)],x)</TT><BR>
+On obtient :<BR>
+<TT>Un graphe proche de sin(x) sur -pi/2,pi/2</TT>
+</P><H2 CLASS="section"><A NAME="toc100"></A><A NAME="htoc368">13.5</A>  Développements asymptotiques et séries divergentes</H2><P>
+Un développement asymptotique est une généralisation d’un développement de Taylor, par 
+exemple lorsque le point de développement est en l’infini. De nombreuses fonctions ayant
+une limite en l’infini admettent un développement asymptotique en l’infini, mais ces
+développements sont souvent des séries qui semblent commencer par converger
+mais sont divergentes. Ce type de développement s’avère néanmoins très utile lorsqu’on
+n’a pas besoin d’une trop grande précision sur la valeur de la fonction.
+</P><H3 CLASS="subsection"><A NAME="htoc369">13.5.1</A>  Un exemple:la fonction exponentielle intégrale</H3><P>
+Nous allons illustrer ce type de développement sur un exemple, la fonction 
+exponentielle intégrale, définie à une constante près par
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>(<I>x</I>)=</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> </TD></TR>
+</TABLE><P>
+On peut montrer que l’intégrale existe bien, car l’intégrand est positif et inférieur à 
+<I>e</I><SUP>−<I>t</I></SUP> (qui admet −<I>e</I><SUP>−<I>t</I></SUP> comme primitive, cette primitive ayant une limite en 
++∞).<BR>
+Pour trouver le développement asymptotique de <I>f</I> en +∞, on effectue 
+des intégrations par parties répétées, en intégrant l’exponentielle 
+et en dérivant la fraction rationnelle :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP> <I>f</I>(<I>x</I>)</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">[</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">−<I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">]<SUB><I>x</I></SUB><SUP>+∞</SUP> − </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">−<I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">−<I>t</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>e</I><SUP>−<I>x</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> − </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>e</I><SUP>−<I>x</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> − ([</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">−<I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">]<SUB><I>x</I></SUB><SUP>+∞</SUP> − </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">−2<I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">−<I>t</I><SUP>3</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">) </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>e</I><SUP>−<I>x</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> − </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>e</I><SUP>−<I>x</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> + </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2<I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I><SUP>3</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP>... </TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>e</I><SUP>−<I>x</I></SUP></TD><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> − </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> + </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP>3</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> + ... + </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(−1)<SUP><I>n</I></SUP> <I>n</I>!</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP><I>n</I>+1</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎟<BR>
+⎠</TD><TD CLASS="dcell">
+− </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(−1)<SUP><I>n</I></SUP> <I>n</I>!<I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I><SUP><I>n</I>+1</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><I>S</I>(<I>x</I>) + <I>R</I>(<I>x</I>)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+où
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"> <A NAME="eq:Eiinf"></A>
+<I>S</I>(<I>x</I>)=<I>e</I><SUP>−<I>x</I></SUP>
+</TD><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> − </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> + </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP>3</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> + ... + </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(−1)<SUP><I>n</I></SUP> <I>n</I>!</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP><I>n</I>+1</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎟<BR>
+⎠</TD><TD CLASS="dcell">, 
+   <I>R</I>(<I>x</I>)=− </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(−1)<SUP><I>n</I></SUP> <I>n</I>!<I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I><SUP><I>n</I>+1</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> 
+    (1)</TD></TR>
+</TABLE><P>
+Le développement en séries est divergent puisque pour <I>x</I>&gt;0 fixé et <I>n</I> tendant vers l’infini
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">lim</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I>→ +∞</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I>!</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP><I>n</I>+1</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> = +∞</TD></TR>
+</TABLE><P>
+mais si <I>x</I> est grand, au début la série semble converger, de manière très rapide :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> &gt;&gt; </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> &gt;&gt; </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP>3</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD></TR>
+</TABLE><P>
+On peut utiliser <I>S</I>(<I>x</I>) comme valeur approchée de <I>f</I>(<I>x</I>) pour <I>x</I> grand si on sait majorer
+<I>R</I>(<I>x</I>) par un nombre suffisamment petit. On a
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">| <I>R</I>(<I>x</I>) | ≤ </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I>!<I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP><I>n</I>+1</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+= </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I>!<I>e</I><SUP>−<I>x</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP><I>n</I>+1</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD></TR>
+</TABLE><P>
+On retrouve une majoration du type de celle des séries alternées, l’erreur est inférieure
+à la valeur absolue du dernier terme sommé. Pour <I>x</I> fixé assez grand, il 
+faut donc de trouver un rang <I>n</I>, s’il en existe un, tel que <I>n</I>!/<I>x</I><SUP><I>n</I></SUP>&lt;є où
+є est la précision relative que l’on s’est fixée.
+Par exemple, si <I>x</I>≥ 100, <I>n</I>=12 convient pour є=12!/100<SUP>12</SUP>=5<I>e</I>−16 (à peu 
+près la précision relative d’un “double”).
+</P><H3 CLASS="subsection"><A NAME="htoc370">13.5.2</A>  Le calcul approché de la constante d’Euler γ</H3><P><A NAME="sec:gammadiv"></A>
+Pour d’autres méthodes concernant le calcul approché de la constante d’Euler voir aussi
+<A HREF="#sec:gammaalt">13.3.4</A> et <A HREF="casrouge015.html#sec:gammarich">15.2.3</A>.<BR>
+On peut montrer que
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"> <A NAME="eq:def_gamma"></A>
+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">lim</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I>→ +∞</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>u</I><SUB><I>n</I></SUB>,    <I>u</I><SUB><I>n</I></SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> − ln(<I>n</I>) 
+    (2)</TD></TR>
+</TABLE><P>
+existe (par exemple en cherchant un équivalent de <I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB> qui vaut 
+−1/2<I>n</I><SUP>2</SUP>)
+et on définit γ comme sa limite. Malheureusement, la convergence
+est très lente et cette définition n’est pas applicable pour obtenir la valeur
+de γ avec une très grande précision.
+Il y a un lien entre γ et la fonction exponentielle intégrale (définie par
+<I>f</I>(<I>x</I>)=∫<SUB><I>x</I></SUB><SUP>+∞</SUP> <I>e</I><SUP>−<I>t</I></SUP>/<I>t</I>  <I>dt</I>) , plus 
+précisément lorsque <I>x</I>→ 0, <I>f</I>(<I>x</I>) admet −ln(<I>x</I>) comme singularité,
+plus précisément <I>f</I>(<I>x</I>)+ln(<I>x</I>)
+admet un développement en séries (de rayon de convergence +∞), car :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP> <I>f</I>(<I>x</I>)+ln(<I>x</I>)</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>e</I><SUP>−<I>t</I></SUP>−1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>dt</I>   + </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>e</I><SUP>−<I>t</I></SUP>−1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>dt</I>  + </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>dt</I>  − </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left"><I>x</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>e</I><SUP>−<I>t</I></SUP>−1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>dt</I> </TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Que vaut la constante du membre de droite :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>C</I>=</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(<I>e</I><SUP>−<I>t</I></SUP>−1)</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> + </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP>−<I>t</I></SUP> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> </TD></TR>
+</TABLE><P>
+Il se trouve que <I>C</I>=−γ (voir plus bas une démonstration condensée) et donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"> <A NAME="eq:gamma"></A>
+γ= </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left"><I>x</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1−<I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> −<I>f</I>(<I>x</I>)−ln(<I>x</I>)
+    (3)</TD></TR>
+</TABLE><P>
+Pour obtenir une valeur approchée de γ, il suffit donc de prendre un 
+<I>x</I> assez grand pour pouvoir calculer <I>f</I>(<I>x</I>) par son développement 
+asymptotique à la précision requise (<I>f</I>(<I>x</I>)<I>S</I>(<I>x</I>)+<I>R</I>(<I>x</I>) avec 
+<I>S</I>(<I>x</I>)=<I>e</I><SUP>−<I>x</I></SUP>(1/<I>x</I>−1/<I>x</I><SUP>2</SUP> + 2/<I>x</I><SUP>3</SUP>+...+(−1)<SUP><I>n</I></SUP> <I>n</I>!/<I>x</I><SUP><I>n</I>+1</SUP>) et <I>R</I>(<I>x</I>)=− ∫<SUB><I>x</I></SUB><SUP>+∞</SUP> (−1)<SUP><I>n</I></SUP> <I>n</I>!<I>e</I><SUP>−<I>t</I></SUP>/<I>t</I><SUP><I>n</I>+1</SUP>  <I>dt</I>  et |<I>R</I>(<I>x</I>)|≤ <I>n</I>!<I>e</I><SUP>−<I>x</I></SUP>/<I>x</I><SUP><I>n</I>+1</SUP>), puis de calculer l’intégrale du membre de 
+droite par le développement en séries en <I>x</I>=0 (en utilisant une 
+précision intermédiaire plus grande puisque ce développement en séries 
+va sembler diverger au début avant de converger pour <I>n</I> suffisamment grand).<BR>
+
+<B>Exemple1</B> : on pose <I>x</I>=13.<BR>
+On calcule <I>f</I>(13) par (<A HREF="#eq:Eiinf">1</A>)
+avec <I>n</I>=13 et une erreur absolue inférieure à <I>e</I><SUP>−13</SUP> 13!/13<SUP>14</SUP>≤ 3.6<I>e</I>−12.<BR>
+On a en effet pour <I>x</I>=<I>x</I><SUB>0</SUB> si <I>v</I><SUB><I>n</I></SUB>=<I>e</I><SUP>−<I>x</I><SUB>0</SUB></SUP><I>n</I>!/<I>x</I><SUB>0</SUB><SUP><I>n</I>+1</SUP> :<BR>
+<I>v</I><SUB><I>n</I></SUB>/<I>v</I><SUB><I>n</I>−1</SUB>≤ 1 équivalent à <I>n</I>/<I>x</I><SUB>0</SUB>≤ 1équivalent 
+à <I>n</I>≤ <I>x</I><SUB>0</SUB>.<BR>
+ Donc si <I>x</I>=<I>x</I><SUB>0</SUB>=13 on calcule <I>f</I>(13) avec :<BR>
+<I>f</I>(13)≃ ∑<SUB><I>n</I>=0</SUB><SUP>13</SUP> <I>e</I><SUP>−13</SUP>(−1)<SUP><I>n</I></SUP> <I>n</I>!/<I>x</I><SUP><I>n</I>+1</SUP>
+Ou bien, on tape :<BR>
+<TT>Digits:=2</TT>; puis<BR>
+<TT>exp(-13)*n!/13.</TT><CODE><TT>^</TT></CODE><TT>(n+1))$(n=0..20)</TT> renvoie :<BR>
+<TT>1.7e-07,1.3e-08,2.1e-09,4.7e-10,1.5e-10,5.6e-11,2.6e-11,</TT><BR>
+<TT>1.4e-11,8.6e-12,5.9e-12,4.6e-12,3.9e-12,3.6e-12, 3.6e-12,</TT><BR>
+
+<TT>3.8e-12,4.4e-12,5.5e-12,7.1e-12,9.9e-12,1.4e-11,2.2e-11</TT><BR>
+donc
+</P><DIV CLASS="center">
+<I>f</I>(13) ≈ <CODE>exp(-13)*sum((-1)^n*n!/13.^(n+1),n=0..13)</CODE>
+</DIV><P>
+puis on remplace dans (<A HREF="#eq:gamma">3</A>), avec 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left"><I>x</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1−<I>e</I><SUP>−<I>t</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> = 
+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> (−1)<SUP><I>n</I></SUP> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP><I>n</I>+1</SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">(<I>n</I>+1) (<I>n</I>+1)!</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+dont on obtient une valeur approchée, en faisant la somme jusqu’au rang 49, 
+le reste de cette somme <I>R</I><SUB>50</SUB> est positif et est inférieur à 
+<TT>13.</TT><CODE><TT>^</TT></CODE><TT>51/51/51!)</TT> qui est de l’ordre de <CODE>8.2e-12</CODE>. 
+On a en effet si <I>v</I><SUB><I>n</I></SUB>=13<SUP><I>n</I>+1</SUP>/(<I>n</I>+1)(<I>n</I>+1)! :<BR>
+|<I>R</I><SUB><I>N</I></SUB>|=∑<SUB><I>n</I>=<I>N</I>+1</SUB><SUP>∞</SUP><I>v</I><SUB><I>n</I></SUB>&lt;<I>v</I><SUB><I>n</I>+1</SUB>=13<SUP><I>N</I>+2</SUP>/(<I>N</I>+2)(<I>N</I>+2)!
+et |<I>R</I><SUB>49</SUB>|&lt;8.2<I>e</I>−12. 
+</P><DIV CLASS="center">
+<CODE>evalf(sum((-1)^n*13^(n+1)/(n+1)/(n+1)!,n=0..49))</CODE>
+</DIV><P>
+La somme argument de <CODE>evalf</CODE> étant exacte, il n’y a pas de problèmes 
+de perte de précision.<BR>
+On obtient finalement comme valeur approchée de γ
+</P><DIV CLASS="center">
+<CODE>-exp(-13)*sum((-1)^n*n!/13.^(n+1),n=0..13)-ln(13.)+</CODE><BR>
+<CODE>evalf(  sum((-1)^n*13^(n+1)/(n+1)/(n+1)!,n=0..49))</CODE>
+</DIV><P>
+On choisit alors 12 chiffres significatif et on tape :<BR>
+<TT>Digits:=12;</TT>
+<TT>f13:=exp(-13.)*evalf(sum((-1)</TT><CODE><TT>^</TT></CODE><TT>n*n!/13</TT><CODE><TT>^</TT></CODE><TT>(n+1),n=0..13))</TT>
+<TT>I13:=evalf(sum((-1)</TT><CODE><TT>^</TT></CODE><TT>*13</TT><CODE><TT>^</TT></CODE><TT>(n+1)/(n+1)/(n+1)!,n=0..49))</TT><BR>
+La constante d’Euler vaut donc à 1.2e-11 près :<BR>
+<TT>-f13-ln(13.)+I13</TT><BR>
+On obtient :<BR>
+<TT>0.577215664897</TT><BR>
+On tape :<BR>
+<TT>evalf(euler_gamma)</TT><BR>
+On obtient :<BR>
+<TT>0.5772156649018</TT><BR>
+soit <CODE>0.57721566489</CODE> avec une erreur inférieure à <CODE>1.2e-11</CODE>.<BR>
+
+<B>Exemple2</B> : on pose <I>x</I>=40.<BR>
+On tape :<BR>
+<TT>r40:=(exp(-40.)*40!/40.</TT><CODE><TT>^</TT></CODE><TT>41)</TT> on obtient <TT>r40</TT> inférieur à 7.2e-36<BR>
+On choisit alors 36 chiffres significatif et on tape :<BR>
+<TT>Digits:=36;</TT><BR>
+<TT>f40:=exp(-40.)*evalf(sum((-1)</TT><CODE><TT>^</TT></CODE><TT>n*n!/40</TT><CODE><TT>^</TT></CODE><TT>(n+1),n=0..40))</TT><BR>
+puisque :<BR>
+<TT>40.</TT><CODE><TT>^</TT></CODE><TT>168/168./168!</TT> est inférieur à 3.3e-36, on tape :<BR>
+<TT>I40:=evalf(sum((-1)</TT><CODE><TT>^</TT></CODE><TT>n*40</TT><CODE><TT>^</TT></CODE><TT>(n+1)/(n+1)/(n+1)!,n=0..166))</TT><BR>
+La constante d’Euler vaut donc à (7.2+3.3)e-36 près:<BR>
+<TT>-f40-ln(40.)+I40</TT><BR>
+On obtient avec une erreur inférieure à <CODE>1.1e-35</CODE>:<BR>
+<TT>0.5772156649015328606065120900824024285</TT><BR>
+On tape :<BR>
+<TT>evalf(euler_gamma)</TT><BR>
+On obtient :<BR>
+<TT>0.5772156649015328606065120900824024308</TT><BR>
+
+<B>Remarques</B>
+La somme argument de <CODE>evalf</CODE>
+étant exacte, il n’y a pas de problèmes de perte de précision,
+on peut aussi faire les calculs intermédiaires en arithmétique approchée,
+lorsque <I>x</I>=13 on doit alors prendre 4 chiffres significatifs de plus
+(pour tenir compte de la valeur du plus grand terme
+sommé dans la série <I>v</I><SUB><I>n</I></SUB>=13<SUP><I>n</I>+1</SUP>/(<I>n</I>+1)(<I>n</I>+1)! 
+qui est <I>v</I><SUB>10</SUB>=<CODE>13^11/11/11!\simeq 4.08e+03</CODE>).<BR>
+On a en effet :<BR>
+<I>v</I><SUB><I>n</I></SUB>/<I>v</I><SUB><I>n</I>−1</SUB>=13*<I>n</I>/(<I>n</I>+1)<SUP>2</SUP>&gt;1 si <I>n</I><SUP>2</SUP>+11<I>n</I>+1&gt;0 i.e. <I>n</I>≤ 10 et<BR>
+<I>v</I><SUB><I>n</I></SUB>/<I>v</I><SUB><I>n</I>−1</SUB>=13*<I>n</I>/(<I>n</I>+1)<SUP>2</SUP>&lt;1 si <I>n</I>≥ 11<BR>
+On tape avec des calculs intermédiaires en arithmétique approchée :
+</P><DIV CLASS="center">
+<CODE>Digits:=16; sum((-1)^n*13.^(n+1)/(n+1)/(n+1)!,n=0..49)</CODE>
+</DIV><P>
+On obtient dans ce cas comme valeur approchée de γ :
+<TT>0.57721566489675213</TT><BR>
+Bien entendu, cette méthode avec des calculs intermédiaires en 
+arithmétique approchée est surtout intéressante si on veut calculer
+un grand nombre de décimales de la constante d’Euler c’est à dire quand 
+on prend <TT>x=x0</TT> tres grand, sinon
+on peut par exemple appliquer la méthode d’accélération de Richardson 
+(cf <A HREF="casrouge015.html#sec:gammarich">15.2.3</A>) à
+la suite convergente (<A HREF="#eq:def_gamma">2</A>) qui définit γ.<BR>
+
+On peut calculer π de la même manière avec le développement 
+en séries et asymptotique
+de la fonction sinus intégral (on remplace exponentielle par sinus dans
+la définition de <I>f</I>, voir plus bas une démonstration condensée) et 
+l’égalité
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"> <A NAME="eq:Siinf"></A>
+</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">sin(<I>t</I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> = </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+    (4)</TD></TR>
+</TABLE><P><B>Calcul de </B><B><I>C</I></B><B> (et preuve de (</B><A HREF="#eq:Siinf"><B>4</B></A><B>))</B> :<BR>
+Pour cela on effectue une intégration par parties, cette fois en intégrant 1/<I>t</I>
+et en dérivant l’exponentielle (moins 1 dans la première intégrale).
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP> <I>C</I></TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(<I>e</I><SUP>−<I>t</I></SUP>−1)</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> + </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP>−<I>t</I></SUP> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I></TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">[(<I>e</I><SUP>−<I>t</I></SUP>−1)ln(<I>t</I>)]<SUB>0</SUB><SUP>1</SUP> +</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> ln(<I>t</I>) <I>e</I><SUP>−<I>t</I></SUP>  <I>dt</I> + [<I>e</I><SUP>−<I>t</I></SUP> ln(<I>t</I>)]<SUB>1</SUB><SUP>+∞</SUP>
++</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> ln(<I>t</I>) <I>e</I><SUP>−<I>t</I></SUP>  <I>dt</I> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> ln(<I>t</I>) <I>e</I><SUP>−<I>t</I></SUP>  <I>dt</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Pour calculer cette intégrale, on utilise
+l’égalité (qui se démontre par récurrence en faisant une intégration par parties) :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>n</I>!= </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>t</I><SUP><I>n</I></SUP> <I>e</I><SUP>−<I>t</I></SUP>  <I>dt</I> </TD></TR>
+</TABLE><P>
+On va à nouveau intégrer par parties,
+on intègre un facteur 1 et on dérive l’intégrand, on simplifie, puis
+on intègre <I>t</I> et on dérive l’autre terme, puis <I>t</I><SUP>2</SUP>/2, etc. 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP> <I>C</I></TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">[<I>te</I><SUP>−<I>t</I></SUP> ln(<I>t</I>)]<SUB>0</SUB><SUP>+∞</SUP> − </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>t</I> <I>e</I><SUP>−<I>t</I></SUP>(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">−ln(<I>t</I>))  <I>dt</I> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">0 − </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP>−<I>t</I></SUP>  <I>dt</I> + </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>t</I> <I>e</I><SUP>−<I>t</I></SUP> ln(<I>t</I>)  <I>dt</I> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">−1 + [</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>t</I><SUP>2</SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>e</I><SUP>−<I>t</I></SUP> ln(<I>t</I>)]<SUB>0</SUB><SUP>+∞</SUP> 
+− </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>t</I><SUP>2</SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP>−<I>t</I></SUP>(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">−ln(<I>t</I>))  <I>dt</I> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">−1 − </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP>−<I>t</I></SUP> +  </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>t</I><SUP>2</SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP>−<I>t</I></SUP> ln(<I>t</I>)  <I>dt</I> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">−1 − </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> +  </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>t</I><SUP>2</SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP>−<I>t</I></SUP> ln(<I>t</I>)  <I>dt</I> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP>...</TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">−1 − </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> − ... −  </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> + </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>t</I><SUP><I>n</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I>!</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP>−<I>t</I></SUP> ln(<I>t</I>)  <I>dt</I> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">−1 − </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> − ... −  </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> + ln(<I>n</I>) + <I>I</I><SUB><I>n</I></SUB></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+où
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>I</I><SUB><I>n</I></SUB>=</TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>t</I><SUP><I>n</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I>!</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP>−<I>t</I></SUP> (ln(<I>t</I>)−ln(<I>n</I>))  <I>dt</I> </TD></TR>
+</TABLE><P>
+Pour déterminer <I>I</I><SUB><I>n</I></SUB> on fait le changement de variables <I>t</I>=<I>nu</I>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP> <I>I</I><SUB><I>n</I></SUB></TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(<I>nu</I>)<SUP><I>n</I></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I>!</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP>−<I>nu</I></SUP> ln(<I>u</I>) <I>n</I> <I>du</I> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I><SUP><I>n</I>+1</SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I>!</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP><I>n</I>(<I>ln</I>(<I>u</I>)−<I>u</I>)</SUP> ln(<I>u</I>)  <I>du</I> </TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Or en faisant le même changement de variables <I>t</I>=<I>nu</I> :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>n</I>!= </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>t</I><SUP><I>n</I></SUP> <I>e</I><SUP>−<I>t</I></SUP> <I>dt</I>  = <I>n</I><SUP><I>n</I>+1</SUP> </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP><I>n</I>(<I>ln</I>(<I>u</I>)−<I>u</I>)</SUP>  <I>du</I>
+</TD></TR>
+</TABLE><P>
+Donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>I</I><SUB><I>n</I></SUB>= </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP><I>n</I>(<I>ln</I>(<I>u</I>)−<I>u</I>)</SUP> ln(<I>u</I>)  <I>du</I></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP><I>n</I>(<I>ln</I>(<I>u</I>)−<I>u</I>)</SUP>  <I>du</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  </TD></TR>
+</TABLE><P>
+Lorsque <I>n</I> tend vers l’infini, on peut montrer que <I>I</I><SUB><I>n</I></SUB> → 0, en effet les intégrales
+sont équivalentes à leur valeur sur un petit intervalle autour de <I>u</I>=1, point où l’argument
+de l’exponentielle est maximal, 
+et comme l’intégrand du numérateur a une amplitude ln(<I>u</I>) qui s’annule en <I>u</I>=1, 
+il devient négligeable devant le dénominateur. Finalement on a bien <I>C</I>=−γ.<BR>
+On peut remarquer qu’en faisant le même calcul que <I>C</I> 
+mais en remplacant <I>e</I><SUP>−<I>t</I></SUP> par <I>e</I><SUP>−α <I>t</I></SUP> pour ℜ(α)&gt;0, donne
+lim<I>I</I><SUB><I>n</I></SUB>=−ln(α) (car le point critique où la dérivée
+de la phase s’annule est alors 1/α). Ceci peut aussi se vérifier
+pour α réel en faisant le changement de variables α <I>t</I>=<I>u</I>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(<I>e</I><SUP>−α <I>t</I></SUP>−1)</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> + </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP>−α <I>t</I></SUP> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> 
+= −γ −ln(α) </TD></TR>
+</TABLE><P>
+En faisant tendre α vers −<I>i</I>, −ln(α) tend vers ln(<I>i</I>)=<I>i</I>π/2 et on obtient
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(<I>e</I><SUP><I>it</I></SUP>−1)</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> + </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I><SUP><I>i</I> <I>t</I></SUP> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>t</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">  <I>dt</I> 
+= −γ + <I>i</I> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD></TR>
+</TABLE><P>
+dont la partie imaginaire nous donne (<A HREF="#eq:Siinf">4</A>), et la
+partie réelle une autre identité sur γ faisant intervenir
+la fonction cosinus intégral.</P><H2 CLASS="section"><A NAME="toc101"></A><A NAME="htoc371">13.6</A>  Solution de <I>f</I>(<I>x</I>)=0 par la méthode de Newton</H2><P>
+Dans <TT>Xcas</TT>, il existe déjà une fonction qui calcule la valeur 
+approchée <I>r</I> d’une solution de <I>f</I>(<I>x</I>)=0 par la méthode de Newton, qui 
+est : <TT>newton</TT>. 
+</P><H3 CLASS="subsection"><A NAME="htoc372">13.6.1</A>  La méthode de Newton</H3><P>
+Soit <I>f</I> deux fois dérivable ayant un zéro et un seul <I>r</I> dans l’intervalle
+[<I>a</I> ;  <I>b</I>]. Supposons de plus que <I>f</I>′ et <I>f</I>″ ont un signe constant sur
+[<I>a</I> ;  <I>b</I>]. La méthode de Newton consiste à approcher <I>r</I> par l’abscisse
+<I>x</I><SUB>1</SUB> du point commun à <I>Ox</I> et à la tangente en un point <I>M</I><SUB>0</SUB>
+du graphe de <I>f</I>. Si <I>M</I><SUB>0</SUB> a pour coordonées (<I>x</I><SUB>0</SUB>,<I>f</I>(<I>x</I><SUB>0</SUB>)) 
+(<I>x</I><SUB>0</SUB> ∈ [<I>a</I> ;  <I>b</I>]), la tangente en <I>M</I><SUB>0</SUB> a pour équation :<BR>
+<I>y</I>=<I>f</I>(<I>x</I><SUB>0</SUB>)+<I>f</I>′(<I>x</I><SUB>0</SUB>)*(<I>x</I>−<I>x</I><SUB>0</SUB>) et donc on a :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I><SUB>1</SUB>=<I>x</I><SUB>0</SUB>−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>f</I>(<I>x</I><SUB>0</SUB>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>f</I>′(<I>x</I><SUB>0</SUB>)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On peut alors réitérer le processus, et on obtient une suite <I>x</I><SUB><I>n</I></SUB> qui 
+converge vers <I>r</I> soit par valeurs supérieures, si <I>f</I>′*<I>f</I>″&gt;0 sur 
+[<I>a</I> ; <I>b</I>] (i.e. si <I>f</I>′(<I>r</I>)&gt;0 et si <I>f</I> est convexe (<I>f</I>″&gt;0 sur [<I>a</I> ;  <I>b</I>])
+ou si <I>f</I>′(<I>r</I>)&lt;0 et si <I>f</I> est concave (<I>f</I>″&lt;0 sur [<I>a</I> ;  <I>b</I>])) soit par 
+valeurs inférieures, si <I>f</I>′*<I>f</I>″&lt;0 sur [<I>a</I> ;  <I>b</I>] (i.e. si <I>f</I>′(<I>r</I>)&lt;0 et si 
+<I>f</I> est convexe (<I>f</I>″&gt;0 sur [<I>a</I> ; <I>b</I>]) ou si <I>f</I>′(<I>r</I>)&gt;0 et si <I>f</I> est 
+concave (<I>f</I>″&lt;0 sur [<I>a</I> ;  <I>b</I>])).<BR>
+On fait le dessin en tapant :
+</P><PRE CLASS="verbatim">f(x):=x*x-2;
+x0:=5/2;
+G:=plotfunc(f(x));
+T0:=tangent(G,x0);
+Ox:=droite(0,1);
+M1:=inter(T0,Ox)[0];
+x1:=affixe(M1)
+segment(point(x1,0),point(x1,f(x1)));
+T1:=tangent(G,x1);
+M2:=inter(T1,droite(0,1))[0]
+x2:=affixe(M2):
+segment(point(x2,0),point(x2,f(x2)));
+</PRE><P>ou encore pour faire le dessin de la méthode de Newton pour la fonction <I>f</I>
+en partant du point de coordonnèes (<I>a</I>,<I>f</I>(<I>a</I>)) et obtenir <I>p</I> nouveaux points.
+</P><PRE CLASS="verbatim">plotnewton(f,a,p):={
+local L,P,m,j,b;
+L:=plotfunc(f(x),x,affichage=vert);
+L:=L,point(a,couleur=point_width_4+rouge);
+for (j:=1;j&lt;=p;j++) {
+b:=f(a);
+L:=L,segment(a,a+i*b,couleur=ligne_tiret+rouge);
+m:=function_diff(f)(a);
+L:=L,plotfunc(b+(x-a)*m,x);
+if (m==0){return "pente nulle"}
+a:=a-f(a)/m;
+P:=point(a,couleur=point_width_4+rouge);
+L:=L,P;
+}
+return affixe(P),L;
+};
+</PRE><P>On tape :
+<TT>plotnewton(sq-2,4,2)</TT><BR>
+pour obtenir les termes <I>x</I><SUB>0</SUB>,<I>x</I><SUB>1</SUB>,<I>x</I><SUB>2</SUB> de la suite de Newton qui converge 
+vers √<SPAN style="text-decoration:overline">2</SPAN> et où <I>x</I><SUB>0</SUB>=4 :<BR>
+<IMG SRC="casrouge009.png"><BR>
+On remarquera que :
+<TT>plotnewton(sq-2,4,2)[0]</TT>
+renvoie :<BR>
+<TT>113/72 </TT><TT>≃</TT><TT> 1.56944444444</TT><BR>
+On tape :
+<TT>plotnewton(ln-1,5,2)</TT><BR>
+pour obtenir les termes <I>x</I><SUB>0</SUB>,<I>x</I><SUB>1</SUB>,<I>x</I><SUB>2</SUB> de la suite de Newton qui converge 
+vers <I>e</I> et où <I>x</I><SUB>0</SUB>=5 :<BR>
+<IMG SRC="casrouge010.png"><BR>
+On peut aussi faire une animation, pour cela, on tape : 
+</P><PRE CLASS="verbatim">newtonsuite(f,a,p):={
+local L,P,m,j,b,LT;
+P:=point(a,couleur=point_width_4+rouge);
+LT:=P;
+f1:=function_diff(f);
+for (j:=1;j&lt;=p;j++) {
+b:=f(a);
+L:=L,segment(a,a+i*b,couleur=ligne_tiret+rouge);
+m:=f1(a);
+L:=L,plotfunc(b+(x-a)*m,x);
+if (m==0){return "pente nulle"}
+a:=a-f(a)/m;
+P:=point(a,couleur=point_width_4+rouge);
+LT:=LT,[LT,L,P];
+}
+print(affixe(P));
+return LT;
+};
+animnewton(f,a,p):={
+local LT;
+LT:=newtonsuite(f,a,p);
+return plotfunc(f(x),x,affichage=vert),animation(LT);
+};
+</PRE><P>On tape :
+<TT>animnewton(sq-2,4,3)</TT><BR>
+
+Puis, on écrit la fonction <TT>newton_rac</TT> qui renvoie la valeur 
+approchée à <I>eps</I> près de la racine de 
+<I>f</I>(<I>x</I>)=0 on commençant l’itération avec <I>x</I>0.<BR>
+On remarquera que le paramètre <I>f</I> est une fonction et donc, que sa 
+dérivée est la fonction <TT>g:=function_diff(f)</TT>.<BR>
+On cherche une valeur approchée donc il faut écrire :<BR>
+<TT>x0:=evalf(x0-f(x0)/g(x0))</TT><BR>
+car si on ne met pas <TT>evalf</TT>, les calculs de l’itération se feront
+excactement et seront vite compliqués.
+</P><PRE CLASS="verbatim">newton_rac(f,x0,eps):={
+local x1,h,g;
+g:=function\_diff(f)
+x0:=evalf(x0-f(x0)/g(x0));
+x1:=x0-f(x0)/g(x0);
+if (x1&gt;x0) {h:=eps;} else {h:=-eps;}
+while (f(x1)*f(x1+h)&gt;0){
+   x1:=x1-f(x1)/g(x1);
+}
+return x1;
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc373">13.6.2</A>  Exercices sur la méthode de Newton</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+<B>L’énoncé</B>
+<OL CLASS="enumerate" type=a><LI CLASS="li-enumerate">
+Étudier rapidement les variations de <I>f</I>(<I>x</I>)=<I>x</I>exp(<I>x</I>)+0.2 pour montrer que l’équation <I>f</I>(<I>x</I>)=0 a deux solutions <I>a</I> et <I>b</I> qui vérifient <I>a</I>&lt;−1&lt;<I>b</I>&lt;0
+</LI><LI CLASS="li-enumerate">Calculer à l’aide d’un programme par la méthode de Newton, 
+les valeurs approchées de <I>a</I> et de <I>b</I> obtenues après 5 itérations.
+</LI><LI CLASS="li-enumerate">Modifier votre programme pour avoir des valeurs de <I>a</I> et <I>b</I> avec une 
+précision de <I>eps</I> (par exemple de 1<I>e</I>−6).
+</LI><LI CLASS="li-enumerate">Écrire un programme qui dessine le graphe de la fonction implicite
+<I>x</I>exp(<I>x</I>)+<I>y</I>exp(<I>y</I>)=0 lorsque <I>x</I>≥−5.
+</LI></OL><P><B>La solution avec </B><B><TT>Xcas</TT></B>
+</P><OL CLASS="enumerate" type=a><LI CLASS="li-enumerate">
+Pour avoir les variations de <I>f</I>(<I>x</I>)=<I>x</I>exp(<I>x</I>)+0.2 on peut calculer la 
+dérivée et faire le graphe de <I>f</I>.<BR>
+On tape :
+<TT>f(x):=x*exp(x)+0.2</TT><BR>
+<TT>factor(diff(f(x)))</TT><BR>
+On obtient : <TT>(x+1)*exp(x)</TT><BR>
+On tape :
+<TT>G:=plotfunc(f(x),x=-3..1)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge011.png"><P>Pour montrer que l’équation <I>f</I>(<I>x</I>)=0 a deux solutions <I>a</I> et <I>b</I> qui 
+vérifient <I>a</I>&lt;−1&lt;<I>b</I>&lt;0, on calcule, d’après le graphe 
+<I>f</I>(−3),<I>f</I>(−2),<I>f</I>(−1),<I>f</I>(0).<BR>
+On tape :
+<TT>f(x)$(x=-3..0)</TT><BR>
+On obtient :<BR>
+<TT>0.0506387948964,-0.0706705664732,-0.167879441171,0.2</TT><BR>
+donc puisque <I>f</I> est continue, d’après le théorème des valeurs intermédiaires on a : −3&lt;<I>a</I>&lt;−2 et −1&lt;<I>b</I>&lt;0<BR>
+</P></LI><LI CLASS="li-enumerate">La méthode de Newton consiste à itérer la fonction
+<I>h</I> définie par <I>h</I>(<I>x</I>)=<I>x</I>−<I>f</I>(<I>x</I>)/<I>g</I>(<I>x</I>) où <I>g</I> est la derivée de <I>f</I>.
+Pour trouver <I>a</I>, on va commencer en <I>x</I><SUB>0</SUB>=−2 (car la fonction est concave et 
+décroissante sur [−3;−2] et les <I>x</I><SUB><I>n</I></SUB> seront des valeurs approchées de 
+<I>a</I> par excés)
+et pour trouver <I>b</I>, on va commencer en <I>x</I><SUB>0</SUB>=0 (car la fonction est convexe et
+croissante sur [−1;0] et les <I>x</I><SUB><I>n</I></SUB> seront des valeurs approchées de <I>b</I> par
+excés). 
+On tape :
+<PRE CLASS="verbatim">Newtonvaleur(x0):={
+  local j,f,g,h;
+  f(x):=x*exp(x)+0.2;
+  g(x):=(x+1)*exp(x);
+  h(x):=x-f(x)/g(x);
+  pour j de 1 jusque 5 faire
+    x0:=h(x0);
+  fpour;
+  retourne x0;
+}:;
+</PRE><B>Remarque</B><BR>
+On peut remplacer <TT>g(x):=(x+1)*exp(x);</TT> par <TT>g:=function_diff(f);</TT><BR>
+On tape pour avoir la valeur de <I>x</I><SUB>5</SUB> qui approche <I>a</I> :<BR>
+<TT>Newtonvaleur(-2.)</TT><BR>
+On obtient :<BR>
+<TT>-2.54264135777</TT><BR>
+On tape pour avoir la valeur de <I>x</I><SUB>5</SUB> qui approche <I>b</I> :<BR>
+<TT>Newtonvaleur(0)</TT><BR>
+On obtient :<BR>
+<TT>-0.259171101819</TT></LI><LI CLASS="li-enumerate">Si on veut avoir une valeur approchée de <I>a</I> (resp <I>b</I>) à <I>eps</I> 
+prés, il faut avoir un <I>x</I><SUB><I>j</I></SUB> qui vérifie <I>x</I><SUB><I>j</I></SUB>−<I>eps</I>≤ <I>a</I>&lt;<I>x</I><SUB><I>j</I></SUB> 
+(resp <I>x</I><SUB><I>j</I></SUB>−<I>eps</I> ≤ <I>b</I>&lt;<I>x</I><SUB><I>j</I></SUB>) c’est à dire <I>f</I>(<I>x</I><SUB><I>j</I></SUB>−<I>eps</I>)&gt;0 (resp 
+<I>f</I>(<I>x</I><SUB><I>j</I></SUB>−<I>eps</I>)&lt;0) i.e. on doit avoir dans les 2 cas, <I>f</I>(<I>x</I><SUB><I>j</I></SUB>−<I>eps</I>)*<I>f</I>(<I>x</I>0)≤ 0.<BR>
+On tape :
+<PRE CLASS="verbatim">Newtonvalpres(x0,eps):={
+  local j,g,h,t,s;
+  f(x):=x*exp(x)+0.2;
+  g(x):=(x+1)*exp(x);
+  h(x):=x-f(x)/g(x);
+  j:=0;
+  t:=x0-eps;
+  //s:=ifte(f(x0)&gt;0,1,-1);
+  s:=sign(f(x0));
+  tantque s*f(t)&gt;0 faire
+    x0:=h(x0);
+    t:=x0-eps;
+    j:=j+1;
+  ftantque;
+  print(j);
+  retourne t,x0;
+}:;
+</PRE>On tape pour avoir la valeur de <I>x</I><SUB><I>j</I></SUB> qui donne un encadrement de <I>a</I> à 
+1<I>e</I>−6 prés :<BR>
+<TT>Newtonvalpres(-2.,1e-6)</TT><BR>
+On obtient pour <I>j</I>=3 :<BR>
+<TT>-2.54264235686,-2.54264135686</TT><BR>
+On tape pour avoir la valeur de <I>x</I><SUB><I>j</I></SUB> qui donne un encadrement de <I>a</I> à 
+1<I>e</I>−10 prés :<BR>
+<TT>Newtonvalpres(-2.,1e-10)</TT><BR>
+On obtient pour <I>j</I>=4 :<BR>
+<TT>-2.54264135787,-2.54264135777</TT><BR>
+On tape pour avoir la valeur de <I>x</I><SUB><I>j</I></SUB> qui donne un encadrement de <I>b</I> à 
+1<I>e</I>−6 prés :<BR>
+<TT>Newtonvalpres(0,1e-6)</TT><BR>
+On obtient pour <I>j</I>=4 :<BR>
+<TT>-0.259172101477,-0.259171101477</TT>
+On tape pour avoir la valeur de <I>x</I><SUB><I>j</I></SUB> qui donne un encadrement de <I>b</I> à 
+1<I>e</I>−10 prés :<BR>
+<TT>Newtonvalpres(0,1e-10)</TT><BR>
+On obtient pour <I>j</I>=5 :<BR>
+<TT>-0.259171101919,-0.259171101819</TT></LI><LI CLASS="li-enumerate"><I>y</I>exp(<I>y</I>)+<I>a</I>=0 a une solution si −exp(−1)+<I>a</I> ≤ 0 i.e si <I>a</I>&lt;1/<I>e</I>
+Cette fonction est définie pour des <I>x</I> tels que <I>x</I>exp(<I>x</I>)=<I>a</I>&lt;1/<I>e</I>. 
+On résout donc l’équation <I>x</I>exp(<I>x</I>)−1/<I>e</I>=0:<BR>
+On modifie le programme en :<BR>
+<PRE CLASS="verbatim">Newtonvaleura(x0,a):={
+  local j,f,g,h;
+  f(x,a):=x*exp(x)+a;
+  g(x):=(x+1)*exp(x);
+  h(x):=x-f(x,a)/g(x);
+  pour j de 1 jusque 5 faire
+    x0:=h(x0);
+  fpour;
+  retourne x0;
+}:;
+</PRE>lorsque <I>a</I>=−1/<I>e</I>, on a <I>f</I>(0,<I>a</I>)=<I>a</I>&lt;0 et <I>f</I>(1,<I>a</I>)=<I>e</I>−1/<I>e</I>&gt;0.
+On tape :<BR>
+<TT>Newtonvaleura(1,-1./e)</TT><BR>
+On obtient :<BR>
+<TT>0.278464542823</TT><BR>
+Pour <I>x</I>≤ 0, <I>a</I>=<I>x</I>*exp(<I>x</I>)≤ 0 donc l’équation en <I>y</I>, 
+<I>y</I>*exp(<I>y</I>)+<I>x</I>*exp(<I>x</I>)=0 a une seule solution positive
+(<I>y</I>*exp(<I>y</I>)+<I>a</I> vaut <I>a</I>≤ 0 pour <I>y</I>=0 et vaut (<I>x</I>(<I>exp</I>(<I>x</I>)<SUP>2</SUP>−1)/(<I>exp</I>(<I>x</I>))&gt;0 
+pour <I>y</I>=−<I>x</I>). On peut donc l’obtenir par la méthode de Newton : on démarre 
+avec <I>y</I><SUB>0</SUB>=−<I>a</I> car pour <I>x</I>&gt;0 la courbe de <I>f</I>(<I>x</I>,<I>a</I>)=<I>x</I>*exp(<I>x</I>)+<I>a</I> se trouve au 
+dessus de sa tangente en <I>x</I>=0 (puisque <I>f</I>"(<I>x</I>)&gt;0 pour <I>x</I>&gt;0) et que cette 
+tangente d’équation <I>y</I>=<I>x</I>+<I>a</I> coupe l’axe des <I>x</I> en <I>x</I>=−<I>a</I>.<BR>
+Pour 0&lt;<I>x</I>&lt;0.278464542823 l’équation en <I>y</I>, <I>y</I>*exp(<I>y</I>)+<I>x</I>*exp(<I>x</I>)=0 a deux 
+solutions que l’on peut obtenir par la méthode de Newton : on démarre soit 
+par <I>x</I><SUB>0</SUB>=0 soit par <I>x</I><SUB>0</SUB>=−2.<BR>
+On tape (on choisit de prendre <I>x</I><SUB>5</SUB> comme valeur approchée) :
+<PRE CLASS="verbatim">Newtonimplicit():={
+  local j,f,g,h,a,xj,y0,y,L;
+  g(y):=(y+1)*exp(y);
+  f(y,a):=y*exp(y)+a;
+  pour xj de -4 jusque 0 pas 0.1 faire
+  a:=xj*exp(xj);
+  h(y):=y-f(y,a)/g(y);
+  y0:=-a;
+  pour j de 1 jusque 5 faire
+    y0:=h(y0);
+  fpour;
+  L:=L,point(xj+i*y0);
+fpour;
+L:=L,point(0.28-i);
+pour xj de 0.01 jusque 0.28 pas 0.02 faire
+  a:=xj*exp(xj);
+  h(y):=y-f(y,a)/g(y);
+  y0:=0;
+  pour j de 1 jusque 5 faire
+    y0:=h(y0);
+  fpour;
+  L:=L,point(xj+i*y0);
+  y0:=-2;
+  pour j de 1 jusque 5 faire
+    y0:=h(y0);
+  fpour;
+  L:=L,point(xj+i*y0)
+fpour;
+retourne L;
+}:;
+</PRE>On tape <TT>Newtonimplicit()</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge012.png"><P>On peut aussi vouloir calculer <I>y</I> à <I>eps</I> -près. Mais attention lorsqu’on 
+part de <I>y</I>0=−2 on obtient une valeur soit par défaut, soit par excés selon
+le signe de <I>f</I>(−2,<I>a</I>) (si <I>f</I>(−2,<I>a</I>)&gt;0 ce sera par excès car pour <I>x</I>=−2 on a 
+un point d’inflexion).<BR>
+On tape alors :
+</P><PRE CLASS="verbatim">Newtonimpl(eps):={
+  local j,f,g,h,a,xj,y0,y,t,s,L;
+  g(y):=(y+1)*exp(y);
+  f(y,a):=y*exp(y)+a;
+  L:=NULL;
+  pour xj de -5 jusque 0 pas 0.05 faire
+  a:=evalf(xj*exp(xj));
+  h(y):=y-f(y,a)/g(y);
+  y0:=-a;
+  t:=y0-eps;
+  s:=sign(f(y0,a));
+  tantque s*f(t,a)&gt;0 faire
+    y0:=h(y0);
+    t:=y0-eps;
+  ftantque;
+  L:=L,point(xj+i*y0);
+fpour;
+L:=L,point(0.28-i);
+pour xj de 0.01 jusque 0.28 pas 0.02 faire
+  a:=evalf(xj*exp(xj));
+  h(y):=y-f(y,a)/g(y);
+  y0:=0.;
+  t:=y0-eps;
+  s:=sign(f(y0,a));
+  tantque s*f(t,a)&gt;0 faire
+    y0:=h(y0);
+    t:=y0-eps;
+  ftantque;
+  L:=L,point(xj+i*y0);
+fpour;
+  pour xj de 0.01 jusque 0.28 pas 0.02 faire
+    a:=evalf(xj*exp(xj));
+  h(y):=y-f(y,a)/g(y);
+  y0:=-2.;
+  s:=sign(f(y0,a));
+  si s&gt;0  alors eps:=-abs(eps); fsi; 
+  t:=y0-eps;
+  tantque s*f(t,a)&gt;0 faire
+    y0:=h(y0);
+    t:=y0-eps;
+  ftantque;
+  L:=L,point(xj+i*y0)
+fpour;
+retourne L;
+}:;
+</PRE><P>On tape <TT>Newtonimpl(0.01)</TT><BR>
+
+On peut vérifier en tapant :<BR>
+<TT>plotimplicit(x*exp(x)+y*exp(y),[x,y])</TT>
+</P></LI></OL></LI><LI CLASS="li-enumerate"><B>L’énoncé</B><BR>
+Donner la valeur approchée de cos(<I>x</I>)=<I>x</I> pour <I>x</I>∈ [0;1] obtenue en 
+partant de <I>x</I><SUB>0</SUB>=0 après 4, puis après 10 itérations lorsque :
+<OL CLASS="enumerate" type=a><LI CLASS="li-enumerate">
+On applique la méthode du point fixe à <I>f</I>(<I>x</I>)=cos(<I>x</I>).
+</LI><LI CLASS="li-enumerate">On applique la méthode de Newton.
+</LI><LI CLASS="li-enumerate">On applique la méthode du Δ<SUP>2</SUP> d’Aitken.
+</LI><LI CLASS="li-enumerate">On applique la méthode de Steffensen.
+</LI></OL>
+Quelle méthode vous semble la meilleure ? Expliquez pourquoi.<P><B>La solution avec </B><B><TT>Xcas</TT></B><BR>
+On configure <TT>Xcas</TT> avec 20 digits.
+</P><OL CLASS="enumerate" type=a><LI CLASS="li-enumerate">
+fa fonction <I>f</I>(<I>x</I>)=cos(<I>x</I>) est sin(1)-contractante sur [0;1], car 
+d’après le théorème des accroissements finis :<BR>
+il existe <I>c</I>∈ [0;1] tel que pour tout <I>x</I><SUB>1</SUB>∈ [0;1] et tout <I>x</I><SUB>2</SUB>∈ [0;1]
+on a cos(<I>x</I><SUB>1</SUB>)−cos(<I>x</I><SUB>2</SUB>)=(<I>x</I><SUB>1</SUB>−<I>x</I><SUB>2</SUB>)sin(<I>c</I>) donc<BR>
+|cos(<I>x</I><SUB>1</SUB>)−cos(<I>x</I><SUB>2</SUB>)|=|<I>x</I><SUB>1</SUB>−<I>x</I><SUB>2</SUB>||sin(<I>c</I>)|≤ |<I>x</I><SUB>1</SUB>−<I>x</I><SUB>2</SUB>|sin(1).<BR>
+On tape :
+<PRE CLASS="verbatim">ptfixecos(x0,n):={
+local j,f;
+f(x):=cos(x);
+pour j de 1 jusque n faire
+  x0:=f(evalf(x0));
+fpour;
+retourne x0;
+}:;
+</PRE>On tape : <TT>ptfixecos(0,4)</TT><BR>
+On obtient : <TT>0.654289790497779149974</TT><BR>
+On tape : <TT>ptfixecos(0,10)</TT><BR>
+On obtient : <TT>0.731404042422509858293</TT><BR>
+</LI><LI CLASS="li-enumerate">On pose <I>F</I>(<I>x</I>)=cos(<I>x</I>)−<I>x</I> et on a <I>F</I>′(<I>x</I>)=−sin(<I>x</I>)−1, on va donc itérer
+la fonction <I>g</I>(<I>x</I>)=<I>x</I>−<I>F</I>(<I>x</I>)/<I>F</I>′(<I>x</I>)=(<I>x</I>*sin(<I>x</I>)+cos(<I>x</I>))/(sin(<I>x</I>)+1).<BR>
+On tape :
+<PRE CLASS="verbatim">Newtoncos(x0,n):={
+local j,g,F,dF;
+F(x):=cos(x)-x;
+dF:=function_diff(F);
+//g(x):=(x*sin(x)+cos(x))/(sin(x)+1);
+g(x):=normal(x-F(x)/dF(x));
+pour j de 1 jusque n faire
+  x0:=g(evalf(x0));
+fpour;
+retourne x0;
+}:;
+</PRE>On tape : <TT>Newtoncos(0,4)</TT><BR>
+On obtient : <TT>0.739085133385283969762</TT><BR>
+On tape : <TT>Newtoncos(0,10)</TT><BR>
+On obtient : <TT>0.739085133215160641651</TT><BR>
+</LI><LI CLASS="li-enumerate">La méthode du Δ<SUP>2</SUP> d’Aitken consiste à transformer la suite des
+itérées du point fixe par la fonction :<BR>
+<I>gs</I>(<I>x</I>)=<I>x</I>−(<I>f</I>(<I>x</I>)−<I>x</I>)*(<I>f</I>(<I>x</I>)−<I>x</I>)/(<I>f</I>(<I>f</I>(<I>x</I>))−2<I>f</I>(<I>x</I>)+<I>x</I>) avec <I>f</I>(<I>x</I>)=cos(<I>x</I>).<BR>
+On tape :
+<PRE CLASS="verbatim">Aitkencos(x0,n):={
+local j,gs,f,y0;
+f(x):=cos(x);
+gs(x):=x-(f(x)-x)*(f(x)-x)/(f(f(x))-2f(x)+x);
+pour j de 1 jusque n faire
+  x0:=f(evalf(x0));
+  y0:=gs(x0);
+fpour;
+print(x0);
+retourne y0;
+}:;
+</PRE>On tape : <TT>Aitkencos(0,4)</TT><BR>
+On obtient : <TT>0.738050421371663847259</TT><BR>
+On tape : <TT>Aitkencos(0,10)</TT><BR>
+On obtient : <TT>0.739076383318955862683</TT><BR>
+</LI><LI CLASS="li-enumerate">La méthode de Steffenson consiste à itérer la fonction :<BR>
+<I>gs</I>(<I>x</I>)=<I>x</I>−(<I>f</I>(<I>x</I>)−<I>x</I>)*(<I>f</I>(<I>x</I>)−<I>x</I>)/(<I>f</I>(<I>f</I>(<I>x</I>))−2<I>f</I>(<I>x</I>)+<I>x</I>) avec <I>f</I>(<I>x</I>)=cos(<I>x</I>).<BR>
+On tape :
+<PRE CLASS="verbatim">Steffensencos(x0,n):={
+local j,gs,f;
+f(x):=cos(x);
+gs(x):=x-(f(x)-x)*(f(x)-x)/(f(f(x))-2f(x)+x);
+pour j de 1 jusque n faire
+  x0:=gs(evalf(x0));
+fpour;
+retourne x0;
+}:;
+</PRE>On tape : <TT>Steffensencos(0,4)</TT><BR>
+On obtient : <TT>0.739085133215160534355</TT><BR>
+On tape : <TT>Steffensencos(0,10)</TT><BR>
+On obtient : <TT>0.739085133215160641651</TT><BR>
+</LI></OL><P>
+Les méthodes de Newton et de Steffensen sont plus performantes car ce sont 
+des méthodes d’ordre 2 (la fonction que l’on iére a une dérivée nulle 
+au point solution de <I>f</I>(<I>x</I>)=cos(<I>x</I>)=<I>x</I>).<BR>
+Même avec <TT>Digits:=30</TT> on a :<BR>
+<TT>Steffensencos(0,6)=Steffensencos(0,10)=<BR>
+ Newtoncos(0,6)=Newtoncos(0,10)=<BR>
+0.7390851332151606416553120876735</TT></P></LI><LI CLASS="li-enumerate"><B>L’énoncé</B><BR>
+Dans un problème de baccalauréat, on se propose de calculer des valeurs approchées des solutions de exp(−<I>x</I>)cos(<I>x</I>)=<I>x</I> sur [−π/2;π/2].
+<OL CLASS="enumerate" type=a><LI CLASS="li-enumerate">
+Déterminer le nombre de solutions.
+</LI><LI CLASS="li-enumerate">Donner un algorithme de calcul et écrire le programme correspondant.
+</LI><LI CLASS="li-enumerate">Donner un encadrement de la solution ?
+</LI><LI CLASS="li-enumerate">Dessiner les points de coordonnèes <I>t</I>,<I>x</I> qui vérifient :<BR>
+exp(−<I>x</I>)cos(<I>x</I>)−<I>x</I>+<I>t</I>=0 pour <I>t</I> ∈ [−π/2;π/2] et <I>x</I> ∈ [−π/2;π/2]
+</LI></OL>
+<B>La solution avec </B><B><TT>Xcas</TT></B><BR>
+<OL CLASS="enumerate" type=a><LI CLASS="li-enumerate">
+On tape : <TT>f(x:)=exp(-x)*cos(x)-x</TT><BR>
+ <TT>f1:=function_diff(f);f2:=normal(diff(f1(x)))</TT>
+On trouve :<BR>
+<TT>f1(x)=(-cos(x)-sin(x))*exp(-x)-1</TT> et<BR>
+<TT>f2=2*exp(-x)*sin(x)</TT><BR>
+ On a :<BR>
+<I>f</I>2=0 en <I>x</I>=0 le point(0,1) est donc un point d’inflexion et<BR>
+sur [−π/2;0], on a <I>f</I>2&lt;0 et sur [0;π/2], on a <I>f</I>2&gt;0<BR>
+On a :<BR>
+<I>f</I>1(<I>x</I>)=exp(π/2)−1&gt;0 pour <I>x</I>=−π/2<BR>
+<I>f</I>1(0)=−2<BR>
+<I>f</I>1(<I>x</I>)=−exp(−π/2)−1 &lt;0 pour <I>x</I>=π/2<BR>
+<I>f</I>1 s’annule donc pour <I>x</I>=<I>a</I>&lt;0 et donc <I>f</I> est croissante puis décroissante
+et comme on a <I>f</I>(−<I>pi</I>/2)=<I>pi</I>/2, <I>f</I>(0)=1 et <I>f</I>(<I>pi</I>/2)=−<I>pi</I>/2 et <I>f</I> continue,
+<I>f</I> s’annule en un seul point <I>x</I>=<I>b</I>&gt;0
+Pour vérifier, on tape :<BR>
+<TT>G:=plotfunc(f(x),x=-pi/2..pi/2);tangente(G,0)</TT><BR>
+</LI><LI CLASS="li-enumerate">On peut appliquer la méthode de Newton en partant de <I>x</I><SUB>0</SUB>=0.0, la 
+suite <I>x</I><SUB><I>n</I></SUB>=<I>x</I><SUB><I>n</I>−1</SUB>−<I>f</I>(<I>x</I><SUB><I>n</I>−1</SUB>)/<I>f</I>1(<I>x</I><SUB><I>n</I>−1</SUB>) va donner une valeur approchée par 
+défaut de <I>b</I> car sur [0;<I>b</I>] <I>f</I> est positive décroissante et convexe.<P>On tape :<BR>
+<TT>Newton0(4)</TT><BR>
+On obtient avec 22 digits:<BR>
+<TT>0.51775736368245829829471</TT><BR>
+</P></LI><LI CLASS="li-enumerate">On tape :
+<PRE CLASS="verbatim">Newton0(n):={
+local j,f,f1,g,x0;
+f(x):=exp(-x)*cos(x)-x;
+f1:=function_diff(f);
+g(x):=normal(x-f(x)/f1(x));
+x0:=0.0;
+pour j de 1 jusque n faire
+x0:=g(x0)
+fpour;
+retourne x0;
+}:;
+</PRE></LI><LI CLASS="li-enumerate">Pour avoir un encadrement de la solution à <TT>eps</TT> près, on continue 
+l’itération tant que la valeur de <I>f</I>(<I>x</I><SUB><I>n</I></SUB>+<I>eps</I>) reste strictement positive.<BR>
+On tape
+<PRE CLASS="verbatim">Newtoneps(n,eps):={
+  local j,f,f1,g,x0;
+  f(x):=exp(-x)*cos(x)-x;
+  f1:=function_diff(f);
+  g(x):=normal(x-f(x)/f1(x));
+  x0:=0.0;
+  j:=0;
+  tantque f(x0+eps)&gt;0 faire
+    x0:=g(x0);
+    j:=j+1;
+  ftantque;
+  print(j);
+  retourne x0,x0+eps;
+}
+:;
+</PRE>On tape :<BR>
+<TT>Newtoneps(0,1e-20)</TT><BR>
+On obtient :<BR>
+<TT>0.51775736368245829832277,0.51775736368245829833277</TT><BR>
+</LI><LI CLASS="li-enumerate">Il faut voir que si on remplace <I>f</I>(<I>x</I>) par <I>f</I>(<I>x</I>)+<I>t</I> la suite définie 
+par :<I>x</I><SUB>0</SUB>=0 et <I>x</I><SUB><I>n</I>+</SUB>=<I>x</I><SUB><I>n</I></SUB>−(<I>f</I>(<I>x</I><SUB><I>n</I></SUB>)+<I>t</I>)/<I>f</I>1(<I>x</I><SUB><I>n</I></SUB>) 
+approche la solution en <I>x</I> de <I>f</I>(<I>x</I>)+<I>t</I>=0 par excès si <I>t</I>&lt;−1 et par 
+défaut si <I>t</I>&gt;−1 car pour <I>x</I>=0 la fonction <I>f</I>(<I>x</I>)+<I>t</I> a un point d’inflexion
+qui est le point (0;1+<I>t</I>).
+De plus <I>f</I>(<I>x</I>)+<I>t</I>&gt;1+<I>t</I> pour <I>x</I>&lt;0 et <I>f</I>(<I>x</I>)+<I>t</I>&lt;1+<I>t</I> pour <I>x</I>&gt;0. Donc si
+1+<I>t</I>&gt;0 la solution sera positive et si 1+<I>t</I>&lt;0 la solution sera negative<BR>
+On tape :
+<PRE CLASS="verbatim">Newtonimpl():={
+  local j,f,f1,g,x0,t,a,L;
+  a:=evalf(pi/2);
+  f(x):=exp(-x)*cos(x)-x;
+  f1:=function_diff(f);
+  L:=NULL;
+    pour t de -a jusque -1 pas 0.1 faire
+      g(x):=normal(x-(f(x)+t)/f1(x));
+      x0:=0.0;
+      tantque f(x0-0.01)+t&lt;0 faire
+        x0:=g(x0);
+      ftantque;
+      L:=L,point(t,x0);
+    fpour;
+    pour t de -1 jusque a pas 0.1 faire
+      g(x):=normal(x-(f(x)+t)/f1(x));
+      x0:=0.0;
+      tantque f(x0+0.01)+t&gt;0 faire
+        x0:=g(x0);
+      ftantque;
+      L:=L,point(t,x0);
+    fpour;
+    return L;
+  }
+:;
+</PRE>On tape :<BR>
+<TT>Newtonimpl()</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge013.png">
+</LI></OL></LI></OL><H3 CLASS="subsection"><A NAME="htoc374">13.6.3</A>  La méthode de Newton avec préfacteur</H3><P>
+Lorsqu’on part d’une valeur <I>x</I><SUB>0</SUB> trop éloignée de la racine de <I>f</I>(<I>x</I>)
+(si par exemple |<I>f</I>(<I>x</I><SUB>0</SUB>)| est grand),
+on a intérêt à utiliser un préfacteur pour se rapprocher plus vite de 
+la solution de <I>f</I>(<I>x</I>)=0.<BR>
+Posons  <I>n</I>(<I>x</I>)=−<I>f</I>(<I>x</I>)/<I>f</I>′(<I>x</I>), on a alors :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">lim</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>h</I> → 0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(<I>f</I>(<I>x</I><SUB>0</SUB>+<I>h</I>*<I>n</I>(<I>x</I><SUB>0</SUB>))−<I>f</I>(<I>x</I><SUB>0</SUB>))</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>h</I>*<I>n</I>(<I>x</I><SUB>0</SUB>)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=<I>f</I>′(<I>x</I><SUB>0</SUB>)</TD></TR>
+</TABLE><P>
+donc 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">lim</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>h</I> → 0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(<I>f</I>(<I>x</I><SUB>0</SUB>+<I>h</I>*<I>n</I>(<I>x</I><SUB>0</SUB>))−<I>f</I>(<I>x</I><SUB>0</SUB>))</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>h</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=<I>n</I>(<I>x</I><SUB>0</SUB>)*<I>f</I>′(<I>x</I><SUB>0</SUB>)=−<I>f</I>(<I>x</I><SUB>0</SUB>)</TD></TR>
+</TABLE><P>
+ce qui veut dire que :<BR>
+<I>f</I>(<I>x</I><SUB>0</SUB>+<I>h</I>*<I>n</I>(<I>x</I><SUB>0</SUB>))=<I>f</I>(<I>x</I><SUB>0</SUB>)(1−<I>h</I>)+<I>h</I>· є(<I>h</I>) avec є(<I>h</I>) tend vers 0
+quand <I>h</I> tend vers 0.<BR>
+Donc, il existe <I>h</I><SUB>0</SUB> vérifiant :<BR>
+|<I>f</I>(<I>x</I><SUB>0</SUB>+<I>h</I><SUB>0</SUB>*<I>n</I>(<I>x</I><SUB>0</SUB>))|&lt;|<I>f</I>(<I>x</I><SUB>0</SUB>)|<BR>
+Remarque : Il faut minimiser |<I>f</I>(<I>x</I><SUB>0</SUB>+<I>h</I><SUB>0</SUB>*<I>n</I>(<I>x</I><SUB>0</SUB>))|. 
+or plus <I>h</I><SUB>0</SUB> est proche de 1 et plus |<I>f</I>(<I>x</I><SUB>0</SUB>)*(1−<I>h</I><SUB>0</SUB>)| sera petit. 
+Par exemple, on prendra le plus grand <I>h</I><SUB>0</SUB>, dans la liste 
+[1,3/4,(3/4)<SUP>2</SUP>,...] qui vérifie |<I>f</I>(<I>x</I><SUB>0</SUB>+<I>h</I><SUB>0</SUB>*<I>n</I>(<I>x</I><SUB>0</SUB>))|&lt;|<I>f</I>(<I>x</I><SUB>0</SUB>)|<BR>
+Pour cette valeur de <I>h</I><SUB>0</SUB>, <I>x</I><SUB>0</SUB>+<I>h</I><SUB>0</SUB>*<I>n</I>(<I>x</I><SUB>0</SUB>) est probablement plus 
+proche de la racine que <I>x</I><SUB>0</SUB> : on dit que <I>h</I><SUB>0</SUB> est le préfacteur de la 
+méthode de Newton.<BR>
+On va choisir par exemple au début <I>h</I><SUB>0</SUB>=1, et on regarde si 
+|<I>f</I>(<I>x</I><SUB>0</SUB>+<I>n</I>(<I>x</I><SUB>0</SUB>))|&lt;|<I>f</I>(<I>x</I><SUB>0</SUB>)|,
+si ce n’est pas le cas on prend <I>h</I><SUB>0</SUB>=(3/4) et on regarde si 
+|<I>f</I>(<I>x</I><SUB>0</SUB>+3/4*<I>n</I>(<I>x</I><SUB>0</SUB>))|&lt;|<I>f</I>(<I>x</I><SUB>0</SUB>)|,
+si ce n’est pas le cas on prend <I>h</I><SUB>0</SUB>=(3/4)<SUP>2</SUP> etc...<BR>
+On change de préfacteurs à chaque étape jusqu’à ce que :
+<I>abs</I>(<I>f</I>(<I>x</I>1))−<I>abs</I>(<I>f</I>(<I>x</I>0))&lt;0 sans préfacteur,
+on continue alors l’itération sans préfacteur, c’est à dire avec la 
+méthode de Newton normale. 
+On écrit donc :
+</P><PRE CLASS="verbatim">newton_prefacts(f,x0,eps):={
+local x1,h,h0,prefact,niter;
+//prefact est egal par ex a 3/4
+h0:=1.0;
+niter:=0;
+prefact:=0.75;
+x1:=x0-h0*f(x0)/function_diff(f)(x0);
+while (abs(f(x1))-abs(f(x0))&gt;0) {
+   h0:=h0*prefact;
+   x1:=x0-h0*f(x0)/function_diff(f)(x0);
+} 
+h:=eps;
+while (h0!=1 and niter&lt;100){
+   x0:=x1;
+   x1:=x1-h0*f(x1)/function_diff(f)(x1);
+   while (abs(f(x1))-abs(f(x0))&gt;0) {
+      h0:=h0*prefact;
+      x1:=x0-h0*f(x0)/function_diff(f)(x0);
+   } 
+   while (abs(f(x1))-abs(f(x0)&lt;0 and h0!=1)) {
+      h0:=h0/prefact;
+      x1:=x0-h0*f(x0)/function_diff(f)(x0);
+   } 
+niter:=niter+1;   
+}
+while (f(x1-h)*f(x1+h)&gt;0  and niter&lt;200){
+   x0:=x1;
+   x1:=x1-f(x1)/function_diff(f)(x1);
+   niter:=niter+1;
+}
+
+if  (niter&lt;200) {return x1;} else {return "pas trouve";} 
+}
+</PRE><P>On définit la fonction <I>f</I> par <TT><I>f</I>(<I>x</I>):=<I>x</I></TT><SUP><TT>2</TT></SUP><TT>-2</TT> et on met ce programme 
+dans un niveau éditeur de programmes (que l’on ouvre avec <TT>Alt+p</TT>), puis 
+on le teste et on le valide avec <TT>OK</TT>.<BR>
+ On tape :<BR>
+<TT>newton_prefacts(f,100,1e-10)</TT><BR>
+On obtient :<BR>
+<TT>1.41421356237</TT>
+On tape :<BR>
+<TT>newton_prefacts(f,3,1e-5)</TT><BR>
+On obtient :<BR>
+<TT>1.41421378005</TT></P><H2 CLASS="section"><A NAME="toc102"></A><A NAME="htoc375">13.7</A>  Trouver un encadrement de <I>x</I>0 lorsque <I>f</I>(<I>x</I>0) est minimum</H2><P>
+Soit <I>f</I> une fonction définie sur [<I>a</I>;<I>b</I>]. On suppose que <I>f</I> est unimodale 
+sur [<I>a</I>;<I>b</I>], c’est à dite que <I>f</I> a un seul extremum sur [<I>a</I>;<I>b</I>]. On suppose 
+de plus que cet extremum est un minimum (sinon on remplacera <I>f</I> par −<I>f</I>.)
+On se propose de trouver un encadrement à <I>eps</I> près de la valeur pour 
+laquelle <I>f</I> est minimum.
+</P><H3 CLASS="subsection"><A NAME="htoc376">13.7.1</A>  Déscription du principe de la méthode</H3><P>
+On partage [<I>a</I>;<I>b</I>] en trois morceaux en considérant <I>c</I> et <I>d</I> 
+vérifiant : <I>a</I>&lt;<I>c</I>&lt;<I>d</I>&lt;<I>b</I>.<BR>
+On calcule <I>f</I>(<I>c</I>) et <I>f</I>(<I>d</I>) et on les compare.<BR>
+Puisque <I>f</I> a un seul minimum sur [<I>a</I>;<I>b</I>] elle décroit, passe par son 
+minimum, puis <I>f</I> croit. Selon les trois cas possibles on a :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+f(c)&lt;f(d)<BR>
+dans ce cas, la valeur pour laquelle <I>f</I> est minimum n’appartient pas à 
+[<I>d</I>;<I>b</I>]
+</LI><LI CLASS="li-itemize">f(c)&gt;f(d)<BR>
+dans ce cas, la valeur pour laquelle <I>f</I> est minimum n’appartient pas à 
+[<I>a</I>;<I>c</I>]
+</LI><LI CLASS="li-itemize">f(c)=f(d)<BR>
+dans ce cas, la valeur pour laquelle <I>f</I> est minimum n’appartient pas à 
+[<I>d</I>;<I>b</I>] ni à [<I>a</I>;<I>c</I>]
+</LI></UL><P>
+Ainsi, l’intervalle de recherche a diminué et on peut recommencer le 
+processus. Pour que l’algorithme soit performant,
+on veut que l’intervalle de recherche diminue rapidement et que le nombre de 
+valeurs de <I>f</I> à calculer soit le plus petit possible. Pour cela comment 
+doit-on choisir <I>c</I> et <I>d</I> ? 
+</P><H3 CLASS="subsection"><A NAME="htoc377">13.7.2</A>  Déscription de 2 méthodes</H3><H4 CLASS="subsubsection">On fait presque une dichotomie</H4><P>
+On choisit <I>c</I> et <I>d</I> proche de <I>a</I>+<I>b</I>/2 par exemple :<BR>
+ <I>c</I>=<I>a</I>+<I>b</I>−<I>eps</I>/2 et <I>d</I>=<I>a</I>+<I>b</I>+<I>eps</I>/2 pour <I>eps</I> donné.
+Dans ce cas, à chaque étape l’intervalle diminue presque de moitié mais 
+on doit calculer, à chaque étape, deux valeurs de <I>f</I>. 
+</P><H4 CLASS="subsubsection">On utilise la suite de Fibonacci</H4><P>
+Comment faire pour que l’une des valeurs de <I>f</I> déjà calculée serve 
+à l’étape suivante ?<BR>
+La solution se trouve dans la suite de Fibonacci, suite définie par :<BR>
+<I>u</I><SUB>0</SUB>=1, <I>u</I><SUB>1</SUB>=2, <I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>−2</SUB>+<I>u</I><SUB><I>n</I>−1</SUB> dont les premiers termes sont :
+1,2,3,5,8,13,21,34,55,89...
+Par exemple si on partage [<I>a</I>;<I>b</I>] en 89 parties égales si <I>l</I>=(<I>b</I>−<I>a</I>)/89,
+on choisit <I>c</I>=<I>a</I>+34*<I>l</I> et <I>d</I>=<I>a</I>+55*<I>l</I> et ainsi on a :<BR>
+<I>c</I>−<I>a</I>=34*<I>l</I>, <I>d</I>−<I>c</I>=21*<I>l</I>, <I>b</I>−<I>d</I>=34*<I>l</I> (car 89=55+34 et 34+21=55 puisque 
+21,34,55,89 sont des termes consécutifs de la suite de Fibonacci).<BR>
+On calcule <I>f</I>(<I>c</I>) et <I>f</I>(<I>d</I>) puis on réduit l’intervalle en un intervalle de
+longueur (<I>b</I>−<I>a</I>)*55/89, par exemple si l’intervalle suivant est [<I>a</I>;<I>d</I>] et, si 
+on recommence le processus, le point <I>c</I> est le futur point <I>d</I>.<BR>
+Donc à chaque étape il suffit de calculer une seule valeur de <I>f</I> pour
+passer de l’intervalle [<I>a</I>;<I>b</I>] (proportionnel à <I>u</I><SUB><I>n</I></SUB>) à l’intervalle 
+[<I>a</I>;<I>d</I>] ou [<I>c</I>;<I>b</I>] (proportionnel à <I>u</I><SUB><I>n</I>−1</SUB>). Il y a bien sûr le cas 
+<I>f</I>(<I>c</I>)=<I>f</I>(<I>d</I>) où il faut à l’étape suivante calculer deux valeurs de <I>f</I>, 
+mais dans ce cas on gagne 3 étapes car on passe de l’intervalle [<I>a</I>;<I>b</I>] 
+(proportionnel à <I>u</I><SUB><I>n</I></SUB>) à l’intervalle [<I>c</I>;<I>d</I>] (proportionnel à 
+<I>u</I><SUB><I>n</I>−3</SUB>).<BR>
+Selon la valeur <I>eps</I> de la longueur de l’encadrement, on calcule
+<I>k</I>:=<I>ceil</I>(2*(<I>b</I>−<I>a</I>)/<I>eps</I>); et la première valeur <I>t</I>=<I>u</I><SUB><I>n</I></SUB> de la suite de 
+Fibonacci supérieure à <I>k</I>. il faut alors diviser l’intervalle [<I>a</I>;<I>b</I>] en 
+<I>t</I> parties égales. On applique alors plusieurs fois le processus et on 
+s’arrête quand <I>n</I>=1, c’est à dire quand l’intervalle a été réduit 
+à un intervalle de longueur 2*(<I>b</I>−<I>a</I>)/<I>t</I> qui est, grace au choix de <I>t</I> 
+(<I>t</I>&gt;<I>k</I>&gt;2*(<I>b</I>−<I>a</I>)/<I>eps</I>) inférieur à <I>eps</I>.
+</P><H3 CLASS="subsection"><A NAME="htoc378">13.7.3</A>  Traduction <TT>Xcas</TT> de l’algorithme avec Fibonacci</H3><PRE CLASS="verbatim">//f(x):=2*x^4-10*x^3-4*x^2+100
+//fibomin(f,1,5,0.000001)
+//g(x):=2*x^4-10*x^3+4*x^2+100
+//fibomin(g,1,5,1e-20)
+//calcul la valeur du min d'une fonction ayant 
+//un seul extrema sur [a,b]
+fibomin(f,a,b,eps):={
+  local c,d,F,k,n,t,g,h,l,fc,fd;
+  if (a&gt;b) {c:=a;a:=b;b:=c;}
+  k:=ceil(2*(b-a)/eps);
+  F:=1,2;
+  n:=1;
+  g:=1;
+  t:=2;
+  //construction de F=la suite de Fibonacci
+  //h,g,t sont 3 termes consecutifs de F
+  while (t&lt;k) {
+    n:=n+1;
+    h:=g;
+    g:=t;
+    t:=h+g;
+    F:=F,t;
+  }
+  l:=(b-a)/t;
+  c:=a+h*l;
+  d:=a+g*l;
+  fc:=f(c);
+  fd:=f(d);
+  //on itere le processus et on s'arrete qd n=1
+  while (n&gt;1) {
+    if (fc&gt;fd) {
+      a:=a+h*l;
+      fc:=fd;
+      t:=h;
+      h:=g-h;
+      g:=t;
+      fd:=f(a+g*l);
+      n:=n-1;
+    }else{
+      if (fc&lt;fd) {
+ b:=a+g*l;
+ t:=h;
+ h:=g-h;
+ g:=t;
+ fd:=fc;
+ fc:=f(a+h*l);
+ n:=n-1;
+      }else{
+ a:=a+h*l;
+ b:=b-h*l;
+ t:=g-h;
+ g:=h-t;
+ h:=t-g;
+ fc:=f(a+h*l);
+ fd:=f(a+g*l);
+ n:=n-3;
+      }
+    }
+  }
+  return [a,b];
+}
+</PRE><P>On tape :<BR>
+<TT>f(x):=x</TT><CODE><TT>^</TT></CODE><TT>4-10</TT><BR>
+<TT>fibomin(f,-1,1,1e-10)</TT><BR>
+On obtient :<BR>
+<TT>[(-1)/53316291173,1/53316291173]</TT><BR>
+On tape :<BR>
+<TT>g(x):=2*x</TT><CODE><TT>^</TT></CODE><TT>4-10*x</TT><CODE><TT>^</TT></CODE><TT>3-4*x</TT><CODE><TT>^</TT></CODE><TT>2+100</TT><BR>
+<TT>fibomin(g,1,5,1e-10)</TT><BR>
+On obtient :<BR>
+<TT>[86267571271/21566892818,86267571273/21566892818]</TT>
+On tape :<BR>
+<TT>h(x):=2*x</TT><CODE><TT>^</TT></CODE><TT>4-10*x</TT><CODE><TT>^</TT></CODE><TT>3+4*x</TT><CODE><TT>^</TT></CODE><TT>2+100</TT><BR>
+<TT>fibomin(h,1,5,1e-10)</TT><BR>
+On obtient :<BR>
+<TT>[74644573011/21566892818,74644573013/21566892818]</TT><BR>
+
+</P><HR>
+<A HREF="casrouge012.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge014.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

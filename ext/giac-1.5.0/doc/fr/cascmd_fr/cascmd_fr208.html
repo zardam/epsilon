@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Accès aux fonctions de PARI/GP: commande pari</title>
+</head>
+<body >
+<a href="cascmd_fr207.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr209.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec282" class="subsection">6.9.11  Accès aux fonctions de PARI/GP: commande <span style="font-family:monospace">pari</span></h3>
+<p><a id="hevea_default377"></a>
+La commande <span style="font-family:monospace">pari</span> sans argument exporte les fonctions de pari
+qui n’ont pas d’homonymes sous <span style="font-family:monospace">Xcas</span> en leur nom habituel sous PARI/GP.<br>
+Toutes les commandes sont aussi exportées sous leur nom d’origine
+avec le préfixe <span style="font-family:monospace">pari_</span>.</p><p>La commande <span style="font-family:monospace">pari</span> avec en premier argument un chaine de caractère
+- le nom d’une commande PARI - et d’éventuels autres arguments
+exécute la commande PARI avec les autres arguments. <br>
+Par exemple :
+</p><ul class="itemize"><li class="li-itemize">
+On tape :<br>
+<span style="font-family:monospace">pari()</span> puis <span style="font-family:monospace">weber(1+i)</span> ou directement<br>
+<span style="font-family:monospace">pari("weber",1+i)</span>, cela exécute la commande <span style="font-family:monospace">weber</span> de PARI
+avec comme argument <span style="font-family:monospace">1+i</span>. La commande <span style="font-family:monospace">weber</span> n’existant pas sous 
+<span style="font-family:monospace">Xcas</span>.
+</li><li class="li-itemize">On tape :<br>
+<span style="font-family:monospace">pari("content",[25,15,50,75])</span> ou <br>
+<span style="font-family:monospace">pari_content([25,15,50,75])</span>, cela exécute la commande 
+<span style="font-family:monospace">content</span> de PARI avec comme argument <span style="font-family:monospace">[25,15,50,75]</span> et renvoie 
+<span style="font-family:monospace">5</span> qui est le pgcdde la liste d’entiers donnée en argument alors que 
+<span style="font-family:monospace">pari()</span> puis <span style="font-family:monospace">content([25,15,50,75])</span> exécute la commande 
+<span style="font-family:monospace">content</span> de <span style="font-family:monospace">Xcas</span> et renvoie aussi <span style="font-family:monospace">5</span> car <span style="font-family:monospace">content</span>
+est une commande <span style="font-family:monospace">Xcas</span> qui a comme argument un polynôme donné sous sa
+forme symbolique ou par la liste de ses coefficients et qui renvoie le même 
+résultat que la commande <span style="font-family:monospace">content</span> de PARI car on a :<br>
+<span style="font-family:monospace">content([25,15,50,75])=content(25x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+15x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+50x+75)=5</span>
+</li><li class="li-itemize">On tape :<br>
+<span style="font-family:monospace">pari("gcd",[4,3,2,15],[20,30,50,75])</span> ou<br>
+<span style="font-family:monospace">pari_gcd([4,3,2,15],[20,30,50,75])</span>, cela exécute la 
+commande <span style="font-family:monospace">gcd</span> de PARI d’arguments <span style="font-family:monospace">L1=[4,3,2,15]</span> et
+<span style="font-family:monospace">L2=[20,30,50,75]</span> qui renvoie la matrice :<br>
+<span style="font-family:monospace">[[4,1,2,5],[2,3,2,15],[2,1,2,5],[1,3,1,15]]</span> :c’est la matrice
+<span style="font-family:monospace">M[j,k]</span> égale au pgcd des entiers <span style="font-family:monospace">L1[j]</span> et <span style="font-family:monospace">L2[k]</span> alors que, :<br>
+<span style="font-family:monospace">pari()</span> puis<br>
+<span style="font-family:monospace">gcd([4,3,2,15],[20,30,50,75])</span> renvoie <span style="font-family:monospace">[4,3,2,15]</span> car <span style="font-family:monospace">gcd</span>
+est une commande <span style="font-family:monospace">Xcas</span> qui avec comme argument 2 listes <span style="font-family:monospace">L1</span> et 
+<span style="font-family:monospace">L2</span> renvoie la liste <span style="font-family:monospace">L3[j]</span> des pgcd de <span style="font-family:monospace">L1[j]</span> et <span style="font-family:monospace">L2[j]</span>
+c’est à dire la diagonale de la matrice précédente car on a :<br>
+<span style="font-family:monospace">gcd([4,3,2,15],[20,30,50,75])=<br>
+diag(pari("gcd", [4,3,2,15],[20,30,50,75]))</span>
+</li></ul><p>
+La documentation de PARI/GP est disponible depuis le menu
+Aide-&gt;Manuels.</p>
+<hr>
+<a href="cascmd_fr207.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr209.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

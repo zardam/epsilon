@@ -1,0 +1,461 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Διακριτός Μετασχηματισμός Fourier </TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el167.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el169.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc191">1.22.2</A>  Διακριτός Μετασχηματισμός <TT>Fourier</TT><TT> </TT></H3><P>
+Έστω <I>N</I> ένας ακέραιος.
+Ο Διακριτός Μετασχηματισμός <TT>Fourier (DFT)</TT> είναι ένας μετασχηματισμός <I>F</I><SUB><I>N</I></SUB> που ορίζεται στο σύνολο των περιοδικών ακολουθιών περιόδου <I>N</I>. Εξαρτάται απ’ την επιλογή
+μιας αρχικής <I>N</I>-οστής ρίζας της μονάδας ω<SUB><I>N</I></SUB>. Εάν ο
+<TT>DFT</TT> ορίζεται σε ακολουθίες με μιγαδικούς συντελεστές, έχουμε:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">ω<SUB><I>N</I></SUB>=<I>e</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2 <I>i</I> π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="dcell">&nbsp;</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Εάν <I>x</I> είναι μια περιοδική ακολουθία περιόδου
+<I>N</I>, που ορίζεται από το διάνυσμα <I>x</I>=[<I>x</I><SUB>0</SUB>,<I>x</I><SUB>1</SUB>,...<I>x</I><SUB><I>N</I>−1</SUB>] τότε ο 
+<I>F</I><SUB><I>N</I></SUB>(<I>x</I>)=<I>y</I> είναι μια περιοδική ακολουθία περιόδου <I>N</I>, που ορίζεται από:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">(<I>F</I><SUB><I>N</I>,ω<SUB><I>N</I></SUB></SUB>(<I>x</I>))<SUB><I>k</I></SUB>=<I>y</I><SUB><I>k</I></SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>x</I><SUB><I>j</I></SUB>ω<SUB><I>N</I></SUB><SUP>−<I>k</I>· <I>j</I></SUP>, <I>k</I>=0..<I>N</I>−1 </TD></TR>
+</TABLE><P>
+όπου ω<SUB><I>N</I></SUB> είναι μια αρχική <I>N</I>-οστή ρίζα της μονάδας. 
+Mε τον Γρήγορο Μετασχηματισμό <TT>Fourier (FFT)</TT> o διακριτός Μετασχηματισμός <TT>Fourier</TT> μπορεί να υπολογιστεί γρηγορότερα από τον υπολογισμό
+του καθενός <I>y</I><SUB><I>k</I></SUB> ατομικά.
+Το 	
+<TT>Xcas</TT> υλοποιεί τον αλγόριθμο <TT>FFT</TT> για να υπολογίσει
+τον διακριτό μετασχηματισμό <TT>Fourier</TT> μόνο εάν το <I>N</I> είναι δύναμη του 2.</P><H4 CLASS="subsubsection"><A NAME="toc14"></A>Ιδιότητες του διακριτού μετασχηματισμού <TT>Fourier</TT></H4><P>
+Ο Διακριτός Μετασχηματισμός <TT>Fourier</TT> <I>F</I><SUB><I>N</I></SUB> είναι ένας αμφιμονοσήμαντος και επί μετασχηματισμός 
+σε περιοδικές ακολουθίες τέτοιες ώστε : 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP> <I>F</I><SUB><I>N</I>,ω<SUB><I>N</I></SUB></SUB><SUP>−1</SUP></TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>F</I><SUB><I>N</I>,ω<SUB><I>N</I></SUB><SUP>−1</SUP></SUB> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>F</I><SUB><I>N</I></SUB></TD></TR>
+</TABLE></TD><TD CLASS="dcell">     στο  ℂ</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+δηλαδή :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">(<I>F</I><SUB><I>N</I></SUB><SUP>−1</SUP>(<I>x</I>))<SUB><I>k</I></SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>x</I><SUB><I>j</I></SUB>ω<SUB><I>N</I></SUB><SUP><I>k</I>· <I>j</I></SUP> </TD></TR>
+</TABLE><P>
+Στο 	
+<TT>Xcas</TT> ο Διακριτός Μετασχηματισμός <TT>Fourier</TT> και ο αντίστροφός του
+δηλώνονται με 	
+<TT>fft</TT> και 	
+<TT>ifft</TT>:
+</P><DIV CLASS="center">
+	
+<TT>fft(x)</TT>= <I>F</I><SUB><I>N</I></SUB>(<I>x</I>),  	
+<TT>ifft(x)</TT>= <I>F</I><SUB><I>N</I></SUB><SUP>−1</SUP>(<I>x</I>)
+</DIV><P>
+<B>Ορισμοί</B><BR>
+Έστω <I>x</I> και <I>y</I> δύο περιοδικές ακολουθίες με περίοδο <I>N</I>.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Το γινόμενο <TT>Hadamard</TT> (συμβολισμός ·) ορίζεται με:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">(<I>x</I> · <I>y</I>)<SUB><I>k</I></SUB> = <I>x</I><SUB><I>k</I></SUB> <I>y</I><SUB><I>k</I></SUB> </TD></TR>
+</TABLE>
+</LI><LI CLASS="li-itemize">το γινόμενο συνέλιξης (συμβολισμός *) ορίζεται με:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">(<I>x</I> * <I>y</I>)<SUB><I>k</I></SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>x</I><SUB><I>j</I></SUB><I>y</I><SUB><I>k</I>−<I>j</I></SUB> </TD></TR>
+</TABLE>
+</LI></UL><P>
+<B>Ιδιότητες</B> :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>N</I>*<I>F</I><SUB><I>N</I></SUB>(<I>x</I> · <I>y</I>)</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><I>F</I><SUB><I>N</I></SUB>(<I>x</I>) * <I>F</I><SUB><I>N</I></SUB>(<I>y</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>F</I><SUB><I>N</I></SUB>(<I>x</I> * <I>y</I>)</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><I>F</I><SUB><I>N</I></SUB>(<I>x</I>) · <I>F</I><SUB><I>N</I></SUB>(<I>y</I>)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><H4 CLASS="subsubsection"><A NAME="toc15"></A>Εφαρμογές</H4><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Τιμή ενός πολυωνύμου<BR>
+Ορίζουμε ένα πολυώνυμο <I>P</I>(<I>x</I>)=∑<SUB><I>j</I>=0</SUB><SUP><I>N</I>−1</SUP><I>c</I><SUB><I>j</I></SUB><I>x</I><SUP><I>j</I></SUP> με το διάνυσμα
+των συντελεστών του <I>c</I>:=[<I>c</I><SUB>0</SUB>,<I>c</I><SUB>1</SUB>,..<I>c</I><SUB><I>N</I>−1</SUB>], όπου μηδενικά μπορούν να προστεθούν έτσι ώστε το
+<I>N</I> να είναι δύναμη του 2.
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+Υπολογισμός των τιμών του <I>P</I>(<I>x</I>) στα σημεία
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I>=<I>a</I><SUB><I>k</I></SUB>=ω<SUB><I>N</I></SUB><SUP>−<I>k</I></SUP>=exp(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">−2<I>ik</I>π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">),    <I>k</I>=0..<I>N</I>−1 </TD></TR>
+</TABLE>
+Αυτός είναι απλά ο διακριτός μετασηματισμός <TT>Fourier</TT> του <I>c</I> αφού,
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>a</I><SUB><I>k</I></SUB>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>c</I><SUB><I>j</I></SUB>(ω<SUB><I>N</I></SUB><SUP>−<I>k</I></SUP>)<SUP><I>j</I></SUP>=<I>F</I><SUB><I>N</I></SUB>(<I>c</I>)<SUB><I>k</I></SUB> </TD></TR>
+</TABLE>
+Εισάγετε, για παράδειγμα :
+<DIV CLASS="center">
+	
+<TT>P(x):=x+x</TT><CODE><TT>^</TT></CODE><TT>2; w:=i</TT>
+</DIV>
+Εδώ οι συντελεστές του <I>P</I> είναι [0,1,1,0], 
+<I>N</I>=4 και ω=exp(2<I>i</I>π/4)=<I>i</I>.<BR>
+Είσοδος :<BR>
+	
+<TT>fft([0,1,1,0])</TT><BR>
+Έξοδος :<BR>
+	
+<TT>[2,-1-i,0,-1+i]</TT><BR>
+επομένως,
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+	
+<TT>P(0)=2</TT>,
+</LI><LI CLASS="li-itemize">	
+<TT>P(-i)=P(w</TT><CODE><TT>^</TT></CODE><TT>-1)=-1-i</TT>,
+</LI><LI CLASS="li-itemize">	
+<TT>P(-1)=P(w</TT><CODE><TT>^</TT></CODE><TT>-2)=0</TT>,
+</LI><LI CLASS="li-itemize">	
+<TT>P(i)=P(w</TT><CODE><TT>^</TT></CODE><TT>-3)=-1+i</TT>.
+</LI></UL></LI><LI CLASS="li-itemize">Υπολογισμός των τιμών του <I>P</I>(<I>x</I>) στα
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I>=<I>b</I><SUB><I>k</I></SUB>=ω<SUB><I>N</I></SUB><SUP><I>k</I></SUP>=exp(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2<I>ik</I>π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">),    <I>k</I>=0..<I>N</I>−1 </TD></TR>
+</TABLE>
+Αυτό είναι <I>N</I> επί τον αντίστροφο μετασχηματισμό <TT>Fourier</TT> του <I>c</I> αφού,
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>a</I><SUB><I>k</I></SUB>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>c</I><SUB><I>j</I></SUB>(ω<SUB><I>N</I></SUB><SUP><I>k</I></SUP>)<SUP><I>j</I></SUP>=<I>NF</I><SUB><I>N</I></SUB><SUP>−1</SUP>(<I>c</I>)<SUB><I>k</I></SUB> </TD></TR>
+</TABLE>
+Εισάγετε, για παράδειγμα :<BR>
+	
+<TT>P(x):=x+x</TT><CODE><TT>^</TT></CODE><TT>2</TT> και 	
+<TT>w:=i</TT><BR>
+Εδώ, οι συντελεστές του <I>P</I> είναι [0,1,1,0], 
+<I>N</I>=4 και ω=exp(2<I>i</I>π/4)=<I>i</I>.<BR>
+Είσοδος :<BR>
+	
+<TT>4*ifft([0,1,1,0])</TT><BR>
+Έξοδος :<BR>
+	
+<TT>[2,-1+i,0,-1-i]</TT><BR>
+επομένως : <UL CLASS="itemize"><LI CLASS="li-itemize">
+	
+<TT>P(0)=2</TT>,
+</LI><LI CLASS="li-itemize">	
+<TT>P(i)=P(w</TT><CODE><TT>^</TT></CODE><TT>1)=-1+i</TT>,
+</LI><LI CLASS="li-itemize">	
+<TT>P(-1)=P(w</TT><CODE><TT>^</TT></CODE><TT>2)=0</TT>,
+</LI><LI CLASS="li-itemize">	
+<TT>P(-i)=P(w</TT><CODE><TT>^</TT></CODE><TT>3)=-1-i</TT>.
+</LI></UL>
+Ασφαλώς, βρίσκουμε τις ίδιες τιμές όπως και παραπάνω...
+</LI></UL></LI><LI CLASS="li-enumerate">Τριγωνομετρική παρεμβολή<BR>
+Έστω <I>f</I> μια περιοδική συνάρτηση περιόδου 2π, και έστω ότι <I>f</I>(2<I>k</I>π/<I>N</I>)=<I>f</I><SUB><I>k</I></SUB> 
+for <I>k</I>=0..(<I>N</I>−1). Βρείτε ένα τριγωνομετρικό πολυώνυμο <I>p</I> που παρεμβάλει την <I>f</I> 
+στα <I>x</I><SUB><I>k</I></SUB>=2<I>k</I>π/<I>N</I>, δηλαδή βρείτε <I>p</I><SUB><I>j</I></SUB>, <I>j</I>=0..<I>N</I>−1 τέτοια ώστε
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>p</I>(<I>x</I>)= </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>p</I><SUB><I>j</I></SUB> exp(<I>ijx</I>),    <I>p</I>(<I>x</I><SUB><I>k</I></SUB>)=<I>f</I><SUB><I>k</I></SUB></TD></TR>
+</TABLE>
+Αντικαθιστώντας στο <I>p</I>(<I>x</I>) το <I>x</I><SUB><I>k</I></SUB> με την τιμή του έχουμε:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>p</I><SUB><I>j</I></SUB> exp(<I>i</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>j</I>2<I>k</I>π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">) = <I>f</I><SUB><I>k</I></SUB></TD></TR>
+</TABLE>
+Μ’ άλλα λόγια, (<I>f</I><SUB><I>k</I></SUB>) είναι ο αντίστροφος μετασχηματισμός <TT>Fourier DFT</TT> του (<I>p</I><SUB><I>k</I></SUB>), και επομένως
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">(<I>p</I><SUB><I>k</I></SUB>)= </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>F</I><SUB><I>N</I></SUB>(  (<I>f</I><SUB><I>k</I></SUB>)  ) </TD></TR>
+</TABLE>
+Εάν η συνάστηση <I>f</I> είναι πραγματική, <I>p</I><SUB>−<I>k</I></SUB>=<SPAN style="text-decoration:overline"><I>p</I></SPAN><SUB><I>k</I></SUB>, και επομένως ανάλογα αν το <I>N</I> είναι άρτιο ή περιττό:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>p</I>(<I>x</I>)</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>p</I><SUB>0</SUB>+
+2 ℜ(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−1</TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>p</I><SUB><I>k</I></SUB>exp(<I>ikx</I>))+ℜ(<I>p</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> exp(<I>i</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>Nx</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)) </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>p</I>(<I>x</I>)</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>p</I><SUB>0</SUB>+ 2 ℜ(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>p</I><SUB><I>k</I></SUB>exp(<I>ikx</I>))</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></LI><LI CLASS="li-enumerate">Σειρές <TT>Fourier</TT><BR>
+Έστω <I>f</I> μια περιοδική συνάρτηση περιόδου 2π, τέτοια ώστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>(<I>x</I><SUB><I>k</I></SUB>)=<I>y</I><SUB><I>k</I></SUB>,    <I>x</I><SUB><I>k</I></SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2<I>k</I>π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">, <I>k</I>=0..<I>N</I>−1 </TD></TR>
+</TABLE>
+Έστω επίσης ότι η σειρά <TT>Fourier</TT> της <I>f</I> συγκλίνει στην <I>f</I> (αυτό θα ισχύει εάν για παράδειγμα <I>f</I> είναι συνεχής). Εάν το <I>N</I> είναι μεγάλο,
+μια καλή προσέγγιση της <I>f</I> θα δίνεται από:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> ≤ <I>n</I>&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>c</I><SUB><I>n</I></SUB> exp(<I>inx</I>) </TD></TR>
+</TABLE>
+Επομένως θέλουμε μια αριθμητική προσέγγιση των 
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>c</I><SUB><I>n</I></SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2π</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><FONT SIZE=6>∫</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">2π</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>f</I>(<I>t</I>)exp(−<I>int</I>)<I>dt</I> </TD></TR>
+</TABLE>
+Η αριθμητική τιμή του ολοκληρώματος ∫<SUB>0</SUB><SUP>2π</SUP><I>f</I>(<I>t</I>)exp(−<I>int</I>)<I>dt</I> μπορεί να υπολογιστεί από τον τραπεζοειδή κανόνα (σημειώνουμε ότι ο αλγόριθμος <TT>Romberg</TT> δεν θα δούλευε εδώ, επειδή το ανάπτυγμα <TT>Euler Mac Laurin</TT>
+έχει μηδενικούς συντελεστές, αφού η ολοκληρωτέα συνάρτηση είναι περιοδική, και επομένως όλες της οι παράγωγοι έχουν την ίδια τιμή στο 0 και στο 2π).
+Εάν c_n είναι η αριθμητική τιμή της <I>c</I><SUB><I>n</I></SUB> που παίρνουμε από 
+τον τραπεζοειδή κανόνα, τότε 
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">c_n=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2π</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>y</I><SUB><I>k</I></SUB>exp(−2<I>i</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>nk</I>π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">),
+    −</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> ≤ <I>n</I>&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD></TR>
+</TABLE>
+Πράγματι, αφού <I>x</I><SUB><I>k</I></SUB>=2<I>k</I>π/<I>N</I> και <I>f</I>(<I>x</I><SUB><I>k</I></SUB>)=<I>y</I><SUB><I>k</I></SUB>:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>f</I>(<I>x</I><SUB><I>k</I></SUB>)exp(−<I>inx</I><SUB><I>k</I></SUB>)</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I><SUB><I>k</I></SUB>exp(−2<I>i</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>nk</I>π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">), </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>(0)exp(0)=<I>f</I>(2π)exp(−2<I>i</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>nN</I>π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)</TD></TR>
+</TABLE></TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><I>y</I><SUB>0</SUB>=<I>y</I><SUB><I>N</I></SUB> </TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+Επομένως :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">[c<SUB>0</SUB>,..c</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−1</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">,c</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">−<I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">,..<I>c</I><SUB>−1</SUB>]=
+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>F</I><SUB><I>N</I></SUB>([<I>y</I><SUB>0</SUB>,<I>y</I><SUB>1</SUB>...<I>y</I><SUB>(<I>N</I>−1)</SUB>]) </TD></TR>
+</TABLE>
+&lt;αφού
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+εάν <I>n</I>≥0, c<SUB><I>n</I></SUB>=<I>y</I><SUB><I>n</I></SUB> 
+</LI><LI CLASS="li-itemize">εάν <I>n</I>&lt;0 c<SUB><I>n</I></SUB>=<I>y</I><SUB><I>n</I>+<I>N</I></SUB>
+</LI><LI CLASS="li-itemize">ω<SUB><I>N</I></SUB>=exp(2<I>i</I>π/<I>N</I>), 
+τότε ω<SUB><I>N</I></SUB><SUP><I>n</I></SUP>=ω<SUB><I>N</I></SUB><SUP><I>n</I>+<I>N</I></SUP> 
+</LI></UL><P><B>Ιδιότητες</B>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Οι συντελεστές του τριγωνομετρικού πολυωνύμου που παρεμβάλει την <I>f</I> 
+στα <I>x</I>=2<I>k</I>π/<I>N</I> είναι
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>p</I><SUB><I>n</I></SUB>=c<SUB><I>n</I></SUB>,    −</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> ≤ <I>n</I>&lt;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD></TR>
+</TABLE>
+</LI><LI CLASS="li-itemize">Εάν η <I>f</I> είναι ένα τριγωνομετρικό πολυώνυμο <I>P</I> βαθμού <I>m</I>≤ <I>N</I>/2, 
+τότε
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>(<I>t</I>)=<I>P</I>(<I>t</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>m</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=−<I>m</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>c</I><SUB><I>k</I></SUB>exp(2<I>ik</I>π <I>t</I>) </TD></TR>
+</TABLE>
+το τριγωνομετρικό πολυώνυμο που παρεμβάλει την <I>f</I>=<I>P</I> είναι το <I>P</I>, η αριθμητική 
+προσέγγιση των συντελεστών είναι στην πραγματικότητα ακριβής (c<SUB><I>n</I></SUB>=<I>c</I><SUB><I>n</I></SUB>).
+</LI><LI CLASS="li-itemize">Πιο γενικά, μπορούμε να υπολογίσουμε το c<SUB><I>n</I></SUB>−<I>c</I><SUB><I>n</I></SUB>.<BR>
+Υποθέτοντας ότι η <I>f</I> ισούται με την σειρά 	
+Fourier της, δηλαδή ότι :<BR>
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>(<I>t</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>m</I>=−∞</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>c</I><SUB><I>m</I></SUB>exp(2<I>i</I>π <I>mt</I>),   
+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>m</I>=−∞</TD></TR>
+</TABLE></TD><TD CLASS="dcell">|<I>c</I><SUB><I>m</I></SUB>|&lt;∞ </TD></TR>
+</TABLE>
+Τότε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>(<I>x</I><SUB><I>k</I></SUB>)=<I>f</I>(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2<I>k</I>π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)=<I>y</I><SUB><I>k</I></SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>m</I>=−∞</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>c</I><SUB><I>m</I></SUB>ω<SUB><I>N</I></SUB><SUP><I>km</I></SUP>,
+  
+c_n=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>y</I><SUB><I>k</I></SUB>ω<SUB><I>N</I></SUB><SUP>−<I>kn</I></SUP> </TD></TR>
+</TABLE>
+Αντικαταστείστε το <I>y</I><SUB><I>k</I></SUB> με την τιμή του στο c_n:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">c_n=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>m</I>=−∞</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+<I>c</I><SUB><I>m</I></SUB>ω<SUB><I>N</I></SUB><SUP><I>km</I></SUP>ω<SUB><I>N</I></SUB><SUP>−<I>kn</I></SUP> </TD></TR>
+</TABLE>
+Εάν <I>m</I>≠ <I>n</I> (mod <I>N</I> ), ω<SUB><I>N</I></SUB><SUP><I>m</I>−<I>n</I></SUP> είναι μια <I>N</I>-στη ρίζα της μονάδος διάφορη
+του 1, και επομένως:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">ω<SUB><I>N</I></SUB><SUP>(<I>m</I>−<I>n</I>)<I>N</I></SUP>=1,    </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell">ω<SUB><I>N</I></SUB><SUP>(<I>m</I>−<I>n</I>)<I>k</I></SUP>=0 </TD></TR>
+</TABLE>
+Άρα, εάν <I>m</I>−<I>n</I> είναι ένα πολλαπλάσιο του <I>N</I> (<I>m</I>=<I>n</I>+<I>l</I>· <I>N</I>) τότε 
+∑<SUB><I>k</I>=0</SUB><SUP><I>N</I>−1</SUP>ω<SUB><I>N</I></SUB><SUP><I>k</I>(<I>m</I>−<I>n</I>)</SUP>=<I>N</I>, διαφορετικά
+∑<SUB><I>k</I>=0</SUB><SUP><I>N</I>−1</SUP>ω<SUB><I>N</I></SUB><SUP><I>k</I>(<I>m</I>−<I>n</I>)</SUP>=0.
+Αντιστρέφοντας τα δυο αθροίσματα, έχουμε
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>c_n</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>m</I>=−∞</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>c</I><SUB><I>m</I></SUB></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell">ω<SUB><I>N</I></SUB><SUP><I>k</I>(<I>m</I>−<I>n</I>)</SUP> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">+∞</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>l</I>=−∞</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>c</I><SUB>(<I>n</I>+<I>l</I>· <I>N</I>)</SUB> </TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP>...<I>c</I><SUB><I>n</I>−2· <I>N</I></SUB>+<I>c</I><SUB><I>n</I>−<I>N</I></SUB>+<I>c</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I>+<I>N</I></SUB>+<I>c</I><SUB><I>n</I>+2·
+<I>N</I></SUB>+.....</TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+Συμπέρασμα: εάν |<I>n</I>|&lt;<I>N</I>/2, η διαφορά c_n−<I>c</I><SUB><I>n</I></SUB> είναι ένα άθροισμα του <I>c</I><SUB><I>j</I></SUB> μεγάλων δεικτών
+(τουλάχιστον <I>N</I>/2 σε απόλυτη τιμή), και θα είναι μικρή (εξαρτάται από 
+την τάξη σύγκλισης των σειρών 	
+Fourier).
+</LI></UL><P>
+<B>Παράδειγμα</B>, εισάγετε
+</P><DIV CLASS="center">
+	
+<TT>f(t):=cos(t)+cos(2*t)</TT><BR>
+	
+<TT>x:=f(2*k*pi/8)$(k=0..7)</TT>
+</DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">
+	
+ <TT><I>x</I>={2,(√</TT><TT><SPAN style="text-decoration:overline">2</SPAN></TT><TT>)/2,-1,-((√</TT><TT><SPAN style="text-decoration:overline">2</SPAN></TT><TT>)/2),0,-((√</TT><TT><SPAN style="text-decoration:overline">2</SPAN></TT><TT>)/2),-1,(√</TT><TT><SPAN style="text-decoration:overline">2</SPAN></TT><TT>)/2}</TT><BR>
+	
+<TT>fft(x)=[0.0,4.0,4.0,0.0,0.0,0.0,4.0,4.0]</TT>
+</DIV><P>
+Μετά από διαίρεση με <I>N</I>=8, έχουμε :
+</P><DIV CLASS="center"> <I>c</I><SUB>0</SUB>=0,<I>c</I><SUB>1</SUB>=4.0/8,<I>c</I><SUB>2</SUB>=4.0/2,<I>c</I><SUB>3</SUB>=0.0,<BR>
+<I>c</I><SUB>−4</SUB>=0,<I>c</I><SUB>−3</SUB>=0,<I>c</I><SUB>−2</SUB>=4.0/8,=<I>c</I><SUB>−1</SUB>=4.0/8
+</DIV><P>
+Επομένως, <I>b</I><SUB><I>k</I></SUB>=0 και <I>a</I><SUB><I>k</I></SUB>=<I>c</I><SUB>−<I>k</I></SUB>+<I>c</I><SUB><I>k</I></SUB> ισούται με 1 εάν <I>k</I>=1, 2 και 0 σε κάθε άλλη περίπτωση. </P></LI><LI CLASS="li-enumerate">Γινόμενο Συνέλιξης<BR>
+Εάν <I>P</I>(<I>x</I>)=∑<SUB><I>j</I>=0</SUB><SUP><I>n</I>−1</SUP><I>a</I><SUB><I>j</I></SUB><I>x</I><SUP><I>j</I></SUP> 
+και <I>Q</I>(<I>x</I>)=∑<SUB><I>j</I>=0</SUB><SUP><I>m</I>−1</SUP><I>b</I><SUB><I>j</I></SUB><I>x</I><SUP><I>j</I></SUP> 
+δίνονται από τα διανύσματα των συντελεστών τους 
+<I>a</I>=[<I>a</I><SUB>0</SUB>,<I>a</I><SUB>1</SUB>,..<I>a</I><SUB><I>n</I>−1</SUB>] and <I>b</I>=[<I>b</I><SUB>0</SUB>,<I>b</I><SUB>1</SUB>,..<I>b</I><SUB><I>m</I>−1</SUB>], υπολογίζουμε
+το γινόμενο αυτών των δύο πολυωνύμων χρησιμοποιώντας τον <TT>DFT</TT>.
+Το γινόμενο των δύο πολυωνύμων είναι το γινόμενο συνέλιξης 
+της περιοδικής σειράς των συντελεστών τους 
+εάν η περίοδος είναι μεγαλύτερη ή ίση από 
+(<I>n</I>+<I>m</I>). Επομένως συμπληρώνουμε το <I>a</I> (αντίστοιχα το <I>b</I>) με <I>m</I>+<I>p</I> 
+(αντίστοιχα <I>n</I>+<I>p</I>) μηδενικά, όπου
+<I>p</I> επιλέγεται τέτοιο ώστε το <I>N</I>=<I>n</I>+<I>m</I>+<I>p</I> να είναι δύναμη του 2.
+Εάν <I>a</I>=[<I>a</I><SUB>0</SUB>,<I>a</I><SUB>1</SUB>,..<I>a</I><SUB><I>n</I>−1</SUB>,0..0] και <I>b</I>=[<I>b</I><SUB>0</SUB>,<I>b</I><SUB>1</SUB>,..<I>b</I><SUB><I>m</I>−1</SUB>,0..0], τότε:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>x</I>)<I>Q</I>(<I>x</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I>+<I>m</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(<I>a</I>*<I>b</I>)<SUB><I>j</I></SUB><I>x</I><SUP><I>j</I></SUP> </TD></TR>
+</TABLE>
+Υπολογίζουμε τα <I>F</I><SUB><I>N</I></SUB>(<I>a</I>), <I>F</I><SUB><I>N</I></SUB>(<I>b</I>), και μετά <I>ab</I>=<I>F</I><SUB><I>N</I></SUB><SUP>−1</SUP>(<I>F</I><SUB><I>N</I></SUB>(<I>a</I>)· <I>F</I><SUB><I>N</I></SUB>(<I>b</I>))
+χρησιμοποιώντας τις ιδιότητες
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>NF</I><SUB><I>N</I></SUB>(<I>x</I> · <I>y</I>)=<I>F</I><SUB><I>N</I></SUB>(<I>x</I>) * <I>F</I><SUB><I>N</I></SUB>(<I>y</I>),   
+<I>F</I><SUB><I>N</I></SUB>(<I>x</I> * <I>y</I>)=<I>F</I><SUB><I>N</I></SUB>(<I>x</I>) · <I>F</I><SUB><I>N</I></SUB>(<I>y</I>) </TD></TR>
+</TABLE>
+</LI></OL><HR>
+<A HREF="cascmd_el167.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el169.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

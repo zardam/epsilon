@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Augmenter la phase de π/2 dans les expressions trigonométriques : shift_phase</title>
+</head>
+<body >
+<a href="cascmd_fr323.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr325.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec427" class="subsection">6.25.4  Augmenter la phase de π/2 dans les expressions trigonométriques : <span style="font-family:monospace">shift_phase</span></h3>
+<p><a id="hevea_default624"></a><a id="hevea_default625"></a> 
+<span style="font-family:monospace">shift_phase</span> a comme argument une expression trigonométrique.<br>
+<span style="font-family:monospace">shift_phase</span> permet d’augmenter la phase de π/2 dans les 
+expressions trigonométriques une fois que la simplification automatique a eu
+lieu.
+On tape :
+</p><div class="center"><span style="font-family:monospace">shift_phase(x+sin(x))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">x-cos((pi+2*x)/2)</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">shift_phase(x+cos(x))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">x-+sin((pi+2*x)/2)</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">shift_phase(x+tan(x))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">x+1/(tan((pi+2*x)/2))</span></div><p>
+Si on ne veut pas que l’expression soit évaluée (i.e. qu’il n’y ait pas de 
+simplification automatique), il faut quoter l’argument. 
+On tape :
+</p><div class="center"><span style="font-family:monospace">shift_phase(’sin(x+pi/2)’)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">-(cos(pi+x))</span></div><p>
+Mais si on tape sans quoter le sinus :
+</p><div class="center"><span style="font-family:monospace">shift_phase(sin(x+pi/2))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">sin((pi+2*x)/2)</span></div><p>
+car <span style="font-family:monospace">sin(x+pi/2)</span> est évaluée (i.e. simplifiée) en <span style="font-family:monospace">cos(x)</span> avant
+que la commande <span style="font-family:monospace">shift_phase</span> ne soit appelée et ensuite 
+<span style="font-family:monospace">shift_phase(cos(x))</span> renvoie <span style="font-family:monospace">sin((pi+2*x)/2)</span>.
+<span style="font-weight:bold">Exercice</span><br>
+Calcul de ∑<sub><span style="font-style:italic">n</span>=1</sub><sup>+∞</sup>sin(<span style="font-style:italic">n</span>*<span style="font-style:italic">x</span>)/<span style="font-style:italic">n</span><br>
+On tape :<br>
+<span style="font-family:monospace">normal(sum((sin(n*x))/n,n=1..+infinity))</span><br>
+On obtient :<br>
+<span style="font-family:monospace">-atan((sin(x))/(cos(x)-1))</span><br>
+On tape :<br>
+<span style="font-family:monospace">normal(shift_phase(halftan(atan(sin(x)/(-cos(x)+1)))))</span><br>
+On obtient :<br>
+<span style="font-family:monospace">pi*floor(((pi+x)/2)/pi+1/2)+(-1)/2*pi+(-1)/2*x</span><br>
+si on tape :<br>
+<span style="font-family:monospace">tsimplify(atan((sin(x))/(-cos(x)+1)))</span><br>
+On obtient car <span style="font-family:monospace">tsimplify</span> n’est pas rigoureux vis a vis des 2<span style="font-style:italic">k</span>π :<br>
+<span style="font-family:monospace">-1/2*pi-1/2*x</span></p>
+<hr>
+<a href="cascmd_fr323.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr325.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

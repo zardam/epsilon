@@ -1,0 +1,181 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others 
+  Translation to greek : George Nassopoulos-->
+<HTML>
+<HEAD>
+<TITLE>Όρια και πεπερασμένα αναπτύγματα</TITLE>
+<META NAME="description" CONTENT="Limites et d&#233;veloppements limit&#233;s">
+<META NAME="keywords" CONTENT="tutoriel">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutoriel.css">
+
+<LINK REL="next" HREF="node17.html">
+<LINK REL="previous" HREF="node15.html">
+<LINK REL="up" HREF="node14.html">
+<LINK REL="next" HREF="node17.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html289"
+  HREF="node17.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html283"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html277"
+  HREF="node15.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html285"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html287"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html290"
+  HREF="node17.html">Αόριστα και ορισμένα ολοκληρώματα</A>
+<B> εμφάνιση:</B> <A NAME="tex2html284"
+  HREF="node14.html">Εργαλεία για την Ανάλυση</A>
+<B> προηγούμενο:</B> <A NAME="tex2html278"
+  HREF="node15.html">Παράγωγοι</A>
+ &nbsp; <B>  <A NAME="tex2html286"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html288"
+  HREF="node47.html">Ευρετήριο</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00032000000000000000">
+Όρια και πεπερασμένα αναπτύγματα</A>
+</H2>
+Η συνάρτηση  <code>limit</code> 
+υπολογίζει τα πεπερασμένα ή άπειρα όρια,
+ όταν αυτά υπάρχουν.
+Μπορούμε να υπολογίσουμε ένα όριο από αριστερά ή από δεξιά με την βοήθεια 
+ενός τέταρτου ορίσματος (-1 ή 1, αντίστοιχα). 
+Όταν η συνάρτηση εξαρτάται από  μία παράμετρο, το όριο που υπολογίζουμε 
+εξαρτάται από τις υποθέσεις που κάνουμε,
+με την συνάρτηση <TT>assume</TT>, στην παράμετρο αυτή. 
+<A NAME="1644"></A>
+<A NAME="375"></A>
+<A NAME="376"></A>
+<A NAME="377"></A>
+<PRE>
+limit(1/x,x,0)
+limit(1/x,x,0,1)
+limit(1/x,x,0,-1)
+limit(a/x,x,0,1)
+assume(a&gt;0)
+limit(a/x,x,0,1)
+</PRE>
+Για τα πεπερασμένα αναπτύγματα, υπάρχουν δύο συναρτήσεις διαθέσιμες: 
+<code>series</code> και <code>taylor</code>, 
+που δουλεύουν μόνο όταν οι <code>Ρυθμίσεις 
+Cas</code> του <code>Xcas</code> είναι σε ακτίνια. 
+Η διαφορά τους είναι ότι ο βαθμός του αναπτύγματος πρέπει να καθοριστεί 
+στην <code>series</code>, 
+ενώ  για την <code>taylor</code> είναι εξ ορισμού 6. 
+<A NAME="380"></A>
+<A NAME="1645"></A>
+<A NAME="1646"></A>
+
+<P>
+Ο βαθμός του  αναπτύγματος που δίνεται σαν όρισμα 
+χρησιμοποιείται από το
+<TT>Xcas</TT> για να κάνει τα αναπτύγματα.
+Σε περίπτωση απλοποιήσεων, ο βαθμός του αναπτύγματος 
+που παίρνουμε μπορεί να είναι μικρότερος του επιθυμητού, 
+οπότε θα πρέπει να ξαναϋπολογίσουμε το ανάπτυγμα με  πιο μεγάλο βαθμό.
+Η παράσταση που επιστρέφεται σαν αποτέλεσμα αποτελείται από το πολυώνυμο 
+Taylor, και από κάποιο υπόλοιπο της μορφής 
+<I>x</I><SUP>a</SUP><code>*</code> <code>order_size</code>(<I>x</I>), 
+όπου για κάθε <I>a</I> &gt;0, η συνάρτηση 
+<I>x</I><SUP>a</SUP><code>*</code> <code>order_size</code>(<I>x</I>)  τείνει στο 0
+όταν το  <I>x</I> τείνει στο 0. Για να διαγράψουμε το υπόλοιπο και να 
+κρατήσουμε μόνο το πολυώνυμο Taylor, 
+μπορούμε να χρησιμοποιήσουμε την συνάρτηση <code>convert</code> με την επιλογή 
+<TT>polynom</TT>.
+<PRE>
+taylor(1/(x^2+1),0)
+taylor(1/(x^2+a^2),x=0)
+series(1/(x^2+1),0,11)
+series(1/(x^2+1),+infinity,11)
+series(tan(x),pi/4,3)
+series(sin(x)^3/((1-cos(x))*tan(x)),0,4)
+series(sin(x)^3/((1-cos(x))*tan(x)),0,6)
+series(tan(sin(x))-sin(tan(x)),0,13)
+convert(ans(),polynom)
+series(f(x),0,3)
+g:=f@f; series(g(x),0,2)
+
+</PRE>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><B>Όρια και πεπερασμένα αναπτύγματα</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>limit(ex,x,a)</code></TD>
+<TD ALIGN="LEFT">όριo στο a</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>limit(ex,x,a,1)</code></TD>
+<TD ALIGN="LEFT">όριο στo a από δεξιά</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>limit(ex,x,a,-1)</code></TD>
+<TD ALIGN="LEFT">όριο στo a από αριστερά</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>taylor(ex,a)</code></TD>
+<TD ALIGN="LEFT">πεπερασμένο ανάπτυγμα στο <I>a</I> βαθμού 6</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>series(ex,a,n)</code></TD>
+<TD ALIGN="LEFT">πεπερασμένο ανάπτυγμα στο <I>a</I> βαθμού  <I>n</I></TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html289"
+  HREF="node17.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html283"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html277"
+  HREF="node15.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html285"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html287"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενα:</B> <A NAME="tex2html290"
+  HREF="node17.html">Αόριστα και ορισμένα ολοκληρώματα</A>
+<B> εμφάνιση:</B> <A NAME="tex2html284"
+  HREF="node14.html">Εργαλεία για την Ανάλυση</A>
+<B> προηγούμενο:</B> <A NAME="tex2html278"
+  HREF="node15.html">Παράγωγοι</A>
+ &nbsp; <B>  <A NAME="tex2html286"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html288"
+  HREF="node47.html">Ευρετήριο</A></B>  
+<!--End of Navigation Panel-->
+<ADDRESS>
+Βιβλιογραφία του <A HREF="http://www-fourier.ujf-grenoble.fr/~parisse/giac_fr.html">giac</A> από τους Renee De Graeve, Bernard Parisse και Bernard Ycart
+</ADDRESS>
+Μετάφραση στα Ελληνικά : Γιώργος Νασόπουλος. Διασκευή : Αλκιβιάδης Γ. Ακρίτας
+</BODY>
+</HTML>

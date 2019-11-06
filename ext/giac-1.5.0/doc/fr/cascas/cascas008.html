@@ -1,0 +1,1212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>Pour s’amuser avec les mesures</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascas007.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas009.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc124">Chapitre 8</A>  Pour s’amuser avec les mesures</H1><H2 CLASS="section"><A NAME="toc46"></A><A NAME="htoc125">8.1</A>  La ficelle et la terre</H2><P>
+Imaginez qu’avec une ficelle vous fassiez le tour de la terre. Puis vous 
+rajoutez un mètre à cette ficelle et vous ceinturez à nouveau la terre. 
+À quelle distance du sol va alors se trouver la ficelle ?<BR>
+Même question avec une balle de tennis.<BR>
+
+Si <I>r</I> est le rayon de la terre en mètre (ou de la balle de tennis), son 
+périmètre est donc : 2π <I>r</I>. La ficelle va donc mesurer 2π <I>r</I>+1 et 
+cela correspond à un rayon <I>R</I> vérifiant 2π <I>r</I>+1=2π <I>R</I>.
+Donc 2π (<I>R</I>−<I>r</I>)=1 c’est à dire <I>R</I>−<I>r</I>=1/(2π).<BR>
+On tape :<BR>
+<TT>evalf(1/2/pi)</TT><BR>
+On obtient :<BR>
+<TT>0.159154943092</TT><BR>
+Donc quelque soit le rayon de la sphère la ficelle va être à environ 
+15.9 cm de la surface de la sphère.
+</P><H2 CLASS="section"><A NAME="toc47"></A><A NAME="htoc126">8.2</A>  Les lunules d’Hippocrate</H2><P>
+Ce théorème, très ancien, a été démontré par Hippocrate de Chios 
+(-500) (Ne pas le confondre avec Hippocrate de Cos, le médecin), qui étudia 
+aussi la duplication du cube, c’est-à-dire le calcul de la racine cubique de 2.<BR>
+Hippocrate recherchait alors la quadrature du cercle et pensait que la 
+quadrature de ses lunules allait le rapprocher du but.<BR>
+Une lunule est une portion de surface délimitée par deux arcs de cercles 
+non concentriques de rayons différents. Ces arcs ont mêmes extrémités et
+forment un croissant de lune en forme de ménisque : convexe d’un côté et 
+concave de l’autre.<BR>
+<B>Construction</B><BR>
+Soit le triangle <I>ABC</I> rectangle en <I>A</I> et <FONT COLOR=red><I>C</I></FONT> le cercle circonscrit 
+à <I>ABC</I> (de diamètre <I>BC</I>).<BR>
+La lunule <I>L</I><SUB><I>AC</I></SUB> est la figure formée par le demi-disque de diamètre <I>AC</I> 
+extérieur au triangle <I>ABC</I>, auquel on enlève son intersection avec le disque 
+délimité par <FONT COLOR=red><I>C</I></FONT>.<BR>
+La lunule <I>L</I><SUB><I>AB</I></SUB> est la figure formée par le demi-disque de diamètre <I>AB</I> 
+extérieur au triangle <I>ABC</I>, auquel on enlève son intersection avec le disque 
+délimité par <FONT COLOR=red><I>C</I></FONT>.
+Ces deux lunules sont appelées <B>lunules d’Hippocrate</B>.
+Alors la somme des aires de <I>L</I><SUB><I>BC</I></SUB> et de <I>L</I><SUB><I>BA</I></SUB> (en jaune) est égale à 
+l’aire du triangle <I>ABC</I> (en rouge).
+<IMG SRC="cascas022.png">
+On calcule <I>S</I>1 l’aire du triangle <I>ABC</I> :<BR>
+<I>S</I>1=<I>AB</I>*<I>AC</I>/2
+On calcule <I>S</I>2 la somme des aires de <I>L</I><SUB><I>BC</I></SUB> et de <I>L</I><SUB><I>BA</I></SUB> :<BR>
+<I>S</I>2 est obtenue par différence : <I>S</I>2 est égale à la somme des aires des
+demi-cercles de diamètres <I>AB</I> et <I>AC</I> à laquelle on enlève l’aire en 
+bleu.<BR>
+L’aire en bleu est égale à l’aire du demi-cercle de 
+diamètre <I>BC</I> à laquelle on enlève l’aire <I>S</I>1 du triangle <I>ABC</I> :<BR>
+<I>S</I>2=<I>AB</I><SUP>2</SUP>/2+<I>AC</I><SUP>2</SUP>/2−(<I>BC</I><SUP>2</SUP>/2−<I>S</I>1)<BR>
+D’après le théorème de Pythagore on a : <I>AB</I><SUP>2</SUP>+<I>AC</I><SUP>2</SUP>=<I>BC</I><SUP>2</SUP> donc :<BR>
+<I>S</I>2=<I>S</I>1.<BR>
+Pour faire la figure on a tapé :
+</P><PRE CLASS="verbatim">A:=point(0);
+B:=point(2,affichage=quadrant1);
+C:=point(3*i,affichage=quadrant1);
+cercle(A,C,0,pi,affichage=3+rempli);
+cercle(A,B,-pi,0,affichage=3+rempli);
+cercle(B,C,0,pi,affichage=4+rempli);
+triangle(A,B,C,affichage=1+rempli);
+</PRE><P><TT>Xcas</TT> sait remplir de couleur les polygones et les secteurs circulaires.
+On est donc obligé de procéder par superposition de couleur pour remplir 
+les lunules d’Hippocrate et cela symbolise les opérations que l’on fait pour 
+calculer l’aire des 2 lunules.<BR>
+<B>Exercice</B><BR>
+Soient un carré de côtés <I>l</I> et les cercles ayant comme 
+diamètre les côtés du carré.<BR>
+À l’extérieur du carré, ces cercles déterminent avec le cercle 
+circonscrit au carré 4 lunules.<BR>
+Trouver l’aire des 4 lunules ainsi déterminées.<BR>
+À l’intérieur du carré, ces cercles en se coupant déterminent 4 
+"pétales".<BR>
+ Trouver l’aire des 4 "pétales" ainsi déterminées.<BR>
+<B>La solution</B>
+Un carré est formé de 2 triangles rectangles donc l’aire des 4 lunules est 
+égale à l’aire du carré.<BR>
+La somme de l”aire du carré et de l’aire des "pétales" est égale à 
+l’aire des 4 demi-cercles de rayon <I>l</I>/2 donc 
+l’aire des "pétales"=<I>l</I><SUP>2</SUP>/2−<I>l</I><SUP>2</SUP>
+</P><H2 CLASS="section"><A NAME="toc48"></A><A NAME="htoc127">8.3</A>  Aire d’un cercle troué</H2><P>
+On perce un cercle de rayon <I>R</I> avec un cercle de même centre et de rayon <I>r</I>. Quelle est l’aire de ce cercle troué. Exprimer cette aire en fonction de 
+<I>d</I>=√<SPAN style="text-decoration:overline"><I>R</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−<I>r</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>.<BR>
+On sait que l’aire d’un cercle de rayon <I>R</I> est : π <I>R</I><SUP>2</SUP>
+L’aire du cercle troué est donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">π(<I>R</I><SUP>2</SUP>−<I>r</I><SUP>2</SUP>)=π <I>d</I><SUP>2</SUP></TD></TR>
+</TABLE><P>
+L’aire d’un cercle troué est égale à l’aire du cercle de rayon <I>d</I> où 
+<I>d</I> est la longueur de la demi-corde qui est tangente au trou.
+</P><H2 CLASS="section"><A NAME="toc49"></A><A NAME="htoc128">8.4</A>  Volume de la sphère trouée</H2><H3 CLASS="subsection"><A NAME="htoc129">8.4.1</A>  Volume de la calotte de hauteur <I>h</I> d’une sphère de rayon <I>R</I></H3><P>
+On note <I>R</I> le rayon de la spère, <I>r</I> le rayon de la base de la calotte et 
+<I>h</I> la hauteur de la calotte et on suppose que 0&lt;<I>h</I>&lt;<I>R</I>. 0n a donc :
+<I>r</I><SUP>2</SUP>=<I>R</I><SUP>2</SUP>−(<I>R</I>−<I>h</I>)<SUP>2</SUP><BR>
+On tape :<BR>
+<TT>assume(R&gt;0 and h&gt;0 and h&lt;R)</TT><BR>
+On calcule une intégrale triple :<BR>
+∫<SUB>0</SUB><SUP>2*π</SUP>(∫<SUB>0</SUB><SUP><I>r</I></SUP>(∫<SUB>0</SUB><SUP>√<SPAN style="text-decoration:overline"><I>R</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−<I>r</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP></SUP><I>dz</I>)*ρ <I>d</I>ρ)<I>d</I>θ<BR>
+On tape :
+</P><DIV CLASS="center"><TT>factor(int(int(int(1,z,R-h,sqrt(R</TT><CODE><TT>^</TT></CODE><TT>2-ro</TT><CODE><TT>^</TT></CODE><TT>2))*ro,<BR>
+ ro,0,sqrt(R</TT><CODE><TT>^</TT></CODE><TT>2-(R-h)</TT><CODE><TT>^</TT></CODE><TT>2)),t,0,2*pi))</TT></DIV><P>
+On obtient :<BR>
+<TT>(h</TT><CODE><TT>^</TT></CODE><TT>2*pi*(3*R-h))/3</TT><BR>
+Donc le volume de la calotte de hauteur <I>h</I> d’une spère de rayon <I>R</I> est :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>V</I><SUB><I>C</I></SUB>=π <I>h</I><SUP>2</SUP></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">3*<I>R</I>−<I>h</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+<B>Vérification</B>
+On sait que le volume d’une sphère de rayon <I>R</I> est : 4/3π <I>R</I><SUP>3</SUP>
+Le volume de 2 calottes sphériques de rayon <I>R</I> a pour hauteur <I>R</I> est :<BR>
+ 2π <I>R</I><SUP>2</SUP>3*<I>R</I>−<I>R</I>/3=4/3π <I>R</I><SUP>3</SUP>
+</P><H3 CLASS="subsection"><A NAME="htoc130">8.4.2</A>  Volume d’une sphère trouée</H3><P>
+On perce une sphère de rayon <I>R</I> avec un cylindre ayant pour axe un 
+diamètre de la sphère et comme base un cercle de rayon <I>r</I>. Quelle est le 
+volume de cette sphère trouèe. Exprimer ce volume en fonction de 
+<I>d</I>=√<SPAN style="text-decoration:overline"><I>R</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−<I>r</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>.<BR>
+
+Avec les notations précédentes on a enlevé à la sphère :<BR>
+un cylindre ayant comme base un cercle de rayon <I>r</I> comme hauteur 2<I>d</I> et 
+comme volume 2π <I>r</I><SUP>2</SUP><I>d</I>=2π (<I>R</I><SUP>2</SUP>−<I>d</I><SUP>2</SUP>)<I>d</I> et,<BR>
+ 2 calottes sphériques ayant comme base 
+un cercle de rayon <I>r</I> et ayant comme hauteur <I>h</I>=<I>R</I>−<I>d</I>.<BR>
+On sait que le volume d’une sphère de rayon <I>R</I> est : 4/3π <I>R</I><SUP>3</SUP>
+Le volume de cette sphère trouèe est donc :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">π <I>R</I><SUP>3</SUP>−2π <I>h</I><SUP>2</SUP></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">3*<I>R</I>−<I>h</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−2π <I>r</I><SUP>2</SUP><I>d</I></TD></TR>
+</TABLE><P>
+On tape :<BR>
+<TT>factor(2*pi/3*(2*R</TT><CODE><TT>^</TT></CODE><TT>3-(R-d)</TT><CODE><TT>^</TT></CODE><TT>2*(3*R-(R-d))-3*(R</TT><CODE><TT>^</TT></CODE><TT>2-d</TT><CODE><TT>^</TT></CODE><TT>2)*d))</TT><BR>
+On obtient :<BR>
+<TT>(4*d</TT><CODE><TT>^</TT></CODE><TT>3*pi)/3</TT><BR>
+Donc le volume d’une spère de rayon <I>R</I> trouée par un cylindre d’axe un 
+diamètre et de hauteur 2<I>d</I> est :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>V</I><SUB><I>ST</I></SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">π <I>d</I><SUP>3</SUP></TD></TR>
+</TABLE><P>
+c’est à dire le volume d’une spère de rayon <I>R</I> trouée par un cylindre d’axe un 
+diamètre et de hauteur 2<I>d</I> est égal au volume d’une sphère de rayon <I>d</I>.
+</P><H2 CLASS="section"><A NAME="toc50"></A><A NAME="htoc131">8.5</A>  Puzzle transformant un rectangle 5x1 en un carré</H2><P>
+On tape :
+</P><PRE CLASS="verbatim">rectangle(-5,0,1/5):;
+carre(-5,-4,affichage=1+rempli);
+triangle(-4,-2,-2+i,affichage=2+rempli);
+triangle(-4,-2+i,-4+i,affichage=3+rempli);
+triangle(-2,0,-2+i,affichage=4+rempli);
+triangle(0,i,-2+i,affichage=5+rempli);
+carre(-3-5/2*i,-2-5/2*i, affichage=1+rempli));
+triangle(-4-3/2*i,-2-3/2*i,-2-i/2,affichage=2+rempli);
+triangle(-4-3/2*i,-3-3/2*i,-3-7/2*i,affichage=3+rempli);
+triangle(-1-5/2*i,-3-5/2*i,-3-7/2*i,affichage=4+rempli);
+triangle(-1-5/2*i,-2-5/2*i,-2-i/2,affichage=5+rempli);
+</PRE><P>On obtient les 5 pièces du puzzle du rectangle 5*1 :<BR>
+<IMG SRC="cascas023.png">
+</P><H2 CLASS="section"><A NAME="toc51"></A><A NAME="htoc132">8.6</A>  Puzzle transformant un rectangle 3x2 en un carré</H2><P>
+Soit un rectangle de longueur 3 unités et de largeur 2 unités.<BR>
+On veut le partager en plusieurs morceaux pour pouvoir constituer avec 
+tous ces morceaux un carré.<BR>
+On prend exemple sur le découpage précédent.<BR>
+Le carré doit avoir comme côté √<SPAN style="text-decoration:overline">6</SPAN> unités.<BR>
+√<SPAN style="text-decoration:overline">6</SPAN> est l’hypoténuse d’un triangle rectangle de côté 2 et 
+√<SPAN style="text-decoration:overline">2</SPAN> (puisque 6=4+2=2<SUP>2</SUP>+(√<SPAN style="text-decoration:overline">2</SPAN>)<SUP>2</SUP>=(√<SPAN style="text-decoration:overline">6</SPAN>)<SUP>2</SUP>.<BR>
+On utilise la formule :<BR>
+4*√<SPAN style="text-decoration:overline">2</SPAN>+(2−√<SPAN style="text-decoration:overline">2</SPAN>)<SUP>2</SUP>=6 et<BR>
+On considère la droite <I>D</I> d’équation <I>y</I>=−√<SPAN style="text-decoration:overline">2</SPAN><I>x</I>+2 (c’est la droite
+portant l’hypoténuse du triangle 0,√<SPAN style="text-decoration:overline">2</SPAN>,2.<BR>
+Puisque le point de coordonnées (1,2−√<SPAN style="text-decoration:overline">2</SPAN>) est sur la droite <I>D</I>, on 
+peut découper le rectangle selon les 5 morceaux ci-dessous.<BR>
+Voici ce puzzle fait avec ces 5 morceaux mais on remarquera qu’il suffit de 
+découper le rectangle en seulement 3 morceaux !!!<BR>
+On tape :
+</P><PRE CLASS="verbatim">rectangle(0,3,2/3):;
+T1:=triangle(0,sqrt(2),2i):; affichage(T1,1+rempli);
+T2:=triangle(1+2*i,1+(2-sqrt(2))*i,3+2*i):; 
+affichage(T2,2+rempli);
+T3:=triangle(3+2*i,1+(2-sqrt(2))*i,3+(2-sqrt(2))*i):; 
+affichage(T3,3+rempli);
+T4:=triangle(2i,1+(2-sqrt(2))*i,1+2i):; 
+affichage(T4,4+rempli);
+T5:=polygone(1+(2-sqrt(2))*i,sqrt(2),1+sqrt(2),1+sqrt(2)+(2-sqrt(2))*i):; 
+affichage(T5,5+rempli);
+T6:=carre(1+sqrt(2),3):;
+affichage(T6,6+rempli);
+carre(sqrt(2)-2,2i-2):;
+affichage(translation(-2,T1),1+rempli);
+affichage(translation(-5,T3),3+rempli);
+affichage(translation(-5,T5),5+rempli);
+affichage(translation(-5,T6),6+rempli);
+affichage(translation(-3+sqrt(2)-2-2i,T2),2+rempli);
+affichage(translation(-3+sqrt(2)-2-2i,T4),4+rempli);
+</PRE><P>On obtient les 5 pièces du puzzle du rectangle 3*2 :<BR>
+<IMG SRC="cascas024.png">
+On obtient avec 3 pièces :<BR>
+<IMG SRC="cascas025.png">
+<B>Autre solution</B>
+Soit un rectangle de longueur 3 unités et de largeur 2 unités.<BR>
+On veut le partager en plusieurs morceaux pour pouvoir constituer avec 
+tous ces morceaux un carré.<BR>
+Il reste ensuite à découper le rectangle (3−√<SPAN style="text-decoration:overline">5</SPAN>)*2 en 3 morceaux pour
+en faire un carré selon la méthode de la section <A HREF="#sec:carreab">8.9</A>.<BR>
+rappelons ce découpage sur cet exemple.<BR>
+On tape :
+</P><PRE CLASS="verbatim">b:=3;a:=2;
+A:=point(0);
+B:=point(b);
+C:=point(b+i*a);
+D:=point(i*a);
+rectangle(A,B,C,D);
+P:=point(sqrt(a*b));
+M:=point(b-sqrt(a*b)+i*a);
+Q:=point(sqrt(a*b)*(1+i));
+R:=point(sqrt(a*b)*i);
+S:=point(sqrt(a*b)+i*a);
+T:=point(sqrt(a*b)+i*(sqrt(a*b)-a));
+carre(A,P,Q,R, affichage=rouge);
+segment(P,D);
+segment(B,M);
+segment(R,M,affichage=bleu);
+segment(P,S, affichage=vert);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas026.png"><BR>
+Les triangles <I>RQP</I> et <I>MCB</I> sont égaux,<BR>
+les triangles <I>RDM</I> et <I>TPB</I> sont égaux,
+donc les 3 pièces du puzzle sont les triangles <I>MCB</I> et <I>TPB</I> et le polygone
+<I>APTMD</I>.<BR>
+Puis on tape :
+</P><PRE CLASS="verbatim">c:=3;
+P1:=polygone(A,P,T,M,D,affichage=1+rempli);
+T2:=triangle(T,P,B,affichage=2+rempli);
+T4:=triangle(M,C,B,affichage=4+rempli);
+affichage(translation(-c*i,P1),1+rempli)
+affichage(translation(-sqrt(a*b)-c*i+a*i,T2),2+rempli);
+affichage(translation(sqrt(a*b)-b-c*i+(sqrt(a*b)-a)*i,T4),
+          4+rempli);
+</PRE><P>On obtient les 3 pièces du puzzle du rectangle 3*2 :<BR>
+<IMG SRC="cascas027.png"><BR>
+<B>Autre solution</B><BR>
+Soit un rectangle de longueur 3 unités et de largeur 2 unités.<BR>
+On veut le partager en plusieurs morceaux pour pouvoir constituer avec 
+tous ces morceaux un carré.<BR>
+On prend exemple sur le découpage précédent.<BR>
+Le carré doit avoir comme côté √<SPAN style="text-decoration:overline">6</SPAN> unités.<BR>
+√<SPAN style="text-decoration:overline">6</SPAN> est l’hypoténuse d’un triangle rectangle de côté 1 et 
+√<SPAN style="text-decoration:overline">5</SPAN> (puisque 6=1+5=1<SUP>2</SUP>+(√<SPAN style="text-decoration:overline">5</SPAN>)<SUP>2</SUP>=(√<SPAN style="text-decoration:overline">6</SPAN>)<SUP>2</SUP>.<BR>
+On utilise la formule :<BR>
+2*√<SPAN style="text-decoration:overline">5</SPAN>+(√<SPAN style="text-decoration:overline">5</SPAN>−1)<SUP>2</SUP>=6 et<BR>
+Dans le rectangle 2*$<I>sqrt</I> 5, on découpe 4 triangles rectangles qui ont des 
+côtés de l’angle droit de longueur et 1 et √<SPAN style="text-decoration:overline">5</SPAN>.<BR>
+Il reste ensuite à découper le rectangle (3−√<SPAN style="text-decoration:overline">5</SPAN>)*2 en 3 morceaux pour
+en faire un carré selon la méthode de la section <A HREF="#sec:carreab">8.9</A>.<BR>
+rappelons ce découpage sur cet exemple.<BR>
+On tape :
+</P><PRE CLASS="verbatim">b:=2;a:=3-sqrt(5);
+A:=point(0);
+B:=point(b);
+C:=point(b+i*a);
+D:=point(i*a);
+rectangle(A,B,C,D);
+P:=point(sqrt(a*b));
+M:=point(b-sqrt(a*b)+i*a);
+Q:=point(sqrt(a*b)*(1+i));
+R:=point(sqrt(a*b)*i);
+S:=point(sqrt(a*b)+i*a);
+T:=point(sqrt(a*b)+i*(sqrt(a*b)-a));
+carre(A,P,Q,R, affichage=rouge);
+segment(P,D);
+segment(B,M);
+segment(R,M,affichage=bleu);
+segment(P,S, affichage=vert);
+</PRE><P>Puis on tape :
+</P><PRE CLASS="verbatim">P1:=rotation(0,pi/2,polygone(A,P,T,M,D)):;
+affichage(P1,1+rempli);
+T2:=rotation(0,pi/2,triangle(T,P,B)):;
+affichage(T2,2+rempli);
+T4:=rotation(0,pi/2,triangle(M,C,B)):;
+affichage(T4,4+rempli);
+affichage(translation(2,P1),1+rempli);
+affichage(translation(-1+sqrt(5)-sqrt(5)*i+i,T2),2+rempli);
+affichage(translation(6-2*sqrt(5)+(sqrt(5)-3)*i,T4),4+rempli);
+</PRE><P>On obtient avec les 3 pièces qui formeront le carré central :<BR>
+<IMG SRC="cascas028.png"><BR>
+Pour faire les 7 morceaux, on tape :
+</P><PRE CLASS="verbatim">rectangle(0,3,2/3):;
+T1:=triangle(0,sqrt(5),i):;
+affichage(T1,1+rempli);
+T2:=triangle(i+sqrt(5),sqrt(5),i):;
+affichage(T2,2+rempli);
+T3:=triangle(i,sqrt(5)+i,2*i):;
+affichage(T3,3+rempli);
+T4:=triangle(2*i,sqrt(5)+2*i,i+sqrt(5)):;
+affichage(T4,4+rempli);
+T5:=polygone(sqrt(5),3, 3+i*(sqrt(5)-1), 
+    i*(sqrt(5)-1)+7-2*sqrt(5), i*(3-sqrt(5))+sqrt(5)):;
+affichage(T5,5+rempli);
+T6:=triangle(3+2*i,2*i+sqrt(5),sqrt(5)+i*(3-sqrt(5))):;
+affichage(T6,6+rempli);
+T7:=triangle(3+i*(sqrt(5)-1),3+2*i,i*(sqrt(5)-1)+7-2*sqrt(5)):;
+affichage(T7,47+rempli);
+affichage(translation(-2*i-i/2,T5),5+rempli);
+affichage(translation(4-2*sqrt(5)+sqrt(5)*i-5*i-i/2,T6),6+rempli);
+affichage(translation(-3+sqrt(5)-sqrt(5)*i-i-i/2,T7),47+rempli);
+affichage(translation(sqrt(5)*i-3*i-sqrt(5)+4-i/2,T1),1+rempli);
+affichage(translation(-sqrt(5)+3-3*i-i/2,T2),2+rempli);
+affichage(translation(-3*i-sqrt(5)+4-i/2,rotation(i,pi/2,T3)),
+          3+rempli));
+affichage(translation(3-sqrt(5)+sqrt(5)*i-5*i-i/2,
+                rotation(sqrt(5)+2*i,pi/2,T4)),4+rempli));
+</PRE><P>On obtient les 7 pièces du puzzle du rectangle 3*2 :<BR>
+<IMG SRC="cascas029.png"><BR>
+<B>Autre solution</B><BR>
+On fait 2 triangles rectangles (<I>T</I>1 <I>et</I> <I>T</I>2) de côtés √<SPAN style="text-decoration:overline">2</SPAN>,2,√<SPAN style="text-decoration:overline">6</SPAN>,
+puis on fait 2 triangles rectangle (<I>T</I>5 <I>et</I> <I>T</I>6) pour constituer le carré 
+central de côté 2−√<SPAN style="text-decoration:overline">2</SPAN>. Puis on complète en respectant la symétrie.
+On obtient 10 morceaux, on tape :
+</P><PRE CLASS="verbatim">rectangle(0,3,2/3):;
+T1:=triangle(0,2,sqrt(2)*i):;
+affichage(T1,1+rempli);
+T2:=triangle(3+2*i,1+2*i,3+(2-sqrt(2))*i):;
+affichage(T2,2+rempli);
+T3:=triangle(sqrt(2)*i+2-sqrt(2),sqrt(2)*i,2):;
+affichage(T3,3+rempli);
+T4:=triangle(1+2*i,1+sqrt(2)+(2-sqrt(2))*i,3+(2-sqrt(2))*i):;
+affichage(T4,4+rempli);
+T5:=triangle(sqrt(2)*i,2*i,2-sqrt(2)+sqrt(2)*i):;
+affichage(T5,5+rempli);
+T6:=triangle(3+(2-sqrt(2))*i,3,(2-sqrt(2))*i+sqrt(2)+1):;
+affichage(T6,6+rempli);
+T7:=triangle(2*i,1+2*i,1+i):;
+affichage(T7,47+rempli);
+T8:=triangle(1+2*i,1+i,2+i):;
+affichage(T8,178+rempli);
+T9:=triangle(2+i,1+i,2):;
+affichage(T9,69+rempli);
+T0:=triangle(2+i,3,2):;
+affichage(T0,80+rempli);
+affichage(translation(4.5,T1),1+rempli);
+affichage(translation(4.5,
+          rotation(sqrt(2)*i,-pi/2,T3)),3+rempli);
+affichage(translation(4.5-2*i,T5),5+rempli);
+affichage(translation(3.5-sqrt(2)-(2-sqrt(2))*i,T6),6+rempli);
+affichage(translation(3.5-sqrt(2)-4*i+sqrt(2)*i,T2),2+rempli);
+affichage(translation(3.5-sqrt(2)-4*i+sqrt(2)*i,
+          rotation(3+(2-sqrt(2))*i,-pi/2,T4)),4+rempli);
+affichage(translation(3.5-sqrt(2)/2-4*i+3*sqrt(2)/2*i,
+          rotation(1+2*i,pi/4,T7)),47+rempli);
+affichage(translation(3.5-sqrt(2)/2-3*i+3*sqrt(2)/2*i,
+          rotation(1+i,-pi/4,T8)),178+rempli);
+affichage(translation(4.5-sqrt(2)/2-i-sqrt(2)/2*i,
+          rotation(2+i,-pi/4,T9)),69+rempli);
+affichage(translation(4.5-sqrt(2)/2-sqrt(2)/2*i,
+          rotation(2,pi/4,T0)),80+rempli);
+</PRE><P>On obtient les 10 pièces du puzzle du rectangle 3*2 :<BR>
+<IMG SRC="cascas030.png"></P><H2 CLASS="section"><A NAME="toc52"></A><A NAME="htoc133">8.7</A>  Puzzle transformant un rectangle <I>a</I>*(<I>a</I>+1) en un carré</H2><P>
+Soit un rectangle de longueur <I>a</I>+1 unités et de largeur <I>a</I> unités avec 
+<I>a</I>≥ 1 (pour avoir √<SPAN style="text-decoration:overline"><I>a</I></SPAN> ≤ <I>a</I>).<BR>
+On veut le partager en plusieurs morceaux pour pouvoir constituer avec 
+tous ces morceaux un carré.<BR>
+On prend exemple sur le découpage précédent.<BR>
+Le carré reconstitué a pour côté √<SPAN style="text-decoration:overline"><I>a</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>a</I></SPAN> unités.<BR>
+√<SPAN style="text-decoration:overline"><I>a</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>a</I></SPAN> est l’hypoténuse d’un triangle rectangle de côté <I>a</I> et 
+√<SPAN style="text-decoration:overline"><I>a</I></SPAN> (puisque <I>a</I><SUP>2</SUP>+<I>a</I>=<I>a</I><SUP>2</SUP>+(√<SPAN style="text-decoration:overline"><I>a</I></SPAN>)<SUP>2</SUP>=(√<SPAN style="text-decoration:overline"><I>a</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>a</I></SPAN>)<SUP>2</SUP>.<BR>
+On utilise la formule :<BR>
+2<I>a</I>*√<SPAN style="text-decoration:overline"><I>a</I></SPAN>+(<I>a</I>−√<SPAN style="text-decoration:overline"><I>a</I></SPAN>)<SUP>2</SUP>=<I>a</I><SUP>2</SUP>+<I>a</I> et<BR>
+On considère la droite <I>D</I> d’équation <I>y</I>=−√<SPAN style="text-decoration:overline"><I>a</I></SPAN><I>x</I>+<I>a</I> (c’est la droite
+portant l’hypoténuse du triangle 0,√<SPAN style="text-decoration:overline"><I>a</I></SPAN>,<I>a</I><BR>
+.
+Puisque le point de coordonnées (1,<I>a</I>−√<SPAN style="text-decoration:overline"><I>a</I></SPAN>) est sur la droite <I>D</I>, on 
+peut découper le rectangle selon les 5 morceaux ci-dessous.<BR>
+Voici ce puzzle fait avec ces 5 morceaux mais on remarquera qu’il suffit de 
+découper le rectangle en seulement 3 morceaux !!!<BR>
+On tape :
+</P><PRE CLASS="verbatim">supposons(a=[2,1.0,10.0,0.1]);
+rectangle(0,a+1,a/(a+1)):;
+T1:=triangle(0,sqrt(a),a*i):; affichage(T1,1+rempli);
+T2:=triangle(1+a*i,1+(a-sqrt(a))*i,a+1+a*i):; 
+affichage(T2,2+rempli);
+T3:=triangle(a+1+a*i,1+(a-sqrt(a))*i,a+1+(a-sqrt(a))*i):; 
+affichage(T3,3+rempli);
+T4:=triangle(a*i,1+(a-sqrt(a))*i,1+a*i):; 
+affichage(T4,4+rempli);
+T5:=polygone(1+(a-sqrt(a))*i,sqrt(a),1+sqrt(a),
+    1+sqrt(a)+(a-sqrt(a))*i):; 
+affichage(T5,5+rempli);
+T6:=carre(1+sqrt(a),a+1):;
+affichage(T6,6+rempli);
+carre(sqrt(a)-a,a*i-a):;
+affichage(translation(-a,T1),1+rempli);
+affichage(translation(-2a-1,T3),3+rempli);
+affichage(translation(-2a-1,T5),5+rempli);
+affichage(translation(-2a-1,T6),6+rempli);
+affichage(translation(-a-1+sqrt(a)-a-a*i,T2),2+rempli);
+affichage(translation(-1-a+sqrt(a)-a-a*i,T4),4+rempli);
+</PRE><P>On obtient les 5 (ou 3) pièces du puzzle du rectangle (<I>a</I>+1)*<I>a</I> pour <I>a</I>=4 :<BR>
+<IMG SRC="cascas031.png"><BR>
+<IMG SRC="cascas032.png"><BR>
+On obtient les 5 (ou 3) pièces du puzzle du rectangle (<I>a</I>+1)*<I>a</I> pour <I>a</I>=10 :<BR>
+<IMG SRC="cascas033.png">
+</P><H2 CLASS="section"><A NAME="toc53"></A><A NAME="htoc134">8.8</A>  Puzzle transformant un rectangle 3x1 en un carré</H2><P>
+Soit un rectangle de longueur 3 unités et de largeur 1 unité.<BR>
+On veut le partager en plusieurs morceaux pour pouvoir constituer avec 
+tous ces morceaux un carré.<BR>
+Le carré reconstitué a pour côté √<SPAN style="text-decoration:overline">3</SPAN> unités.<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc135">8.8.1</A>  On prend exemple sur le découpage précédent</H3><P>
+On utilise la formule :<BR>
+2*√<SPAN style="text-decoration:overline">2</SPAN>+(√<SPAN style="text-decoration:overline">2</SPAN>−1)<SUP>2</SUP>=6<BR>
+Donc le carré sera au centre a un côté de longueur √<SPAN style="text-decoration:overline">2</SPAN>−1 unités.<BR>
+Voici ce puzzle fait avec ces 8 morceaux mais on remarquera qu’il suffit de 
+découper le rectangle en seulement 4 morceaux !!!<BR>
+On tape :
+</P><PRE CLASS="verbatim">rectangle(0,3,1/3):;
+T1:=triangle(0,sqrt(2),i):; 
+affichage(T1,1+rempli);
+T2:=triangle(3,3-sqrt(2)/2,3+i):; 
+affichage(T2,2+rempli);
+T3:=polygone(2,2+i*(2-sqrt(2)),(2-sqrt(2))*(1+i),sqrt(2)):; 
+affichage(T3,3+rempli);
+T4:=polygone(2,3-sqrt(2)/2,3+i,2+i):; 
+affichage(T4,4+rempli);
+T5:=carre(2+i*(2-sqrt(2)),2+i):; 
+affichage(T5,5+rempli);
+T6:=triangle(i,(2-sqrt(2))*(1+i),2-sqrt(2)+i):; 
+affichage(T6,6+rempli);
+T0:=triangle(i+(2-sqrt(2))*3/2,(2-sqrt(2))*(1+i),2-sqrt(2)+i):; 
+affichage(T0,rempli);
+T7:=polygone((i+(2-sqrt(2))*3/2,(2-sqrt(2))*(1+i),
+              3-sqrt(2)+(2-sqrt(2))*i),3-sqrt(2)+i):; 
+affichage(T7,47+rempli);
+affichage(translation(2-2*i+i/2,T1),1+rempli);
+affichage(translation(-1-2*i+i/2,T2),2+rempli);
+affichage(translation(-3i-1+i/2+sqrt(2),T7),47+rempli);
+affichage(translation(-3i-1+sqrt(2)+i/2,T5),5+rempli);
+affichage(translation(-1+sqrt(2)-3*i+i/2,T4),4+rempli);
+affichage(translation(-1+sqrt(2)-3*i+i/2,T3),3+rempli);
+affichage(translation(-1+2*sqrt(2)-4*i+i/2,T6),6+rempli);
+affichage(translation(-1+2*sqrt(2)-4*i+i/2,T0),0+rempli);
+</PRE><P>On obtient les 8 pièces du puzzle du rectangle 3*1 :<BR>
+<IMG SRC="cascas034.png"><BR>
+On obtient avec 5 pièces :<BR>
+<IMG SRC="cascas035.png">
+</P><H3 CLASS="subsection"><A NAME="htoc136">8.8.2</A>  Autre découpage</H3><P>
+On construit donc un triangle rectangle <TT>T1</TT> ayant comme côté 1 et 
+√<SPAN style="text-decoration:overline">2</SPAN> : son hypothénuse a pour longueur √<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+<TT>T1</TT> est le triangle <I>PMR</I>.<BR>
+Puis on trace la perpendiculaire <I>NM</I> à <I>PQ</I>.
+<TT>T2</TT> est le triangle <I>NMR</I>.<BR>
+Le triangle <TT>T3</TT> (resp <TT>T4</TT>) est le symétrique de <TT>T1</TT> (resp 
+<TT>T2</TT>) par rapport au centre du rectangle.<BR>
+Le triangle <I>OPR</I> et son symétrique par rapport au centre du rectangle sont 
+des triangles rectangles isocèles (leurs côtés sont de longueur 1,1 et 
+√<SPAN style="text-decoration:overline">2</SPAN>).<BR>
+Le triangle <I>NMQ</I> et son symétrique par rapport au centre du rectangle sont 
+des triangles rectangles isocèles (leurs côtés sont de longueur 
+√<SPAN style="text-decoration:overline">2</SPAN> −1, √<SPAN style="text-decoration:overline">2</SPAN> −1, 2-√<SPAN style="text-decoration:overline">2</SPAN>).<BR>
+On tape :
+</P><PRE CLASS="verbatim">rectangle(-4,-1,1/3);
+segment(-2,-2+i,affichage=ligne_tiret_pointpoint);
+segment(-3,-3+i,affichage=ligne_tiret_pointpoint);
+T1:=triangle(-4+i,-3,-3+(1+i)/sqrt(2));
+O:=point(-4);
+M:=point(-3+(1+i)/sqrt(2),affichage=quadrant4);
+N:=point(-4+sqrt(2)+i,affichage=quadrant2);
+P:=point(-3);
+Q:=point(-2+i,affichage=quadrant2);
+R:=point(-4+i,affichage=quadrant2);
+T2:=triangle(-4+i,-3+(1+i)/sqrt(2),-4+sqrt(2)+i);
+T3:=symetrie(point(-5/2+i/2),T1);
+T4:=symetrie(point(-5/2+i/2),T2);
+</PRE><P>On obtient les 8 pièces triangulaires qui pavent le rectangle 3*1 :<BR>
+<IMG SRC="cascas036.png"><BR>
+On réalise le puzzle.<BR>
+On tape :
+</P><PRE CLASS="verbatim">rectangle(-4,-1,1/3):;
+T1:=triangle(-4+i,-3,-3+(1+i)/sqrt(2)):;T1;
+T2:=triangle(-4+i,-3+(1+i)/sqrt(2),-4+sqrt(2)+i):;
+T3:=symetrie(point(-5/2+i/2),T1):;T3;
+T4:=symetrie(point(-5/2+i/2),T2):;
+translation(3/2-3/2*i,T1,affichage=1+rempli);
+R2:=rotation(-3+(1+i)/sqrt(2),pi/2,T2):;T2;
+translation(3/2-3/2*i,R2,affichage=2+rempli);
+A:=translation(3/2-3/2*i,rotation(-3+(1+i)/sqrt(2),pi/2,-4+i)):;
+translation(affixe(A)+1,T3,affichage=3+rempli);
+R4:=rotation(-2-1/sqrt(2)+i*(1-1/sqrt(2)),pi/2,T4):;
+translation(affixe(A)+1,R4,affichage=4+rempli);
+triangle(A,A+sqrt(2)*i,A+(i-1)/sqrt(2),affichage=5+rempli);
+B:=translation(affixe(A)+1,rotation(-2-1/sqrt(2)+i*(1-1/sqrt(2)),
+              pi/2,point(-1))):;
+triangle(B,B-i*sqrt(2),B+(1-i)/sqrt(2),affichage=6+rempli);
+segment(B+(1-i)/sqrt(2),A+(i-1)/sqrt(2));
+affichage(T1,1+rempli);
+affichage(T2,2+rempli);
+affichage(T3,3+rempli);
+affichage(T4,4+rempli);
+T5:=triangle(-1,-1+i,-2+i):;
+affichage(T5,5+rempli);
+T6:=triangle(-4,-3,-4+i):;
+affichage(T6,6+rempli);
+T7:=triangle(-3,-1-sqrt(2),-2-1/sqrt(2)+i*(1-1/sqrt(2))):;
+affichage(T7,47+rempli);
+T0:=triangle(-2+i,-4+sqrt(2)+i,-3+1/sqrt(2)+i*(1/sqrt(2))):;
+affichage(T0,rempli);
+triangle(-3/2-3*i/2,B+(1-i)/sqrt(2),A+(i-1)/sqrt(2),affichage=rempli);
+triangle(-7/2+sqrt(2)-3*i/2,B+(1-i)/sqrt(2),A+(i-1)/sqrt(2),
+         affichage=47+rempli);
+</PRE><P>On obtient les 8 pièces du puzzle du rectangle 3*1 :<BR>
+<IMG SRC="cascas037.png">
+</P><H3 CLASS="subsection"><A NAME="htoc137">8.8.3</A>  Autre découpage</H3><P>
+On utilise la formule :<BR>
+√<SPAN style="text-decoration:overline">(</SPAN>3)<SUP>2</SUP>+1<SUP>2</SUP>=2<SUP>2</SUP><BR>
+Soit <I>ABCD</I> un rectangle de dimension 1*3.<BR>
+Soit <I>APQR</I> un carré de dimension √<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+On dessine donc 2 triangles rectangles <I>APD</I> et <I>BCM</I> dont les côtés de 
+l’angle droit ont pour longueur 1 et √<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">A:=point(0);
+B:=point(3);
+C:=point(3+i);
+D:=point(i);
+rectangle(A,B,C,D);
+P:=point(sqrt(3));
+M:=point(3-sqrt(3)+i);
+Q:=point(sqrt(3)*(1+i));
+R:=point(sqrt(3)*i);
+S:=point(sqrt(3)+i);
+T:=point(sqrt(3)+i*(sqrt(3)-1));
+carre(A,P,Q,R, affichage=rouge);
+segment(P,D);
+segment(B,M);
+segment(R,M,affichage=bleu);
+segment(P,S, affichage=vert);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas038.png"><BR>
+Les points <I>B</I>,<I>M</I>,<I>R</I> sont alignés car les droites <I>BR</I> et <I>BM</I> ont même pente
+qui vaut √<SPAN style="text-decoration:overline">3</SPAN>/3=1/√<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+Les triangles rectangles <I>BCM</I> et <I>TQR</I> sont égaux (<I>CM</I>=<I>QR</I>=√<SPAN style="text-decoration:overline">3</SPAN> et leurs 
+angles sont égaux).<BR>
+Le point <I>T</I> intersection de <I>BR</I> et <I>PQ</I> a pour coordonnées :<BR>
+√<SPAN style="text-decoration:overline">3</SPAN>,√<SPAN style="text-decoration:overline">3</SPAN> −1 puisque :<BR>
+<I>PT</I>/<I>PB</I>=<I>PT</I>/3−√<SPAN style="text-decoration:overline">3</SPAN>=<I>AR</I>/<I>AB</I>=√<SPAN style="text-decoration:overline">3</SPAN>/3
+on a <I>PT</I>=√<SPAN style="text-decoration:overline">3</SPAN>−1<BR>
+Les triangles rectangles <I>PBT</I> et <I>DMR</I> sont donc égaux (<I>PT</I>=<I>DR</I>=√<SPAN style="text-decoration:overline">3</SPAN>−1 et 
+leurs angles sont égaux).<BR>
+On tape :<BR>
+</P><PRE CLASS="verbatim">P1:=polygone(A,P,T,M,D,affichage=1+rempli);
+T2:=triangle(T,P,B,affichage=2+rempli);
+T4:=triangle(M,C,B,affichage=4+rempli)
+affichage(translation(-2*i,P1),1+rempli)
+affichage(translation(-sqrt(3)-i,T2),2+rempli);
+affichage(translation((sqrt(3)-3)*(1+i),T4),4+rempli);
+</PRE><P>On obtient donc 3 pièces :<BR>
+<IMG SRC="cascas039.png"><BR>
+
+On peut faire 4 pièces.<BR>
+On tape :<BR>
+</P><PRE CLASS="verbatim">affichage(triangle(A,P,D),3+rempli);
+affichage(translation(-2*i,triangle(A,P,D)),3+rempli);
+</PRE><P>On obtient les 3 pièces du puzzle du rectangle 3*1 :<BR>
+<IMG SRC="cascas040.png"><BR>
+Dans la section suivante on fait une généralisation de ce découpage à 
+condition que la longueur du rectangle soit inférieure à 4 fois sa largeur.
+</P><H2 CLASS="section"><A NAME="toc54"></A><A NAME="htoc138">8.9</A>  Puzzle transformant un rectangle <I>a</I>*<I>b</I> en un carré</H2><P><A NAME="sec:carreab"></A>
+Soit un rectangle de longueur <I>b</I> unités et de largeur <I>a</I> unités avec 
+<I>a</I>≤ <I>b</I> ≤ 4<I>a</I>.<BR>
+On veut le partager en plusieurs morceaux pour pouvoir constituer avec 
+tous ces morceaux un carré.<BR>
+On prend exemple sur le découpage précédent du rectangle 1x3.<BR>
+Le carré reconstitué a pour côté √<SPAN style="text-decoration:overline"><I>ab</I></SPAN> unités.<BR>
+On considère le rectangle <I>ABCD</I> (<I>AD</I>=<I>a</I> et <I>AB</I>=√<SPAN style="text-decoration:overline"><I>ab</I></SPAN>.<BR>
+ Soit <I>APQR</I> un carré de dimension √<SPAN style="text-decoration:overline"><I>ab</I></SPAN>.<BR>
+On dessine donc 2 triangles rectangles <I>APD</I> et <I>BCM</I> ayant comme côtés de 
+l’angle droit <I>a</I> et √<SPAN style="text-decoration:overline"><I>ab</I></SPAN>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">supposons(a=[2,0.0,10.0,0.1]);
+supposons(b=[2,a,4*a.0,0.1]);
+A:=point(0);
+B:=point(b);
+C:=point(b+i*a);
+D:=point(i*a);
+rectangle(A,B,C,D);
+P:=point(sqrt(a*b));
+M:=point(b-sqrt(a*b)+i*a);
+Q:=point(sqrt(a*b)*(1+i));
+R:=point(sqrt(a*b)*i);
+S:=point(sqrt(a*b)+i*a);
+T:=point(sqrt(a*b)+i*(sqrt(a*b)-a));
+carre(A,P,Q,R, affichage=rouge);
+segment(P,D);
+segment(B,M);
+segment(R,M,affichage=bleu);
+segment(P,S, affichage=vert);
+</PRE><P>On obtient les 3 pièces du puzzle du rectangle <I>b</I>*<I>a</I> (pour <I>a</I>=1.5 et <I>b</I>=4) :<BR>
+<IMG SRC="cascas041.png"><BR>
+Les points <I>BMR</I> sont alignés car les droites <I>BR</I> et <I>BM</I> ont même 
+pente car <I>a</I>/√<SPAN style="text-decoration:overline"><I>a</I>*<I>b</I></SPAN>=√<SPAN style="text-decoration:overline"><I>a</I>*<I>b</I></SPAN>/<I>b</I>.<BR>
+Les triangles rectangles <I>BCM</I> et <I>TQR</I> sont égaux (<I>CM</I>=<I>QR</I>=√<SPAN style="text-decoration:overline"><I>ab</I></SPAN> et 
+leurs angles sont égaux).<BR>
+Le point <I>T</I> intersection de <I>BR</I> et <I>PQ</I> a pour coordonnées :<BR>
+√<SPAN style="text-decoration:overline"><I>ab</I></SPAN>,√<SPAN style="text-decoration:overline"><I>ab</I></SPAN> −<I>a</I> puisque :<BR>
+<I>PT</I>/<I>PB</I>=<I>PT</I>/<I>b</I>−√<SPAN style="text-decoration:overline"><I>ab</I></SPAN>=<I>AR</I>/<I>AB</I>=√<SPAN style="text-decoration:overline"><I>ab</I></SPAN>/<I>b</I>
+on a <I>PT</I>=√<SPAN style="text-decoration:overline"><I>ab</I></SPAN>−<I>a</I><BR>
+Pour que <I>T</I> soit sur le segment <I>PS</I> on suppose que <I>PT</I>=√<SPAN style="text-decoration:overline"><I>ab</I></SPAN>−<I>a</I>≤ <I>a</I>
+c’est à dire <I>a</I>≤ <I>b</I>≤ 4<I>a</I>.<BR>
+Les triangles rectangles <I>PBT</I> et <I>DMR</I> sont donc égaux (<I>PT</I>=<I>DR</I>=√<SPAN style="text-decoration:overline"><I>ab</I></SPAN>−<I>a</I> 
+et leurs angles sont égaux).<BR>
+On tape en notant <I>c</I> le paramètre qui produit la translation 
+−<I>c</I>*<I>i</I> de la pièce rouge :<BR>
+</P><PRE CLASS="verbatim">supposons(a=[2,0.0,10.0,0.1]);
+supposons(b=[2,a,4*a.0,0.1]);
+supposons(c=[2,0.0,10.0,0.1]);
+P1:=polygone(A,P,T,M,D,affichage=1+rempli);
+T2:=triangle(T,P,B,affichage=2+rempli);
+T4:=triangle(M,C,B,affichage=4+rempli);
+affichage(translation(-c*i,P1),1+rempli)
+affichage(translation(-sqrt(a*b)-c*i+a*i,T2),2+rempli);
+affichage(translation(sqrt(a*b)-b-c*i+(sqrt(a*b)-a)*i,T4),
+          4+rempli);
+</PRE><P>On obtient donc 3 pièces du rectangle <I>b</I>*<I>a</I> pour <I>a</I>=1.5,<I>b</I>=3.1,<I>c</I>=2.5 :<BR>
+<IMG SRC="cascas042.png"></P><H2 CLASS="section"><A NAME="toc55"></A><A NAME="htoc139">8.10</A>  Exercice</H2><P>
+Faire un puzzle qui transforme un rectangle 1*6 en un carré.<BR>
+<B>Une solution</B>:<BR>
+Comme 6&gt;4*1, on ne peut pas utiliser le découpage 
+ci-dessus en 3 morceaux.
+On découpe le rectangle en 2 morceaux de 1*3, puis on fait le découpage 
+en 3 pièces d’un rectangle 2*3 : cela fait 5 pièces pour le rectangle 1*6.<BR>
+ On tape :
+</P><PRE CLASS="verbatim">rectangle(0,3,2/3);
+triangle(3,3+2*i,3-sqrt(6)+2*i);
+carre(0,sqrt(6));
+segment(i*sqrt(6),3);
+T1:=polygone(i,0,sqrt(6),sqrt(6)+i*(sqrt(6)-2),i+3-sqrt(6)/2):;
+affichage(T1,1+rempli);
+T2:=triangle(3,3+i,3-sqrt(6)/2+i):;
+affichage(T2,2+rempli);
+T3:=triangle(sqrt(6),3,sqrt(6)+i*(sqrt(6)-2)):;
+affichage(T3,3+rempli);
+T4:=polygone(6,6+i,6+i-sqrt(6),6-sqrt(6)/2):;
+affichage(T4,4+rempli);
+T5:=polygone(i+3,3,6-sqrt(6)/2,i+6-sqrt(6)):;
+affichage(T5,5+rempli);
+affichage(translation(-3*i,T1),1+rempli);
+affichage(translation(sqrt(6)-3+sqrt(6)*i-5*i,T2),2+rempli);
+affichage(translation(-sqrt(6)-i,T3),3+rempli);
+affichage(translation(-6+sqrt(6)+sqrt(6)*i-4*i,T4),4+rempli);
+affichage(translation(-3-2*i,T5),5+rempli);
+</PRE><P>On obtient donc 5 pièces :<BR>
+<IMG SRC="cascas043.png">
+<B>Une autre solution</B> :<BR>
+On découpe le rectangle en 2 morceaux de 1*3, puis on fait le découpage 
+en 3 pièces d’un rectangle <I>a</I>*(<I>a</I>+1) avec <I>a</I>=2 : cela fait 6 pièces pour 
+le rectangle 1*6.<BR>
+ On tape :
+</P><PRE CLASS="verbatim">T1:=polygone(0,sqrt(2),sqrt(2)/2+i,i):;
+affichage(T1,1+rempli);
+T4:=triangle(3,3+sqrt(2)/2,3+i):;
+affichage(T4,4+rempli);
+T2:=triangle(1+(2-sqrt(2))*i,3-sqrt(2)+i,sqrt(2)/2+i):;
+affichage(T2,2+rempli);
+T3:=polygone(sqrt(2),3,3+i,3-sqrt(2)+i,1+(2-sqrt(2))*i):;
+affichage(T3,3+rempli);
+T5:=triangle(6-sqrt(2),6,6+i):;
+affichage(T5,5+rempli);
+T6:=polygone(6-sqrt(2),6+i,3+i,3+sqrt(2)/2):;
+affichage(T6,6+rempli);
+affichage(translation(3-2*i-i/2,T1),1+rempli);
+affichage(translation(-i-i/2,T4),4+rempli);
+affichage(translation(-3+sqrt(2)-3*i-i/2,T6),6+rempli);
+affichage(translation(sqrt(2)+-4*i-i/2,T2),2+rempli);
+affichage(translation(-2*i-i/2,T3),3+rempli);
+affichage(translation(-3-i-i/2,T5),5+rempli);
+</PRE><P>On obtient donc 6 pièces :<BR>
+<IMG SRC="cascas044.png">
+<B>Encore une autre solution</B> :<BR>
+On utilise le découpage en 3 morceaux en le modifant : on rajoute un 
+quatrième morceau pour que le porcédé marche encore quand 4=4<I>a</I>&lt;<I>b</I>=6&lt;8<I>a</I>=8.<BR>
+On tape :
+</P><PRE CLASS="verbatim">rectangle(0,6,1/6);
+carre(0,sqrt(6));
+segment(6,sqrt(6)*i);
+segment(i*2,6-2*sqrt(6)+i*2);
+segment(2*sqrt(6),2*sqrt(6)+i*(sqrt(6)-2));
+T1:=polygone(0,sqrt(6),sqrt(6)+i,i):;
+T2:=polygone(sqrt(6)+i,sqrt(6),2*sqrt(6),
+             2*sqrt(6)+i*(sqrt(6)-2),6-sqrt(6)+i):;
+T3:=triangle(6,6+i,6-sqrt(6)+i):;
+T4:=triangle(2*sqrt(6),6,2*sqrt(6)+i*(sqrt(6)-2)):;
+affichage(T1,1+rempli);
+affichage(T2,2+rempli);
+affichage(T3,3+rempli);
+affichage(T4,4+rempli);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas045.png"><BR>
+La droite d’équation <I>y</I>=−√<SPAN style="text-decoration:overline">6</SPAN>/6*<I>x</I>+<I>sqrt</I>(6) détermine un petit triangle 
+rectangle (en noir) qui se trouve à l’extérieur du rectangle et du carré.
+Ce triangle a pour côté de l’angle droit : 6−2√<SPAN style="text-decoration:overline">6</SPAN> et √<SPAN style="text-decoration:overline">6</SPAN>−2.
+On le translate dans le rectangle (en bleu) et dans le carré.
+On obtient donc les 4 pièces ci dessus.<BR>
+On réalise le puzzle avec ces 4 pièces, on tape :
+</P><PRE CLASS="verbatim">affichage(T1,1+rempli);
+affichage(T2,2+rempli);
+affichage(T3,3+rempli);
+affichage(T4,4+rempli);
+affichage(translation(1.5*i,T1),1+rempli);
+affichage(translation(2.5*i-sqrt(6),T2),2+rempli);
+affichage(translation(sqrt(6)*i+0.5*i-6+sqrt(6),T3),3+rempli);
+affichage(translation(3.5*i-2*sqrt(6),T4),4+rempli);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas046.png">
+</P><H2 CLASS="section"><A NAME="toc56"></A><A NAME="htoc140">8.11</A>  La quadrature d’un triangle équilatéral</H2><H3 CLASS="subsection"><A NAME="htoc141">8.11.1</A>  Le carré, le rectangle 1*√<SPAN style="text-decoration:overline">3</SPAN> et le triangle équilatéral avec 8 et 6 pièces</H3><P>
+On peut transformer un rectangle de dimension <I>a</I>*<I>b</I> en un triangle isocèle 
+à l’aide de 4 pièces : 2 triangles rectangles et 2 trapèzes rectangles.<BR>
+Le triangle est obtenu en faisant subir au triangle <I>LDU</I> (resp <I>NUA</I>) une 
+rotation de centre <I>L</I> (resp <I>N</I>) et d’angle π : le triangle a comme base 
+de longueur 2*<I>a</I> et la hauteur reliée à cette base a pour longueur <I>b</I>.<BR>
+<IMG SRC="cascas047.png"><BR>
+<B>Remarques</B>
+On peut aussi de la même façon transformer un rectangle de dimension 
+<I>a</I>*<I>b</I> en un triangle isocèle de base 2*<I>b</I> et de hauteur <I>a</I> relative à 
+cette base.<BR>
+On remarquera aussi qu’il suffit de 3 pièces pour réaliser cette 
+transformation (le partage <I>UW</I> etant inutile !).<BR>
+À condition que les angles de la base <I>b</I> soient aigus, tout triangle de base
+<I>b</I> et de hauteur 2*<I>a</I> relative à cette base se transforme de cette façon
+en un rectangle <I>a</I>*<I>b</I>.</P><P>On va donc transformer selon cette mèthode un rectangle 1*√<SPAN style="text-decoration:overline">3</SPAN> en un 
+triangle équilatéral et en un carré.<BR>
+On tape :
+</P><PRE CLASS="verbatim">b:=sqrt(3);a:=1;
+A:=point(0);
+B:=point(b);
+C:=point(b+i*a);
+D:=point(i*a);
+rectangle(A,B,C,D);
+P:=point(sqrt(a*b));
+M:=point(b-sqrt(a*b)+i*a);
+Q:=point(sqrt(a*b)*(1+i));
+R:=point(sqrt(a*b)*i);
+S:=point(sqrt(a*b)+i*a);
+T:=point(sqrt(a*b)+i*(sqrt(a*b)-a));
+carre(A,P,Q,R, affichage=rouge);
+segment(P,D);
+segment(B,M);
+segment(R,M,affichage=bleu);
+segment(P,S, affichage=vert);
+U:=point(a*i/2);
+V:=point(a*i/2+b-sqrt(b)/2);
+W:=point(b+a*i/2);
+segment(U,W);
+segment(U,L);
+segment(U,N);
+N:=point(b/2);
+O:=point(b/2+i*a/2);
+L:=point(b/2+i*a);
+F:=inter_unique(droite(U,L),droite(M,B));
+</PRE><P><IMG SRC="cascas048.png"><BR>
+Puis, on tape :
+</P><PRE CLASS="verbatim">c:=3/2;
+T0:=triangle(A,N,U,affichage=0+rempli);
+T1:=polygone(N,P,T,V,U,affichage=1+rempli);
+T2:=triangle(T,P,B,affichage=2+rempli);
+T3:=triangle(B,W,V,affichage=3+rempli);
+T4:=polygone(C,S,L,F,V,W,affichage=4+rempli);
+T5:=triangle(U,V,F,affichage=5+rempli);
+T6:=triangle(F,L,M,affichage=6+rempli);
+T7:=polygone(F,M,D,U,affichage=47+rempli);
+affichage(translation(-c*i,T1),1+rempli);
+affichage(translation(-sqrt(a*b)-c*i+a*i,T2),2+rempli);
+affichage(translation(sqrt(a*b)-b-c*i+(sqrt(a*b)-a)*i,T4),
+           4+rempli);
+affichage(translation(sqrt(a*b)-b-c*i+(sqrt(a*b)-a)*i,T6),
+           6+rempli);
+affichage(translation(sqrt(a*b)-b-c*i+(sqrt(a*b)-a)*i,T3),
+          3+rempli);
+affichage(translation(-c*i,T1),1+rempli);
+affichage(translation(-c*i,T0),0+rempli);
+affichage(translation(-c*i,T7),47+rempli);
+affichage(translation(-c*i,T5),5+rempli);
+affichage(translation(3/2-3*c/4*i,T1),1+rempli);
+affichage(rotation(N+3/2-3*c/4*i,pi,translation(3/2-3*c/4*i,T0)),
+          0+rempli);
+affichage(translation(3/2-3*c/4*i,T2),2+rempli);
+affichage(translation(3/2-3*c/4*i,T3),3+rempli);
+affichage(translation(3/2-3*c/4*i,T4),4+rempli);
+affichage(translation(3/2-3*c/4*i,T5),5+rempli);
+affichage(rotation(L+3/2-3*c/4*i,pi,
+           translation(3/2-3*c/4*i,T6)),6+rempli);
+affichage(rotation(L+3/2-3*c/4*i,pi,
+           translation(3/2-3*c/4*i,T7)),47+rempli);
+</PRE><P>On obtient donc 8 pièces :<BR>
+<IMG SRC="cascas049.png">
+On obtient 6 pièces si on ne fait pas le partage <I>UW</I>:<BR>
+<IMG SRC="cascas050.png">
+</P><H3 CLASS="subsection"><A NAME="htoc142">8.11.2</A>  Un autre découpage du rectangle 1*√<SPAN style="text-decoration:overline">3</SPAN> avec 6 pièces</H3><P>
+On tape :
+</P><PRE CLASS="verbatim">T3:=triangle(sqrt(3),sqrt(sqrt(3)),sqrt(sqrt(3))+i*(sqrt(sqrt(3))-1)):;
+P:=inter_unique(droite(y=sqrt(3)/3*x),y=-sqrt(sqrt(3)/3)*(x-sqrt(3)));
+T1:=polygone(0,sqrt(sqrt(3)),sqrt(sqrt(3))+i*(sqrt(sqrt(3))-1),P):;
+T2:=triangle(sqrt(3),P,sqrt(3)+i):;
+T4:=triangle(sqrt(3)+i,P,i+sqrt(3)-sqrt(sqrt(3))):;
+T5:=polygone(i,i/2+sqrt(3)/2,P,i+sqrt(3)-sqrt(sqrt(3))):;
+T6:=triangle(i,0,i/2+sqrt(3)/2):;
+affichage(T1,1+rempli);
+affichage(T6,6+rempli);
+affichage(T2,2+rempli);
+affichage(T3,3+rempli);
+affichage(T4,4+rempli);
+affichage(T5,5+rempli);
+affichage(translation(-2*i+i/2,T1),1+rempli);
+affichage(translation(-2*i+i/2,T6),6+rempli);
+affichage(translation(-2*i+i/2,T5),5+rempli);
+affichage(translation(-3*i-sqrt(3)+sqrt(sqrt(3))+i*sqrt(sqrt(3))+i/2,T2),
+           2+rempli);
+affichage(translation(-3*i-sqrt(3)+sqrt(sqrt(3))+i*sqrt(sqrt(3))+i/2,T4),
+           4+rempli);
+affichage(translation(-i-sqrt(sqrt(3))+i/2,T3),3+rempli);
+affichage(translation(-i/2+3/2,T1),1+rempli);
+affichage(translation(-i/2+3/2,T3),3+rempli);
+affichage(translation(-i/2+3/2,T2),2+rempli);
+affichage(translation(-3*i/2+3/2,T4),4+rempli);
+affichage(translation(-3*i/2+3/2,T5),5+rempli);
+affichage(translation(-3/2*i+3/2+sqrt(3),rotation(0,pi/3,T6)),6+rempli);
+</PRE><P>On obtient 6 pièces :<BR>
+<IMG SRC="cascas051.png">
+</P><H3 CLASS="subsection"><A NAME="htoc143">8.11.3</A>  Le carré, le rectangle et le triangle équilatéral avec 5 
+pièces</H3><P>
+Voici les 5 pièces d’un puzzle qui peuvent s’assembler soit en un carré 
+soit en un rectangle, soit en 2 paralélogramme, soit en un triangle 
+équilatéral :<BR>
+<IMG SRC="cascas052.png"><BR>
+On choisit au départ un rectangle de côtés de longueur :<BR>
+√<SPAN style="text-decoration:overline">6</SPAN> et <I>b</I>=√<SPAN style="text-decoration:overline">6</SPAN>*<I>sqrt</I> 3/4.<BR>
+Ce rectangle a la même surface qu’un triangle équilatéral de côté 
+√<SPAN style="text-decoration:overline">6</SPAN> et a aussi la même surface qu’un carré de côté 
+<I>a</I>=√<SPAN style="text-decoration:overline">3*√</SPAN><SPAN style="text-decoration:overline">3</SPAN><SPAN style="text-decoration:overline">/2</SPAN>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">a:=sqrt(3*sqrt(3)/2);
+b:=sqrt(3)/4*sqrt(6);
+rectangle(0,sqrt(6),sqrt(3)/4);
+A:=point(i*b)+sqrt(6)/4);
+B:=point(i*b+3*sqrt(6)/4);
+T1:=triangle(0,A,i*b);
+T2:=triangle(sqrt(6),B,i*b+sqrt(6));
+T3:=triangle(sqrt(6),B,sqrt(6)-a+i*b);
+T4:=triangle(a,sqrt(6),a+i*(a-b));
+T5:=polygone(A,0,a,a+i*(a-b),i*b+sqrt(6)-a);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas053.png"><BR>
+On remarque qu’il suffit de faire :<BR>
+</P><PRE CLASS="verbatim">rotation(A,-pi,T1);
+rotation(B,pi,T2);
+</PRE><P>pour obtenir un triangle équilatéral.
+Et on sait facilement transformer ce rectandle en carré avec 
+les 3 pièces : (T1+ T5),T4, (T2+T3) selon la méthode 
+de la section <A HREF="#sec:carreab">8.9</A>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">//le rectangle
+affichage(T1,1+rempli);
+affichage(T2,2+rempli);
+affichage(T3,3+rempli);
+affichage(T4,4+rempli);
+affichage(T5,5+rempli);
+//le triangle equilateral
+affichage(translation(2*i,T5),5+rempli);
+affichage(translation(2*i,T4),4+rempli);
+affichage(translation(2*i,T3),3+rempli);
+affichage(translation(2*i,rotation(B,pi,T2)),2+rempli);
+affichage(translation(2*i,rotation(A,-pi,T1)),1+rempli);
+//le carre
+affichage(translation(2*i+3,T5),5+rempli);
+affichage(translation(2*i+3,T1),1+rempli);
+affichage(translation(2*i+i*(a-b)+3+a-sqrt(6),T2),2+rempli);
+affichage(translation(2*i+i*(a-b)+3+a-sqrt(6),T3),3+rempli);
+affichage(translation(2*i+i*b+3-a,T4),4+rempli);
+//le parallelogramme de base sqrt(6) et de hauteur b
+affichage(translation(3.5,T5),5+rempli);
+affichage(translation(3.5,T4),4+rempli);
+affichage(translation(3.5,T3),3+rempli);
+affichage(translation(3.5,T2),2+rempli);
+affichage(translation(3.5+sqrt(6),T1),1+rempli);
+//l'autre parallelogramme de base a et de hauteur a
+affichage(translation(2.5*i+5,T5),5+rempli);
+affichage(translation(2.5*i+i*b+5-a,T4),4+rempli);
+affichage(translation(2.5*i+5,T1),1+rempli);
+affichage(translation(2.5*i-i*b+5+a-sqrt(6),T2),2+rempli);
+affichage(translation(2.5*i-i*b+5+a-sqrt(6),T3),3+rempli);
+</PRE><P>On obtient les 5 quadilatères du début :<BR>
+<IMG SRC="cascas054.png"><BR>
+</P><H3 CLASS="subsection"><A NAME="htoc144">8.11.4</A>  Le carré et le triangle équilatéral avec 4 pièces</H3><P>
+Voici les 4 pièces d’un puzzle qui peuvent s’assembler soit en un carré 
+soit en un triangle équilatéral :<BR>
+<IMG SRC="cascas055.png"><BR>
+Etant donné un carré, trouver la construction de ces pièces et prouvez 
+que l’on a bien obtenu après réorganisation un triangle équilatéral.<BR>
+<B>La solution</B><BR>
+<IMG SRC="cascas056.png"><BR>
+Si le carré est de côté <TT>2a</TT> et le côté du triangle 
+équilatéral est de côté <TT>2b</TT>.<BR>
+On doit avoir (égalité des aires):<BR>
+<TT>4a</TT><CODE><TT>^</TT></CODE><TT>2=b</TT><CODE><TT>^</TT></CODE><TT>2*sqrt(3)</TT>
+On pose <TT>l:=sqrt(b</TT><CODE><TT>^</TT></CODE><TT>2-a</TT><CODE><TT>^</TT></CODE><TT>2)</TT>.<BR>
+On voit que si les figures sont exactes pour obtenir le triangle à partir du 
+carré de côté <TT>2a</TT> il faut, sans bouger la pièce bleue, 
+faire subir :
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+à la pièce rouge une symétrie par rapport à <TT>M:=point(1)</TT> 
+</LI><LI CLASS="li-enumerate">à la pièce jaune une symétrie par rapport à <TT>Q:=point(2+i*l)</TT>
+</LI><LI CLASS="li-enumerate">à la pièce verte une translation de vecteur <TT>PP1</TT> si <TT>P1</TT> 
+est le symétrique de <TT>P:=point((a-l)*i)</TT> par rapport à <TT>M</TT>.
+</LI></OL><P>
+On doit donc avoir :<BR>
+le côté du triangle équilatéral 2<I>b</I> est égal à <I>PR</I>+<I>PN</I>+<I>RN</I>=2<I>PN</I>=2<I>b</I>,<BR>
+<I>AM</I>=<I>MB</I> donc <I>M</I> est le milieu de <I>AB</I>,<BR>
+<I>DN</I>=<I>NC</I> donc <I>N</I> est le milieu de <I>CD</I>,<BR>
+<I>CQ</I>+<I>DP</I>=<I>AP</I>+<I>QB</I>=2<I>a</I><BR>
+<I>RM</I>=<I>RQ</I>=<I>b</I><BR>
+<I>PRM</I>=<I>MRQ</I>=<I>QRN</I>=π/3<BR>
+4<I>a</I><SUP>2</SUP>=<I>b</I><SUP>2</SUP>√<SPAN style="text-decoration:overline">3</SPAN> car le carré et le triangle ont même surface.<BR>
+Donc <I>RMQ</I> est équilatéral puisque c’est un triangle isocèle ayant un 
+angle de π/3 et donc 
+<I>RMQ</I>=<I>PRM</I>=<I>QRN</I>=π/3.<BR>
+Puisque on a aussi <I>MQR</I>=<I>QRN</I>=π/3, on en déduit 
+que :<BR>
+<I>MQ</I> est parallèle à <I>PN</I> et <I>NQ</I> est parallèle à <I>PM</I>.<BR>
+les triangles <I>DNP</I> et <I>BMQ</I> sont égaux.<BR>
+les triangles <I>AMP</I> et <I>CNQ</I> sont égaux.<BR>
+le quadrilatère <I>PMQN</I> est un parallélogramme.<BR>
+On a donc <I>AP</I>=<I>QC</I>=2<I>a</I>−<I>l</I> et <I>PD</I>=<I>BQ</I>=<I>l</I> et<BR>
+aire(<I>PMQN</I>)=4<I>a</I><SUP>2</SUP>−<I>al</I>−(2<I>a</I>−<I>l</I>)<I>a</I>=2<I>a</I><SUP>2</SUP>=<I>h</I>*√<SPAN style="text-decoration:overline"><I>a</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>l</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>=<I>hb</I> si <I>h</I> est la 
+distance entre les parallèles <I>PN</I> et <I>MQ</I>.<BR>
+Donc <I>hb</I>=2<I>a</I><SUP>2</SUP>=<I>b</I><SUP>2</SUP>√<SPAN style="text-decoration:overline">3</SPAN>/2 et on en déduit <I>h</I>=<I>b</I>√<SPAN style="text-decoration:overline">3</SPAN>/2.<BR>
+Réciproquement, si <I>PD</I>=<I>BQ</I>=<I>l</I> et si <I>RMQ</I> est équilatéral alors :<BR>
+<I>MQ</I> est parallèle à <I>PN</I> et 
+<I>R</I> se trouve sur <I>PN</I> car la hauteur du triangle <I>RMQ</I> qui vaut 
+<I>b</I>√<SPAN style="text-decoration:overline">(</SPAN>3)/2 est aussi égale à la distance <I>h</I> entre 
+les parallèles <I>PN</I> et <I>MQ</I>.
+<I>PRM</I>=<I>MRQ</I>=<I>QRN</I>=π/3<BR>
+Donc 
+<I>PRM</I>=<I>MQR</I>=π/3  et
+ <I>QRN</I>=<I>MQR</I>=π/3<BR>
+<B>Autre démonstration</B>
+Si le carré a comme côté 2<I>a</I> et le triangle équilatéral a comme 
+côté 2<I>b</I> on a :<BR>
+4<I>a</I><SUP>2</SUP>=<I>b</I><SUP>2</SUP>√<SPAN style="text-decoration:overline">3</SPAN> car le carré et le triangle ont même surface.<BR>
+Posons <I>l</I>=<I>PD</I> on a <I>b</I><SUP>2</SUP>=<I>PN</I><SUP>2</SUP>=<I>l</I><SUP>2</SUP>+<I>a</I><SUP>2</SUP>=4<I>a</I><SUP>2</SUP>/√<SPAN style="text-decoration:overline">(</SPAN>3)<BR>
+Donc <I>l</I><SUP>2</SUP>=<I>a</I><SUP>2</SUP>(4√<SPAN style="text-decoration:overline">3</SPAN>/3−1)<BR>
+Si <I>PD</I>=<I>BQ</I>=<I>l</I> et <I>AM</I>=<I>MB</I>=<I>DN</I>=<I>NC</I>=<I>a</I> on a :<BR>
+<I>PN</I>=<I>MQ</I> et <I>PM</I>=<I>NQ</I> donc la quadrilatère <I>MPNQ</I> est un parallélogramme.
+<I>NM</I> est paralléle à <I>DP</I> donc <I>NPD</I>=<I>PNM</I>=α.
+sin(<I>NPD</I>)=<I>a</I>/<I>b</I> et sin(<I>PNM</I>)=<I>h</I>/2<I>a</I> donc
+<I>h</I>=2<I>a</I><SUP>2</SUP>/<I>b</I>=<I>b</I>√<SPAN style="text-decoration:overline">3</SPAN>/2.<BR>
+Le point <I>R</I> est donc l’intersection de la médiatrice de <I>MQ</I> avec <I>PN</I>.
+Le triangle <I>PQR</I> est donc isocèle est sa hauteur issue de <I>R</I> vaut
+<I>h</I>=<I>b</I><I>b</I>√<SPAN style="text-decoration:overline">3</SPAN>/2 donc le triangle <I>PQR</I> est équilatéral.<BR>
+<B>Comment construire le point </B><B><I>R</I></B><B> ?</B><BR>
+On a montré que <I>R</I> est le transformé de <I>Q</I> dans la rotation de centre <I>M</I>
+et d’angle π/3.<BR>
+On tape pour avoir les pièces du puzzle (on prend pour simplifier <I>a</I>=1) :
+</P><PRE CLASS="verbatim">l:=sqrt(4*sqrt(3)/3-1);
+M:=point(1):;
+P:=point(i*(2-l)):;
+Q:=point(2+i*l):;
+R:=rotation(M,pi/3,Q):;
+quadrilatere(M,2,Q,R,affichage=4+rempli); 
+quadrilatere(Q,2+2*i,1+2i,R,affichage=3+rempli); 
+triangle(P,2i,1+2i,affichage=2+rempli);
+quadrilatere(0,M,R,i*(2-l),affichage=1+rempli); 
+</PRE><P>On obtient :<BR><BR>
+<IMG SRC="cascas057.png"><BR>
+<B>Comment construire les pièces à partir d’un triangle équilatèral</B><BR>
+Soit un triangle de côté 2<I>b</I>=2.<BR>
+On tape :<BR>
+</P><PRE CLASS="verbatim">triangle_equilateral(0,2,R));
+b:=1;
+a2:=b^2*sqrt(3)/4;
+l2:=1-a2;
+M:=milieu(0,R);
+Q:=milieu(2,R);
+B:=inter_unique(cercle(M,sqrt(a2)),cercle(Q,sqrt(l2)),point(2));
+T4:=polygone(R,M,B,Q);
+P:=inter_unique(droite(Q,B),droite(0,2));
+T1:=polygone(0,P,B,M);
+S:=P+1;
+N:=inter_unique(droite(B,Q),perpendiculaire(S,droite(B,Q)));
+T3:=polygone(2,Q,N,S);
+T2:=triangle(N,P,S);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas058.png"><BR>
+<B>Pour animer la figure</B><BR>
+On peut animer la figure, soit manuellement avec les curseurs, soit avec la 
+commande <TT>animation</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">animtri(t1,t2,t3):={
+  local L,l,M,P,P1,Q,R;
+l:=sqrt(4*sqrt(3)/3-1);
+M:=point(1):;
+P:=point(i*(2-l)):;
+P1:=symetrie(M,P):;
+Q:=point(2+i*l):;
+R:=rotation(M,pi/3,Q):;
+L:=quadrilatere(M,2,Q,R,affichage=4+rempli); 
+L:=L,affichage(rotation(M,t1,quadrilatere(0,M,R,i*(2-l))),1+rempli); 
+L:=L,affichage(rotation(Q,-t3,quadrilatere(Q,2+2*i,1+2i,R)),3+rempli); 
+L:=L,affichage(translation((P1-P)*t2,triangle(i*(2-l),2i,1+2i)),2+rempli);
+return L;
+}:;
+</PRE><P>Puis on utilise des paramètres dans un écran de géométrie, on tape :
+</P><PRE CLASS="verbatim">supposons(t1=[0.0,0,3.14,0.1]);
+supposons(t3=[0.0,0,3.14,0.1]);
+supposons(t2=[0.0,0,1,0.1]);
+animtri(t1,t2,t3);
+</PRE><P>En faisant bouger les curseurs <TT>t1</TT>,<TT>t3</TT> et <TT>t2</TT>, on voit les 
+pièces du puzzle se déplacer selon les transformations annoncées.<BR>
+Ou bien :<BR>
+On crée une animation pour voir les déplacements, pour cela on 
+crée les listes que la commande <TT>animation</TT> va utiliser.<BR>
+On tape :<BR>
+</P><PRE CLASS="verbatim">T1:=seq([animtri(t1,0,0)],t1=0..3.14,3.14/10):;
+T3:=seq([animtri(3.14,0,t3)],t3=0..3.14,3.14/10):;
+T2:=seq([animtri(3.14,t2,3.14)],t2=0..1,0.1):;
+T4:=seq([animtri(t1,1,3.14)],t1=3.14..0,3.14/10):;
+T6:=seq([animtri(0,1,t3)],t3=3.14..0,3.14/10):;
+T5:=seq([animtri(0,t2,0)],t2=1..0,0.1):;
+</PRE><P>Puis on tape :<BR>
+<TT>animation(T1,T3,T2,T4,T6,T5)</TT>
+</P><H2 CLASS="section"><A NAME="toc57"></A><A NAME="htoc145">8.12</A>  La quadrature d’un dodécaèdre</H2><H3 CLASS="subsection"><A NAME="htoc146">8.12.1</A>  Le dodécaèdre</H3><P>
+On définit les points utiles.<BR>
+On tape :
+</P><PRE CLASS="verbatim">LP:=[point(exp(k*i*pi/6))$(k=0..11)]:;
+[A,B,C,D,E,F,G,H,I,J,K,L]:=LP;
+polygone(LP);
+triangle_equilateral(A,B,M);
+triangle_equilateral(J,I,N);
+triangle_equilateral(F,E,P);
+O:=isobarycentre(F,M,I);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas059.png">
+<B>Exercice</B><BR>
+On trace le dodécacone <I>ABCDEFGHIJKL</I> inscrit dans un cercle de rayon 1 
+unité et le triangle équilatèral <I>ABM</I> comme ci-dessus, puis on trace 
+les 4 segments : cela détermine 6 régions :<BR>
+</P><PRE CLASS="verbatim">segment(A,I);
+segment(B,F);
+segment(A,F);
+segment(B,I);
+</PRE><P><IMG SRC="cascas060.png"><BR>
+Montrer que <I>AF</I> et <I>BI</I> se coupent en <I>M</I> sommet du triangle équilatèral 
+<I>ABM</I>.<BR>
+Montrer que le triangle <I>FMI</I> est équilatéral.<BR>
+Calculer les angles des triangles <I>MBF</I> et <I>MAI</I>.<BR>
+Calculer les angles des triangles <I>AIL</I> et <I>BCF</I>.
+Montrer que <I>AI</I>=<I>BF</I>=√<SPAN style="text-decoration:overline">3</SPAN><BR>
+</P><H3 CLASS="subsection"><A NAME="htoc147">8.12.2</A>  Le dodécaèdre et le carré</H3><P>
+<B>Exercice</B><BR>
+Soit un dodécaèdre inscrit dans un cercle de rayon 1 unité.<BR>
+Calculer son aire.<BR>
+Calculer le côté du carré qui a la même aire que ce dodécagone.<BR>
+<B>Réponse</B><BR>
+Aire du dodécaèdre= 12sin(2*<I>pi</I>/12)/2=6sin(<I>pi</I>/6)=3 unité*unité.<BR>
+Le côté du carré qui a la même aire est donc : √<SPAN style="text-decoration:overline">3</SPAN> unités.<BR>
+<B>Le découpage</B><BR>
+On découpe le dodécaèdre en 6 morceaux, puis on forme un carré avec 
+ces 6 morceaux.<BR>
+D’après ce qui précède <I>AI</I> et <I>BF</I> ont pour longueur le côté du 
+carré cherché.<BR>
+On tape :
+</P><PRE CLASS="verbatim">P1:=polygone(A,I,J,K,L):;
+affichage(P1,1+rempli);
+P2:=polygone(B,C,D,E,F):;
+affichage(P2,2+rempli);
+P3:=triangle_equilateral(A,B,M):;
+affichage(P3,3+rempli);
+P4:=triangle(M,I,A):;
+affichage(P4,4+rempli);
+P5:=triangle(M,F,B):;
+affichage(P5,5+rempli);
+P6:=polygone(F,G,H,I,M):;
+affichage(P6,6+rempli);
+O:=isobarycentre(F,M,I):;
+affichage(translation(3,P6),6+rempli);
+affichage(translation(3,rotation(O,2*pi/3,P4)),4+rempli)
+affichage(translation(3,rotation(O,-2*pi/3,P5)),5+rempli);
+affichage(translation(3-A+H,P3),3+rempli);
+triangle_equilateral(J,I,N):;
+affichage(translation(3,rotation(
+                  isobarycentre(I,J,N),pi/2+pi/6,P1)),1+rempli);
+triangle_equilateral(F,E,P):;
+affichage(translation(3,rotation(
+                  isobarycentre(F,E,P),-pi/2-pi/6,P2)),2+rempli);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas061.png">
+</P><H3 CLASS="subsection"><A NAME="htoc148">8.12.3</A>  Pour animer la figure</H3><P>
+On peut animer la figure, manuellement avec les curseurs.<BR>
+On tape :
+</P><PRE CLASS="verbatim">affichage(P6,6+rempli);
+supposons(t1=[1.0,0,1,0.1]);
+affichage(rotation(isobarycentre(I,J,N),-t1*4*pi/3,P1),1+rempli) ;
+supposons(t2=[1.0,0,1,0.1]);
+affichage(rotation(isobarycentre(F,E,P),(t2)*4*pi/3,P2),2+rempli);
+supposons(t3=[1.0,0,1,0.1]);
+affichage(translation(t3*(H-A),P3),3+rempli);
+supposons(t4=[1.0,0,1,0.1]);
+affichage(rotation(O,t4*2*pi/3,P4),4+rempli);
+supposons(t5=[1.0,0,1,0.1]);
+affichage(rotation(O,-t5*2*pi/3,P5),5+rempli);
+O;
+N;
+P;
+</PRE><P>On peut aussi animer la figure avec la commande <TT>animation</TT>.<BR>
+On tape (attention les variables P1,..P6,A,H,E,F,I,J,n,P sont globales) :
+</P><PRE CLASS="verbatim">animdode(t1,t2,t3,t4,t5):={
+local L; 
+L:=NULL;
+L:=L,affichage(P6,6+rempli);;
+L:=L,affichage(rotation(isobarycentre(I,J,N),-t1*4*pi/3.,P1),
+                                                  1+rempli);
+L:=L,affichage(rotation(isobarycentre(F,E,P),(t2)*4*pi/3.,P2),
+                                                  2+rempli);
+L:=L,affichage(translation(t3*(H-A),P3),3+rempli);
+L:=L,affichage(rotation(O,t4*2*pi/3,P4),4+rempli);
+L:=L,affichage(rotation(O,-t5*2*pi/3,P5),5+rempli);
+return L;
+}:;
+</PRE><P>Puis si on utilise un seul paramètre (tout bouge en même temps !!!):<BR>
+<TT>K1:=seq([animdode(t1,t1,t1,t1,t1)],t1=0.0..1.0,0.1):;</TT><BR>
+<TT>K2:=seq([animdode(t1,t1,t1,t1,t1)],t1=1.0..0.0,0.1):;</TT><BR>
+<TT>animation(K1,K2)</TT><BR>
+Ou bien si on utilise 5 paramètres :
+</P><PRE CLASS="verbatim">T1:=seq([animdode(t1,0,0,0,0)],t1=0.0..1.0,0.1):;
+T2:=seq([animdode(1,t2,0,0,0)],t2=0.0..1.0,0.1):;
+T3:=seq([animdode(1,1,t3,0,0)],t3=0.0..1.0,0.1):;
+T4:=seq([animdode(1,1,1,t4,0)],t4=0.0..1.0,0.1):;
+T5:=seq([animdode(1,1,1,1,t5)],t5=0.0..1.0,0.1):;
+T6:=seq([animdode(1,1,1,1,t5)],t5=1.0..0.0,0.1):;
+T7:=seq([animdode(1,1,1,t4,0)],t4=1.0..0.0,0.1):;
+T8:=seq([animdode(1,1,t3,0,0)],t3=1.0..0.0,0.1):;
+T9:=seq([animdode(1,t2,0,0,0)],t2=1.0..0.0,0.1):;
+T0:=seq([animdode(t1,0,0,0,0)],t1=1.0..0.0,0.1):;
+</PRE><P>Puis on tape :<BR>
+<TT>animation(T1,T2,T3,T4,T5,T6,T7,T8,T9,T0)</TT><BR>
+Ou encore si on n’utilise que 4 paramètres (en échangeant la pièce bleue 
+avec la pièce violette à l’aide d’un seul paramètre).<BR>
+</P><PRE CLASS="verbatim">Q1:=seq([animdode(t1,0,0,0,0)],t1=0.0..1.0,0.1):;
+Q2:=seq([animdode(1,t2,0,0,0)],t2=0.0..1.0,0.1):;
+Q3:=seq([animdode(1,1,t3,0,0)],t3=0.0..1.0,0.1):;
+Q4:=seq([animdode(1,1,1,t4,t4)],t4=0.0..1.0,0.1):;
+Q7:=seq([animdode(1,1,1,t4,t4)],t4=1.0..0.0,0.1):;
+Q8:=seq([animdode(1,1,t3,0,0)],t3=1.0..0.0,0.1):;
+Q9:=seq([animdode(1,t2,0,0,0)],t2=1.0..0.0,0.1):;
+Q0:=seq([animdode(t1,0,0,0,0)],t1=1.0..0.0,0.1):;
+</PRE><P>Puis on tape :<BR>
+<TT>animation(Q1,Q2,Q3,Q4,Q7,Q8,Q9,Q0)</TT>
+</P><H2 CLASS="section"><A NAME="toc58"></A><A NAME="htoc149">8.13</A>  L’hexagone, le rectangle et le carré</H2><P>
+On considère un rectangle de côtés 3 et √<SPAN style="text-decoration:overline">3</SPAN>/2.<BR>
+On transforme facilement ce rectangle en un hexagone de côté 1 avec 3 
+pièces.<BR>
+On sait transformer ce rectangle en un carré avec 3 pièces selon la 
+méthode vue en section <A HREF="#sec:carreab">8.9</A>.<BR>
+Avec 6 pièces on peut passer de l’hexagone au carré via le rectangle.<BR>
+On tape :
+</P><PRE CLASS="verbatim">a:=sqrt(3*sqrt(3)/2);
+b:=sqrt(3)/2;
+d:=droite(3,3-a+i*b):;
+Q:=inter_unique(droite(y=b),d):;
+R:=inter_unique(droite(x=a),d):;
+P1:=polygone(R,Q,1/2+i*b,1,a):;
+affichage(P1,1+rempli);
+P2:=polygone(R,a,2,S):;
+affichage(P2,2+rempli);
+P3:=polygone(Q,S,5/2+i*b):;
+affichage(P3,3+rempli);
+P4:=triangle(S,2,3):;
+affichage(P4,4+rempli);
+P5:=polygone(S,3,3+i*b,5/2+i*b):;
+affichage(P5,5+rempli);
+P6:=polygone(i*b,0,1,1/2+i*b):;
+affichage(P6,6+rempli);
+affichage(translation(i+2,P1),1+rempli);
+affichage(translation(i+2,P2),2+rempli);
+affichage(translation(i+2,P3),3+rempli);
+affichage(translation(i+i*b-3/2+2,P4),4+rempli);
+affichage(translation(i+i*b-3/2+2,P5),5+rempli);
+affichage(translation(i+i*b+3/2+2,P6),6+rempli);
+affichage(translation(i,P1),1+rempli);
+affichage(translation(i,P6),6+rempli);
+affichage(translation(i+i*b-a,P2),2+rempli);
+affichage(translation(i+i*b-a,P4),4+rempli);
+affichage(translation(i+i*(a-b)-3+a,P3),3+rempli);
+affichage(translation(i+i*(a-b)-3+a,P5),5+rempli);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas062.png">
+</P><HR>
+<A HREF="cascas007.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas009.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

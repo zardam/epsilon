@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Logistic regression: logistic_regression logistic_regression_plot</title>
+</head>
+<body >
+<a href="cascmd_en704.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en706.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec862" class="subsection">8.2.9  Logistic regression: <span style="font-family:monospace">logistic_regression</span><a id="hevea_default1200"></a> <span style="font-family:monospace">logistic_regression_plot</span><a id="hevea_default1201"></a></h3>
+<p>Differential equations of the form <span style="font-style:italic">y</span>′ = <span style="font-style:italic">y</span>(<span style="font-style:italic">a</span>*<span style="font-style:italic">y</span> + <span style="font-style:italic">b</span>) come up often,
+particularly when studying bounded population growth. With the
+initial condition <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>0) = <span style="font-style:italic">y</span>0, the solution is the logistic equation
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span> = </td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">−<span style="font-style:italic">b</span>*<span style="font-style:italic">y</span>0</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">a</span>*<span style="font-style:italic">y</span>0 − (<span style="font-style:italic">a</span>*<span style="font-style:italic">y</span>0+<span style="font-style:italic">b</span>)exp(<span style="font-style:italic">b</span>(<span style="font-style:italic">x</span>0−<span style="font-style:italic">x</span>))</td></tr>
+</table></td></tr>
+</table><p>
+However, you often don’t know the values of <span style="font-style:italic">a</span> and <span style="font-style:italic">b</span>. You can
+still get a “best fit” logisitic equation with the following
+information: The initial value of <span style="font-style:italic">x</span>, the initial value of <span style="font-style:italic">y</span>, and
+several values of <span style="font-style:italic">y</span>′; namely, <span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>0),<span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>0+1),…,<span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>0+<span style="font-style:italic">n</span>−1) where
+<span style="font-style:italic">x</span>0 is the initial value of <span style="font-style:italic">x</span>. <span style="font-family:monospace">Xcas</span> will then take the
+initial value <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>0) = <span style="font-style:italic">y</span>0 and the approximation <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>+1) ≈ <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)
++ <span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>) to get the approximations <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>0+1) ≈ <span style="font-style:italic">y</span>0 + <span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>0),
+<span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>0+2) ≈ <span style="font-style:italic">y</span>0 + <span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>0) + <span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>0+1), …<span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>0+<span style="font-style:italic">n</span>) ≈ <span style="font-style:italic">y</span>0 + <span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>0) +… <span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>0+<span style="font-style:italic">n</span>−1), …Since <span style="font-style:italic">y</span>′/<span style="font-style:italic">y</span> = <span style="font-style:italic">a</span> + <span style="font-style:italic">by</span>, <span style="font-family:monospace">Xcas</span> will take the
+approximate values of <span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>0+<span style="font-style:italic">j</span>)/<span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>0+<span style="font-style:italic">j</span>) and use linear interpolation
+to get the best fit values of <span style="font-style:italic">a</span> and <span style="font-style:italic">b</span>, and then solve the
+differential equation.</p><p>The <span style="font-family:monospace">logistic_regression</span> command will take as input a list
+and two numbers; the list will be [<span style="font-style:italic">y</span><sub>10</sub>,<span style="font-style:italic">y</span><sub>11</sub>,…,<span style="font-style:italic">y</span><sub>1(<span style="font-style:italic">n</span>−1)</sub>], 
+where <span style="font-style:italic">y</span><sub>1<span style="font-style:italic">j</span></sub> represents the value of <span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span><sub>0</sub> + <span style="font-style:italic">j</span>), 
+the first number is <span style="font-style:italic">x</span><sub>0</sub> and the last number is
+<span style="font-style:italic">y</span><sub>0</sub>=<span style="font-style:italic">y</span>(<span style="font-style:italic">x</span><sub>0</sub>). The command will return the function <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>), the
+derivative <span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>), the number <span style="font-style:italic">C</span>=−<span style="font-style:italic">b</span>/<span style="font-style:italic">a</span>, <span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span><sub><span style="font-style:italic">M</span></sub>) which is the maximum value
+of <span style="font-style:italic">y</span>′, <span style="font-style:italic">x</span><sub><span style="font-style:italic">M</span></sub> which is where <span style="font-style:italic">y</span>′ has its maximum, and the linear
+correlation coefficient <span style="font-style:italic">R</span> of <span style="font-style:italic">Y</span>=<span style="font-style:italic">y</span>′/<span style="font-style:italic">y</span> as a function of <span style="font-style:italic">y</span> with <span style="font-style:italic">Y</span>=<span style="font-style:italic">a</span>*<span style="font-style:italic">y</span>
++ <span style="font-style:italic">b</span>. For example, if you enter
+</p><div class="center">
+<span style="font-family:monospace">logistic_regression([0.0,1.0,2.5],0,1)
+</span></div><p>
+you will get
+</p><pre class="verbatim">   Pinstant=0.132478632479*Pcumul+0.0206552706553
+   Correlation 0.780548607383, Estimated total P=-0.155913978495
+   Returning estimated Pcumul, Pinstant, Ptotal, Pinstantmax, tmax, R
+   [-0.155913978495/(1+exp(-0.0554152581707*x+0.140088513344+3.14159265359*i)),
+    -0.00161022271237/(1+cos((-i)*(-0.0554152581707*x+0.140088513344+3.14159265359*i))),
+    -0.155913978495,-0.000805111356186,2.52797727501+56.6918346552*i,0.780548607383]
+</pre><p>You can plot the logistic equation with the command
+<span style="font-family:monospace">logistic_regression_plot</span>; if you enter
+</p><div class="center">
+<span style="font-family:monospace">logistic_regression_plot([1,2,4,6,8,7,5],0,2.0)
+</span></div><p>
+you will get
+</p><div class="center">
+<img src="cascmd_en051.png">
+</div>
+<hr>
+<a href="cascmd_en704.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en706.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

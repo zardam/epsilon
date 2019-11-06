@@ -1,0 +1,151 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others 
+  Translation to greek : George Nassopoulos-->
+<HTML>
+<HEAD>
+<TITLE>Αόριστα και ορισμένα ολοκληρώματα</TITLE>
+<META NAME="description" CONTENT="Primitives et int&#233;grales">
+<META NAME="keywords" CONTENT="tutoriel">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutoriel.css">
+
+<LINK REL="next" HREF="node18.html">
+<LINK REL="previous" HREF="node16.html">
+<LINK REL="up" HREF="node14.html">
+<LINK REL="next" HREF="node18.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html303"
+  HREF="node18.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html297"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html291"
+  HREF="node16.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html299"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html301"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html304"
+  HREF="node18.html">Επίλυση εξισώσεων</A>
+<B> εμφάνιση:</B> <A NAME="tex2html298"
+  HREF="node14.html">Εργαλεία για την Ανάλυση</A>
+<B> προηγούμενο:</B> <A NAME="tex2html292"
+  HREF="node16.html">Όρια και πεπερασμένα αναπτύγματα</A>
+ &nbsp; <B>  <A NAME="tex2html300"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html302"
+  HREF="node47.html">Ευρετήριο</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00033000000000000000">
+Αόριστα και ορισμένα ολοκληρώματα</A>
+</H2>
+<A NAME="1647"></A>
+<A NAME="397"></A>
+<A NAME="398"></A>
+<A NAME="399"></A>
+Η συνάρτηση <code>int</code> υπολογίζει το ολοκλήρωμα μίας παράστασης ως προς 
+<I>x</I> ή ως προς την μεταβλητή που δίνεται ως όρισμα. 
+Εάν η παράσταση έχει πολλές μεταβλητές, πρέπει να ορίσουμε την μεταβλητή ολοκλήρωσης. 
+Εάν προσθέσουμε δύο ορίσματα <I>a</I> και <I>b</I> 
+μετά την μεταβλητή ολοκλήρωσης, υπολογίζουμε το ολοκλήρωμα στο διάστημα [<I>a</I>, <I>b</I>].
+Ενδεχομένως τα όρια του ολοκληρώματος μπορούν να είναι παράστασεις, 
+κάτι που μας επιτρέπει να υπολογίσουμε πολλαπλά ολοκληρώματα.
+<PRE>
+int(x^2-1)
+int(x^2-1,x,-1,1)
+int(x*y,x)
+int(x*y,y,0,x)
+int(int(x*y,y,0,x),x,0,1)
+</PRE>
+Για να υπολογίσει κάποιο ολοκλήρωμα, ένα λογισμικό υπολογιστικής 
+άλγεβρας
+αναζητά ένα αόριστο ολοκλήρωμα το οποίο στην συνέχεια το αποτιμά μέσα στα όρια, 
+με σκοπό να πάρει μια ακριβή τιμή.
+Σε ορισμένες περιπτώσεις, είναι άσκοπο να υπολογίσουμε ένα αόριστο ολοκλήρωμα,
+είτε γιατί αυτό δεν μπορεί να εκφρασθεί με τις στοιχειώδεις συναρτήσεις,
+είτε γιατί οι αριθμητικοί υπολογισμοί είναι πιο κατάλληλοι 
+(π.χ. εάν ο χρόνος υπολογισμού του αόριστου ολοκληρώματος είναι πολύ μεγάλος,
+εάν η συνάρτηση παρουσιάζει σημεία ασυνέχειας στο διάστημα ολοκλήρωσης, κ.ο.κ...).
+Σε αυτή την περίπτωση, ζητούμε μια προσεγγιστική τιμή χρησιμοποιώντας την 
+συνάρτηση
+<code>evalf</code>, ή καλύτερα χρησιμοποιούμε απευθείας την συνάρτηση 
+<code>romberg</code>, 
+που καλείται από την συνάρτηση <code>evalf</code>.
+<A NAME="1648"></A>
+<PRE>
+int(exp(-x^2))
+int(exp(-x^2),x,0,10)
+evalf(int(exp(-x^2),x,0,10))
+romberg(exp(-x^2),x,0,10)
+ans()/sqrt(pi))
+</PRE>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><B>Ολοκληρώματα</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>int(E)</code></TD>
+<TD ALIGN="LEFT">αόριστο ολοκλήρωμα μίας παράστασης</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>int(E,x,a,b)</code></TD>
+<TD ALIGN="LEFT">ορισμένο ολοκλήρωμα μίας παράστασης</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>romberg(E,x,a,b)</code></TD>
+<TD ALIGN="LEFT">προσεγγιστικό ολοκλήρωμα</TD>
+</TR>
+</TABLE>
+</DIV><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html303"
+  HREF="node18.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html297"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html291"
+  HREF="node16.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html299"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html301"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html304"
+  HREF="node18.html">Επίλυση εξισώσεων</A>
+<B> εμφάνιση:</B> <A NAME="tex2html298"
+  HREF="node14.html">Εργαλεία για την Ανάλυση</A>
+<B> προηγούμενο:</B> <A NAME="tex2html292"
+  HREF="node16.html">Όρια και πεπερασμένα αναπτύγματα</A>
+ &nbsp; <B>  <A NAME="tex2html300"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html302"
+  HREF="node47.html">Ευρετήριο</A></B>  
+<!--End of Navigation Panel-->
+<ADDRESS>
+Βιβλιογραφία του <A HREF="http://www-fourier.ujf-grenoble.fr/~parisse/giac_fr.html">giac</A> από τους Renee De Graeve, Bernard Parisse και Bernard Ycart
+</ADDRESS>
+Μετάφραση στα Ελληνικά : Γιώργος Νασόπουλος. Διασκευή : Αλκιβιάδης Γ. Ακρίτας
+</BODY>
+</HTML>

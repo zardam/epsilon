@@ -1,0 +1,318 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3Δ Προβολείς</TITLE>
+<META NAME="description" CONTENT="3-d spots">
+<META NAME="keywords" CONTENT="casinter">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-7">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="casinter.css">
+
+<LINK REL="next" HREF="node14.html">
+<LINK REL="previous" HREF="node12.html">
+<LINK REL="up" HREF="node8.html">
+<LINK REL="next" HREF="node14.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html170"
+  HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.png"></A> 
+<A NAME="tex2html168"
+  HREF="node8.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.png"></A> 
+<A NAME="tex2html162"
+  HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.png"></A>   
+<BR>
+<B> Επόμενο:</B> <A NAME="tex2html171"
+  HREF="node14.html">3Δ Γεωμετρία</A>
+<B> Πάνω:</B> <A NAME="tex2html169"
+  HREF="node8.html">Γεωμετρία και γραφικά</A>
+<B> Προηγούμενο:</B> <A NAME="tex2html163"
+  HREF="node12.html">3Δ Αντικείμενα</A>
+<!--End of Navigation Panel-->
+
+<H4><A NAME="SECTION00035500000000000000">
+3Δ Προβολείς</A>
+</H4>
+Αν ενεργοποιήσουμε την εντολή <code>Lights</code> στο πλαίσιο που 
+ανοίγει πατώντας το κουμπί <code>cfg</code> ενός 3Δ γραφήματος,
+ το σκηνικό θα εμφανισθεί όπως ορίζεται από τον αλγόριθμο φωτισμού OpenGL. 
+ (Περισσότερες πληροφορίες υπάρχουν στην ιστοσελίδα http://www.glprogramming.com/red/)
+Μπορούμε να ενεργοποιήσουμε από 1 έως 8 προβολείς, όπου ο καθένας είναι 
+ρυθμίσιμος
+(κουμπιά <code>L0</code> έως <code>L7</code> ή <code>l1</code> έως <code>l8</code>).
+ 
+
+<P>
+Κάθε προβολέας έχει γεωμετρικές ιδιότητες: μπορεί  να είναι προβολέας θέσης
+αν <I>w</I> = 1  ή προβολέας κατεύθυνσης αν <I>w</I> = 0.
+
+<UL>
+<LI>Ένα προβολέας θέσης (<I>w</I> = 1) είναι 
+στη θέση <I>x</I>, <I>y</I>, <I>z</I> και έχει μια κατεύθυνση που ορίζεται από τις
+συντεταγμένες
+<code>x-&gt;, y-&gt;, z-&gt;</code>. Το φως που έρχεται από έναν προβολέα
+ θέσης μπορεί να εξασθενίσει (απόσβεση). Η 
+απόσβεση εξαρτάται απ την απόσταση μεταξύ
+του προβολέα και του αντικειμένου (με εναν τετραγωνικό τύπο των μεταβλητων 
+<code>att0, att1, att2</code> που βρίσκονται στην ρύθμιση του προβολέα), και από
+το συνημίτονο της γωνίας μεταξύ της κατεύθυνσης του προβολέα
+ και του τμήματος προβολέα-αντικειμένου 
+σε κάποιον εκθέτη (<code>exp</code> στην ρύθμιση του προβολέα). Βλέπε και τον τύπο 
+παρακάτω στην σελίδα αυτή.
+Επιπλέον, ο προβολέας μπορεί να φωτίζει μόνο εντός ενός κώνου, η γωνία του 
+οποίου ρυθμίζεται 
+από την μεταβλητή <code>cutoff</code>  (σε μοίρες, μεταξύ 0 και 90.
+Για να φωτίζει παντού, χρησιμοποιούμε 180). 
+Μια επιπλέον απόσβεση
+προέρχεται από το συνημίτονο της γωνίας εισερχόμενης κατεύθυνσης-κάθετου
+ στο αντικείμενο, ούτως ώστε ο ζενιθιακός φωτισμός να είναι μέγιστος.
+</LI>
+<BR>
+<LI>Ένας προβολέας κατεύθυνσης (<I>w</I> = 0), που προσομοιώνει π.χ το ηλιακό φως, 
+δεν 
+έχει απόσβεση (εκτός απο την γωνία μεταξύ της κατεύθυνσης του προβολέα και
+της καθέτου). Η κατεύθυνση ορίζεται από τα <I>x</I>, <I>y</I>, <I>z</I>.
+</LI>
+</UL>
+
+<P>
+Τα αντικείμενα στο σκηνικό ενδέχεται
+να έχουν τις δικές τους ιδιότητες σχετικά με τρία είδη φωτός:
+
+<UL>
+<LI>φως περιβάλλοντος (ambient), το οποίο
+προσομοιώνει φως που έρχεται από όλες τις κατευθύνσεις και διαχέεται προς
+ όλες τις κατευθύνσεις χωρίς απόσβεση, 
+</LI>
+<BR>
+<LI>διάχυτο φως (diffuse), το οποίο
+προσομοιώνει φως που έρχεται από μια κατέυθυνση και διαχέεται προς
+ όλες τις κατευθύνσεις
+με έναν παράγοντα απόσβεσης ανάλογο προς το συνημίτονο της γωνίας μεταξύ
+της εισερχόμενης κατεύθυνσης και της καθέτου προς το αντικείμενο,
+</LI>
+<BR>
+<LI>κατοπτρικό φως (specular), το οποίο
+προσομοιώνει φως που έρχεται από μια κατέυθυνση και αντικατοπτρίζεται 
+επιλεκτικά προς την κατεύθυνση την συμμετρική  ως προς την κάθετο στο αντικείμενο.
+</LI>
+</UL>
+Επιπροσθέτως, ένα αντικείμενο μπορεί να έχει ενδογενές φως, που ονομάζεται 
+εκπομπή (emission).
+Κάθε ιδιότητα πρέπει να ορίζεται για 4 κανάλια: r (red/κόκκινο), b (blue/μπλε)
+και g (πράσινο/green) για τα χρώματα, και a (άλφα) για τη διαφάνεια (αν
+ενεργοποιήσιυμε το <code>Blending</code>).
+Οι ιδιότητες του αντικειμένου πρέπει να διευκρινιστούν κατά τον ορισμό τους (στη
+γραμμή εντολών της "υποσυνεδρίας"). Έτσι για παράδειγμα η εντολή
+
+<UL>
+<LI><code>gl_material=[gl_front,gl_ambient,[r,g,b,a]]</code>
+<BR>
+καθορίζει την ιδιότητα για το  φως περιβάλλοντος. Στην εντολή αυτή χρησιμοποιούμε 
+<code>gl_diffuse</code>, <code>gl_specular</code> ή <code>gl_emission</code>
+αντί για <code>gl_ambient</code> για διάχυτο, κατοπτρικό ή 
+φως εκπομπής. Οι προεπιλεγμένες τιμές είναι 0.2 για το φώς περιβάλλοντος, 
+0.8 για το διάχυτο
+ και 0 για το φως εκπομπής
+στα κανάλια r,g,b και 1 στα κανάλια alpha.
+</LI>
+<BR>
+<LI><code>gl_material=[gl_front,gl_shininess,n]</code>
+<BR>
+καθορίζει τον εκθέτη <I>n</I> που θα χρησιμοποιηθεί για το κατοπτρικό φως. Ο εκθέτης 
+είναι του <!-- MATH
+ $\cos(\theta)$
+ -->
+cos(<IMG
+ WIDTH="11" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img16.png"
+ ALT="$ \theta$">), όπου <IMG
+ WIDTH="11" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img16.png"
+ ALT="$ \theta$"> είναι η γωνία
+μεταξύ του ανακλούμενου εισερχόμενου φωτός και της διεύθυνσης οπτικοποίησης 
+(προεπιλεγμένη τιμή <I>n</I> = 50).
+</LI>
+<BR>
+<LI><code>gl_texture="filename"</code> ορίζει ένα όνομα αρχείου εικόνας
+όπου θα απεικονισθεί σε μια σφαίρα ή ένα πολύγωνο ή μια παραμετρικά
+ορισμένη επιφάνεια.
+</LI>
+</UL> 
+
+<P>
+Συνοψίζοντας, έχουμε ότι ο τύπος για το φως σε κάθε κανάλι είναι &nbsp;:
+<BR>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{eqnarray*}
+l &=&o_e+ o_a \sum_{j=1}^8 l_{a,j} + o_s \sum_{j=1}^8 l_{s,j}
+ \cos(\gamma_j)^S + \\
+ &  & +  o_d \sum_{j=1}^8 l_{d,j}
+\cos(\alpha_j)^{e_j} \cos(\beta_j) \frac{1}{a_{0,j}+a_{1,j}
+  d_j+a_{2,j} d_j^2} 
+\end{eqnarray*}
+ -->
+<TABLE CELLPADDING="0" ALIGN="CENTER" WIDTH="100%">
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><I>l</I></TD>
+<TD WIDTH="10" ALIGN="CENTER" NOWRAP>=</TD>
+<TD ALIGN="LEFT" NOWRAP><I>o</I><SUB>e</SUB> + <I>o</I><SUB>a</SUB><IMG
+ WIDTH="26" HEIGHT="66" ALIGN="MIDDLE" BORDER="0"
+ SRC="img17.png"
+ ALT="$\displaystyle \sum_{{j=1}}^{8}$"><I>l</I><SUB>a, j</SUB> + <I>o</I><SUB>s</SUB><IMG
+ WIDTH="26" HEIGHT="66" ALIGN="MIDDLE" BORDER="0"
+ SRC="img17.png"
+ ALT="$\displaystyle \sum_{{j=1}}^{8}$"><I>l</I><SUB>s, j</SUB>cos(<IMG
+ WIDTH="18" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img18.png"
+ ALT="$\displaystyle \gamma_{j}^{}$">)<SUP>S</SUP> +</TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+&nbsp;</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT">&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD ALIGN="LEFT" NOWRAP>+ <I>o</I><SUB>d</SUB><IMG
+ WIDTH="26" HEIGHT="66" ALIGN="MIDDLE" BORDER="0"
+ SRC="img17.png"
+ ALT="$\displaystyle \sum_{{j=1}}^{8}$"><I>l</I><SUB>d, j</SUB>cos(<IMG
+ WIDTH="20" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img19.png"
+ ALT="$\displaystyle \alpha_{j}^{}$">)<SUP>e<SUB>j</SUB></SUP>cos(<IMG
+ WIDTH="19" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img20.png"
+ ALT="$\displaystyle \beta_{j}^{}$">)<IMG
+ WIDTH="152" HEIGHT="50" ALIGN="MIDDLE" BORDER="0"
+ SRC="img21.png"
+ ALT="$\displaystyle {\frac{{1}}{{a_{0,j}+a_{1,j}
+d_j+a_{2,j} d_j^2}}}$"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+&nbsp;</TD></TR>
+</TABLE></DIV>
+<BR CLEAR="ALL">
+
+όπου&nbsp;:
+
+<UL>
+<LI><!-- MATH
+ $o_e,o_a,o_d,o_s$
+ -->
+<I>o</I><SUB>e</SUB>, <I>o</I><SUB>a</SUB>, <I>o</I><SUB>d</SUB>, <I>o</I><SUB>s</SUB> 
+είναι οι υλικές ιδιότητες σχετικά με το
+ περιβαλλοντικό, διάχυτο, και κατοπτρικό φως, <I>S</I> είναι η
+"λαμπρότητα" (εκθέτης για κατοπτρικό φως)
+</LI>
+<BR>
+<LI><!-- MATH
+ $l_{a,j},l_{d,j},l_{s,j}$
+ -->
+<I>l</I><SUB>a, j</SUB>, <I>l</I><SUB>d, j</SUB>, <I>l</I><SUB>s, j</SUB> 
+είναι οι ιδιότητες του προβολέα <I>j</I> για το
+ περιβαλλοντικό, διάχυτο, και κατοπτρικό φως
+</LI>
+<BR>
+<LI><!-- MATH
+ $a_{0,j}, a_{1,j}, a_{2,j}$
+ -->
+<I>a</I><SUB>0, j</SUB>, <I>a</I><SUB>1, j</SUB>, <I>a</I><SUB>2, j</SUB> είναι 
+οι συντελεστές απόσβεσης
+του προβολέα <I>j</I>, που αντικαθίστανται από 1,0,0 αν <I>w</I> = 0 (χωρίς
+ απόσβεση)
+</LI>
+<BR>
+<LI><I>d</I><SUB>j</SUB> είναι η απόσταση από τον προβολέα <I>j</I> μέχρι
+ το αντικείμενο
+</LI>
+<BR>
+<LI><IMG
+ WIDTH="20" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img22.png"
+ ALT="$ \alpha_{j}^{}$"> είναι η γωνία μεταξύ της κατεύθυνσης του προβολέα <I>j</I> 
+ και του τμήματος απο τον προβολέα <I>j</I> μέχρι το αντικείμενο, εκτός αν <IMG
+ WIDTH="20" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img22.png"
+ ALT="$ \alpha_{j}^{}$"> είναι μεγαλύτερο
+ απο την γωνία αποκοπής του προβολέα <I>j</I> (<!-- MATH
+ $\alpha_j=\pi/2$
+ -->
+<IMG
+ WIDTH="20" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img22.png"
+ ALT="$ \alpha_{j}^{}$"> = <IMG
+ WIDTH="13" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img23.png"
+ ALT="$ \pi$">/2), 
+ή αν <I>w</I> = 0 (<!-- MATH
+ $\alpha_j=0$
+ -->
+<IMG
+ WIDTH="20" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img22.png"
+ ALT="$ \alpha_{j}^{}$"> = 0, καμία απόσβεση του κατευθυντικού φωτός).
+</LI>
+<BR>
+<LI><IMG
+ WIDTH="19" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img24.png"
+ ALT="$ \beta_{j}^{}$"> είναι η γωνία μεταξύ του τμήματος προβολέας 
+ <I>j</I>-αντικείμενο και
+της καθέτου προς το αντικείμενο (αν <I>w</I> = 0, αντικαταθιστούμε το τμήμα προβολέας
+<I>j</I>-αντικείμενο με
+την κατεύθυνση του προβολέα)
+</LI>
+<BR>
+<LI><IMG
+ WIDTH="18" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img25.png"
+ ALT="$ \gamma_{j}^{}$"> είναι η γωνία μεταξύ της συμμετρικής κατεύθυνσης του προβολέα  
+ ως προς την κάθετο στο αντικείμενο και το τμήμα αντικειμένου-ματιού
+</LI>
+</UL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html170"
+  HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="next.png"></A> 
+<A NAME="tex2html168"
+  HREF="node8.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="up.png"></A> 
+<A NAME="tex2html162"
+  HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="prev.png"></A>   
+<BR>
+<B> Επόμενο:</B> <A NAME="tex2html171"
+  HREF="node14.html">3Δ Γεωμετρία</A>
+<B> Πάνω:</B> <A NAME="tex2html169"
+  HREF="node8.html">Γεωμετρία και γραφικά</A>
+<B> Προηγούμενο:</B> <A NAME="tex2html163"
+  HREF="node12.html">3Δ Αντικείμενα</A>
+  <BR>
+<BR>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Η τεκμηρίωση του <A HREF="http://www-fourier.ujf-grenoble.fr/~parisse/giac.html">giac</A> γράφτηκε από τον Bernard Parisse
+</ADDRESS>
+Μετάφραση στα Ελληνικά : Χρήστος Γ. Αγγελόπουλος.  Διασκευή : Αλκιβιάδης Γ. Ακρίτας
+</BODY>
+</HTML>

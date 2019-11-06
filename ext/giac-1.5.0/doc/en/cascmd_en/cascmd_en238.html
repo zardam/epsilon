@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>An example : finding the surface of revolution with minimal area</title>
+</head>
+<body >
+<a href="cascmd_en237.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en239.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec297" class="subsection">5.21.5  An example : finding the surface of revolution with minimal area</h3>
+<p>
+In this section we find the function
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span><sub>0</sub>∈ <span style="font-style:italic">D</span>={<span style="font-style:italic">y</span>∈ <span style="font-style:italic">C</span><sup>1</sup>[0,1]:<span style="font-style:italic">y</span>(0)=1,<span style="font-style:italic">y</span>(1)=2/3} </td></tr>
+</table><p>
+for which the area of the corresponding surface of revolution is minimal. The result is not necessarily intuitive.</p><p>The area of the surface of revolution is measured by the functional
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">F</span>(<span style="font-style:italic">y</span>)=2 π </td><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left">1</td></tr>
+<tr><td class="dcell" style="text-align:left"><br>
+<br>
+</td></tr>
+<tr><td class="dcell" style="text-align:left">0</td></tr>
+</table></td><td class="dcell"><span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>) </td><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >1+<span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>)<sup>2</sup></td></tr>
+</table></td><td class="dcell"> <span style="font-style:italic">d</span><span style="font-style:italic">x</span>. </td></tr>
+</table><p>
+We set <span style="font-style:italic">f</span>(<span style="font-style:italic">y</span>,<span style="font-style:italic">y</span>′,<span style="font-style:italic">x</span>)=<span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>) √<span style="text-decoration:overline">1+</span><span style="text-decoration:overline"><span style="font-style:italic">y</span></span><span style="text-decoration:overline">′(</span><span style="text-decoration:overline"><span style="font-style:italic">x</span></span><span style="text-decoration:overline">)</span><sup><span style="text-decoration:overline">2</span></sup> and compute the associated Euler-Lagrange equation :
+</p><div class="center">
+<span style="font-family:monospace">dy:=diff(y(x),x):; f:=y*sqrt(1+dy</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2):; eq:=euler_lagrange(f)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[-(y(x))/(sqrt(diff(y(x),x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1))=K_0, diff(y(x),x,2)=((diff(y(x),x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1)/(y(x)))]
+</span></div><p>
+We obtain the stationary function by finding the general solution of the first equation. Input :
+</p><div class="center">
+<span style="font-family:monospace">sol:=collect(simplify(dsolve(eq[0],x,y)))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[-K_0,K_0*(-exp((x-c_1)/K_0)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)/(2*exp((x-c_1)/K_0))]
+</span></div><p>
+Obviously the constant solution −<span style="font-style:italic">K</span><sub>0</sub> is not in <span style="font-style:italic">D</span>, so we set <span style="font-style:italic">y</span><sub>0</sub> to be the second element of the above list. That function, which can be written as </p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span><sub>0</sub>(<span style="font-style:italic">x</span>)=−<span style="font-style:italic">K</span><sub>0</sub> cosh</td><td class="dcell">⎛<br>
+⎜<br>
+⎜<br>
+⎝</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span>−<span style="font-style:italic">c</span><sub>1</sub></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">K</span><sub>0</sub></td></tr>
+</table></td><td class="dcell">⎞<br>
+⎟<br>
+⎟<br>
+⎠</td><td class="dcell">, </td></tr>
+</table><p> is called a <em>catenary</em>. Input :
+</p><div class="center">
+<span style="font-family:monospace">y0:=sol[1]:; p:=[K_0,c_1]:;
+</span></div><p>
+To find the values of <span style="font-style:italic">K</span><sub>0</sub> and <span style="font-style:italic">c</span><sub>1</sub> from the boundary conditions, we first plot the curves <span style="font-style:italic">y</span><sub>0</sub>(0)=1 and <span style="font-style:italic">y</span><sub>0</sub>(1)=2/3 for <span style="font-style:italic">K</span><sub>0</sub>∈[−1,1] and <span style="font-style:italic">c</span><sub>1</sub>∈[−1,2] to see where they intersect each other. Input :
+</p><div class="center">
+<span style="font-family:monospace">eq1:=subs(y0,x=0)=1:; eq2:=subs(y0,x=1)=2/3:; implicitplot([eq1,eq2],K_0=-1..1,c_1=-1..2)
+</span></div><p>
+Output :
+</p><div class="center">
+<img src="cascmd_en010.png">
+</div><p>
+We observe that there are exactly two catenaries satisfying the Euler-Lagrange necessary conditions and the given boundary conditions : the first with <span style="font-style:italic">K</span><sub>0</sub>≈ −0.5 and <span style="font-style:italic">c</span><sub>1</sub>≈ 0.6 resp. the second with <span style="font-style:italic">K</span><sub>0</sub>≈ −0.3 and <span style="font-style:italic">c</span><sub>1</sub>≈ 0.5. We obtain the values of these constants more precisely by using <span style="font-family:monospace">fsolve</span>. Input :
+</p><div class="center">
+<span style="font-family:monospace">p1:=fsolve([eq1,eq2],p,[-0.5,0.6]);
+p2:=fsolve([eq1,eq2],p,[-0.3,0.5])
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[-0.56237423894,0.662588703113], [-0.30613431407,0.567138261119]
+</span></div><p>
+We check, for each catenary, whether the strong Legendre condition </p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">f</span><sub><span style="font-style:italic">y</span>′ <span style="font-style:italic">y</span>′</sub>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span><sub><span style="font-style:italic">k</span></sub>,<span style="font-style:italic">y</span><sub><span style="font-style:italic">k</span></sub>′)&gt;0</td></tr>
+</table><p> holds for <span style="font-style:italic">k</span>=1,2. Input :
+</p><div class="center">
+<span style="font-family:monospace">y1:=subs(y0,p,p1):; y2:=subs(y0,p,p2):;
+D2f:=diff(f,diff(y(x),x),2):;
+solve([eval(subs(D2f,y=y1,y(x)=y1))&lt;=0,x&gt;=0,x&lt;=1],x);
+solve([eval(subs(D2f,y=y2,y(x)=y2))&lt;=0,x&gt;=0,x&lt;=1],x)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[],[]
+</span></div><p>
+We conclude that the strong Legendre condition is satisfied in both cases, so we proceed by attempting to find the points conjugate to 0 for each catenary. The function <span style="font-style:italic">y</span><sub>0</sub> depends on two parameters, so we use <span style="font-family:monospace">conjugate_equation</span> to find these points easily. Input :
+</p><div class="center">
+<span style="font-family:monospace">fsolve(conjugate_equation(y0,p,p1,x,0)=0,x=0..1)
+fsolve(conjugate_equation(y0,p,p2,x,0)=0,x=0..1)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[0.0], [0.0,0.799514772606]
+</span></div><p>
+We conclude that there are no points conjugate to 0 in (0,1] for the catenary <span style="font-style:italic">y</span><sub>1</sub>, so it minimizes the functional <span style="font-style:italic">F</span>. However, for the other catenary there is a conjugate point in the relevant interval, therefore <span style="font-style:italic">y</span><sub>2</sub> is not a minimizer.</p><p>We can verify the above conclusions by computing the surface area for catenaries <span style="font-style:italic">y</span><sub>1</sub> and <span style="font-style:italic">y</span><sub>2</sub> and comparing them. Input :
+</p><div class="center">
+<span style="font-family:monospace">int(y1*sqrt(1+diff(y1,x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),x=0..1); int(y2*sqrt(1+diff(y2,x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),x=0..1)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">0.81396915825,0.826468466845
+</span></div><p>
+We see that the surface formed by rotating the curve <span style="font-style:italic">y</span><sub>1</sub> is indeed smaller than the area of the surface formed by rotating the curve <span style="font-style:italic">y</span><sub>2</sub>. Finally, we visualize both surfaces for convenience. Input :
+</p><div class="center">
+<span style="font-family:monospace">plot3d([y1*cos(t),y1*sin(t),x],x=0..1,t=0..2*pi, display=yellow+filled)
+</span></div><p>
+Output :
+</p><div class="center">
+<img src="cascmd_en011.png">
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">plot3d([y2*cos(t),y2*sin(t),x],x=0..1,t=0..2*pi, display=yellow+filled)
+</span></div><p>
+Output :
+</p><div class="center">
+<img src="cascmd_en012.png">
+</div>
+<hr>
+<a href="cascmd_en237.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en239.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Προσεγγιστική επίλυση του συστήματος v′=f(t,v): 
+ odesolve</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el486.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el488.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc564">3.3.5</A>  Προσεγγιστική επίλυση του συστήματος <TT>v</TT><TT>′</TT><TT>=f(t,v)</TT>:<BR>
+<TT> odesolve</TT></H3><P><A NAME="@default830"></A>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Εάν <I>v</I> είναι ένα διάνυσμα
+μεταβλητών [<I>x</I>1,..,<I>xn</I>] και εάν η <I>f</I> δίνεται από ένα διάνυσμα παρaστάσεων
+	
+<TT>[e1,...,en]</TT> ως προς <I>t</I> και [<I>x</I>1,..,<I>xn</I>],
+και εάν η αρχική τιμή του <I>v</I> στο 	
+<TT>t0</TT>
+είναι το διάνυσμα [<I>x</I>10,...,<I>xn</I>0] τότε η εντολή
+<DIV CLASS="center">
+	
+<TT>odesolve([e1,..,en],t=t0..t1,[x1,...,xn],
+[x10,...,xn0])</TT> 
+</DIV>
+επιστρέφει μια προσεγγιστική τιμή του <I>v</I> στο <I>t</I>=<I>t</I>1.
+Με το προαιρετικό όρισμα 	
+<TT>curve</TT>, η εντολή 	
+<TT>odesolve</TT> επιστρέφει την λίστα των 
+ενδιάμεσων τιμών [<I>t</I>,<I>v</I>(<I>t</I>)] που υπολογίζονται από τον επιλυτή. <P>Παράδειγμα, για να λύσουμε το σύστημα
+	
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><TT><I>x</I>′(<I>t</I>)</TT></TD><TD ALIGN=center NOWRAP><TT>=</TT></TD><TD ALIGN=left NOWRAP><TT>-<I>y</I>(<I>t</I>)</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT><I>y</I>′(<I>t</I>)</TT></TD><TD ALIGN=center NOWRAP><TT>=</TT></TD><TD ALIGN=left NOWRAP><TT><I>x</I>(<I>t</I>)</TT></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P><TT>
+</TT>
+Είσοδος :
+</P><DIV CLASS="center">
+	
+<TT>odesolve([-y,x],t=0..pi,[x,y],[0,1])</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[-1.797364e-12,-1.0]</TT></DIV></LI><LI CLASS="li-itemize">Εάν η <I>f</I> είναι μια συνάρτηση από το ℝ × ℝ<SUP><I>n</I></SUP> στο 
+ℝ<SUP><I>n</I></SUP>.<BR>
+	
+<TT>odesolve(t0..t1,(t,v)-&gt;f(t,v),v0)</TT> ή
+	
+<TT>odesolve(t0..t1,f,v0)</TT><BR>
+υπολογίζει μια προσεγγιστική τιμή της <I>v</I>(<I>t</I>1) όπου το διάνυσμα <I>v</I>(<I>t</I>)
+στο ℝ<SUP><I>n</I></SUP> είναι η λύση της
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>v</I>′(<I>t</I>)=<I>f</I>(<I>t</I>,<I>v</I>(<I>t</I>)),    <I>v</I>(<I>t</I>0)=<I>v</I>0 </TD></TR>
+</TABLE>
+Με το προαιρετικό όρισμα 	
+<TT>curve</TT>, η 	
+<TT>odesolve</TT> επιστρέφει τη λίστα των 
+ενδιάμεσων τιμών [<I>t</I>,<I>v</I>(<I>t</I>)] που υπολογίζεται από τον 	
+<TT>solver</TT>. <P>Παράδειγμα, για να λύσουμε το σύστημα :<BR>
+	
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><TT><I>x</I>′(<I>t</I>)</TT></TD><TD ALIGN=center NOWRAP><TT>=</TT></TD><TD ALIGN=left NOWRAP><TT>-<I>y</I>(<I>t</I>)</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT><I>y</I>′(<I>t</I>)</TT></TD><TD ALIGN=center NOWRAP><TT>=</TT></TD><TD ALIGN=left NOWRAP><TT><I>x</I>(<I>t</I>)</TT></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P><TT>
+</TT>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>odesolve(0..pi,(t,v)-&gt;[-v[1],v[0]],[0,1])</TT></DIV><P>
+ή ορίστε την συνάρτηση:
+</P><DIV CLASS="center">	
+<TT>f(t,v):=[-v[1],v[0]]</TT></DIV><P>
+και μετά εισάγετε : 
+</P><DIV CLASS="center">	
+<TT>odesolve(0..pi,f,[0,1])</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[-8.931744e-14,-1.0]</TT></DIV><P>
+Εναλλακτικά εισάγετε :
+</P><DIV CLASS="center">	
+<TT>odesolve(0..pi/4,f,[0,1],curve)</TT></DIV><P>
+Έξοδος:
+</P><DIV CLASS="center">	
+<TT>[[0.0,[0.0,1.0]],[0.2781,[-0.2745291,0.9615788]], [0.4781,[-0.4600931,0.8878707]], [0.6781,[-0.6273145,0.778766]], [0.7853982,[-0.7071068,0.7071068]]]</TT></DIV></LI></UL><HR>
+<A HREF="cascmd_el486.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el488.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

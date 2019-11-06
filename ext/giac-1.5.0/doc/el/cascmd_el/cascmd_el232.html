@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Βάση Gröbner:  gbasis</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el231.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el233.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc260">1.27.1</A>  Βάση <TT>Gröbner</TT><TT>: </TT><TT> gbasis</TT></H3><P><A NAME="@default418"></A>
+<A NAME="sec:gbasis"></A>
+	
+<TT>gbasis</TT> παίρνει τουλάχιστον δύο ορίσματα
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+ένα διάνυσμα πολυωνύμων με πολλές μεταβλητές 
+</LI><LI CLASS="li-itemize">ένα διάνυσμα με τα ονόματα μεταβλητών,
+</LI></UL><P>
+Προαιρετικά ορίσματα μπορεί να χρησιμοποιηθούν για να ορίσουμε τη διάταξη και τους αλγορίθμους. 
+Από προεπιλογή, η διάταξη είναι λεξικογραφική (αναφορικά με την λίστα
+των διατεταγμένων ονομάτων των μεταβλητών) και τα πολυώνυμα γράφονται σε φθίνουσα σειρά βαθμών αναφορικά με την διάταξη
+Για παράδειγμα, η έξοδος θα είναι 
+...+<I>x</I><SUP>2</SUP> <I>y</I><SUP>4</SUP> <I>z</I><SUP>3</SUP>+<I>x</I><SUP>2</SUP> <I>y</I><SUP>3</SUP> <I>z</I><SUP>4</SUP>+... εάν το δεύτερο όρισμα είναι [<I>x</I>,<I>y</I>,<I>z</I>] επειδή
+(2,4,3)&gt;(2,3,4) αλλά η έξοδος θα είναι 
+...+<I>x</I><SUP>2</SUP> <I>y</I><SUP>3</SUP><I>z</I><SUP>4</SUP>+<I>x</I><SUP>2</SUP> <I>y</I><SUP>4</SUP> <I>z</I><SUP>3</SUP>+... εάν το δεύτερο όρισμα είναι [<I>x</I>,<I>z</I>,<I>y</I>].<BR>
+	
+<TT>gbasis</TT> επιστρέφει μια βάση  <TT>Gröbner</TT>
+του πολυωνυμικού ιδεώδους που παράγεται 
+από αυτά τα πολυώνυμα.</P><P><B>Ιδιότητα</B><BR>
+Εάν <I>I</I> είναι ένα ιδανικό και εάν (<I>G</I><SUB><I>k</I></SUB>)<SUB><I>k</I> ∈ <I>K</I></SUB> είναι μια βάση <TT>Gröbner</TT> του
+ιδανικού <I>I</I> τότε, εάν <I>F</I> είναι ένα μη μηδενικό πολυώνυμο στο <I>I</I>, το μεγαλύτερο μονώνυμο
+του <I>F</I> διαιρείται από το μεγαλύτερο μονώνυμο ενός εκ των πολυωνύμων <I>G</I><SUB><I>k</I></SUB> της βάσης.
+Μ’ άλλα λόγια, εάν κάνετε μια Ευκλέιδεια διαίρεση του <I>F</I>≠ 0 
+με το αντίστοιχο <I>G</I><SUB><I>k</I></SUB>, πάρτε το υπόλοιπο αυτής της διαίρεσης, επαναλάβετε το ίδιο και ούτω καθεξής, σε κάποιο σημείο θα πάρετε υπόλοιπο μηδέν.</P><P>Είσοδος :
+</P><DIV CLASS="center">	
+<TT>gbasis([2*x*y-y</TT><CODE><TT>^</TT></CODE><TT>2,x</TT><CODE><TT>^</TT></CODE><TT>2-2*x*y],[x,y])</TT>
+</DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[4*x</TT><CODE><TT>^</TT></CODE><TT>2+-4*y</TT><CODE><TT>^</TT></CODE><TT>2,2*x*y-y</TT><CODE><TT>^</TT></CODE><TT>2,-(3*y</TT><CODE><TT>^</TT></CODE><TT>3)]</TT>
+</DIV><P>Όπως αναφέραμε πριν, η 	
+<TT>gbasis</TT> μπορεί να έχει περισσότερα από δύο ορίσματα  :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+	
+<TT>plex</TT> (λεξικογραφική μόνο) είναι η διάταξη από προεπιλογή. Άλλες επιλογές για να ορίσουμε την διάταξη των μονωνύμων είναι: 	
+<TT>tdeg</TT> (ολικού βαθμού — <TT>total degree</TT> — και μετά
+λεξικογραφική διάταξη),
+	
+<TT>revlex</TT> (ολικού βαθμού — <TT>total degree</TT> — και μετά αντίστροφη λεξικογραφική διάταξη),
+</LI><LI CLASS="li-itemize">	
+<TT>with_cocoa=true</TT> ή 	
+<TT>with_cocoa=false</TT>, εάν θέλετε να χρησιμοποιήσετε
+την βιλιοθήκη 	
+<TT>CoCoA</TT> για να υπολογίσετε την βάση <TT>Gröbner</TT> (συνιστάται,
+αλλά απαιτείται η εγκατάσταση της 	
+<TT>CoCoA</TT>).</LI><LI CLASS="li-itemize">	
+<TT>with_f5=true</TT> ή 	
+<TT>with_f5=false</TT> εάν θέλετε να χρησιμοποιήσετε
+τον αλγόριθμο <TT>F5</TT> της βιβλιοθήκης 	
+<TT>CoCoA</TT>.
+Σε αυτή την περίπτωση η καθορισθείσα διάταξη δεν χρησιμοποιείται (τα πολυώνυμα είναι 
+ομογενοποιημένα).
+</LI></UL><P>
+Είσοδος :
+</P><DIV CLASS="center">
+	
+<TT>gbasis([x1+x2+x3,x1*x2+x1*x3+x2*x3,x1*x2*x3-1], [x1,x2,x3],tdeg,with_cocoa=false)</TT>
+</DIV><P>
+Έξοδος
+</P><DIV CLASS="center">	
+<CODE><TT>[x3^3-1,-x2^2-x2*x3-x3^2,x1+x2+x3]</TT></CODE>
+</DIV><HR>
+<A HREF="cascmd_el231.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el233.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

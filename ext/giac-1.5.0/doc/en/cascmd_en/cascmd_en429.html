@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Taylor expansion : taylor</title>
+</head>
+<body >
+<a href="cascmd_en428.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en430.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec514" class="subsection">5.38.2  Taylor expansion : <span style="font-family:monospace">taylor</span></h3>
+<p><a id="hevea_default674"></a><a id="hevea_default675"></a> 
+<span style="font-family:monospace">taylor</span> takes from one to four arguments :
+</p><ul class="itemize"><li class="li-itemize">
+an expression depending of a variable (by default <span style="font-family:monospace">x</span>),
+</li><li class="li-itemize">an equality variable=value (e.g. <span style="font-style:italic">x</span>=<span style="font-style:italic">a</span>) where to compute
+the Taylor expansion, by default <span style="font-family:monospace">x=0</span>, 
+</li><li class="li-itemize">an integer <span style="font-style:italic">n</span>, the order of the series expansion,
+by default <span style="font-family:monospace">5</span>
+</li><li class="li-itemize">a direction <span style="font-family:monospace">-1, 1</span> (for unidirectional series expansion)
+or <span style="font-family:monospace">0</span> (for bidirectional series expansion) (by default <span style="font-family:monospace">0</span>).
+</li></ul><p>
+Note that the syntax <span style="font-family:monospace">...,x,</span><span style="font-style:italic">n</span><span style="font-family:monospace">,</span><span style="font-style:italic">a</span><span style="font-family:monospace">,...</span> 
+(instead of <span style="font-family:monospace">...,x=</span><span style="font-style:italic">a</span><span style="font-family:monospace">,</span><span style="font-style:italic">n</span><span style="font-family:monospace">,...</span>) is also accepted.<br>
+<span style="font-family:monospace">taylor</span> returns a polynomial in <span style="font-family:monospace">x-a</span>, plus a remainder 
+of the form:<br>
+ <span style="font-family:monospace">(x-a)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n*order_size(x-a)</span><br>
+where <span style="font-family:monospace">order_size</span> is a function such that,
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">∀ <span style="font-style:italic">r</span>&gt;0,    </td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:center">lim</td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span>→ 0</td></tr>
+</table></td><td class="dcell"> <span style="font-style:italic">x</span><sup><span style="font-style:italic">r</span></sup> order_size(<span style="font-style:italic">x</span>) = 0 </td></tr>
+</table><p>
+For regular series expansion, <span style="font-family:monospace">order_size</span> is a bounded function,
+but for non regular series expansion, it might tend slowly to
+infinity, for example like a power of ln(<span style="font-style:italic">x</span>).<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">taylor(sin(x),x=1,2)</span></div><p>
+Or (be careful with the order of the arguments !) :
+</p><div class="center"><span style="font-family:monospace">taylor(sin(x),x,2,1)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">sin(1)+cos(1)*(x-1)+(-(1/2*sin(1)))*(x-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+ (x-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*order_size(x-1)</span></div><p>
+<span style="font-weight:bold">Remark</span><br>
+The order returned by <span style="font-family:monospace">taylor</span> may be smaller than <span style="font-style:italic">n</span> if
+cancellations between numerator and denominator occur, for example
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">taylor(</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span><sup>3</sup>+sin(<span style="font-style:italic">x</span>)<sup>3</sup></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span>−sin(<span style="font-style:italic">x</span>)</td></tr>
+</table></td><td class="dcell">) </td></tr>
+</table><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">taylor(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+sin(x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3/(x-sin(x)))</span></div><p>
+The output is only a 2nd-order series expansion :
+</p><div class="center"><span style="font-family:monospace">6+-27/10*x</span><code><span style="font-family:monospace">^2</span></code><span style="font-family:monospace">+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*order_size(x)</span></div><p>
+Indeed the numerator and denominator valuation is 3, hence we lose 3
+orders. To get order 4, we should use <span style="font-style:italic">n</span>=7.<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">taylor(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+sin(x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3/(x-sin(x)),x=0,7)</span></div><p>
+Output is a 4th-order series expansion :
+</p><div class="center"><span style="font-family:monospace">6+-27/10*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+711/1400*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">5*order_size(x)</span></div>
+<hr>
+<a href="cascmd_en428.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en430.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

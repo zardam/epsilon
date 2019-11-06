@@ -1,0 +1,1149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casexo.css">
+<TITLE>Géométrie plane seconde et terminale</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casexo006.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo008.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc68">Chapitre 7</A>  Géométrie plane seconde et terminale</H1><H2 CLASS="section"><A NAME="toc24"></A><A NAME="htoc69">7.1</A>  Les transformations planes</H2><H3 CLASS="subsection"><A NAME="htoc70">7.1.1</A>  La translation</H3><P>
+<B>Définition</B>
+Une translation de vecteur <I>V</I> est une transformation 
+ponctuelle qui, à un point <I>M</I> fait correspondre un point <I>M</I>′ tel que :<BR>
+<I>MM</I>′=<I>V</I><BR>
+<B>Propriétés</B>
+Soient 2 points <I>A</I> et <I>B</I> et leurs transformés <I>A</I>′ et <I>B</I>′ par la 
+translation de vecteur <I>V</I>.<BR>
+On a par hypothèse :
+<I>AA</I>′=<I>V</I> et <I>BB</I>′=<I>V</I>.
+On en déduit que <I>AB</I>=<I>A</I>′<I>B</I>′.<BR>
+La transformée d’une droite est une droite de même direction.<BR>
+Le transformé d’un cercle est un cercle de même rayon.<BR>
+La translation conserve les angles.<BR>
+<B>Avec Xcas</B>
+<TT>translation(B-A,M)</TT> (resp <TT>translation(a+i*b,M)</TT>) désigne le 
+translaté de <I>M</I> dans la translation de vecteur <I>AB</I> (resp 
+d’affixe <I>a</I>+<I>ib</I>).<BR>
+<B>Une visualisation</B>
+On considère la translation de vecteur 2+i.<BR>
+On veut visualiser l’image par cette translation des 4 carrés :
+</P><PRE CLASS="verbatim">C1:=carre(i,1+i,affichage=1+rempli);
+C2:=carre(1,2,affichage=2+rempli);
+C3:=carre(i+1,2+i,affichage=3+rempli);
+C4:=carre(0,1,affichage=4+rempli)
+</PRE><P><IMG SRC="casexo011.png"><BR>
+On tape :
+</P><PRE CLASS="verbatim">C1:=carre(i,1+i,affichage=1+rempli);
+translation(2+i,C1,affichage=1+rempli);
+C2:=carre(1,2,affichage=2+rempli);
+translation(2+i,C2,affichage=2+rempli);
+C3:=carre(i+1,2+i,affichage=3+rempli);
+translation(2+i,C3,affichage=3+rempli);
+C4:=carre(0,1,affichage=4+rempli);
+translation(2+i,C4,affichage=4+rempli);
+translation(1+i,carre(0,1),affichage=4+rempli)
+</PRE><P>On obtient :<BR><BR>
+</P><H3 CLASS="subsection"><A NAME="htoc71">7.1.2</A>  La rotation</H3><P>
+<B>Définition</B>
+Une rotation de centre <I>O</I> et d’angle <I>t</I> est une transformation 
+ponctuelle qui, à un point <I>M</I> fait correspondre un point <I>M</I>′ tel que :<BR>
+<I>OM</I>=<I>OM</I>′ et (<I>OM</I>,<I>OM</I>′=<I>t</I>+2<I>n</I>π (<I>n</I>∈<BR>
+<I>Z</I>)<BR>
+<B>Propriétés</B>
+Soient 2 points <I>A</I> et <I>B</I> et leurs transformés <I>A</I>′ et <I>B</I>′ par la 
+rotation de centre <I>O</I> et d’angle <I>t</I>. On a :<BR>
+<I>AB</I>=<I>A</I>′<I>B</I>′ et (<I>AB</I>,<I>A</I>′<I>B</I>′=<I>t</I>+2<I>n</I>π
+La transformée d’une droite est une droite.<BR>
+Le transformé d’un cercle est un cercle de même rayon.<BR>
+La rotation conserve les angles.<BR>
+<B>Avec Xcas</B>
+<TT>rotation(O,t,M)</TT> désigne le transformé de <I>M</I> dans la rotation de 
+de centre, le point <I>O</I>, et d’angle <I>t</I>.<BR>
+<TT>rotation(a+i*b,t,M)</TT> désigne le transformé de <I>M</I> dans la rotation 
+de centre, le point d’affixe <I>a</I>+<I>ib</I>, et d’angle <I>t</I>.<BR>
+<B>Une visualisation</B>
+On considère la rotation de centre <I>C</I>=(−2,0) et d’angle π/3.<BR>
+On veut visualiser l’image par cette rotation des 4 carrés :
+<TT>C1, C2, C3, C4</TT>.<BR>
+<IMG SRC="casexo012.png"><BR>
+On tape :
+</P><PRE CLASS="verbatim">C1:=carre(i,1+i,affichage=1+rempli):;C1;
+rotation(-2,pi/3,C1,affichage=1+rempli);
+C2:=carre(1,2,affichage=2+rempli):;C2;
+rotation(-2,pi/3,C2,affichage=2+rempli);
+C3:=carre(i+1,2+i,affichage=3+rempli):;C3;
+rotation(-2,pi/3,C3,affichage=3+rempli);
+C4:=carre(0,1,affichage=4+rempli);
+rotation(-2,pi/3,C4,affichage=4+rempli):;C4;
+C:=point(-2);
+O1:=rotation(C,pi/3,point(0)):;
+segment(C,point(0),affichage=ligne_tiret_point));
+segment(C,O1,affichage=ligne_tiret_point));
+angle(C,point(0),O1,"pi/3");
+</PRE><P>On obtient :<BR><BR>
+<IMG SRC="casexo013.png">
+<B>Un exercice</B><BR>
+Sur les côtés d’un triangle <I>ABC</I> quelconque, on construit 3 carrés
+<I>ACDE</I>, <I>BAFG</I> et <I>BHIC</I> puis 2 parallélogramme <I>BGJH</I> et <I>CIKD</I>.<BR>
+Démontrer que le triangle <I>AJK</I> est rectangle isocèle.<BR>
+<B>Une solution</B><BR>
+On fait la figure, on clique sur 3 points <I>A</I>,<I>B</I>,<I>C</I> puis on tape :
+</P><PRE CLASS="verbatim">triangle(A,B,C);
+carre(A,C,D,E);
+carre(C,B,H,I);
+carre(B,A,F,G);
+parallelogramme(H,B,G,J);
+parallelogramme(D,C,I,K);
+segment(A,J,affichage=1);
+segment(A,K,affichage=1);
+G1:=symetrie(B,G);
+segment(B,G1,affichage=2);
+segment(K,G1,affichage=2);
+segment(K,C);
+angle(C,I,K,"");angle(B,C,A,"");
+angle(G,J,B,"");angle(K,D,C,"");
+angle(D,C,K,"gamma");
+angle(C,A,B,"gamma");
+segment(B,J);
+angle(J,B,G,"gamma");
+segment(A,G);segment(A,G1);
+</PRE><P>On obtient :<BR>
+<IMG SRC="casexo014.png">
+On remarque tout d’abord que les triangles <I>BGJ</I>, <I>JHB</I>, <I>KCI</I> et <I>CKD</I> sont 
+égaux au triangle <I>ABC</I>. En effet pour <I>BGJ</I>, on a <I>BG</I>=<I>AB</I>, <I>GJ</I>=<I>BC</I> et 
+l’angle <I>G</I> est égale à <I>B</I> comme angle à côtés perpendiculaires.
+donc le triangle <I>BGJ</I> est égal à <I>ABC</I>.<BR>
+De même <I>CKD</I> est égal à <I>ABC</I> l’angle <I>D</I> est égale à <I>BC</I> comme 
+angle à côtés perpendiculaires.<BR>
+De plus <I>BGJ</I> est aussi égal à <I>JHB</I> et <I>CKD</I> est aussi égal à <I>KCI</I>
+puisque <I>BGJH</I> et <I>CIKD</I> sont des parallélogrammes.
+Donc le triangle <I>BGJ</I> est égal au triangle <I>KCI</I>, donc <I>CK</I> est parallèle 
+à <I>BG</I>. Si <I>G</I>1 est le symétrique de <I>G</I> par rapport à <I>B</I> on en déduit que le quadrilatère <I>BG</I>1<I>KC</I> est un parallélogramme.<BR>
+On va chercher le transformé de <I>J</I> par la rotation de centre <I>A</I> et d’angle 
++π/2 si <I>ABC</I> est direct et −π/2 sinon.
+Supposons le triangle <I>ABC</I> est direct.<BR>
+La rotation de centre <I>A</I> et d’angle +π/2 transforme <I>G</I> en <I>G</I>1 et <I>J</I> en 
+<I>J</I>1. Le segment <I>G</I>1<I>J</I>1 a pour longueur <I>BC</I> et est perpendiculaire à <I>GJ</I> 
+donc parallèle à <I>BC</I>.
+<I>AGG</I>1 est un triangle rectanlgle isocèle qui admet <I>AB</I> comme bissectrice 
+donc <I>G</I>1 est le symétrique de <I>G</I> par rapport à <I>B</I>.<BR>
+Le quadrilatère <I>BG</I>1<I>J</I>1<I>C</I> est donc le parallélogramme <I>BG</I>1<I>KC</I> et <I>J</I>1 et <I>K</I>
+sont confondus. Le triangle <I>AJK</I> est donc rectangle isocèle.
+</P><H3 CLASS="subsection"><A NAME="htoc72">7.1.3</A>  La symétrie droite et la symétrie point</H3><P>
+<B>Définition</B>
+La symétrie par rapport à une droite <I>d</I> est une transformation 
+ponctuelle qui, à un point <I>M</I> fait correspondre un point <I>M</I>′ tel que 
+le segment <I>MM</I>′ soit perpendiculaire à <I>d</I> en son milieu i.e.<I>d</I> est la 
+médiatrice de <I>MM</I>′<BR>
+La symétrie par rapport à un point <I>O</I> est une rotation de centre <I>O</I> et 
+d’angle π (cf rotation pour les propriétés).<BR>
+<B>Propriétés de la symétrie droite</B>
+La transformée d’une droite est une droite.<BR>
+Le transformé d’un cercle est un cercle de même rayon.<BR>
+La symétrie transforme un angle en son opposé.<BR>
+<B>Avec Xcas</B>
+<TT>symetrie(droite(A,B),M)</TT> ou <TT>symetrie(A,B,M)</TT> désigne le transformé
+de <I>M</I> dans la symétrie par rapport à la droite <I>AB</I>.<BR>
+<TT>symetrie(O,M)</TT> désigne le transformé
+de <I>M</I> dans la symétrie de centre <I>O</I>.<BR>
+<B>Une visualisation</B>
+On considère la symétrie par rapport à la droite passant par 
+<TT>A:=point(0)</TT> et <TT>B:= point(-1/2+i)</TT>.<BR>
+On veut visualiser l’image par cette symétrie des 4 carrés :
+<TT>C1, C2, C3, C4</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">C1:=carre(i,1+i,affichage=1+rempli);
+C2:=carre(1,2,affichage=2+rempli);
+C3:=carre(i+1,2+i,affichage=3+rempli);
+C4:=carre(0,1,affichage=4+rempli)
+symetrie(droite(0,-1/2+i),C1,affichage=1+rempli);
+symetrie(droite(0,-1/2+i),C2,affichage=2+rempli);
+symetrie(droite(0,-1/2+i),C3,affichage=3+rempli);
+symetrie(droite(0,-1/2+i),C4,affichage=4+rempli);
+droite(0,-0.5+i)
+</PRE><P><IMG SRC="casexo015.png">
+</P><H3 CLASS="subsection"><A NAME="htoc73">7.1.4</A>  L’homothétie</H3><P>
+<B>Définition</B>
+L’homothétie de centre <I>O</I> et de rapport <I>k</I> est une transformation 
+ponctuelle qui, à un point <I>M</I> fait correspondre un point <I>M</I>′ tel que :<BR>
+<I>OM</I>′=<I>k</I><I>OM</I><BR>
+<B>Propriétés</B>
+Soient 2 points <I>A</I> et <I>B</I> et leurs transformés <I>A</I>′ et <I>B</I>′ par 
+l’homothétie de centre <I>O</I> et de rapport <I>k</I>.
+On a :<BR>
+<I>A</I>′<I>B</I>′=<I>k</I><I>AB</I>.<BR>
+La transformée d’une droite est une droite parallèle.<BR>
+Le transformé d’un cercle de rayon <I>R</I> est un cercle de rayon <I>kR</I>.<BR>
+L’homothétie conserve les angles.<BR>
+<B>Avec Xcas</B>
+<TT>homothetie(O,k,M)</TT> désigne le transformé
+de <I>M</I> dans l’homothétie de centre <I>O</I> et de rapport <I>k</I>.<BR>
+<B>Une visualisation</B>
+On considère la homothétie de centre <I>C</I>=(−2,0) et de rapport 1/2.<BR>
+On veut visualiser l’image par cette homothétie des 4 carrés :
+<TT>C1, C2, C3, C4</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">C1:=carre(i,1+i,affichage=1+rempli);
+homothetie(-2,1/2,C1,affichage=1+rempli);
+C2:=carre(1,2,affichage=2+rempli);
+homothetie(-2,1/2,C2,affichage=2+rempli);
+C3:=carre(i+1,2+i,affichage=3+rempli);
+homothetie(-2,1/2,C3,affichage=3+rempli);
+C4:=carre(0,1,affichage=4+rempli);
+homothetie(-2,1/2,C4,affichage=4+rempli);
+C:=point(-2)
+</PRE><P>On obtient :<BR><BR>
+<IMG SRC="casexo016.png">
+</P><H3 CLASS="subsection"><A NAME="htoc74">7.1.5</A>  La similitude</H3><P>
+<B>Définition</B>
+La similitude de centre <I>O</I>, de rapport <I>k</I> et d’angle <I>t</I> est une 
+transformation ponctuelle qui, à un point <I>M</I> fait correspondre un point <I>M</I>′
+tel que :<BR>
+<I>OM</I>′=<I>k</I>*<I>OM</I> et (<I>OM</I>,<I>OM</I>′)=<I>t</I><BR>
+<B>Propriétés</B>
+Soient 2 points <I>A</I> et <I>B</I> et leurs transformés <I>A</I>′ et <I>B</I>′ par 
+la similitude de centre <I>O</I> de rapport <I>k</I> et d’angle <I>t</I>.
+On a :<BR>
+<I>A</I>′<I>B</I>′=<I>kAB</I> et (<I>AB</I>,<I>A</I>′<I>B</I>′)=<I>t</I>.<BR>
+La transformée d’une droite est une droite.<BR>
+Le transformé d’un cercle de rayon <I>R</I> est un cercle de rayon <I>kR</I>.<BR>
+La similitude conserve les angles.<BR>
+
+<B>Avec Xcas</B>
+<TT>similitude(O,k,t,M)</TT> désigne le transformé
+de <I>M</I> dans la similitude de centre <I>O</I>, de rapport <I>k</I> et d’angle <I>t</I>.<BR>
+<B>Une visualisation</B>
+On considère la similitude de centre <I>C</I>=(−2,0) et de rapport 1/2 et d’angle 2*pi/3.<BR>
+On veut visualiser l’image par cette similitude des 4 carrés :
+<TT>C1, C2, C3, C4</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">C1:=carre(i,1+i,affichage=1+rempli);
+similitude(-2,1/2,2*pi/3,C1,affichage=1+rempli);
+C2:=carre(1,2,affichage=2+rempli);
+similitude(-2,1/2,2*pi/3,C2,affichage=2+rempli);
+C3:=carre(i+1,2+i,affichage=3+rempli);
+similitude(-2,1/2,2*pi/3,C3,affichage=3+rempli);
+C4:=carre(0,1,affichage=4+rempli);
+similitude(-2,1/2,2*pi/3,C4,affichage=4+rempli);
+C:=point(-2)
+</PRE><P>On obtient :<BR><BR>
+<IMG SRC="casexo017.png">
+</P><H3 CLASS="subsection"><A NAME="htoc75">7.1.6</A>  L’inversion</H3><P>
+<B>Définition</B>
+Une inversion de centre <I>C</I> et de puissance <I>k</I> est une transformation 
+ponctuelle qui, à un point <I>M</I> fait correspondre un point <I>M</I>′ tel que :<BR>
+<SPAN style="text-decoration:overline"><I>OM</I></SPAN>*<SPAN style="text-decoration:overline"><I>OM</I>′</SPAN>=<I>k</I><BR>
+<B>Propriétés</B> 
+Deux points quelconques et leurs inverses sont cocycliques ou sont alignés 
+avec le centre d’inversion.<BR>
+L’inverse d’une droite passant par le centre d’inversion est elle-même.<BR>
+L’inverse d’une droite ne passant pas par le centre d’inversion est un cercle
+passant par le centre d’inversion dont le diamètre est perpendiculaire à
+la droite.<BR>
+<B>Avec Xcas</B>
+<TT>inversion(C,k,M)</TT> désigne le point inverse de <I>M</I> dans l’inversion de 
+centre <I>C</I> et de puissance <I>k</I>.<BR>
+<B>Une visualisation</B>
+On considère l’inversion de centre 0 et de puissance 1.<BR>
+On veut visualiser l’image par cette inversion des 3 carrés :<BR>
+<TT>carre(i,1+i,affichage=1+rempli),<BR>
+ carre(i+1,2+i,affichage=3+rempli),<BR>
+ carre(1,2,affichage=2+rempli)</TT><BR>
+Pour pouvoir remplir une figure ayant comme contour des arcs de cercles on va
+écrire une procédure qui trace les arcs avec des polygones.<BR>
+On tape :
+</P><PRE CLASS="verbatim">arcpoly(z0,r,a,b):={
+return seq(z0+r*exp(i*t),t=a..b,0.05),z0+r*exp(i*b);
+}:;
+arccorde(z0,r,a,b,coul):={
+local L;
+L:=arcpoly(z0,r,a,b);
+return polygone(L,affichage=coul+rempli)
+}:;
+arcpolyepais(z0,r,a,b,ep,coul):={
+local L;  
+L:=z0+(r-ep)*exp(i*a),z0+r*exp(i*a),arcpoly(z0,r,a,b),
+  z0+(r)*exp(i*b),z0+(r-ep)*exp(i*b),arcpoly(z0,r-ep,b,a);
+return affichage(polygone(L),c+rempli);
+}:;  
+</PRE><P>Ainsi <TT>arccorde</TT> dessinera la surface comprise entre l’arc et la corde avec
+la couleur <TT>coul</TT> et <TT>arcpolyepais</TT> dessinera la surface comprise entre 
+2 arcs, l’un de rayon <TT>r</TT> et l’autre de rayon <TT>r-ep</TT> avec la couleur 
+<TT>coul</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">triangle(1,1+i,i,affichage=4+rempli),
+polygone(a1,a2,a3,affichage=1+rempli),
+polygone(b1,b2,b3,affichage=2+rempli),
+polygone(a2,b2,c1,c2,affichage=3+rempli),
+carre(i,1+i,affichage=1+rempli),
+carre(i+1,2+i,affichage=3+rempli),
+carre(1,2,affichage=2+rempli),legende(0,"O")
+</PRE><P>On obtient :<BR><BR>
+<IMG SRC="casexo018.png">
+Les figures de même couleur sont inverses l’une de l’autre (en particulier 
+les inverses des points de la figure bleue sont aussi dans la figure bleue qui 
+est globalement invariante)
+</P><H2 CLASS="section"><A NAME="toc25"></A><A NAME="htoc76">7.2</A>  </H2><H2 CLASS="section"><A NAME="toc26"></A><A NAME="htoc77">7.3</A>  Le théorème de Pappus</H2><P>
+Voici les cercles de Pappus :<BR>
+<IMG SRC="casexo019.png">
+Théorème :<BR>
+Si Γ est le grand cercle de diamètre <I>b</I>, <I>C</I> le cercle "moyen" de
+diamètre <I>a</I> (<I>a</I>&lt;<I>b</I>) est tangent intérieurement à Γ en <I>A</I> et les 
+petits cercles<I>c</I><SUB><I>j</I></SUB>,..<I>c</I><SUB>1</SUB>,<I>c</I><SUB>0</SUB>,<I>c</I><SUB>1</SUB>..<I>c</I><SUB><I>j</I></SUB> sont tangents à Γ et à 
+<I>C</I> et <I>c</I><SUB><I>j</I></SUB> est tangent à <I>c</I><SUB><I>j</I>+1</SUB>.<BR>
+Les cercles Γ, <I>C</I> et <I>c</I><SUB>0</SUB> sont centrés sur la droite <I>D</I>.
+Le théorème de Pappus dit que si <I>r</I><SUB><I>j</I></SUB> et le rayon de <I>c</I><SUB><I>j</I></SUB> et si <I>d</I><SUB><I>j</I></SUB> est
+la distance du centre de <I>c</I><SUB><I>j</I></SUB> à <I>D</I> alors <I>d</I><SUB>1</SUB>=2<I>r</I><SUB>1</SUB> et <I>d</I><SUB><I>j</I></SUB>=2*<I>j</I>*<I>r</I><SUB><I>j</I></SUB> pour 
+<I>j</I>=0..<I>n</I>.<BR>
+De plus les points de tangences des cercles <I>c</I><SUB><I>j</I></SUB> et <I>c</I><SUB><I>j</I>+1</SUB> sont sur un 
+cercle de diamètre 2<I>ab</I>/<I>a</I>+<I>b</I>, tangent en <I>A</I> à Γ et <I>C</I>.
+<B>Construction des cercles de Pappus.</B><BR>
+On va utiliser une inversion qui transforme Γ et <I>C</I> en 2 droites 
+parallèles <I>d</I><SUB>1</SUB> et <I>d</I><SUB>2</SUB>. Cette inversion aura comme centre le point <I>A</I> 
+commun à Γ et <I>C</I>. Les cercles <I>c</I><SUB><I>k</I></SUB> seront transformés en des 
+cercles qui seront tangents à ces 2 droites : les transformés seront donc 
+des cercles égaux. et les points de tangences de ces cercles sont sur la 
+parallèle équidistante à <I>d</I><SUB>1</SUB> et <I>d</I><SUB>2</SUB>.<BR>
+Voici la fonction qui renvoie le transformé d’un cercle <I>c</I>, son centre et 
+son rayon (lorsque ce transformé est un cercle) par l’inversion de centre <I>A</I>
+et de puissance <I>k</I> :
+</P><PRE CLASS="verbatim">inversionc(A,k,c):={
+  local p,O1,r1,O,r,B,B1;
+  O:=centre(c);
+  r:=rayon(c);
+  si est_element(A,c) alors
+    B:=symetrie(O,A);
+    B1:=inversion(A,k,B);
+  return perpendiculaire(B1,droite(O,A)); fsi;
+  si A==O alors return cercle(O,k/r),O,k/r; fsi;
+  p:=puissance(c,A);//p:=longueur2(A,O)-r^2
+  r1:=k*r/p;
+  O1:=inversion(A,k,projection(polaire(c,A),A));
+  return cercle(O1,r1),O1,r1;
+  }:;
+</PRE><P>on a 
+<I>r</I><SUB>1</SUB>=<I>k</I>*<I>r</I>/(<I>AO</I><SUP>2</SUP>−<I>r</I><SUP>2</SUP>)
+<I>O</I><SUB>1</SUB> est l’inverse du point d’affixe
+(<I>r</I><SUP>2</SUP>+(<I>xA</I>−<I>i</I>*<I>yA</I>)*(<I>xO</I>+<I>i</I>*<I>yO</I>)−(<I>xO</I><SUP>2</SUP>+<I>yO</I><SUP>2</SUP>))/(<I>xA</I>−<I>xO</I>+(−<I>i</I>)*(<I>yA</I>−<I>yO</I>))
+On tape :<BR>
+</P><PRE CLASS="verbatim">k:=24;
+Gamma:=cercle(point(2),2):;Gamma;
+C:=cercle(point(3/2),3/2):;C;
+d1:=inversionc(0,k,Gamma):;d1;
+d2:=inversionc(0,k,C):;d2[0];
+c0:=cercle(point(6),point(8));
+c1:=cercle(7+2*i,1):;
+C0:=inversionc(point(0),k,c0);;C0[0];
+C1:=inversionc(point(0),k,c1):;C1[0];
+L:=cercle(7+2*k*i,1)$(k=-7..7):;L;
+L1:=inversionc(0,k,L[j])$(j=0..14):;L1[0];
+</PRE><P>On obtient :<BR>
+<IMG SRC="casexo020.png"><BR>
+
+<B>Démonstration du théorème de Pappus avec </B><B><TT>Xcas</TT></B>
+On prend comme origine <I>A</I> le centre de l’inversion, et comme axe des <I>x</I> la 
+droite des centres.<BR>
+Γ est le cercle de diamètre <TT>A point(b)</TT> et <I>C</I> est le cercle de 
+diamètre <TT>A point(a)</TT>.<BR>
+Γ se transforme par l’inversion de centre <I>A</I> et de puissance <I>k</I> en la 
+droite d’équation <I>x</I>=<I>k</I>/<I>b</I><BR>
+<I>C</I> se transforme par l’inversion de centre <I>A</I> et de puissance <I>k</I> en la 
+droite d’équation <I>x</I>=<I>k</I>/<I>a</I><BR>
+Le cercle des points de tangence des cercles <I>c</I><SUB><I>j</I></SUB> est donc le transformé par
+l’inversion de centre <I>A</I> et de puissance <I>k</I> de la droite d’équation 
+<I>x</I>=(<I>k</I>/<I>b</I>+<I>k</I>/<I>a</I>)/2=<I>k</I>(<I>a</I>+<I>b</I>)/(2<I>ab</I>) c’est donc le cercle de diamètre 
+<TT>A point(2a*b/(a+b))</TT>.<BR>
+Le cercle <I>c</I>0 est de diamètre <I>AB</I> et son transformé <I>C</I>0
+dans l’inversion de centre <I>A</I> et de puissance <I>k</I> a pour centre
+<TT>point(k/2*(1/a+1/b))</TT> et comme rayon <TT>r:=k/2*(1/a-1/b)</TT>.<BR>
+On considère donc le cercle <I>C</I><SUB><I>j</I></SUB> de rayon 
+<TT>r:=k/2*(1/a-1/b)</TT> et de centre <TT>oj:=point(k/2*(1/a+1/b)+i*2*j*r);</TT> 
+Soit <I>c</I><SUB><I>j</I></SUB> l’inverse de <I>C</I><SUB><I>j</I></SUB> dans 
+l’inversion de centre <I>A</I> et de puissance <I>k</I>.<BR>
+On cherche l’ordonnée du centre et du rayon de <I>c</I><SUB><I>j</I></SUB>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">A:=point(0);
+assume(a=[3,0,10,0.1]);
+assume(b=[4,a,10,0.1]);;
+cercle(A,point(a));
+cercle(A,point(b));
+supposons(k=[23.9,0,25,0.1]);
+c0:=cercle(point(a),point(b));
+C0:=inversionr(A,k,c0);
+supposons(j=[1,0,7,1]);
+r:=k/2*(1/a-1/b);
+oj:=point(k/2*(1/a+1/b)+i*2*j*r);
+Cj:=cercle(oj,r);
+cj:=inversionr(A,k,Cj);
+cj[0];
+dj:=simplify(ordonnee(cj[1]));
+rj:=simplify(ordonnee(cj[1])/cj[2]);
+simplify(ordonnee(dj/rj);
+</PRE><P>On obtient pour <I>dj</I> :<BR>
+<TT>(-a</TT><CODE><TT>^</TT></CODE><TT>2*b*j+a*b</TT><CODE><TT>^</TT></CODE><TT>2*j)/(a</TT><CODE><TT>^</TT></CODE><TT>2*j</TT><CODE><TT>^</TT></CODE><TT>2-2*a*b*j</TT><CODE><TT>^</TT></CODE><TT>2+a*b+b</TT><CODE><TT>^</TT></CODE><TT>2*j</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient pour <I>rj</I> :<BR>
+<TT>(-a</TT><CODE><TT>^</TT></CODE><TT>2*b+a*b</TT><CODE><TT>^</TT></CODE><TT>2)/(2*a</TT><CODE><TT>^</TT></CODE><TT>2*j</TT><CODE><TT>^</TT></CODE><TT>2-4*a*b*j</TT><CODE><TT>^</TT></CODE><TT>2+2*a*b+2*b</TT><CODE><TT>^</TT></CODE><TT>2*j</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient pour <I>dj</I>/<I>rj</I> :<BR>
+<TT>(2*j</TT><BR>
+Donc <TT>Xcas</TT> a démontré que <I>d</I><SUB><I>j</I></SUB>=2<I>jr</I><SUB><I>j</I></SUB>.</P><H2 CLASS="section"><A NAME="toc27"></A><A NAME="htoc78">7.4</A>  Un problème de partage</H2><H3 CLASS="subsection"><A NAME="htoc79">7.4.1</A>  Le problème</H3><P>
+Un père possède un terrain triangulaire. Il veut forer un puits à 
+l’intérieur de son terrain, de façon qu’á sa mort chacun de ses 3 fils 
+possède un morceau triangulaire de même surface ayant accès au puits.</P><P>Soit <I>ABC</I> le terrain initial et <I>P</I> l’emplacement du puits.<BR>
+Chaque fils aura comme morceau <I>ABP</I> ou <I>APC</I> ou <I>BCP</I> et ces morceaux 
+doivent avoir même aire qui est le tiers de l’aire de <I>ABC</I>.<BR>
+Donc la hauteur de <I>ABP</I> doit être le tiers de la hauteur de <I>ABC</I> issue de 
+<I>C</I> et la hauteur de <I>BCP</I> doit être le tiers de la hauteur de <I>ABC</I> issue de
+<I>A</I>.<BR>
+Avec <TT>Xcas</TT> on clique sur 3 points et on 
+tape dans un ècran de géométrie :<BR>
+</P><PRE CLASS="verbatim">triangle(A,B,C);
+I:=A+(C-A)/3;
+dc:=parallele(I,droite(B,A));
+J:=A+2*(C-A)/3;
+da:=parallele(J,droite(B,C));
+P:=inter_unique(da,dc);
+affichage ([segment(P,A),segment(P,B),segment(P,C)],rouge)
+K:=B+(A-B)/3
+</PRE><P>On obtient :<BR>
+
+<IMG SRC="casexo021.png"></P><P>On tape pour vérifier :<BR>
+<TT>aire(A,B,P),aire(B,C,P),aire(C,A,P)</TT><BR>
+
+Propriétés du point <TT>P</TT><BR>
+<TT>I</TT> est le milieu de <TT>AJ</TT>, <TT>IP</TT> est parallèle à <TT>AK</TT> 
+donc <TT>P</TT> est le milieu de <TT>KJ</TT>.
+<TT>AP</TT> est une médiane de <TT>AKJ</TT>, <TT>KJ</TT> est parallèle à <TT>BC</TT>
+donc <TT>AP</TT> est une médiane de <TT>ABC</TT>.<BR>
+On montrerait de même que <TT>BP</TT> et <TT>CP</TT> sont des médianes de 
+<TT>ABC</TT>.<BR>
+<TT>P</TT> est donc le centre de gravité du triangle <TT>ABC</TT> ou encore
+l’isobarycentre des 3 points <TT>A,B,C</TT>.<BR>
+On tape pour vérifier :<BR>
+<TT>affichage(isobarycentre(A,B,C),point_width_2)</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc80">7.4.2</A>  Généralisation du problème</H3><P>
+Un père possède un terrain triangulaire et a <I>n</I> fils (<I>n</I>=3,4,5...).<BR>
+Il veut forer un puits à l’intérieur de son terrain, de façon qu’á sa 
+mort, chacun de ses <I>n</I> fils possède un morceau triangulaire de même 
+surface ayant accès au puits. Déterminer le nombre de solutions possibles.</P><P>Pour <I>n</I>=4, on cherche 2 points <TT>P</TT> et <TT>D</TT> avec <TT>D</TT> 
+par exemple sur <TT>BC</TT> (il y a donc 3 solutions selon que l’on choisit
+<TT>D</TT> sur <TT>BC</TT> ou sur <TT>AC</TT> ou sur <TT>AB</TT>) 
+pour que chaque fils ait comme morceau <I>ABP</I> ou <I>APC</I> ou <I>BDP</I> ou <I>DCP</I>
+et que ces morceaux soient de même aire à savoir le quart de l’aire de 
+<I>ABC</I>.<BR>
+Avec <TT>Xcas</TT> on clique sur 3 points et on 
+tape dans un ècran de géométrie :<BR>
+</P><PRE CLASS="verbatim">triangle(A,B,C);
+I:=A+(C-A)/4;
+dc:=parallele(I,droite(B,A));
+J:=A+(C-A)/2;
+da:=parallele(J,droite(B,C));
+P:=inter_unique(da,dc);
+D:=milieu(B,C);
+affichage ([segment(P,A),segment(P,B),segment(P,C),
+            segment(P,D)],rouge);
+K:=B+(A-B)/2;
+</PRE><P>On obtient :<BR>
+
+<IMG SRC="casexo022.png"></P><P>On tape pour vérifier :<BR>
+<TT>aire(A,B,P),aire(B,D,P),aire(C,A,P),aire(D,C,P)</TT><BR>
+
+Propriétés du point <TT>P</TT><BR>
+<TT>I</TT> est le milieu de <TT>AJ</TT>, <TT>IP</TT> est parallèle à <TT>AK</TT> 
+donc <TT>P</TT> est le milieu de <TT>KJ</TT>.
+<TT>AP</TT> est une médiane de <TT>AKJ</TT>, <TT>KJ</TT> est parallèle à <TT>BC</TT>
+donc <TT>AP</TT> est la médiane <TT>AD</TT> de <TT>ABC</TT>.<BR>
+De plus <TT>P</TT> est le milieu de <TT>AD</TT> puisque <TT>J</TT> est le milieu de 
+<TT>AC</TT>, <TT>JP</TT> est parallèle à <TT>DC</TT> .<BR>
+<TT>P</TT> est donc le barycentre des 3 points <TT>[A,2],[B,1],[C,1]</TT>.<BR>
+On tape pour vérifier :<BR>
+<TT>affichage(barycentre([A,2],[B,1],[C,1]),point_width_2)</TT>.<BR>
+Les 2 autres solutions, pour l’emplacement du puits, sont obtenues avec :<BR>
+<TT>affichage(barycentre([A,1],[B,2],[C,1]),point_width_2)</TT><BR>
+<TT>affichage(barycentre([A,1],[B,1],[C,2]),point_width_2)</TT><BR>
+
+Pour <I>n</I>=5, on cherche 3 points <TT>P, D</TT> et <TT>E</TT> avec <TT>D et E</TT> sur un 
+même côté par exemple sur <TT>BC</TT> ou <TT>D</TT> et <TT>E</TT> sur des 
+côtés différents par exemple <TT>D</TT> sur <TT>BC</TT> et <TT>E</TT> 
+par exemple sur <TT>AC</TT> (il y a donc en tout 6 solutions : 3 solutions selon 
+que l’on choisit <TT>D</TT> et <TT>E</TT> sur <TT>BC</TT> ou sur <TT>AC</TT> ou sur 
+<TT>AB</TT> et 3 solutions selon que l’on choisit <TT>D</TT> et <TT>E</TT> pas sur 
+<TT>BC</TT> ou pas sur <TT>AC</TT> ou pas sur <TT>AB</TT>) 
+pour que chaque fils ait comme morceau un triangle de sommets pris parmi
+<TT>A,B,C,D,E,P</TT>
+et que ces morceaux soient de même aire à savoir le cinquième de l’aire 
+de 
+<I>ABC</I>.<BR>
+Avec <TT>Xcas</TT> on clique sur 3 points et on 
+tape dans un ècran de géométrie :<BR>
+</P><PRE CLASS="verbatim">triangle(A,B,C);
+I:=A+(C-A)/5
+dc:=parallele(I,droite(B,A));
+J:=A+2*(C-A)/5;
+da:=parallele(J,droite(B,C));
+P:=inter_unique(da,dc);
+D:=B+(C-B)/3;
+E:=B+2*(C-B)/3;
+affichage ([segment(P,A),segment(P,B),segment(P,C),
+            segment(P,D),segment(P,E)],rouge)
+K:=B+3*(A-B)/5;
+affichage(barycentre([A,3],[B,1],[C,1]),point_width_2);
+</PRE><P>On obtient :<BR>
+
+<IMG SRC="casexo023.png"></P><P>On tape pour vérifier :<BR>
+<TT>aire(A,B,P),aire(B,D,P),aire(C,A,P),aire(D,E,P),aire(E,C,P)</TT><BR>
+
+Propriétés du point <TT>P</TT><BR>
+<TT>I</TT> est le milieu de <TT>AJ</TT>, <TT>IP</TT> est parallèle à <TT>AK</TT> 
+donc <TT>P</TT> est le milieu de <TT>KJ</TT>.
+<TT>AP</TT> est une médiane de <TT>AKJ</TT>, <TT>KJ</TT> est parallèle à <TT>BC</TT>
+donc <TT>AP</TT> est la médiane de <TT>ABC</TT>.<BR>
+De plus <TT>P</TT> est situé au 2/5 de cette médiane de <TT>AD</TT> puisque 
+<TT>J</TT> est situé au 2/5 de <TT>AC</TT>, <TT>JP</TT> est parallèle à <TT>DC</TT>.<BR>
+Donc l’aire de <TT>PBC</TT> vaut les 3/5 de l’aire de <TT>ABC</TT>
+<TT>P</TT> est donc le barycentre des 3 points <TT>[A,3],[B,1],[C,1]</TT>.<BR>
+On tape pour vérifier :<BR>
+<TT>affichage(barycentre([A,2],[B,1],[C,1]),point_width_2)</TT>.<BR>
+On voit le partage en rouge sur la figure lorsque le puits est en <TT>P</TT>.<BR>
+Les 2 autres solutions, pour l’emplacement du puits lorsque l’on choisit 
+<TT>D</TT> et <TT>E</TT> sur le même côté, sont obtenues avec :<BR>
+<TT>affichage(barycentre([A,1],[B,2],[C,1]),point_width_2)</TT><BR>
+<TT>affichage(barycentre([A,1],[B,1],[C,2]),point_width_2)</TT><BR>
+Les 3 autres solutions, pour l’emplacement du puits lorsque l’on choisit 
+<TT>D</TT> et <TT>E</TT> sur des côtés, sont obtenues avec :<BR>
+<TT>affichage(barycentre([A,2],[B,2],[C,1]),point_width_2)</TT><BR>
+<TT>affichage(barycentre([A,2],[B,1],[C,2]),point_width_2)</TT><BR>
+<TT>Q:=affichage(barycentre([A,1],[B,2],[C,2]),point_width_2)</TT><BR>
+On voit le partage en vert sur la figure lorsque le puits est en <TT>Q</TT> :<BR>
+
+<IMG SRC="casexo024.png"></P><P>On généralise aisément.<BR>
+On montre par récurrence que le nombre de solutions pour <I>n</I> (<I>n</I>&gt;3) est : 
+(<I>n</I>−2)(<I>n</I>−1)/2.<BR>
+En effet on cherche le nombre de triplets d’entiers non nuls de somme <I>n</I> i.e.
+on cherche le nombre de triplets (<I>a</I>,<I>b</I>,<I>c</I>)∈ ℕ<SUP>*3</SUP> vérifiant 
+<I>a</I>+<I>b</I>+<I>c</I>=<I>n</I>.
+pour <I>n</I>=3 ce nombre est 1=(<I>n</I>−2)(<I>n</I>−1)/2 car (1+1+1=3)<BR>
+<B>Hypothèse de recurrence</B> : pour <I>n</I> ce nombre est (<I>n</I>−2)(<I>n</I>−1)/2,<BR>
+pour <I>n</I>+1, on cherche le nombre de 
+triplets d’entiers non nuls de somme <I>n</I>+1 :<BR>
+si <I>a</I>+<I>b</I>+<I>c</I>=<I>n</I>+1, c’est que <I>a</I>+<I>b</I>&lt;<I>n</I>+1 car <I>c</I> ≠ 0<BR>
+Donc le problème revient à chercher le nombre de couples (<I>a</I>,<I>b</I>) d’entiers 
+non nuls de somme strictement inférieure à <I>n</I>+1. Par hypothèse de 
+recurrence, le nombre de couples (<I>a</I>,<I>b</I>) d’entiers 
+non nuls de somme strictement inférieure à <I>n</I> est (<I>n</I>−2)(<I>n</I>−1)/2. Il reste
+donc à comptabiliser les couples (<I>a</I>,<I>b</I>) d’entiers 
+non nuls de somme <I>n</I> : il y en <I>n</I>−1 puisque <I>a</I> peut prendre <I>n</I>−1 valeurs. 
+Donc le nombre de triplets d’entiers non nuls de somme <I>n</I>+1 est :<BR>
+(<I>n</I>−2)(<I>n</I>−1)/2+<I>n</I>−1=(<I>n</I>−1)(<I>n</I>−2+2)/2=(<I>n</I>−1)<I>n</I>/2.
+On a ainsi montrer par récurrence que le nombre de solutions pour le partage
+en <I>n</I> triangles de même aire est (<I>n</I>−2)(<I>n</I>−1)/2.<BR>
+Il est interessant de voir alors la disposition des différents puits les uns 
+par rapport aux autres : il forme un reseau triangulaire de côté <I>n</I>−2
+et on retrouve alors le nombre de puits avec la formule :<BR>
+1+2+...+(<I>n</I>−2)=(<I>n</I>−2)(<I>n</I>−1)/2.
+</P><H2 CLASS="section"><A NAME="toc28"></A><A NAME="htoc81">7.5</A>  Le sigle CE</H2><P>
+Il existe une différence subtile entre le sigle CE "Comformité Européenne"
+indiquant que le produit répond à des normes de sécurité et qu’il peut 
+circuler librement en Europe et le sigle CE signifiant "China Export".<BR>
+Seul l’espace entre le C et le E et différent : dans le sigle chinois le C et
+le E sont plus proches.<BR>
+Alors soyez vigilant !
+</P><H3 CLASS="subsection"><A NAME="htoc82">7.5.1</A>  Le sigle "Comformité Européenne"</H3><P>
+On tape :
+</P><PRE CLASS="verbatim">cercle(-5,5);
+cercle(-5,4);
+cercle(4,5);
+cercle(4,4);
+c1:=cercle(-5,5,pi/2,3*pi/2,affichage=rempli);
+c2:=cercle(-5,4,pi/2,3*pi/2,affichage=rempli+ 7);
+c3:=cercle(4,5,pi/2,3*pi/2,affichage=rempli);
+c4:=cercle(4,4,pi/2,3*pi/2,affichage=rempli+ 7);
+rectangle(i/2,-i/2,4,affichage=rempli);
+papier_quadrille(1,pi/2,x=-11..10,y=-6..6);
+</PRE><P>On obtient :<BR>
+<IMG SRC="casexo025.png">
+</P><H3 CLASS="subsection"><A NAME="htoc83">7.5.2</A>  Le sigle "China Export"</H3><P>
+On tape :
+</P><PRE CLASS="verbatim">cercle(1,5);
+cercle(1,4);
+c1:=cercle(-5,5,pi/2,3*pi/2,affichage=rempli);
+c2:=cercle(-5,4,pi/2,3*pi/2,affichage=rempli+ 7);
+c5:=cercle(1,5,pi/2,3*pi/2,affichage=rempli);
+c6:=cercle(1,4,pi/2,3*pi/2,affichage=rempli+ 7);
+rectangle(-3+i/2,-3-i/2,4,affichage=rempli);
+papier_quadrille(1,pi/2,x=-11..10,y=-6..6);
+cercle(-5,5);
+cercle(-5,4);
+</PRE><P>On obtient :<BR>
+<IMG SRC="casexo026.png">
+</P><H2 CLASS="section"><A NAME="toc29"></A><A NAME="htoc84">7.6</A>  Le cercle inscrit</H2><H3 CLASS="subsection"><A NAME="htoc85">7.6.1</A>  Le problème</H3><P>
+Soient <I>ABC</I> un triangle et <I>M</I> un point qui se déplace sur le segment <I>BC</I>.
+Soit <I>I</I> (resp <I>J</I>) le centre du cercle inscrit au triangle <I>ABM</I> (resp <I>ACM</I>).
+Montrer que le cercle de diamètre <I>IJ</I> passe par un point fixe lorsque
+le point <I>M</I> se déplace sur le segment <I>BC</I>.</P><H3 CLASS="subsection"><A NAME="htoc86">7.6.2</A>  Les lemmes</H3><H4 CLASS="subsubsection">Lemme1</H4><P>
+Soient <I>c</I> est un cercle de diamètre <I>AB</I> et une corde <I>MP</I> avec <I>M</I> et <I>P</I> 
+situé d’un même côté de <I>AB</I>.
+Soient <I>A</I>1 et <I>B</I>1 les projections respectives de <I>A</I> et <I>B</I> sur <I>MP</I>.<BR>
+Alors 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>A</I>1<I>M</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>PB</I>1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD></TR>
+</TABLE><DIV CLASS="center"><IMG SRC="casexo027.png"></DIV><P>En effet le centre de <I>c</I> est le milieu de <I>AB</I> et donc il se projette sur le 
+milieu de <I>MP</I>. Comme le milieu de <I>AB</I> se projette sur le 
+milieu <I>O</I>1 de <I>A</I>1<I>B</I>1, on a <I>A</I>1<I>B</I>1 et <I>MP</I> ont même milieu.<BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>A</I>1<I>M</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>A</I>1<I>O</I>1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>O</I>1<I>M</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>O</I>1<I>B</I>1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>PO</I>1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>PB</I>1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD></TR>
+</TABLE><H4 CLASS="subsubsection">Lemme2</H4><P>
+Soient <I>ABC</I> un triangle et <I>K</I> le centre de son cercle inscrit.<BR>
+Alors <I>K</I> est le barycentre des points [<I>A</I>,<I>a</I>],[<I>B</I>,<I>b</I>],[<I>C</I>,<I>c</I>] où <I>a</I>,<I>b</I>,<I>c</I> sont 
+les longueurs des côtés <I>BC</I>, <I>AC</I>, <I>AB</I>.<BR>
+
+</P><DIV CLASS="center"><IMG SRC="casexo028.png"></DIV><P>
+Si la bissectrice intérieure de l’angle <I>A</I> coupe <I>BC</I> en <I>A</I>1 on a :
+<I>A</I>1<I>B</I>/<I>A</I>1<I>C</I>=<I>c</I>/<I>b</I> donc <I>b</I>*<I>A</I>1<I>B</I>=<I>c</I>*<I>A</I>1<I>C</I> ou encore puisque <I>A</I>1 se trouve sur le 
+segment <I>BC</I> :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>b</I>*</TD><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>A</I>1<I>B</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD><TD CLASS="dcell">+<I>c</I>*</TD><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>A</I>1<I>C</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD><TD CLASS="dcell">=0</TD></TR>
+</TABLE><P>
+donc <I>A</I>1 est le barycentre de [<I>B</I>,<I>b</I>],[<I>C</I>,<I>c</I>].</P><P>Si la bissectrice intérieure de l’angle <I>B</I> coupe <I>AC</I> en <I>B</I>1 on a :
+<I>B</I>1<I>A</I>/<I>B</I>1<I>C</I>=<I>c</I>/<I>a</I> donc <I>a</I>*<I>B</I>1<I>A</I>=<I>c</I>*<I>B</I>1<I>C</I> ou encore puisque <I>B</I>1 se trouve sur le 
+segment <I>AC</I> :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I>*</TD><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>B</I>1<I>A</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD><TD CLASS="dcell">+<I>c</I>*</TD><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>B</I>1<I>C</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD><TD CLASS="dcell">=0</TD></TR>
+</TABLE><P>
+donc <I>B</I>1 est le barycentre de [<I>A</I>,<I>a</I>],[<I>C</I>,<I>c</I>].<BR>
+Donc le barycentre des points [<I>A</I>,<I>a</I>],[<I>B</I>,<I>b</I>],[<I>C</I>,<I>c</I>] est l’intersection de 
+<I>AA</I>1 et de <I>BB</I>1 c’est à dire l’intersection des bissectrices <I>K</I> 
+qui est le centre du cercle inscrit.</P><H4 CLASS="subsubsection">Lemme3</H4><P>
+Soient un triangle <I>ABC</I> et <I>K</I>1 un point de la droite <I>BC</I>.<BR>
+Alors <I>K</I>1 est la projection sur <I>BC</I> du centre du cercle inscrit à <I>ABC</I> si 
+et seulement si :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>K</I>1<I>B</I>−<I>K</I>1<I>C</I>=<I>AB</I>−<I>AC</I></TD></TR>
+</TABLE><DIV CLASS="center"><IMG SRC="casexo029.png"></DIV><P>
+Soit <I>K</I> le centre du cercle inscrit à <I>ABC</I>.<BR>
+Soient <I>K</I>1, <I>K</I>2 et <I>K</I>3 les projections respectives de <I>K</I> sur <I>BC</I>, <I>AC</I> et 
+<I>AB</I>.
+Puisque les côtés <I>AB</I>,<I>AC</I>,<I>BC</I> sont des tangentes au cercle inscrit et que
+<I>K</I>1,<I>K</I>2,<I>K</I>3 sont les points de contact de ces tangentes, on a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>BK</I>1=<I>BK</I>3, <I>CK</I>1=<I>CK</I>2, <I>AK</I>2=<I>AK</I>3</TD></TR>
+</TABLE><P> et 
+<I>K</I>1, <I>K</I>2 et <I>K</I>3 se trouvent respectivement sur les segments sur <I>BC</I>, <I>AC</I> et
+<I>AB</I>.
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>AB</I>−<I>AC</I>=<I>AK</I>3+<I>K</I>3<I>B</I>−(<I>AK</I>2+<I>K</I>2<I>C</I>)=<I>K</I>1<I>B</I>−<I>K</I>1<I>C</I></TD></TR>
+</TABLE><P>Soit <I>K</I>1 tel que <I>K</I>1<I>B</I>−<I>K</I>1<I>C</I>=<I>AB</I>−<I>AC</I>.<BR>
+Le point <I>K</I>1 se trouve sur le segment <I>BC</I> en effet si <I>K</I>1 était à 
+l’exterieur de <I>BC</I> on aurait |<I>K</I>1<I>B</I>−<I>K</I>1<I>C</I>|=|<I>BC</I>|&gt;|<I>AB</I>−<I>AC</I>| d’apres l’inégalité 
+triangulaire ce qui condredit l’hypothèse <I>K</I>1<I>B</I>−<I>K</I>1<I>C</I>=<I>AB</I>−<I>AC</I>.
+L’égalité <I>K</I>1<I>B</I>−<I>K</I>1<I>C</I>=<I>AB</I>−<I>AC</I> définit un seul point <I>K</I>1 du segment <I>BC</I>, ce 
+point est donc la projection du centre du cercle inscrit à <I>ABC</I>
+</P><H3 CLASS="subsection"><A NAME="htoc87">7.6.3</A>  La solution géométrique</H3><P>
+Pour la solution géométrique, on va se servir des lemmes 1 et 3.
+La bissectrice de l’angle <I>BMA</I> et la bissectrice de l’angle  <I>CMA</I> sont perpendiculaire donc <I>M</I> est sur le cercle de diamétre <I>IJ</I>.
+Ce cercle coupe le segment <I>BC</I> en <I>M</I> et <I>P</I>. Montrons que <I>P</I> est fixe.
+Soient <I>I</I>1 et <I>J</I>1 les projections de <I>I</I> et <I>J</I> sur <I>BC</I>.</P><P><IMG SRC="casexo030.png"><BR>
+D’après le <B> lemme3 </B> on a :<BR>
+<I>I</I>1<I>B</I>−<I>I</I>1<I>M</I>=<I>AB</I>−<I>AM</I> et<BR>
+<I>J</I>1<I>M</I>−<I>J</I>1<I>C</I>=<I>AM</I>−<I>AC</I> donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>I</I>1<I>B</I>−<I>I</I>1<I>M</I>+<I>J</I>1<I>M</I>−<I>J</I>1<I>C</I>=<I>AB</I>−<I>AM</I>+<I>AM</I>−<I>AC</I>=<I>AB</I>−<I>AC</I></TD></TR>
+</TABLE><P>
+Puisque <I>I</I>1 et <I>J</I>1 sont entre <I>B</I> et <I>C</I>, et que <I>M</I> et <I>P</I> sont entre
+<I>I</I>1 et <I>J</I>1, on a <I>M</I> et <I>P</I> sont entre <I>B</I> et <I>C</I>.<BR>
+D’après le <B>lemme1</B> on a :<BR>
+<I>I</I>1<I>M</I>=<I>PJ</I>1 et 
+<I>I</I>1<I>P</I>=<I>MJ</I>1 donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>I</I>1<I>B</I>−<I>I</I>1<I>M</I>+<I>J</I>1<I>M</I>−<I>J</I>1<I>C</I>=<I>I</I>1<I>B</I>−<I>PJ</I>1+<I>I</I>1<I>P</I>−<I>J</I>1<I>C</I></TD></TR>
+</TABLE><P>
+<I>M</I> et <I>P</I> sont entre <I>B</I> et <I>C</I> donc
+<I>I</I>1<I>B</I>+<I>I</I>1<I>P</I>=<I>PB</I> et <I>PJ</I>1+<I>J</I>1<I>C</I>=<I>PC</I> d’où :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>PB</I>−<I>PC</I>=<I>AB</I>−<I>AC</I></TD></TR>
+</TABLE><P>
+Le point <I>P</I> est fixe et <I>P</I> est la projection du centre <I>K</I> du cercle inscrit
+à <I>ABC</I>.
+</P><H3 CLASS="subsection"><A NAME="htoc88">7.6.4</A>  La solution avec <TT>Xcas</TT></H3><P>
+Le choix des paramètres est important !
+Sans perte de généralité, on peut prendre l’origine du repère en <I>B</I>,
+et <I>C</I> sur l’axe des <I>x</I> d’abscisse <I>a</I>. Le point <I>M</I> est donc sur l’axe des 
+<I>x</I> d’abscisse <I>m</I>&lt;<I>a</I> .<BR>
+Si on choisit comme paramètres les coordonnèes de <I>A</I>, <TT>Xcas</TT> n’arrive
+pas à faire les calculs (cf la remarque ci-après). Mais si on choisit comme paramètres les longueurs 
+<I>b</I> et <I>c</I> des côtés <I>AC</I> et <I>AB</I> les calculs sont simples même si
+on ne définit pas les centres des cercles inscrits comme des barycentres :
+on peut indifférement mettre pour définir <I>I</I> :<BR>
+<TT>I:=barycentre([A,m],[B,l1],[M,c]);</TT> (cf <B>lemme2</B>) ou<BR>
+<TT>I:=normal(centre(inscrit(A,B,M)));</TT> (idem pour définir <I>J</I> et <I>K</I>)
+On tape :
+</P><PRE CLASS="verbatim">B:=point(0);
+supposons(a=[1,0,2,0.1]);
+C:=point(a);
+supposons(b=[0.9,0,2,0.1]);
+supposons(c=[1.1,0,2,0.1]);
+A:=inter(cercle(B,c),cercle(C,b))[1];
+triangle(A,B,C);
+supposons(m=[0.4,0,a,0.1]);
+M:=point(m);
+b1:=longueur(A,M);
+I:=barycentre([A,m],[B,b1],[M,c]);
+J:=barycentre([A,a-m],[C,b1],[M,b]);
+K:=barycentre([A,a],[B,b],[C,c],affichage=1);
+I1:=projection(droite(y=0),I,affichage=quadrant3);
+J1:=projection(droite(y=0),J,affichage=quadrant4);
+K1:=projection(droite(y=0),K,affichage=quadrant2+
+                               epaisseur_point_2);
+</PRE><P>On obtient :
+</P><DIV CLASS="center"><IMG SRC="casexo031.png"></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>simplify(2*longueur(B,K1)-a))</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>-b+c</TT></DIV><P>
+cela prouve le <B>lemme3</B> puisque <I>CK</I>1=<I>a</I>−<I>BK</I>1 on a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>BK</I>1−<I>CK</I>1=2*<I>BK</I>1−<I>a</I>=<I>c</I>−<I>b</I>=<I>AB</I>−<I>AC</I></TD></TR>
+</TABLE><P>
+On tape en se servant du <B>lemme1</B> pour définir <I>P</I> :
+</P><DIV CLASS="center"><TT>P:=I1+vecteur(M,J1):;</TT></DIV><DIV CLASS="center"><TT>simplify(affixe(P))</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>(a-b+c)/2</TT></DIV><P>
+Donc <I>P</I> est fixe.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>simplify(affixe(K1))</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>(a-b+c)/2</TT></DIV><P>
+Donc <I>P</I> et <I>K</I>1 sont confondus.</P><P><B>Remarque</B>
+On peut aussi faire faire le calcul à <TT>Xcas</TT> avec au départ plus de 
+paramètres que nécessaire et donner ensuite les relations entre ces 
+paramètres seulement à la fin des calculs.<BR>
+On choisit comme paramètres :<BR>
+<I>a</I>1 l’abscisse de <I>A</I>,<BR>
+<I>a</I> l’abscisse de <I>C</I>,<BR>
+<I>m</I> l’abscisse de <I>M</I>,<BR>
+<I>b</I>1 la longueur de <I>AM</I>,<BR>
+<I>b</I> la longueur de <I>AC</I>,<BR>
+<I>c</I> la longueur de <I>AB</I>.<BR>
+cos(<I>B</I>) le cosinus de l’angle <I>B</I> qu triangle <I>ABC</I>
+Ces paramètres vérifient :<BR>
+<I>a</I>1=<I>c</I>*cos(<I>B</I>)<BR>
+<I>b</I>1<SUP>2</SUP>=<I>m</I><SUP>2</SUP>+<I>c</I><SUP>2</SUP>−2<I>m</I>*<I>c</I>*<I>cos</I>(<I>B</I>)<BR>
+<I>b</I><SUP>2</SUP>=<I>c</I><SUP>2</SUP>+<I>a</I><SUP>2</SUP>−2<I>a</I>*<I>c</I>*cos(<I>B</I>)<BR>
+Si on note <I>i</I>1 l’affixe de <I>I</I>1, <I>j</I>1 l’affixe de <I>J</I>1 et <I>p</I>1 l’affixe de 
+<I>P</I>1, on a, avec les notations précédentes, <I>PB</I>−<I>PC</I>=2*<I>PB</I>−<I>a</I>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">i1:=affixe(barycentre([point(a1),m],[point(0),b1],[point(m),c]));
+j1:=affixe(barycentre([point(a1),a-m],[point(m),b],[point(a),b1]));
+p1:=simplify(i1+j1-m);
+res:=simplify(2*p1-1);
+res:=simplify(subst(subst(res,[a1=c*cos(B),b1^2=m^2+c^2-2*m*c*cos(B)]),
+            cos(B)=(-b^2+c^2+a^2)/(2*c*a)));
+</PRE><P>On obtient alors facilement pour <I>PB</I>−<I>PC</I>=2*<I>PB</I>−<I>a</I>=<TT>res</TT> :<BR>
+<TT>-b+c</TT><BR>
+Donc <I>PB</I>−<I>PC</I>=<I>c</I>−<I>b</I>=<I>AB</I>−<I>AC</I>.</P><H2 CLASS="section"><A NAME="toc30"></A><A NAME="htoc89">7.7</A>  Un problème de surface minimum</H2><P>
+Ce problème a ète donné aux olympiades académiques de 2005.
+</P><H3 CLASS="subsection"><A NAME="htoc90">7.7.1</A>  Le problème</H3><P>
+Soit une feuille de papier rectangulaire <I>ABCD</I> de côtés <I>AB</I>=4 unités 
+et <I>BC</I>=6 unités.
+Soient <I>R</I> un point du segment <I>AB</I> et, <I>T</I> un point du segment 
+<I>CB</I>. <I>R</I> et <I>T</I> sont tels que si on plie la feuille selon le segment <I>RT</I> 
+le point <I>B</I> se trouve sur le segment <I>AD</I>. On appelle <I>S</I> le point du segment
+<I>AD</I> qui coincide avec <I>B</I> lors du pliage.<BR>
+On pose <I>AR</I>=<I>a</I> et <I>BT</I>=<I>b</I>.<BR>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Trouver les valeurs minimales et maximales de <I>a</I>,
+</LI><LI CLASS="li-itemize">Trouver une relation entre <I>a</I> et <I>b</I>,
+</LI><LI CLASS="li-itemize">Trouver la valeur de <I>a</I> pour laquelle l’aire de <I>BRT</I> est minimale.
+</LI></UL><H3 CLASS="subsection"><A NAME="htoc91">7.7.2</A>  La figure</H3><P>
+On peut faire la figure à l’aide d’une feuille de papier que l’on plie de 
+façon à amener le coin <I>B</I> de la feuille sur <I>AD</I> ou bien, on utilise 
+<TT>Xcas</TT> mais alors :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+on peut définir tout d’abord <I>S</I>, puis définir la 
+pliure comme la médiatrice <I>m</I> de <I>BS</I>, puis on trouve les points <I>R</I> et <I>T</I>
+comme intersection de <I>m</I> avec les segments <I>AB</I> et <I>BC</I>.<BR>
+Grâce à <TT>s:=element(0..6);S:=point(s*i);</TT> on peut faire bouger le point
+<I>S</I> sur <I>AD</I>.<BR>
+On tape (voir <TT>minis.xws</TT>) :
+<PRE CLASS="verbatim">A:=point(0);
+B:=point(4);
+C:=point(4+6*i);
+D:=point(6*i);
+quadrilatere(A,B,C,D);
+assume(s=[2,0,6]);
+S:=point(s*i);
+m:=mediatrice(B,S);
+R:=inter_unique(m,droite(A,B));
+T:=inter_unique(m,droite(C,B));
+equation(m);
+r:=coordonnees(R);
+t:=normal(coordonnees(T));
+AT:=aire(triangle(R,B,T));
+</PRE>On obtient :<BR>
+
+<IMG SRC="casexo032.png">
+</LI><LI CLASS="li-itemize">on peut définir tout d’abord <I>R</I> d’abscisse <I>a</I>, puis définir le 
+point <I>S</I> comme intersection du cercle de centre <I>R</I> et de rayon 4−<I>a</I> avec le
+segment <I>AD</I>, puis la pliure comme la médiatrice <I>m</I> de <I>BS</I>,<P>On tape (voir <TT>minia.xws</TT>):
+</P><PRE CLASS="verbatim">A:=point(0);
+B:=point(4);
+C:=point(4+6*i);
+D:=point(6*i);
+quadrilatere(A,B,C,D);
+assume(a=[1,0,4]);
+R:=point(a);
+S:=inter(cercle(R,4-a),segment(A,D))[0];
+m:=mediatrice(B,S);
+T:=inter_unique(m,droite(C,B));
+equation(m);
+coordonnees(S);
+normal(coordonnees(T));
+AT:=aire(triangle(R,B,T));
+plotfunc(AT-5,a);
+segment(R,a+i*(AT-5));
+</PRE></LI></UL><P>
+Dans les 2 cas, on obtient, après réglage de la fenêtre graphique, 
+la figure :</P><P><IMG SRC="casexo033.png"></P><H3 CLASS="subsection"><A NAME="htoc92">7.7.3</A>  Les calculs avec <TT>Xcas</TT></H3><P>
+On obtient :<BR>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+dans le premier cas :<BR>
+<TT>equation(m)</TT> et on obtient <TT>Y=(4/s*X+(s</TT><CODE><TT>^</TT></CODE><TT>2-16)/(2*s))</TT><BR>
+<TT>coordonnees(R)</TT> et on obtient <TT>[-1/8*s</TT><CODE><TT>^</TT></CODE><TT>2+2,0]</TT><BR>
+<TT>normal(coordonnees(T))</TT> et on obtient <TT>[4,(s</TT><CODE><TT>^</TT></CODE><TT>2+16)/(2*s)]</TT><BR>
+<TT>AT:=aire(triangle(R,B,T))</TT> et on obtient <TT>(s</TT><CODE><TT>^</TT></CODE><TT>2+16)/2/s*(1/8*s</TT><CODE><TT>^</TT></CODE><TT>2+2)/2</TT><BR>
+mais toutes les réponses sont fonction de <TT>s</TT> qui a été choisi comme 
+paramètre.<BR>
+Si on veut avoir la relation liant <I>b</I> et <I>a</I> on tape :<BR>
+<TT>factor(resultant(a-r[0],numer(b-t[1]),s))</TT><BR>
+on obtient :<BR>
+<TT>32*(2*a</TT><CODE><TT>^</TT></CODE><TT>2+a*b</TT><CODE><TT>^</TT></CODE><TT>2-16*a-2*b</TT><CODE><TT>^</TT></CODE><TT>2+32)</TT>
+donc <TT>2*a</TT><CODE><TT>^</TT></CODE><TT>2+a*b</TT><CODE><TT>^</TT></CODE><TT>2-16*a-2*b</TT><CODE><TT>^</TT></CODE><TT>2+32=0</TT>
+</LI><LI CLASS="li-itemize">dans le deuxième cas :<BR>
+pour <TT>equation(m)</TT>, on obtient <TT>y=((-(sqrt(-2*a+4)))/(a-2)*x+a*sqrt(-2*a+4)/(a-2))</TT><BR>
+pour <TT>coordonnees(S)</TT>, on obtient <TT>[0,sqrt((-a+4)</TT><CODE><TT>^</TT></CODE><TT>2-a</TT><CODE><TT>^</TT></CODE><TT>2)]</TT><BR>
+pour <TT>normal(coordonnees(T))</TT>, on obtient 
+<TT>[4,(a-4)*sqrt(-2*a+4)/(a-2)]</TT><BR>
+pour <TT>AT:=aire(triangle(R,B,T))</TT>, on obtient 
+<TT>(a-4)*sqrt(-2*a+4)/(a-2)*(4-a)/2</TT><BR>
+donc <TT>b=(a-4)*sqrt(-2*a+4)/(a-2)</TT> ou encore :<BR>
+si <I>a</I>≠ 2 on a :<BR>
+<TT>factor(b</TT><CODE><TT>^</TT></CODE><TT>2*(a-2)</TT><CODE><TT>^</TT></CODE><TT>2-(a-4)</TT><CODE><TT>^</TT></CODE><TT>2*(4-2*a))=0</TT> 
+<TT>(a-2)*(b</TT><CODE><TT>^</TT></CODE><TT>2*a-2*b</TT><CODE><TT>^</TT></CODE><TT>2+2*a</TT><CODE><TT>^</TT></CODE><TT>2-16*a+32)=0</TT>
+donc <TT>2*a</TT><CODE><TT>^</TT></CODE><TT>2+a*b</TT><CODE><TT>^</TT></CODE><TT>2-16*a-2*b</TT><CODE><TT>^</TT></CODE><TT>2+32=0</TT>
+</LI></UL><H3 CLASS="subsection"><A NAME="htoc93">7.7.4</A>  La démonstration</H3><H4 CLASS="subsubsection">Les valeurs minimales et maximales de <I>a</I></H4><P>
+En faisant bouger <TT>s</TT> ou <TT>a</TT>, on voit que <TT>R</TT> va se déplacer du 
+point <TT>A</TT>
+au point <TT>R1</TT> d’abscisse <TT>a1</TT> qui correspond à <TT>S</TT> en <TT>S1</TT>
+et <TT>T</TT> en <TT>C</TT>, c’est à dire lorsque <TT>m</TT> passe par <TT>C</TT>.<BR>
+On a alors :<BR>
+<I>S</I>=0+<I>i</I>*<I>s</I> avec 0 ≤ <I>s</I> ≤ 6 et <I>SC</I>=6 donc <I>S</I> est sur le cercle de centre
+<TT>C</TT> et de rayon 6 qui a pour équation : (<I>X</I>−4)<SUP>2</SUP>+(<I>Y</I>−6)<SUP>2</SUP>=36<BR>
+si <I>X</I>=0 on a (<I>Y</I>−6)<SUP>2</SUP>=36−16=20 donc <I>s</I>=6−√<SPAN style="text-decoration:overline">20</SPAN>=6−2√<SPAN style="text-decoration:overline">5</SPAN><BR>
+On a :<BR>
+<I>S</I>1<I>R</I>1=4−<I>a</I>1, <I>AR</I>1=<I>a</I>1 et <I>AS</I>1=6−2√<SPAN style="text-decoration:overline">5</SPAN><BR>
+comme le triangle <I>AS</I>1<I>R</I>1 est rectangle en <I>A</I> on a :<BR>
+(4−<I>a</I>1)<SUP>2</SUP>=<I>a</I>1<SUP>2</SUP>+(6−2√<SPAN style="text-decoration:overline">5</SPAN>)<SUP>2</SUP>=<I>a</I>1<SUP>2</SUP>+−24*√<SPAN style="text-decoration:overline">5</SPAN>+56<BR>
+donc<BR>
+−8*<I>a</I>1=−24*√<SPAN style="text-decoration:overline">5</SPAN>+40<BR>
+donc <I>a</I>1=3*√<SPAN style="text-decoration:overline">5</SPAN>−5.<BR>
+Autre solution :<BR>
+Le triangle <I>DS</I>1<I>C</I> est rectangle donc <I>DS</I>1<SUP>2</SUP>=36−16=20=(6−<I>s</I>1)<SUP>2</SUP> soit 
+<I>DS</I>1=2√<SPAN style="text-decoration:overline">5</SPAN><BR>
+Les triangles rectangles <I>AR</I>1<I>S</I>1 et <I>DS</I>1<I>C</I> sont semblables donc :<BR>
+<I>AR</I>1/<I>DS</I>1=<I>a</I>1/(2√<SPAN style="text-decoration:overline">5</SPAN>)=<I>R</I>1<I>S</I>1/<I>S</I>1<I>C</I>=(4−<I>a</I>1)/6 soit<BR>
+<I>a</I>1(6+2√<SPAN style="text-decoration:overline">5</SPAN>)=8√<SPAN style="text-decoration:overline">5</SPAN> donc<BR>
+<I>a</I>1=8√<SPAN style="text-decoration:overline">5</SPAN>*(6−2√<SPAN style="text-decoration:overline">5</SPAN>)/16=3√<SPAN style="text-decoration:overline">5</SPAN>−5<BR>
+Donc 0 ≤ <I>a</I> ≤ 3√<SPAN style="text-decoration:overline">5</SPAN>−5 ≃ 1.7082039325.<BR>
+
+</P><H4 CLASS="subsubsection">Relation entre <I>a</I> et <I>b</I></H4><P>
+Soit <I>E</I> la projection de <I>T</I> sur <I>AD</I>.<BR>
+Le triangle <I>ARS</I> est rectangle en <I>A</I> donc <I>AS</I><SUP>2</SUP>=<I>SR</I><SUP>2</SUP>−<I>AR</I><SUP>2</SUP> soit :<BR>
+<I>s</I><SUP>2</SUP>=(4−<I>a</I>)<SUP>2</SUP>−<I>a</I><SUP>2</SUP>=8*(2−<I>a</I>)
+Les triangles rectangles <I>ARS</I> et <I>EST</I> sont semblables donc :<BR>
+<I>RS</I>/<I>ST</I>=(4−<I>a</I>)/<I>b</I>=<I>AS</I>/<I>ET</I>=<I>s</I>/4 soit<BR>
+<I>s</I>=4(4−<I>a</I>)/<I>b</I>, soit <I>s</I><SUP>2</SUP>=16*(4−<I>a</I>)<SUP>2</SUP>/<I>b</I><SUP>2</SUP>=8*(2−<I>a</I>) donc :<BR>
+(2−<I>a</I>)*<I>b</I><SUP>2</SUP>−2*(4−<I>a</I>)<SUP>2</SUP>=0<BR>
+Si on développe :<BR>
+<TT>expand((2-a)*b</TT><CODE><TT>^</TT></CODE><TT>2-2*(4-a)</TT><CODE><TT>^</TT></CODE><TT>2)</TT>, on trouve
+<TT>-b</TT><CODE><TT>^</TT></CODE><TT>2*a+2*b</TT><CODE><TT>^</TT></CODE><TT>2-2*a</TT><CODE><TT>^</TT></CODE><TT>2+16*a-32</TT>
+</P><H4 CLASS="subsubsection">Valeur de <I>a</I> pour que l’aire de <I>BRT</I> soit minimale</H4><P>
+On veut avoir (4−<I>a</I>)*<I>b</I> minimum. On pose <I>u</I>=(4−<I>a</I>)*<I>b</I> on a donc :<BR>
+<I>b</I>=<I>u</I>/(4−<I>a</I>) donc =0 soit<BR>
+(2−<I>a</I>)*<I>u</I><SUP>2</SUP>=2*(4−<I>a</I>)<SUP>4</SUP> c’est à dire :<BR>
+<I>u</I><SUP>2</SUP>=2*(4−<I>a</I>)<SUP>4</SUP>/(2−<I>a</I>)<BR>
+On cherche les variations de <I>u</I> et on tape :<BR>
+<TT>factor(diff(2*(4-a)</TT><CODE><TT>^</TT></CODE><TT>4/(2-a),a))</TT><BR>
+On obtient :<BR>
+<TT>(-2*(3*a-4)*(a-4)</TT><CODE><TT>^</TT></CODE><TT>3)/((a-2)</TT><CODE><TT>^</TT></CODE><TT>2)</TT>
+<TT>u*u’</TT> est positif pour <TT>a&gt;4/3</TT> et est negatif pour <TT>a&lt;4/3</TT>.<BR>
+Donc lorsque <TT>a=4/3</TT>, <TT>u</TT> est minimum.<BR>
+On tape :<BR>
+<TT>subst(2*(4-a)</TT><CODE><TT>^</TT></CODE><TT>4/(2-a),a=4/3)</TT><BR>
+On obtient :<BR>
+<TT>4096/27</TT>
+Donc la surface minimum vaut :<BR>
+<TT>normal(sqrt(4096/27))=(192*sqrt(3))/27</TT><BR>
+la valeur de <TT>b</TT> est :<BR>
+<TT>normal((192*sqrt(3))/27/(4-4/3))=8*sqrt(3)/3</TT>
+a valeur de <TT>s</TT> est :<BR>
+<TT>normal(sqrt(8*(2-4/3)))=(4*sqrt(3))/3</TT><BR>
+Dans ce cas le triangle <I>BTR</I> est un demi triangle équilatéral puisque :<BR>
+<TT>b=8*sqrt(3)/3</TT> et <TT>4-a=8/3</TT>.<BR>
+L’angle <TT>T</TT> du triangle isocèle <I>BTS</I> vaut donc <I>pi</I>/3 : ce triangle est 
+donc équilatéral. 
+</P><H2 CLASS="section"><A NAME="toc31"></A><A NAME="htoc94">7.8</A>  La boite de biscuits</H2><H3 CLASS="subsection"><A NAME="htoc95">7.8.1</A>  L’énoncé 1</H3><P>
+On veut emballer 40 biscuits d’epaisseur 0.5 <I>cm</I> et ayant la forme d’un quart 
+de cercle de rayon 5 <I>cm</I> dans une boite ayant la forme d’un 
+parallélépipède rectangle. Les biscuits sont dans 2 sachets fraicheur de 
+20 biscuits et ayant chacun 10 <I>cm</I> de haut.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+On décide de mettre les 2 
+sachets bout à bout. Quelle sont les dimensions de la boite et calculer sa surface.
+</LI><LI CLASS="li-itemize">On décide de mettre les 2 sachets de façon qu’ils soient tangents.
+Quelle sont les dimensions de la boite et calculer sa surface.
+</LI><LI CLASS="li-itemize">Quelle est la boite la plus économique ?
+</LI></UL><H3 CLASS="subsection"><A NAME="htoc96">7.8.2</A>  Solution de l’énoncé 1</H3><P>
+La réponse :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+La boite a comme dimension : 20× 5× 5. Sa surface est donc:
+2*5*5+20*4*5=450 <I>cm</I><SUP>2</SUP>.
+</LI><LI CLASS="li-itemize">On ouvre un écran de géométrie (<TT>Alt+g</TT>) et on tape :
+<TT>cercle(point(0),5,0,pi/2,affichage=1+rempli)</TT>
+cela dessine le premier biscuit. La position du deuxième biscuit aura pour 
+centre <TT>point(a,5)</TT> et il faut trouver <TT>a</TT> pour que les 2 
+cercles soient tangents.<BR>
+On tape :
+<PRE CLASS="verbatim"> cercle(point(0),5,0,pi/2,affichage=1+rempli);
+supposons(a=[8.66,5,10,0.01]);
+ cercle(point(a,5),5,pi,3*pi/2,affichage=3+rempli);
+I:=inter(cercle(point(a,5),5,pi,3*pi/2),
+cercle(point(0),5,0,pi/2))
+</PRE>et on fait bouger le curseur <TT>a</TT>. On trouve que 
+<TT>a</TT> est proche de 8.66 car il n’y a qu’un point d’intersection.<BR>
+Pour faire un calcul exact à la main, il suffit de savoir que le point de 
+tangence des deux biscuits se trouve au milieu du segment qui joint les centres
+qui est ici le <TT>segment(0,point(a+5*i))</TT>. Lorsque les 2 cercles sont 
+tangents ce segment a pour longueur 10 <I>cm</I>. Donc on a d’après le 
+théorème de Pythagore :<BR>
+<I>a</I><SUP>2</SUP>=10<SUP>2</SUP>−5<SUP>2</SUP>=75 donc <I>a</I>=5√<SPAN style="text-decoration:overline">3</SPAN> ≃ 8.66025403784.<BR>
+La boite a comme dimension : 10× 5× 5√<SPAN style="text-decoration:overline">3</SPAN>. Sa surface est donc:
+2*5*5√<SPAN style="text-decoration:overline">3</SPAN>+10*2*(5+ 5√<SPAN style="text-decoration:overline">3</SPAN>)=100+150√<SPAN style="text-decoration:overline">3</SPAN>=359.807621135 <I>cm</I><SUP>2</SUP>
+</LI><LI CLASS="li-itemize">La deuxième boite de suface 359.807621135 <I>cm</I><SUP>2</SUP> est la plus 
+économique.
+</LI></UL><P>
+On a :<BR>
+<IMG SRC="casexo034.png"></P><H3 CLASS="subsection"><A NAME="htoc97">7.8.3</A>  L’énoncé 2</H3><P>
+On veut emballer 40 biscuits d’epaisseur 0.5 <I>cm</I> et ayant la forme d’un quart 
+de cercle de rayon 5 <I>cm</I> dans une boite ayant la forme d’un 
+parallélépipède rectangle. Les biscuits sont dans 5 sachets fraicheur de 
+8 biscuits et ayant chacun 4 <I>cm</I> de haut.<BR>
+ On décide de mettre un sachet dans chaque coin de la boite et 1 sachet 
+au milieu, de façon qu’ils soient tangents aux 4 autres.
+Quelle est la dimension de la boite de surface minimum ?
+</P><H3 CLASS="subsection"><A NAME="htoc98">7.8.4</A>  Solution de l’énoncé 2</H3><P>
+La réponse :<BR>
+On ouvre un écran de géométrie (<TT>Alt+g</TT>).
+Le premier biscuit sera <TT>cercle(point(0),5,0,pi/2,affichage=1+rempli)</TT>.<BR>
+On choisit un paramètre <TT>a</TT> et on positionne le deuxième biscuit dans 
+le coin <TT>D:=point(0,10+2*a)</TT><BR>
+Le cinquième biscuit (celui que l’on met au milieu de la boite) aura pour 
+centre <I>I</I> qui sera le point d’intersection de la tangente au biscuit 1 
+d’équation <I>y</I>=−<I>x</I>+5*√<SPAN style="text-decoration:overline">2</SPAN> avec <I>y</I>=5+<I>a</I>.<BR>
+Le troisième biscuit doit être tangents au cinquième biscuit, son 
+centre <I>J</I> est donc sur l’axe des <I>x</I> et sur le cercle de centre <I>I</I> et de 
+rayon 10. IL faut bien sûr imposer que <TT>abscisse(J)&gt;=10</TT>
+Il faut trouver <TT>a</TT> pour que la surface de la boite soient minimum.<BR>
+On tape :
+</P><PRE CLASS="verbatim"> 
+cercle(point(0),5,0,pi/2,affichage=1+rempli);
+supposons(a=[1.66,0,5,0.01]);
+cercle(point(0,10+2*a),5,3*pi/2,2*pi,affichage=2+rempli);
+I:=inter_unique(droite(y=5+a),droite(y=-x+5*sqrt(2)));
+cercle(I,5,-pi/4,pi/4,affichage=5+rempli);
+J:=inter(droite(y=0),cercle(I,10))[0]:;
+cercle(J,5,pi/2,pi,affichage=3+rempli);
+cercle(translation((10+2*a)*i,J),4,pi,3*pi/2,affichage=5+rempli);
+xj:=normal(abscisse(J))
+evalf(xj*(10+2*a)*2+2*4*(xj+10+2*a)
+</PRE><P>et on fait bouger le curseur <TT>a</TT>. 
+On trouve que <TT>a</TT> varie entre 0 et 0.453289254261.<BR>
+En effet :
+<TT>xj:=normal(abscisse(J))</TT> renvoie :<BR>
+<TT>-a+5*sqrt(2)-5+sqrt(-a</TT><CODE><TT>^</TT></CODE><TT>2-10*a+75)</TT> et<BR>
+<TT>evalf(solve(-a</TT><CODE><TT>^</TT></CODE><TT>2-10*a+75-(15+a-5*sqrt(2))</TT><CODE><TT>^</TT></CODE><TT>2=0,a))</TT><BR>
+renvoie <TT>[-13.3822214424,0.453289254261]</TT><BR>
+la surface de la boite est donc :<BR>
+<TT>xj*(10+2*a)*2+8*(xj+10+2*a)</TT><BR>
+qui varie de <TT>380.477011792</TT> à <TT>385.361761927</TT> lorsque <TT>a</TT> varie 
+de <TT>0</TT> à <TT>0.45</TT><BR>
+Donc on prend <TT>a=0</TT> et alors <TT>xj</TT> vaut <TT>5*sqrt(2)-5+5sqrt(3)</TT> ou
+encore <TT>10.7313218497</TT><BR>
+La boite est donc de dimensions 4*5*(5√<SPAN style="text-decoration:overline">2</SPAN>−5+5√<SPAN style="text-decoration:overline">3</SPAN>) et sa surface vaut
+<TT>20*(5*sqrt(2)-5+5*sqrt(3))+8*(5*sqrt(2)-5+5*sqrt(3)+80)</TT> c’està dire :<BR>
+<TT>28*(5*sqrt(2)-5+5*sqrt(3))+80</TT> ou encore <TT>380.477011792</TT><BR>
+On obtient :<BR>
+<IMG SRC="casexo035.png">
+</P><H2 CLASS="section"><A NAME="toc32"></A><A NAME="htoc99">7.9</A>  Une construction géométrique : inscrire un carré dans une "goutte"</H2><H3 CLASS="subsection"><A NAME="htoc100">7.9.1</A>  L’énoncé</H3><P>
+Une goutte d’eau representée ci-dessous est constituée par 2 demi-cercles 
+<I>C</I>2 et <I>C</I>3 de centre <I>O</I>2 et <I>O</I>3 et rayon <I>r</I> et d’un demi-cercle <I>C</I>1 de 
+centre <I>O</I> et de rayon 2<I>r</I>.<BR>
+<IMG SRC="casexo036.png"><BR>
+On cherche à placer 4 <I>A</I>,<I>B</I>,<I>C</I>,<I>D</I> points surle contour de cette goutte pour que
+<I>ABCD</I> soit un carré.<BR>
+Pour chercher, on fait la figure suivante et on tape dans un écran de 
+géométrie :
+</P><PRE CLASS="verbatim">C1:=cercle(0,6,0,pi):;C1;
+C2:=cercle(3,3,0,pi):;C2;
+C3:=cercle(-3,3,pi,2*pi):;C3;
+a:=element(0 .. pi,1.947787474,0.031415927);
+A:=element(C1,a);
+c:=element(pi .. (2*pi),4.618141269,0.031415927)
+C:=element(C3,c);
+C4:=cercle(A,C,affichage=rouge);
+B:=inter(C4,C1)[0];
+D:=inter(C4,C2)[1];
+polygone(A,B,C,D);
+O:=point(0);
+</PRE><P>On fait bouger les curseurs <TT>a</TT> et <TT>c</TT> pour essayer d’avoir un 
+rectangle et on obtient :
+<IMG SRC="casexo037.png"><BR>
+Il semble que le segment <I>CD</I> passe par <I>O</I>.<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc101">7.9.2</A>  Des lemmes sur les rectangles et leur cercle circonscrit</H3><P>
+Les lemmes qui suivent vont montrer que si un rectangle direct <I>ABCD</I> a ses 
+sommets sur le pourtour de la goutte un de ses sommets est le point 
+d’intersection <I>A</I> de <I>C</I>1 et <I>C</I>3 et son côté <I>CD</I> passe par 0.<BR>
+
+<B>Lemme 1</B><BR>
+Si 3 sommets d’un rectangle sont sur un demi-cercle Γ de centre <I>O</I>, 
+alors le quatrième sommet se trouve sur le demi-cercle γ symétrique 
+de Γ par rapport à <I>O</I>. Dans le cas de la goutte cela veut 
+dire que si un rectangle a ses sommets sur le pourtour de la goutte, il ne peut
+pas y avoir 3 sommets sur le même demi cercle.<BR>
+
+<B>Lemme 2</B><BR>
+Si 2 sommets <I>M</I> et <I>P</I> d’un rectangle sont sur un demi-cercle Γ de 
+centre <I>O</I>, alors ces sommets sont consécutifs car sinon le centre de 
+Γ serait le milieu de <I>MP</I> et le rectangle aura ses 4 sommets sur le 
+cercle de diamètre <I>MP</I> (cercle qui contient Γ). Dans le cas de la 
+goutte cela veut dire que si un rectangle a deux sommets sur un même 
+demi-cercle (faisant partie du pourtour de la goutte) alors ces 2 sommets sont 
+consécutifs.<BR>
+
+<B>Lemme 3</B><BR>
+Soient <I>c</I>1, <I>c</I>2 et <I>c</I>3 les cercles complétant <I>C</I>1, <I>C</I>2 et <I>C</I>3
+Montrons qu’il n’y a pas de rectangle ayant tous ses sommets sur <I>C</I>2∪ <I>C</I>3.
+En effet, si par exemple <I>A</I> et <I>B</I> sont sur <I>C</I>3 et si <I>C</I> et <I>D</I> sont sur 
+<I>C</I>2 : l’angle <I>A</I> est droit donc le symétrique <I>B</I>1 de <I>B</I> par rapport à 
+<I>O</I>3 se trouve sur <I>AD</I> et sur <I>c</I>3 et l’angle <I>B</I> est droit donc le 
+symétrique <I>A</I>1 de <I>A</I> par rapport à <I>O</I>3 se trouve sur <I>BC</I> et sur <I>c</I>3 : 
+les deux droites <I>AD</I> et <I>BC</I> sont donc symétriques par rapport à <I>O</I>3.<BR>
+De même l’angle <I>C</I> est droit donc le symétrique <I>D</I>1 de <I>D</I> par rapport 
+à <I>O</I>2 e trouve sur <I>BC</I> et sur <I>c</I>2 etc...Donc les deux droites <I>AD</I> et <I>BC</I>
+sont donc symétriques par rapport à <I>O</I>2.<BR>
+Donc <I>AD</I> et <I>BC</I> sont paralléles à <I>O</I>2<I>O</I>3 c’est à dire que <I>AB</I> et <I>AC</I> sont confondus et le rectangle se réduit à une droite.<BR>
+
+<B>Lemme 4</B><BR>
+Supposons qu’il y ait 2 sommets <I>A</I> et <I>B</I> sur le demi-cercle <I>C</I>2. Les 
+côtés <I>AD</I> et <I>BC</I> sont symétriques par rapport à <I>O</I>2 et ces 
+côtés coupent <I>C</I>1 et <I>C</I>3 en des points qui sont de part et d’autre de 
+<I>AB</I>. Donc <I>A</I> et <I>B</I> ne sont pas consécutifs.<BR>
+
+<B>Lemme 5</B><BR>
+Supposons qu’il y ait 2 sommets <I>A</I> et <I>B</I> sur le demi-cercle <I>C</I>3. Les 
+côtés <I>AD</I> et <I>BC</I> sont symétriques par rapport à <I>O</I>3.<BR>
+Supposons que <I>D</I> soit sur <I>C</I>1 et que <I>AD</I> coupe <I>c</I>1 en 
+<I>D</I>1. L’angle <I>D</I> est droit donc <I>DC</I> passe par <I>D</I>2 symétrique de <I>D</I>1 par 
+rapport à <I>O</I> et donc <I>D</I>2 est sur <I>C</I>1.<BR>
+<I>BC</I> coupe le cercle <I>c</I>3 en <I>A</I>3 symétrique de <I>A</I> par rapport à <I>O</I>3 et 
+coupe le cercle <I>C</I>2 en <I>A</I>2 et en <I>C</I>. L’angle <I>C</I> est droit donc <I>DC</I> passe 
+par <I>A</I>3 symétrique de <I>A</I>2 par rapport à <I>O</I>2 et donc <I>A</I>3 est sur <I>c</I>2.<BR>
+Donc si <I>DC</I> passe par <I>D</I>2 situé sur <I>C</I>1, il ne peut pas couper <I>c</I>2 que si <I>D</I>2 et <I>A</I>3 sont confondus et sont sur la droitre <I>OO</I>2 c’est à dire si <I>A</I> 
+se trouve en <I>P</I> intersection de <I>C</I>1 et <I>C</I>3.<BR>
+Même raisonnement si <I>C</I> est sur <I>C</I>1 et <I>D</I> sur <I>C</I>2. </P><P><B>Lemme 6</B><BR>
+Il y a 2 sommets sur le demi-cercle <I>C</I> 
+Soient <I>da</I> et <I>db</I> les perpendiculaires à <I>AB</I> en <I>A</I> et <I>B</I>. Considérons 
+<I>A</I>1 et <I>B</I>1 les symétriques de <I>A</I> et <I>B</I> par rapport à <I>O</I>. Puisque <I>AA</I>1
+et <I>BB</I>1 sont des diamètres du cercle de centre <I>O</I> et de rayon 2<I>r</I>, <I>da</I>
+passe par <I>B</I>1 et <I>db</I> passe par <I>A</I>1. <I>AB</I>1 et <I>A</I>1<I>B</I> sont des segments 
+symétriques par rapport à <I>O</I> et les demi-cercles de rayon <I>r</I> sont aussi 
+symétriques par rapport à <I>O</I>. Donc <I>AB</I>1 et <I>A</I>1<I>B</I> coupent les demi-cercles de rayon <I>r</I> en deux points <I>D</I> et <I>C</I> symétriques par rapport à <I>O</I>.
+Donc <I>DC</I> passe par <I>O</I>.
+</P><H3 CLASS="subsection"><A NAME="htoc102">7.9.3</A>  Construction du carré</H3><P>
+Si <I>A</I> et <I>B</I> sont sur le demi-cercle de centre <I>O</I> et de rayon 2<I>r</I> alors le 
+segment <I>CD</I> passe par <I>O</I> si les angles <I>A</I> et <I>B</I> de <I>ABCD</I> sont droits,
+On tape :
+</P><PRE CLASS="verbatim">C1:=cercle(0,6,0,pi):;C1;
+C2:=cercle(3,3,0,pi):;C2;
+C3:=cercle(-3,3,pi,2*pi):;C3;
+O:=point(0);
+a:=element(0 .. pi,1.947787474,0.031415927);
+A:=element(C1,a);
+b:=element(0 .. pi,2.82743343,0.031415927;)
+B:=element(C1,b);
+C5:=cercle(0,6,pi,2*pi):;affichage(C5,1);
+A1:=symetrie(O,A);
+B1:=symetrie(O,B);
+s1:=segment(A,B1):;s1;
+s2:=segment(A1,B):;s2;
+D:=inter(C2,s1)[1];
+C:=inter(C3,s2)[1];
+segment(A,B);
+</PRE><P>On obtient :<BR>
+<IMG SRC="casexo038.png"></P><P>Pour avoir un carré il suffira de choisir <I>OA</I>=2<I>r</I> et <I>OD</I>=<I>AD</I>/2 donc
+<I>OD</I><SUP>2</SUP>+<I>AD</I><SUP>2</SUP>=5*<I>OD</I><SUP>2</SUP>=4*<I>r</I><SUP>2</SUP> c’est à dire :<BR>
+<I>OD</I>=2<I>r</I>√<SPAN style="text-decoration:overline">5</SPAN>/5.<BR>
+Dans la figure on a choisit <I>r</I>=3 donc <I>OD</I>=6/5*<I>sqrt</I>5 <I>OD</I> est donc 
+l’hypoténuse d’un triangle rectangle de côté 6/5 et 12/5.
+Si le point <TT>D1:=point(12/5,6/5):;D1</TT>, on a <I>OD</I>=<I>OD</I>1.<BR>
+On tape dans un écran de géométrie :
+</P><PRE CLASS="verbatim">C1:=cercle(0,6,0,pi):;C1;
+C2:=cercle(3,3,0,pi):;C2;
+C3:=cercle(-3,3,pi,2*pi):;C3;
+O:=point(0);
+D1:=point(12/5,6/5):;D1;
+D:=inter(C2,cercle(O,longueur(O,D1)))[0];
+C:=symetrie(O,D);
+carre(C,D,A,B);
+</PRE><P>On obtient :
+<IMG SRC="casexo039.png"><BR>
+On remarque que :<BR>
+le point <I>B</I> est sur l’axe des <I>x</I> car l’angle <I>C</I> est droit,<BR>
+le point <I>D</I> a pour coordonnées 6/5,12/5.</P>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casexo006.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo008.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

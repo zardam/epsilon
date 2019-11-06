@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Exercices sur trigonométrie et complexes</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casrouge010.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge012.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc288">Chapitre 11</A>  Exercices sur trigonométrie et complexes</H1><H2 CLASS="section"><A NAME="toc82"></A><A NAME="htoc289">11.1</A>  Les polynômes de Tchebychev</H2><H3 CLASS="subsection"><A NAME="htoc290">11.1.1</A>  L’énoncé</H3><P>
+Les polynômes de Tchebychev <I>T</I><SUB><I>n</I></SUB> sont tels que cos(<I>nx</I>)=<I>T</I><SUB><I>n</I></SUB>(cos(<I>x</I>)).<BR>
+On a ainsi :<BR>
+<I>T</I><SUB>0</SUB>(<I>x</I>)=1<BR>
+<I>T</I><SUB>1</SUB>(<I>x</I>)=<I>x</I><BR>
+<I>T</I><SUB>2</SUB>(<I>x</I>)=2<I>x</I><SUP>2</SUP>−1<BR>
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Montrer que pour <I>n</I>≥ 1 on a :<BR>
+<I>T</I><SUB><I>n</I>+1</SUB>(<I>x</I>)=2<I>xT</I><SUB><I>n</I></SUB>(<I>x</I>)−<I>T</I><SUB><I>n</I>−1</SUB>(<I>x</I>).
+</LI><LI CLASS="li-enumerate">Écrire une fonction de <I>n</I> qui renvoie le polynôme <I>T</I><SUB><I>n</I></SUB>, en utilisant
+la relation <I>T</I><SUB><I>n</I>+1</SUB>(<I>x</I>)=2<I>xT</I><SUB><I>n</I></SUB>(<I>x</I>)−<I>T</I><SUB><I>n</I>−1</SUB>(<I>x</I>).
+</LI><LI CLASS="li-enumerate">Écrire une fonction de <I>n</I> qui renvoie le polynôme <I>T</I><SUB><I>n</I></SUB>, en utilisant
+les nombres complexes et la formule de Moivre.
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc291">11.1.2</A>  La solution avec <TT>Xcas</TT></H3><P>
+Dans <TT>Xcas</TT>, la fonction <TT>tchebyshev1</TT> qui renvoie le nième 
+polynôme de Tchebyshev de 1ière espèce existe. Cela va pouvoir permettre 
+la vérification de vos programmes
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+La relation <I>T</I><SUB><I>n</I>+1</SUB>(<I>x</I>)=2<I>xT</I><SUB><I>n</I></SUB>(<I>x</I>)−<I>T</I><SUB><I>n</I>−1</SUB>(<I>x</I>) est vraie pour <I>n</I>=1
+car <I>T</I><SUB>2</SUB>(<I>x</I>)=2<I>xT</I><SUB>1</SUB>(<I>x</I>)−<I>T</I><SUB>0</SUB>(<I>x</I>)=2<I>x</I>*<I>x</I>−2
+On a :
+cos((<I>n</I>+1)<I>x</I>)=cos(<I>x</I>)*cos(<I>nx</I>)−sin(<I>x</I>)*sin(<I>nx</I>) et<BR>
+cos((<I>n</I>−1)<I>x</I>)=cos(<I>x</I>)*cos(<I>nx</I>)+sin(<I>x</I>)*sin(<I>nx</I>)<BR>
+donc cos((<I>n</I>+1)<I>x</I>)+cos((<I>n</I>−1)<I>x</I>)=2cos(<I>x</I>)*cos(<I>nx</I>)<BR>
+ou encore cos((<I>n</I>+1)<I>x</I>)=2cos(<I>x</I>)*cos(<I>nx</I>)−cos((<I>n</I>−1)<I>x</I>)
+c’est à dire :<BR>
+<I>T</I><SUB><I>n</I>+1</SUB>(<I>x</I>)=2<I>xT</I><SUB><I>n</I></SUB>(<I>x</I>)−<I>T</I><SUB><I>n</I>−1</SUB>(<I>x</I>)
+</LI><LI CLASS="li-enumerate">On écrit une fonction <TT>Tcheb(n)</TT> qui renvoie le polynôme <I>T</I><SUB><I>n</I></SUB>, 
+en utilisant la relation <I>T</I><SUB><I>n</I>+1</SUB>(<I>x</I>)=2<I>xT</I><SUB><I>n</I></SUB>(<I>x</I>)−<I>T</I><SUB><I>n</I>−1</SUB>(<I>x</I>). :
+<PRE CLASS="verbatim">Tcheb(n):={
+local j,T0,T1,Tj;
+T0:=1;
+T1:=x;
+pour j de 2 jusque n faire
+Tj:=2*x*T1-T0;
+T0:=T1;
+T1:=Tj;
+fpour;
+return T1;
+}:;
+</PRE>On tape : <TT>Tcheb(7)</TT><BR>
+On obtient :<TT>64*x</TT><CODE><TT>^</TT></CODE><TT>7-112*x</TT><CODE><TT>^</TT></CODE><TT>5+56*x</TT><CODE><TT>^</TT></CODE><TT>3-7*x</TT></LI><LI CLASS="li-enumerate">On écrit une fonction <TT>Tchebich(n)</TT> qui renvoie le polynôme <I>T</I><SUB><I>n</I></SUB>,
+en utilisant la formule de Moivre (cos(<I>nx</I>)=<I>re</I>((cos(<I>x</I>)+<I>i</I>sin(<I>x</I>))<SUP><I>n</I></SUP>)) et 
+l’égalité sin(<I>x</I>)<SUP>2</SUP>=1−cos(<I>x</I>)<SUP>2</SUP> :
+<PRE CLASS="verbatim">Tchebich(n):={
+local f;
+f(x,y):=normal(re((x+i*y)^n));
+return f(x,sqrt(1-x^2));
+}:;
+</PRE>On tape : <TT>Tchebich(7)</TT><BR>
+On obtient :<TT>64*x</TT><CODE><TT>^</TT></CODE><TT>7-112*x</TT><CODE><TT>^</TT></CODE><TT>5+56*x</TT><CODE><TT>^</TT></CODE><TT>3-7*x</TT><BR>
+
+<B>Remarque</B><BR>
+On peut vérifier car cette fontion existe dans <TT>Xcas</TT>, on tape 
+On tape : <TT>tchebyshev1(7)</TT><BR>
+On obtient :<TT>64*x</TT><CODE><TT>^</TT></CODE><TT>7-112*x</TT><CODE><TT>^</TT></CODE><TT>5+56*x</TT><CODE><TT>^</TT></CODE><TT>3-7*x</TT>
+</LI></OL><HR>
+<A HREF="casrouge010.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge012.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Différence de codage entre (3.1-3) et 0.1</title>
+</head>
+<body >
+<a href="cascmd_fr105.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr107.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec160" class="subsection">4.1.2  Différence de codage entre (3.1-3) et 0.1</h3>
+<ul class="itemize"><li class="li-itemize">
+codage de 0.1 :<br>
+On a :<br>
+0.1=2<sup>−4</sup>*(1+1/2+1/2<sup>4</sup>+1/2<sup>5</sup>+1/2<sup>8</sup>+1/2<sup>9</sup>+...)=2<sup>−4</sup>*∑<sub><span style="font-style:italic">k</span>=0</sub><sup>∞</sup>1/2<sup>4*<span style="font-style:italic">k</span></sup>+1/2<sup>4*<span style="font-style:italic">k</span>+1</sup><br>
+donc α=1 et <span style="font-style:italic">m</span>=1/2+∑<sub><span style="font-style:italic">k</span>=1</sub><sup>∞</sup>1/2<sup>4*<span style="font-style:italic">k</span></sup>+1/2<sup>4*<span style="font-style:italic">k</span>+1</sup> <br>
+On obtient le codage de 0.1 :<br>
+ the code of3f (00111111), b9 (10111001), 99 (10011001), 99 (10011001),<br>
+99 (10011001), 99 (10011001), 99 (10011001), 9a (10011010),<br>
+le dernier octet est 1010 car il y a eu un arrondi les 2 derniers bits 01
+sont devenus 10 car le chiffre suivant etait 1.</li><li class="li-itemize">codage de a:=3.1-3 :<br>
+L’exposant sera donc α=−4 (qui correspond à 2*2<sup>−5</sup>) et les bits 
+qui correspondent à la mantisse vont débuter à 1/2=2*2<sup>−6</sup> : ainsi
+les nombres de la mantisse subissent un décalage vers la gauche de 5 places
+et on obtient :<br>
+3f (00111111), b9 (10111001), 99 (10011001), 99 (10011001),<br>
+99 (10011001), 99 (10011001), 99 (10011001), 9a (10100000),<br>
+On voit alors que :<br>
+<span style="font-style:italic">a</span>&gt;0.1 et que <span style="font-style:italic">a</span>−0.1=1/2<sup>50</sup>+1/2<sup>51</sup> (car 100000-11010=110)
+</li></ul><p>
+<span style="font-family:monospace">Remarque</span><br>
+Ce qui précéde permet d’expliquer pourquoi lorsque <span style="font-family:monospace">Digits:=15</span> :<br>
+<span style="font-family:monospace">floor(1/(3.1-3))</span> renvoie <span style="font-family:monospace">9</span> et non <span style="font-family:monospace">10</span>.</p>
+<hr>
+<a href="cascmd_fr105.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr107.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

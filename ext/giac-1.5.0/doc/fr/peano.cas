@@ -1,0 +1,30 @@
+//arc qui remplit le carre de cote x,y :peano(-i,3-i,3)
+peano(x,y,n):={
+local u,v;
+u:=(y-x)/3;
+v:=i*u;
+if (n==0) {segment(x,y+3*v);}
+else {
+peano(x,x+u,n-1);
+peano(x+u+v,x+u,n-1);
+peano(x+2*u,y,n-1);
+peano(y+v,y+2*v,n-1);
+peano(x+2*(u+v),x+u+2*v,n-1);
+peano(x+(u+v),x+u+2*v,n-1);
+peano(x+2*v,x+2*v+u,n-1);
+peano(x+3*v+u,x+u+2*v,n-1);
+peano(x+2*(u+v),y+2*v,n-1);
+}
+};
+//autre courbe de peano ex  peanobi(-2-2*i,2-2*i,6)
+peanobi(x,y,n):={
+local a,b,c;
+a:=x+(y-x)*i/2;
+c:=y+(y-x)*i/2;
+b:=(a+c)/2;
+if (n==0) return segment(x,y);
+peanobi(a,x,n-1);
+peanobi(a,b,n-1);
+peanobi(b,c,n-1);
+peanobi(y,c,n-1);
+};

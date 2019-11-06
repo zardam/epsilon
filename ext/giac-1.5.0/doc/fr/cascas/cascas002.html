@@ -1,0 +1,1091 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>La suite de Fibonacci et le nombre d’or</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascas001.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas003.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc40">Chapitre 2</A>  La suite de Fibonacci et le nombre d’or</H1><H2 CLASS="section"><A NAME="toc12"></A><A NAME="htoc41">2.1</A>  Un exercice pour commencer</H2><P>
+De combien de façons peut-on vider un tonneau de <I>n</I> litres avec un pot de 
+1 litre et un pot de 2 litres ? (2 façons sont identiques si la suite des 
+prélèvements sont identiques par exemple pour <I>n</I>=3 on a (1,1,1), (1,2) et 
+(2,1) soit 3 façons).
+Soit <I>u</I>(<I>n</I>) le nombre de façons de vider un tonneau de <I>n</I> litres avec un 
+pot de 1 litre et un pot de 2 litres.<BR>
+On a :<BR>
+<I>u</I>(0)=1 il y a une façon de vider un tonneau vide !<BR>
+<I>u</I>(1)=1<BR>
+<I>u</I>(2)=2<BR>
+<I>u</I>(3)=3<BR>
+Soit un tonneau de <I>n</I> litres. Quand on a prélevé 1 litre, il reste à 
+vider un tonneau de <I>n</I>−1 litres (cela se termine donc de <I>u</I>(<I>n</I>−1) façons)
+et quand on a prélevé 2 litres, il reste à vider un tonneau de <I>n</I>−2 
+litres (cela se termine donc de <I>u</I>(<I>n</I>−2) façons)<BR>
+ Donc :<BR>
+<I>u</I>(<I>n</I>)=<I>u</I>(<I>n</I>−1)+<I>u</I>(<I>n</I>−2) avec <I>u</I>(0)=<I>u</I>(1)=1<BR>
+On doit donc étudier cette suite récurrente qui s’appelle la suite de 
+Fibonacci
+</P><H2 CLASS="section"><A NAME="toc13"></A><A NAME="htoc42">2.2</A>  La suite de Fibonacci</H2><H3 CLASS="subsection"><A NAME="htoc43">2.2.1</A>  La définition</H3><P>
+La suite de Fibonacci est la suite <I>u</I> définie par :<BR>
+<I>u</I><SUB>0</SUB>=1<BR>
+<I>u</I><SUB>1</SUB>=1<BR>
+<I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>−1</SUB>+<I>u</I><SUB><I>n</I>−2</SUB> pour <I>n</I>&gt;1
+</P><H3 CLASS="subsection"><A NAME="htoc44">2.2.2</A>  Le programme avec <TT>Xcas</TT></H3><P>
+Il ne faut surtout pas écrire un programme récursif car sinon on calcule 
+les mêmes termes plusieurs fois :
+Pour avoir <I>u</I><SUB><I>n</I></SUB> :
+</P><PRE CLASS="verbatim">Fibonacci(n):={
+local a,b,c,k;
+si n==0 ou n==1 alors
+   retourne 1;
+fsi;
+a:=1;
+b:=1;
+pour k de 2 jusque n faire
+    c:=a+b;
+    a:=b;
+    b:=c;
+fpour;
+retourne c;   
+}:;
+</PRE><P>On tape :<BR>
+<TT>Fibonacci(10)</TT><BR>
+On obtient :<BR>
+<TT>89</TT><BR>
+Pour avoir les <I>n</I> premiers termes (le premier terme est <I>u</I><SUB>0</SUB>):
+</P><PRE CLASS="verbatim">Fibonasuite(n):={
+local a,b,c,L,k;
+L:=NULL;
+si n&lt;=0 alors retourne L;fsi;
+L:=L,1;
+si n==1 alors retourne L;fsi;
+L:=L,1;
+si n==2 alors retourne L; fsi;
+a:=1;
+b:=1;
+pour k de 3 jusque n faire
+    c:=a+b;
+    L:=L,c;
+    a:=b;
+    b:=c;
+fpour;
+retourne L;   
+}:;
+</PRE><P>On tape :<BR>
+<TT>Fibonasuite(11)</TT><BR>
+On obtient la suite des 11 premiers termes de la suite de Fibonnacci :<BR>
+<TT>1,1,2,3,5,8,13,21,34,55,89</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc45">2.2.3</A>  Le programme récursif avec <TT>Xcas</TT></H3><PRE CLASS="verbatim">Fibonarec(n):={
+si (n==0 or n==1) alors retourne 1 fsi;
+retourne Fibonarec(n-2)+Fibonarec(n-1);
+}:;
+</PRE><P>ou encore une écriture récursive avec un <TT>when</TT> :
+</P><PRE CLASS="verbatim">Fibonawhen(n):={
+when(n==0 or n==1,1,Fibonawhen(n-2)+Fibonawhen(n-1));
+}:;
+</PRE><P>Que faut-il calculer pour calculer <TT>Fibonarec(5)</TT> ?<BR>
+Il faut calculer <TT>Fibonarec(3)</TT> et <TT>Fibonarec(4)</TT>.<BR>
+Pour calculer <TT>Fibonarec(3)</TT>, il faut calculer <TT>Fibonarec(1)</TT> et <TT>Fibonarec(2)</TT>.<BR>
+Pour calculer <TT>Fibonarec(2)</TT>, il faut calculer <TT>Fibonarec(0)</TT> et <TT>Fibonarec(1)</TT>.<BR>
+Pour calculer <TT>Fibonarec(4)</TT>, il faut calculer <TT>Fibonarec(2)</TT> et <TT>Fibonarec(3)</TT> donc
+calculer <TT>Fibonarec(2)</TT> 2 fois et <TT>Fibonarec(3)</TT> 1 fois<BR>
+Donc pour calculer <TT>Fibonarec(5)</TT> :<BR>
+<TT>Fibonarec(2)</TT> doit être calculer 3 fois, <TT>Fibonarec(3)</TT> doit être 
+calculer 2 fois et <TT>Fibonarec(4)</TT> doit être calculer 1 fois.<BR>
+Que faut-il calculer pour calculer <TT>Fibonarec(6)</TT> ?<BR>
+Il faut calculer <TT>Fibonarec(4)</TT> et <TT>Fibonarec(5)</TT>.<BR>
+Donc pour calculer <TT>Fibonarec(6)</TT> :<BR>
+<TT>Fibonarec(5)</TT> doit être calculé 1 fois<BR>
+<TT>Fibonarec(4)</TT> doit être calculé 1 fois.<BR>
+<TT>Fibonarec(2)</TT> doit être calculé 2+3=5 fois, <TT>Fibonarec(3)</TT> doit être 
+calculé 2+1=3 fois et <TT>Fibonarec(4)</TT> doit être calculé 2 fois.<BR>
+On cherche <I>v</I><SUB><I>n</I></SUB> le nombre de fois qu’il faut calculer 
+<TT>Fibonarec(2)</TT> pour calculer <TT>Fibonarec(n)</TT>.
+On a :<BR>
+<I>v</I><SUB>2</SUB>=1, <I>v</I><SUB>3</SUB>=1, <I>v</I><SUB>4</SUB>=2, <I>v</I><SUB>5</SUB>=3 et
+puisque pour calculer <TT>Fibonarec(n)</TT>, il faut calculer <TT>Fibonarec(n-2)</TT> et 
+<TT>Fibonarec(n-1)</TT>, on a :<BR>
+<I>v</I><SUB><I>n</I></SUB>=<I>v</I><SUB><I>n</I>−2</SUB>+<I>v</I><SUB><I>n</I>−1</SUB><BR>
+Donc <I>v</I><SUB><I>n</I></SUB> est la suite de Fibonacci commencant à <I>n</I>=2 :<BR>
+<I>v</I><SUB>2</SUB>=1,<I>v</I><SUB>3</SUB>=1,<I>v</I><SUB><I>n</I></SUB>=<I>v</I><SUB><I>n</I>−2</SUB>+<I>v</I><SUB><I>n</I>−1</SUB> i.e. <I>v</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>−2</SUB><BR>
+On cherche <I>w</I><SUB><I>n</I></SUB> le nombre de fois qu’il faut 
+calculer <TT>Fibonarec(p)</TT> pour calculer <TT>Fibonarec(n)</TT> lorsque <I>p</I> est fixé et 
+vérifie 2≤ <I>p</I>≤ <I>n</I>.
+On a :<BR>
+<I>w</I><SUB><I>p</I></SUB>=1, <I>w</I><SUB><I>p</I>+1</SUB>=1 et<BR>
+puisque pour calculer <TT>Fibonarec(n)</TT>, il faut calculer <TT>Fibonarec(n-2)</TT> et 
+<TT>Fibonarec(n-1)</TT>, on a : <I>w</I><SUB><I>n</I></SUB>=<I>w</I><SUB><I>n</I>−2</SUB>+<I>w</I><SUB><I>n</I>−1</SUB><BR>
+Donc <I>w</I><SUB><I>n</I></SUB>=<I>v</I><SUB><I>n</I>+2−<I>p</I></SUB>=<I>u</I><SUB><I>n</I>−<I>p</I></SUB> </P><P>Pour vérifier, on cherche le temps mis pour calculer <I>u</I><SUB>21</SUB>,<I>u</I><SUB>22</SUB>,<I>u</I><SUB>23</SUB>
+avec la fonction récursive <TT>Fibonarec(22)</TT>
+<TT>Fibonarec(21)</TT>, <TT>Fibonarec(22)</TT> et <TT>Fibonarec(23)</TT>.<BR>
+On tape :<BR>
+<TT>time(Fibonarec(21))</TT><BR>
+On obtient : <TT>[1.75,1.802534401]</TT><BR>
+On tape :<BR>
+<TT>time(Fibonarec(22))</TT><BR>
+On obtient : <TT>[2.79,2.825411609]</TT><BR>
+On tape :<BR>
+<TT>time(Fibonarec(23))</TT><BR>
+On obtient : <TT>[4.59,4.614912788]</TT><BR>
+On a : <TT>1.75+2.79</TT> renvoie <TT>4.54</TT> qui est proche de <TT>4.59</TT>
+et <TT>1.802534401+2.825411609</TT> renvoie <TT>4.62794601</TT> qui est proche de 
+<TT>4.614912788</TT><BR>
+
+On modifie <TT>Fibonasuite</TT> en <TT>Fibonarectime</TT> qui donnera le temps mis 
+pour calculer <TT>Fibonarec(0)</TT>...<TT>Fibonarec(n)</TT> en mettant comme 
+4 premiers termes 0,0,0.00022,0.0003 (car le temps mis 
+pour calculer <TT>Fibonarec(2)</TT> est environ 0.00022 et le temps mis 
+pour calculer et <TT>Fibonarec(3)</TT> est environ 0.0003:<BR>
+</P><PRE CLASS="verbatim">Fibonarectime(n):={
+local a,b,c,L,k;
+L:=0,0;
+si n&lt;=1 alors retourne L;fsi;
+L:=L,0.00022;
+si n==2 alors retourne L;fsi;
+L:=L,0.0003;
+si n==3 alors retourne L; fsi;
+a:=0.00022;
+b:=0.0003;
+pour k de 4 jusque n faire
+    c:=a+b;
+    L:=L,c;
+    a:=b;
+    b:=c;
+fpour;
+retourne L;   
+}:;
+</PRE><P>On tape :<BR>
+<TT>T:=Fibonarectime(24)</TT><BR>
+<TT>T[21],T[22],T[23],T[24]</TT><BR>
+On obtient :<BR>
+<TT>1.82278,2.94932,4.7721,7.72142</TT><BR>
+Peut-on espérer calculer <TT>Fibonarec(30)</TT> ?
+On tape :<BR>
+<TT>T:=Fibonarectime(30)</TT><BR>
+<TT>T[30]</TT><BR>
+On obtient :<BR>
+<TT>138.55526</TT><BR>
+cela fait un temps de 138.55526 secondes soit plus de 2 minutes !<BR>
+Je teste en tapant :<BR>
+<TT>time(Fibonarec(30))</TT><BR>
+On obtient :<BR>
+<TT>[141.16,142.640424131] </TT><BR>
+Le premier nombre est le temps CPU (temps mis par le processeur pour faire 
+uniquement ces calculs, en seconde), le deuxième nombre est le temps mis pour 
+faire le calcul comme si on chronomètrait. 
+</P><H3 CLASS="subsection"><A NAME="htoc46">2.2.4</A>  Propriété</H3><P>
+La suite de Fibonnacci vérifie :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>u</I><SUB><I>n</I>+1</SUB>.<I>u</I><SUB><I>n</I>−1</SUB>−<I>u</I><SUB><I>n</I></SUB><SUP>2</SUP>=(−1)<SUP><I>n</I>−1</SUP></TD></TR>
+</TABLE><P>
+En effet :<BR>
+1*2−1=1, 3*1−2<SUP>2</SUP>=−1, 5*2−3<SUP>2</SUP>=1<BR>
+et on a :<BR>
+<I>u</I><SUB><I>n</I>+1</SUB>.<I>u</I><SUB><I>n</I>−1</SUB>−<I>u</I><SUB><I>n</I></SUB><SUP>2</SUP>=<I>u</I><SUB><I>n</I></SUB>.<I>u</I><SUB><I>n</I>−1</SUB>+<I>u</I><SUB><I>n</I>−1</SUB><SUP>2</SUP>−<I>u</I><SUB><I>n</I></SUB><SUP>2</SUP>=<I>u</I><SUB><I>n</I></SUB>(<I>u</I><SUB><I>n</I>−1</SUB>−<I>u</I><SUB><I>n</I></SUB>)+<I>u</I><SUB><I>n</I>−1</SUB><SUP>2</SUP><BR>
+Donc :<BR>
+<I>u</I><SUB><I>n</I>+1</SUB>.<I>u</I><SUB><I>n</I>−1</SUB>−<I>u</I><SUB><I>n</I></SUB><SUP>2</SUP>=−<I>u</I><SUB><I>n</I></SUB>.<I>u</I><SUB><I>n</I>−2</SUB>+<I>u</I><SUB><I>n</I>−1</SUB><SUP>2</SUP>.<BR>
+On a par exemple :
+5*13−8<SUP>2</SUP>=1<BR>
+Cela conduit au paradoxe suivant :<BR>
+Soit un carré de côté 8 unités. 0n le découpe en 4 morceaux et on 
+dispose ces 4 morceaux comme ci dessous (on pourrait faire la même chose avec
+un carré de côté un des termes <I>u</I><SUB><I>n</I></SUB> de la suite de Fibonacci puis faire 
+le découpage en utilisant les 2 termes précedents <I>u</I><SUB><I>n</I>−2</SUB> et <I>u</I><SUB><I>n</I>−1</SUB> ):<BR>
+
+<IMG SRC="cascas006.png">
+Le carré a comme surface 64 carrés alors que le rectangle est composé de 
+5*13=65 carrés. D’où vient le carré supplémentaire ?
+Le carré supplémentaire est l’aire du parallélogramme bleu !!!!<BR>
+
+<IMG SRC="cascas007.png"></P><P>En effet les bords des 4 morceaux ne suivent pas la diagonale du rectangle qui
+a comme pente −5/13 ce qui est différent de -2/5 et de -3/8.<BR>
+Selon la longueur du carré initial il peut soit y avoir un petit carré en 
+trop soit en manquer 1 puisque <I>u</I><SUB><I>n</I>+1</SUB>.<I>u</I><SUB><I>n</I>−1</SUB>−<I>u</I><SUB><I>n</I></SUB><SUP>2</SUP>=(−1)<SUP><I>n</I>−1</SUP>.</P><H2 CLASS="section"><A NAME="toc14"></A><A NAME="htoc47">2.3</A>  La suite de Fibonacci et le triangle de Pascal</H2><H3 CLASS="subsection"><A NAME="htoc48">2.3.1</A>  Le triangle de Pascal</H3><P>
+Pour avoir les premières valeurs du triangle de Pascal, on tape :<BR>
+<TT>A:=makemat((j,k)-&gt;comb(j,k),11,11)</TT><BR>
+On obtient :<BR>
+(</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>20</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>21</TD><TD ALIGN=center NOWRAP>35</TD><TD ALIGN=center NOWRAP>35</TD><TD ALIGN=center NOWRAP>21</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>28</TD><TD ALIGN=center NOWRAP>56</TD><TD ALIGN=center NOWRAP>70</TD><TD ALIGN=center NOWRAP>56</TD><TD ALIGN=center NOWRAP>28</TD><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>9</TD><TD ALIGN=center NOWRAP>36</TD><TD ALIGN=center NOWRAP>84</TD><TD ALIGN=center NOWRAP>126</TD><TD ALIGN=center NOWRAP>126</TD><TD ALIGN=center NOWRAP>84</TD><TD ALIGN=center NOWRAP>36</TD><TD ALIGN=center NOWRAP>9</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>45</TD><TD ALIGN=center NOWRAP>120</TD><TD ALIGN=center NOWRAP>210</TD><TD ALIGN=center NOWRAP>252</TD><TD ALIGN=center NOWRAP>210</TD><TD ALIGN=center NOWRAP>120</TD><TD ALIGN=center NOWRAP>45</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+</TABLE><P>)<BR>
+On peut aussi utiliser le tableur et la relation :<BR>
+pour <I>n</I> ∈ ℕ :
+<I>C</I><SUB><I>n</I></SUB><SUP>0</SUP>=1, <I>C</I><SUB><I>n</I></SUB><SUP><I>n</I></SUP>=1 et <I>C</I><SUB><I>n</I></SUB><SUP><I>p</I></SUP>=<I>C</I><SUB><I>n</I>−1</SUB><SUP><I>p</I></SUP>+<I>C</I><SUB><I>n</I>−1</SUB><SUP><I>p</I>−1</SUP> pour 0&lt;<I>p</I>&lt;<I>n</I>.<BR>
+On ouvre un niveau tableur et on choisit 22 lignes et 11 colonnes.<BR>
+On met <TT>1</TT> dans <I>A</I>0.<BR>
+Puis, on copie <I>A</I>0 vers le bas pour avoir des <TT>1</TT> dans la colonne <I>A</I>.<BR>
+Dans <I>B</I>1 on met <TT>=B0+A0</TT> formule que l’on copie vers le bas et vers la 
+droite.<BR>
+On copie alors vers le bas la formule située dans <I>C</I>1,...<I>K</I>1.<BR>
+<B>Remarque</B> On peut mettre <TT>idn(11)</TT> dans <I>A</I>0, et si on a 
+coché sur <TT>Distribuer</TT>, cela a pour effet de remplir 11 lignes et 11 
+colonnes avec la matrice identité d’ordre 11. Mais cela est inutile car les 
+1 de la diagonale sont recalculés quand on copie vers la droite !<BR>
+On obtient :<BR>
+(</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>20</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>21</TD><TD ALIGN=center NOWRAP>35</TD><TD ALIGN=center NOWRAP>35</TD><TD ALIGN=center NOWRAP>21</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>28</TD><TD ALIGN=center NOWRAP>56</TD><TD ALIGN=center NOWRAP>70</TD><TD ALIGN=center NOWRAP>56</TD><TD ALIGN=center NOWRAP>28</TD><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>9</TD><TD ALIGN=center NOWRAP>36</TD><TD ALIGN=center NOWRAP>84</TD><TD ALIGN=center NOWRAP>126</TD><TD ALIGN=center NOWRAP>126</TD><TD ALIGN=center NOWRAP>84</TD><TD ALIGN=center NOWRAP>36</TD><TD ALIGN=center NOWRAP>9</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>45</TD><TD ALIGN=center NOWRAP>120</TD><TD ALIGN=center NOWRAP>210</TD><TD ALIGN=center NOWRAP>252</TD><TD ALIGN=center NOWRAP>210</TD><TD ALIGN=center NOWRAP>120</TD><TD ALIGN=center NOWRAP>45</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>11</TD><TD ALIGN=center NOWRAP>55</TD><TD ALIGN=center NOWRAP>165</TD><TD ALIGN=center NOWRAP>330</TD><TD ALIGN=center NOWRAP>462</TD><TD ALIGN=center NOWRAP>462</TD><TD ALIGN=center NOWRAP>330</TD><TD ALIGN=center NOWRAP>165</TD><TD ALIGN=center NOWRAP>55</TD><TD ALIGN=center NOWRAP>11</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>12</TD><TD ALIGN=center NOWRAP>66</TD><TD ALIGN=center NOWRAP>220</TD><TD ALIGN=center NOWRAP>495</TD><TD ALIGN=center NOWRAP>792</TD><TD ALIGN=center NOWRAP>924</TD><TD ALIGN=center NOWRAP>792</TD><TD ALIGN=center NOWRAP>495</TD><TD ALIGN=center NOWRAP>220</TD><TD ALIGN=center NOWRAP>66</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>13</TD><TD ALIGN=center NOWRAP>78</TD><TD ALIGN=center NOWRAP>286</TD><TD ALIGN=center NOWRAP>715</TD><TD ALIGN=center NOWRAP>1287</TD><TD ALIGN=center NOWRAP>1716</TD><TD ALIGN=center NOWRAP>1716</TD><TD ALIGN=center NOWRAP>1287</TD><TD ALIGN=center NOWRAP>715</TD><TD ALIGN=center NOWRAP>286</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>14</TD><TD ALIGN=center NOWRAP>91</TD><TD ALIGN=center NOWRAP>364</TD><TD ALIGN=center NOWRAP>1001</TD><TD ALIGN=center NOWRAP>2002</TD><TD ALIGN=center NOWRAP>3003</TD><TD ALIGN=center NOWRAP>3432</TD><TD ALIGN=center NOWRAP>3003</TD><TD ALIGN=center NOWRAP>2002</TD><TD ALIGN=center NOWRAP>1001</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>105</TD><TD ALIGN=center NOWRAP>455</TD><TD ALIGN=center NOWRAP>1365</TD><TD ALIGN=center NOWRAP>3003</TD><TD ALIGN=center NOWRAP>5005</TD><TD ALIGN=center NOWRAP>6435</TD><TD ALIGN=center NOWRAP>6435</TD><TD ALIGN=center NOWRAP>5005</TD><TD ALIGN=center NOWRAP>3003</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>16</TD><TD ALIGN=center NOWRAP>120</TD><TD ALIGN=center NOWRAP>560</TD><TD ALIGN=center NOWRAP>1820</TD><TD ALIGN=center NOWRAP>4368</TD><TD ALIGN=center NOWRAP>8008</TD><TD ALIGN=center NOWRAP>11440</TD><TD ALIGN=center NOWRAP>12870</TD><TD ALIGN=center NOWRAP>11440</TD><TD ALIGN=center NOWRAP>8008</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>17</TD><TD ALIGN=center NOWRAP>136</TD><TD ALIGN=center NOWRAP>680</TD><TD ALIGN=center NOWRAP>2380</TD><TD ALIGN=center NOWRAP>6188</TD><TD ALIGN=center NOWRAP>12376</TD><TD ALIGN=center NOWRAP>19448</TD><TD ALIGN=center NOWRAP>24310</TD><TD ALIGN=center NOWRAP>24310</TD><TD ALIGN=center NOWRAP>19448</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>18</TD><TD ALIGN=center NOWRAP>153</TD><TD ALIGN=center NOWRAP>816</TD><TD ALIGN=center NOWRAP>3060</TD><TD ALIGN=center NOWRAP>8568</TD><TD ALIGN=center NOWRAP>18564</TD><TD ALIGN=center NOWRAP>31824</TD><TD ALIGN=center NOWRAP>43758</TD><TD ALIGN=center NOWRAP>48620</TD><TD ALIGN=center NOWRAP>43758</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>19</TD><TD ALIGN=center NOWRAP>171</TD><TD ALIGN=center NOWRAP>969</TD><TD ALIGN=center NOWRAP>3876</TD><TD ALIGN=center NOWRAP>11628</TD><TD ALIGN=center NOWRAP>27132</TD><TD ALIGN=center NOWRAP>50388</TD><TD ALIGN=center NOWRAP>75582</TD><TD ALIGN=center NOWRAP>92378</TD><TD ALIGN=center NOWRAP>92378</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>20</TD><TD ALIGN=center NOWRAP>190</TD><TD ALIGN=center NOWRAP>1140</TD><TD ALIGN=center NOWRAP>4845</TD><TD ALIGN=center NOWRAP>15504</TD><TD ALIGN=center NOWRAP>38760</TD><TD ALIGN=center NOWRAP>77520</TD><TD ALIGN=center NOWRAP>125970</TD><TD ALIGN=center NOWRAP>167960</TD><TD ALIGN=center NOWRAP>184756</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>21</TD><TD ALIGN=center NOWRAP>210</TD><TD ALIGN=center NOWRAP>1330</TD><TD ALIGN=center NOWRAP>5985</TD><TD ALIGN=center NOWRAP>20349</TD><TD ALIGN=center NOWRAP>54264</TD><TD ALIGN=center NOWRAP>116280</TD><TD ALIGN=center NOWRAP>203490</TD><TD ALIGN=center NOWRAP>293930</TD><TD ALIGN=center NOWRAP>352716</TD></TR>
+</TABLE><P>)<BR>
+On a ainsi les coefficients binomiaux utiles pour le développement de 
+(1+<I>x</I>)<SUP><I>n</I></SUP> pour <I>n</I>=0..21.
+</P><H3 CLASS="subsection"><A NAME="htoc49">2.3.2</A>  La somme des diagonales montantes</H3><P>
+Lorsqu’on fait la somme des diagonales montantes du triangle de Pascal on obtient la suite de Fibonacci.<BR>
+Par exemple :<BR>
+(</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>=</TD></TR>
+<TR><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>=</TD></TR>
+<TR><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>=</TD></TR>
+<TR><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>=</TD></TR>
+<TR><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>=</TD></TR>
+<TR><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>=</TD></TR>
+<TR><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>13</TD><TD ALIGN=center NOWRAP>=</TD></TR>
+</TABLE><P>) 
+(</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗  </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗  </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>0  </TD></TR>
+<TR><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>5</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>1 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>↗</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>20</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>15</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=center NOWRAP>6  </TD></TR>
+</TABLE><P>)<BR>
+On tape :<BR>
+<TT>L:=sum(A[j-k, k],k=0..j)$(j=0..10)</TT><BR>
+On obtient :<BR>
+<TT>1,1,2,3,5,8,13,21,34,55,89</TT><BR>
+Pour le montrer on utilise les relations pour <I>n</I> ∈ ℕ et <I>p</I> ∈ ℕ :<BR>
+<I>C</I><SUB><I>n</I></SUB><SUP>0</SUP>=1, <I>C</I><SUB><I>n</I></SUB><SUP><I>n</I></SUP>=1, <I>C</I><SUB><I>n</I></SUB><SUP><I>p</I></SUP>=0 si <I>p</I>&gt;<I>n</I> et <I>C</I><SUB><I>n</I></SUB><SUP><I>p</I></SUP>=<I>C</I><SUB><I>n</I>−1</SUB><SUP><I>p</I></SUP>+<I>C</I><SUB><I>n</I>−1</SUB><SUP><I>p</I>−1</SUP> pour
+0&lt;<I>p</I>≤ <I>n</I>.<BR>
+On tape :<BR>
+<TT>simplify(comb(j-1,k-1)+comb(j-1,k)-comb(j,k))</TT><BR>
+On obtient :<BR>
+<TT>0</TT><BR>
+Soit <I>a</I><SUB><I>n</I></SUB> la suite définie par la somme des diagonales montantes du 
+triangle de Pascal.<BR>
+On a donc :<BR>
+<I>a</I><SUB>0</SUB>=1, <I>a</I><SUB>1</SUB>=1 et pour <I>n</I>&gt;1:<BR>
+<I>a</I><SUB><I>n</I></SUB>=∑<SUB><I>p</I>=0</SUB><SUP><TT><I>floor</I>(<I>n</I>/2)</TT></SUP><TT><I>comb</I>(<I>n</I>-<I>p</I>,<I>p</I>)</TT>=1+∑<SUB><I>p</I>=1</SUB><SUP><TT><I>floor</I>(<I>n</I>/2)</TT></SUP><TT><I>comb</I>(<I>n</I>-<I>p</I>,<I>p</I>)</TT><BR>
+<I>a</I><SUB><I>n</I></SUB>=1+∑<SUB><I>p</I>=1</SUB><SUP><TT><I>floor</I>(<I>n</I>/2)</TT></SUP><TT><I>comb</I>(<I>n</I>-<I>p</I>-1,<I>p</I>-1)</TT>+∑<SUB><I>p</I>=1</SUB><SUP><TT><I>floor</I>(<I>n</I>/2)</TT></SUP><TT><I>comb</I>(<I>n</I>-<I>p</I>-1,<I>p</I>)</TT><BR>
+On a pour tout <I>n</I> : <TT><I>floor</I>(<I>n</I>/2)-1=<I>floor</I>((<I>n</I>-2)/2))</TT>.<BR>
+On a si <I>n</I>=2<I>k</I>, on a <TT><I>floor</I>(<I>n</I>/2)=<I>floor</I>((<I>n</I>-1)/2)+1</TT>=<I>k</I>:<BR>
+1+∑<SUB><I>p</I>=1</SUB><SUP><TT><I>floor</I>(<I>n</I>/2)</TT></SUP><TT><I>comb</I>(<I>n</I>-<I>p</I>-1,<I>p</I>)</TT>=<BR>
+∑<SUB><I>p</I>=0</SUB><SUP><TT><I>floor</I>((<I>n</I>-1)/2)</TT></SUP><TT><I>comb</I>(<I>n</I>-1-<I>p</I>,<I>p</I>)</TT>+<TT><I>comb</I>(2<I>k</I>-1-<I>k</I>,<I>k</I>)</TT>=<I>a</I><SUB><I>n</I>−1</SUB><BR>
+car <TT><I>comb</I>(2<I>k</I>-1-<I>k</I>,<I>k</I>)</TT>=0<BR>
+∑<SUB><I>p</I>=1</SUB><SUP><TT><I>floor</I>(<I>n</I>/2)</TT></SUP><TT><I>comb</I>(<I>n</I>-<I>p</I>-1,<I>p</I>-1)</TT>=<BR>
+∑<SUB><I>p</I>=0</SUB><SUP><TT><I>floor</I>((<I>n</I>-2)/2)</TT></SUP><TT><I>comb</I>(<I>n</I>-2-<I>p</I>,<I>p</I>)</TT>=<I>a</I><SUB><I>n</I>−2</SUB><BR>
+car <TT>floor(n/2)-1=floor((n-2)/2)</TT><BR>
+On a si <I>n</I>=2<I>k</I>+1 alors <TT><I>floor</I>(<I>n</I>/2)=<I>floor</I>((<I>n</I>-1)/2)=<I>k</I></TT> :<BR>
+1+∑<SUB><I>p</I>=1</SUB><SUP><TT><I>floor</I>(<I>n</I>/2)</TT></SUP><TT><I>comb</I>(<I>n</I>-<I>p</I>-1,<I>p</I>)</TT>=<BR>
+∑<SUB><I>p</I>=0</SUB><SUP><TT><I>floor</I>((<I>n</I>-1)/2)</TT></SUP><TT><I>comb</I>(<I>n</I>-1-<I>p</I>,<I>p</I>)</TT>=<I>a</I><SUB><I>n</I>−1</SUB><BR>
+∑<SUB><I>p</I>=1</SUB><SUP><TT><I>floor</I>(<I>n</I>/2)</TT></SUP><TT><I>comb</I>(<I>n</I>-<I>p</I>-1,<I>p</I>-1)</TT>=<BR>
+∑<SUB><I>p</I>=0</SUB><SUP><TT><I>floor</I>((<I>n</I>-2)/2)</TT></SUP><TT><I>comb</I>(<I>n</I>-2-<I>p</I>,<I>p</I>)</TT>=<I>a</I><SUB><I>n</I>−2</SUB><BR>
+car <TT>floor(n/2)-1=floor((n-2)/2)</TT><BR>
+Donc :<BR>
+<I>a</I><SUB>0</SUB>=1, <I>a</I><SUB>1</SUB>=1 et pour <I>n</I>&gt;1 on a
+<I>a</I><SUB><I>n</I></SUB>=<I>a</I><SUB><I>n</I>−1</SUB>+<I>a</I><SUB><I>n</I>−2</SUB><BR>
+<I>a</I><SUB><I>n</I></SUB> est donc la suite de Fibonacci.<BR>
+On tape :<BR>
+<TT>L1:=0,sum(A[j-k-1,k-1],k=1..j-1)$(j=1..10)</TT><BR>
+On obtient :<BR>
+<TT>0,0,1,1,2,3,5,8,13,21,34</TT><BR>
+On tape :<BR>
+<TT>L2:=1,sum(A[j-k-1,k],k=0..j-1)$(j=1..10)</TT><BR>
+On obtient :<BR>
+<TT>1,1,1,2,3,5,8,13,21,34,55</TT><BR>
+On tape :<BR>
+<TT>[L1]+[L2]</TT><BR>
+On obtient :<BR>
+<TT>[1,1,2,3,5,8,13,21,34,55,89]</TT><BR>
+On tape :<BR>
+<TT>simplify(comb(j-1,k-1)+comb(j-1,k)-comb(j,k))</TT><BR>
+On obtient :<BR>
+<TT>0</TT>
+</P><H2 CLASS="section"><A NAME="toc15"></A><A NAME="htoc50">2.4</A>  Le code de Fibonacci</H2><P>
+À partir de "sa" suite Fibonacci a fabriqué un code qui permet d’écrire 
+tous les entiers avec des 0 et des 1. Pour cela, si <I>u</I><SUB><I>n</I></SUB> est la suite de 
+Fibonacci <I>u</I><SUB>0</SUB>=<I>u</I><SUB>1</SUB>=1 et pour <I>n</I>≥2 <I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>−2</SUB>+<I>u</I><SUB><I>n</I>−1</SUB>,
+le code de 0 est 0 et pour <I>n</I>&gt;0 le code des nombres <I>u</I><SUB><I>n</I></SUB> est 1 suivi de <I>n</I>−1 zéros.<BR>
+On a ainsi :<BR>
+0 a pour code 0<BR>
+1 a pour code 1<BR>
+2 a pour code 10<BR>
+3 a pour code 100<BR>
+4 a pour code 101 car 4=3+1<BR>
+5 a pour code 1000<BR>
+6 a pour code 1001 car 6=5+1<BR>
+7 a pour code 1010 car 7=5+2<BR>
+8 a pour code 10000<BR>
+etc...<BR>
+On remarquera que dans ce code il n’y a jamais deux 1 qui se suivent, en effet :<BR>
+<I>u</I><SUB><I>n</I>−1</SUB>+<I>u</I><SUB><I>n</I>−2</SUB>=<I>u</I><SUB><I>n</I></SUB>.<BR>
+Par exemple le nombre :<BR>
+<I>u</I><SUB>1</SUB>+<I>u</I><SUB>2</SUB>+<I>u</I><SUB>3</SUB>+<I>u</I><SUB>4</SUB>=1+2+3+5=11 a comme code 1010 car 11=8+3.<BR>
+<B>Exercice</B><BR>
+Écrire un programme qui renvoie le code de Fibonacci d’un entier <I>n</I>≥ 10<SUP>8</SUP>.<BR>
+On remarquera que <I>u</I><SUB>38</SUB>&lt;10<SUP>8</SUP>&lt;<I>u</I><SUB>39</SUB>.<BR>
+On construit la liste des 40 premiers termes de <I>u</I><SUB><I>n</I></SUB> pour <I>n</I>=0,1..39.<BR>
+<B>Le codage</B><BR>
+On utilise le programme vu précédemment :
+</P><PRE CLASS="verbatim">Fibonasuite(n):={
+local a,b,c,L;
+L:=NULL;
+si n&lt;=0 alors retourne L;fsi;
+L:=L,1;
+si n==1 alors retourne L;fsi;
+L:=L,1;
+si n==2 alors retourne L; fsi;
+a:=1;
+b:=1;
+pour k de 3 jusque n faire
+    c:=a+b;
+    L:=L,c;
+    a:=b;
+    b:=c;
+fpour;
+retourne L;   
+}:;
+</PRE><P>On écrit le code d’un nombre <I>n</I> au moyen d’une chaîne de caractères : 
+c’est <TT>string</TT> qui transforme l’écriture d’un nombre en une chaîne
+de caractères 
+</P><PRE CLASS="verbatim">codefib(n):={
+local fib,cod,p;
+si n&gt;10^8 alors retourne "l'entier doit etre &lt;10^8" fsi;
+si (n==0 or n==1) alors  return n fsi;
+fib:=Fibonasuite(40);
+cod:=0;
+repeter
+p:=2;
+tantque n&gt;=fib[p] faire p:=p+1 ftantque;
+// fib[p-1]&lt;=n&lt;fib[p]
+cod:=10^(p-2)+cod;
+n:=n-fib[p-1];
+jusqua n==0;
+retourne string(cod);
+}:;
+</PRE><P>On tape :<BR>
+<TT>codefib(n)$(n=0..20)</TT><BR>
+On obtient une suite de chaînes :<BR>
+<TT>0,1,10,100,101,1000,1001,1010,10000,10001,10010,10100,10101,</TT><BR>
+<TT>100000,100001,100010,100100,100101,101000,101001,101010</TT><BR>
+<B>Le décodage</B><BR>
+On donne une chaîne de caractères <I>L</I> de 1 et de zéro qui est le code de 
+Fibonacci d’un nombre <I>n</I> et on obtient le nombre <I>n</I> codé par <I>L</I>.<BR>
+On remarquera que le décodage ci-dessous ne vérifie pas que <I>L</I> est bien un
+code de Fobonacci : il peut y avoir 2 "1" à la suite (par ex decodefib("11") 
+renverra 3) et les chiffres autres que "1" seront considérés comme des "0"
+(par ex decodefib("15") renverra 2).<BR>
+On tape :
+</P><PRE CLASS="verbatim">decodefib(L):={
+local k,n,s,fib;
+fib:=Fibonasuite(40);
+s:=dim(L);
+si s==1 alors return expr(L[0]); fsi; 
+n:=0;
+pour k de 0 jusque s-1 faire
+si L[k]=="1" alors n:=n+fib[s-k];fsi; 
+fpour;
+return n;
+}:;
+</PRE><P>On tape :<BR>
+<TT>decodefib("101010"),decodefib("10101")</TT><BR>
+On obtient :<BR>
+<TT>20,12</TT>
+</P><H2 CLASS="section"><A NAME="toc16"></A><A NAME="htoc51">2.5</A>  Le nombre d’or</H2><P>
+Les quotients des termes successifs de la suite de Fibonnacci est la suite 
+<I>v</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>+1</SUB>/<I>u</I><SUB><I>n</I></SUB> pour <I>n</I> ≥ 0<BR>
+Cette suite converge vers 
+1+√<SPAN style="text-decoration:overline">5</SPAN>/2 : c’est le nombre d’or qui est noté Φ.<BR>
+En effet, on a <I>v</I><SUB>0</SUB>=1 et <I>v</I><SUB><I>n</I></SUB>=1+<I>u</I><SUB><I>n</I>−1</SUB>/<I>u</I><SUB><I>n</I></SUB>=1+1/<I>v</I><SUB><I>n</I>−1</SUB> donc<BR>
+<I>v</I><SUB>1</SUB>=2, <I>v</I><SUB>2</SUB>=3/2, <I>v</I><SUB>3</SUB>=5/3.<BR>
+Montrons par reécurrence que 1 ≤ <I>v</I><SUB><I>n</I></SUB> ≤ 2 pour tout <I>n</I> :
+1≤ <I>v</I><SUB>0</SUB>=1&lt;2
+si 1 ≤ <I>v</I><SUB><I>n</I>−1</SUB>&lt;2 alors 1/2≤ 1/<I>v</I><SUB><I>n</I>−1</SUB>≤ 1
+donc 1≤ 1+1/2 ≤ <I>v</I><SUB><I>n</I></SUB>≤ 1+1=2<BR>
+Étude du signe de <I>v</I><SUB><I>n</I></SUB>−<I>v</I><SUB><I>n</I>−1</SUB> :<BR>
+<I>v</I><SUB><I>n</I></SUB>−<I>v</I><SUB><I>n</I>−1</SUB>=1/<I>v</I><SUB><I>n</I>−1</SUB>−1/<I>v</I><SUB><I>n</I>−2</SUB>=<I>v</I><SUB><I>n</I>−2</SUB>−<I>v</I><SUB><I>n</I>−1</SUB>/<I>v</I><SUB><I>n</I>−1</SUB><I>v</I><SUB><I>n</I>−2</SUB><BR>
+Donc <I>v</I><SUB><I>n</I></SUB>−<I>v</I><SUB><I>n</I>−1</SUB> est du signe opposé à celui de <I>v</I><SUB><I>n</I>−1</SUB>−<I>v</I><SUB><I>n</I>−2</SUB>.<BR>
+Donc <I>v</I><SUB>2<I>n</I></SUB>−<I>v</I><SUB>2<I>n</I>−2</SUB> a le mme signe que <I>v</I><SUB>2</SUB>−<I>v</I><SUB>0</SUB>=1/2&gt;0 et<BR>
+<I>v</I><SUB>2<I>n</I>+1</SUB>−<I>v</I><SUB>2<I>n</I>−1</SUB> a le même signe que <I>v</I><SUB>3</SUB>−<I>v</I><SUB>1</SUB>=−1/3&lt;0<BR>
+La suite <I>v</I><SUB>2<I>n</I></SUB> est convergente vers 1≤ <I>a</I>≤ 2 car croissante et 
+majorée.<BR>
+<I>v</I><SUB>2<I>n</I>+1</SUB> est convergente vers 1≤ <I>b</I>≤ 2 car décroissante et 
+minorée.<BR>
+On doit avoir <I>a</I>=1+1/<I>b</I> et <I>b</I>=1+1/<I>a</I> donc <I>ab</I>=<I>b</I>+1=<I>a</I>+1 donc <I>a</I>=<I>b</I>
+Donc <I>v</I> converge vers <I>a</I>=<I>b</I>=φ qui vérifie :<BR>
+φ=1+1/φ ou encore φ<SUP>2</SUP>−φ−1=0 et 1≤ φ ≤ 2.
+donc φ=1+√<SPAN style="text-decoration:overline">5</SPAN>/2
+Le nombre d’or est :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">φ=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">≃ 1.61803398875</TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc52">2.5.1</A>  Propriétés du nombre d’or</H3><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">φ<SUP>2</SUP>=1+φ</TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">(φ−1)*φ=1</TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">φ=</TD><TD CLASS="dcell"><TABLE CELLSPACING=0 CELLPADDING=0><TR><TD ALIGN="right"><DIV CLASS="vbar" STYLE="height:8em;"></DIV></TD></TR>
+<TR><TD><FONT SIZE=7>√</FONT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CELLSPACING=0 CELLPADDING=0><TR><TD ALIGN="right"><DIV CLASS="vbar" STYLE="height:4em;"></DIV></TD></TR>
+<TR><TD><FONT SIZE=7>√</FONT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=0 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CELLSPACING=0 CELLPADDING=0><TR><TD ALIGN="right"><DIV CLASS="vbar" STYLE="height:0em;"></DIV></TD></TR>
+<TR><TD><FONT SIZE=7>√</FONT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=0 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=0 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>1+...</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">φ</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=1+φ</TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">φ=1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">1+...</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Si un réctangle est tel que le rapport de la longueur <I>L</I> à la largeur <I>l</I> 
+soit φ alors :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>L</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>l</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>l</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>L</I>−<I>l</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=φ</TD></TR>
+</TABLE><P>
+On tape :
+</P><PRE CLASS="verbatim">spiror(a,b,n):={
+local au,r,L;
+L:=NULL;
+si n==0 alors retourne L,segment(a,b);fsi;
+au :=(1+sqrt(5))/2;
+L:=L,rectangle(a,b,au-1);
+r:=(b-a)*(au-1);
+L:=L,affichage(cercle(a+r,r,pi/2,pi),1);
+retourne L,spiror(a+r*(1+i),a+r,n-1);
+}:;
+</PRE><P>puis on tape :<BR>
+<TT>spiror(0,1/2+sqrt(5)/2,7)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="cascas008.png">
+</P><H2 CLASS="section"><A NAME="toc17"></A><A NAME="htoc53">2.6</A>  Un exercice niveau trousième</H2><P>
+On veut construire un rectangle d’or i.e. un rectangle tel que :<BR>
+longueur/largeur =1+√<SPAN style="text-decoration:overline">5</SPAN>/2=Φ.<BR>
+Tout d’abord étant donné un segment <I>AB</I>, on construit un point <I>M</I> tel que
+<I>AB</I>/<I>MB</I>=<I>MB</I>/<I>MA</I>=1+√<SPAN style="text-decoration:overline">5</SPAN>/2=Φ<BR>
+Soient <I>a</I> un nombre réel positif et <I>ABC</I> un triangle rectangle en <I>A</I> tel 
+que <I>AB</I>=<I>a</I> et <I>AC</I>=<I>a</I>/2.<BR>
+Soit <I>N</I> intersection du cercle de centre <I>C</I> et de rayon <I>AC</I>.<BR>
+Soit <I>M</I> intersection du cercle de centre <I>B</I> et de rayon <I>BN</I>.<BR>
+<IMG SRC="cascas009.png"><BR>
+Calculer les longueurs <I>BC</I>, <I>BN</I>, <I>BM</I> et <I>AM</I>.<BR>
+Montrer que <I>M</I> partage <I>BA</I> selon le nombre d’or i.e. :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>MB</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>MA</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>AB</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>MB</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=Φ</TD></TR>
+</TABLE><P>
+En déduire une construction d’un rectangle d’or avec <TT>Xcas</TT><BR>
+<B>Solution</B><BR>
+D’après le théorème de Phytagore on a :<BR>
+<I>BC</I><SUP>2</SUP>=<I>AB</I><SUP>2</SUP>+<I>AC</I><SUP>2</SUP>=<I>a</I><SUP>2</SUP>+<I>a</I><SUP>2</SUP>/4=5<I>a</I><SUP>2</SUP>/4<BR>
+Donc :<BR>
+ <I>BC</I>=<I>a</I>√<SPAN style="text-decoration:overline">5</SPAN>/2<BR>
+ <I>BN</I>=<I>BM</I>=<I>BC</I>−<I>CN</I>=<I>BC</I>−<I>a</I>/2=<I>a</I>(√<SPAN style="text-decoration:overline">5</SPAN>−1/2<BR>
+ <I>AM</I>=<I>AB</I>−<I>BM</I>=<I>a</I>−<I>a</I>(√<SPAN style="text-decoration:overline">5</SPAN>−1/2=<I>a</I>(3−√<SPAN style="text-decoration:overline">5</SPAN>/2<BR>
+On a donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>MB</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>MA</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−1</TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">3−</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=Φ</TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>AB</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>MB</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−1</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=Φ</TD></TR>
+</TABLE><P>
+<B>Remarque</B><BR>
+On peut se servir de <TT>Xcas</TT> pour faire les calculs.<BR>
+On peut stocker les valeurs dans des variables.
+On tape :<BR>
+<TT>a</TT><CODE><TT>^</TT></CODE><TT>2+a</TT><CODE><TT>^</TT></CODE><TT>2/4</TT><BR>
+On obtient <I>BC</I><SUP>2</SUP> :<BR>
+<TT>5*a</TT><CODE><TT>^</TT></CODE><TT>2/4</TT><BR>
+On tape :<BR>
+<TT>factor(sqrt(5*a</TT><CODE><TT>^</TT></CODE><TT>2/4))</TT><BR>
+On obtient <I>BC</I> :<BR>
+<TT>sqrt(5)*a/2</TT><BR>
+On tape :<BR>
+<TT>factor(a*sqrt(5)/2-a/2)</TT><BR>
+On obtient <I>CN</I> et <I>BM</I> :<BR>
+<TT>(sqrt(5)-1)*a/2</TT><BR>
+On tape :<BR>
+<TT>factor(a-(sqrt(5)-1)*a/2)</TT><BR>
+On obtient <I>AM</I> :<BR>
+<TT>(-(sqrt(5))+3)*a/2</TT><BR>
+On tape :<BR>
+<TT>normal((sqrt(5)-1)*a/2/((-(sqrt(5))+3)*a/2))</TT><BR>
+On obtient <I>BM</I>/<I>AM</I> :<BR>
+<TT>(sqrt(5)+1)/2</TT><BR>
+On tape :<BR>
+<TT>normal(a/((sqrt(5)-1)*a/2))</TT><BR>
+On obtient <I>AB</I>/<I>BM</I> :<BR>
+<TT>(sqrt(5)+1)/2</TT>.<BR>
+On peut stocker les valeurs dans des variables pour que les calculs soient plus
+lisibles.<BR>
+On tape :<BR>
+<TT>BC:=factor(sqrt(a</TT><CODE><TT>^</TT></CODE><TT>2+a</TT><CODE><TT>^</TT></CODE><TT>2/4))</TT><BR>
+On obtient <I>BC</I> :<BR>
+<TT>sqrt(5)*a/2</TT><BR>
+On tape :<BR>
+<TT>BM:=factor(BC-a/2)</TT><BR>
+On obtient <I>CN</I> et <I>BM</I> :<BR>
+<TT>a*(sqrt(5)-1)/2</TT><BR>
+On tape :<BR>
+<TT>AM:=factor(a-BM)</TT><BR>
+On obtient <I>AM</I> :<BR>
+<TT>a*(-(sqrt(5))+3)/2</TT><BR>
+On tape :<BR>
+<TT>normal(BM/AM)</TT><BR>
+On obtient <I>BM</I>/<I>AM</I> :<BR>
+<TT>(sqrt(5)+1)/2</TT><BR>
+On tape :<BR>
+<TT>normal(a/BM)</TT><BR>
+On obtient <I>AB</I>/<I>BM</I> :<BR>
+<TT>(sqrt(5)+1)/2</TT>.<BR>
+<B>Construction du rectangle d’or</B>
+</P><PRE CLASS="verbatim">A:=point(0);
+B:=point(4);
+K:=point(0,2,affichage=3);
+triangle(A,B,K,affichage=3);
+cercle(K,2,affichage=3);
+N:=inter(cercle(K,2),segment(K,B));
+l:=longueur(K,B);
+cercle(B,l-2,affichage=3);
+M:=inter(cercle(B,l-2),segment(A,B));
+rectangle(A,B,(l-2)/4,D,C);
+L:=point(6-l,l-2);
+segment(M,L);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas010.png"><BR>
+Les rectangles <I>ABCD</I> et <I>AMLD</I> sont des rectangles d’or et <I>MBCL</I> est un 
+carré.
+</P><H2 CLASS="section"><A NAME="toc18"></A><A NAME="htoc54">2.7</A>  Un exercice niveau terminale</H2><H3 CLASS="subsection"><A NAME="htoc55">2.7.1</A>  L’énoncé</H3><P>
+On cosidère la fonction <I>f</I> definie sur ℝ<SUP>*</SUP> par :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>(<I>x</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>x</I>+1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On note <I>f</I>@@ <I>n</I>=<I>f</I>∘ <I>f</I>..∘ <I>f</I>  (On compose <I>f</I>, <I>n</I> fois)
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Calculer :
+<I>f</I>@@ 2=<I>f</I>∘ <I>f</I>,  <I>f</I>@@ 3=<I>f</I>∘ <I>f</I>∘ <I>f</I>,  <I>f</I>@@ 4=<I>f</I>∘ <I>f</I>∘ <I>f</I>∘ <I>f</I>
+</LI><LI CLASS="li-enumerate">Trouver la valeur de <I>f</I>@@ <I>n</I> en fonction de <I>n</I>.
+</LI><LI CLASS="li-enumerate">Résoudre, lorsqu’on utilise <I>n</I> traits de fractions, l’équation 
+d’inconnue <I>x</I> :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I>=1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">...+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+</LI><LI CLASS="li-enumerate">Touver la limite lorsque <I>n</I> tends vers +∞ de
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">...+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>a</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+lorsque <I>a</I>&gt;0 et lorsqu’on utilise <I>n</I> traits de fractions.
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc56">2.7.2</A>  La solution avec <TT>Xcas</TT></H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On définit la fonction <I>f</I>, on tape :<BR>
+<TT>f(x):=(x+1)/x</TT><BR>
+On calcule <I>f</I>@@ 2=<I>f</I>(<I>f</I>(<I>x</I>)), on tape :<BR>
+<TT>normal((f@@2)(x))</TT><BR>
+On obtient :<BR>
+<TT>(2*x+1)/(x+1)</TT><BR>
+ On calcule <I>f</I>@@ 3=<I>f</I>(<I>f</I>(<I>f</I>(<I>x</I>))), on tape :<BR>
+<TT>normal((f@@3)(x))</TT><BR>
+On obtient :<BR>
+<TT>(3*x+2)/(2*x+1)</TT><BR>
+On calcule <I>f</I>@@ 4, on tape :<BR>
+<TT>normal((f@@4)(x))</TT><BR>
+On obtient :<BR>
+<TT>(5*x+3)/(3*x+2)</TT><BR>
+</LI><LI CLASS="li-enumerate">On suppose que :
+ <I>f</I>@@ <I>n</I>=<I>a</I><SUB><I>n</I></SUB><I>x</I>+<I>b</I><SUB><I>n</I></SUB>/<I>c</I><SUB><I>n</I></SUB><I>x</I>+<I>d</I><SUB><I>n</I></SUB><BR>
+On cherche une relation de récurrence entre les différents coefficients.<BR>
+On définit la fonction <I>g</I>, on tape :<BR>
+<TT>g(x,a,b,c,d):=(a*x+b)/(c*x+d)</TT><BR>
+On a :
+(<I>f</I>@@ <I>n</I>+1)(<I>x</I>)=<I>f</I>(<I>g</I>(<I>x</I>,<I>a</I>,<I>b</I>,<I>c</I>,<I>d</I>))<BR>
+ On calcule <I>f</I>(<I>g</I>(<I>x</I>,<I>a</I>,<I>b</I>,<I>c</I>,<I>d</I>)) et on tape :<BR>
+<TT>normal(f(g(x,a,b,c,d)))</TT><BR>
+On obtient :<BR>
+<TT>(a*x+b+c*x+d)/(a*x+b)</TT><BR>
+donc :<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=<I>a</I><SUB><I>n</I></SUB>, <I>d</I><SUB><I>n</I>+1</SUB>=<I>b</I><SUB><I>n</I></SUB><BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=<I>a</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>=<I>a</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I>−1</SUB><BR>
+<I>b</I><SUB><I>n</I>+1</SUB>=<I>b</I><SUB><I>n</I></SUB>+<I>d</I><SUB><I>n</I></SUB>=<I>b</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I>−1</SUB><BR>
+On sait que <I>a</I><SUB>1</SUB>=1, <I>b</I><SUB>1</SUB>=1 <I>a</I><SUB>0</SUB>=<I>c</I><SUB>1</SUB>=1 <I>b</I><SUB>0</SUB>=<I>d</I><SUB>1</SUB>=0<BR>
+Donc si la suite de Fibonacci est la suite <I>u</I> définie par :<BR>
+<I>u</I><SUB>0</SUB>=1,  <I>u</I><SUB>1</SUB>=1<BR>
+<I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>−1</SUB>+<I>u</I><SUB><I>n</I>−2</SUB> pour <I>n</I>&gt;1:<BR>
+Alors 
+ <I>f</I>@@ <I>n</I>=<I>a</I><SUB><I>n</I></SUB><I>x</I>+<I>b</I><SUB><I>n</I></SUB>/<I>c</I><SUB><I>n</I></SUB><I>x</I>+<I>d</I><SUB><I>n</I></SUB>
+avec <I>a</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>, <I>b</I><SUB><I>n</I></SUB>=<I>c</I><SUB><I>n</I></SUB>=<I>a</I><SUB><I>n</I>−1</SUB>, <I>d</I><SUB><I>n</I></SUB>=<I>a</I><SUB><I>n</I>−2</SUB>
+</LI><LI CLASS="li-enumerate">On résout l’équation d’inconnue <I>x</I>, avec 1 trait de fractions :
+ <I>x</I>=1+1/<I>x</I><BR>
+On tape :<BR>
+<TT>normal(1+1/x)</TT><BR>
+On obtient : <TT>(x+1)/x</TT><BR>
+Donc  <I>f</I>(<I>x</I>)=1+1/<I>x</I><BR>
+Il faut donc résoudre <I>f</I>(<I>x</I>)=<I>x</I>, on tape :<BR>
+<TT>solve(x=f(x),x)</TT><BR>
+On obtient : <TT>[1/2*(1-sqrt(5)),1/2*(1+sqrt(5))]</TT><BR>
+On reconnait le nombre d’or et l’inverse de son opposé.<BR>
+On résout l’équation d’inconnue <I>x</I>, avec 2 traits de fractions :
+<I>x</I>=1+ 1/1+ 1/<I>x</I><BR>
+On tape :<BR>
+<TT>normal(1+1/(1+1/x))</TT><BR>
+On obtient : <TT>(2*x+1)/(x+1)</TT><BR>
+On reconnait <I>f</I>(<I>f</I>(<I>x</I>)) ou bien 
+puisque  <I>f</I>(<I>x</I>)=1+1/<I>x</I>, on a :<BR>
+1+ 1/1+ 1/<I>x</I>=1+1/<I>f</I>(<I>x</I>)=<I>f</I>(<I>f</I>(<I>x</I>))<BR>
+. 
+Il faut donc résoudre <I>f</I>(<I>f</I>(<I>x</I>))=<I>x</I>, on tape :<BR>
+<TT>solve(f(f(x))=x,x)</TT><BR>
+On obtient :
+<TT>[1/2*(1-sqrt(5)),1/2*(1+sqrt(5))]</TT><BR>
+qui sont les mêmes solutions qur <I>f</I>(<I>x</I>)=<I>x</I>.<BR>
+On doit résoudre l’équation avec <I>n</I> traits de fractions :
+(<I>f</I>@@ <I>n</I>)(<I>x</I>)=<I>x</I><BR>
+Comme (<I>f</I>@@ <I>n</I>) est une fonction homographique (i.e.
+(<I>f</I>@@ <I>n</I>)(<I>x</I>) est de la forme (<I>a</I>*<I>x</I>+<I>b</I>)/(<I>c</I>*<I>x</I>+<I>d</I>))),
+cette équation est une équation du 2-nd degré donc admet au plus 2 
+solutions. Les 2 solutions de <I>f</I>(<I>x</I>)=<I>x</I> sont aussi solutions de
+(<I>f</I>@@ <I>n</I>)(<I>x</I>)=<I>x</I> donc (<I>f</I>@@ <I>n</I>)(<I>x</I>)=<I>x</I> a les mêmes solutions que
+<I>f</I>(<I>x</I>)=<I>x</I>.
+</LI><LI CLASS="li-enumerate">Chercher la limite lorsque le nombre de traits tend vers l’infini de :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">...</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>a</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+revient à chercher la limite de la suite des itérées de <I>f</I> définit 
+par : <I>u</I><SUB>0</SUB>=<I>a</I>&gt;0, <I>u</I><SUB><I>n</I></SUB>=<I>f</I>(<I>u</I><SUB><I>n</I>−1</SUB>) pour <I>n</I>&gt;0.
+On a en effet (avec <I>n</I> traits de fractions) :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>u</I><SUB><I>n</I></SUB>=1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">...</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>a</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE>.
+Avec <TT>Xcas</TT>, on tape dans un niveau de géométrie 2-d :<BR>
+<TT>supposons(a=[6.0,0,9,0.1])</TT><BR>
+<TT>plotseq(1+1/x,[a,0,9],5)</TT><BR>
+On obtient :<BR>
+<IMG SRC="cascas011.png">
+Montrons que la suite <I>u</I><SUB><I>n</I></SUB> converge vers 
+φ=1+√<SPAN style="text-decoration:overline">5</SPAN>/2 qui est la 
+solution positive de l’équation <I>f</I>(<I>x</I>)=<I>x</I>.<BR>
+Puisque <I>a</I>&gt;0, on a <I>u</I><SUB>1</SUB>=<I>b</I>=1+1/<I>a</I>&gt;1&gt;0 et pour tout <I>n</I>&gt;0 <I>u</I><SUB><I>n</I></SUB>&gt;1&gt;0.<BR>
+Si <I>u</I><SUB>0</SUB>=<I>a</I>&gt;φ alors <I>b</I>=<I>u</I><SUB>1</SUB>=1+1/<I>a</I>&lt;1+1/φ=φ et<BR>
+si <I>u</I><SUB>0</SUB>=<I>a</I>&lt;φ alors <I>b</I>=<I>u</I><SUB>1</SUB>=1+1/<I>a</I>&gt;1+1/φ=φ
+De même si <I>c</I>=<I>u</I><SUB><I>n</I></SUB>&gt;φ alors <I>d</I>=<I>u</I><SUB><I>n</I>+1</SUB>=1+1/<I>c</I>&lt;φ et <I>u</I><SUB><I>n</I>+2</SUB>=1+1/<I>c</I>&gt;φ.<BR>
+Suupposons par exemple que <I>a</I>=<I>u</I><SUB>0</SUB>&gt;φ<BR>
+Alors pour tout <I>n</I>∈ ℕ on a <I>u</I><SUB>2<I>n</I></SUB>&gt;φ et <I>u</I><SUB>2<I>n</I>+1</SUB>&lt;φ<BR>
+On a :<BR>
+<I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB>=<I>f</I>(<I>u</I><SUB><I>n</I></SUB>)−<I>f</I>(<I>u</I><SUB><I>n</I>−1</SUB>)=1/<I>u</I><SUB><I>n</I></SUB>−1/<I>u</I><SUB><I>n</I>−1</SUB>=(<I>u</I><SUB><I>n</I>−1</SUB>−<I>u</I><SUB><I>n</I></SUB>)/(<I>u</I><SUB><I>n</I>−1</SUB><I>u</I><SUB><I>n</I></SUB>)<BR>
+Comme (<I>u</I><SUB><I>n</I>−1</SUB><I>u</I><SUB><I>n</I></SUB>)&gt;0 on en déduit que <I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB> et <I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>n</I>−1</SUB>−
+sont de signe opposé donc que <I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB> et <I>u</I><SUB><I>n</I>−1</SUB>−<I>u</I><SUB><I>n</I>−2</SUB> et sont de 
+même signe.<BR>
+Ainsi <I>u</I><SUB>2<I>n</I></SUB>−<I>u</I><SUB>2<I>n</I>−2</SUB> a le même signe que <I>u</I><SUB>2</SUB>−<I>u</I><SUB>0</SUB> et<BR>
+<I>u</I><SUB>2<I>n</I>+1</SUB>−<I>u</I><SUB>2<I>n</I>−1</SUB> a le même signe que <I>u</I><SUB>3</SUB>−<I>u</I><SUB>1</SUB>.<BR>
+Signe de <I>u</I><SUB>2</SUB>−<I>u</I><SUB>0</SUB> :<BR>
+<I>u</I><SUB>2</SUB>−<I>u</I><SUB>0</SUB>=(2<I>a</I>+1)/(<I>a</I>+1)−<I>a</I>=(−<I>a</I><SUP>2</SUP>+<I>a</I>+1)/(<I>a</I>+1)&lt;0 puisque <I>a</I>&gt;φ et que φ est la 
+plus grande racine de −<I>x</I><SUP>2</SUP>+<I>x</I>+1<BR>
+Signe de <I>u</I><SUB>3</SUB>−<I>u</I><SUB>1</SUB> :<BR>
+<I>u</I><SUB>3</SUB>−<I>u</I><SUB>1</SUB>=(2<I>b</I>+1)/(<I>b</I>+1)−<I>b</I>=(−<I>b</I><SUP>2</SUP>+<I>b</I>+1)/(<I>b</I>+1)&gt;0 puisque 0&lt;<I>b</I>&lt;φ et que φ est la 
+plus grande racine de −<I>x</I><SUP>2</SUP>+<I>x</I>+1 et que 0 se trouve entre les racines.<BR>
+On a donc montrer que <I>u</I><SUB>2<I>n</I></SUB> est décroissante et minorée donc est 
+convergente vers la solution positive de <I>f</I>(<I>f</I>(<I>x</I>))=<I>x</I> qui est φ 
+et que <I>u</I><SUB>2<I>n</I>+1</SUB> est croissante et majorée donc est convergente
+vers la solution positive de <I>f</I>(<I>f</I>(<I>x</I>))=<I>x</I> qui est φ .
+Donc <I>u</I><SUB><I>n</I></SUB> converge vers φ.<BR>
+<B>Remarque</B> Lorsque <I>a</I>=1, <I>u</I><SUB><I>n</I></SUB> est le quotient de de 2 termes consécutifs
+de la suite de Fibonacci.
+</LI></OL><H2 CLASS="section"><A NAME="toc19"></A><A NAME="htoc57">2.8</A>  Deux suites convergentes vers le nombre d’or <I>L</I></H2><H3 CLASS="subsection"><A NAME="htoc58">2.8.1</A>  <I>u</I><SUB>0</SUB>=1 et <I>u</I><SUB><I>n</I>+1</SUB>=√<SPAN style="text-decoration:overline">1+<I>u</I></SPAN><SUB><SPAN style="text-decoration:overline"><I>n</I></SPAN></SUB> pour <I>n</I>∈ ℕ</H3><P>
+Soit la suite <I>u</I> définie par :<BR>
+<I>u</I><SUB>0</SUB>=1 et <I>u</I><SUB><I>n</I>+1</SUB>=√<SPAN style="text-decoration:overline">1+<I>u</I></SPAN><SUB><SPAN style="text-decoration:overline"><I>n</I></SPAN></SUB> pour <I>n</I>∈ ℕ.<BR>
+Calculer une valeur approché de <I>u</I><SUB>5</SUB>.<BR>
+Montrer que <I>u</I> est à terme positif et est croissante (on montrera que
+<I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB>&gt;0  pour <I>n</I>∈ ℕ).<BR>
+Soit <I>L</I> la racine positive de <I>x</I><SUP>2</SUP>−<I>x</I>−1=0.<BR>
+Montrer que <I>u</I><SUB><I>n</I></SUB>&lt;<I>L</I> pour <I>n</I>∈ ℕ.<BR>
+En déduire que <I>u</I> converge vers  <I>L</I>=1+√<SPAN style="text-decoration:overline">5</SPAN>/2<BR>
+On tape :<BR>
+<TT>sqrt(1+sqrt(1+sqrt(1+sqrt(1+sqrt(2.)))))</TT><BR>
+On obtient :<BR>
+<TT>1.61612120651</TT><BR>
+ou bien, on tape :<BR>
+<TT>1</TT><BR>
+<TT>sqrt(1.+ans())</TT><BR>
+On valide la dernière ligne 5 fois et on obtient :<BR>
+<TT>1.61612120651</TT><BR>
+ou bien, on utilise le tableur...<BR>
+On tape :<BR>
+<TT>mult_conjugate(sqrt(1+u1)-sqrt(1+u0))</TT><BR>
+On obtient apres simplification du numérateur :<BR>
+<TT>(-u0+u1)/(sqrt(1+u1)+sqrt(1+u0))</TT><BR>
+ce qui veut dire que <I>u</I><SUB>2</SUB>−<I>u</I><SUB>1</SUB> a la même signe que <I>u</I><SUB>1</SUB>−<I>u</I><SUB>0</SUB>=√<SPAN style="text-decoration:overline">2</SPAN>−1&gt;0.<BR>
+Le même calcul montre que <I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB> a la même signe que <I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>n</I>−1</SUB> qui
+a la même signe que <I>u</I><SUB><I>n</I>−1</SUB>−<I>u</I><SUB><I>n</I>−2</SUB> etc..qui a la même signe que 
+<I>u</I><SUB>1</SUB>−<I>u</I><SUB>0</SUB>.<BR>
+Donc <I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB>&gt;0 pour <I>n</I>∈ ℕ. La suite <I>u</I> est donc croissante.<BR>
+On tape :<BR>
+<TT>solve(x</TT><CODE><TT>^</TT></CODE><TT>2-x-1)</TT><BR>
+On obtient :<BR>
+<TT>[1/2*(1-(sqrt(5))),1/2*(1+sqrt(5))]</TT><BR>
+Donc <I>L</I>=1/2*(1+√<SPAN style="text-decoration:overline">5</SPAN>)≃ 1.61803398875 et <I>L</I>=√<SPAN style="text-decoration:overline">1+<I>L</I></SPAN>.<BR>
+On tape :<BR>
+<TT>mult_conjugate(sqrt(1+un)-sqrt(1+L))</TT><BR>
+On obtient :<BR>
+<TT>(-L+un)/(sqrt(1+un)+sqrt(1+L))</TT><BR>
+Donc <I>u</I><SUB><I>n</I>+1</SUB>−<I>L</I> a le même signe que <I>u</I><SUB><I>n</I></SUB>−<I>L</I> qui
+a la même signe que <I>u</I><SUB><I>n</I>−1</SUB>−<I>L</I> etc..qui a la même signe que 
+<I>u</I><SUB>0</SUB>−<I>L</I>=1/2*(1−<I>sqrt</I>(5))&lt;0. Donc <I>u</I> est majorée par <I>L</I>.<BR>
+La suite <I>u</I> est croissante et major'e donc <I>u</I> est convergente et sa limite 
+<I>a</I> vérifie <I>a</I>=√<SPAN style="text-decoration:overline">1+<I>a</I></SPAN>. Donc <I>a</I>=<I>L</I>.<BR>
+La convergence de <I>u</I><SUB><I>n</I></SUB> n’est pas très rapide puisque <I>u</I><SUB>5</SUB> donne la 
+valeur de <I>L</I> avec seulement 2 décimales exactes.</P><H3 CLASS="subsection"><A NAME="htoc59">2.8.2</A>  <I>u</I><SUB>0</SUB>=2 et <I>u</I><SUB><I>n</I>+1</SUB>=<I>u</I><SUB><I>n</I></SUB><SUP>2</SUP>+1/2<I>u</I><SUB><I>n</I></SUB>−1 pour <I>n</I>∈ ℕ</H3><P> 
+Soit la suite <I>u</I> définie par :<BR>
+<I>u</I><SUB>0</SUB>=2 et <I>u</I><SUB><I>n</I>+1</SUB>=<I>u</I><SUB><I>n</I></SUB><SUP>2</SUP>+1/2<I>u</I><SUB><I>n</I></SUB>−1 pour <I>n</I>∈ ℕ.<BR>
+En considérant la fonction <I>g</I> définie par <I>g</I>(<I>x</I>)=<I>x</I><SUP>2</SUP>−<I>x</I>−1, montrer que 
+<I>u</I><SUB><I>n</I></SUB> est la suite de la méthode de Newton pour trouver une valeur 
+approchée de <TT>L:=1/2*(1+sqrt(5))</TT> qui est le zéro de <I>g</I> dans
+[1,2], c’est à dire que <I>u</I><SUB><I>n</I>+1</SUB>=<I>u</I><SUB><I>n</I></SUB>−<I>g</I>(<I>u</I><SUB><I>n</I></SUB>/<I>g</I>′(<I>u</I><SUB><I>n</I></SUB>).<BR>
+Montrer que <I>u</I><SUB><I>n</I>+1</SUB>−<I>L</I>=(<I>u</I><SUB><I>n</I></SUB>−<I>L</I>)<SUP>2</SUP>/2<I>u</I><SUB><I>n</I></SUB>−1.<BR>
+Montrer par récurrence que <I>u</I><SUB><I>n</I></SUB>&gt;<I>L</I> pour tout <I>n</I>∈ ℕ<BR>
+Montrer que <I>u</I> est décroissante et converge vers <I>L</I><BR>
+Calculer une valeur approché de <I>u</I><SUB>5</SUB>.<BR>
+On tape :<BR>
+<TT>g(x):=x</TT><CODE><TT>^</TT></CODE><TT>2-x-1</TT><BR>
+<TT>f(x):=x-g(x)/g’(x)</TT><BR>
+<TT>normal(f(x))</TT><BR>
+On obtient :
+<TT>(x</TT><CODE><TT>^</TT></CODE><TT>2+1)/(2*x-1)</TT><BR>
+Donc <I>u</I><SUB><I>n</I>+1</SUB>=<I>f</I>(<I>u</I><SUB><I>n</I></SUB>).<BR>
+On tape :<BR>
+<TT>L:=1/2*(1+sqrt(5))</TT><BR>
+<TT>normal(f(L))</TT><BR>
+On obtient :
+<TT>1/2*(1+sqrt(5))</TT><BR>
+Donc <I>f</I>(<I>L</I>)=<I>L</I>
+On tape pour calculer <I>u</I><SUB><I>n</I>+1</SUB>−<I>L</I>:<BR>
+<TT>factor(f(un)-f(L))</TT><BR>
+On obtient :<BR>
+<TT>(2*(un+(-(sqrt(5))-1)/2)</TT><CODE><TT>^</TT></CODE><TT>2)/(4*un-2)</TT><BR>
+On a <I>u</I><SUB>0</SUB>=2&gt;<I>L</I> et si <I>u</I><SUB><I>n</I></SUB>&gt;<I>L</I> alors 2<I>u</I><SUB><I>n</I></SUB>−1&gt;2<I>L</I>−1&gt;0 donc puisque
+<I>u</I><SUB><I>n</I>+1</SUB>−<I>L</I>=(<I>u</I><SUB><I>n</I></SUB>−<I>L</I>)<SUP>2</SUP>/2<I>u</I><SUB><I>n</I></SUB>−1&gt;0 on en déduit que <I>u</I><SUB><I>n</I>+1</SUB>&gt;<I>L</I>.<BR>
+On tape pour avoir le signe de <I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB> :<BR>
+<TT>normal(f(un)-un)</TT><BR>
+On obtient :
+<TT>(-un</TT><CODE><TT>^</TT></CODE><TT>2+un+1)/(2*un-1)</TT><BR>
+Comme <I>u</I><SUB><I>n</I></SUB>&gt;<I>L</I> <I>u</I><SUB><I>n</I></SUB> est à l’extérieur des racines de −<I>x</I><SUP>2</SUP>+<I>x</I>+1 donc 
+−<I>u</I><SUB><I>n</I></SUB><SUP>2</SUP>+<I>u</I><SUB><I>n</I></SUB>+1&lt;0 et 2<I>u</I><SUB><I>n</I></SUB>−1&gt;0 donc <I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB>&lt;0 donc <I>u</I> est décroissante 
+et converge vers <I>a</I> la racine positive de <I>f</I>(<I>x</I>)−<I>x</I>.<BR>
+On tape :<BR>
+<TT>normal(solve(f(x)-x))</TT><BR>
+On obtient :
+<TT>[(-(sqrt(5))+1)/2,(sqrt(5)+1)/2]</TT><BR>
+Donc <I>a</I>=<I>L</I>=(√<SPAN style="text-decoration:overline">5</SPAN>+1)/2<BR>
+On tape :<BR>
+<TT>(f@@5)(2.)</TT><BR>
+On obtient (avec 30 chiffres significatifs):<BR>
+<TT>1.618033988749894848204586838338</TT><BR>
+On tape :<BR>
+<TT>(f@@5)(2.)-(sqrt(5)+1)/2.</TT><BR>
+On obtient :<BR>
+<TT>0.3972703518693015452053465054764e-26</TT><BR>
+La convergence de <I>u</I><SUB><I>n</I></SUB> est tres rapide puisque <I>u</I><SUB>5</SUB> donne la valeur de <I>L</I> 
+avec 26 décimales exactes.
+</P><H2 CLASS="section"><A NAME="toc20"></A><A NAME="htoc60">2.9</A>  Le nombre d’or et cos(π/5)</H2><H3 CLASS="subsection"><A NAME="htoc61">2.9.1</A>  Calcul de cos(2π/5)</H3><P>
+Soit  <I>z</I><SUB>1</SUB>=exp(<I>i</I>*2π/5).<BR>
+ <I>z</I><SUB>1</SUB>=<I>a</I>+<I>ib</I>=cos(2π/5)+<I>i</I>*sin(2π/5) est la racine de 
+<I>z</I><SUP>5</SUP>−1=0 qui vérifie <I>a</I>&gt;0 et <I>b</I>&gt;0.<BR>
+Puisque <I>z</I><SUP>5</SUP>−1=(<I>z</I>−1)(<I>z</I><SUP>4</SUP>+<I>z</I><SUP>3</SUP>+<I>z</I><SUP>2</SUP>+<I>z</I>+1), <I>z</I><SUB>1</SUB>=<I>a</I>+<I>ib</I> est la racine de 
+<I>z</I><SUP>4</SUP>+<I>z</I><SUP>3</SUP>+<I>z</I><SUP>2</SUP>+<I>z</I>+1=(<I>z</I>+1/<I>z</I>)<SUP>2</SUP>+(<I>z</I>+1/<I>z</I>)−1=0.<BR>
+On pose  <I>Z</I>=<I>z</I>+1/<I>z</I> et on tape :<BR>
+<TT>solve(Z</TT><CODE><TT>^</TT></CODE><TT>2+Z-1,Z)</TT><BR>
+On obtient :
+<TT>[1/2*(-1-sqrt(5)),1/2*(-1+sqrt(5))]</TT><BR>
+Comme <I>z</I><SUB>1</SUB>=<I>a</I>+<I>ib</I> est de module 1, on a 1/<I>z</I>1=<I>a</I>−<I>ib</I> et donc 
+<I>z</I>1+1/<I>z</I>1=2<I>a</I>=2cos(2π/5).<BR>
+On a donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">cos(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">−1+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On tape :<BR>
+<TT>normal(expand((1/4*(-1+sqrt(5)))</TT><CODE><TT>^</TT></CODE><TT>2))</TT><BR>
+On obtient :
+<TT>(-sqrt(5)+3)/8</TT><BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">cos(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)<SUP>2</SUP>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">3−</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">8</TD></TR>
+</TABLE></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">sin(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)<SUP>2</SUP>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">5</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">8</TD></TR>
+</TABLE></TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc62">2.9.2</A>  Calcul de 2cos(π/5)</H3><P>
+On a :
+ cos(2π/5)=2cos(π/5)<SUP>2</SUP>−1<BR>
+Donc :<BR>
+2cos(π/5)<SUP>2</SUP>=cos(2π/5)+1)=−1+√<SPAN style="text-decoration:overline">5</SPAN>/4+1<BR>
+On tape :
+<TT>normal(1/4*(-1+sqrt(5))+1)</TT><BR>
+On obtient :
+<TT>(sqrt(5)+3)/4</TT><BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">cos(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)<SUP>2</SUP>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">3−</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">8</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On tape :
+<TT>normal(expand((1/4*(1+sqrt(5)))</TT><CODE><TT>^</TT></CODE><TT>2))</TT><BR>
+On obtient :
+<TT>(sqrt(5)+3)/8</TT><BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">cos(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Le nombre d’or est :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">φ=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>5</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">≃ 1.61803398875</TD></TR>
+</TABLE><P>
+Donc </P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">2cos(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)=φ</TD></TR>
+</TABLE><HR>
+<A HREF="cascas001.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas003.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

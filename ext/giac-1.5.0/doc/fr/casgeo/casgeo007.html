@@ -1,0 +1,1017 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casgeo.css">
+<TITLE>Quelques exemples de géométrie dynamique</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casgeo006.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo008.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc133">Chapitre 7</A>  Quelques exemples de géométrie dynamique</H1><H2 CLASS="section"><A NAME="toc43"></A><A NAME="htoc134">7.1</A>  Exemples de problème de maxima-minima</H2><H3 CLASS="subsection"><A NAME="htoc135">7.1.1</A>  Variation d’une longueur</H3><P>
+Soient deux points <I>A</I> et <I>B</I>.
+Un point <I>M</I> se déplace sur le cercle <I>C</I> de centre <I>B</I> et de rayon 2 : 
+<I>BM</I>=2*exp(<I>it</I>).<BR>
+On considère la fonction :<BR>
+<I>L</I>(<I>A</I>,<I>B</I>,<I>t</I>)= longueur(<I>AM</I>)<BR>
+Avec <TT>Xcas</TT> on peut avoir sur le même dessin la construction 
+géomètrique et le graphe de la fonction.<BR>
+On clique avec la souris pour avoir les points <TT>A</TT> et <TT>B</TT> puis,
+on exécute la liste des instructions qui se trouve dans <TT>geo12</TT> ( faire <TT>Charger session</TT> du 
+menu <TT>Fich</TT> de <TT>Xcas</TT> et selectionner <TT>geo12</TT> du répértoire 
+<TT>examples/geo</TT> pour exécuter ce fichier).<BR>
+Voici le détail de <TT>geo12</TT> :<BR>
+<TT>//2pts A et B, calcul de la longueur de AE qd E=B+</TT><TT>2*</TT><TT>exp</TT><TT>(<I>i</I>*<I>t</I>)</TT><TT><BR>
+//A:=point(-2);<BR>
+//B:=point(i);<BR>
+C:=cercle(B,2);</TT><BR>
+définit le cercle <I>C</I>,<BR>
+<TT>L(A,B,t):=evalf(longueur(A,B+2*exp(i*t)));</TT><BR>
+ définit la fonction <I>L</I>,<BR>
+<TT>D:=plotfunc(L(A,B,x),x);</TT><BR>
+dessine le graphe de la longueur(<I>AM</I>) en fonction de <I>x</I> (<I>M</I>=<I>B</I>+2*<I>exp</I>(<I>i</I>*<I>x</I>)),<BR>
+<TT>t:=element(0..pi);</TT><BR>
+t est un élément que l’on pourra faire varier entre 0 et π<BR>
+<TT>E:=element(cercle(B,2),t);</TT><BR>
+ <I>E</I> est un point du cercle qui varie quand t varie,<BR>
+<TT>F:=element(D,t);</TT><BR>
+ <I>F</I> est un point du graphe qui varie quand t varie, <I>F</I> a donc comme ordonné la longueur de <I>AE</I><BR>
+Lorsqu’on fait bouger le curseur correspondant à <I>t</I> (situé dans la plage 
+grise en haut et à droite de l’écran géométrique), on fait varier <I>E</I>
+et <I>F</I> simultanément.</P><H3 CLASS="subsection"><A NAME="htoc136">7.1.2</A>  Dimensions du rectangle de périmetre 2<I>p</I> et de surface maximum</H3><P>
+Une famille de rectangles a pour périmètre 2<I>p</I>. Trouver les dimensions du 
+(ou des) rectangle(s) d’aire maximum.<BR>
+On suppose pour faire le dessin avec <TT>Xcas</TT> que <I>p</I>=3.<BR>
+Les cotés d’un rectangle de la famille sont donc <I>x</I> et 3−<I>x</I> ou encore
+3<I>t</I> et 3(1−<I>t</I>)<BR>
+L’aire d’un tel rectangle est donc égale à <I>f</I>(<I>t</I>)=9<I>t</I>(1−<I>t</I>).<BR>
+On dessine les différents rectangles et le graphe de la fonction <I>f</I> sur un 
+même graphique pour pouvoir observer la variation des formes des rectangles
+et la variation de leurs aires.<BR>
+On exécute la liste des instructions :
+<TT>A:=point(-3);</TT><BR>
+<TT>p:=3;</TT><BR>
+ <I>p</I> est le demi-périmètre des rectangles,<BR>
+<TT>K:= point(A+p);</TT><BR>
+<SPAN style="text-decoration:overline"><I>AK</I></SPAN>=<I>p</I>=3<BR>
+<TT>t:=element(0..1);</TT>
+<TT>B:=A+t*(K-A);</TT><BR>
+ <I>B</I> sommet du rectangle <I>AB</I>=<I>t</I>*<I>AK</I> donc 
+<SPAN style="text-decoration:overline"><I>AB</I></SPAN>=3*<I>t</I><BR>
+<TT>C:=rotation(B,pi/2,K);</TT><BR>
+<I>C</I> est un sommet du rectangle<BR>
+<TT>D:= C+A-B;</TT><BR>
+ <I>D</I> est l’autre sommet<BR>
+<TT>segment(A,B);</TT><BR>
+<TT>segment(C,B);</TT><BR>
+<TT>segment(C,D);</TT><BR>
+<TT>segment(A,D);</TT><BR>
+ces 4 segments dessinent le rectangle <TT>ABCD</TT>.<BR>
+<TT>f(x):=9*x*(1-x);</TT><BR>
+ définit de la fonction <I>f</I> égale à l’aire de <TT>ABCD</TT>.<BR>
+<TT>G:=plotfunc(f(x),x);</TT><BR>
+dessine le graphe de <I>f</I>.<BR>
+<TT>M:=element(G,t);</TT><BR>
+définit <I>M</I> un point du graphe, qui a comme ordonné l’aire du rectangle 
+<TT>ABCD</TT>.<BR>
+En faisant varier <I>t</I>, le rectangle change de forme et le point <I>M</I> se 
+déplace sur le graphe en ayant pour ordonné l’aire du rectangle dessiné. 
+<B>Remarque</B>
+Il est facile de montrer algébriquement que l’aire est maximum quand le 
+rectangle est un carré, c’est à dire que l’aire maximum vaut 
+(<I>p</I>/2)<SUP>2</SUP>=<I>p</I><SUP>2</SUP>/4.
+En effet on a :<BR>
+l’aire d’un rectangle de côtés <I>a</I> et <I>p</I>−<I>a</I> vaut (<I>p</I>−<I>a</I>)*<I>a</I>=<I>a</I>*<I>p</I>−<I>a</I><SUP>2</SUP>,
+et on a <I>p</I><SUP>2</SUP>/4≥ <I>a</I>*<I>p</I>−<I>a</I><SUP>2</SUP>=(<I>p</I>/2−<I>a</I>)<SUP>2</SUP> car  <I>p</I><SUP>2</SUP>/4−<I>a</I>*<I>p</I>+<I>a</I><SUP>2</SUP>=(<I>p</I>/2−<I>a</I>)<SUP>2</SUP> ≥ 0</P><H3 CLASS="subsection"><A NAME="htoc137">7.1.3</A>  Variante du problème précédent : minimiser une surface</H3><P>
+Soient un rectangle <I>ABCD</I> de côtés <I>a</I> et <I>b</I> et <I>c</I> ≤ <TT><I>min</I></TT>(<I>a</I>,<I>b</I>).
+Soient <I>A</I>1 sur le côté <I>AB</I> tel que <I>AA</I>1=<I>c</I>, <I>B</I>1 sur le côté <I>BC</I> tel
+que <I>BB</I>1=<I>c</I>, <I>C</I>1 sur le côté <I>CD</I> tel que <I>CC</I>1=<I>c</I> et <I>D</I>1 sur le côté 
+<I>DA</I> tel que <I>DD</I>1=<I>c</I>. Comment choisir <I>c</I> pour que l’aire du parallélogramme
+<I>A</I>1<I>B</I>1<I>C</I>1<I>D</I>1 soit minimum.<BR>
+Ce problème se raméne au précédent en effet :
+la différence entre les aires de <I>ABCD</I> et de <I>A</I>1<I>B</I>1<I>C</I>1<I>D</I>1 est l’aire de 4 
+triangles rectangles égaux deux à deux, c’est donc aussi l’aire de 2 
+rectangles de côtés <I>c</I> et <I>a</I>−<I>c</I> pour l’un et <I>c</I> et <I>b</I>−<I>c</I> pour l’autre
+ou encore l’aire d’un rectangle de côtés <I>c</I> et <I>a</I>+<I>b</I>−2*<I>c</I>.
+L’aire de ces 4 triangles rectangles vaut donc (<I>a</I>+<I>b</I>−2*<I>c</I>)*<I>c</I>.<BR>
+On cherche comment choisir
+<I>c</I> pour que l’aire du rectangle de côtés <I>c</I> et <I>a</I>+<I>b</I>−2*<I>c</I> soit maximum ou
+ce qui revient au même pour que l’aire du "rectangle double" (de côtés 
+2*<I>c</I> et <I>a</I>+<I>b</I>−2*<I>c</I>) soit maximum. Ce rectangle double a pour périmètre 
+2*<I>p</I>=2*(<I>a</I>+<I>b</I>), donc d’après ce qui précède il faut choisir 
+2*<I>c</I>=<I>p</I>/2=(<I>a</I>+<I>b</I>)/2 c’est à dire <I>c</I>=(<I>a</I>+<I>b</I>)/4.</P><H3 CLASS="subsection"><A NAME="htoc138">7.1.4</A>  Un trajet difficile : minimiser AMB avec M sur un cercle</H3><P>
+Un point <TT>M</TT> se déplace sur le cercle <TT>C</TT> de centre <TT>O</TT> et de 
+rayon <TT>1</TT>. On choisit deux points <TT>A</TT> et <TT>B</TT> pour que la droite 
+<TT>AB</TT> ne coupe pas le cercle <TT>C</TT>.<BR>
+On cherche dans ce cas, à minimiser le trajet <TT>AM+MB</TT>.<BR>
+Avec <TT>Xcas</TT> on va faire apparaître sur le même écran, le dessin
+géométrique et le graphe <TT>G</TT> de <TT>L:=longueur(AM)+longueur(MB)</TT> :
+lorsque <TT>M:=exp(i*t)</TT> se déplace sur le cercle <TT>C</TT>, le point 
+<TT>N</TT> de coordonnèes <TT>(t,L)</TT>
+se déplace sur le graphe <TT>G</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">A:=point(-3);
+B:=point(1+2*i);
+C:=cercle(0,1);
+t:=element(-3..7);
+M:=point(exp(i*t)); 
+L(A,B,t):=evalf(longueur(A,exp(i*t))+longueur(B,exp(i*t)));
+G:=plotfunc(L(A,B,t),t=-3..7);
+//N:=element(G,t);
+N:=point(t,L(A,B,t));
+segment(A,M,affichage=1+epaisseur_ligne_2);
+segment(B,M,affichage=1+epaisseur_ligne_2);
+segment(N,t,affichage=1+epaisseur_ligne_2);
+bissectrice(M,A,B);
+exbissectrice(M,A,B);
+</PRE><P>Ensuite lorsque l’on fait bouger <TT>t</TT> les points <TT>M</TT> et <TT>N</TT> 
+bougent, l’un sur le cercle <TT>C</TT>, l’autre sur le graphe <TT>G</TT> et l’on peut 
+voir que le minimum est atteint quand une bissectrice intérieure de l’angle 
+<TT>M</TT> passe par <TT>O</TT>.<BR>
+On peut aussi faire varier <TT>B</TT> pour voir ce qu’il se passe quand la 
+droite
+<TT>AB</TT> coupe <TT>C</TT> c’est à dire quand la solution est evidente...<BR>
+
+<IMG SRC="casgeo063.png"><BR>
+
+<B>Solution dans un cas particulier</B><BR>
+
+<IMG SRC="casgeo064.png"></P><P>On peut démontrer que lorsque le triangle <I>OAB</I> est isocéle de 
+sommet <I>O</I> le point <I>M</I> du cercle <I>C</I> de centre <I>O</I> qui rend le trajet <I>AM</I>+<I>MB</I>
+minimum se trouve sur la bissectrice intérieure de l’angle
+ <I>AOB</I>. En effet soient deux points <I>N</I>1 et <I>N</I>2
+du cercle <I>C</I> symétriques par rapport à cette bissectrice (qui est
+aussi la médiatrice de <I>AB</I>). On a donc <I>AN</I>1=<I>BN</I>2 et <I>AN</I>2=<I>BN</I>1 et donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>AN</I>1+<I>N</I>1<I>B</I>=<I>AN</I>1+<I>AN</I>2. </TD></TR>
+</TABLE><P>
+Soient <I>K</I> le milieu de <I>N</I>1<I>N</I>2 et <I>J</I> le milieu de <I>AB</I>.
+Les points 0, <I>K</I>, <I>M</I>, <I>J</I> sont tous sur la médiatrice de <I>AB</I> et
+puisque <I>JK</I>&gt;<I>JM</I> (<I>K</I> milieu de la corde <I>N</I>1<I>N</I>2 et
+<I>M</I> milieu de l’arc <I>N</I>1<I>N</I>2), on en déduit que :<BR>
+ </P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>AK</I>&gt;<I>AM</I></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>AN</I>1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>AN</I>2</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD><TD CLASS="dcell">=2</TD><TD CLASS="dcell"><TABLE CLASS="display" STYLE="width:100%;"><TR><TD CLASS="dcell" ALIGN="center" STYLE="width:90%;"><HR CLASS="hbar"></TD><TD CLASS="dcell" ALIGN="center" STYLE="width:10%;">▸</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"><I>AK</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center" COLSPAN="2"> </TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+d’aprés l’inégalité triangulaire on a 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">2<I>AK</I>&lt;<I>AN</I>1+<I>AN</I>2 </TD></TR>
+</TABLE><P> 
+donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>AM</I>+<I>MB</I>=2<I>AM</I>&lt;2<I>AK</I>&lt;<I>AN</I>1+<I>AN</I>2 </TD></TR>
+</TABLE><P>
+ce qui prouve que <I>AM</I>+<I>MB</I> est minimum.<BR>
+La figure avec <TT>Xcas</TT> :
+</P><PRE CLASS="verbatim">A:=point(-2-3*i);
+B:=point(2-3*i);
+O:=point(0);cercle(0,1);
+M:=point(-i);
+N1:=point(exp(-7*pi*i/8));
+N2:=point(exp(-pi*i/8));
+K:=milieu(N1,N2);J:=milieu(A,B);
+segment(A,N1,affichage=1+epaisseur_ligne_2);
+segment(A,N2,affichage=4+epaisseur_ligne_2);
+segment(A,M);
+segment(A,K);
+segment(N2,N1);
+segment(B,N1,affichage=1+epaisseur_ligne_2);
+segment(O,J);
+segment(A,B);
+</PRE><H3 CLASS="subsection"><A NAME="htoc139">7.1.5</A>  Maximiser une surface</H3><P>
+Le problème est le suivant :<BR>
+Étant donné un rectangle ou un parallélogramme ou un trapèze <I>OABC</I> 
+avec <I>OA</I>//<I>BC</I>, on cherche la position de <I>A</I>1 sur le segment <I>OA</I> et de <I>A</I>2 
+sur le segment <I>BC</I> pour que l’aire de l’intersection des triangles <I>BCA</I>1 et 
+<I>OAA</I>2 soit maximum.<BR>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Avec un rectangle,<BR>
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+La conjecture<BR>
+On appelle <I>a</I>1 et <I>a</I>2 les abscisses respectives de <I>A</I>1 et de <I>A</I>2.
+On conjecture que la réponse est <I>a</I>1=<I>a</I>2.<BR>
+On voit cela en exécutant le fichier ci-dessous.<BR>
+Pour cela :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+ouvrir un écran de géométrie (en tapant <TT>Alt+g</TT>)
+</LI><LI CLASS="li-itemize">utiliser le menu <TT>Session</TT><TT>▸</TT><TT>Montrer</TT><TT>▸</TT><TT>Montrer la fenetre de script</TT>.<BR>
+</LI><LI CLASS="li-itemize">recopier le script dans cette fenêtre, avec la souris, depuis un 
+éditeur de programmes ou bien charger le fichier contenant le script avec 
+le menu <TT>Fich</TT><TT>▸</TT><TT>Charger</TT> de cette fenêtre. 
+</LI><LI CLASS="li-itemize">exécuter le script ligne par ligne, on clique sur la ligne à 
+exécuter, puis, sur la ligne de commandes où on veut que cela s’exécute, 
+puis, on clique sur le bouton <TT>exec</TT> : le script s’exécute alors ligne 
+par ligne.
+<B>Attention</B><BR>
+Il ne faut rien faire entre, cliquer sur la ligne à exécuter et choisir
+la ligne de commandes. De plus, cette ligne de commandes doit se trouver à 
+la fin de votre session, ou à la 
+fin des lignes de commandes d’un écran graphique ou tortue, pour que de
+nouvelles lignes soient créées automatiquement au fur et à mesure de 
+l’exécution du script.
+</LI></UL>
+<PRE CLASS="verbatim">erase;
+xyztrange(-0.5,8.5,-0.5,10.5,-10,10,-1,6,-0.5,8.5,-0.5,10.5,1,0,1,1);
+rectangle(0,8,5/8);
+assume(a1=1);
+A1:=point(a1,0);
+assume(a2=6);
+A2:=point(a2,5);
+O:=point(0,0);
+A:=point(8,0);
+B:=point(8,5);
+C:=point(0,5);
+droite(O,A2);
+droite(C,A1);
+I:=(inter(droite(O,A2),droite(C,A1)))[0];
+droite(A,A2);
+droite(B,A1);
+J:=(inter(droite(A,A2),droite(B,A1)))[0];
+couleur(polygone(A1,J,A2,I),rempli+rouge);
+f(a1):=normal(aire(A1,J,A2,I));
+plotfunc(f(x),x=0..8);
+S:=point(a1,f(a1));
+couleur(droite(A1,S),vert);
+H:=point(a2,0);
+K:=(inter(droite(O,A2),droite(C,H)))[0];
+L:=(inter(droite(A,A2),droite(B,H)))[0];
+droite(H,C);
+droite(H,B);
+M:=(inter(droite(C,A1),droite(K,L)))[0];
+N:=(inter(droite(B,A1),droite(K,L)))[0];
+couleur(polygone(L,H,K),rempli+bleu);
+couleur(polygone(A1,M,N),rempli+bleu);
+normal(aire(H,K,L)-aire(A1,M,N));
+</PRE>On considere au debut <I>A</I>2 fixe et on peut faire bouger <I>A</I>1 en cliquant sur 
+le petit trait rouge <I>a</I>1 situé en haut et à droite de l’écran.<BR>
+La courbe que l’on voit, est celle de l’aire <I>A</I>1,<I>I</I>,<I>A</I>2,<I>J</I> en fonction de <I>a</I>1 
+(aire = ordonnee de <I>S</I>).<BR>
+Puis on peut faire bouger <I>A</I>2 : on a une nouvelle courbe qui
+est toujours celle de l’aire <I>A</I>1,<I>I</I>,<I>A</I>2,<I>J</I> en fonction de <I>a</I>1.
+On peut taper dans une ligne de commande
+<I>f</I>(<I>x</I>) pour avoir la fonction aire de parametre <I>a</I>2.<P>On trace ensuite les differents graphes en faisant varier <I>a</I>2 de 0 a 8,
+on les voit ds l’ecran <TT>DispG</TT> en tapant <TT>DispG</TT> et en exécutant :
+<TT><I>erase</I>;</TT><BR>
+<TT><I>xyztrange</I>(-0.5,8.5,-0.5,10.5,-10,10,-1,6,-0.5,8.5,-0.5,10.5,1,0,1,1);</TT><BR>
+<TT> <I>f</I>(<I>x</I>):=</TT><TT>20*<I>x</I></TT><SUP><TT>2</TT></SUP><TT>-160*<I>x</I>+20*<I>a</I>2</TT><SUP><TT>2</TT></SUP><TT>-160*<I>a</I>2/<I>x</I></TT><SUP><TT>2</TT></SUP><TT>+2*<I>x</I>*<I>a</I>2-16*<I>x</I>+<I>a</I>2</TT><SUP><TT>2</TT></SUP><TT>-16*<I>a</I>2</TT><TT>;</TT><BR>
+<TT><I>pour</I> <I>a</I>2 <I>de</I> 0 <I>jusque</I> 8 <I>faire</I>  <I>nodisp</I>(<I>plotfunc</I>(<I>f</I>(<I>x</I>),<I>x</I>=0..8)) <I>fpour</I>;</TT>
+</P></LI><LI CLASS="li-itemize">Une démonstration<BR>
+On conjecture que le maximum est quand <I>a</I>1=<I>a</I>2.
+On trace alors les 2 surfaces que l’on veut comparer : <I>A</I>1<I>JA</I>2<I>I</I> et <I>HLA</I>2<I>K</I>.<BR>
+
+<IMG SRC="casgeo065.png"><BR>
+
+On remarque que les triangles <I>A</I>1<I>MN</I>, <I>HKL</I> et <I>A</I>2<I>KL</I> ont la même aire.
+Cette aire est d’ailleurs égale au huitième de l’aire du rectangle puisque
+ces triangles ont comme base la moitié de la longueur du rectangle et comme
+hauteur correspondant la moitié de la largeur du rectangle. 
+On trace en rouge le morceau <I>A</I>1<I>NKO</I> et en vert le morceau <I>A</I>2<I>KNJ</I>.
+On suppose que <I>A</I>1 se trouve entre <I>O</I> et <I>H</I> (on se ramèneà ce cas en 
+faisant une symétrie par rapport à la droite <I>ML</I> médiane du rectangle).
+Le point <I>I</I> se trouve alors en dessous de la droite <I>ML</I> et <I>J</I> se trouve 
+alors en dessus de la droite <I>ML</I> : en effet, <I>I</I> est entre <I>O</I> et <I>K</I> donc en 
+dessous de la droite <I>KL</I> et <I>J</I> entre <I>L</I> et <I>A</I>2 donc en dessus de la droite <I>KL</I>.<BR>
+Le morceau rouge <I>A</I>1<I>NKO</I> a donc une aire plus petite que l’aire de <I>A</I>1<I>MN</I> et
+le morceau vert <I>A</I>2<I>KNJ</I> a donc une aire plus petite que l’aire de <I>A</I>2<I>KL</I>.<BR>
+On voit cela en exécutant le fichier ci-dessous.<BR>
+Pour cela :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+ouvrir un écran de géométrie (en tapant <TT>Alt+g</TT>)
+</LI><LI CLASS="li-itemize">utiliser le menu <TT>Session</TT><TT>▸</TT><TT>Montrer</TT><TT>▸</TT><TT>Montrer la fenetre de script</TT>.<BR>
+</LI><LI CLASS="li-itemize">recopier le script dans cette fenêtre, avec la souris, depuis un 
+éditeur de programmes ou bien charger le fichier contenant le script avec 
+le menu <TT>Fich</TT><TT>▸</TT><TT>Charger</TT> de cette fenêtre. 
+</LI><LI CLASS="li-itemize">exécuter le script ligne par ligne, on clique sur la ligne à 
+exécuter, puis, sur la ligne de commandes où on veut que cela s’exécute, 
+puis, on clique sur le bouton <TT>exec</TT> : le script s’exécute alors ligne 
+par ligne.
+<B>Attention</B><BR>
+Il ne faut rien faire entre, cliquer sur la ligne à exécuter et choisir
+la ligne de commandes. De plus, cette ligne de commandes doit se trouver à 
+la fin de votre session, ou à la fin des lignes de commandes d’un écran 
+graphique ou tortue, pour que de nouvelles lignes soient créées 
+automatiquement au fur et à mesure de l’exécution du script.
+</LI></UL>
+<PRE CLASS="verbatim">erase;
+xyztrange(-0.5,8.5,-0.5,10.5,-10,10,-1,6,-0.5,8.5,-0.5,10.5,1,0,1,1);
+rectangle(0,8,5/8);
+a1:=element(0..8,2);
+A1:=point(a1,0);
+a2:=element(0..8,7);
+A2:=point(a2,5);
+O:=point(0,0);
+A:=point(8,0);
+B:=point(8,5);
+C:=point(0,5);
+segment(O,A2);
+segment(C,A1);
+I:=(inter(segment(O,A2),segment(C,A1)))[0];
+segment(A,A2);
+segment(B,A1);
+J:=(inter(segment(A,A2),segment(B,A1)))[0];
+H:=point(a2,0);
+segment(C,H);
+segment(B,H);
+K:=(inter(segment(O,A2),segment(C,H)))[0];
+L:=(inter(segment(A,A2),segment(B,H)))[0];
+segment(2.5*i,8+2.5*i);
+M:=(inter(segment(C,A1),segment(K,L)))[0];
+N:=(inter(segment(B,A1),segment(K,L)))[0];
+si (a1&lt;a2) alors [couleur(polygone(A1,N,K,I),rempli+rouge),
+                  couleur(polygone(A2,K,N,J),rempli+vert)]; 
+    sinon [couleur(polygone(A2,I,M,L),rempli+vert),
+           couleur(polygone(A1,J,L,M),rempli+rouge)];
+fsi;
+</PRE></LI><LI CLASS="li-itemize">Une autre façon de rédiger la démonstration<BR>
+On remarque que :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+si <I>a</I>1&lt;<I>a</I>2, <I>I</I> est au dessous de la médiane <I>MN</I> et <I>J</I>
+se trouve au dessus : le triangle <I>A</I>1<I>MN</I> a donc une aire plus grande que l’aire
+de <I>A</I>1<I>IKN</I> et le triangle <I>A</I>2<I>LK</I> a donc une aire plus grande que l’aire
+de <I>A</I>2<I>JNK</I>. Or quelquesoit la position de <I>A</I>1 (resp de <I>A</I>2), l’aire du 
+triangle <I>A</I>1<I>MN</I> vaut le quart de l’aire du triangle <I>A</I>1<I>CB</I> ou encore le 
+huitième de l’aire du rectangle (resp le triangle <I>A</I>2<I>LK</I> vaut le huitième de l’aire du rectangle) et donc l’aire de <I>A</I>1<I>IA</I>2<I>J</I> est inférieure à un quart de
+l’aire du rectangle.
+</LI><LI CLASS="li-itemize">si <I>a</I>1=<I>a</I>2,<I>I</I> et <I>J</I> sont sur la médiane et donc l’aire de <I>A</I>1<I>IA</I>2<I>J</I> 
+est égale à un quart de l’aire du rectangle.
+</LI><LI CLASS="li-itemize">si <I>a</I>1&gt;<I>a</I>2, on se ramène au cas <I>a</I>1&lt;<I>a</I>2 en faisant une symétrie par
+rapport à la médiane. 
+</LI></UL>
+</LI></UL>
+</LI><LI CLASS="li-itemize">Avec <I>OABC</I>, un parallélogramme,<BR>
+On obtient le même résultat qu’avec le rectangle.
+</LI><LI CLASS="li-itemize">Avec <I>OABC</I>, un trapèze rectangle,<BR>
+Soit <I>S</I> l’intersection de <I>OC</I> et de <I>AB</I>.<BR>
+<I>SA</I>2 coupe <I>OA</I> en <I>H</I>.<BR>
+La paralléle à <I>OA</I> passant par le point de concours des diagonales <I>OB</I> et
+<I>CA</I> va jouer le même rôle que la médiane du rectangle.<BR>
+En effet, si <I>A</I>1 se trouve en <I>H</I>, les points <I>K</I> intersection de <I>CH</I> et de
+<I>A</I>2<I>O</I> et <I>L</I> intersection de <I>BH</I> et de <I>A</I>2<I>A</I> se trouve sur cette paralléle
+qui est la polaire de <I>S</I> par rapport à <I>OA</I> et <I>BC</I> (cf <A NAME="polaire"></A>).
+Si <I>I</I> est l’intersection de <I>OA</I>2 avec <I>CA</I>1, et si <I>J</I> est l’intersection de 
+<I>AA</I>2 avec <I>BA</I>1, <I>I</I> et <I>J</I> sont de part et d’autre de cette paralléle et 
+donc l’aire de <I>A</I>1<I>IA</I>2<I>J</I> est inférieure à l’aire de <I>HKA</I>2<I>L</I>. 
+On fait la figure en exécutant le script suivant :
+<PRE CLASS="verbatim">erase;
+xyztrange(-0.5,8.5,-0.5,9,-10,10,-1,6,-0.5,8.5,-0.5,9,1,0,1,1);
+polygone(0,8,5*i+24/7,5*i);
+a1:=element(0..8,1.5);
+A1:=point(a1,0);
+a2:=element(0..24/7,2);
+A2:=point(a2,5);
+O:=point(0,0);
+A:=point(8,0);
+B:=point(24/7,5);
+C:=point(0,5);
+segment(O,A2);
+segment(C,A1);
+I:=(inter(segment(O,A2),segment(C,A1)))[0];
+segment(A,A2);
+segment(B,A1);
+J:=(inter(segment(A,A2),segment(B,A1)))[0];
+h:=7/3*a2;
+H:=point(h,0);
+segment(C,H);
+segment(B,H);
+S:=(inter(demi_droite(O,C),demi_droite(A,B)))[0];
+segment(A,S);
+segment(O,S);
+K:=(inter(segment(O,A2),segment(C,H)))[0];
+L:=(inter(segment(A,A2),segment(B,H)))[0];
+segment(3.5*i,4.8+3.5*i);
+M:=(inter(segment(C,A1),droite(K,L)))[0];
+N:=(inter(segment(B,A1),segment(K,L)))[0];
+si (a1&lt;h) alors [couleur(polygone(A1,N,K,I),rempli+rouge),
+                 couleur(polygone(A2,K,N,J),rempli+vert)]; 
+   sinon [couleur(polygone(A2,I,M,L),rempli+vert),
+          couleur(polygone(A1,J,L,M),rempli+rouge)];
+fsi;
+</PRE>On obtient :<P><IMG SRC="casgeo066.png"><BR>
+
+La surface rouge est inférieure à l’aire de <I>A</I>1<I>NM</I> qui est égale à 
+l’aire de <I>HKL</I> (triangle ayant des bases égales et des hauteurs égales) 
+et, la surface verte est inférieure à l’aire de <I>A</I>2<I>KL</I>. Donc, l’aire de 
+<I>A</I>1<I>IA</I>2<I>J</I> est inférieure à l’aire de <I>A</I>2<I>KHL</I>. 
+</P></LI><LI CLASS="li-itemize">Avec <I>OABC</I>, un trapèze quelconque,<BR>
+On obtient le même résultat qu’avec le trapèze rectangle.
+</LI><LI CLASS="li-itemize">Avec <I>OABC</I>, un quadrilatère quelconque,<BR>
+On suppose, quitte à faire des symétries que le quadrilatère <I>OABC</I> est
+direct et est tel que si <I>S</I> est l’intersection de <I>OA</I> et de <I>BC</I>, <I>S</I>,<I>O</I>,<I>A</I> 
+se trouve dans cet ordre sur <I>OA</I> et si <I>P</I> est l’intersection 
+de <I>OC</I> et de <I>AB</I>, <I>P</I>,<I>B</I>,<I>A</I> se trouve dans cet ordre sur <I>BA</I>.<BR>
+Comme précédemment, on choisit <I>A</I>1 sur le segment <I>OA</I> et <I>A</I>2 sur le 
+segment <I>BC</I>. On appelle <I>H</I> l’intersection de <I>PA</I>2 et du segment <I>OA</I>, <I>I</I> 
+l’intersection de <I>CA</I>1 et de <I>OA</I>2, <I>J</I> l’intersection de <I>BA</I>1 et de <I>AA</I>2,
+Soit la figure :
+<PRE CLASS="verbatim">O:=point(1,0);
+A:=point(10,0);
+B:=point(5,5);
+C:=point(2,2);
+a1:=element(1..10,2);
+a2:=element(2..5,4);
+A1:=point(a1);
+A2:=point(a2*(1+i));
+P:=inter_droite(droite(A,B),droite(O,C));
+H:=inter_droite(droite(P,A2),droite(O,A));
+segment(A,A2);
+segment(O,A2);
+segment(B,A1);
+segment(C,A1);
+I:=inter_droite(segment(O,A2),segment(C,A1));
+J:=inter_droite(segment(A,A2),segment(B,A1));
+segment(C,H);
+segment(B,H);
+K:=inter_droite(segment(O,A2),segment(C,H));
+L:=inter_droite(segment(A,A2),segment(B,H));
+s1:=normal(aire(polygone(A1,J,A2,I)));
+s2:=normal(aire(polygone(H,L,A2,K)));
+segment(0,P,ligne_tiret);
+segment(B,P,ligne_tiret);
+quadrilatere(O,A,B,C,affichage=rouge)
+</PRE>On trouve :<BR>
+<TT>s1=42/21</TT> et <TT>s2=576/119</TT><BR>
+
+On obtient la figure :<P><IMG SRC="casgeo067.png"><BR>
+
+On peut trouver la valeur de l’aire du polygone <I>A</I>1<I>JA</I>2<I>I</I> lorsque <I>A</I>2
+et <I>A</I>1 varient (<I>A</I>2 entre 0 et <I>A</I> et <I>A</I>1 entre <I>B</I> et <I>C</I>) . 
+Pour cela on tape :
+</P><PRE CLASS="verbatim">O:=point(1,0);
+A:=point(10,0);
+B:=point(5,5);
+C:=point(2,2);
+polygone(O,A,B,C);
+assume(a1=[2,1,10]);
+assume(a2=[4,1,5]);
+A1:=point(a1);
+A2:=point(a2*(1+i));
+P:=inter_droite(droite(A,B),droite(O,C));
+H:=inter_droite(droite(P,A2),droite(O,A));
+segment(A,A2);
+segment(O,A2);
+segment(B,A1);
+segment(C,A1);
+I:=inter_droite(segment(O,A2),segment(C,A1));
+J:=inter_droite(segment(A,A2),segment(B,A1));
+f(a1):=normal(aire(A1,J,A2,I));
+</PRE><P>On obtient :<BR>
+<TT>H=point((-(2*a2))/(a2-6),0)</TT>
+on a bien si <TT>a2=2</TT> alors <I>H</I> est en <I>O</I> et si 
+<TT>a2=5</TT> alors <I>H</I> est en <I>A</I>.<BR>
+
+<TT> <I>f</I>(<I>x</I>)=</TT><TT>9*<I>a</I>2</TT><SUP><TT>3</TT></SUP><TT>*<I>x</I></TT><SUP><TT>2</TT></SUP><TT>+3*<I>a</I>2</TT><SUP><TT>2</TT></SUP><TT>*<I>x</I></TT><SUP><TT>3</TT></SUP><TT>+(-(96*<I>a</I>2</TT><SUP><TT>2</TT></SUP><TT>))*<I>x</I></TT><SUP><TT>2</TT></SUP><TT>+30*<I>a</I>2</TT><SUP><TT>2</TT></SUP><TT>*<I>x</I>+90*<I>a</I>2*<I>x</I></TT><SUP><TT>2</TT></SUP><TT>/2*<I>a</I>2</TT><SUP><TT>2</TT></SUP><TT>*<I>x</I></TT><SUP><TT>2</TT></SUP><TT>+(-(104*<I>a</I>2))*<I>x</I>+200</TT><BR>
+
+On peut faire les courbes de l’aire du polygone <I>A</I>1<I>JA</I>2<I>I</I> lorsque <I>A</I>2 est fixe
+et lorsque <I>A</I>1 varie entre <I>O</I> et <I>A</I>. Pour cela on tape :
+Pour avoir les graphes de <I>f</I> selon le paramètre <I>a</I>2, on tape 
+successivement :<BR>
+<TT>a2:=2;G1:=plotfunc(f(x),x=1..10);</TT><BR>
+....<BR>
+<TT>a2:=5;G4:=plotfunc(f(x),x=1..10);</TT><BR>
+ou bien, on tape :<BR>
+</P><PRE CLASS="verbatim">f(x):=(9*a2^3*x^2+3*a2^2*x^3+(-(96*a2^2))*x^2+30*a2^2*x+90*a2*x^2)/(2*a2^2*x^2+(-(104*a2))*x+200);
+L:=[];
+for (a2:=2;a2&lt;6;a2++) {L:=append(L,plotfunc(f(x),x=1..10));}
+L;
+</PRE><P>On obtient :<BR>
+<IMG SRC="casgeo068.png"><BR>
+
+Pour montrer que l’aire de <I>A</I>1<I>JA</I>2<I>I</I> est maximum lorsque <I>A</I>1 est en <I>A</I> et <I>A</I>2
+en <I>B</I>, on va montrer que cette aire croit lorsque <I>A</I>2 est fixe et que <I>A</I>1 
+se déplace sur le segment <I>OH</I> de <I>O</I> à <I>H</I>. Puis on va montrer que l’aire 
+de <I>HLA</I>2<I>K</I> croit, lorsque <I>A</I>2 se déplace sur le segment <I>CB</I> de <I>C</I> à <I>B</I>.
+Pour cela, il suffit de demontrer le lemme suivant :<BR>
+<B>Lemme</B>
+Soient trois demi-droites <I>D</I>1,<I>D</I>2,<I>D</I>3 de même origine <I>S</I> et tels que,
+0&lt;(<I>D</I>1,<I>D</I>2)&lt;(<I>D</I>1,<I>D</I>3)&lt;π/2. Soient deux points fixes <I>O</I> et <I>A</I> sur <I>D</I>1 tels 
+que <I>SO</I>&lt;<I>SA</I> et un point variable <I>M</I> sur <I>D</I>3. Le segment <I>MO</I> coupe <I>D</I>2 en 
+<I>K</I> et le segment <I>MA</I> coupe <I>D</I>2 en <I>L</I>. Alors le segment <I>KL</I>
+augmente lorsque le segment <I>SM</I> augmente.<BR>
+Donc l’aire du triangle <I>AMKL</I> augmente avec <I>SM</I> puisque <I>KL</I> et
+la hauteur relative à <I>KL</I> augmentent avec <I>SM</I>.<BR>
+Voici la figure :<BR>
+<IMG SRC="casgeo069.png"></P><P>La démonstration du lemme peut se faire avec <TT>Xcas</TT> de façon 
+analytique ou de façon purement géométrique. 
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+avec <TT>Xcas</TT><BR>
+On se donne 3 points <I>S</I>,<I>O</I> et <I>A</I> alignés et deux droites, puis on 
+fait la construction et on calcule
+la longueur <I>KL</I> et on montre que cette longueur croit lorsque <I>SM</I> augmente.
+<PRE CLASS="verbatim">S:=point(0);
+O:=point(1);
+assume(a=5);
+assume(k=2);
+assume(m=3);
+assume(t=2);
+A:=point(a);
+M:=point(t,m*t);
+N:=point(2*t,2*k*t):;
+D1:=demi_droite(S,A);
+D2:=demi_droite(S,N);
+D3:=demi_droite(S,M);
+K:=inter_droite(droite(M,O),D2);
+L:=inter_droite(droite(M,A),D2);
+segment(M,O);
+segment(M,A);
+l(t):=longueur2(K,L);
+d(t):=diff(l(t),t);
+factor(numer(d(t)));
+factor(denom(d(t)));
+</PRE>On trouve comme numérateur :<BR>
+<TT>(-(2*(<I>k</I></TT><SUP><TT>2</TT></SUP><TT>+1)*<I>k</I>))*(-<I>m</I>+<I>k</I>)</TT><SUP><TT>2</TT></SUP><TT>*(-<I>m</I>)</TT><SUP><TT>2</TT></SUP><TT>*<I>t</I></TT><SUP><TT>3</TT></SUP><TT>*</TT><BR>
+<TT>(-<I>a</I>*<I>t</I>*<I>k</I>+<I>a</I>*<I>t</I>*<I>m</I>--2*<I>a</I>*<I>k</I>-<I>t</I>*<I>k</I>+<I>t</I>*<I>m</I>)*(<I>a</I>-1)</TT><SUP><TT>2</TT></SUP><BR>
+On trouve comme dénominateur :<BR>
+<TT>(-((-<I>t</I>*<I>k</I>+<I>t</I>*<I>m</I>+<I>k</I>)</TT><SUP><TT>3</TT></SUP><TT>))*(<I>a</I>*<I>k</I>-<I>t</I>*<I>k</I>+<I>t</I>*<I>m</I>)</TT><SUP><TT>3</TT></SUP><BR>
+Le numérateur et le dénominateur sont tous les deux négatifs puisque l’on
+suppose <I>m</I>&gt;<I>k</I>&gt;0, <I>t</I>&gt;0 et <I>a</I>&gt;0 donc <I>d</I>(<I>x</I>) est positif. On a donc montré que
+<I>l</I>(<I>t</I>) croit avec <I>t</I>.</LI><LI CLASS="li-itemize">de façon purement géométrique,<BR>
+La parallèle à <I>OA</I> passant par <I>K</I> coupe <I>MA</I> en <I>L</I>1. 
+On a donc :<BR>
+<I>KL</I>1=<I>OA</I>*<I>MK</I>/<I>MO</I> et<BR>
+en considérant le triangle <I>LKL</I>1,on a :<BR>
+ <I>KL</I>/sin( <I>L</I>1)=<I>KL</I>/sin( <I>A</I>)=<I>KL</I>1/sin( <I>L</I>).<BR>
+Le rapport <I>MK</I>/<I>MO</I> augmente avec <I>OM</I> en effet soit une autre position
+<I>M</I>1 de <I>M</I> (<I>SM</I>&lt;<I>SM</I>1) et <I>K</I>1 l’intersection de <I>M</I>1<I>O</I> avec <I>D</I>2. <P><IMG SRC="casgeo070.png"></P><P>La parallèle à <I>D</I>3 passant par <I>K</I> coupe <I>M</I>1<I>O</I> en <I>K</I>2 on a :<BR>
+<I>MK</I>/<I>MO</I>=<I>M</I>1<I>K</I>2/<I>M</I>1<I>O</I>&lt;<I>M</I>1<I>K</I>1/<I>M</I>1<I>O</I> puisque <I>M</I>1<I>K</I>2&lt;<I>M</I>1<I>K</I>1.<BR>
+Donc <I>KL</I>1 augmente lorsque <I>SM</I> augmente.<BR>
+L’angle <I>A</I> augmente quand <I>SM</I> augmente et donc l’angle <I>L</I> diminue puisque 
+l’angle (<I>D</I>1,<I>D</I>2) est fixe. Donc puisque
+<I>KL</I>=<I>KL</I>1*<I>sin</I>( <I>A</I>)/<I>sin</I>( <I>L</I>), on en déduit que <I>KL</I> augmente 
+lorsque <I>SM</I> augmente.<BR>
+<B>Remarque</B><BR>
+On a le même résultat si <I>M</I> se trouve sur <I>D</I>1 et si <I>K</I> et <I>L</I> sont les 
+intersections des segments qui joignent <I>M</I> à deux points fixes <I>C</I> et <I>B</I> 
+de <I>D</I>3.</P><P>On va utiliser ce lemme en prenant pour <I>M</I> soit le point <I>A</I>2, soit le point
+<I>A</I>1, en effet :<BR>
+- si <I>S</I> est l’intersection des droites <I>OA</I> et <I>BC</I>, les points <I>S</I>,<I>K</I>,<I>L</I> sont 
+alignés sur la polaire de <I>P</I> intersection des droites <I>OC</I> et <I>AB</I>.
+De plus si <I>A</I>1 se trouve entre <I>O</I> et 
+<I>H</I>, le point <I>I</I> est en dessous de cette droite et <I>J</I> se trouve au dessus
+de cette droite. Cela prouve que si <I>A</I>1 se 
+trouve entre <I>O</I> et <I>H</I>, l’aire de <I>A</I>1<I>JA</I>2<I>I</I> est inférieure à l’aire de 
+<I>HLA</I>2<I>K</I>.<BR>
+- lorsque <I>A</I>2 va de <I>C</I> à <I>B</I>, <I>H</I> va de <I>O</I> à <I>A</I> et l’aire de <I>A</I>2<I>KLH</I> 
+augmente. 
+</P></LI></UL></LI></UL><H2 CLASS="section"><A NAME="toc44"></A><A NAME="htoc140">7.2</A>  Les courbes de Bézier et le barycentre</H2><H3 CLASS="subsection"><A NAME="htoc141">7.2.1</A>  Courbe de Bézier définie par 3 points</H3><P>
+Etant donné 3 points <I>A</I>, <I>B</I>, <I>C</I> la courbe de Bézier qui passe par <I>A</I>
+et <I>C</I> en étant tangente à <I>AB</I> et à <I>BC</I> a pour 
+équation paramétrique :<BR>
+<I>A</I>(1−<I>x</I>)<SUP>2</SUP>+2<I>Bx</I>(1−<I>x</I>)+<I>Cx</I><SUP>2</SUP> pour <I>x</I> ∈ [0;1].<BR>
+On peut donc définir la fonction :<BR>
+<TT><I>bezier</I>3(<I>A</I>,<I>B</I>,<I>C</I>,<I>x</I>):={
+<I>evalf</I>(<I>A</I>*(1-<I>x</I>)</TT><CODE><TT>^</TT></CODE><TT>2+2*<I>B</I>*<I>x</I>*(1-<I>x</I>)+<I>C</I>*<I>x</I></TT><CODE><TT>^</TT></CODE><TT>2);
+};</TT><BR>
+La représentation de cette équation paramétrique se fait en utilisant 
+la fonction 
+<TT>plotparam</TT> qui permet de représenter des courbes en paramétrique.<BR>
+On écrit par exemple :<BR>
+<TT>courb(A,B,C):={plotparam(affixe(bezier3(A,B,C,x)),x,0,1);};</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc142">7.2.2</A>  Courbe de Bézier pour une liste de points</H3><P>
+On suppose que l’on met dans une liste une suite de points par exemple :<BR>
+<TT>L:=[A,B,C,D,E,F,G]</TT> et on veut tracer les courbes de Bézier définies 
+par <TT>A, B, C</TT> puis, par <TT>C, D, E</TT> puis, par <TT>E, F, G</TT>.<BR>
+On peut donc définir la fonction :
+</P><PRE CLASS="verbatim">  
+bezierl(L,x):={
+  local LS,A,B,C;
+  LS:=[];
+  for(j:=0;j&lt;size(L)-2;j:=j+2){
+    A:=L[j];B:=L[j+1];C:=L[j+2]; 
+    LS:=append(LS,affixe(evalf(A*(1-x)^2+2*B*x*(1-x)+C*x^2)));
+  };
+  eval(LS);
+};
+</PRE><P>Pour représenter cette équation paramétrique on écrit :
+</P><PRE CLASS="verbatim">  
+courbl(L):={
+  local LB,LS;
+  LS:=[];
+  LB:=bezierl(L,x);
+  for (j:=0;j&lt;size(LB);j:=j+1) {
+  LS:=concat(LS,plotparam(LB[j],x,0,1));
+  };
+  return(feuille(LS));
+};
+</PRE><P>Puis, on clique dans l’écran graphique pour obtenir par exemple les points 
+<TT>A, B, C, D, E, F, G</TT> et on tape :<BR>
+<TT>courbl([A,B,C,D,E,F,G])</TT>, on obtient trois courbes de Bézier successives
+(passant par <TT>A,C,E,G</TT>) et que l’on peut déformer en déplacant l’un 
+des points <TT>A, B, C, D, E, F, G</TT>.<BR>
+<B>Attention</B> la liste <TT>L</TT> doit avoir un nombre impair
+de points car sinon le dernier point n’est pas pris en compte...<BR>
+Si on veut obtenir une courbe fermée il faut terminer la liste par le 
+premier élément de la liste.
+</P><H3 CLASS="subsection"><A NAME="htoc143">7.2.3</A>  La commande <TT>bezier</TT></H3><P><A NAME="@default90"></A>
+On peut utiliser la commande <TT>bezier</TT> de <TT>Xcas</TT> qui existe maintenant.<BR>
+Soient <I>n</I>+1 points <I>P</I><SUB><I>j</I></SUB> de contrôle (<I>j</I>=0..<I>n</I>) et <I>L</I> la séquence de ces
+points.<BR>
+La courbe de Bézier ayant les points de la séquence <TT>L</TT> comme points de
+contrôle, a comme équation paramétrique :<BR>
+∑<SUB><I>j</I>=0</SUB><SUP><I>n</I></SUP> <I>comb</I>(<I>n</I>,<I>j</I>)<I>t</I><SUP><I>j</I></SUP>(1−<I>t</I>)<SUP><I>n</I>−<I>j</I></SUP>*<I>L</I>[<I>j</I>].<BR>
+<TT>bezier(L,plot)</TT> renvoie le tracé de la courbe d’équation 
+paramétrique : ∑<SUB><I>j</I>=0</SUB><SUP><I>n</I></SUP> <I>comb</I>(<I>n</I>,<I>j</I>)<I>t</I><SUP><I>j</I></SUP>(1−<I>t</I>)<SUP><I>n</I>−<I>j</I></SUP>*<I>L</I>[<I>j</I>].<BR>
+<TT>parameq(bezier(L))</TT> renvoie l’équation paramétrique de la courbe de
+Bézier ayant comme points de contrôle les points de la séquence <TT>L</TT>.
+On tape :
+</P><DIV CLASS="center"><TT>bezier(1,1+i,2+i,3-i,plot)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Le tracé de la courbe de Bézier ayant comme points de contrôle les points d’affixe 1,1+i,2+i,3-i</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>parameq(bezier(1,1+i,2+i,3-i))</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>L’équation paramétrique de la courbe précédente</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>bezier(point([0,0,0]),point([1,1,0]),point([0,1,1]),plot)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>Le tracé de la courbe de Bézier ayant comme points de contrôle les points point([0,0,0]),point([1,1,0]),point([0,1,1])</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>parameq(bezier(point([0,0,0]),point([1,1,0]),point([0,1,1])))</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>L’équation paramétrique de la courbe précédente</TT></DIV><H3 CLASS="subsection"><A NAME="htoc144">7.2.4</A>  Morphing</H3><P>
+Une application amusante du barycentre est le morphing.<BR>
+Prenons tout d’abord un exemple simple :<BR>
+On considère six points <I>A</I>, <I>B</I>, <I>C</I>, <I>D</I>, <I>E</I>, <I>F</I>, la courbe de Bézier 
+<I>C</I>1 définie par <I>A</I>, <I>B</I>, <I>C</I> et la courbe de Bézier 
+<I>C</I>2 définie par <I>D</I>, <I>E</I>, <I>F</I>.<BR>
+Soient <I>t</I> ∈ [0;1] et <I>M</I> (resp <I>N</I>, <I>P</I>) le barycentre de (<I>A</I>,1−<I>t</I>) et de 
+(<I>D</I>,<I>t</I>) (resp de (<I>B</I>,1−<I>t</I>) et de (<I>E</I>,<I>t</I>), de (<I>C</I>,1−<I>t</I>) et de (<I>F</I>,<I>t</I>)).<BR>
+Lorsque <I>t</I> varie de 0 à 1 la courbe de Bézier définie par 
+<I>M</I>, <I>N</I>, <I>P</I> se déforme en passant de <I>C</I>1 à <I>C</I>2.<BR>
+On écrit la fonction <TT>baryc</TT> égale à la courbe intermédiaire de paramètre <I>t</I> :<BR>
+</P><PRE CLASS="verbatim">baryc(A1,B1,C1,A2,B2,C2,t):={
+  local M1,M2,M3;
+  M1:=bary(A1,A2,t);
+  M2:=bary(B1,B2,t);
+  M3:=bary(C1,C2,t);
+  return(courb(M1,M2,M3));
+};
+</PRE><P>puis, les instructions permettant de faire bouger la courbe intermédiaire :<BR>
+</P><PRE CLASS="verbatim">courb(A,B,C);
+courb(D,E,F);
+t:=element(0..1);
+baryc(A,B,C,D,E,F,t);
+</PRE><P>Prenons maintenant l’exemple où deux courbes de Bézier sont définies par des listes de points 
+<TT>L1</TT> et <TT>L2</TT> de même longueur. On définit la liste <TT>L3</TT>
+obtenue en formant le barycentre des points de <TT>L1</TT> avec ceux de <TT>L2</TT>
+affectés des coefficients <TT>1-t</TT> et <TT>t</TT> (<TT>0 ≤ <I>t</I> ≤ 1</TT>).<BR>
+On représente la courbe de Bézier définie par la liste <TT>L3</TT>
+en faisant varier <TT>t</TT> cette courbe se déforme et passe de la courbe 
+définie par <TT>L1</TT> à celle définie par <TT>L2</TT> lorsque <TT>t</TT> varie de <TT>0</TT> à <TT>1</TT>.<BR>
+Voici par exemple le programme :
+</P><PRE CLASS="verbatim">  
+baryl(L1,L2,t):={
+  local L3,s1,s2;
+  s1:=size(L1);
+  s2:=size(L2);
+  if (s1 !=s2) {s1:=min(s1,s2)};
+  L3:=[];
+  for (k:=0;k&lt;s1;k++) {
+  L3:=append(L3,evalf(L1[k]*(1-t)+L2[k]*t));
+  }
+  return(eval(L3));
+};
+</PRE><P>ou plus simplement<BR>
+<TT>barycl(L1,L2,t):=evalf(t*L2+(1-t)*L1)</TT><BR>
+Par exemple, on clique avec la souris les points :<BR>
+<TT>A,B,C,D,E,F,G,H,J,K,L,M,N,O,P</TT><BR>
+Par exemple vous pouvez utiliser les points qui se trouvent dans le fichier 
+<TT>pointmorph</TT> 
+puis on exécute un fichier contenant les commandes (c’est le fichier 
+<TT>morphing</TT>) :<BR>
+<TT>t:=element(0..1);</TT><BR>
+<TT>courbl([A,B,C,D,E,F,G,H,A]);</TT><BR>
+<TT>courbl([J,K,L,M,N,O,L,P,J]);</TT><BR>
+<TT>courbl(baryl([A,B,C,D,E,F,G,H,A],[J,K,L,M,N,O,L,P,J],t));</TT><BR>
+ou encore
+</P><PRE CLASS="verbatim"> 
+courbl([A,B,C,D,E,F,G,H,A]);
+courbl([J,K,L,M,N,O,L,P,J]);
+t:=element(0..1);
+baryc(A,B,C,J,K,L,t);
+baryc(C,D,E,L,M,N,t);
+baryc(E,F,G,N,O,L,t);
+baryc(G,H,A,L,P,J,t);
+</PRE><P>On peut ensuite s’amuser à changer la valeur de <TT>t</TT> et aussi déplacer 
+les différents points. 
+On pourra se référer aux fichiers <TT>bezier</TT> qui contient les fonctions qui suivent :<BR>
+</P><PRE CLASS="verbatim"> 
+// -*- mode:C++ -*- 
+//fonction f(0)=A f(1)=C f'(0)=AB f'(1)=BC qui renvoie 1 pt
+bezier3(A,B,C,x):={
+  evalf(A*(1-x)^2+2*B*x*(1-x)+C*x^2);
+};
+
+//dessin de la courbe en parametrique passant par A et C 
+//et tgte a AB et a BC 
+courb(A,B,C):={plotparam(affixe(bezier3(A,B,C,x)),x,0,1);};
+
+//fonction donnant le barycentre de (A1,1-t) et de (A2, t)
+bary(A1,A2,t):={evalf(t*A2+(1-t)*A1);};
+
+//dessin de la courbe barycentre de (courb(A1,B1,C1),1-t) 
+//et de (courb(A2,B2,C2),t)
+//on place les 6 pts puis on definit t:=element(0..1) on peut voir 
+//la deformation de la courbe qd on fait varier t.
+baryc(A1,B1,C1,A2,B2,C2,t):={
+  local M1,M2,M3;
+  M1:=bary(A1,A2,t);
+  M2:=bary(B1,B2,t);
+  M3:=bary(C1,C2,t);
+  courb(M1,M2,M3);
+};
+
+baryl(L1,L2,t):={
+  local L3,s1,s2;
+  s1:=size(L1);
+  s2:=size(L2);
+  if (s1 !=s2) return("erreur");
+  L3:=[];
+  for (k:=0;k&lt;s1;k++) {
+  L3:=append(L3,bary(L1[k],L2[k],t));
+  }
+  return(eval(L3));
+};
+barycl(L1,L2,t):=evalf(t*L2+(1-t)*L1);
+bezierl(L,x):={
+  local LS,A,B,C;
+  LS:=[];
+  for(j:=0;j&lt;size(L)-2;j:=j+2){
+  A:=L[j];B:=L[j+1];C:=L[j+2]; 
+  LS:=append(LS,affixe(evalf(A*(1-x)^2+2*B*x*(1-x)+C*x^2)));
+  };
+  eval(LS);
+};
+
+courbl(L):={
+  local LB,LS;
+  LS:=[];
+  LB:=bezierl(L,x);
+  for (j:=0;j&lt;size(LB);j:=j+1) {
+  LS:=append(LS,plotparam(LB[j],x,0,1));
+  };
+  return(feuille(LS));
+};
+</PRE><H2 CLASS="section"><A NAME="toc45"></A><A NAME="htoc145">7.3</A>  Enveloppe de droites</H2><P>
+Commençons par un exemple :<BR>
+On cherche l’enveloppe des droites définies par 
+<I>y</I>−2<I>tx</I>−<I>t</I><SUP>2</SUP> lorsque <I>t</I> varie.<BR>
+On va tracer le lieu des points d’intersection <TT>M</TT> des droites 
+<TT>ed</TT> d’équation <I>y</I>−2<I>tx</I>−<I>t</I><SUP>2</SUP>=0 et des droites 
+<TT>ed1</TT> d’équation −2<I>x</I>−2<I>t</I>=0 obtenue en dérivant <I>y</I>−2<I>tx</I>−<I>t</I><SUP>2</SUP>=0 par 
+rapport à <I>t</I>.
+Les instructions suivantes tracent les droites <TT>ed</TT> et <TT>ed1</TT> de 
+paramètre <I>t</I> et le lieu de <TT>M</TT>.<BR>
+Ces instructions se trouvent dans le fichier <TT>envelopp</TT>.
+</P><PRE CLASS="verbatim">ed:=y-2*t*x-t^2;
+ed1:=derive(ed,t);
+M:=solve([ed,ed1],[x,y])[0];
+plotparam(M[0]+i*M[1],t);
+t:=element(-3..3);
+d:=plotfunc(2*t*x-t^2,x);
+</PRE><P>On peut aussi définir la droite d’équation <I>ay</I>+<I>bx</I>+<I>c</I>=0 par la liste [<I>a</I>,<I>b</I>,<I>c</I>].<BR>
+On traite alors l’exemple avec les instructions ci-dessous (elles se trouvent 
+dans le fichier <TT>envelopl</TT>).
+</P><PRE CLASS="verbatim">//ld=[a,b,c] si ay+bx+c=0
+xyztrange(-6,6,-7,4,-10,10,-3,3,-6,6,-5,1,1);
+purge(t);
+ld:=[1,-2*t,-t^2];
+a:=ld[0]:
+b:=ld[1];
+c:=ld[2];
+ld1:=derive(ld,t);
+dpd1:=a*ld1[1]-b*ld1[0];
+//dpd1=-2 &lt;&gt;0 donc ici ld et ld1 ne sont pas paralleles
+M:=(i*(-c*ld1[1]+b*ld1[2])+(c*ld1[0]-a*ld1[2]))/dpd1;
+plotparam(M,t);
+t:=element(-3..3);
+d:=plotfunc(2*t*x+t^2,x);
+</PRE><P>On écrit maintenant deux fonctions (<TT>enveloppe3</TT> et <TT>enveloppe</TT>) qui tracent l’enveloppe d’une famille de droites.<BR>
+La fonction <TT>enveloppe3</TT> a trois paramètres <TT>a,b,c</TT> qui sont des fonctions de la variable <I>t</I> et qui représente les droites d’équation <TT>ay+bx+c=0</TT>.
+</P><PRE CLASS="verbatim">//enveloppe d'une droite def par a(t),b(t),c(t) (ay+bx+c=0)
+enveloppe3(a,b,c):={
+  local ld,ld1,dd1,M;
+  ld:=[a,b,c];
+  ld1:=derive(ld,t);
+  dd1:=ld[0]*ld1[1]-ld[1]*ld1[0];
+  if (dd1!=0) {
+     M:=(i*(-ld[2]*ld1[1]+ld[1]*ld1[2])+
+         (ld[2]*ld1[0]-ld[0]*ld1[2]))/dd1;
+     return(plotparam(M,t));
+  } else {
+    return("droites paralleles");
+  }
+}
+</PRE><P>La fonction <TT>enveloppe</TT> a un paramètre <TT>d</TT> qui est :<BR>
+<TT>d</TT> est l’expression <TT>a(t)y+b(t)x+c(t)</TT> (on sous-endend =0 et les 
+variables doivent être <TT>x,y,t</TT>).
+</P><PRE CLASS="verbatim">enveloppe(d):={
+  local zM,a,b,c,a1,b1,c1,dpd1;
+  a:=derive(d,y);
+  b:=derive(d,x);
+  c:=subst(subst(d,x=0),y=0);
+  a1:=derive(a,t);b1:=derive(b,t);c1:=derive(c,t);
+  dpd1:=a*b1-b*a1;
+  if (dpd1!=0) {
+     zM:=(i*(-c*b1+b*c1)+(c*a1-a*c1))/dpd1;
+     return(plotparam(zM,t));
+  }
+  else 
+    return("Droites paralleles");
+};
+</PRE><P>On peut alors écrire les fichiers <TT>envelopt</TT> et <TT>envelop3t</TT>
+pour avoir une figure animée : l’enveloppe <TT>E</TT> et les différentes 
+droites qui bougent selon les valeurs de <TT>t</TT> en restant tangentes à 
+<TT>E</TT>.<BR>
+Voici le fichier <TT>envelop3t</TT> qui trace l’enveloppe des droites :<BR>
+cos(<I>t</I>)*(1−cos(2<I>t</I>))<I>y</I>+sin(<I>t</I>)*cos(2<I>t</I>)<I>x</I>=sin(<I>t</I>)cos(<I>t</I>) :
+</P><PRE CLASS="verbatim">purge(t);
+purge(tt);
+purge(x);
+purge(y);
+xyztrange(-6,6,-7,4,-10,10,-3,3,-6,6,-2,4,1);
+a:=cos(t)*(1-cos(2*t));
+b:=sin(t)*cos(2*t);
+c:=-sin(t)*cos(t);
+enveloppe3(a,b,c);
+tt:=element(-3..4);
+aa:=subst(a,t,tt);
+bb:=subst(b,t,tt);
+cc:=subst(c,t,tt);
+plotfunc((-bb*x-cc)/aa,x);
+</PRE><P>Voici le fichier <TT>envelopt</TT> qui trace l’enveloppe des droites 
+<I>x</I>*(<I>cos</I>(2*<I>t</I>)−<I>cos</I>(<I>t</I>))+<I>y</I>*(<I>sin</I>(2*<I>t</I>)−<I>sin</I>(<I>t</I>))−<I>sin</I>(2*<I>t</I>)=0 :
+</P><PRE CLASS="verbatim">xyztrange(-6,6,-7,4,-10,10,-3,3,-6,6,-2,4,1);
+purge(x);
+purge(y);
+purge(t);
+purge(tt);
+d:=x*(cos(2*t)-cos(t))+y*(sin(2*t)-sin(t))-sin(2*t);
+enveloppe(d);
+tt:=element(-3..4);
+dd:=subst(d,t,tt);
+aa:=derive(dd,y);
+bb:=derive(dd,x);
+cc:=subst(subst(dd,x=0),y=0);
+plotfunc((-bb*x-cc)/aa,x);
+</PRE><H2 CLASS="section"><A NAME="toc46"></A><A NAME="htoc146">7.4</A>  Le pantalon</H2><P>
+Un "jean" de poids <I>j</I> est accroché en <I>A</I> à un étendage spécial :<BR>
+l’un des poteaux de l’étendage possède une poulie <I>P</I> !<BR>
+Le fil de l’étendage passe sur la poulie et est accroché à l’autre 
+poteau en <I>O</I>. On suppose que la masse du fil est négligeable.<BR>
+Quel poids faut-il mettre au bout du fil pour avoir un équilibre ?<BR>
+<IMG SRC="casgeo071.png"><BR>
+
+Dans ce qui suit on suppose que :<BR>
+- le "jean" pèse <I>j</I> unités et on note <I>J</I>=(0,−<I>j</I>),<BR>
+- les deux poteaux sont distants de <I>l</I>,<BR>
+- on choisit le repère <I>Oxy</I> pour que la poulie <I>P</I> ait comme coordonnées 
+(0,<I>l</I>),<BR>
+- le "jean" est fixé au point <I>A</I> de coordonnées (<I>a</I>,<I>b</I>) dans le repère <I>Oxy</I>,<BR>
+- le poids est de <I>p</I> unités.<BR>
+Quelles sont alors les positions d’équilibre du "jean" ?<BR>
+Si <I>T</I>1=(<I>t</I>11,<I>t</I>12) est la tension du fil <I>AP</I> et<BR>
+si <I>T</I>2=(<I>t</I>21,<I>t</I>22) est la tension du fil <I>AO</I>, on a :<BR>
+<I>T</I>1+<I>T</I>2+<I>J</I>=0 et <I>p</I><SUP>2</SUP>=||<I>T</I>1||<SUP>2</SUP> 
+donc :<BR>
+<I>t</I>11+<I>t</I>21=0, <I>t</I>12+<I>t</I>22−<I>j</I>=0 et <I>p</I><SUP>2</SUP>=<I>t</I>11<SUP>2</SUP>+<I>t</I>12<SUP>2</SUP>.<BR>
+<I>T</I>1 est dirigé selon <I>AP</I> donc −<I>b</I>/(<I>l</I>−<I>a</I>)=<I>t</I>12/<I>t</I>11,<BR>
+<I>T</I>2 est dirigé selon <I>AO</I> donc −<I>b</I>/(−<I>a</I>)=<I>t</I>22/<I>t</I>21.<BR>
+On remarquera que le problème n’est pas le même selon que le pantalon 
+coulisse sur le fil ou qu’il est fixé sur le fil par une pince à linge :</P><P>- si le pantalon coulisse sur le fil les deux tensions 
+<I>T</I>1 et <I>T</I>2 ont même module.<BR>
+On tape :<BR>
+<TT><I>solve</I>([<I>t</I>11+<I>t</I>21=0,<I>t</I>12+<I>t</I>22-<I>j</I>=0,<I>t</I>11</TT><SUP><TT>2</TT></SUP><TT>+<I>t</I>12</TT><SUP><TT>2</TT></SUP><TT>=<I>t</I>21</TT><SUP><TT>2</TT></SUP><TT>+<I>t</I>22</TT><SUP><TT>2</TT></SUP><TT>],</TT><BR>
+<TT>[<I>t</I>11,<I>t</I>12,<I>t</I>21,<I>t</I>22])</TT><BR>
+On obtient :<BR>
+<TT>[[-<I>t</I>21,<I>j</I>/2,<I>t</I>21,<I>j</I>/2]]</TT><BR>
+ce qui signifie que <I>T</I>1 et <I>T</I>2 sont
+symétriques par rapport à la verticale et donc que <I>OA</I>=<I>AP</I>.<BR>
+On tape pour déterminer le poids <I>p</I> en fonction de <I>j</I>,<I>l</I>,<I>a</I>,<I>b</I> :<BR>
+<TT><I>solve</I>([<I>t</I>11+<I>t</I>21=0,<I>t</I>12+<I>t</I>22-<I>j</I>=0,<I>t</I>11</TT><SUP><TT>2</TT></SUP><TT>+<I>t</I>12</TT><SUP><TT>2</TT></SUP><TT>=<I>t</I>21</TT><SUP><TT>2</TT></SUP><TT>+<I>t</I>22</TT><SUP><TT>2</TT></SUP><TT>,</TT><BR>
+<TT><I>b</I>/<I>a</I>=<I>t</I>22/<I>t</I>21,<I>p</I></TT><SUP><TT>2</TT></SUP><TT>=<I>t</I>11</TT><SUP><TT>2</TT></SUP><TT>+<I>t</I>12</TT><SUP><TT>2</TT></SUP><TT>],[<I>p</I>,<I>t</I>11,<I>t</I>12,<I>t</I>21,<I>t</I>22])</TT><BR>
+On obtient :<BR>
+<TT>[[<I>sqrt</I>(4*<I>b</I></TT><SUP><TT>4</TT></SUP><TT>*<I>j</I></TT><SUP><TT>2</TT></SUP><TT>+4*<I>b</I></TT><SUP><TT>2</TT></SUP><TT>*<I>j</I></TT><SUP><TT>2</TT></SUP><TT>*<I>a</I></TT><SUP><TT>2</TT></SUP><TT>)/(4*<I>b</I></TT><SUP><TT>2</TT></SUP><TT>),(-(<I>j</I>*<I>a</I>))/(2*<I>b</I>),<I>j</I>/2,<I>j</I>*<I>a</I>/(2*<I>b</I>),<I>j</I>/2],</TT><BR>
+<TT>[(-(<I>sqrt</I>(4*<I>b</I></TT><SUP><TT>4</TT></SUP><TT>*<I>j</I></TT><SUP><TT>2</TT></SUP><TT>+4*<I>b</I></TT><SUP><TT>2</TT></SUP><TT>*<I>j</I></TT><SUP><TT>2</TT></SUP><TT>*<I>a</I></TT><SUP><TT>2</TT></SUP><TT>)))/(4*<I>b</I></TT><SUP><TT>2</TT></SUP><TT>),(-(<I>j</I>*<I>a</I>))/(2*<I>b</I>),<I>j</I>/2,<I>j</I>*<I>a</I>/(2*<I>b</I>),<I>j</I>/2]]</TT></P><P>- si le pantalon est fixé en <I>A</I> (par exemple au moyen d’une pince à linge),
+il faut supprimer l’équation <TT><I>t</I>11</TT><SUP><TT>2</TT></SUP><TT>+<I>t</I>12</TT><SUP><TT>2</TT></SUP><TT>=<I>t</I>21</TT><SUP><TT>2</TT></SUP><TT>+<I>t</I>22</TT><SUP><TT>2</TT></SUP> et rajouter :
+<TT>-<I>b</I>/(<I>l</I>-<I>a</I>)=<I>t</I>12/<I>t</I>11</TT>.<BR>
+On tape :<BR>
+<TT><I>normal</I>(<I>solve</I>([<I>t</I>11+<I>t</I>21=0,<I>t</I>12+<I>t</I>22-<I>j</I>=0,<I>b</I>/<I>a</I>=<I>t</I>22/<I>t</I>21,</TT><BR>
+<TT>-<I>b</I>/(<I>l</I>-<I>a</I>)=<I>t</I>12/<I>t</I>11,<I>t</I>11</TT><SUP><TT>2</TT></SUP><TT>+<I>t</I>12</TT><SUP><TT>2</TT></SUP><TT>=<I>p</I></TT><SUP><TT>2</TT></SUP><TT>],[<I>p</I>,<I>t</I>11,<I>t</I>12,<I>t</I>21,<I>t</I>22])[1][0])</TT><BR>
+On obtient :<BR>
+<TT>(<I>sqrt</I>(<I>l</I></TT><SUP><TT>2</TT></SUP><TT>+-2*<I>l</I>*<I>a</I>+<I>a</I></TT><SUP><TT>2</TT></SUP><TT>+<I>b</I></TT><SUP><TT>2</TT></SUP><TT>)*<I>abs</I>(<I>l</I>)*<I>abs</I>(<I>b</I>)*<I>abs</I>(<I>j</I>)*<I>abs</I>(<I>a</I>))/(<I>l</I></TT><SUP><TT>2</TT></SUP><TT>*<I>b</I></TT><SUP><TT>2</TT></SUP><TT>)</TT><BR>
+On a donc : <I>p</I><SUP>2</SUP>=<I>j</I><SUP>2</SUP>*<I>a</I><SUP>2</SUP>*((<I>l</I>−<I>a</I>)<SUP>2</SUP>+<I>b</I><SUP>2</SUP>)/(<I>l</I><SUP>2</SUP>*<I>b</I><SUP>2</SUP>),<BR>
+d’où <I>b</I><SUP>2</SUP>=<I>j</I><SUP>2</SUP>*<I>a</I><SUP>2</SUP>*(−<I>l</I>+<I>a</I>)<SUP>2</SUP>/(<I>p</I><SUP>2</SUP>*<I>l</I><SUP>2</SUP>−<I>j</I><SUP>2</SUP>*<I>a</I><SUP>2</SUP>).<BR>
+L’ordonnée de <I>A</I> est négative, l’équation de la courbe d’équilibre est :<BR>
+<TT><I>b</I>:=-<I>sqrt</I>((<I>a</I></TT><CODE><TT>^</TT></CODE><TT>2*(-<I>l</I>+<I>a</I>)</TT><CODE><TT>^</TT></CODE><TT>2*<I>j</I></TT><CODE><TT>^</TT></CODE><TT>2)/(<I>p</I></TT><CODE><TT>^</TT></CODE><TT>2*<I>l</I></TT><CODE><TT>^</TT></CODE><TT>2-<I>j</I></TT><CODE><TT>^</TT></CODE><TT>2*<I>a</I></TT><CODE><TT>^</TT></CODE><TT>2));</TT>.<BR>
+Pour simuler la situation on écrit les instructions suivantes dans le fichier
+<TT>pantalon</TT>.
+Ces instructions permettent de faire varier les paramètres <I>j</I>,<I>p</I> et <I>a</I>.<BR>
+Voici le fichier <TT>pantalon</TT>.
+</P><PRE CLASS="verbatim">switch_axes(0);
+xyztrange(-1,10,-7,1,-10,10,-1,6,-1,10,-7,1,0); 
+p:=element(0..5);
+h:=2;//hauteur des poteaux
+l:=8;//distance entre les poteaux
+f:=l+5;//longueur du fil
+j:=element(1..3);//poids du jean
+segment(l-h*i,l);P;=point(l,0);//dessin d'un poteau
+segment(-h*i,0);O:=point(0,0);//dessin de l'autre poteau
+y:=-sqrt((x^2*(-l+x)^2*j^2)/(p^2*l^2-j^2*x^2));
+//m:=min(l,p*l/j);
+//plotfunc(y,x,0,m);
+a:=element(0..l);
+b:=-sqrt((a^2*(-l+a)^2*j^2)/(p^2*l^2-j^2*a^2));
+A:=point(a,b);
+couleur(segment(A,0),2);
+couleur(segment(A,l),2);
+ap:=sqrt((l-a)^2+b^2);
+ao:=sqrt(a^2+b^2);
+c:=ao+ap;
+//dessin des forces
+couleur(vecteur(A,a+(b-j)*i),1);
+couleur(vecteur(A,A+(l-a-b*i)*p/sqrt((-l+a)^2+b^2)),1); 
+couleur(vecteur(A,A+(-l+a+b*i)*p/sqrt((-l+a)^2+b^2)+j*i),1); 
+couleur(vecteur(A,A+(l-a-b*i)*p/sqrt((-l+a)^2+b^2)-j*i),4);
+T1:=A+(l-a-b*i)*p/sqrt((-l+a)^2+b^2);
+T2:=A+(-l+a+b*i)*p/sqrt((-l+a)^2+b^2)+j*i;
+J:=A+(-j)*i;
+//dessin de la poulie
+cercle(l,0.2);
+//dessin du poids p
+if (c&lt;f){
+[couleur(segment(l+0.1,l+0.1+i*(c-f)),2),
+couleur( segment(l+i*(c-f),l+i*(c-f-p/10)),1),
+couleur( segment(l+0.2+i*(c-f),l+0.2+i*(c-f-p/10)),1),
+couleur( segment(l+0.2+i*(c-f),l+i*(c-f)),1),
+couleur( segment(l+0.2+i*(c-f-p/10),l+i*(c-f-p/10)),1)];
+};
+</PRE><P>On peut aussi utiliser le tableur pour avoir des valeurs numériques.<BR>
+On a <I>p</I><SUP>2</SUP>=<I>j</I><SUP>2</SUP>*<I>x</I><SUP>2</SUP>*((−<I>l</I>+<I>x</I>)<SUP>2</SUP>+<I>y</I><SUP>2</SUP>)/(<I>l</I><SUP>2</SUP>*<I>y</I><SUP>2</SUP>).<BR>
+ On définit la fonction <I>g</I> (égale à <I>p</I> par :<BR>
+<TT><I>g</I>(<I>j</I>,<I>l</I>,<I>x</I>,<I>y</I>)=<I>j</I>*<I>x</I>*<I>sqrt</I>((-<I>l</I>+<I>x</I>)</TT><SUP><TT>2</TT></SUP><TT>+<I>y</I></TT><SUP><TT>2</TT></SUP><TT>)/(<I>l</I>*<I>y</I>)</TT><BR>
+Ne pas oublier auparavant de purger les variables <I>j</I>,<I>l</I>,<I>x</I>,<I>y</I> !<BR>
+Puis on ouvre le tableur (on tape <TT>Alt+t</TT> pour ouvrir le tableur).<BR>
+On tape par exemple :<BR>
+<TT>table g(3.0,8,4,y),y)</TT> et on complète la table....<BR>
+On peut recopier la deuxième colonne :
+on sélectionne la deuxième colonne puis 
+on se place en début de colonne et on clique sur <TT>coller</TT>.<BR>
+Si on veut voir l’influence de <TT>l</TT> on met comme formule dans la troisième
+case :<BR>
+<TT>g(3.0,4,2,y),y)</TT> et on change la formule (=<TT>eval(subst..)</TT> comme 
+ci-dessous...<BR>
+On obtient :<BR><BR>
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>A</TD><TD ALIGN=right NOWRAP>B</TD><TD ALIGN=right NOWRAP>C</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP><TT>y</TT></TD><TD ALIGN=right NOWRAP><TT>g(3,8,4,y)</TT></TD><TD ALIGN=right NOWRAP><TT>g(3,4,2,y)</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP><TT>0.1</TT></TD><TD ALIGN=right NOWRAP><TT>"Table"</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP>2</TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(B$0,$A$0,$A2))</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(C$0,$A$0,$A2))</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP>3</TD><TD ALIGN=right NOWRAP><TT>=A2+A$1</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(B$0,$A$0,$A3))</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(C$0,$A$0,$A3))</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP>4</TD><TD ALIGN=right NOWRAP><TT>=A3+A$1</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(B$0,$A$0,$A4))</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(C$0,$A$0,$A4))</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP>5</TD><TD ALIGN=right NOWRAP><TT>=A4+A$1</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(B$0,$A$0,$A5))</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(C$0,$A$0,$A5))</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP>6</TD><TD ALIGN=right NOWRAP><TT>=A5+A$1</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(B$0,$A$0,$A6))</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(C$0,$A$0,$A6))</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP>7</TD><TD ALIGN=right NOWRAP><TT>=A6+A$1</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(B$0,$A$0,$A7))</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(C$0,$A$0,$A7))</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP>8</TD><TD ALIGN=right NOWRAP><TT>=A7+A$1</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(B$0,$A$0,$A8))</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(C$0,$A$0,$A8))</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP>9</TD><TD ALIGN=right NOWRAP><TT>=A8+A$1</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(B$0,$A$0,$A9))</TT></TD><TD ALIGN=right NOWRAP><TT>=eval(subst(C$0,$A$0,$A9))</TT></TD></TR>
+</TABLE><P>  = </P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>A</TD><TD ALIGN=right NOWRAP>B</TD><TD ALIGN=right NOWRAP>C</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP><I>y</I></TD><TD ALIGN=right NOWRAP>12 √<SPAN style="text-decoration:overline">16+<I>y</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>/8 <I>y</I></TD><TD ALIGN=right NOWRAP>6 √<SPAN style="text-decoration:overline">4+<I>y</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>/4 <I>y</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>0.1</TD><TD ALIGN=right NOWRAP>Table</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>2</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>∞ </TD><TD ALIGN=right NOWRAP>∞</TD></TR>
+<TR><TD ALIGN=right NOWRAP>3</TD><TD ALIGN=right NOWRAP>0.1</TD><TD ALIGN=right NOWRAP>60.0187470712</TD><TD ALIGN=right NOWRAP>30.0374765918</TD></TR>
+<TR><TD ALIGN=right NOWRAP>4</TD><TD ALIGN=right NOWRAP>0.2</TD><TD ALIGN=right NOWRAP>30.0374765918</TD><TD ALIGN=right NOWRAP>15.0748134317</TD></TR>
+<TR><TD ALIGN=right NOWRAP>5</TD><TD ALIGN=right NOWRAP>0.3</TD><TD ALIGN=right NOWRAP>20.0561711201</TD><TD ALIGN=right NOWRAP>10.1118742081</TD></TR>
+<TR><TD ALIGN=right NOWRAP>6</TD><TD ALIGN=right NOWRAP>0.4</TD><TD ALIGN=right NOWRAP>15.0748134317</TD><TD ALIGN=right NOWRAP>7.64852927039</TD></TR>
+<TR><TD ALIGN=right NOWRAP>7</TD><TD ALIGN=right NOWRAP>0.5</TD><TD ALIGN=right NOWRAP>12.0933866224</TD><TD ALIGN=right NOWRAP>6.18465843843</TD></TR>
+<TR><TD ALIGN=right NOWRAP>8</TD><TD ALIGN=right NOWRAP>0.6</TD><TD ALIGN=right NOWRAP>10.1118742081</TD><TD ALIGN=right NOWRAP>5.22015325446</TD></TR>
+<TR><TD ALIGN=right NOWRAP>9</TD><TD ALIGN=right NOWRAP>0.7</TD><TD ALIGN=right NOWRAP>8.70168878753</TD><TD ALIGN=right NOWRAP>4.54063287866</TD></TR>
+</TABLE><P><BR>
+
+On voit l’influence de la longueur du fil : si <I>j</I>=3, pour avoir <I>A</I> au 
+point de coordonées (<I>l</I>/2,−0.1)), il faut avoir <I>p</I>=60 si <I>l</I>=8 et <I>p</I>=30 si <I>l</I>=4.</P><P>On définit la fonction <TT>equi</TT> qui est l’ordonnée de <I>A</I> par :<BR>
+<TT><I>equi</I>(<I>j</I>,<I>l</I>,<I>p</I>,<I>x</I>):=</TT><TT>-<I>sqrt</I>(<I>j</I></TT><SUP><TT>2</TT></SUP><TT>*<I>x</I></TT><SUP><TT>2</TT></SUP><TT>*(<I>x</I>-<I>l</I>)</TT><SUP><TT>2</TT></SUP><TT>/(<I>p</I></TT><SUP><TT>2</TT></SUP><TT>*<I>l</I></TT><SUP><TT>2</TT></SUP><TT>-<I>j</I></TT><SUP><TT>2</TT></SUP><TT>*<I>x</I></TT><SUP><TT>2</TT></SUP><TT>))</TT><BR>
+On tape le fichier suivant :
+</P><PRE CLASS="verbatim">xyztrange(0,8,-7,1,-10,10,-1,6,0.,8,-7,1,1);
+L:=plotfunc(equi(3,8,1,x),x,0,8/3);
+for (p:=2;p&lt;10;p:=p+1) {
+m:=min(8,8*p/3);
+L:=L,plotfunc(equi(3,8,p,x),x,0,m);
+};
+L;
+</PRE><P>On obtient les diffèrentes courbes d’équilibre lorsque le poids <I>p</I> 
+varie (on peut vérifier que <TT>limit(equi(3,8,3,x),x,8)=0</TT>)<BR>
+
+</P>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casgeo006.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo008.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

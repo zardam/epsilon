@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="tutoriel.css">
+<title>Programmation</title>
+</head>
+<body >
+<a href="tutoriel005.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel007.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h2 id="sec31" class="section">6&#XA0;&#XA0;Programmation</h2>
+<h3 id="sec32" class="subsection">6.1&#XA0;&#XA0;Le langage</h3>
+<p>
+<span style="font-family:monospace">Xcas</span> permet d&#X2019;&#XE9;crire des programmes, comme n&#X2019;importe quel 
+langage de programmation. Voici ses
+principales caract&#XE9;ristiques.
+<a id="hevea_default346"></a>
+<a id="hevea_default347"></a>
+<a id="hevea_default348"></a>
+</p><ul class="itemize"><li class="li-itemize">
+C&#X2019;est un langage fonctionnel. L&#X2019;argument d&#X2019;une fonction peut &#XEA;tre
+une autre fonction. Si c&#X2019;est le cas, on peut soit donner le nom de la
+fonction argument dans la commande, soit sa d&#XE9;finition&#XA0;: par exemple
+<code>function_diff(f)</code> ou bien <code>function_diff(x-&gt;x^2)</code>.
+</li><li class="li-itemize">Il n&#X2019;y a pas de distinction entre programme et fonction&#XA0;: 
+une fonction renvoie la valeur de la derni&#XE8;re instruction 
+&#XE9;valu&#XE9;e ou ce qui suit le mot r&#XE9;serv&#XE9; <code>return</code>.
+Comme pour tous les environnements de calcul, programmer
+consiste &#XE0; &#XE9;tendre <span style="font-family:monospace">Xcas</span> en lui rajoutant les fonctions
+souhait&#XE9;es. Structurer la programmation consiste &#XE0; hi&#XE9;rarchiser
+les diff&#XE9;rentes fonctions qui s&#X2019;appellent entre elles.
+</li><li class="li-itemize">Le langage est non typ&#XE9;. On distingue seulement les 
+variables globales, qui ne sont pas d&#XE9;clar&#XE9;es, 
+et les variables locales, 
+d&#XE9;clar&#XE9;es en d&#XE9;but de fonction.
+</li></ul><p>
+<a id="hevea_default349"></a>
+Dans un programme, lorsqu&#X2019;on appelle une variable munie d&#X2019;un indice qui n&#X2019;est 
+pas affect&#XE9;e &#XE0; une liste, s&#XE9;quence ou matrice, 
+c&#X2019;est une table qui est cr&#XE9;&#XE9;e, et non une liste.
+Une table est un conteneur d&#X2019;objets analogue aux listes et aux
+s&#XE9;quences. La diff&#XE9;rence est qu&#X2019;elle peut &#XEA;tre indic&#XE9;e
+par autre chose qu&#X2019;un entier, par exemple
+une cha&#XEE;ne de caract&#XE8;res&#X2026;&#XA0;
+Si <code>a</code> est une variable formelle, la commande <code>a[4]:=2</code>
+cr&#XE9;e une table <code>a</code>.<br>
+Pour que <code>a</code> soit une liste, il faut d&#X2019;abord affecter <code>a</code>
+&#XE0; une liste par exemple <code>a:=[0$10]</code>
+(si la taille de la liste est connue) ou <code>a:=[]</code> puis 
+<code>a[4]:=2</code>.
+M&#XEA;me si le langage est non typ&#XE9;, il est donc 
+recommand&#XE9; d&#X2019;initialiser
+les variables avant de les utiliser.
+La syntaxe de d&#XE9;claration d&#X2019;une fonction est la suivante. 
+</p><pre class="verbatim">nom_fonction(var1,var2,...):={
+local var_loc1, var_loc2,... ;
+  instruction1;
+  instruction2;
+  ...
+}
+</pre><p>
+La syntaxe est soit avec des mots clef en 
+fran&#XE7;ais soit celle du langage C++.</p><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Instructions en fan&#XE7;ais</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >affectation</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> a:=2;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >entr&#XE9;e expression</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> saisir("a=",a);</code> </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >entr&#XE9;e chaine</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> saisir_chaine("a=",a);</code> </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >sortie</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> afficher("a=",a);</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >valeur retourn&#XE9;e</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> retourne(a);</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >arr&#XEA;t dans boucle</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> break;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >alternative</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> si &lt;condition&gt; alors &lt;inst&gt; fsi;</code> </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >&nbsp;</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> si &lt;condition&gt; alors &lt;inst1&gt; sinon &lt;inst2&gt; fsi;</code> </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >boucle pour</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> pour j de a jusque b faire &lt;inst&gt; fpour;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >&nbsp;</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> pour j de a jusque b pas p faire &lt;inst&gt; fpour;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >boucle r&#XE9;p&#XE9;ter</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> repeter &lt;inst&gt; jusqua &lt;condition&gt;;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >boucle tantque</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> tantque &lt;condition&gt; faire &lt;inst&gt; ftantque;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >boucle faire</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> faire &lt;inst1&gt; si &lt;condition&gt; break;&lt;inst2&gt;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >&nbsp;</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> ffaire;</code></td></tr>
+</table>
+</div><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Instructions comme en C++</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >affectation</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> a:=2;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >entr&#XE9;e expression</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> input("a=",a);</code> </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >entr&#XE9;e chaine</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> textinput("a=",a);</code> </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >sortie</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> print("a=",a);</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >valeur retourn&#XE9;e</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> return(a);</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >arr&#XEA;t dans boucle</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> break;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >alternative</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> if (&lt;condition&gt;) {&lt;inst&gt;};</code> </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >&nbsp;</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> if (&lt;condition&gt;) {&lt;inst1&gt;} else {&lt;inst2&gt;};</code> </td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >boucle pour</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> for (j:= a;j&lt;=b;j++) {&lt;inst&gt;};</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >&nbsp;</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> for (j:= a;j&lt;=b;j:=j+p) {&lt;inst&gt;};</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >boucle r&#XE9;p&#XE9;ter</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> repeat &lt;inst&gt; until &lt;condition&gt;;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >boucle tantque</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> while (&lt;condition&gt;) {&lt;inst&gt;};</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" >boucle faire</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> do &lt;inst1&gt; if (&lt;condition&gt;) break;&lt;inst2&gt; od;</code></td></tr>
+</table>
+</div><p>
+Pour les tests, une condition est un bool&#XE9;en,
+r&#XE9;sultat d&#X2019;une expression logique, utilisant les
+op&#XE9;rateurs habituels.</p><p><a id="hevea_default350"></a>
+<a id="hevea_default351"></a>
+<a id="hevea_default352"></a></p><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=4><span style="font-weight:bold">Op&#XE9;rateurs logiques</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>==</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >teste l&#X2019;&#XE9;galit&#XE9;</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>!=</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >teste la diff&#XE9;rence</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>&lt;</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >teste la stricte inf&#XE9;riorit&#XE9;</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>&gt;</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >teste la stricte sup&#XE9;riorit&#XE9;</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>&lt;=</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >teste l&#X2019;inf&#XE9;riorit&#XE9; ou l&#X2019;&#XE9;galit&#XE9;</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>&gt;=</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >teste la sup&#XE9;riorit&#XE9; ou l&#X2019;&#XE9;galit&#XE9;</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>&amp;&amp;, et </code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >op&#XE9;rateur bool&#XE9;en infix&#XE9; et</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>||, ou</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >op&#XE9;rateur bool&#XE9;en infix&#XE9; ou</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>vrai</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >est le bool&#XE9;en true ou 1</td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>faux</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >est le bool&#XE9;en false ou 0</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>non, !</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >inverse logique</td><td style="text-align:left;border:solid 1px;white-space:nowrap" >&nbsp;</td><td style="text-align:left;border:solid 1px;white-space:nowrap" >&nbsp;</td></tr>
+</table>
+</div><p>
+<a id="hevea_default353"></a>
+<a id="hevea_default354"></a>
+<a id="hevea_default355"></a>
+<a id="hevea_default356"></a>
+<a id="hevea_default357"></a>
+<a id="hevea_default358"></a>
+<a id="hevea_default359"></a>
+<a id="hevea_default360"></a></p><p>Attention, <code>i</code> d&#XE9;signe &#X221A;<span style="text-decoration:overline">&#X2212;1</span> et ne peut pas &#XEA;tre
+utilis&#XE9; comme variable de boucle.
+L&#X2019;instruction <code>break;</code> permet de sortir d&#X2019;une boucle
+et <code>continue;</code> de passer imm&#XE9;diatement &#XE0; l&#X2019;it&#XE9;ration
+suivante.
+<a id="hevea_default361"></a>
+<a id="hevea_default362"></a>
+De nombreuses variantes sont reconnues en particulier en mode 
+de compatibilit&#XE9; avec Maple, Mupad et les TI89/Voyage 200.
+<a id="hevea_default363"></a>
+On peut capturer des erreurs d&#X2019;ex&#XE9;cution par
+</p><pre class="verbatim">try {bloc_erreurs_capturees} 
+catch (variable)
+    {bloc_execute_si_erreur}
+</pre><p>
+Par exemple :
+</p><pre class="verbatim">try{A:=idn(2)*idn(3)} 
+catch(erreur) 
+{print("l'erreur est "+erreur)}
+</pre>
+<h3 id="sec33" class="subsection">6.2&#XA0;&#XA0;Quelques exemples</h3>
+<p>
+Pour &#XE9;crire un programme, il est conseill&#XE9; d&#X2019;ouvrir
+un &#XE9;diteur de programme avec le menu <code>Prg-&gt;Nouveau programme</code>. Le menu
+<code>Prg</code> de l&#X2019;&#XE9;diteur permet d&#X2019;entrer facilement les structures
+de programmation. On peut ensuite sauvegarder le texte du programme
+ind&#XE9;pendamment de la session de travail pour l&#X2019;utiliser ensuite
+dans une autre session de travail.</p><p>Voici un programme qui donne le quotient et le 
+reste de la division euclidienne de 2 entiers en utilisant les fonctions 
+<code>iquo</code> qui renvoie le quotient et <code>irem</code> 
+qui renvoie le reste (c&#X2019;est la fonction <code>iquorem</code> de <span style="font-family:monospace">Xcas</span>).</p><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">idiv2</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>idiv2(a,b):={</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>idiv2(a,b):={</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> local q,r;</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  local q,r;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  if (b!=0) {</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  si b!=0 alors</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>    q:=iquo(a,b);</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>     q:=iquo(a,b);</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>    r:=irem(a,b);}</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>     r:=irem(a,b);</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  else {</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  sinon</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>    q:=0;</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>     q:=0;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>    r:=a;</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>     r:=a;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  }</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  fsi</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  return [q,r];</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  retourne [q,r];</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>}</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>}</code></td></tr>
+</table>
+</div><p>
+Saisissez cette fonction <span style="font-family:monospace">idiv2</span> dans un &#XE9;diteur de programme, testez-la
+(bouton <code>OK</code>) puis sauvegardez par exemple sous le nom
+<code>idiv2.cxx</code>. Vous pouvez utiliser cette fonction 
+dans une ligne de commande, en tapant par exemple <code>idiv2(25,15)</code>.
+Vous pourrez utiliser cette fonction dans une autre session <span style="font-family:monospace">Xcas</span>, 
+en utilisant la commande
+<code>read("idiv2.cxx")</code> ou en l&#X2019;ouvrant depuis un
+&#XE9;diteur de programme (et en le validant par OK).</p><p>Voici maintenant deux versions du calcul du PGCD de deux entiers, une
+version it&#XE9;rative, puis une version r&#XE9;cursive.
+<a id="hevea_default364"></a></p><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">pgcd_iteratif</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>pgcdi(a,b):={</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>pgcdi(a,b):={</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> local r;</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  local r;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  while (b!=0) {</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  tantque b!=0 faire</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>    r:=irem(a,b);</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>     r:=irem(a,b);</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>    a:=b;</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>     a:=b;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>    b:=r;</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>     b:=r;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  }</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  ftantque</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  return a;</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>  retourne a;</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>}:;</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>}:;</code></td></tr>
+</table>
+</div><p><a id="hevea_default365"></a></p><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">pgcd_recursif</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>pgcdr(a,b):={</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>pgcdr(a,b):={</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> if (b!=0) return a;</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> si b!=0 alors retourne a;fsi</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> return pgcdr(b,irem(a,b));</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code> retourne pgcdr(b,irem(a,b));</code></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>}:;</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>}:;</code></td></tr>
+</table>
+</div><p>Il arrive parfois qu&#X2019;un programme ne fonctionne pas du premier coup 
+comme pr&#XE9;vu (!) 
+Il est alors possible de l&#X2019;ex&#XE9;cuter en mode pas-&#XE0;-pas pour le mettre 
+au point, avec la 
+<a id="hevea_default366"></a>
+commande <code>debug</code>. Pour plus de d&#XE9;tails consulter le menu
+<code>Aide-&gt;Interface</code>. Par exemple, pour le programme <code>idiv2</code>,
+on lance la mise au point en tapant :<br>
+<code>debug(idiv2(25,15))</code><br>
+Le d&#XE9;buggueur affiche automatiquement la valeur des param&#XE8;tres <code>a,b</code> puis
+des variables locales <code>q,r</code> lors de l&#X2019;ex&#XE9;cution instruction par 
+instruction avec le bouton <code>sst</code>.
+</p>
+<h3 id="sec34" class="subsection">6.3&#XA0;&#XA0;Style de programmation</h3>
+<p>
+<a id="hevea_default367"></a>
+<span style="font-family:monospace">Xcas</span> est interpr&#XE9;t&#XE9; et non compil&#XE9;.
+Plus que le nombre de lignes du programme, c&#X2019;est le nombre
+d&#X2019;instructions r&#XE9;ellement ex&#XE9;cut&#XE9;es qui influence le temps de calcul.
+En r&#XE8;gle g&#XE9;n&#XE9;rale, il est plus rapide de cr&#XE9;er des listes
+ou des s&#XE9;quences que de programmer des boucles. 
+Voici quelques mani&#XE8;res de calculer
+5000!&#XA0;: comparez leurs temps d&#X2019;ex&#XE9;cution.
+</p><pre class="verbatim">5000!
+product([n$(n=1..5000)])
+product(cumSum([1$5000]))
+f:=1; (f:=f*n)$(n=2..5000):;f
+f:=1; for(n:=1;n&lt;=5000;n++) {f:=f*n}
+f:=1;n:=1; while(n&lt;5000) {n:=n+1; f:=f*n}
+f:=1; (f:=f*n)$(n=2..5000)
+</pre><p>
+La rapidit&#XE9; d&#X2019;ex&#XE9;cution est parfois contradictoire avec la
+clart&#XE9; du programme, et on doit accepter des compromis. Dans une
+utilisation courante, le temps de calcul n&#X2019;est pas r&#XE9;ellement un enjeu&#XA0;: 
+on utilise en g&#XE9;n&#XE9;ral les langages
+interpr&#XE9;t&#XE9;s comme <span style="font-family:monospace">Xcas</span> pour tester des algorithmes et r&#XE9;aliser des
+maquettes. Les applications en vraie grandeur sont cod&#XE9;es dans des
+langages compil&#XE9;s comme C++ (en utilisant par exemple la librarie
+<code>giac</code> pour les fonctions de calcul formel).</p>
+<hr>
+<a href="tutoriel005.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel007.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

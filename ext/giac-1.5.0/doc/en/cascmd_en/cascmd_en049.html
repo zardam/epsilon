@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>The CST variable</title>
+</head>
+<body >
+<a href="cascmd_en048.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en050.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec73" class="subsection">4.6.2  The <span style="font-family:monospace">CST</span> variable</h3>
+<p><a id="hevea_default39"></a>
+<a id="ssec:cst"></a></p><p>The menu available with the <span style="font-family:monospace">cust</span> button on the onscreen
+keyboard is defined with the <span style="font-family:monospace">CST</span> variable. It is a list
+where each list item determines a menu item; a list item is either a
+builtin command name or a list itself consisting of a string to be
+displayed in the menu and the input to be entered when the item is
+selected. </p><p>For example, to create a custom defined menu with the builtin function
+<span style="font-family:monospace">diff</span>, a user defined function <span style="font-family:monospace">foo</span>, and a menu item
+to insert the number 22/7, you can set
+</p><div class="center">
+<span style="font-family:monospace">CST := [diff,["foo",foo],["My pi approx",22/7]]
+</span></div><p>Note that if the input to be entered is a variable and the variable
+has a value when <span style="font-family:monospace">CST</span> is defined, then <span style="font-family:monospace">CST</span> will
+contain the value of the variable. For example,<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">app := 22/7<br>
+ CST := [diff,["foo",foo],["My pi approx",app]] 
+</span></div><p>
+will be equivalent to the previous definition of <span style="font-family:monospace">CST</span>.
+However, if the variable does not have a value when <span style="font-family:monospace">CST</span> is
+defined, for example,
+Input:
+</p><div class="center">
+<span style="font-family:monospace">CST := [diff,["foo",foo],["My pi approx",app]]<br>
+ app := 22/7
+</span></div><p>
+will behave as the previous values, to begin with, but in this case if
+the variable <span style="font-family:monospace">app</span> is changed, so will the the result of
+pressing the <span style="font-family:monospace">My pi approx</span> button.</p><p>Since <span style="font-family:monospace">CST</span> is a list, a function can be added to the
+<span style="font-family:monospace">cust</span> menu with the <span style="font-family:monospace">concat</span> command;<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">CST := concat(CST,evalc)
+</span></div><p>
+will add the <span style="font-family:monospace">evalc</span> command to the <span style="font-family:monospace">cust</span> menu.</p>
+<hr>
+<a href="cascmd_en048.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en050.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

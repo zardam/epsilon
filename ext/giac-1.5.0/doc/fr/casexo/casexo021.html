@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casexo.css">
+<TITLE>Les limites</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casexo020.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo022.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc319">Chapitre 21</A>  Les limites</H1><H2 CLASS="section"><A NAME="toc117"></A><A NAME="htoc320">21.1</A>  Un exercice sur limite et développement limité</H2><H3 CLASS="subsection"><A NAME="htoc321">21.1.1</A>  L’énoncé</H3><P>
+1/ Trouver le développement limité à l’ordre 4 autour de zéro de :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>(<I>x</I>)=cos(sin(<I>x</I>))</TD></TR>
+</TABLE><P>.
+2/ Calculer :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">lim</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I>−&gt;0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>f</I>(<I>x</I>)−<I>e</I><SUP>−<I>x</I><SUP>2</SUP></SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP>2</SUP></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+3/ Soit <I>g</I> définie sur ]0;+∞ par :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>g</I>(<I>x</I>)=<I>x</I><SUP>2</SUP>(<I>f</I>(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>(</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>x</I>)</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)−1)</TD></TR>
+</TABLE><P>
+Montrer que <I>g</I> admet une asymptote oblique au voisinage de +∞ et en 
+donner une équation.
+</P><H3 CLASS="subsection"><A NAME="htoc322">21.1.2</A>  La solution avec <TT>Xcas</TT></H3><P>
+1/ On tape :<BR>
+<TT>taylor(cos(sin(x)))</TT><BR>
+On obtient :<BR>
+<TT>1+(x</TT><CODE><TT>^</TT></CODE><TT>2)/-2+(5*x</TT><CODE><TT>^</TT></CODE><TT>4)/24+</TT><CODE><TT>x^</TT></CODE><TT>6*order_size(x)</TT><BR>
+donc le développement limité à l’ordre 4 autour de zéro de 
+<I>f</I>(<I>x</I>)=cos(sin(<I>x</I>)) est :<BR>
+<TT>1+(x</TT><CODE><TT>^</TT></CODE><TT>2)/-2+(5*x</TT><CODE><TT>^</TT></CODE><TT>4)/24+</TT><CODE><TT>x^</TT></CODE><TT>5*</TT><TT>є</TT><TT>(x)</TT><BR>
+2/ On tape :<BR>
+<TT>limit((cos(sin(x))-exp(-x</TT><CODE><TT>^</TT></CODE><TT>2))/x</TT><CODE><TT>^</TT></CODE><TT>2,x=0)</TT><BR>
+On obtient :<BR>
+<TT>1/2</TT><BR>
+3/ On tape :<BR>
+<TT>f(x):=cos(sin(x))</TT><BR>
+Puis, on tape :<BR>
+<TT>series(x</TT><CODE><TT>^</TT></CODE><TT>2*(f(1/sqrt(x))-1),x=+infinity,4)</TT><BR>
+On obtient :<BR>
+<TT>x/-2+5/24+(order_size(1/x))/x</TT><BR>
+Donc <I>g</I> admet une asymptote oblique au voisinage de +∞ déquation :<BR>
+<I>y</I>=−<I>x</I>/2+5/24</P><H2 CLASS="section"><A NAME="toc118"></A><A NAME="htoc323">21.2</A>  Des calculs de limite</H2><P>
+On tape :
+</P><PRE CLASS="verbatim">limit((1-cos(x))*sin(x)^2/(x^3*ln(x+1)),x,0);
+limit(sqrt(x^2+x+1)-sqrt(x^2+1),x,+infinity);
+limit((x^n-y^n)/(x-y),x,t);
+limit((x+1)/sqrt((x+1)/(x-1)),x,+infinity);
+limit((1-2*x)/(x^2+x-2),x,1);
+limit(exp(x*exp(-x)/(exp(-x)+exp(-2*x^2/(x+1))))/x,
+      x,+infinity);
+limit((exp(x*exp(-x)/(exp(-x)+exp(-2*x^2/(x+1))))-
+      exp(x))/x,x,+infinity);
+</PRE><H2 CLASS="section"><A NAME="toc119"></A><A NAME="htoc324">21.3</A>  Des calculs de développements limités</H2><P>
+On tape :
+</P><PRE CLASS="verbatim">series(cos(x)/exp(x),x,0,4);
+series(ln(cos(x)),x,0,4);
+series(atan(x*y)+1-exp(x+y),x,1/2,2);
+series(cos(x)*exp(2*x+1),x,0,4);
+series(sin(sin(x)),x,0,7);
+</PRE>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casexo020.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo022.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

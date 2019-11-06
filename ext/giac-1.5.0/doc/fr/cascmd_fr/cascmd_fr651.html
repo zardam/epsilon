@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Comatrice : adjoint_matrix</title>
+</head>
+<body >
+<a href="cascmd_fr650.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr652.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec800" class="subsection">6.57.10  Comatrice : <span style="font-family:monospace">adjoint_matrix</span></h3>
+<p><a id="hevea_default1203"></a>
+La comatrice de <span style="font-style:italic">A</span> est une matrice <span style="font-style:italic">B</span> telle que <span style="font-style:italic">A</span>* <span style="font-style:italic">B</span>=det(<span style="font-style:italic">A</span>)* <span style="font-style:italic">I</span>.<br>
+<span style="font-family:monospace">adjoint_matrix </span> a comme argument une matrice carrée <span style="font-style:italic">A</span> d’ordre <span style="font-style:italic">n</span>.<br>
+<span style="font-family:monospace">adjoint_matrix </span> renvoie une liste composée des coefficients du
+polynôme caractéristique <span style="font-style:italic">P</span> de <span style="font-style:italic">A</span>, d’une liste contenant les coefficients matriciels d’un polynôme <span style="font-style:italic">Q</span> tel que <span style="font-style:italic">Q</span>(<span style="font-style:italic">x</span>) soit la comatrice de <span style="font-style:italic">A</span>−<span style="font-style:italic">x</span>* <span style="font-style:italic">I</span> au signe près si <span style="font-style:italic">n</span> est pair! <br>
+On a :<br>
+<span style="font-style:italic">P</span>(<span style="font-style:italic">x</span>)=(−1)<sup><span style="font-style:italic">n</span></sup>* det(<span style="font-style:italic">A</span>−<span style="font-style:italic">x</span>* <span style="font-style:italic">I</span>) et <span style="font-style:italic">P</span>(<span style="font-style:italic">A</span>)−<span style="font-style:italic">P</span>(<span style="font-style:italic">x</span>)* <span style="font-style:italic">I</span>=(<span style="font-style:italic">A</span>−<span style="font-style:italic">x</span>* <span style="font-style:italic">I</span>)* <span style="font-style:italic">Q</span>(<span style="font-style:italic">x</span>)<br>
+En effet le polynôme à coefficients matriciels <span style="font-style:italic">P</span>(<span style="font-style:italic">A</span>)−<span style="font-style:italic">P</span>(<span style="font-style:italic">x</span>)* <span style="font-style:italic">I</span>  est divisible
+par <span style="font-style:italic">A</span>−<span style="font-style:italic">x</span>* <span style="font-style:italic">I</span> car il s’annule pour <span style="font-style:italic">x</span>=<span style="font-style:italic">A</span> :<br>
+<span style="font-style:italic">P</span>(<span style="font-style:italic">A</span>)=0, on a donc  <span style="font-style:italic">P</span>(<span style="font-style:italic">A</span>)−<span style="font-style:italic">P</span>(<span style="font-style:italic">x</span>)* <span style="font-style:italic">I</span> = −<span style="font-style:italic">P</span>(<span style="font-style:italic">x</span>)* <span style="font-style:italic">I</span> = (<span style="font-style:italic">A</span>−<span style="font-style:italic">x</span>* <span style="font-style:italic">I</span>)* <span style="font-style:italic">Q</span>(<span style="font-style:italic">x</span>).<br>
+<span style="font-style:italic">Q</span>(<span style="font-style:italic">x</span>) est donc la comatrice de <span style="font-style:italic">A</span>−<span style="font-style:italic">x</span>* <span style="font-style:italic">I</span> au signe près si <span style="font-style:italic">n</span> est pair, 
+puisque :<br>
+ (<span style="font-style:italic">A</span>−<span style="font-style:italic">x</span>* <span style="font-style:italic">I</span>)* <span style="font-style:italic">Q</span>(<span style="font-style:italic">x</span>)= −<span style="font-style:italic">P</span>(<span style="font-style:italic">x</span>)* <span style="font-style:italic">I</span>=(−1)<sup><span style="font-style:italic">n</span>+1</sup>* det(<span style="font-style:italic">A</span>−<span style="font-style:italic">x</span>* <span style="font-style:italic">I</span>).<br>
+On a alors <span style="font-style:italic">Q</span>(<span style="font-style:italic">x</span>) = <span style="font-style:italic">I</span>* <span style="font-style:italic">x</span><sup><span style="font-style:italic">n</span>−1</sup>+...+<span style="font-style:italic">B</span><sub>0</sub>  où <span style="font-style:italic">B</span><sub>0</sub>= est la comatrice de <span style="font-style:italic">A</span> (au signe près si <span style="font-style:italic">n</span> est pair!) puisque <span style="font-style:italic">Q</span>(0)=<span style="font-style:italic">B</span><sub>0</sub> et <span style="font-style:italic">A</span>* <span style="font-style:italic">Q</span>(0)=(−1)<sup><span style="font-style:italic">n</span>+1</sup>det(<span style="font-style:italic">A</span>).<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">adjoint_matrix([[4,1,-2],[1,2,-1],[2,1,0]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1,-6,12,-8],[[[1,0,0],[0,1,0],[0,0,1]],[[-2,1,-2], [1,-4,-1],[2,1,-6]],[[1,-2,3],[-2,4,2],[-3,-2,7]]]]</span></div><p>
+Donc le polynôme caractéristique est :<br>
+<span style="font-style:italic">x</span><sup>3</sup>−6*<span style="font-style:italic">x</span><sup>2</sup>+12*<span style="font-style:italic">x</span>−8<br>
+Le déterminant de <span style="font-style:italic">A</span> est égal à −<span style="font-style:italic">P</span>(0) donc à 8<br>
+La comatrice de <span style="font-style:italic">A</span> est égale à <span style="font-style:italic">Q</span>(0) donc à :<br>
+[[1,−2,3],[−2,4,2],[−3,−2,7]]<br>
+L’inverse de <span style="font-style:italic">A</span> est donc :<br>
+ 1/8*[[1,−2,3],[−2,4,2],[−3,−2,7]]<br>
+La comatrice de <span style="font-style:italic">A</span>−<span style="font-style:italic">x</span> * <span style="font-style:italic">I</span> est donc :<br>
+[[<span style="font-style:italic">x</span><sup>2</sup>−2<span style="font-style:italic">x</span>+1,<span style="font-style:italic">x</span>−2,−2<span style="font-style:italic">x</span>+3],[<span style="font-style:italic">x</span>−2,<span style="font-style:italic">x</span><sup>2</sup>−4<span style="font-style:italic">x</span>+4,−<span style="font-style:italic">x</span>+2],[2<span style="font-style:italic">x</span>−3,<span style="font-style:italic">x</span>−2,<span style="font-style:italic">x</span><sup>2</sup>−6<span style="font-style:italic">x</span>+7]]<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">adjoint_matrix([[4,1],[1,2]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1,-6,7],[[[1,0],[0,1]],[[-2,1],[1,-4]]]]</span></div><p>
+Donc le polynôme caractéristique est :<br>
+ <span style="font-style:italic">x</span><sup>2</sup>−6*<span style="font-style:italic">x</span>+7<br>
+Le déterminant de <span style="font-style:italic">A</span> est égal à +<span style="font-style:italic">P</span>(0) donc à 7<br>
+La comatrice de <span style="font-style:italic">A</span> est égale à <span style="font-style:italic">Q</span>(0) donc à :<br>
+ −[[−2,1],[1,−4]].<br>
+L’inverse de <span style="font-style:italic">A</span> est donc :<br>
+ −1/7*[[−2,1],[1,−4]].<br>
+La comatrice de <span style="font-style:italic">A</span>−<span style="font-style:italic">x</span>* <span style="font-style:italic">I</span> est donc :<br>
+ −[[<span style="font-style:italic">x</span>−2,1],[1,<span style="font-style:italic">x</span>−4]].</p>
+<hr>
+<a href="cascmd_fr650.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr652.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

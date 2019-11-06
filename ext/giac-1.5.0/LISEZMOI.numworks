@@ -1,0 +1,52 @@
+J'ai partiellement reussi a integrer giac dans l'application de calculs 
+de Numworks, sur le simulateur uniquement bien sur. 
+Sur la calculatrice physique, il n'y a pas assez de memoire, mais il semble possible d'en ajouter:
+Voir https://tiplanet.org/forum/viewtopic.php?f=97&t=20557
+
+Voici comment:
+1/ Installer Giac/Xcas sur Mac, ca doit aussi marcher sous Linux (je n'ai pas teste). Pour la calculatrice physique, installer un compilateur ARM,
+compiler tommath https://github.com/zardam/libtommath-0.39 et copier
+config.h.numworks dans config.h, puis compiler avec make -f Makefile.numworks.
+
+2/ Dans le Makefile principal ajouter
+    LDFLAGS = -lgiac
+
+Sur Mac, il est peut-etre necessaire de mettre
+    LDFLAGS = -L/Applications/usr/lib -lgiac
+
+
+3/ Modifier apps/calculation/calculation.cpp, remplacer
+
+=====
+    void Calculation::setContent(const char * c, Context * context) {
+    ...
+    }
+
+=====
+par
+
+=====
+    extern "C" const char * caseval(const char *);
+
+    void Calculation::setContent(const char * c, Context * context) {
+      reset();
+    #if 0
+      strlcpy(m_inputText, c, sizeof(m_inputText));
+    #else
+      static const char * bidon=caseval("init geogebra");
+      const char * ans=caseval(c);
+      strlcpy(m_inputText,ans,sizeof(m_inputText));
+    #endif
+      Evaluation<double> * evaluation = input()->evaluate<double>(*context);
+      evaluation->writeTextInBuffer(m_outputText, sizeof(m_outputText));
+      delete evaluation;
+    }
+=====
+
+
+Ensuite recompiler, par exemple avec gcc-7
+    make PLATFORM=simulator CC=gcc-7 CXX=g++-7 LD=g++-7
+
+
+
+Lancer ./app.elf, essayez par exemple int(1/x,1,2), observez que l'input est remplace le resultat exact du calcul fait par giac (en mode geogebra). J'aurais bien voulu remplacer l'output par le resultat mais ca ne marche pas parce qu'il y a surement un post-traitement qui veut un resultat approche. Mais l'objectif est atteint de mon cote, ca marche et c'est tres facile a mettre en oeuvre.

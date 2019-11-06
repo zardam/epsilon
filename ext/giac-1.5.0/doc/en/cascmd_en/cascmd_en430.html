@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Series expansion : series</title>
+</head>
+<body >
+<a href="cascmd_en429.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en431.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec515" class="subsection">5.38.3  Series expansion : <span style="font-family:monospace">series</span></h3>
+<p><a id="hevea_default676"></a><a id="hevea_default677"></a> 
+<span style="font-family:monospace">series</span> takes from one to four arguments :
+</p><ul class="itemize"><li class="li-itemize">
+an expression depending of a variable (by default <span style="font-family:monospace">x</span>),
+</li><li class="li-itemize">an equality variable=value (e.g. <span style="font-style:italic">x</span>=<span style="font-style:italic">a</span>) where to compute
+the series expansion, by default <span style="font-family:monospace">x=0</span>, 
+</li><li class="li-itemize">an integer <span style="font-style:italic">n</span>, the order of the series expansion,
+by default <span style="font-family:monospace">5</span>
+</li><li class="li-itemize">a direction <span style="font-family:monospace">-1, 1</span> (for unidirectional series expansion)
+or <span style="font-family:monospace">0</span> (for bidirectional series expansion) (by default <span style="font-family:monospace">0</span>).
+</li></ul><p>
+Note that the syntax <span style="font-family:monospace">...,x,</span><span style="font-style:italic">a</span><span style="font-family:monospace">,</span><span style="font-style:italic">n</span><span style="font-family:monospace">,...</span> 
+(instead of <span style="font-family:monospace">...,x=</span><span style="font-style:italic">a</span><span style="font-family:monospace">,</span><span style="font-style:italic">n</span><span style="font-family:monospace">,...</span>) is also accepted.<br>
+<span style="font-family:monospace">series</span> returns a polynomial in <span style="font-family:monospace">x-a</span>, plus a remainder 
+of the form:
+</p><div class="center">
+<span style="font-family:monospace">(x-a)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">n*order_size(x-a)</span>
+</div><p>
+where <span style="font-family:monospace">order_size</span> is a function such that,
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">∀ <span style="font-style:italic">r</span>&gt;0,    </td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:center">lim</td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span>→ 0</td></tr>
+</table></td><td class="dcell"> <span style="font-style:italic">x</span><sup><span style="font-style:italic">r</span></sup> order_size(<span style="font-style:italic">x</span>) = 0 </td></tr>
+</table><p>
+The order returned by <span style="font-family:monospace">series</span> may be smaller than <span style="font-style:italic">n</span> if
+cancellations between numerator and denominator occur.</p><p>Examples :
+</p><ul class="itemize"><li class="li-itemize">
+series expansion in the vicinity of <span style="font-family:monospace">x=0</span><br>
+ Find an series expansion of 
+<span style="font-style:italic">x</span><sup>3</sup>+sin(<span style="font-style:italic">x</span>)<sup>3</sup>/<span style="font-style:italic">x</span>−sin(<span style="font-style:italic">x</span>) 
+in the vicinity of <span style="font-family:monospace">x=0</span>.<br>
+Input :
+<div class="center"><span style="font-family:monospace">series(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+sin(x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3/(x-sin(x)))</span></div>
+Output is only a 2nd-order series expansion :
+<div class="center"><span style="font-family:monospace">6+-27/10*x</span><code><span style="font-family:monospace">^2</span></code><span style="font-family:monospace">+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*order_size(x)</span></div>
+We have lost 3 orders because the valuation of the numerator and
+denominator is 3. To get a 4-th order expansion, we must therefore 
+take <span style="font-style:italic">n</span>=7.<br>
+Input :
+<div class="center"><span style="font-family:monospace">series(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+sin(x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3/(x-sin(x)),x=0,7)</span></div>
+or :
+<div class="center"><span style="font-family:monospace">series(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+sin(x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3/(x-sin(x)),x,0,7)</span></div>
+Output is a 4th-order series expansion :
+<div class="center"><span style="font-family:monospace">6+-27/10*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+711/1400*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4+
+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">5*order_size(x)</span></div>
+</li><li class="li-itemize">series expansion in the vicinity of <span style="font-family:monospace">x=a</span><br>
+Find a series 4th-order expansion of cos(2<span style="font-style:italic">x</span>)<sup>2</sup> in the vicinity of
+<span style="font-style:italic">x</span>=π/6. <br>
+Input:
+<div class="center"><span style="font-family:monospace">series(cos(2*x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x=pi/6, 4)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">1/4+(-(4*sqrt(3)))/4*(x-pi/6)+(4*3-4)/4*(x-pi/6)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+ 32*sqrt(3)/3/4*(x-pi/6)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+(-16*3+16)/3/4*(x-pi/6)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4+ (x-pi/6)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">5*order_size(x-pi/6)</span></div> 
+</li><li class="li-itemize">series expansion in the vicinity of <span style="font-family:monospace">x=+</span>∞ or <span style="font-family:monospace">x=-</span>∞
+<ol class="enumerate" type=1><li class="li-enumerate">
+Find a 5th-order series expansion of arctan(<span style="font-style:italic">x</span>) in the vicinity of
+<span style="font-family:monospace">x=+</span>∞.<br>
+ Input :
+<div class="center"><span style="font-family:monospace">series(atan(x),x=+infinity,5)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">pi/2-1/x+1/3*(1/x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+1/-5*(1/x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">5+
+(1/x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">6*order_size(1/x)</span></div>
+Note that the expansion variable and the argument of the 
+<span style="font-family:monospace">order_size</span> function is
+ <span style="font-style:italic">h</span>=1/<span style="font-style:italic">x</span> →<sub><span style="font-style:italic">x</span>→ + ∞</sub> 0 .
+</li><li class="li-enumerate">Find a series 2nd-order expansion of (2<span style="font-style:italic">x</span>−1)<span style="font-style:italic">e</span><sup>1/<span style="font-style:italic">x</span>−1</sup> in the vicinity of
+<span style="font-family:monospace">x=+</span>∞. <br>
+Input :
+<div class="center"><span style="font-family:monospace">series((2*x-1)*exp(1/(x-1)),x=+infinity,3)</span></div>
+Output is only a 1st-order series expansion :
+<div class="center"><span style="font-family:monospace">2*x+1+2/x+(1/x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*order_size(1/x)</span></div>
+To get a 2nd-order series expansion in 1/<span style="font-style:italic">x</span>, input:
+<div class="center"><span style="font-family:monospace">series((2*x-1)*exp(1/(x-1)),x=+infinity,4)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">2*x+1+2/x+17/6*(1/x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+(1/x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*order_size(1/x)</span></div>
+</li><li class="li-enumerate">Find a 2nd-order series expansion of (2<span style="font-style:italic">x</span>−1)<span style="font-style:italic">e</span><sup>1/<span style="font-style:italic">x</span>−1</sup> in the vicinity 
+of <span style="font-family:monospace">x=-</span>∞.<br>
+Input :
+<div class="center"><span style="font-family:monospace">series((2*x-1)*exp(1/(x-1)),x=-infinity,4)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">-2*(-x)+1-2*(-1/x)+17/6*(-1/x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+<br>
+(-1/x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*order_size(-1/x)</span></div>
+</li></ol>
+</li><li class="li-itemize">unidirectional series expansion.<br>
+The fourth parameter indicates the direction :
+<ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">1</span> to do an series expansion in the vicinity of <span style="font-style:italic">x</span>=<span style="font-style:italic">a</span> with 
+  <span style="font-style:italic">x</span>&gt;<span style="font-style:italic">a</span>,
+</li><li class="li-itemize"><span style="font-family:monospace">-1</span> to do an series expansion in the vicinity of <span style="font-style:italic">x</span>=<span style="font-style:italic">a</span> with 
+  <span style="font-style:italic">x</span>&lt;<span style="font-style:italic">a</span>,
+</li><li class="li-itemize"><span style="font-family:monospace">0</span> to do an series expansion in the vicinity of <span style="font-style:italic">x</span>=<span style="font-style:italic">a</span> with 
+  <span style="font-style:italic">x</span> ≠ <span style="font-style:italic">a</span>.
+</li></ul>
+For example, 
+find a 2nd-order series expansion of  (1+<span style="font-style:italic">x</span>)<sup>1/<span style="font-style:italic">x</span></sup>/<span style="font-style:italic">x</span><sup>3</sup>  in 
+the vicinity of <span style="font-style:italic">x</span>=0<sup>+</sup>.<br>
+Input :
+<div class="center"><span style="font-family:monospace">series((1+x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(1/x)/x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,x=0,2,1)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">exp(1)/x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+(-(exp(1)))/2/x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1/x*order_size(x)</span></div>
+</li></ul>
+<hr>
+<a href="cascmd_en429.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en431.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

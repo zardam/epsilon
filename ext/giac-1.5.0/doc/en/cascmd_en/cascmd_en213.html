@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Top and leaves of an expression : sommet feuille op</title>
+</head>
+<body >
+<a href="cascmd_en212.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en214.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec256" class="subsection">5.16.3  Top and leaves of an expression : <span style="font-family:monospace">sommet feuille op</span></h3>
+<p><a id="hevea_default331"></a><a id="hevea_default332"></a><a id="hevea_default333"></a><a id="sec:op"></a>
+An operator is an infixed function : for example ’+’ is an 
+operator and ’sin’ is a function.<br>
+An expression can be represented by a tree. The top of the tree is 
+either an operator, or a function and the leaves of the tree are the 
+arguments of the operator or of the function 
+(see also <a href="cascmd_en475.html#sec%3Amakesuiteop">5.43.15</a>).<br>
+The instruction <span style="font-family:monospace">sommet</span> (resp. <span style="font-family:monospace">feuille</span> (or <span style="font-family:monospace">op</span>))
+returns the top (resp. the list of the leaves) of an expression.<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">sommet(sin(x+2))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">’sin’</span></div><p> 
+Input :
+</p><div class="center"><span style="font-family:monospace">sommet(x+2*y)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">’+’</span></div><p> 
+Input :
+</p><div class="center"><span style="font-family:monospace">feuille(sin(x+2))</span></div><p>
+or :
+</p><div class="center"><span style="font-family:monospace">op(sin(x+2))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">x+2</span></div><p> 
+Input :
+</p><div class="center"><span style="font-family:monospace">feuille(x+2*y)</span></div><p>
+or :
+</p><div class="center"><span style="font-family:monospace">op(x+2*y)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">(x,2*y) </span></div><p> 
+<span style="font-weight:bold">Remark</span><br>
+Suppose that a function is defined by a program, for example 
+let us define the <span style="font-family:monospace">pgcd</span> function :
+</p><div class="center"><span style="font-family:monospace">pgcd(a,b):={local r; while (b!=0) {r:=irem(a,b);a:=b;b:=r;} return a;}</span></div><p>
+Then input :
+</p><div class="center"><span style="font-family:monospace">sommet(pgcd)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">’program’</span></div><p> 
+Then input :
+</p><div class="center"><span style="font-family:monospace">feuille(pgcd)[0]</span></div><p> 
+Output :
+</p><div class="center"><span style="font-family:monospace">(a,b)</span></div><p>
+Then input :
+</p><div class="center"><span style="font-family:monospace">feuille(pgcd)[1]</span></div><p> 
+Output :
+</p><div class="center"><span style="font-family:monospace">(0,0) or (15,25) if the last input was pgcd(15,25)</span></div><p>
+Then input :
+</p><div class="center"><span style="font-family:monospace">feuille(pgcd)[2]</span></div><p> 
+Output :
+</p><div class="center"><span style="font-family:monospace">The body of the program : {local r;....return(a);}</span></div>
+<hr>
+<a href="cascmd_en212.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en214.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

@@ -1,0 +1,1628 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Algorithmes d’algébre</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casrouge013.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge015.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc379">Chapitre 14</A>  Algorithmes d’algébre</H1><H2 CLASS="section"><A NAME="toc103"></A><A NAME="htoc380">14.1</A>  Méthode pour résoudre des systèmes linéaires</H2><P>
+Dans <TT>Xcas</TT>, il existe déjà les fonctions qui correspondent
+aux algorithmes qui suivent, ce sont :
+<TT>ref, rref, ker, pivot</TT> 
+</P><H3 CLASS="subsection"><A NAME="htoc381">14.1.1</A>  Le pivot de Gauss quand <I>A</I> est de rang maximum</H3><P>
+Étant donné un système d’équations noté <I>AX</I>=<I>b</I>, on cherche à le 
+remplacer par un système équivalent et triangulaire inférieur.<BR>
+À un système d’équations <I>AX</I>=<I>b</I>, on associe la matrice <I>M</I> formée 
+par <I>A</I> que l’on borde avec <I>b</I> comme dernière colonne.<BR>
+La méthode de Gauss (resp Gauss-Jordan) consiste à multiplier <I>A</I> et <I>b</I> 
+(donc <I>M</I>) par des matrices inversibles, afin de rendre <I>A</I> triangulaire 
+inférieure (resp diagonale). Cette transformation, qui se fera au coup 
+par coup en traitant toutes les colonnes de <I>A</I> (donc toutes les colonnes de 
+<I>M</I>, sauf la dernière), consiste par des combinaisons de lignes de <I>M</I> 
+à mettre des zéros sous (resp de part et d’autre) la diagonale de <I>A</I>.<BR>
+La fonction <TT>gauss_redi</TT> ci-dessous, transforme <I>M</I> par la méthode de
+Gauss, la variable <TT>pivo</TT> (car <TT>pivot</TT> est une fonction de <TT>Xcas</TT>)
+sert à mettre le pivot choisi.<BR>
+ Pour <I>j</I>=0..<I>p</I>−2 (<I>p</I>−2 car on ne traite pas la dernière colonne de <I>M</I>), 
+dans chaque colonne <I>j</I>, on cherche ce qui va faire office de pivot à partir de la diagonale : dans le programme ci-dessous on choisit le premier 
+élément non nul, puis par un échange de lignes, on met le pivot sur la 
+diagonale (<I>pivo</I>=<I>M</I>[<I>j</I>,<I>j</I>]). Il ne reste plus qu’à former, pour chaque ligne 
+<I>k</I> (<I>k</I>&gt;<I>j</I>) et pour <I>a</I>=<I>M</I>[<I>k</I>,<I>j</I>], la combinaison :<BR>
+ <I>pivo</I>*<I>ligne</I><SUB><I>k</I></SUB>−<I>a</I>*<I>ligne</I><SUB><I>j</I></SUB> (et ainsi <I>M</I>[<I>k</I>,<I>j</I>] devient nul).<BR>
+On écrit pour réaliser cette combinaison :<BR>
+<TT>a:=M[k,j];<BR>
+ for (l:=j;l&lt;nc;l++){<BR>
+ M[k,l]:=M[k,l]*pivo-M[j,l]*a;}</TT><BR>
+On remarquera qu’il suffit que <I>l</I> parte de <I>j</I> car :<BR>
+pour tout <I>l</I>&lt;<I>j</I>, on a déjà obtenu, par le traitement des colonnes 
+<I>l</I>=0..<I>j</I>−1, <I>M</I>[<I>k</I>,<I>l</I>]=0.<BR>
+Le programme ci-dessous ne sera utile que si on trouve un pivot pour 
+chaque colonne : c’est à dire si la matrice <I>A</I> est de rang maximum. 
+En effet, dans ce programme, si on ne trouve pas de pivot (i. e. si tous les 
+éléments d’une colonne sont nuls sur et sous la diagonale), on continue 
+comme si de rien était...
+</P><PRE CLASS="verbatim">gauss_redi(M):={
+local pivo,j,k,nl,nc,temp,l,n,a;
+nl:=nrows(M);
+nc:=ncols(M);
+n:=min(nl,nc-1);
+//on met des 0 sous la diagonale du carre n*n
+for (j:=0;j&lt;n;j++) {
+  //choix du pivot mis ds pivo
+    k:=j;
+    while (M[k,j]==0 and k&lt;nl-1) {k:=k+1;}
+    //on ne fait la suite que si on a pivo!=0
+    if (M[k,j]!=0) {
+      pivo:=M[k,j];
+      //echange de la ligne j et de la ligne k
+      for (l:=j;l&lt;nc;l++){
+       temp:=M[j,l];
+       M[j,l] := M[k,l];
+        M[k,l]:=temp;     
+      }
+     //fin du choix du pivot qui est M[j,j]
+      for (k:=j+1;k&lt;nl;k++) {
+        a:=M[k,j];
+        for (l:=j;l&lt;nc;l++){ 
+          M[k,l]:=M[k,l]*pivo-M[j,l]*a; 
+         } 
+       }
+    }  
+}
+return M;
+}
+</PRE><P>On tape :<BR>
+<TT>M0:= [[1,2,3,6],[2,3,1,6],[3,2,1,6]]</TT><BR>
+<TT>gauss_redi(M0)</TT><BR>
+On obtient :<BR>
+<TT>[[1,2,3,6],[0,-1,-5,-6],[0,0,-12,-12]]</TT><BR>
+On tape :<BR>
+<TT>M1:= [[1,2,3,4],[0,0,1,2],[0,0,5,1]]</TT><BR>
+<TT>gauss_redi(M1)</TT><BR>
+On obtient :<BR>
+<TT>[[1,2,3,4],[0,0,1,2],[0,0,5,1]]</TT><BR>
+On tape :<BR>
+<TT>M2:= [[1,2,3,4],[0,0,1,2],[0,0,5,1],[0,0,3,2],[0,0,-1,1]]</TT><BR>
+<TT>gauss_redi(M2)</TT>
+On obtient :<BR>
+<TT>[[1,2,3,4],[0,0,1,2],[0,0,5,1],[0,0,0,7],[0,0,0,6]]</TT><BR>
+c’est à dire :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TT><I>gauss</I>_<I>redi</I></TT></TD><TD CLASS="dcell"><TT>⎛<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎝</TT></TD><TD CLASS="dcell"><TT>⎡<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎣</TT></TD><TD CLASS="dcell"><TT>
+</TT></TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><TT>1</TT></TD><TD ALIGN=right NOWRAP><TT>2</TT></TD><TD ALIGN=right NOWRAP><TT>3</TT></TD><TD ALIGN=right NOWRAP><TT>4</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>1</TT></TD><TD ALIGN=right NOWRAP><TT>2</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>5</TT></TD><TD ALIGN=right NOWRAP><TT>1</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>3</TT></TD><TD ALIGN=right NOWRAP><TT>2</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>-1</TT></TD><TD ALIGN=right NOWRAP><TT>1</TT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TT>
+</TT></TD><TD CLASS="dcell"><TT>⎤<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎦</TT></TD><TD CLASS="dcell"><TT>⎞<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎠</TT></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell">⎡<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎣</TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>2</TD><TD ALIGN=right NOWRAP>3</TD><TD ALIGN=right NOWRAP>4</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>2</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>5</TD><TD ALIGN=right NOWRAP>1</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>7</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎤<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎦</TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc382">14.1.2</A>  Le pivot de Gauss pour <I>A</I> quelconque</H3><P>
+On cherche un programme valable lorsque <I>A</I> est quelconque :
+on veut, dans ce cas, mettre des zéros sous la "fausse diagonale" de <I>A</I>
+(ce qu’on appelle "fausse diagonale" c’est la diagonale obtenue en ne tenant 
+pas compte des colonnes pour lesquelles la recherche du pivot a été 
+infructueuse : un peu comme si ces colonnes étaient rejetées à la fin 
+de la matrice).<BR>
+Donc, dans ce programme, si on ne trouve pas de pivot pour la colonne d’indice
+<I>jc</I> (i. e. si tous les éléments de la colonne <I>jc</I> sont nuls sur et sous 
+la diagonale), on continue en cherchant, pour la colonne suivante (celle 
+d’indice <I>jc</I>+1), un pivot à partir de l’élément situé à la ligne 
+d’indice <I>jc</I> (et non comme précédemment à partir de <I>jc</I>+1),
+pour mettre sur la colonne <I>jc</I>+1, des zéros sur les lignes <I>jc</I>+1,...,<I>nl</I>−1.
+On est donc obligé, d’avoir 2 indices <I>jl</I> et <I>jc</I> pour repérer les 
+indices de la "fausse diagonale".
+</P><PRE CLASS="verbatim">gauss_red(M):={
+local pivo,jc,jl,k,nl,nc,temp,l,a;
+nl:=nrows(M);
+nc:=ncols(M);
+//on met des 0 sous la fausse diagonale d'indice jl,jc 
+jc:=0;
+jl:=0;
+//on traite chaque colonne (indice jc)
+while (jc&lt;nc-1 and jl&lt;nl-1) {
+  //choix du pivot que l'on veut mettre en M[jl,jc]
+    k:=jl;
+    while (M[k,jc]==0 and k&lt;nl-1) {k:=k+1;}
+    //on ne fait la suite que si M[k,jc](=pivo)!=0
+    if (M[k,jc]!=0) {
+      pivo:=M[k,jc];
+      //echange de la ligne jl et de la ligne k
+      for (l:=jc;l&lt;nc;l++){
+       temp:=M[jl,l];
+       M[jl,l] := M[k,l];
+        M[k,l]:=temp;     
+      }
+     //fin du choix du pivot qui est M[jl,jc]
+      //on met des 0 sous la fausse diagonale de 
+      //la colonne jc
+      for (k:=jl+1;k&lt;nl;k++) {
+        a:=M[k,jc];
+        for (l:=jc;l&lt;nc;l++){ 
+          M[k,l]:=M[k,l]*pivo-M[jl,l]*a; 
+         } 
+       }
+      //on a 1 pivot,l'indice-ligne de 
+      //la fausse diag augmente de 1
+      jl:=jl+1;
+    }//fin du if (M[k,jc]!=0)
+    //colonne suivante,l'indice-colonne de
+    //la fausse diag augmente de 1
+    jc:=jc+1;  
+}//fin du while
+return M;
+}
+</PRE><P>On tape :<BR>
+<TT>M0:= [[1,2,3,6],[2,3,1,6],[3,2,1,6]]</TT><BR>
+<TT>gauss_red(M0)</TT><BR>
+On obtient :<BR>
+<TT>[[1,2,3,6],[0,-1,-5,-6],[0,0,-12,-12]]</TT><BR>
+On tape :<BR>
+<TT>M1:= [[1,2,3,4],[0,0,1,2],[0,0,5,1]]</TT><BR>
+<TT>gauss_red(M1)</TT><BR>
+On obtient :<BR>
+<TT>[[1,2,3,4],[0,0,1,2],[0,0,0,-9]]</TT><BR>
+On tape :<BR>
+<TT>M2:= [[1,2,3,4],[0,0,1,2],[0,0,5,1],[0,0,3,2],[0,0,-1,1]]</TT><BR>
+<TT>gauss_red(M2)</TT><BR>
+On obtient :<BR>
+<TT>[[1,2,3,4],[0,0,1,2],[0,0,0,-9],[0,0,0,-4],[0,0,0,3]]</TT></P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TT><I>gauss</I>_<I>red</I></TT></TD><TD CLASS="dcell"><TT>⎛<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎝</TT></TD><TD CLASS="dcell"><TT>⎡<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎣</TT></TD><TD CLASS="dcell"><TT>
+</TT></TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><TT>1</TT></TD><TD ALIGN=right NOWRAP><TT>2</TT></TD><TD ALIGN=right NOWRAP><TT>3</TT></TD><TD ALIGN=right NOWRAP><TT>4</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>1</TT></TD><TD ALIGN=right NOWRAP><TT>2</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>5</TT></TD><TD ALIGN=right NOWRAP><TT>1</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>3</TT></TD><TD ALIGN=right NOWRAP><TT>2</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>-1</TT></TD><TD ALIGN=right NOWRAP><TT>1</TT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TT>
+</TT></TD><TD CLASS="dcell"><TT>⎤<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎦</TT></TD><TD CLASS="dcell"><TT>⎞<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎠</TT></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell">⎡<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎣</TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>2</TD><TD ALIGN=right NOWRAP>3</TD><TD ALIGN=right NOWRAP>4</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>2</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>−9</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>−4</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎤<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎦</TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc383">14.1.3</A>  La méthode de Gauss-Jordan</H3><P>
+Étant donnée un système d’équations, on cherche à le remplacer 
+par un système diagonale équivalent.
+À un système d’équations <I>AX</I>=<I>b</I>, on associe la matrice <I>M</I> formée 
+de <I>A</I>, bordée par <I>b</I> comme dernière colonne.<BR>
+La fonction <TT>gaussjordan_redi</TT> transforme <I>M</I> par la méthode de 
+Gauss-Jordan.
+On cherche dans chaque colonne <I>j</I>,(<I>j</I>=0..<I>nc</I>−2) à partir de la diagonale, 
+ce qui va faire office de pivot : dans le programme ci-dessous on choisit le 
+premier élément non nul, puis par un échange de lignes, on met le pivot 
+sur la diagonale (<I>pivo</I>=<I>M</I>[<I>j</I>,<I>j</I>]). Il ne reste plus qu’à former, pour chaque 
+ligne <I>k</I> (<I>k</I>≠ <I>j</I>) et pour <I>a</I>=<I>M</I>[<I>k</I>,<I>j</I>], la combinaison :<BR>
+<I>pivo</I>*<I>ligne</I><SUB><I>k</I></SUB>−<I>a</I>*<I>ligne</I><SUB><I>j</I></SUB> (et ainsi <I>M</I>[<I>k</I>,<I>j</I>] devient nul).<BR>
+On écrit pour réaliser cette combinaison :<BR>
+lorsque <I>k</I>&lt;<I>j</I><BR>
+<TT>a:=M[k,j];<BR>
+ for (l:=0;l&lt;j;l++){<BR>
+ M[k,l]:=M[k,l]*pivo-M[j,l]*a;}</TT><BR>
+et lorsque <I>k</I>&gt;<I>j</I><BR>
+<TT>a:=M[k,j];<BR>
+ for (l:=j;l&lt;nc;l++){<BR>
+ M[k,l]:=M[k,l]*pivo-M[j,l]*a;}</TT><BR>
+On remarquera que <I>l</I> part soit de 0 soit de <I>j</I> car pour <I>l</I>&lt;<I>j</I>, on a
+<I>M</I>[<I>k</I>,<I>l</I>]=0 seulement si <I>k</I>&gt;<I>j</I>.<BR>
+Si on ne trouve pas de pivot, on continue comme si de rien n’était : on
+obtiendra donc des zéros au dessus de la diagonale que si on 
+a trouvé un pivot pour chaque colonne.
+</P><PRE CLASS="verbatim">gaussjordan_redi(M):={
+local pivo,j,k,nl,nc,temp,l,n,a;
+nl:=nrows(M);
+nc:=ncols(M);
+n:=min(nl,nc-1);
+//on met 0 sous et au dessus de la diag du carre n*n
+for (j:=0;j&lt;n;j++) {
+  //choix du pivot
+    k:=j;
+    while (M[k,j]==0 and k&lt;nl-1) {k:=k+1;}
+    //on ne fait la suite que si on a pivo!=0
+    if (M[k,j]!=0) {
+      pivo:=M[k,j];
+      //echange de la ligne j et de la ligne k
+      for (l:=j;l&lt;nc;l++){
+       temp:=M[j,l];
+       M[j,l] := M[k,l];
+        M[k,l]:=temp;     
+      }
+     //fin du choix du pivot qui est M[j,j]
+     // on met des zeros au dessus de la diag
+     for (k:=0;k&lt;j;k++) {
+        a:=M[k,j];
+        for (l:=0;l&lt;nc;l++){ 
+          M[k,l]:=M[k,l]*pivo-M[j,l]*a; 
+         } 
+      }
+      // on met des zeros au dessous de la diag
+      for (k:=j+1;k&lt;nl;k++) {
+        a:=M[k,j];
+        for (l:=j;l&lt;nc;l++){ 
+          M[k,l]:=M[k,l]*pivo-M[j,l]*a; 
+         } 
+       }
+    }  
+}
+return M;
+}
+</PRE><P>De la même façon que pour la mèthode de Gauss, on va mettre des 
+zéros sous la "fausse diagonale" et au dessus de cette "fausse diagonale"
+(on ne pourra pas bien sûr, mettre des zéros au dessus de cette "fausse 
+diagonale", pour les colonnes sans pivot!!)
+</P><PRE CLASS="verbatim">gaussjordan_red(M):={
+local pivo,jc,jl,k,nl,nc,temp,l,a;
+nl:=nrows(M);
+nc:=ncols(M);
+//on met des 0 sous la fausse diagonale 
+jc:=0;
+jl:=0;
+//on doit traiter toutes les colonnes sauf la derniere 
+//on doit traiter toutes les lignes
+while (jc&lt;nc-1 and jl&lt;nl) {
+  //choix du pivot que l'on veut mettre en M[jl,jc]
+    k:=jl;
+    while (M[k,jc]==0 and k&lt;nl-1) {k:=k+1;}
+    //on ne fait la suite que si on a pivo!=0
+    if (M[k,jc]!=0) {
+      pivo:=M[k,jc];
+      //echange de la ligne jl et de la ligne k
+      for (l:=jc;l&lt;nc;l++){
+       temp:=M[jl,l];
+       M[jl,l] := M[k,l];
+        M[k,l]:=temp;     
+      }
+     //fin du choix du pivot qui est M[jl,jc]
+      //on met des 0 au dessus la fausse diagonale de 
+      //la colonne jc
+      for (k:=0;k&lt;jl;k++) {
+        a:=M[k,jc];  
+        for (l:=0;l&lt;nc;l++){ 
+          M[k,l]:=M[k,l]*pivo-M[jl,l]*a; 
+         } 
+       }
+       //on met 0 sous la fausse diag de la colonne jc
+       for (k:=jl+1;k&lt;nl;k++) {
+        a:=M[k,jc];
+        for (l:=jc;l&lt;nc;l++){ 
+          M[k,l]:=M[k,l]*pivo-M[jl,l]*a; 
+         } 
+       }
+      //on a un pivot donc le numero de  
+      //la ligne de la fausse diag augmente de 1
+      jl:=jl+1;
+    }
+    //ds tous les cas, le numero de
+    //la colonne de la fausse diag augmente de 1
+    jc:=jc+1;  
+}
+return M;
+}
+</PRE><P>On tape :<BR>
+<TT>M0:= [[1,2,3,6],[2,3,1,6],[3,2,1,6]]</TT><BR>
+<TT>gaussjordan_red(M0)</TT><BR>
+On obtient :<BR>
+<TT>[[12,0,0,12],[0,12,0,12],[0,0,-12,-12]]</TT><BR>
+On tape :<BR>
+<TT>M1:= [[1,2,3,4],[0,0,1,2],[0,0,5,1]]</TT><BR>
+<TT>gaussjordan_red(M1)</TT><BR>
+On obtient :<BR>
+<TT>[[1,2,0,-2],[0,0,1,2],[0,0,0,-9]]</TT><BR>
+On tape :<BR>
+<TT>M2:= [[1,2,3,4],[0,0,1,2],[0,0,5,1],[0,0,3,2],[0,0,-1,1]]</TT><BR>
+<TT>gaussjordan_red(M2)</TT><BR>
+On obtient :<BR>
+<TT>[[1,2,0,-2],[0,0,1,2],[0,0,0,-9],[0,0,0,-4],[0,0,0,3]]</TT></P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TT><I>gaussjordan</I>_<I>red</I></TT></TD><TD CLASS="dcell"><TT>⎛<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎝</TT></TD><TD CLASS="dcell"><TT>⎡<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎣</TT></TD><TD CLASS="dcell"><TT>
+</TT></TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><TT>1</TT></TD><TD ALIGN=right NOWRAP><TT>2</TT></TD><TD ALIGN=right NOWRAP><TT>3</TT></TD><TD ALIGN=right NOWRAP><TT>4</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>1</TT></TD><TD ALIGN=right NOWRAP><TT>2</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>5</TT></TD><TD ALIGN=right NOWRAP><TT>1</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>3</TT></TD><TD ALIGN=right NOWRAP><TT>2</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>-1</TT></TD><TD ALIGN=right NOWRAP><TT>1</TT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TT>
+</TT></TD><TD CLASS="dcell"><TT>⎤<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎦</TT></TD><TD CLASS="dcell"><TT>⎞<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎠</TT></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell">⎡<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎣</TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>2</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>−2</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>2</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>−9</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>−4</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎤<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎦</TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc384">14.1.4</A>  La méthode de Gauss et de Gauss-Jordan avec recherche du pivot</H3><P> 
+On peut bien sûr modifier la recherche du pivot.<BR>
+Pour les méthodes numériques il est recommandé de normaliser les 
+équations (on divise chaque ligne <I>k</I> par max<SUB><I>j</I></SUB>|<I>a</I><SUB><I>k</I>,<I>j</I></SUB>|) et de choisir 
+le pivot qui a la plus grande valeur absolue.<BR>
+En calcul formel, on prend l’expression exacte la plus simple possible.
+Ici on normalise les équations à chaque étape et on choisit 
+le pivot qui a la plus grande valeur absolue : c’est ce que font, avec ce choix du pivot les programmes (cf le répertoire exemples),
+<TT>gauss_reducni</TT> (analogue à <TT>gauss_redi</TT>), 
+<TT>gauss_reducn</TT> (analogue à <TT>gauss_red</TT>)), 
+<TT>gaussjordan_reducni</TT> (analogue à <TT>gaussjordan_redi</TT>) et
+<TT>gaussjordan_reducn</TT> (analogue à <TT>gaussjordan_red</TT>) : </P><PRE CLASS="verbatim">     
+gaussjordan_reducn(M):={
+local pivo,j,jc,jl,k,nl,nc,temp,l,a,piv,kpiv,maxi;
+nl:=nrows(M);
+nc:=ncols(M);
+//on met des 0 sous la fausse diagonale 
+jc:=0;
+jl:=0;
+while (jc&lt;nc-1 and jl&lt;nl) {
+   //on normalise les lignes
+   for (jj:=0;jj&lt;nl;jj++) {
+       maxi:=max(abs(seq(M[jj,kk], kk=0..nc-1)));
+       for (kk:=0;kk&lt;nc;kk++) {
+           M[jj,kk]:=M[jj,kk]/maxi;
+       }  
+   }
+   //choix du pivot que l'on veut mettre en M[jl,jc]
+    kpiv:=jl;
+    piv:=abs(M[kpiv,jc]);
+    for (k:=jl+1;k&lt;nl;k++){
+    if (abs(M[k,jc])&gt;piv) {piv:=abs(M[k,jc]);kpiv:=k;}
+    }
+   //on ne fait la suite que si on a piv!=0
+    if (piv!=0) {
+      pivo:=M[kpiv,jc];
+      k:=kpiv;
+      //echange de la ligne jl et de la ligne k
+      for (l:=jc;l&lt;nc;l++){
+       temp:=M[jl,l];
+       M[jl,l] := M[k,l];
+        M[k,l]:=temp;     
+      }
+     //fin du choix du pivot qui est M[jl,jc]
+     //on met des 0 au dessus la fausse diagonale 
+     //de la colonne jc
+      for (k:=0;k&lt;jl;k++) {
+        a:=M[k,jc];  
+        for (l:=0;l&lt;nc;l++){ 
+          M[k,l]:=M[k,l]*pivo-M[jl,l]*a; 
+         } 
+       }
+       //on met des 0 sous la fausse dia de la colonne jc
+       for (k:=jl+1;k&lt;nl;k++) {
+        a:=M[k,jc];
+        for (l:=jc;l&lt;nc;l++){ 
+          M[k,l]:=M[k,l]*pivo-M[jl,l]*a; 
+         } 
+       }
+      //on a un pivot donc,le numero de
+      //la ligne de la fausse diag augmente de 1
+      jl:=jl+1;
+    }
+    //ds tous les cas,le numero de
+    //la colonne de la fausse diag augmente de 1
+    jc:=jc+1;  
+}
+return M;
+}
+</PRE><P>On tape :<BR>
+<TT>M0:= [[1,2,3,6],[2,3,1,6],[3,2,1,6]]</TT><BR>
+<TT>gaussjordan_reducn(M0)</TT><BR>
+On obtient :<BR>
+<TT>[[5/6,0,0,5/6],[0,5/6,0,5/6],[0,0,1,1]]</TT><BR>
+On tape :<BR>
+<TT>M1:= [[1,2,3,4],[0,0,1,2],[0,0,5,1]]</TT><BR>
+<TT>gaussjordan_reducn(M1)</TT><BR>
+On obtient :<BR>
+<TT>[[1/4,1/2,0,17/20],[0,0,1,1/5],[0,0,0,9/10]]</TT><BR>
+On tape :<BR>
+<TT>M2:=[[1,2,3,4],[0,0,1,2],[0,0,5,1],[0,0,3,2],[0,0,-1,1]]</TT><BR>
+<TT>gaussjordan_reducn(M2)</TT><BR>
+On obtient :<BR>
+<TT>[[1/4,1/2,0,17/20],[0,0,1,1/5],</TT><BR>
+<TT>[0,0,0,9/10],[0,0,0,7/15],[0,0,0,6/5]]</TT></P><P>On a donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TT><I>gaussjordan</I>_<I>reducn</I></TT></TD><TD CLASS="dcell"><TT>⎛<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎜<BR>
+⎝</TT></TD><TD CLASS="dcell"><TT>⎡<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎣</TT></TD><TD CLASS="dcell"><TT>
+</TT></TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><TT>1</TT></TD><TD ALIGN=right NOWRAP><TT>2</TT></TD><TD ALIGN=right NOWRAP><TT>3</TT></TD><TD ALIGN=right NOWRAP><TT>4</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>1</TT></TD><TD ALIGN=right NOWRAP><TT>2</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>5</TT></TD><TD ALIGN=right NOWRAP><TT>1</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>3</TT></TD><TD ALIGN=right NOWRAP><TT>2</TT></TD></TR>
+<TR><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>0</TT></TD><TD ALIGN=right NOWRAP><TT>-1</TT></TD><TD ALIGN=right NOWRAP><TT>1</TT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TT>
+</TT></TD><TD CLASS="dcell"><TT>⎤<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎦</TT></TD><TD CLASS="dcell"><TT>⎞<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎟<BR>
+⎠</TT></TD></TR>
+</TABLE></TD><TD CLASS="dcell">= </TD><TD CLASS="dcell">⎡<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎣</TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD ALIGN=right NOWRAP><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">17</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">20</TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP> </TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">5</TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP> </TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">9</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">10</TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP> </TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">7</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">15</TD></TR>
+</TABLE></TD></TR>
+<TR><TD ALIGN=right NOWRAP> </TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">6</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">5</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎤<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎦</TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc385">14.1.5</A>  Application : recherche du noyau grâce à Gauss-Jordan</H3><P>
+Soit une application linéaire <I>f</I> de ℝ<SUP><I>n</I></SUP> dans ℝ<SUP><I>p</I></SUP>,
+de matrice <I>A</I> dans la base canonique de ℝ<SUP><I>n</I></SUP> et de ℝ<SUP><I>p</I></SUP>.<BR>
+Trouver le noyau de <I>f</I> revient à résoudre <I>f</I>(<I>X</I>)=0 ou encore 
+à résoudre <I>AX</I>=0 pour <I>X</I>∈ℝ<SUP><I>n</I></SUP>.<BR>
+Pour cela, on va utiliser la méthode de Gauss-Jordan en rajoutant des lignes 
+de 0 aux endroits où l’on n’a pas trouvé de pivot de façon à ce que 
+les pivots suivants se trouve sur la diagonale (et non sur la 
+"fausse diagonale").<BR>
+Plus précisément :<BR>
+- quand on a trouvé un pivot pour une colonne, à l’aide de la méthode 
+habituelle de réduction de Gauss-Jordan, on met sur cette colonne :<BR>
+ 1 sur la diagonale et<BR>
+ 0 de part et d’autre du 1.<BR>
+- quand on n’a pas trouvé de pivot pour la colonne <I>j</I>, on rajoute
+une ligne de 0 : la ligne <I>j</I> devient une ligne de 0 et les autres lignes 
+sont décalées.<BR>
+- on rajoute éventuellement à la fin, des lignes de 0, pour traiter 
+toutes les colonnes de <I>A</I> et avoir une matrice carrée.<BR>
+- on enlève éventuellement à la fin, des lignes de 0, pour avoir 
+une matrice carrée.<BR>
+Remarque : on ne change pas le nombre de colonnes.<BR>
+Ainsi, si la colonne <I>C</I><SUB><I>j</I></SUB> a un 0 sur sa diagonale, si <I>e</I><SUB><I>j</I></SUB> est le <I>j</I>-ième
+vecteur de la base canonique de ℝ<SUP><I>n</I></SUP>, alors <I>N</I><SUB><I>j</I></SUB>=<I>C</I><SUB><I>j</I></SUB>−<I>e</I><SUB><I>j</I></SUB> est 
+un vecteur du noyau. En effet, on a <I>A</I>(<I>e</I><SUB><I>j</I></SUB>)=<I>C</I><SUB><I>j</I></SUB>; si on a <I>C</I><SUB><I>j</I></SUB>=<I>a</I>1<I>e</I><SUB>1</SUB>+....+<I>a</I><SUB><I>j</I>−1</SUB><I>e</I><SUB><I>j</I>−1</SUB>, pour <I>k</I>&lt;<I>j</I>, et pour <I>a</I><SUB><I>k</I></SUB>!=0, on a <I>A</I>(<I>e</I><SUB><I>k</I></SUB>)=<I>e</I><SUB><I>k</I></SUB> c’est à dire 
+<I>A</I>(<I>C</I><SUB><I>j</I></SUB>)=<I>C</I><SUB><I>j</I></SUB>=<I>A</I>(<I>e</I><SUB><I>j</I></SUB>), soit <I>A</I>(<I>C</I><SUB><I>j</I></SUB>−<I>e</I><SUB><I>j</I></SUB>)=<I>A</I>(<I>N</I><SUB><I>j</I></SUB>)=0.<BR>
+Voici le programme correspondant en conservant la variable <TT>jl</TT> afin de 
+faciliter la lisibilité du programme :
+</P><PRE CLASS="verbatim">     
+gaussjordan_noyau(M):={
+local pivo,jc,jl,k,j,nl,nc,temp,l,a,noyau;
+nl:=nrows(M);
+nc:=ncols(M);
+//on met des 0 sous la diagonale 
+jc:=0;
+jl:=0;
+// on traite toutes les colonnes
+while (jc&lt;nc and jl&lt;nl) {
+  //choix du pivot que l'on veut mettre en M[jl,jc]
+    k:=jl;
+    while (M[k,jc]==0 and k&lt;nl-1) {k:=k+1;}
+    //on ne fait la suite que si on a pivo!=0
+    if (M[k,jc]!=0) {
+      pivo:=M[k,jc];
+      //echange de la ligne jl et de la ligne k
+      for (l:=jc;l&lt;nc;l++){
+       temp:=M[jl,l];
+       M[jl,l] := M[k,l];
+        M[k,l]:=temp;     
+      }
+     //fin du choix du pivot qui est M[jl,jc]
+      //on met 1 sur la diagonale de la colonne jc
+      for (l:=0;l&lt;nc;l++) {
+      M[jl,l]:=M[jl,l]/pivo;
+      }
+      //on met des 0 au dessus de la diagonale
+      // de la colonne jc
+      for (k:=0;k&lt;jl;k++) {
+        a:=M[k,jc];  
+        for (l:=0;l&lt;nc;l++){
+          M[k,l]:=M[k,l]-M[jl,l]*a; 
+         } 
+       }
+       //on met des 0 sous la diag de la colonne jc
+       for (k:=jl+1;k&lt;nl;k++) {
+        a:=M[k,jc];
+        for (l:=jc;l&lt;nc;l++){ 
+          M[k,l]:=M[k,l]-M[jl,l]*a; 
+         } 
+       }
+    }
+    else{
+    //on ajoute une ligne de 0 si ce n'est pas le dernier 0
+    if (jl&lt;nc-1){
+     for (j:=nl;j&gt;jl;j--){
+      M[j]:=M[j-1];
+      }
+    M[jl]:=makelist(0,1,nc);
+    nl:=nl+1;
+    }
+   }
+    //ds tous les cas,le numero de colonne et 
+    //le numero de ligne augmente de 1
+    jc:=jc+1;  jl:=jl+1;
+    //il faut faire toutes les colonnes 
+    if (jl==nl and jl&lt;nc) { M[nl]:=makelist(0,1,nc);nl:=nl+1;}
+}
+noyau:=[];
+//on enleve les lignes en trop pour avoir 
+//une matrice carree de dim nc
+//on retranche la matrice identite
+M:=M[0..nc-1]-idn(nc);
+for(j:=0;j&lt;nc;j++){
+if (M[j,j]==-1) {noyau:=append(noyau,M[0..nc-1,j]);}
+}
+return noyau;
+}
+</PRE><P><B>Remarque</B><BR>
+On peut écrire le même programme en supprimant la variable 
+<I>jl</I> puisque <I>jl</I>=<I>jc</I> (on met <I>jc</I> à la place de <I>jl</I> et on supprime <I>jl</I>:=0
+et <I>jl</I>:=<I>jl</I>+1).<BR>
+On met ce programme 
+dans un niveau éditeur de programmes (que l’on ouvre avec <TT>Alt+p</TT>), puis 
+on le teste et on le valide avec <TT>OK</TT>.<BR>
+On tape :<BR>
+<TT>gaussjordan_noyau([[1,2,3],[1,3,6],[2,5,9]])</TT><BR>
+On obtient :<BR>
+<TT>[[-3,3,-1]]</TT><BR>
+On tape :<BR>
+<TT>gaussjordan_noyau([[1,2,3,4],[1,3,6,6],[2,5,9,10]])</TT><BR>
+On obtient :<BR>
+<TT>[[-3,3,-1,0],[0,2,0,-1]]</TT>
+</P><H2 CLASS="section"><A NAME="toc104"></A><A NAME="htoc386">14.2</A>  Résolution d’un système linéaire</H2><H3 CLASS="subsection"><A NAME="htoc387">14.2.1</A>  Résolution d’un système d’équations linéaires</H3><H4 CLASS="subsubsection">L’algorithme</H4><P>
+On associe à un système d’équations linéaires, une matrice <I>A</I> 
+constituèe de la matrice du système augmentèe d’une colonne formée
+par l’opposé du second membre.<BR>
+Par exemple au système : 
+[<I>x</I>+<I>y</I>=4,<I>x</I>−<I>y</I>=2] d’inconnues [<I>x</I>,<I>y</I>] on associe la matrice :<BR>
+<I>A</I>=[[1,1,−4],[1,−1,−2]].<BR>
+Puis on réduit avec la méthode de Gauss-Jordan la matrice <I>A</I> pour obtenir 
+une matrice <I>B</I>. Pour chaque ligne de <I>B</I> :<BR>
+- si il n’y a que des zéro on regarde la ligne suivante,<BR>
+- si il y a des zéro sauf en dernière position, il n’y a pas de solution,<BR>
+- dans les autres cas on obtient la valeur de la variable de même indice
+que le premier élément non nul rencontré sur la ligne,<BR>
+- les valeurs arbitraires correspondent aux zéros de la diagonale de <I>B</I> et 
+en général il y a des valeurs non nulles au dessus de ces zéros,
+c’est pourquoi il faut initialisé la solution au vecteur des variables.</P><H4 CLASS="subsubsection">Le programme</H4><P>
+Voici le programme de résolution d’un système linéaire :
+</P><PRE CLASS="verbatim">//Veq vecteur des equations 
+//v vecteur de variables
+//renvoie le vecteur solution
+linsolv(Veq,v):={
+  local A,B,j,k,l,deq,d,res,ll,rep;
+  d:=size(v);
+  deq:=size(Veq);
+  //A est la matrice du systeme +le 2nd membre
+  A:=syst2mat(Veq,v);
+  //B matrice reduite de Gauss-jordan
+  B:=rref(A);
+  res:=v;
+  //ll ligne l de B
+  ll:=makelist(0,0,d);
+  for (l:=0; l&lt;deq;l++){
+    for (k:=0;k&lt;d+1;k++){
+      ll[k]:=B[l][k];
+    }
+  j:=l;
+  while (ll[j]==0 &amp;&amp; j&lt;d){
+    j:=j+1;
+  }
+  //si (j==d and ll[d]==0) 
+  //ll=ligne de zeros on ne fait rien
+  if (j==d and ll[d]!=0){
+    // pas de sol
+    return [];
+  } 
+  else {//la sol res[j] vaut rep/ll[j]
+      if (j&lt;d) {
+      rep:=-ll[d];
+      for (k:=j+1;k&lt;d;k++) {
+      rep:=rep-ll[k]*v[k];
+      }
+      res[j]:=rep/ll[j];
+      }
+    }
+  }
+  return res;
+}
+</PRE><H4 CLASS="subsubsection">Autre algorithme</H4><H3 CLASS="subsection"><A NAME="htoc388">14.2.2</A>  Résolution de <I>MX</I>=<I>b</I> donné sous forme matricielle</H3><H4 CLASS="subsubsection">L’algorithme</H4><P>
+On transforme la résolution de <I>MX</I>=<I>b</I> en <I>MX</I>−<I>b</I>=<I>AY</I>=0 où <I>A</I> est la matrice
+constituèe de la matrice <I>M</I> du système augmentèe d’une 
+colonne formée par l’opposé du second membre <I>b</I>.<BR>
+<I>Y</I> est donc un vecteur du noyau de <I>A</I> ayant comme dernière composante 1.<BR>
+D’après l’algorithme de recherche du noyau, seul le dernier vecteur a comme 
+dernière composante -1. Si <TT>-ker(A)</TT> renvoie <I>n</I> vecteurs, la solution 
+<I>Y</I> est donc une combinaison arbitraire des <I>n</I>−1 premiers vecteurs du noyau 
+plus le <I>n</I>-ième vecteur. 
+</P><H4 CLASS="subsubsection">Le programme</H4><P>
+Voici le programme de résolution de <I>AX</I>=<I>b</I> :
+</P><PRE CLASS="verbatim">//M*res=b res renvoie le vecteur solution
+//M:=[[1,1],[1,-1]]; b:=[4,2]
+//M:=[[1,1,1],[1,1,1],[1,1,1]];b:=[0,0,0]
+//M:=[[1,2,1],[1,2,5],[1,2,1]];b:=[0,1,0]
+linsolvm(M,b):={
+  local A,B,N,n,k,d,res;
+  d:=ncols(M);
+  //A est la matrice du systeme +le 2nd membre
+  A:=border(M,-b);
+  //N contient une base du noyau
+  N:=-ker(A);
+  n:=size(N);
+  //res a d+1 composante (la derniere=1)
+  res:=makelist(0,0,d);
+  //C_(k) designe les constantes arbitraires 
+  for (k:=0;k&lt;n-1;k++){
+    res:=res+N[k]*C_(k);
+  }
+  res:=res+N[n-1];
+  res:=suppress(res,d);
+  return res;
+}
+</PRE><H2 CLASS="section"><A NAME="toc105"></A><A NAME="htoc389">14.3</A>  La décomposition LU d’une matrice</H2><P>
+C’est l’interprétation matricielle de la méthode de Gauss.<BR>
+Si <I>A</I> est une matrice carrée d’ordre <I>n</I>, il existe une matrice <I>L</I>
+triangulaire supérieure, une matrice <I>L</I>
+triangulaire inférieure, et une matrice <I>P</I> de permutation telles que :<BR>
+<I>P</I>*<I>A</I>=<I>L</I>*<I>U</I>.<BR>
+Supposons tout d’abord que l’on peut faire la méthode de Gauss sans 
+échanger des lignes. Mettre des zéros sous la diagonale de la 1-ière
+colonne (d’ndice 0) de <I>A</I>, reviens à multiplier <I>A</I> par la matrice <I>E</I><SUB>0</SUB>
+qui a des 1 sur sa diagonale, comme première colonne :<BR>
+[1,−<I>A</I>[1,0]/<I>A</I>[0,0], ...−<I>A</I>[<I>n</I>−1,0]/<I>A</I>[0,0]] et des zéros ailleurs.<BR>
+Puis si <I>A</I>1=<I>E</I>1*<I>A</I>, mettre des zéros sous la diagonale de la 2-ière 
+colonne (d’ndice 1) de <I>A</I>1, reviens à multiplier <I>A</I>1 par la matrice <I>E</I><SUB>1</SUB>
+qui a des 1 sur sa diagonale, comme deuxième colonne :<BR>
+[0,1,−<I>A</I>1[2,1]/<I>A</I>[1,1], ...−<I>A</I>[<I>n</I>−1,1]/<I>A</I>[1,1]] et des zéros ailleurs.<BR>
+On continue ainsi jusqu’à mettre des zéros sous la diagonale de la colonne 
+d’indice <I>n</I>−2, et à la fin la matrice <I>U</I>=<I>E</I><SUB><I>n</I>−2</SUB>*...*<I>E</I><SUB>1</SUB>*<I>E</I><SUB>0</SUB>*<I>A</I> est 
+triangulaire supérieure et on a <I>L</I>=<I>inv</I>(<I>E</I><SUB><I>n</I>−2</SUB>*...*<I>E</I><SUB>1</SUB>*<I>E</I><SUB>0</SUB>).<BR>
+Le calcul de <I>inv</I>(<I>L</I>) est simple car on a :<BR>
+- <I>inv</I>(<I>E</I><SUB>0</SUB>) des 1 sur sa diagonale, comme colonne d’indice 0
+[1,+<I>A</I>[1,0]/<I>A</I>[0,0], ...+<I>A</I>[<I>n</I>−1,0]/<I>A</I>[0,0]] et des zéros ailleurs de même
+<I>inv</I>(<I>E</I><SUB><I>k</I></SUB>) est obtenue à partir de <I>E</I><SUB><I>k</I></SUB> "en changeant les moins en plus".<BR>
+- la colonne d’indice <I>k</I> de <I>inv</I>(<I>E</I><SUB>0</SUB>)*<I>inv</I>(<I>E</I><SUB>1</SUB>)...<I>inv</I>(<I>E</I><SUB><I>n</I>−2</SUB>) est égale à
+la colonne d’indice <I>k</I> de <I>E</I><SUB><I>k</I></SUB>.<BR>
+Lorsqu’il y a à faire une permutation de lignes, il faut répercuter cette 
+permutation sur <I>L</I> et sur <I>U</I> : pour faciliter la programmation on va 
+conserver les valeurs de <I>L</I> et de <I>U</I> dans une seule matrice <I>R</I> que l’on
+séparera à la fin : <I>U</I> sera la partie supérieure et la diagonale de <I>R</I> 
+<I>L</I> sera la partie inférieure de <I>R</I>, avec des 1 sur sa diagonale.<BR>
+Voici le programme de séparation :
+</P><PRE CLASS="verbatim">splitmat(R):={
+  local L,U,n,k,j;
+  n:=size(R);
+  L:=idn(n);
+  U:=makemat(0,n,n);
+  for (k:=0;k&lt;n;k++){
+    for (j:=k;j&lt;n;j++){
+      U[k,j]:= R[k,j];
+    }
+  } 
+  for (k:=1;k&lt;n;k++){
+    for (j:=0;j&lt;k;j++){
+      L[k,j]:= R[k,j];
+    }
+  }
+return (L,U);
+};
+</PRE><P>Le programme ci-dessous, <TT>decomplu(A)</TT>, renvoie la permutation <I>p</I> que l’on
+a fait sur les lignes, <I>L</I> et <I>U</I> et on a:
+<I>P</I>*<I>A</I>=<I>L</I>*<I>U</I>.<BR>
+Voici le programme de décomposition LU qui utilise <TT>splitmat</TT> ci-dessus :
+</P><PRE CLASS="verbatim">//A:=[[5,2,1],[5,2,2],[-4,2,1]]
+//A:=[[5,2,1],[5,-6,2],[-4,2,1]]
+// utilise splitmat
+decomplu(A):={
+  local B,R,L,U,n,j,k,l,temp,p;
+  n:=size(A);
+  p:=seq(k,k,0,n-1);
+  R:=makemat(0,n,n);
+  B:=A;
+  l:=0;
+//on traite toutes les colonnes
+  while (l&lt;n-1) {
+    if (A[l,l]!=0){
+    //pas de permutations 
+    //on recopie dans R la ligne l de A 
+    //a partir de la diagonale
+      for (j:=l;j&lt;n;j++){R[l,j]:=A[l,j];}
+      //on met des zeros sous la diagonale 
+      //dans la colonne l
+      for (k:=l+1;k&lt;n;k++){
+ for (j:=l+1;j&lt;n;j++){
+   A[k,j]:=A[k,j]-A[l,j]*A[k,l]/A[l,l];
+   R[k,j]:=A[k,j];
+ } 
+ R[k,l]:=A[k,l]/A[l,l];
+ A[k,l]:=0;
+      }
+    l:=l+1;
+    }
+    else {
+      k:=l;
+      while ((k&lt;n-1) and (A[k,l]==0)) {
+        k:=k+1;
+      }
+      //si (A[k,l]==0) A est non inversible, 
+      //on passe a la colonne suivante
+      if (A[k,l]==0) {
+ l:=l+1;
+      }
+      else {
+      //A[k,l]!=0) on echange la ligne l et k ds A et R
+       for (j:=l;j&lt;n;j++){
+        temp:=A[k,j];
+        A[k,j]:=A[l,j];
+        A[l,j]:=temp;
+       };
+       for (j:=0;j&lt;n;j++){
+        temp:=R[k,j];
+        R[k,j]:=R[l,j];
+        R[l,j]:=temp;
+       }
+       //on note cet echange dans  p
+       temp:=p[k];
+       p[k]:=p[l];
+       p[l]:=temp;
+     }//fin du if (A[k,l]==0)
+    }//fin du if (A[l,l]!=0)
+  }//fin du while
+  L,U:=splitmat(R);
+  return(p,L,U);
+};
+</PRE><P>On tape :<BR>
+<TT>A:=[[5,2,1],[5,2,2],[-4,2,1]]</TT><BR>
+<TT>decomplu(A)</TT><BR>
+On obtient :<BR>
+<TT>[0,2,1],[[1,0,0],[-4/5,1,0],[1,0,1]],</TT><BR>
+<TT>[[5,2,1],[0,18/5,9/5],[0,0,1]]</TT><BR>
+On verifie, on tape (car <TT>permu2mat(p)=P=inv(P)</TT>) :<BR>
+<TT>[[1,0,0],[0,0,1],[0,1,0]]*[[1,0,0],[-4/5,1,0],[1,0,1]]*</TT><BR>
+<TT>[[5,2,1],[0,18/5,9/5],[0,0,1]]</TT><BR>
+On obtient bien <TT>[[5,2,1],[5,2,2],[-4,2,1]]</TT><BR>
+On tape :<BR>
+<TT>B:=[[5,2,1],[5,-6,2],[-4,2,1]]</TT><BR>
+<TT>decomplu(B)</TT><BR>
+On obtient :<BR>
+<TT>[0,1,2],,[[1,0,0],[1,1,0],[-4/5,-9/20,1]],</TT><BR>
+<TT>[[5,2,1],[0,-8,1],[0,0,9/4]]</TT><BR>
+On verifie, on tape :<BR>
+<TT>[[1,0,0],[1,1,0],[-4/5,-9/20,1]]*[[5,2,1],[0,-8,1],[0,0,9/4]]</TT><BR>
+On obtient bien <TT>[[5,2,1],[5,-6,2],[-4,2,1]]</TT>
+</P><H2 CLASS="section"><A NAME="toc106"></A><A NAME="htoc390">14.4</A>  Décomposition de Cholesky d’une matrice symétrique définie positive</H2><H3 CLASS="subsection"><A NAME="htoc391">14.4.1</A>  Les méthodes</H3><P>
+Lorsque la matrice <TT>A</TT> est la matrice associée à une forme bilinéaire
+définie positive, on lui associe la matrice symétrique 
+<TT>B=1/2*(A+tran(A))</TT> qui est la matrice de la forme quatratique 
+associée.<BR>
+Avec ses hypothèses, il existe une matrice triangulaire inférieure unique
+<TT>C</TT> telle que <TT>B=C*tran(C)</TT>.<BR>
+Pour déterminer <TT>C</TT> on présente ici deux méthodes :
+</P><H4 CLASS="subsubsection">La méthode utilisant la décomposition LU</H4><P>
+Si on décompose <TT>B</TT> selon la méthode LU, on n’est pas obligé de faire
+des échanges de lignes car les sous-matrices principales <I>B</I><SUB><I>k</I></SUB> d’ordre <I>k</I> 
+(obtenues en prenant les <I>k</I> premières lignes et colonnes de <I>B</I>) sont des 
+matrices inversibles car ce sont des matrices de formes définies positives.<BR>
+On a donc :<BR>
+<TT>p,L,U:=decomplu(B)</TT> avec <TT>p=[0,1..n-1]</TT> si <TT>A</TT> est d’ordre 
+<TT>n</TT>.
+Posons <TT>D</TT> la matrice diagonale ayant comme diagonale la racine carrée de
+la diagonale de <TT>U</TT>.<BR>
+On a alors <TT>C=L*D</TT> et <TT>tran(C)=inv(D)*U</TT>.<BR>
+Pour le montrer on utilise le théorème :<BR>
+Si <TT>B=C*F</TT> avec
+<TT>B</TT> symétrique, <TT>C</TT> triangulaire inférieure et <TT>F</TT> triangulaire
+supérieure de même diagonale que <TT>C</TT> alors <TT>F=tran(C)</TT>.<BR>
+En effet on a :<BR>
+<TT>B=tran(B)</TT> donc <TT>C*F=tran(C*F)=tran(F)*tran(C)</TT>.<BR>
+On en déduit l’égalité des 2 matrices :<BR>
+<TT>inv(tran(F))*C=tran(C)*inv(F)</TT><BR>
+la première est triangulaire inférieure, et la deuxième est triangulaire 
+supérieure donc ces matrices sont diagonales et leur diagonale n’a que des 1
+ces 2 matrices sont donc égales à la matrice unité.
+</P><H4 CLASS="subsubsection">La méthode par identification</H4><P>
+On peut aussi déterminer <TT>C</TT> par identification en utilisant 
+l’égalité <TT>B=C*tran(C)</TT> et <TT>C</TT> triangulaire inférieure.<BR>
+On trouve pour tout entier <I>j</I> compris entre 0 et <I>n</I>−1 :<BR>
+- pour la diagonale :<BR>
+<TT>(<I>C</I>[<I>j</I>,<I>j</I>])</TT><SUP><TT>2</TT></SUP><TT>=<I>B</I>[<I>j</I>,<I>j</I>]-∑</TT><SUB><TT><I>k</I>=0</TT></SUB><SUP><TT><I>j</I>-1</TT></SUP><TT>(<I>C</I>[<I>j</I>,<I>k</I>])</TT><SUP><TT>2</TT></SUP><BR>
+- pour les termes subdiagonaux c’est à dire pour <I>j</I>+1 ≤ <I>l</I> ≤ <I>n</I>−1 :<BR>
+<TT><I>C</I>[<I>l</I>,<I>j</I>]=1/<I>C</I>[<I>j</I>,<I>j</I>]*(<I>B</I>[<I>l</I>,<I>j</I>]-∑</TT><SUB><TT><I>k</I>=0</TT></SUB><SUP><TT><I>j</I>-1</TT></SUP><TT><I>C</I>[<I>l</I>,<I>k</I>]*<I>C</I>[<I>j</I>,<I>k</I>])</TT><BR>
+On peut donc calculer les coefficients de <TT>C</TT> par colonnes, en effet, pour 
+avoir la colonne <I>j</I> :<BR>
+- on calcule le terme diagonal <TT>C[j,j]</TT> qui fait intervenir les termes de 
+la ligne <I>j</I> des colonnes précédentes (avec un test vérifiant
+que le terme <TT><I>B</I>[<I>j</I>,<I>j</I>]-∑</TT><SUB><TT><I>k</I>=0</TT></SUB><SUP><TT><I>j</I>-1</TT></SUP><TT>(<I>C</I>[<I>j</I>,<I>k</I>])</TT><SUP><TT>2</TT></SUP> est positif), puis,<BR>
+- on calcule les termes subdiagonaux <TT>C[l,j]</TT> pour <I>j</I>+1 ≤ <I>l</I> ≤ <I>n</I>−1 
+qui font intervenir les termes des colonnes précédentes des lignes 
+précédentes.
+Mais cet algorithme n’est pas très bon car les termes de la matrice <TT>C</TT> 
+sont obtenus à chaque étape avec une multiplication ou une division de 
+racine carrée : il serait préférable d’introduire les racines carrées 
+qu’à la fin du calcul comme dans la méthode LU. On va donc calculer une 
+matrice <TT>CC</TT> (sans utiliser de racines carrées) et une matrice diagonale 
+<TT>D</TT> (qui aura des racines carrées sur sa diagonale)
+de tel sorte que <TT>C=CC*D</TT> (la colonne <I>k</I> de <TT>CC*D</TT> est la colonne <I>k</I>
+de <TT>CC</TT> multiplié par <TT>D[k,k]</TT>).<BR>
+Par exemple : <TT>C[0,0]* C[0,0]= B[0,0]</TT> on pose :<BR>
+<TT>CC[0,0]= B[0,0]=a</TT> et <TT>D[0,0]=1/sqrt(a)</TT> ainsi<BR>
+<TT>C[0,0]= CC[0,0]/sqrt(a)=sqrt(a)</TT> et on a bien :<BR>
+ <TT>C[0,0]* C[0,0]=a=B[0,0]</TT><BR>
+On aura donc <TT>C[l,0]=CC[l,0]/sqrt(a)</TT> c’est à dire :<BR>
+<TT>CC[l,0]=B[l,0]</TT> pour 0≤ <I>l</I>&lt;<I>n</I><BR>
+Puis :<BR>
+ <TT>C[1,1]*C[1,1]=B[1,1]-C[1,0]*C[1,0]=<BR>
+B[1,1]-CC[1,0]*CC[1,0]/a=b</TT><BR>
+on pose :<BR>
+<TT>CC[1,1]= B[1,1]-CC[1,0]*CC[1,0]/a=b </TT> et<BR>
+<TT>D[1,1]=1/sqrt(b)</TT><BR>
+ On aura donc pour 2≤ <I>l</I>&lt;<I>n</I> ;<BR>
+<TT>C[l,1]=CC[l,1]/sqrt(b)=1/sqrt(b)*(B[l,1]-C[l,0]*C[1,0])</TT><BR>
+c’est à dire pour 2≤ <I>l</I>&lt;<I>n</I> :<BR>
+<TT>CC[l,1]=B[l,1]-C[l,0]*C[1,0]=B[l,1]-CC[l,0]*CC[1,0]/a</TT><BR>
+etc.....<BR>
+Les formules de récurences pour le calcul de <TT>CC</TT> sont :<BR>
+- pour la diagonale :<BR>
+<TT><I>CC</I>[<I>j</I>,<I>j</I>]=<I>B</I>[<I>j</I>,<I>j</I>]-∑</TT><SUB><TT><I>k</I>=0</TT></SUB><SUP><TT><I>j</I>-1</TT></SUP><TT>(<I>CC</I>[<I>j</I>,<I>k</I>])</TT><SUP><TT>2</TT></SUP><TT>/<I>CC</I>[<I>k</I>,<I>k</I>]</TT><BR>
+- pour les termes subdiagonaux c’est à dire pour <I>j</I>+1 ≤ <I>l</I> ≤ <I>n</I>−1 :<BR>
+<TT><I>CC</I>[<I>l</I>,<I>j</I>]=<I>B</I>[<I>l</I>,<I>j</I>]-∑</TT><SUB><TT><I>k</I>=0</TT></SUB><SUP><TT><I>j</I>-1</TT></SUP><TT><I>CC</I>[<I>l</I>,<I>k</I>]*<I>CC</I>[<I>j</I>,<I>k</I>]/<I>CC</I>[<I>k</I>,<I>k</I>]</TT><BR>
+avec <TT><I>D</I>[<I>j</I>,<I>j</I>]=1/<I>sqrt</I>(<I>CC</I>[<I>j</I>,<I>j</I>])</TT>.
+</P><H3 CLASS="subsection"><A NAME="htoc392">14.4.2</A>  Le programme de factorisation de Cholesky avec LU</H3><PRE CLASS="verbatim"> 
+//utilise decomplu et splitmat ci-dessus
+//A:=[[1,0,-1],[0,2,4],[-1,4,11]]
+//A:=[[1,1,1],[1,2,4],[1,4,11]]
+//A:=[[1,0,-2],[0,2,6],[0,2,11]]
+//A:=[[1,-2,4],[-2,13,-11],[4,-11,21]]
+//A:=[[-1,-2,4],[-2,13,-11],[4,-11,21]] (pas def pos)
+//A:=[[24,66,13],[66,230,-11],[13,-11,210]]
+choles(A):={
+  local j,n,p,L,U,D,p0;
+  n:=size(A);
+  A:=1/2*(A+tran(A));
+ (p,L,U):=decomplu(A);
+  p0:=makelist(x-&gt;x,0,n-1);
+  if (p!=p0) {return "pas definie positive ";}
+  D:=makemat(0,n,n);
+  for (j:=0;j&lt;n;j++) {
+    //if (U[j,j]&lt;0) {return "pas def positive";}
+    D[j,j]:=sqrt(U[j,j]);
+  }
+  return normal(L*D);
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc393">14.4.3</A>  Le programme de factorisation de Cholesky par identification</H3><PRE CLASS="verbatim"> 
+//A:=[[1,0,-1],[0,2,4],[-1,4,11]]
+//A:=[[1,1,1],[1,2,4],[1,4,11]]
+//A:=[[1,0,-2],[0,2,6],[0,2,11]]
+//A:=[[1,-2,4],[-2,13,-11],[4,-11,21]]
+//A:=[[-1,-2,4],[-2,13,-11],[4,-11,21]] (pas def pos)
+//A:=[[24,66,13],[66,230,-11],[13,-11,210]]
+cholesi(A):={
+  local j,n,l,k,C,c2,s;
+  n:=size(A);
+  A:=1/2*(A+tran(A));
+  C:=makemat(0,n,n);;
+  for (j:=0;j&lt;n;j++) {
+    s:=0;
+    for (k:=0;k&lt;j;k++) {
+      s:=s+(C[j,k])^2;
+    }
+    c2:=A[j,j]-s; 
+    if (c2&lt;=0) {return "pas definie positive ";}
+    C[j,j]:=normal(sqrt(c2));
+    for (l:=j+1;l&lt;n;l++) {
+      s:=0;
+      for (k:=0;k&lt;j;k++) {
+ s:=s+C[l,k]*C[j,k];
+      }
+      C[l,j]:=normal(1/sqrt(c2)*(A[l,j]-s));
+    }
+  }
+return C;
+}
+</PRE><P>Ce programme n’est pas très bon car les termes de la matrice <TT>C</TT> sont
+obtenus avec une multiplication ou une division de racine carrée...<BR>
+On se pourra se reporter ci-dessous pour avoir le programme choleski optimisé.
+</P><H3 CLASS="subsection"><A NAME="htoc394">14.4.4</A>  Le programme optimisé de factorisation de Cholesky par identification</H3><PRE CLASS="verbatim"> 
+//A:=[[1,0,-1],[0,2,4],[-1,4,11]]
+//A:=[[1,1,1],[1,2,4],[1,4,11]]
+//A:=[[1,0,-2],[0,2,6],[0,2,11]]
+//A:=[[1,-2,4],[-2,13,-11],[4,-11,21]]
+//A:=[[-1,-2,4],[-2,13,-11],[4,-11,21]] (pas def pos)
+//A:=[[24,66,13],[66,230,-11],[13,-11,210]]
+choleski(A):={
+  local j,n,l,k,CC,D,c2,s;
+  n:=size(A);
+  A:=1/2*(A+tran(A));
+  CC:=makemat(0,n,n);
+  D:=makemat(0,n,n);
+  for (j:=0;j&lt;n;j++) {
+    s:=0;
+    for (k:=0;k&lt;j;k++) {
+      s:=s+(CC[j,k])^2/CC[k,k];
+    }
+    c2:=normal(A[j,j]-s); 
+    //if (c2&lt;=0) {return "pas definie positive ";}
+    CC[j,j]:=c2;
+    D[j,j]:=normal(1/sqrt(c2));
+    for (l:=j+1;l&lt;n;l++) {
+      s:=0;
+      for (k:=0;k&lt;j;k++) {
+ s:=s+CC[l,k]*CC[j,k]/CC[k,k];
+      }
+      CC[l,j]:=normal(A[l,j]-s);
+    }
+  }
+return normal(CC*D);
+}
+</PRE><P>Avec cette méthode, pour obtenir les coefficients diagonaux ont utilise la
+même relation de récurrence que pour les autres coefficients. De plus on 
+peut effectuer directement et facilement la multiplication par <TT>D</TT> sans 
+avoir à définir <TT>D</TT> en multipliant les colonnes de <TT>CC</TT> par la 
+même valeur <TT>1/sqrt(c)</TT> avec <TT>c=CC[k,k]</TT>...<BR>
+donc on écrit :
+</P><PRE CLASS="verbatim"> 
+choleskii(A):={
+  local j,n,l,k,CC,c,s;
+  n:=size(A);
+  A:=1/2*(A+tran(A));
+  CC:=makemat(0,n,n);
+  for (j:=0;j&lt;n;j:=j+1) { 
+     for (l:=j;l&lt;n;l++) {
+      s:=0;
+      for (k:=0;k&lt;j;k++) {
+ //if (CC[k,k]&lt;=0) {return "pas definie positive ";}
+ if (CC[k,k]==0) {return "pas definie";}
+ s:=s+CC[l,k]*CC[j,k]/CC[k,k];
+      }
+      CC[l,j]:=A[l,j]-s;
+    }
+  } 
+  for (k:=0;k&lt;n;k++) {
+    c:=CC[k,k];
+    for (j:=k;j&lt;n;j++) {
+      CC[j,k]:=normal(CC[j,k]/sqrt(c));
+    }
+  }
+  return CC;
+}
+</PRE><P>Avec la traduction pour avoir une fonction interne à Xcas :
+</P><PRE CLASS="verbatim"> 
+cholesky(_args)={
+gen args=(_args+mtran(_args))/2;
+matrice &amp;A=*args._VECTptr;
+int n=A.size(),j,k,l;
+vector&lt;vecteur&gt; C(n,vecteur(n)), D(n,vecteur(n));
+for (j=0;j&lt;n;j++) {
+gen s;
+for (k=0;k&lt;j;k++)
+s=s+pow(C[j][k],2)/C[k][k];
+gen c2=A[j][j]-s;
+if (is_strictly_positive(-c2)) 
+setsizeerr("Not a positive define matrice");
+C[j][j]=c2;
+D[j][j]=normal(1/sqrt(c2));
+for (l=j+1;l&lt;n;l++) {
+s=0;
+for (k=0;k&lt;j;k++) 
+s=s+C[l][k]*C[j][k]/C[k][k];
+C[l][j]=A[l][j]-s;
+}
+}
+matrice Cmat,Dmat;
+vector_of_vecteur2matrice(C,Cmat);
+vector_of_vecteur2matrice(D,Dmat);
+return Cmat*Dmat;
+}
+</PRE><H2 CLASS="section"><A NAME="toc107"></A><A NAME="htoc395">14.5</A>  Réduction de Hessenberg</H2><H3 CLASS="subsection"><A NAME="htoc396">14.5.1</A>  La méthode</H3><P>
+Une matrice de Hessenberg est une matrice qui a des zéros sous 
+la "deuxième diagonale inférieure".<BR>
+ Soit <I>A</I> une matrice. On va chercher <I>B</I> une matrice de Hessenberg semblable
+à <I>A</I>. Pour cela on va mettre des zéros sous cette diagonale 
+en utilisant la méthode de Gauss mais en prenant les pivots sur la
+"deuxième diagonale inférieure" encore appelée "sous-diagonale": cela 
+revient à multiplier <I>A</I> par 
+<I>Q</I>=<I>R</I><SUP>−1</SUP> et cela permet de conserver les zéros lorsque l’on multiplie 
+à chaque étape le résultat par <I>R</I> pour obtenir une matrice semblable 
+à <I>A</I>. Si on est obligé de faire un échange de lignes (correspondant à 
+la multiplication à droite par <I>E</I>) il faudra faire aussi un échange de 
+colonnes (correspondant à la multiplication à gauche par <I>E</I>.<BR>
+Par exemple si on a :<BR>
+<I>A</I>:=[</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><I>a</I><SUB>00</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>01</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>02</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>03</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>04</SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>a</I><SUB>10</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>11</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>12</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>13</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>14</SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>a</I><SUB>20</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>21</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>22</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>23</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>24</SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>a</I><SUB>30</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>31</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>32</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>33</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>34</SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>a</I><SUB>40</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>41</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>42</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>43</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>44</SUB></TD></TR>
+</TABLE><P>
+]<BR>
+Pour mettre des zéros dans la première colonne en dessous de <I>a</I><SUB>10</SUB>, on 
+va multiplier <I>A</I> à gauche par <I>Q</I> et à droite par <I>R</I>=<I>Q</I><SUP>−1</SUP> avec si on 
+suppose <I>a</I><SUB>10</SUB>!=0 c’est à dire si on peut choisir comme pivot <I>a</I><SUB>10</SUB> :
+<I>Q</I>:=[</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>−<I>a</I><SUB>20</SUB>/<I>a</I><SUB>10</SUB></TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>−<I>a</I><SUB>30</SUB>/<I>a</I><SUB>10</SUB></TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>−<I>a</I><SUB>40</SUB>/<I>a</I><SUB>10</SUB></TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+</TABLE><P>
+]<BR>
+<I>R</I>:=[</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>+<I>a</I><SUB>20</SUB>/<I>a</I><SUB>10</SUB></TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>+<I>a</I><SUB>30</SUB>/<I>a</I><SUB>10</SUB></TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>+<I>a</I><SUB>40</SUB>/<I>a</I><SUB>10</SUB></TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+</TABLE><P>
+]<BR>
+On tape alors :<BR>
+<TT><I>A</I>:=[[<I>a</I></TT><SUB><TT>00</TT></SUB><TT>,<I>a</I></TT><SUB><TT>01</TT></SUB><TT>,<I>a</I></TT><SUB><TT>02</TT></SUB><TT>,<I>a</I></TT><SUB><TT>03</TT></SUB><TT>,<I>a</I></TT><SUB><TT>04</TT></SUB><TT>],[<I>a</I></TT><SUB><TT>10</TT></SUB><TT>,<I>a</I></TT><SUB><TT>11</TT></SUB><TT>,<I>a</I></TT><SUB><TT>12</TT></SUB><TT>,<I>a</I></TT><SUB><TT>13</TT></SUB><TT>,<I>a</I></TT><SUB><TT>14</TT></SUB><TT>],</TT><BR>
+<TT>[<I>a</I></TT><SUB><TT>20</TT></SUB><TT>,<I>a</I></TT><SUB><TT>21</TT></SUB><TT>,<I>a</I></TT><SUB><TT>22</TT></SUB><TT>,<I>a</I></TT><SUB><TT>23</TT></SUB><TT>,<I>a</I></TT><SUB><TT>24</TT></SUB><TT>],[<I>a</I></TT><SUB><TT>30</TT></SUB><TT>,<I>a</I></TT><SUB><TT>31</TT></SUB><TT>,<I>a</I></TT><SUB><TT>32</TT></SUB><TT>,<I>a</I></TT><SUB><TT>33</TT></SUB><TT>,<I>a</I></TT><SUB><TT>34</TT></SUB><TT>],[<I>a</I></TT><SUB><TT>40</TT></SUB><TT>,<I>a</I></TT><SUB><TT>41</TT></SUB><TT>,<I>a</I></TT><SUB><TT>42</TT></SUB><TT>,<I>a</I></TT><SUB><TT>43</TT></SUB><TT>,<I>a</I></TT><SUB><TT>44</TT></SUB><TT>]]</TT><BR>
+<TT><I>Q</I>:=[[1,0,0,0,0],[0,1,0,0,0],[0,(-<I>a</I></TT><SUB><TT>20</TT></SUB><TT>)/<I>a</I></TT><SUB><TT>10</TT></SUB><TT>,1,0,0],</TT><BR>
+<TT>[0,(-<I>a</I></TT><SUB><TT>30</TT></SUB><TT>)/<I>a</I></TT><SUB><TT>10</TT></SUB><TT>,0,1,0],[0,(-<I>a</I></TT><SUB><TT>40</TT></SUB><TT>)/<I>a</I></TT><SUB><TT>10</TT></SUB><TT>,0,0,1]]</TT><BR>
+<TT><I>R</I>:=[[1,0,0,0,0],[0,1,0,0,0],[0,(<I>a</I></TT><SUB><TT>20</TT></SUB><TT>)/<I>a</I></TT><SUB><TT>10</TT></SUB><TT>,1,0,0],</TT><BR>
+<TT>[0,(<I>a</I></TT><SUB><TT>30</TT></SUB><TT>)/<I>a</I></TT><SUB><TT>10</TT></SUB><TT>,0,1,0],[0,(<I>a</I></TT><SUB><TT>40</TT></SUB><TT>)/<I>a</I></TT><SUB><TT>10</TT></SUB><TT>,0,0,1]]</TT><BR>
+On obtient la matrice <I>B</I>1:<BR>
+<I>B</I>1=<I>Q</I>*<I>A</I>*<I>R</I>=<I>R</I><SUP>−1</SUP>*<I>A</I>*<I>R</I>=[</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><I>a</I><SUB>00</SUB></TD><TD ALIGN=center NOWRAP>...</TD><TD ALIGN=center NOWRAP><I>a</I><SUB>02</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>03</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>04</SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>a</I><SUB>10</SUB></TD><TD ALIGN=center NOWRAP>...</TD><TD ALIGN=center NOWRAP><I>a</I><SUB>12</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>13</SUB></TD><TD ALIGN=center NOWRAP><I>a</I><SUB>14</SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>...</TD><TD ALIGN=center NOWRAP>...</TD><TD ALIGN=center NOWRAP>...</TD><TD ALIGN=center NOWRAP>...</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>...</TD><TD ALIGN=center NOWRAP>...</TD><TD ALIGN=center NOWRAP>...</TD><TD ALIGN=center NOWRAP>...</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>...</TD><TD ALIGN=center NOWRAP>...</TD><TD ALIGN=center NOWRAP>...</TD><TD ALIGN=center NOWRAP>...</TD></TR>
+</TABLE><P>
+]
+où les ... sont des expressions des coefficients de <I>A</I>.<BR>
+On va faire cette transformation successivement sur la deuxième colonne de
+la matrice <I>B</I>1 pour obtenir <I>B</I>2 etc...<BR>
+On appellera <I>B</I> toutes les matrices obtenues successivement.<BR>
+Si on doit échanger les deux lignes <I>k</I> et <I>j</I> pour avoir un pivot, cela 
+revient à multiplier à gauche la matrice <I>B</I> par une matrice <I>E</I> égale 
+à la matrice identité ayant subie l’échange des deux lignes <I>k</I> et <I>j</I>. 
+Il faudra alors, aussi multiplier à droite la matrice <I>B</I> par <I>E</I> c’est à 
+dire échanger les deux colonnes <I>k</I> et <I>j</I> de <I>B</I>
+</P><H3 CLASS="subsection"><A NAME="htoc397">14.5.2</A>  Le programme de réduction de Hessenberg</H3><PRE CLASS="verbatim"> 
+//A est mise sous forme de hessenberg B avec 
+//P matrice de passage
+//p indique si il y a eu une permutation de lignes
+//a chaque etape la matrice inv(R) 
+// met des zeros sous la "sous diagonale"
+//B=P^-1AP ex A:=[[5,2,1],[5,2,2],[-4,2,1]]
+//A:=[[5,2,1,1],[5,2,2,1],[5,2,2,1],[-4,2,1,1]]
+hessenbg(A):={
+  local B,R,P,n,j,k,l,temp,p;
+  n:=size(A);
+  P:=idn(n);
+  p:=seq(k,k,0,n-1);
+  B:=A;
+  l:=1;
+  while (l&lt;n) {
+     R:=idn(n);
+     if (B[l,l-1]!=0){
+     for (k:=l+1;k&lt;n;k++){
+ R[k,l]:=B[k,l-1]/B[l,l-1];
+ //on multiplie B a droite par inv(R)
+        for (j:=l;j&lt;n;j++){
+   B[k,j]:=B[k,j]-B[l,j]*B[k,l-1]/B[l,l-1];
+ } 
+ B[k,l-1]:=0;
+      }
+     //on multiplie B et P a gauche par R
+     B:=B*R;
+     P:=P*R;
+    l:=l+1;
+    }
+  else {
+    k:=l;
+    while ((k&lt;n-1) and (B[k,l-1]==0)) {
+    k:=k+1;
+    }
+    
+    if (B[k,l-1]==0) {l:=l+1;}
+    else{
+    //B[k,l]!=0) on echange ligne l et k ds B
+    for (j:=l-1;j&lt;n;j++){
+    temp:=B[k,j];
+    B[k,j]:=B[l,j];
+    B[l,j]:=temp;
+    };
+    //A[k,l]!=0) on echange colonne l et k ds B et P
+    for (j:=0;j&lt;n;j++){
+    temp:=B[j,k];
+    B[j,k]:=B[j,l];
+    B[j,l]:=temp;
+    };
+    for (j:=0;j&lt;n;j++){
+    temp:=P[j,k];
+    P[j,k]:=P[j,l];
+    P[j,l]:=temp;
+    };
+    temp:=p[k];
+    p[k]:=p[l];
+    p[l]:=temp;
+  }
+  }
+  }
+  return(p,P,B);
+};
+</PRE><P><I>p</I> nous dit les échanges effectués et on a <I>B</I>=<I>P</I><SUP>−1</SUP>*<I>A</I>*<I>P</I>.<BR>
+Attention !! si <I>A</I> est symétrique, cette transformation détruit la 
+symétrie et on n’a donc pas une tridiagonalistion d’une matrice symtrisue par cette méthode.
+</P><H2 CLASS="section"><A NAME="toc108"></A><A NAME="htoc398">14.6</A>  Tridiagonalisation des matrices symétriques avec des rotations</H2><P>
+On a le théorème :
+Pour toute matrice symétrique <I>A</I> d’ordre <I>n</I>, il existe une matrice <I>P</I>, 
+produit de <I>n</I>−2 matrices de rotations, telle que <I>B</I>=<SUP><I>t</I></SUP><I>P</I>*<I>A</I>*<I>P</I> soit 
+tridiagonale : c’est la réduction de Givens.
+</P><H3 CLASS="subsection"><A NAME="htoc399">14.6.1</A>  Matrice de rotation associée à <I>e</I><SUB><I>p</I></SUB>, <I>e</I><SUB><I>q</I></SUB></H3><P>
+Dans ℝ<SUP><I>n</I></SUP>, on appelle rotation associée à <I>e</I><SUB><I>p</I></SUB>, <I>e</I><SUB><I>q</I></SUB>,
+une rotation d’angle <I>t</I> du plan dirigé par <I>e</I><SUB><I>p</I></SUB>, <I>e</I><SUB><I>q</I></SUB> où <I>e</I><SUB><I>k</I></SUB> désigne
+le <I>k</I>+1-ième vecteur de la base canonique de ℝ<SUP><I>n</I></SUP> (la base canonique est <I>e</I><SUB>0</SUB>=[1,0..,0], <I>e</I><SUB>1</SUB>=[0,1,0..,0] etc...).<BR>
+Si ℝ<SUP><I>n</I></SUP> est rapporté à la base canonique, à cette rotation est 
+associée une matrice <I>G</I>(<I>n</I>,<I>p</I>,<I>q</I>,<I>t</I>) dont le terme général est :<BR>
+si <I>k</I>∉{<I>p</I>,<I>q</I>}, <I>g</I><SUB><I>k</I>,<I>k</I></SUB>=1<BR>
+<I>g</I><SUB><I>p</I>,<I>p</I></SUB>=<I>g</I><SUB><I>q</I>,<I>q</I></SUB>=cos(<I>t</I>)<BR>
+<I>g</I><SUB><I>p</I>,<I>q</I></SUB>=−<I>g</I><SUB><I>q</I>,<I>p</I></SUB>=−sin(<I>t</I>)<BR>
+Voici un matrice de rotation associée à <I>e</I><SUB>1</SUB>, <I>e</I><SUB>3</SUB> (deuxième et 
+quatrième vecteur de base) de ℝ<SUP>5</SUP> :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎡<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎢<BR>
+⎣</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>cos(<I>t</I>)</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>−sin(<I>t</I>)</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>sin(<I>t</I>)</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>cos(<I>t</I>)</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎤<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎥<BR>
+⎦</TD></TR>
+</TABLE><P>
+et le programme qui construit une telle matrice :<BR>
+</P><PRE CLASS="verbatim">rota(n,p,q,t):={
+local G;
+G:=idn(n);
+G[p,p]:=cos(t);
+G[q,q]:=cos(t);
+G[p,q]:=-sin(t);
+G[q,p]:=sin(t);
+return G;
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc400">14.6.2</A>  Réduction de Givens</H3><P>
+Soit <I>A</I> une matrice symétrique. On va chercher <I>G</I>1 une matrice de rotation
+associée à <I>e</I><SUB>1</SUB>,<I>e</I><SUB>2</SUB> pour annuler les coefficients 2,0 et 0,2
+de <SUP><I>t</I></SUP><I>G</I>1*<I>A</I>*<I>G</I>1.<BR>
+Regardons un exemple :<BR>
+<TT>G1:=[[1,0,0,0,0],[0,cos(t),-sin(t),0,0],[0,sin(t),cos(t),0,0],</TT><BR>
+<TT>[0,0,0,1,0],[0,0,0,0,1]]</TT><BR>
+<TT>A:=[[a,b,c,d,e],[b,f,g,h,j],[c,g,k,l,m],[d,h,l,n,o],[e,j,m,o,r]]</TT><BR>
+On obtient :<BR>
+<SUP><I>t</I></SUP><I>G</I>1=[</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>cos(<I>t</I>)</TD><TD ALIGN=right NOWRAP>sin(<I>t</I>)</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>−sin(<I>t</I>)</TD><TD ALIGN=right NOWRAP>cos(<I>t</I>)</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>1</TD></TR>
+</TABLE><P>
+], 
+<I>A</I>=
+[</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>a</I></TD><TD ALIGN=right NOWRAP><I>b</I></TD><TD ALIGN=right NOWRAP><I>c</I></TD><TD ALIGN=right NOWRAP><I>d</I></TD><TD ALIGN=right NOWRAP><I>e</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>b</I></TD><TD ALIGN=right NOWRAP><I>f</I></TD><TD ALIGN=right NOWRAP><I>g</I></TD><TD ALIGN=right NOWRAP><I>h</I></TD><TD ALIGN=right NOWRAP><I>j</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>c</I></TD><TD ALIGN=right NOWRAP><I>g</I></TD><TD ALIGN=right NOWRAP><I>k</I></TD><TD ALIGN=right NOWRAP><I>l</I></TD><TD ALIGN=right NOWRAP><I>m</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>d</I></TD><TD ALIGN=right NOWRAP><I>h</I></TD><TD ALIGN=right NOWRAP><I>l</I></TD><TD ALIGN=right NOWRAP><I>n</I></TD><TD ALIGN=right NOWRAP><I>o</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>e</I></TD><TD ALIGN=right NOWRAP><I>j</I></TD><TD ALIGN=right NOWRAP><I>m</I></TD><TD ALIGN=right NOWRAP><I>o</I></TD><TD ALIGN=right NOWRAP><I>r</I></TD></TR>
+</TABLE><P>
+]<BR>
+On a :<BR>
+<SUP><I>t</I></SUP><I>G</I>1*<I>A</I>=
+[</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>a</I></TD><TD ALIGN=right NOWRAP><I>b</I></TD><TD ALIGN=right NOWRAP><I>c</I></TD><TD ALIGN=right NOWRAP><I>d</I></TD><TD ALIGN=right NOWRAP><I>e</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>b</I>cos(<I>t</I>)+<I>c</I>sin(<I>t</I>)</TD><TD ALIGN=right NOWRAP><I>f</I>cos(<I>t</I>)+<I>g</I>sin(<I>t</I>)</TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP>..</TD></TR>
+<TR><TD ALIGN=right NOWRAP>−<I>b</I>sin(<I>t</I>)+<I>c</I>cos(<I>t</I>)</TD><TD ALIGN=right NOWRAP>−<I>f</I>sin(<I>t</I>)+<I>g</I>cos(<I>t</I>)</TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP>..</TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>d</I></TD><TD ALIGN=right NOWRAP><I>h</I></TD><TD ALIGN=right NOWRAP><I>l</I></TD><TD ALIGN=right NOWRAP><I>n</I></TD><TD ALIGN=right NOWRAP><I>o</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>e</I></TD><TD ALIGN=right NOWRAP><I>j</I></TD><TD ALIGN=right NOWRAP><I>m</I></TD><TD ALIGN=right NOWRAP><I>o</I></TD><TD ALIGN=right NOWRAP><I>r</I></TD></TR>
+</TABLE><P>
+]<BR>
+On choisit <I>t</I> pour que −<I>b</I>sin(<I>t</I>)+<I>c</I>cos(<I>t</I>)=0 par exemple :<BR>
+cos(<I>t</I>)=<I>b</I>/√<SPAN style="text-decoration:overline">(</SPAN><I>b</I><SUP>2</SUP>+<I>c</I><SUP>2</SUP>) et sin(<I>t</I>)=<I>c</I>/√<SPAN style="text-decoration:overline">(</SPAN><I>b</I><SUP>2</SUP>+<I>c</I><SUP>2</SUP>).<BR>
+On a :<BR>
+<I>G</I>1:=[</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>cos(<I>t</I>)</TD><TD ALIGN=right NOWRAP>−sin(<I>t</I>)</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>sin(<I>t</I>)</TD><TD ALIGN=right NOWRAP>cos(<I>t</I>)</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>1</TD></TR>
+</TABLE><P>
+]<BR>
+et donc puisqu’on a choisit −<I>b</I>sin(<I>t</I>)+<I>c</I>cos(<I>t</I>)=0, on a bien annuler les 
+coefficients 2,0 et 0,2 de :<BR>
+<SUP><I>t</I></SUP><I>G</I>1*<I>A</I>*<I>G</I>1=
+[</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>a</I></TD><TD ALIGN=right NOWRAP><I>b</I>cos(<I>t</I>)+<I>c</I>sin(<I>t</I>)</TD><TD ALIGN=right NOWRAP>−<I>b</I>sin(<I>t</I>)+<I>c</I>cos(<I>t</I>)</TD><TD ALIGN=right NOWRAP><I>d</I></TD><TD ALIGN=right NOWRAP><I>e</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>b</I>cos(<I>t</I>)+<I>c</I>sin(<I>t</I>)</TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP>..</TD></TR>
+<TR><TD ALIGN=right NOWRAP>−<I>b</I>sin(<I>t</I>)+<I>c</I>cos(<I>t</I>)</TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP>..</TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>d</I></TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP><I>n</I></TD><TD ALIGN=right NOWRAP><I>o</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>e</I></TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP>..</TD><TD ALIGN=right NOWRAP><I>o</I></TD><TD ALIGN=right NOWRAP><I>r</I></TD></TR>
+</TABLE><P>
+]<BR>
+Puis on annule les coefficients 0,3 et 3,0 de l la matrice <I>A</I>1
+obtenue en formant <SUP><I>t</I></SUP><I>G</I>2*<I>A</I>1*<I>G</I>2 avec :<BR>
+<I>G</I>2:=[
+</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>cos(<I>t</I>)</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>−sin(<I>t</I>)</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>1</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>sin(<I>t</I>)</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>cos(<I>t</I>)</TD><TD ALIGN=right NOWRAP>0</TD></TR>
+<TR><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>1</TD></TR>
+</TABLE><P>
+] en choissant correctement <I>t</I> etc... 
+</P><H3 CLASS="subsection"><A NAME="htoc401">14.6.3</A>  Le programme de tridiagonalisation par la méthode de Givens</H3><PRE CLASS="verbatim">//A:=[[1,-1,2,1],[-1,1,-1,1],[2,-1,1,-1],[1,1,-1,-1]]
+//tran(R)*A*R=B si tridiagivens(A)=R,B
+//pour annuler le terme 2,0 on multiplie A par TG
+//TG[1,1]=cos(t)=TG[2,2],TG[1,2]=sin(t)=-TG[2,1], 
+//avec -sin(t)A[1,0]+cos(t)A[2,0]=0
+//TG*A multiplie par tran(TG) annule les termes 2,0 et 0,2
+//pour annuler le terme q,p (q&gt;p+1) on multiplie A par TG
+//TG[p+1,p+1]=cos(t)=TG[q,q],TG[p+1,q]=sin(t)=-TG[q,p+1], 
+//avec sin(t)A[p+1,p]=cos(t)A[q,p] 
+//donc sin(t)=A[q,p]/r et cos(t)=A[p+1,p]/r
+//avec r:=sqrt((A[p+1,p])^2+(A[q,p])^2)
+tridiagivens(A):={
+  local n,p,q,r,TG,R,c,s;
+  n:=size(A);
+  R:=idn(n);
+  for (p:=0;p&lt;n-2;p++) {
+    for (q:=p+2;q&lt;n;q++) {
+    r:=sqrt((A[p+1,p])^2+(A[q,p])^2);
+    if (r!=0) {
+    c:=normal(A[p+1,p]/r);
+    s:=normal(A[q,p]/r);
+    TG:=idn(n);
+    TG[p+1,p+1]:=c;
+    TG[q,q]:=c;
+    TG[p+1,q]:=s;    
+    TG[q,p+1]:=-s;
+    TG:=normal(TG);
+    A:=normal(TG*A);
+    A:=normal(A*tran(TG));
+    A:=normal(A);
+    R:=normal(R*tran(TG));
+    }
+    }
+  }
+  return (R,A);
+}   
+</PRE><P>On tape :<BR>
+<TT>A:=[[1,-1,2,1],[-1,1,-1,1],[2,-1,1,-1],[1,1,-1,-1]]</TT><BR>
+<TT>tridiagivens(A)</TT><BR>
+On obtient :
+</P><PRE CLASS="verbatim">[[1,0,0,0],[0,(-(sqrt(6)))/6,
+(-(sqrt(4838400000)))/201600,
+(-(sqrt(2962400000)))/64400],
+[0,sqrt(6)/3,sqrt(4838400000)/252000,
+(-(sqrt(26661600000)))/322000],
+[0,sqrt(6)/6,(-(26*sqrt(210)))/420,12*sqrt(35)/420]],
+[[1,sqrt(6),0,0],
+[sqrt(6),1/3,sqrt(275990400000)/266400,0],
+[0,sqrt(209026944000)/231840,73/105,8*sqrt(6)/35],
+[0,0,8*sqrt(6)/35,1/-35]]
+</PRE><P>On tape :<BR>
+<TT>A:=[[1,-1,2,0],[-1,1,-1,1],[2,-1,1,-1],[1,1,-1,-1]]</TT><BR>
+<TT>tridiagivens(A)</TT><BR>
+On obtient :
+</P><PRE CLASS="verbatim">[[1,0,0,0],[0,(-(sqrt(6)))/6,
+(-(sqrt(4838400000)))/201600,(-(sqrt(2962400000)))/64400],
+[0,sqrt(6)/3,sqrt(4838400000)/252000,
+(-(sqrt(26661600000)))/322000],
+[0,sqrt(6)/6,(-(26*sqrt(210)))/420,12*sqrt(35)/420]],
+[[1,5*sqrt(6)/6,13*sqrt(210)/210,(-(sqrt(35)))/35],
+[sqrt(6),1/3,sqrt(275990400000)/266400,0],
+[0,sqrt(209026944000)/231840,73/105,8*sqrt(6)/35],
+[0,0,8*sqrt(6)/35,1/-35]]
+</PRE><H2 CLASS="section"><A NAME="toc109"></A><A NAME="htoc402">14.7</A>  Tridiagonalisation des matrices symétriques avec Householder</H2><P>
+On a le théorème :
+Pour toute matrice symétrique <I>A</I> d’ordre <I>n</I>, il existe une matrice <I>P</I>, 
+produit de <I>n</I>−2 matrice de Householder (donc <I>P</I><SUP>−1</SUP>=<SUP><I>t</I></SUP><I>P</I>), telle que 
+<I>B</I>=<SUP><I>t</I></SUP><I>P</I>*<I>A</I>*<I>P</I> soit tridiagonale.<BR>
+Si <I>A</I> n’est pas symétrique, il existe une matrice <I>P</I>, 
+produit de <I>n</I>−2 matrice de Householder, telle que <I>B</I>= <SUP><I>t</I></SUP><I>P</I>*<I>A</I>*<I>P</I> soit 
+un matrice de Hessenberg c’est à dire une matrice dont les coefficient 
+sous-tridiagonaux sonts nuls : c’est la réduction de Householder.<BR>
+On va dans cette section écrire un programme qui renverra <I>P</I> et <I>B</I>.</P><H3 CLASS="subsection"><A NAME="htoc403">14.7.1</A>  Matrice de Householder associée à <TT>v</TT></H3><P>
+Soit un hyperplan défini par son vecteur normal <TT>v</TT>.<BR>
+On appelle matrice de Householder, la matrice d’une symétrie orthogonale 
+<TT>hv</TT> par rapport à cet hyperplan. On a :<BR>
+<TT>hv(u):=u-2(dot(v,u))/norm(v)</TT><CODE><TT>^</TT></CODE><TT>2*v</TT><BR>
+et la matrice de Householder associée est :<BR>
+<TT>Hv=idn(n)-2*tran(v)*[v]/(v*v)</TT>.<BR>
+On a :<BR>
+<TT>Hv=tran(Hv)=inv(Hv)</TT>
+Par convention la matrice unité est une matrice de Householder.<BR>
+On écrit le programme houdeholder qui à un vecteur <TT>v</TT> renvoie
+la matrice de Householder associé à <TT>v</TT>.
+</P><PRE CLASS="verbatim">householder(v):={
+  local n,w,nv;
+  n:=size(v);
+  nv:=v*v;
+  w:=tran(v);
+  return normal(idn(n)-2*w*[v]/nv);
+};
+</PRE><H3 CLASS="subsection"><A NAME="htoc404">14.7.2</A>  Matrice de Householder annulant les dernières composantes de <TT>a</TT></H3><P>
+Soit <TT>Hv</TT> la matrice de Householder associée à <TT>v</TT>.<BR>
+Etant donné un vecteur <TT>a</TT> non nul, il existe deux vecteurs <TT>v</TT> tels 
+que le vecteur 
+<TT>b=Hv*tran(a)</TT> a ses <I>n</I>−1 dernières composantes nulles (<TT>Hv</TT> étant
+la matrice de Householder associé à <TT>v</TT>).<BR>
+Plus précisement, si <TT>e0=[1,0,..0]</TT>,<TT>e1=[0,1,0,..0]</TT> etc...,
+les vecteurs <TT>v</TT> sont :<BR>
+<TT>v1=a+norm(a)*e0</TT> et <TT>v2=a-norm(a)*e0</TT>.<BR>
+Plus généralement, il existe deux vecteurs <TT>v</TT> 
+tels que le vecteur 
+<TT>b=Hv*tran(a)</TT> a ses composantes à partir de la 
+<TT>(l+1)</TT>-ième nulles.<BR>
+Plus précisement, si <TT>el=[0,..0,1,0,..0]</TT> (ou toutes les composantes sont
+nulles sauf <TT>el[l]=1</TT>), et si
+<TT>al=[0,...,0,a[l],..,a[n-1]]</TT>, les vecteurs <TT>v</TT> sont :<BR>
+<TT>v1=al+norm(al)*el</TT> et <TT>v2=al-norm(al)*el</TT>.<BR>
+On 'ecrit le programme qui étant donné <TT>a</TT> et <TT>l</TT> renvoie si 
+<TT>a</TT> est nul renvoie la matrice identité et si <TT>a</TT> est non nul renvoie
+la matrice de Householder associée à <TT>v=al+eps*norm(al)*el</TT> 
+en choisisant <TT>eps</TT> égal au signe de <TT>al</TT> si <TT>al</TT> est réelle et
+<TT>eps</TT>=1 sinon.
+</P><PRE CLASS="verbatim">//renvoie une matrice hh= H tel que b:=H*tran(a) 
+//a ses n-l-1 dernieres comp=0 
+//ou encore b[l+1]=...b[n-1]=0
+make_house(a,l):={
+  local n,na,el,v;
+  n:=size(a);
+  for (k:=0;k&lt;l;k++) a[k]:=0;
+  na:=normal(norm(a)^2);
+  na:=sqrt(na);
+  if (na==0) return idn(n);
+  el:=makelist(0,1,n);
+  el[l]:=1;
+  if (im(a[l])==0 and a[l]&lt;0) v:=normal(a-na*el); 
+    else v:=normal(a+na*el);
+  return householder(v);
+};
+</PRE><H3 CLASS="subsection"><A NAME="htoc405">14.7.3</A>  Réduction de Householder</H3><P>
+Le programme <TT>tridiaghouse(A)</TT> renvoie <TT>H,B</TT> tel que 
+<TT>normal(H*A*tran(H))=B</TT> (ou encore <TT>normal(tran(H)*B*H)=A</TT>)
+avec <TT>H</TT> est le produit de matrice 
+de householder (tran(H)=inv(H)) et <TT>B</TT> est une matrice de hessenberg (ou 
+bien <TT>B</TT> est une matrice tridiagonale si <TT>tran(A)=A</TT>).
+</P><PRE CLASS="verbatim">tridiaghouse(A):={
+  local n, a, H,Ha;
+  B:=A;
+  n:=size(A);
+  H:=idn(n);
+  for (l:=0;l&lt;n-2;l++) {
+  a:=col(B,l);
+  Ha:=make_house(a,l+1);
+  B:=normal(Ha*B*Ha);
+  H:=normal(Ha*H);
+  }
+  //normal(H*A*tran(H))=B et B de hessenberg 
+  //(ou tridiagonale si tran(A)=A)
+  return(H,B);
+};
+</PRE><P>On tape :<BR>
+<TT>A:=[[3,2,2,2,2],[2,1,2,-1,-1],[2,2,1,-1,1],</TT><BR>
+<TT>[2,-1,-1,3,1],[2,-1,1,1,2]]</TT><BR>
+<TT>H,B:tridiaghouse(A)</TT><BR>
+On obtient :<BR>
+<TT>[[1,0,0,0,0],[0,1/-2,1/-2,1/-2,1/-2],[0,5*sqrt(11)/22,</TT><BR>
+<TT>(-(3*sqrt(11)))/22,sqrt(11)/22,(-(3*sqrt(11)))/22],</TT><BR>
+<TT>[0,0,22*sqrt(2)/44,0,(-(22*sqrt(2)))/44],[0,22*sqrt(22)/242,</TT><BR>
+<TT>22*sqrt(22)/484,(-(22*sqrt(22)))/121,22*sqrt(22)/484]],</TT><BR>
+<TT>[[3,-4,0,0,0],[-4,9/4,sqrt(11)/4,0,0],[0,sqrt(11)/4,3/4,</TT><BR>
+<TT>44*sqrt(22)/121,0],[0,0,44*sqrt(22)/121,1/2,286*sqrt(11)/484],</TT><BR>
+<TT>[0,0,0,286*sqrt(11)/484,7/2]]</TT><BR>
+On vérifie et on tape :<BR>
+<TT>normal(H*A*tran(H))</TT><BR>
+On tape :<BR>
+<TT>A:=[[1,2,3],[2,3,4],[3,4,5]]</TT><BR>
+<TT>H,B:=tridiaghouse(A)</TT><BR>
+On obtient :<BR>
+<TT>[[1,0,0],[0,(-(2*sqrt(13)))/13,(-(3*sqrt(13)))/13],</TT><BR>
+<TT>[0,(-(3*sqrt(13)))/13,(2*sqrt(13))/13]],</TT><BR>
+<TT>[[1,-(sqrt(13)),0],[-(sqrt(13)),105/13,8/13],[0,8/13,(-1)/13]]</TT><BR>
+On vérifie et on tape :<BR>
+<TT>normal(H*A*tran(H))</TT>
+</P><HR>
+<A HREF="casrouge013.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge015.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

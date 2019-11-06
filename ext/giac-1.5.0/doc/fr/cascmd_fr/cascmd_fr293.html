@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Transformer une expression en une fonction : unapply</title>
+</head>
+<body >
+<a href="cascmd_fr292.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr294.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec375" class="subsection">6.17.2  Transformer une expression en une fonction : <span style="font-family:monospace">unapply</span></h3>
+<p><a id="hevea_default505"></a>
+Pour transformer une expression en une fonction, on utilise la 
+commande <span style="font-family:monospace">unapply</span>.<br>
+<span style="font-family:monospace">unapply</span> a deux arguments une expression et le nom d’une (ou des)
+variable(s).<br>
+<span style="font-family:monospace">unapply</span> renvoie une fonction définie à partir de cette expression et 
+de la (ou des) variable(s) donnée(s) en argument.</p><p><span style="font-weight:bold">Attention</span> lorsqu’on définit une fonction,
+le membre de droite de l’affectation n’est pas évalué,
+ainsi l’écriture <code>g:=x^2; f(x):=g</code>
+ne définit pas la fonction <span style="font-style:italic">f</span>: <span style="font-style:italic">x</span> → <span style="font-style:italic">x</span><sup>2</sup> mais la fonction
+<span style="font-style:italic">f</span>: <span style="font-style:italic">x</span> → <span style="font-style:italic">g</span>.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">g:= sin(x+1); f:=unapply(g,x)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(sin(x+1), (x)-&gt;sin(x+1))</span></div><p> 
+On a alors la variable <span style="font-family:monospace">g</span> qui contient une expression symbolique 
+et la variable <span style="font-family:monospace">f</span> qui contient une fonction.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">unapply(exp(x+2),x)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(x)-&gt;exp(x+2)</span></div><p> 
+On tape :
+</p><div class="center"><span style="font-family:monospace">f:=unapply(lagrange([1,2,3],[4,8,12]),x)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(x)-&gt;4+4*(x-1)</span></div><p> 
+On tape :
+</p><div class="center"><span style="font-family:monospace">f:=unapply(integrate(log(t),t,1,x),x)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(x)-&gt;x*log(x)-x+1</span></div><p> 
+On tape :
+</p><div class="center"><span style="font-family:monospace">f:=unapply(integrate(log(t),t,1,x),x)</span></div><div class="center"><span style="font-family:monospace">f(x)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">x*log(x)-x+1</span></div><p>
+<span style="font-weight:bold">Remarque</span>
+Pour définir, à partir d’une fonction de 2 variables <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">w</span>), la fonction
+<span style="font-style:italic">g</span> qui à <span style="font-style:italic">w</span> fait correspondre la fonction <span style="font-style:italic">g</span>(<span style="font-style:italic">w</span>) définie par :
+<span style="font-style:italic">g</span>(<span style="font-style:italic">w</span>)(<span style="font-style:italic">x</span>)=<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">w</span>), on utilise aussi <span style="font-family:monospace">unapply</span>.<br>
+On tape : 
+</p><div class="center"><span style="font-family:monospace">f(x,w):=2*x+w</span></div><div class="center"><span style="font-family:monospace">g(w):=unapply(f(x,w),x)</span></div><div class="center"><span style="font-family:monospace">g(3)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">x-&gt;2</span>·<span style="font-family:monospace"> x+3</span></div>
+<hr>
+<a href="cascmd_fr292.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr294.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Le cercle et ses arcs : circle cercle</title>
+</head>
+<body >
+<a href="cascmd_fr945.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr947.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1153" class="subsection">10.13.1  Le cercle et ses arcs : <span style="font-family:monospace">circle cercle</span></h3>
+<p><a id="hevea_default1849"></a><a id="hevea_default1850"></a><a id="sec:cercle"></a>
+<span style="font-weight:bold">Voir aussi :</span> <a href="cascmd_fr947.html#sec%3Aarc">10.13.2</a> pour les arcs de cercle.<br>
+<span style="font-weight:bold">Voir aussi :</span> <a href="index.html#sec%3Acercle3d">11.10</a> pour les cercles de la 
+géométrie 3-d.<br>
+<span style="font-family:monospace">cercle</span> a un ou deux arguments pour dessiner un cercle et de 
+quatre à six arguments pour dessiner un arc de cercle.<br>
+Description des arguments :
+</p><ul class="itemize"><li class="li-itemize">
+Avec un argument : l’argument de <span style="font-family:monospace">cercle</span> est alors l’équation du 
+cercle ayant comme variables <span style="font-style:italic">x</span> et <span style="font-style:italic">y</span>, 
+</li><li class="li-itemize">Avec deux arguments <span style="font-family:monospace">cercle</span> désigne un cercle :<br>
+ Le premier argument est un point ou un nombre complexe considéré comme 
+l’affixe d’un point.<br>
+C’est le deuxième argument qui détermine si on trace le cercle avec la 
+donnée de son centre et de son rayon (le deuxième argument est alors
+un nombre complexe de module le rayon) ou avec la donnée de son
+diamètre (le deuxième argument est un point).<br>
+- <span style="font-family:monospace">cercle(C,r)</span> où <span style="font-family:monospace">C</span> est un point (ou un nombre complexe) et 
+<span style="font-family:monospace">r</span> un nombre complexe, trace le cercle de centre <span style="font-family:monospace">C</span> et de rayon le 
+module de <span style="font-family:monospace">r</span>. Cela est utile, par exemple, pour avoir le cercle de 
+centre <span style="font-family:monospace">A</span> qui passe par <span style="font-family:monospace">B</span> on tape <span style="font-family:monospace">cercle(A,B-A)</span>.<br>
+- <span style="font-family:monospace">cercle(A,B)</span> où <span style="font-family:monospace">A</span> est un point ou un nombre complexe et 
+<span style="font-family:monospace">B</span> un point, trace le cercle de diamètre <span style="font-family:monospace">AB</span>.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">cercle(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2*x-2*y)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">Le cercle de centre 1+i et de rayon sqrt(2) est tracé</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">cercle(-1,i)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">Le cercle de centre -1 et de rayon 1 est tracé</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">cercle(-1, point(i))</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">Le cercle de diamétre -1,i</span></div>
+<span style="font-weight:bold">Attention !</span>
+Il faut bien voir la différence entre :<br>
+<span style="font-family:monospace">cercle(A,B-A)</span>, <span style="font-family:monospace">cercle(A,B)</span> et <span style="font-family:monospace">cercle(A,affixe(B)-A)</span>.<br>
+<span style="font-family:monospace">A:=point(1);B:=point(i/2);</span>
+<span style="font-family:monospace">cercle(A,B-A)</span> ou <span style="font-family:monospace">cercle(A,affixe(B-A))</span> ou <span style="font-family:monospace">cercle(A,abs(B-A))</span> 
+dessine le cercle de centre <span style="font-family:monospace">A</span> passant par <span style="font-family:monospace">B</span>,<br>
+<span style="font-family:monospace">cercle(A,B))</span> dessine le cercle de diamètre <span style="font-family:monospace">A,B</span>,<br>
+<span style="font-family:monospace">cercle(A,affixe(B)-A)</span> dessine le cercle de diamètre <span style="font-family:monospace">A,C</span> où
+<span style="font-family:monospace">C</span> est le point d’affixe <span style="font-family:monospace">(-2+i)/2</span>. En effet <span style="font-family:monospace">affixe(B)-A)</span> 
+désigne un point <span style="font-family:monospace">C</span> tel que :<br>
+<span style="font-family:monospace">affixe(C)=affixe(B)-affixe(A)=i/2-1=(-2+i)/2</span>.
+</li><li class="li-itemize">Avec de quatre à six arguments, <span style="font-family:monospace">cercle</span> désigne un arc de 
+cercle. Dans ce cas les deux premiers arguments déterminent le cercle qui 
+porte l’arc (voir ci-dessus) et les deux arguments suivants sont les angles 
+au centre des points qui délimitent l’arc et les deux derniers arguments 
+sont des noms de variables qui contiendront les points qui délimitent 
+l’arc. Le troisième et le quatrième argument sont les mesures des 
+angles au centre des points qui délimitent l’arc, ces angles sont mesurés
+en radians (ou en degrés) à partir de l’axe défini par les deux 
+premiers arguments si le deuxième argument est un point (définition du 
+cercle par son diamètre) ou de l’axe défini par son centre <span style="font-style:italic">C</span> et le 
+point <span style="font-style:italic">A</span>=<span style="font-style:italic">C</span>+<span style="font-style:italic">r</span> si le deuxième argument est un complexe égal à <span style="font-style:italic">r</span> 
+(définition du cercle par son centre et un complexe dont le module est 
+égal au rayon).<br>
+Le cinquième et le sixième argument ne sont pas obligatoires et 
+servent à définir les extrémités de l’arc. <br>
+On tape :
+<div class="center"><span style="font-family:monospace">cercle(-1,1,0,pi/4,A,B)</span></div>
+On obtient si on a coché <span style="font-family:monospace">radian</span> dans la configuration du <span style="font-family:monospace">cas</span> 
+(bouton donnant la ligne d’état) :
+<div class="center"><span style="font-family:monospace">L’arc AB (A=point(0) et B=point(</span>−1+√<span style="text-decoration:overline">2</span>+<span style="font-style:italic">i</span>*√<span style="text-decoration:overline">2</span>/2<span style="font-family:monospace">)) du cercle de centre -1 et de rayon 1 est tracé</span></div>
+En effet l’angle est compté à partir de l’axe (-1,0) et donc l’angle 0 
+est le point(0).<br>
+On tape :
+<div class="center"><span style="font-family:monospace">cercle(-1,i,0,pi/4,A,B)</span></div>
+On obtient si on a coché <span style="font-family:monospace">radian</span> dans la configuration du <span style="font-family:monospace">cas</span> 
+(bouton donnant la ligne d’état) :
+<div class="center"><span style="font-family:monospace">L’arc AB (A=point(-1+i) et B=point(</span>−1−√<span style="text-decoration:overline">2</span>+<span style="font-style:italic">i</span>*√<span style="text-decoration:overline">2</span>/2<span style="font-family:monospace">)) du cercle de centre -1 et de rayon 1 est tracé</span></div>
+En effet, l’angle est compté à partir de l’axe (-1,i-1) et donc l’angle 0 
+est le point d’affixe i-1.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">cercle(-1, point(i),0,pi/4,A,B)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">L’arc AB (A=point(i) et B=point(</span>−1+<span style="font-style:italic">i</span>*(1+√<span style="text-decoration:overline">2</span>)/2<span style="font-family:monospace">)) du cercle de diamétre -1,i</span></div>
+En effet, l’angle est compté à partir de l’axe (-1,i) et donc l’angle 0 est
+le point d’affixe i.
+</li></ul>
+<hr>
+<a href="cascmd_fr945.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr947.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

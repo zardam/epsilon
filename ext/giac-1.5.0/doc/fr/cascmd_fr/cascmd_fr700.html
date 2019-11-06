@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Norme minimale d’un système linéaire : LSQ lsq</title>
+</head>
+<body >
+<a href="cascmd_fr699.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr701.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec855" class="subsection">6.63.9  Norme minimale d’un système linéaire : <span style="font-family:monospace">LSQ lsq</span></h3>
+<p><a id="hevea_default1274"></a><a id="hevea_default1275"></a>
+<span style="font-family:monospace">LSQ</span> ou <span style="font-family:monospace">lsq</span> a pour arguments une matrice <span style="font-family:monospace">A</span> et un vecteur (rep une 
+matrice) <span style="font-family:monospace">B</span> qui représentent le (resp les) système(s) linéaire(s) 
+<span style="font-family:monospace">A*X=B</span> si <span style="font-family:monospace">B</span> est un vecteur (resp une matrice).<br>
+<span style="font-family:monospace">LSQ(A,B)</span> ou <span style="font-family:monospace">lsq(A,B)</span> calcule la norme minimale selon la méthode 
+des moindres carrés du système linéaire <span style="font-family:monospace">A*X=B</span> sur- ou 
+sous-déterminé c’est pour estimer la solution d’un système linéaire 
+<span style="font-family:monospace">A*X=B</span> (si <span style="font-family:monospace">B</span> est un vecteur) ou des systèmes linéaires 
+<span style="font-family:monospace">A*X=B</span> (si <span style="font-family:monospace">B</span> est une matrice) pour :
+</p><ul class="itemize"><li class="li-itemize">
+un système sur-déterminé (on a plus de lignes que de colonnes)
+<ul class="itemize"><li class="li-itemize">
+si <span style="font-family:monospace">B</span> est un vecteur : on cherche <span style="font-family:monospace">X</span> de norme euclidienne 
+minimum qui minimise la norme euclidienne de <span style="font-family:monospace">(AX-B)</span>.
+</li><li class="li-itemize">si <span style="font-family:monospace">B</span> est une matrice :
+on cherche <span style="font-family:monospace">Xj</span> de norme euclidienne minimum parmi les solutions qui 
+minimise la norme euclidienne de <span style="font-family:monospace">(AXj-Bj)</span>
+</li></ul>
+</li><li class="li-itemize">un système sous determiné (en général on a plus de colonnes que 
+de lignes)<br>
+ On cherche <span style="font-family:monospace">X</span> qui minimise la norme de Frobenius de <span style="font-family:monospace">(AX-B)</span>
+(la norme de Frobenius d’une matrice <span style="font-style:italic">M</span> est √<span style="text-decoration:overline">∑</span><sub><span style="text-decoration:overline"><span style="font-style:italic">j</span></span><span style="text-decoration:overline">,</span><span style="text-decoration:overline"><span style="font-style:italic">k</span></span></sub><span style="text-decoration:overline">|</span><span style="text-decoration:overline"><span style="font-style:italic">M</span></span><span style="text-decoration:overline">(</span><span style="text-decoration:overline"><span style="font-style:italic">j</span></span><span style="text-decoration:overline">,</span><span style="text-decoration:overline"><span style="font-style:italic">k</span></span><span style="text-decoration:overline">)|</span><sup><span style="text-decoration:overline">2</span></sup>).
+</li><li class="li-itemize">un système exactement déterminé (le nombre de colonnes est égal 
+au nombre de lignes et <span style="font-family:monospace">A</span> est inversible).<br>
+On utilise <span style="font-family:monospace">inv(A)*B</span> pour avoir <span style="font-family:monospace">X</span> qui produit des résultats faux 
+en calcul approché si la matrice est mal conditionnée (équations 
+indépendantes proche l’une de l’autre)
+</li></ul><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">LSQ([[1,2],[3,4]],[5,11])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1],[2]]</span></div><p> 
+En effet si <span style="font-family:monospace">X:=[[1],[2]]</span>, on a <span style="font-family:monospace">[[1,2],[3,4]]*X=[[5],[11]]</span>
+On tape :
+</p><div class="center"><span style="font-family:monospace">LSQ([[1,2],[3,4]],[7,9])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[-5],[6]]</span></div><p> 
+En effet si <span style="font-family:monospace">X:=[[-5],[6]]</span>, on a <span style="font-family:monospace">[[1,2],[3,4]]*X=[[7],[9]]</span>
+On tape :
+</p><div class="center"><span style="font-family:monospace">LSQ([[1,2],[3,4]],[[5,7],[11,9]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1,-5],[2,6]]</span></div><p> 
+En effet si <span style="font-family:monospace">X:=[[1,-5],[2,6]]</span>, on a <span style="font-family:monospace">[[1,2],[3,4]]*X=[[5,7],[11,9]]</span>
+On tape :
+</p><div class="center"><span style="font-family:monospace">LSQ([[1,2],[3,4],[3,6]],[5,11,13])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[11/5],[11/10]]</span></div><p> 
+En effet puisque<span style="font-family:monospace">linsolve([[1,2],[3,4],[3,6]]*[x,y]-[5,11,13],[x,y])</span> 
+renvoie <span style="font-family:monospace">[]</span>, on cherche la norme minimum de <span style="font-family:monospace">C</span> définit par :<br>
+ <span style="font-family:monospace">C:= [[1,2],[3,4],[3,6]]*[x,y]-[5,11,13]</span>.<br>
+On a :<br>
+<span style="font-family:monospace">norm(C)</span> renvoie :<br>
+<span style="font-family:monospace">sqrt(19*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+64*x*y-154*x+56*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-264*y+315)</span><br>
+<span style="font-family:monospace">gauss(19*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+64*x*y-154*x*z+56*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-264*y*z+315*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,[x,y,z])</span> renvoie :<br>
+<span style="font-family:monospace">((19*x+32*y-77*z)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)/19+((40/19*y+(-44)/19*z)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)/(40/19)+(2*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)/5</span><br>
+<span style="font-family:monospace">linsolve([19*x+32*y-77=0,40/19*y+(-44)/19=0],[x,y])</span> renvoie :<br>
+<span style="font-family:monospace">[11/5,11/10]</span><br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">LSQ([[1,2],[3,4],[3,6]],[[5,-1],[11,-1],[13,-3]]</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[11/5,1],[11/10,-1]]</span></div><p> 
+En effet <span style="font-family:monospace">linsolve([[1,2],[3,4],[3,6]]*[x,y]-[-1,-1,-3],[x,y])</span><br>
+ renvoie : <span style="font-family:monospace">[1,-1]</span><br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">LSQ([[3,4]],[12])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[36/25],[48/25]]</span></div><p> 
+En effet si <span style="font-family:monospace">d:=droite(3x+4y-12)</span> et si <span style="font-family:monospace">M:=projection(d,point(0))</span> 
+alors <span style="font-family:monospace">coordonnees(M)</span> renvoie :<br>
+<span style="font-family:monospace">[36/25,48/25]</span></p>
+<hr>
+<a href="cascmd_fr699.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr701.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

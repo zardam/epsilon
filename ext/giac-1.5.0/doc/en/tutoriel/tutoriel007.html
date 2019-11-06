@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="tutoriel.css">
+<title>Graphs</title>
+</head>
+<body >
+<a href="tutoriel006.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel008.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h2 id="sec35" class="section">6&#XA0;&#XA0;Graphs</h2>
+<div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Plotting graphs</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">plot</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >graph an expression of one variable</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">plotfunc</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >graph an expression of one or two variables</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">tangent</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >tangent to a curve</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">plotparam</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >parametric curve</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">plotpolar</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >polar plotting</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">plotimplicit</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >implicit curve</td></tr>
+</table>
+</div><p>
+<a id="hevea_default304"></a>
+<a id="hevea_default305"></a>
+<a id="hevea_default306"></a>
+<a id="hevea_default307"></a>
+<a id="hevea_default308"></a>
+<a id="hevea_default309"></a>
+<a id="hevea_default310"></a>
+<a id="hevea_default311"></a>
+<a id="hevea_default312"></a></p><p>The <span style="font-family:monospace">Graphic</span> menu has entries for several graphing commands;
+if you choose one you will be given a template you can fill out to
+produce a graphic. The appropriate command will be placed on the
+command line. If you want several graphs in the same window, you can
+put the commands on the same command line separated by semicolons.</p><p>Once you have created a graphic window, there will be a panel to the
+right with buttons allowing you to control the image. The default
+parameters for graphs, such as the size of the graphs, are
+configurable (see section <a href="tutoriel003.html#config">2.3</a>, &#X201C;Configuration&#X201D;).</p><p>As well as being displayed in the <span style="font-family:monospace">Xcas</span> window, the two
+dimensional graphics also appear in the DispG (Display Graphics)
+window. You can bring that window up with the
+<span style="font-family:monospace">Cfg</span>&#X25B8;<span style="font-family:monospace">Show</span>&#X25B8;<span style="font-family:monospace">DispG</span> menu item.
+This window will contain all two dimensional graphs; they can be
+cleared with the <span style="font-family:monospace">ClrGraph</span> command. </p>
+<h3 id="sec36" class="subsection">6.1&#XA0;&#XA0;Curves</h3>
+<p>The simplest way to draw graphs is with the templates from the
+<span style="font-family:monospace">Graphic</span> menu, but there are command line equivalents. </p><p>The command line instruction for graphing a function is the
+<span style="font-family:monospace">plot</span> command. It takes an expression (or list of
+expressions) followed by the variable. To use a domain different than
+the default, you can indicate the range of the variable by setting it
+equal to an interval. If you are plotting several curves, you can
+distinguish them by giving them different colors; you can do this with
+a third argument <span style="font-family:monospace">color=</span> followed by a list of colors.
+If you plot
+</p><blockquote class="quote"><span style="font-family:monospace">plot([x^2,x^3],x=-1..1,color=[red,blue])
+</span></blockquote><p>
+you will get
+</p><div class="center">
+<img src="tutoriel008.png">
+</div><p>You can draw parameterized curves with the <span style="font-family:monospace">plotparam</span> command.
+The coordinates of the curve must be given as a single complex
+expression; the <span style="font-style:italic">x</span> coordinate will be the real part of the expression
+and the <span style="font-style:italic">y</span> coordinate will be the imaginary part. For example, if
+you enter
+</p><blockquote class="quote"><span style="font-family:monospace">plotparam(sin(t) + i*cos(t),t)
+</span></blockquote><p>
+you will get the circle
+</p><div class="center">
+<img src="tutoriel009.png">
+</div><p>
+(Since the <span style="font-style:italic">x</span>- and <span style="font-style:italic">y</span>-axes are scaled differently, the circle
+looks elliptical.)</p><p>You can draw a curve using polar coordinates with the
+<span style="font-family:monospace">plotpolar</span> command. This takes the form
+<span style="font-family:monospace">plotpolar(f(theta),theta,theta-min,theta-max)</span>.</p><p>You can draw an implicitly defined curve with the
+<span style="font-family:monospace">plotimplicit</span> command; the command
+<span style="font-family:monospace">plotimplicit(</span><span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>)<span style="font-family:monospace">,</span><span style="font-style:italic">x</span><span style="font-family:monospace">,</span><span style="font-style:italic">y</span><span style="font-family:monospace">)</span> will draw the curve
+<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>)=0. For example, the command
+</p><blockquote class="quote"><span style="font-family:monospace">plotimplicit(x^2 + y^2 = 1,x,y)
+</span></blockquote><p>
+will draw a circle.</p><p>The <span style="font-family:monospace">tangent</span> command will draw the tangent line to a curve, if
+you tell it the curve and the point. To draw the tangent line to the
+graph <span style="font-style:italic">y</span>=<span style="font-style:italic">x</span><sup>2</sup> at <span style="font-style:italic">x</span>=1, for example, you can enter
+</p><blockquote class="quote"><span style="font-family:monospace">tangent(plotfunc(x^2,x),1)
+</span></blockquote><p>
+You will get
+</p><div class="center">
+<img src="tutoriel010.png">
+</div>
+<h3 id="sec37" class="subsection">6.2&#XA0;&#XA0;Plane geometry</h3>
+<div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">2D graphical objects</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">legend</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >place text starting from a given point</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">point</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >determine a point given a complex number or two
+coordinates</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">segment</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >segment determined by 2 points</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">circle</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >circle determined by a point and radius</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">inter</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >find the intersection of curves</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">equation</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >return the cartesian equation of a curve</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">parameq</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >return the parametric equation of a curve</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">polygonplot</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >draw a polygonal line</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">scatterplot</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >draw a cloud of dots</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">polygon</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >draw a closed polygon</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">open_polygon</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >draw an open polygon</td></tr>
+</table>
+</div><p>
+<a id="hevea_default313"></a>
+<a id="hevea_default314"></a>
+<a id="hevea_default315"></a>
+<a id="hevea_default316"></a>
+<a id="hevea_default317"></a>
+<a id="hevea_default318"></a>
+<a id="hevea_default319"></a>
+<a id="hevea_default320"></a>
+<a id="hevea_default321"></a>
+<a id="hevea_default322"></a>
+<a id="hevea_default323"></a>
+<a id="hevea_default324"></a>
+<a id="hevea_default325"></a>
+<a id="hevea_default326"></a>
+<a id="hevea_default327"></a>
+<a id="hevea_default328"></a>
+<a id="hevea_default329"></a></p><p>Among its other capabilities, <span style="font-family:monospace">Xcas</span> works with plane geometry.
+The <span style="font-family:monospace">Geo</span>&#X25B8;<span style="font-family:monospace">New figure 2D</span> menu item or the
+<span style="font-family:monospace">Alt+g</span> key will bring up the screen for plane geometry.</p><p>A point on the geometry screen can be specified with the
+<span style="font-family:monospace">point</span> command, which can take either an ordered pair or real
+numbers or a complex number as argument. The <span style="font-family:monospace">Geo</span> menu
+contains many commands for drawing geometric objects, such as
+<span style="font-family:monospace">circle</span> (which takes a point and a radius as arguments) and
+<span style="font-family:monospace">polygon</span> (which takes a sequence of points as arguments).</p><p>Some functions, such as <span style="font-family:monospace">polygonplot</span> and <span style="font-family:monospace">scatterplot</span>,
+take lists of <span style="font-style:italic">x</span>-coordinates and <span style="font-style:italic">y</span>-coordinates as arguments. For
+example,
+</p><blockquote class="quote"><span style="font-family:monospace">polygonplot([0,2,0],[0,0,2])
+</span></blockquote><p>
+and 
+</p><blockquote class="quote"><span style="font-family:monospace">open_polygon(point(0,0),point(2,0),point(0,2))
+</span></blockquote><p>
+will both draw the same segments.</p><p>The <span style="font-family:monospace">legend</span> can be used to place text on the screen; one
+simple way of using it is to give it a point and text as arguments.</p>
+<h3 id="sec38" class="subsection">6.3&#XA0;&#XA0;3D graphical objects</h3>
+<div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">3D graphical objects</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">plotfunc</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >graph of a function</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">plotparam</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >parametric surface</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">point</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >point</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">plane</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >plane</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">sphere</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >sphere with a center and radius</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">cone</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >cone with a center, axis and opening angle</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">inter</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >intersection </td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">polygon</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >polygon </td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">open_polygon</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >open polygon</td></tr>
+</table>
+</div><p>
+<a id="hevea_default330"></a>
+<a id="hevea_default331"></a>
+<a id="hevea_default332"></a>
+<a id="hevea_default333"></a>
+<a id="hevea_default334"></a>
+<a id="hevea_default335"></a>
+<a id="hevea_default336"></a>
+<a id="hevea_default337"></a>
+<a id="hevea_default338"></a>
+<a id="hevea_default339"></a>
+<a id="hevea_default340"></a>
+<a id="hevea_default341"></a></p><p><span style="font-family:monospace">Xcas</span> can also handle three-dimensions graphically, either by
+drawing curves and graphs in three-dimensions or by drawing
+three-dimensional geometric objects. A three-dimensional screen can
+be brought up with the <span style="font-family:monospace">Geo</span>&#X25B8;<span style="font-family:monospace">New figure 3D</span>
+menu item or the <span style="font-family:monospace">Alt+h</span> key.
+There will controls for the view window to the right of the screen.
+You can rotate the visualization cube by using the mouse outside of
+the cube or by clicking in the cube and using the <span style="font-family:monospace">x</span>,
+<span style="font-family:monospace">y</span> and <span style="font-family:monospace">z</span> keys to rotate and the <span style="font-family:monospace">+</span> and
+<span style="font-family:monospace">-</span> keys for zooming.</p><p>You can draw a graph <span style="font-style:italic">z</span> = <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>) with the <span style="font-family:monospace">plotfunc</span> command,
+which takes an expression and a list of two variables. Like graphs of
+functions of one variable, you can use a domain different than the
+default by giving the variables their own intervals. The command
+</p><blockquote class="quote"><span style="font-family:monospace">plotfunc(y^2 - x^2,[x=-1..1,y=-1..1])
+</span></blockquote><p>
+will give you the graph
+</p><div class="center">
+<img src="tutoriel011.png">
+</div><p>The <span style="font-family:monospace">plotparam</span> command can be used to draw a parameterized
+curves and surfaces in three-dimensions. If the first argument is a
+list of three expressions involving two variables and the next two
+arguments are the variables (with optional intervals), then
+<span style="font-family:monospace">plotparam</span> will plot the surface. If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">plotparam([u,u+v,v],u,v)
+</span></blockquote><p>
+you will get
+</p><div class="center">
+<img src="tutoriel012.png">
+</div><p>
+If the first argument is a list of three expressions involving one
+variable and the next argument is the variable, then
+<span style="font-family:monospace">plotparam</span> will plot the curve. If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">plotparam([cos(t),sin(t),t],t)
+</span></blockquote><p>
+you will get
+</p><div class="center">
+<img src="tutoriel013.png">
+</div><p>A point in three-dimensions is given with the <span style="font-family:monospace">point</span> command
+with three arguments. Commands like <span style="font-family:monospace">polygon</span> and
+<span style="font-family:monospace">open_polygon</span> work in three-dimensions as well as two, as
+well as additional commands such as <span style="font-family:monospace">sphere</span>. A plane can be
+drawn with the <span style="font-family:monospace">plane</span> command, which can be given either three
+points, a line and two points, or an equation of the form <span style="font-family:monospace">a*x
++ b*y + c*z = d</span>.</p>
+<hr>
+<a href="tutoriel006.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel008.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

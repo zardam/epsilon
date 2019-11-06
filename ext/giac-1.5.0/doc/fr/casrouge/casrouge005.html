@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Des programmes tres simples sur les chaînes de caractères</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casrouge004.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge006.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc126">Chapitre 5</A>  Des programmes tres simples sur les chaînes de caractères</H1><H2 CLASS="section"><A NAME="toc32"></A><A NAME="htoc127">5.1</A>  Compter un nombre d’occurences</H2><H3 CLASS="subsection"><A NAME="htoc128">5.1.1</A>  Nombre d’occurences d’une lettre</H3><P>
+On parcourt la chaîne <I>S</I> et on augmente le compteur <I>n</I> de 1 lorsqu’il y a 
+égalité avec le caractère <I>c</I>.
+</P><PRE CLASS="verbatim">Occurc(c,S):={
+  local n,d,j;
+  d:=dim(S)-1;
+  n:=0;
+  pour j de 0 jusque d faire
+    si c==S[j]  alors n:=n+1 fsi;
+  fpour;
+  retourne n;
+}:;
+</PRE><P>On tape :<BR>
+<TT>Occurc("e","occurrences")</TT><BR>
+On obtient : <TT>2</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc129">5.1.2</A>  Nombre d’occurences d’une sous-chaîne</H3><P>
+Il faut comparer à chaque étape la sous-chaîne <TT>ch</TT> avec un morceau de
+la chaîne <TT>S</TT> qui a même longueur.<BR>
+On va utiliser <TT>mid(S,j,k)</TT> qui renvoie la sous chaîne de <TT>S</TT> de
+longueur <TT>k</TT> qui commence à l’indice <TT>j</TT> ou <TT>mid(S,j)</TT> qui 
+renvoie la sous-chaîne fin de <TT>S</TT> commençant à l’indice <TT>j</TT>.<BR>
+<B>Remarque</B> À la place de <TT>mid(S,j,k)</TT> on peut aussi utiliser 
+<TT>S[j..j+k-1]</TT> (on met les indices de début et de fin de la sous-chaîne) 
+et à la place de <TT>mid(S,j)</TT> on peut aussi utiliser <TT>S[j..dim(S)-1]</TT>.<BR>
+On considère que dans "aaa" on voit une seule sous-chaîne "aa".
+</P><PRE CLASS="verbatim">Occurch(ch,S):={
+  local n,d,j,k;
+  d:=dim(S)-1;
+  k:=dim(ch);
+  n:=0;
+  j:=0;
+  tantque j&lt;= d-k+1 faire
+    si ch==mid(S,j,k)  alors 
+      n:=n+1; 
+      j:=j+k; 
+      sinon
+        j:=j+1
+    fsi;
+  fpour;
+  retourne n;
+}:;
+</PRE><P>On tape :<BR>
+<TT>Occurch("e","occurrences")</TT><BR>
+On obtient : <TT>2</TT><BR>
+On tape :<BR>
+<TT>Occurch("az","aaazaaazaaaz")</TT><BR>
+On obtient : <TT>3</TT><BR>
+On tape :<BR>
+<TT>Occurch("aa","aaazaaazaaaz")</TT><BR>
+On obtient : <TT>3</TT></P><H2 CLASS="section"><A NAME="toc33"></A><A NAME="htoc130">5.2</A>  Supprimer une lettre et sous-chaîne</H2><H3 CLASS="subsection"><A NAME="htoc131">5.2.1</A>  Supprimer une lettre</H3><P>
+On parcourt la chaîne <I>S</I> lorsqu’il y a 
+égalité avec le caractère <I>c</I> il faudra supprimer ce caractère en 
+faisant une concaténation entre ce qu’il y a avant <I>c</I> (si <I>c</I> est d’indice 
+<I>j</I> c’est <TT>mid(S,0,j)</TT> car ce qu’il y a avant <I>c</I> est de longueur <I>j</I>) et 
+ce qu’il y a après <I>c</I> (<TT>mid(S,j+1)</TT>). On met alors à jour la longueur 
+de <I>S</I>.
+</P><PRE CLASS="verbatim">Supprimec(c,S):={
+  local d,j;
+  d:=dim(S)-1;
+  j:=0;
+  tantque j&lt;=d faire
+    si c==S[j]  alors 
+      S:=mid(S,0,j)+mid(S,j+1);
+      d:=d-1;
+    sinon
+      j:=j+1
+    fsi;
+  ftantque;
+  retourne S;
+}:;
+</PRE><P>On tape :<BR>
+<TT>Supprimec("e","occurrences")</TT><BR>
+On obtient : <TT>"occurrncs"</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc132">5.2.2</A>  Supprimer une sous-chaîne</H3><P>
+On parcourt la chaîne <I>s</I> lorsqu’il y a 
+égalité avec la sous-chaîne <I>ch</I> il faudra supprimer cette sous-chaîne en 
+faisant une concaténation entre ce qu’il y a avant <I>ch</I> et ce qu’il y a 
+après <I>ch</I>. On met alors à jour la longueur de <I>S</I>.
+</P><PRE CLASS="verbatim">Supprimech(ch,S):={
+  local k,d,j;
+  d:=dim(S)-1;
+  k:=dim(ch);
+  j:=0;
+  tantque j&lt;=d faire
+    si ch==mid(S,j,k)  alors 
+      S:=mid(S,0,j)+mid(S,j+k);
+      d:=d-k;
+    sinon
+      j:=j+1
+    fsi;
+  ftantque;
+  retourne S;
+}:;
+</PRE><P>On tape :<BR>
+<TT>Supprimech("e","occurrences")</TT><BR>
+On obtient : <TT>"occurrncs"</TT><BR>
+On tape :<BR>
+<TT>Supprimech("az","azerazerazaz")</TT><BR>
+On obtient : <TT>"erer"</TT><BR>
+On tape :<BR>
+<TT>Supprimesch("aa","aaazaaazaaaz")</TT><BR>
+On obtient : <TT>"azazaz"</TT></P><H2 CLASS="section"><A NAME="toc34"></A><A NAME="htoc133">5.3</A>  Remplacer une lettre ou une sous-chaîne par une autre chaîne</H2><H3 CLASS="subsection"><A NAME="htoc134">5.3.1</A>  Remplacer une lettre par une autre lettre</H3><P>
+Pour remplacer le caractére <I>a</I> par <I>b</I> dans <I>S</I>, on parcourt <I>S</I> et quand 
+on trouve le caractére <I>a</I> on change ce caractére.
+</P><PRE CLASS="verbatim">Remplaceab(a,b,S):={
+local d,j;
+  d:=dim(S)-1;
+  j:=0;
+  tantque j&lt;=d faire
+    si a==S[j]  alors 
+      S:=mid(S,0,j)+b+mid(S,j+1);
+    sinon
+      j:=j+1
+    fsi;
+  ftantque;
+  retourne S;
+}:;
+</PRE><P>On tape :<BR>
+<TT>Remplaceab("a","e","azerazerazaz")</TT><BR>
+On obtient : <TT>"ezerezerezez"</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc135">5.3.2</A>  Remplacer une sous-chaîne par une autre</H3><P>
+Pour remplacer la sous-chaîne <I>cha</I> par la sous-chaîne <I>chb</I> dans <I>S</I>, on 
+parcourt <I>S</I> et quand on trouve la sous-chaîne <I>cha</I>. on 
+fait une concaténation entre ce qu’il y a avant <I>cha</I>, la sous-chaîne <I>chb</I>
+et ce qu’il y a après <I>cha</I>. On met alors à jour la longueur de <I>S</I>.
+</P><PRE CLASS="verbatim">Remplacechab(cha,chb,S):={
+local ka,kb,d,j;
+  d:=dim(S)-1;
+  ka:=dim(cha);
+  kb:=dim(chb);
+  j:=0;
+  tantque j&lt;=d faire
+    si cha==mid(S,j,ka)  alors 
+      S:=mid(S,0,j)+chb+mid(S,j+ka);
+      d:=d-ka+kb;
+    sinon
+      j:=j+1
+    fsi;
+  ftantque;
+  retourne S;
+}:;
+</PRE><P>On tape :<BR>
+<TT>Remplacechab("a","e","azerazerazaz")</TT><BR>
+On obtient : <TT>"ezerezerezez"</TT><BR>
+On tape :<BR>
+<TT>Remplacechab("az","bcd","azerazerazaz")</TT><BR>
+On obtient : <TT>"bcderbcderbcdbcd"</TT></P><HR>
+<A HREF="casrouge004.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge006.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

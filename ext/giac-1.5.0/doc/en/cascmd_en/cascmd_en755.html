@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Approximate solution of the system v’=f(t,v) : odesolve</title>
+</head>
+<body >
+<a href="cascmd_en754.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en756.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec970" class="subsection">9.3.6  Approximate solution of the system v’=f(t,v) : <span style="font-family:monospace">odesolve</span></h3>
+<p><a id="hevea_default1315"></a>
+</p><ul class="itemize"><li class="li-itemize">
+If <span style="font-style:italic">v</span> is a vector
+of variables [<span style="font-style:italic">x</span>1,..,<span style="font-style:italic">xn</span>] and if <span style="font-style:italic">f</span> is given by a vector of expressions
+<span style="font-family:monospace">[e1,...,en]</span> depending on <span style="font-style:italic">t</span> and of [<span style="font-style:italic">x</span>1,..,<span style="font-style:italic">xn</span>],
+if the initial value of <span style="font-style:italic">v</span> at <span style="font-family:monospace">t0</span>
+is the vector [<span style="font-style:italic">x</span>10,...,<span style="font-style:italic">xn</span>0] then the instruction
+<div class="center">
+<span style="font-family:monospace">odesolve([e1,..,en],t=t0..t1,[x1,...,xn],
+[x10,...,xn0])</span> 
+</div>
+returns an approximated value of <span style="font-style:italic">v</span> at <span style="font-style:italic">t</span>=<span style="font-style:italic">t</span>1.
+With the optional argument <span style="font-family:monospace">curve</span>, <span style="font-family:monospace">odesolve</span> returns the list of 
+the intermediate values of [<span style="font-style:italic">t</span>,<span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)] computed by the solver. <p>Example, to solve the system
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">x</span>′(<span style="font-style:italic">t</span>)</td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" >−<span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>)</td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">x</span>(<span style="font-style:italic">t</span>)
+</td></tr>
+</table></td></tr>
+</table><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">odesolve([-y,x],t=0..pi,[x,y],[0,1])</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">[-1.79045146764e-15,-1]</span></div></li><li class="li-itemize">If <span style="font-style:italic">f</span> is a function from ℝ × ℝ<sup><span style="font-style:italic">n</span></sup> to 
+ℝ<sup><span style="font-style:italic">n</span></sup>.<br>
+<span style="font-family:monospace">odesolve(t0..t1,(t,v)-&gt;f(t,v),v0)</span> or<br>
+<span style="font-family:monospace">odesolve(t0..t1,f,v0)</span><br>
+computes an approximate value of <span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>1) where the vector <span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)
+in ℝ<sup><span style="font-style:italic">n</span></sup> is the solution of
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">v</span>′(<span style="font-style:italic">t</span>)=<span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)), <span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>0)=<span style="font-style:italic">v</span>0 </td></tr>
+</table>
+With the optional argument <span style="font-family:monospace">curve</span>, <span style="font-family:monospace">odesolve</span> returns the list of 
+the intermediate value [<span style="font-style:italic">t</span>,<span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)] computed by the solver.<p>Example, to solve the system :<br>
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">x</span>′(<span style="font-style:italic">t</span>)</td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" >−<span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>)</td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">x</span>(<span style="font-style:italic">t</span>)
+</td></tr>
+</table></td></tr>
+</table><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">odesolve(0..pi,(t,v)-&gt;[-v[1],v[0]],[0,1])</span></div><p>
+Or define the function:
+</p><div class="center"><span style="font-family:monospace">f(t,v):=[-v[1],v[0]]</span></div><p>
+then input : 
+</p><div class="center"><span style="font-family:monospace">odesolve(0..pi,f,[0,1])</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">[-1.79045146764e-15,-1]</span></div><p>
+Alternative input :
+</p><div class="center"><span style="font-family:monospace">odesolve(0..pi/4,f,[0,1],curve)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">[[0.1781,[-0.177159948386,0.984182072936]], [0.3781,[-0.369155338156,0.929367707805]], [0.5781,[-0.54643366953,0.837502384954]], [0.7781,[-0.701927414872,0.712248484906]]]</span></div></li></ul>
+<hr>
+<a href="cascmd_en754.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en756.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

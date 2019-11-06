@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Résoudre un système linéaire : linsolve resoudre_systeme_lineaire</title>
+</head>
+<body >
+<a href="cascmd_fr696.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr698.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec852" class="subsection">6.63.6  Résoudre un système linéaire : <span style="font-family:monospace">linsolve resoudre_systeme_lineaire</span></h3>
+<p><a id="hevea_default1270"></a><a id="hevea_default1271"></a>
+<span style="font-family:monospace">linsolve</span> permet de résoudre un système d’équations 
+linéaires où chaque équation est de la forme <span style="font-style:italic">Xpr</span> = 0 où <span style="font-style:italic">Xpr</span> est 
+une expression. Si vous avez coché <span style="font-family:monospace">Pas à pas</span> dans la configuration 
+générale, vous avez le détail des calculs. <br>
+<span style="font-family:monospace">linsolve</span> a comme paramètres :<br>
+soit la liste des équations et la liste des variables,<br>
+soit la matrice du système et le second membre sous la forme d’une liste,<br>
+soit les matrice <span style="font-style:italic">p</span>,<span style="font-style:italic">l</span>,<span style="font-style:italic">u</span> résultant de la décomposition <span style="font-family:monospace">lu</span> de la 
+matrice du système et le second membre sous la forme d’une liste.<br>
+<span style="font-family:monospace">linsolve</span> renvoie une liste qui est solution du système d’équations.<br>
+<span style="font-family:monospace">linsolve</span> permet de résoudre aussi un système d’équations 
+linéaires dans ℤ/<span style="font-style:italic">n</span>ℤ.<br>
+<span style="font-weight:bold">Remarque</span><br>
+Lorsqu’on a à résoudre plusieurs systèmes d’équations qui ne 
+diffèrent que par leur second membre, on a intérêt à utiliser une 
+décompsition <span style="font-family:monospace">lu</span>.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">linsolve([2*x+y+z=1,x+y+2*z=1,x+2*y+z=4],[x,y,z])</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">linsolve([[2,1,1],[1,1,2],[1,2,1]],[1,1,4])</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">p,l,u:=lu([[2,1,1],[1,1,2],[1,2,1]]);linsolve(p,l,u,[1,1,4])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[-1/2,5/2,1-/2]</span></div><p> 
+donc 
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">x</span>=−</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">, <span style="font-style:italic">y</span>=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">5</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">, <span style="font-style:italic">z</span>=−</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell"> </td></tr>
+</table><p> 
+sont solutions du système :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" >2<span style="font-style:italic">x</span>+<span style="font-style:italic">y</span>+<span style="font-style:italic">z</span></td><td style="text-align:left;white-space:nowrap" >=1</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">x</span>+<span style="font-style:italic">y</span>+2<span style="font-style:italic">z</span></td><td style="text-align:left;white-space:nowrap" >=1</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">x</span>+2<span style="font-style:italic">y</span>+<span style="font-style:italic">z</span></td><td style="text-align:left;white-space:nowrap" >=4
+</td></tr>
+</table></td><td class="dcell">
+</td></tr>
+</table><p> 
+Si on a coché <span style="font-family:monospace">Pas à pas</span> dans la configuration générale, on obtient
+écrit en vert :<br>
+</p><pre class="verbatim">Matrix [[1,1,2,-1],[0,1,-1,-3],[0,-1,-3,1]]
+Row operation L2 &lt;- (1)*L1-(1)*L2
+Matrix [[1,0,3,2],[0,1,-1,-3],[0,-1,-3,1]]
+Row operation L2 &lt;- (1)*L3-(-1)*L2
+Matrix [[1,0,3,2],[0,1,-1,-3],[0,0,-4,-2]]
+Reducing column 3 using pivot -4 at row 3
+Matrix [[1,0,3,2],[0,1,-1,-3],[0,0,-4,-2]]
+Row operation L3 &lt;- (-4)*L1-(3)*L3
+Matrix [[-4,0,0,-2],[0,1,-1,-3],[0,0,-4,-2]]
+Row operation L3 &lt;- (-4)*L2-(-1)*L3
+End reduction [[-4,0,0,-2],[0,-4,0,10],[0,0,-4,-2]]
+</pre><p>
+puis on obtient la réponse :
+</p><div class="center"><span style="font-family:monospace">[-1/2,5/2,1-/2]</span></div><p>On tape :
+</p><div class="center"><span style="font-family:monospace">linsolve([2*x+y+z-1,x+y+2*z-1,x+2*y+z-4]%3,[x,y,z])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[1 % 3,1 % 3,1 % 3]</span></div><p> 
+donc 
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">x</span>=1 % 3, <span style="font-style:italic">y</span>=1 % 3, <span style="font-style:italic">z</span>=1 % 3 </td></tr>
+</table><p> 
+sont solutions du système :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" >(2<span style="font-style:italic">x</span>+<span style="font-style:italic">y</span>+<span style="font-style:italic">z</span>−1)</td><td style="text-align:right;white-space:nowrap" >% 3</td><td style="text-align:right;white-space:nowrap" >=0</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" >(<span style="font-style:italic">x</span>+<span style="font-style:italic">y</span>+2<span style="font-style:italic">z</span>−1)</td><td style="text-align:right;white-space:nowrap" >% 3</td><td style="text-align:right;white-space:nowrap" >=0</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" >(<span style="font-style:italic">x</span>+2<span style="font-style:italic">y</span>+<span style="font-style:italic">z</span>−4)</td><td style="text-align:right;white-space:nowrap" >% 3</td><td style="text-align:right;white-space:nowrap" >=0
+</td></tr>
+</table></td><td class="dcell">
+</td></tr>
+</table>
+<hr>
+<a href="cascmd_fr696.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr698.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

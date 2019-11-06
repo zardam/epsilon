@@ -1,0 +1,219 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others 
+  Translation to greek : George Nassopoulos-->
+<HTML>
+<HEAD>
+<TITLE>Διανύσματα και πίνακες</TITLE>
+<META NAME="description" CONTENT="Vecteurs et matrices">
+<META NAME="keywords" CONTENT="tutoriel">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutoriel.css">
+
+<LINK REL="next" HREF="node25.html">
+<LINK REL="previous" HREF="node23.html">
+<LINK REL="up" HREF="node20.html">
+<LINK REL="next" HREF="node25.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html405"
+  HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html399"
+  HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html393"
+  HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html401"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html403"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html406"
+  HREF="node25.html">Γραμμικά συστήματα</A>
+<B> εμφάνιση:</B> <A NAME="tex2html400"
+  HREF="node20.html">Εργαλεία για την Άλγεβρα</A>
+<B> προηγούμενο:</B> <A NAME="tex2html394"
+  HREF="node23.html">Τριγωνομετρία</A>
+ &nbsp; <B>  <A NAME="tex2html402"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html404"
+  HREF="node47.html">Ευρετήριο</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00044000000000000000"></A>
+<A NAME="587"></A>
+<A NAME="588"></A>
+<BR>
+Διανύσματα και πίνακες
+</H2>
+Ένα διάνυσμα είναι μία λίστα αριθμών, ενώ ένας πίνακας είναι 
+μία λίστα διανυσμάτων κάθε ένα των οποίων είναι και μία γραμμή του πίνακα.
+Το γινόμενο πινάκων συμβολίζεται όπως το κανονικό γινόμενο <code>*</code>. 
+Τα διανύσματα είναι εξ ορισμού πίνακες με μία γραμμή,
+αλλά το γινόμενο από δεξιά με ένα διάνυσμα εφαρμόζεται σαν να ήταν μία στήλη.
+Ειδικότερα, εάν <code>v</code> και <code>w</code> 
+είναι δύο διανύσματα ίδιου μεγέθους, το <code>v*w</code> επιστρέφει το εσωτερικό γινόμενο. 
+<A NAME="589"></A>
+<PRE>
+A:=[[1,2,3],[4,5,6],[7,8,9]]
+v:=[1,1,1]
+v*v
+A*v
+v*A
+B:=[[1,1,1],[2,2,2]]
+A*B
+B*A
+A*tran(B)
+</PRE>
+Ξεκινώντας από μία συνάρτηση που αντιστοιχεί στους δύο 
+δείκτες (<I>j</I>, <I>k</I>) τον πραγματικό 
+<I>a</I>(<I>j</I>, <I>k</I>), μπορούμε να δημιουργήσουμε έναν πίνακα 
+με την συνάρτηση <code>makemat</code> ή
+<code>matrix</code>. 
+<A NAME="1715"></A>
+<A NAME="1716"></A>
+<PRE>
+makemat((j,k)-&gt;j+2*k,3,2)
+matrix(3,2,(j,k)-&gt;j+2*k)
+</PRE>
+Μπορούμε επίσης να δημιουργήσουμε πίνακες με μπλόκ χρησιμοποιώντας την εντολή
+<code>blockmatrix</code>.
+<A NAME="1717"></A>
+<PRE>
+A:=makemat((j,k)-&gt;j+2*k,3,2)
+B:=idn(3)
+blockmatrix(1,2,[A,B])
+blockmatrix(2,2,[A,B,B,A])
+</PRE>
+Αποκτούμε πρόσβαση σε ένα στοιχείο κάποιου πίνακα με δυο δείκτες διαχωρισμένους 
+με κόμμα και τοποθετούμενους ανάμεσα σε άγκιστρα. 
+Ο πρώτος δείκτης αναφέρεται στην γραμμή και ο δεύτερος στην στήλη.
+<B>Προσοχή:</B> Οι δείκτες ξεκινούν από το  0. 
+Παραδείγματος χάρη, εάν <code>A:=[[0,2],[1,3],[2,4]]</code> τότε το
+<code>A[2,1]</code> επιστρέφει το στοιχείο <code>4</code>.
+Για να πάρουμε ένα μπλοκ (υποπίνακα) από κάποιον πίνακα, χρησιμοποιούμε 
+διαστήματα αντί για δείκτες&nbsp;: έτσι, το <code>A[1..2,0..1]</code> 
+επιστρέφει το μπλοκ που αποτελείται από τις γραμμές 1 <I>μέχρι</I> 2 και 
+τις στήλες 0 <I>μέχρι</I> 1.
+
+<P>
+Σημειώστε ότι οι πίνακες στο  <TT>Xcas</TT> 
+αντιγράφονται ολόκληροι όταν τροποποιούμε κάποιο στοιχείο τους με
+την εντολή <code>:=</code>,  γράφοντας δηλαδή <code>Α[i,j]:=5</code>.
+Αυτό  κοστίζει σε χρόνο εάν τροποποιούμε πολλές φορές 
+διαδοχικά σε ένα πρόγραμμα πολλά στοιχεία του ίδιου (μεγάλου) πίνακα. 
+Για να αποφύγουμε τις αντιγραφές πινάκων μπορούμε να τροποποιούμε 
+τα στοιχεία τους χρησιμοποιώντας την εντολή <code>=<</code>, γράφοντας δηλαδή
+<code>Α[i,j]=<5</code>.
+
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><B>Διανύσματα και πίνακες</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>v*w</code></TD>
+<TD ALIGN="LEFT">εσωτερικό γινόμενο</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>cross(v,w)</code></TD>
+<TD ALIGN="LEFT">εξωτερικό γινόμενο</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>A*B</code></TD>
+<TD ALIGN="LEFT">γινόμενο πινάκων</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>A.*B</code></TD>
+<TD ALIGN="LEFT">γινόμενο πινάκων στοιχείο προς στοιχείο</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>1/A</code></TD>
+<TD ALIGN="LEFT">αντίστροφος</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>tran</code></TD>
+<TD ALIGN="LEFT">αντιμεταθετικός</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>rank</code></TD>
+<TD ALIGN="LEFT">τάξη</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>det</code></TD>
+<TD ALIGN="LEFT">ορίζουσα</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>ker</code></TD>
+<TD ALIGN="LEFT">πυρήνας</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>image</code></TD>
+<TD ALIGN="LEFT">πεδίο τιμών</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>idn</code></TD>
+<TD ALIGN="LEFT">ταυτοτικός πίνακας</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>ranm</code></TD>
+<TD ALIGN="LEFT">πίνακας με τυχαίους συντελεστές</TD>
+</TR>
+</TABLE>
+</DIV>
+<A NAME="608"></A>
+<A NAME="609"></A>
+<A NAME="610"></A>
+<A NAME="611"></A>
+<A NAME="1718"></A>
+<A NAME="1719"></A>
+<A NAME="1720"></A>
+<A NAME="1721"></A>
+<A NAME="1722"></A>
+<A NAME="1723"></A>
+<A NAME="618"></A>
+<A NAME="619"></A>
+<A NAME="620"></A>
+<A NAME="621"></A>
+<A NAME="622"></A>
+<A NAME="623"></A>
+<A NAME="624"></A>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html405"
+  HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html399"
+  HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html393"
+  HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html401"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html403"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html406"
+  HREF="node25.html">Γραμμικά συστήματα</A>
+<B> εμφάνιση:</B> <A NAME="tex2html400"
+  HREF="node20.html">Εργαλεία για την Άλγεβρα</A>
+<B> προηγούμενο:</B> <A NAME="tex2html394"
+  HREF="node23.html">Τριγωνομετρία</A>
+ &nbsp; <B>  <A NAME="tex2html402"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html404"
+  HREF="node47.html">Ευρετήριο</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+Βιβλιογραφία του <A HREF="http://www-fourier.ujf-grenoble.fr/~parisse/giac_fr.html">giac</A> από τους Renee De Graeve, Bernard Parisse και Bernard Ycart
+</ADDRESS>
+Μετάφραση στα Ελληνικά : Γιώργος Νασόπουλος. Διασκευή : Αλκιβιάδης Γ. Ακρίτας
+</BODY>
+</HTML>

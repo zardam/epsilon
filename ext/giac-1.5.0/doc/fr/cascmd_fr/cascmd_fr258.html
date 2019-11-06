@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Qu’est-ce qune expression</title>
+</head>
+<body >
+<a href="cascmd_fr257.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr259.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec337" class="subsection">6.14.1  Qu’est-ce qune expression</h3>
+<p>
+Il ne faut pas confondre expression et fonction.<br>
+Une expression est une combinaison de nombres et de variables reliés par des 
+opérations alors qu’une fonction associe à une variable une expression. <br>
+Par exemple :<br>
+<code>a:=x^2+2*x+1</code> définit une expression et
+<code>b(x):=x^2+2*x+1</code> définit une fonction. <br>
+On obtient la valeur de l’expression <code>a</code> en 0, avec
+<code>subst(a,x=0)</code> et la valeur de la fonction <code>b</code> en 0, 
+avec <code>b(0)</code>.<br>
+On peut aussi considérer une expression comme un arbre. <br>
+Par exemple, si <span style="font-family:monospace">A:=3+2*x/y</span> ou si <span style="font-family:monospace">B:=sin(2x+3)</span> on a :<br>
+</p><ul class="itemize"><li class="li-itemize">
+le sommet de l’arbre <span style="font-family:monospace">A</span> est l’opérateur <span style="font-family:monospace">’+’</span> et le sommet de 
+l’arbre <span style="font-family:monospace">B</span> est la fonction <span style="font-family:monospace">’sin’</span>.<br>
+ On a :<br>
+<span style="font-family:monospace">sommet(A)</span> renvoie <span style="font-family:monospace">’+’</span><br>
+ <span style="font-family:monospace">sommet(B)</span> renvoie <span style="font-family:monospace">’sin’</span>
+</li><li class="li-itemize">les feuilles de l’arbre <span style="font-family:monospace">A</span> sont <span style="font-family:monospace">3,2*x/y</span> (car <span style="font-family:monospace">’+’</span> est 
+un opérateur binaire) et la feuille de l’arbre <span style="font-family:monospace">B</span> est <span style="font-family:monospace">2*x+3</span> (car
+<span style="font-family:monospace">’sin’</span> est une fonction d’une variable).<br>
+On a :<br>
+<span style="font-family:monospace">feuille(A)</span> renvoie <span style="font-family:monospace">3,2*x/y</span><br>
+<span style="font-family:monospace">feuille(B)</span> renvoie <span style="font-family:monospace">2*x+3</span>
+</li><li class="li-itemize">la feuille <span style="font-family:monospace">2*x/y</span> est elle-même un arbre de sommet <span style="font-family:monospace">’*’</span> etc...
+</li><li class="li-itemize">Les variables <span style="font-family:monospace">A</span> et <span style="font-family:monospace">B</span> permettent de retrouver la structure 
+d’arbre en effet :<br>
+<span style="font-family:monospace">A[0],A[1],A[2],A[2,0],A[2,1],A[2,2],A[2,3],A[2,3,0],A[2,3,1]</span> <br>
+renvoie : <span style="font-family:monospace">’+’,3,2*x,’*’,2,x,1/y,’inv’,y</span><br>
+<span style="font-family:monospace">B[0],B[1,0],B[1,1],B[1,2],B[1,1,0],B[1,1,1],B[1,1,2]</span> <br>
+renvoie : <span style="font-family:monospace">’sin’,’+’,2*x,3,’*’,2,x</span><br>
+</li></ul><p>
+<span style="font-weight:bold">Attention</span><br>
+Si <span style="font-family:monospace">C:=2*x-y</span> alors <br>
+<span style="font-family:monospace">sommet(C)</span> renvoie <span style="font-family:monospace">’+’</span> et <br>
+<span style="font-family:monospace">feuille(C)</span> renvoie <span style="font-family:monospace">2*x,-y</span><br>
+car l’expression est <span style="font-family:monospace">C</span> s’écrit <span style="font-family:monospace">2*x+(-y)</span><br>
+De même si <span style="font-family:monospace">D:=x/3</span> alors <br>
+<span style="font-family:monospace">sommet(D)</span> renvoie <span style="font-family:monospace">’*’</span> et <br>
+<span style="font-family:monospace">feuille(C)</span> renvoie <span style="font-family:monospace">x,1/3</span><br>
+car l’expression est <span style="font-family:monospace">D</span> s’écrit <span style="font-family:monospace">x*1/3</span><br>
+On a alors :<br>
+<span style="font-family:monospace">C[0],C[1],C[1,0],C[1,1],C[1,2],C[2],C[2,0],C[2,1]</span> <br>
+renvoie : <span style="font-family:monospace">’+’,2*x,’*’,2,x,-y,’-’,y</span> (<span style="font-family:monospace">’-’</span> est le "moins" unaire).<br>
+Et :<br>
+<span style="font-family:monospace">D[0],D[1],D[2],D[2,0],D[2,1],B[1,1,2]</span> <br>
+renvoie : <span style="font-family:monospace">’*’,x,1/3,’inv’,3</span><br>
+<span style="font-weight:bold">Remarque </span><br>
+Ce qui suit n’est valable que pour des programmeurs confirmés avec les 
+manipulations qui suivent, les erreurs sont faciles ! <br>
+On peut changer le sommet ou une feuille terminale en affectant l’une des 
+variables <span style="font-family:monospace">A[0],A[1],A[2],A[2,0],A[2,1],A[2,2],A[2,3],A[2,3,0],A[2,3,1]</span> <br>
+ou <span style="font-family:monospace">B[0],B[1,0],B[1,1],B[1,2],B[1,1,0],B[1,1,1],B[1,1,2]</span> <br>
+MAIS il faut faire cela avec prudence car le système ne fait pas de 
+vérifications et n’enverra pas de message d’erreurs.<br>
+On tape :<br>
+<span style="font-family:monospace">A:=3+2*x/y</span><br>
+<span style="font-family:monospace">A[0]:=’*’</span>
+Et <span style="font-family:monospace">A</span> renvoie <span style="font-family:monospace">6*x/y</span>
+Maintenant :<span style="font-family:monospace">A[1]</span> renvoie <span style="font-family:monospace">6</span><br>
+On peut taper :<br>
+<span style="font-family:monospace">A[1]:=2+z</span>
+Maintenant <span style="font-family:monospace">A</span> renvoie <span style="font-family:monospace">(2+z)*x/y</span><br>
+On tape :<br>
+<span style="font-family:monospace">B:=sin(2*x+3)</span><br>
+<span style="font-family:monospace">B[0]:=cos</span>
+Et <span style="font-family:monospace">B</span> renvoie <span style="font-family:monospace">cos(2*x+3)</span>
+Puis, on tape :<br>
+<span style="font-family:monospace">B[1,2]:=y</span> et <span style="font-family:monospace">B</span> renvoie <span style="font-family:monospace">cos(2*x+y)</span></p>
+<hr>
+<a href="cascmd_fr257.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr259.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

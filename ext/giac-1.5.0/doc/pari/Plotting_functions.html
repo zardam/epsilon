@@ -1,0 +1,511 @@
+<HTML>
+<HEAD>
+  <TITLE>
+    Catalogue of GP/PARI Functions: Plotting functions
+  </TITLE>
+
+  <META NAME="author"       CONTENT="Nils-Peter Skoruppa">
+  <META NAME="created"      CONTENT="Sat Mar 22 18:13:28 2014">
+  <META NAME="author-email" CONTENT="skoruppa@math.uni-siegen.de">
+  <META NAME="keywords"     CONTENT="PARI, GP, DOC">
+  <link rel="stylesheet" href="/pari.css">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+
+<h3 align=center>Plotting functions</h3>
+
+<a name="High-level plotting functions"></a>
+<h4>High-level plotting functions</h4>
+<p> (all the functions starting with
+<code>ploth</code>) in which the user has little to do but explain what type of plot
+he wants, and whose syntax is similar to the one used in the preceding
+section.</p>
+
+<hr></hr>
+<a name="Low-level plotting functions"></a>
+<h4>Low-level plotting functions</h4>
+<p> (called <em>rectplot</em> functions,
+sharing the prefix <code>plot</code>), where every drawing primitive (point, line,
+box, etc.) is specified by the user. These low-level functions work as
+follows. You have at your disposal 16 virtual windows which are filled
+independently, and can then be physically ORed on a single window at
+user-defined positions. These windows are numbered from 0 to 15, and must be
+initialized before being used by the function <code>plotinit</code>, which specifies
+the height and width of the virtual window (called a <em>rectwindow</em> in the
+sequel). At all times, a virtual cursor (initialized at [0,0]) is associated
+to the window, and its current value can be obtained using the function
+<code>plotcursor</code>.</p>
+<p>
+A number of primitive graphic objects (called <em>rect</em> objects) can then
+be drawn in these windows, using a default color associated to that window
+(which can be changed using the <code>plotcolor</code> function) and only the part
+of the object which is inside the window will be drawn, with the exception of
+polygons and strings which are drawn entirely. The ones sharing the prefix
+<code>plotr</code> draw relatively to the current position of the virtual cursor,
+the others use absolute coordinates. Those having the prefix <code>plotrecth</code>
+put in the rectwindow a large batch of rect objects corresponding to the
+output of the related <code>ploth</code> function.</p>
+<p>
+   Finally, the actual physical drawing is done using <code>plotdraw</code>. The
+rectwindows are preserved so that further drawings using the same windows at
+different positions or different windows can be done without extra work. To
+erase a window, use <code>plotkill</code>. It is not possible to partially erase a
+window: erase it completely, initialize it again, then fill it with the
+graphic objects that you want to keep.</p>
+<p>
+   In addition to initializing the window, you may use a scaled window to
+avoid unnecessary conversions. For this, use <code>plotscale</code>. As long as this
+function is not called, the scaling is simply the number of pixels, the
+origin being at the upper left and the y-coordinates going downwards.</p>
+<p>
+   Plotting functions are platform independent, but a number of graphical
+drivers are available for screen output: X11-windows (hence also for GUI's
+based on X11 such as Openwindows and Motif), and the Qt and FLTK graphical
+libraries. The physical window opened by <code>plotdraw</code> or any of the
+<code>ploth*</code> functions is completely separated from <code>gp</code> (technically, a
+<code>fork</code> is done, and the non-graphical memory is immediately freed in the
+child process), which means you can go on working in the current <code>gp</code>
+session, without having to kill the window first. This window can be closed,
+enlarged or reduced using the standard window manager functions. No zooming
+procedure is implemented though (yet).</p>
+
+<hr></hr>
+<a name="Functions for PostScript output"></a>
+<h4>Functions for PostScript output</h4>
+<p> in the same way that <code>printtex</code> allows you to have a TeX output
+corresponding to printed results, the functions starting with <code>ps</code> allow
+you to have <code>PostScript</code> output of the plots. This will not be identical
+with the screen output, but sufficiently close. Note that you can use
+PostScript output even if you do not have the plotting routines enabled. The
+PostScript output is written in a file whose name is derived from the
+<code>psfile</code> default (<code>./pari.ps</code> if you did not tamper with it). Each
+time a new PostScript output is asked for, the PostScript output is appended
+to that file. Hence you probably want to remove this file, or change the
+value of <code>psfile</code>, in between plots. On the other hand, in this manner,
+as many plots as desired can be kept in a single file. </p>
+
+<hr></hr>
+<a name="Library mode"></a>
+<h4>Library mode</h4>
+<p> <em>None of the graphic functions are available
+within the PARI library, you must be under <code>gp</code> to use them</em>. The reason
+for that is that you really should not use PARI for heavy-duty graphical work,
+there are better specialized alternatives around. This whole set of routines
+was only meant as a convenient, but simple-minded, visual aid. If you really
+insist on using these in your program (we warned you), the source
+(<code>plot*.c</code>) should be readable enough for you to achieve something.</p>
+<p></p>
+
+<hr></hr>
+<a name="plot"></a>
+<h4>plot(X = a,b,<em>expr</em>,{<em>Ymin</em>},{<em>Ymax</em>})</h4>
+<p></p>
+<p>Crude ASCII plot of the function represented by expression <em>expr</em>
+from a to b, with <em>Y</em> ranging from <em>Ymin</em> to <em>Ymax</em>. If
+<em>Ymin</em> (resp. <em>Ymax</em>) is not given, the minimum (resp. the maximum)
+of the computed values of the expression is used instead.</p>
+
+<hr></hr>
+<a name="plotbox"></a>
+<h4>plotbox(w,<em>x2</em>,<em>y2</em>)</h4>
+<p></p>
+<p>Let (x1,y1) be the current position of the virtual cursor. Draw in the
+rectwindow w the outline of the rectangle which is such that the points
+(x1,y1) and (x2,y2) are opposite corners. Only the part of the rectangle
+which is in w is drawn. The virtual cursor does <em>not</em> move.</p>
+
+<hr></hr>
+<a name="plotclip"></a>
+<h4>plotclip(w)</h4>
+<p></p>
+<p>`clips' the content of rectwindow w, i.e remove all parts of the
+drawing that would not be visible on the screen. Together with
+<code>plotcopy</code> this function enables you to draw on a scratchpad before
+committing the part you're interested in to the final picture.</p>
+
+<hr></hr>
+<a name="plotcolor"></a>
+<h4>plotcolor(w,c)</h4>
+<p></p>
+<p>Set default color to c in rectwindow w.
+This is only implemented for the X-windows, fltk and Qt graphing engines.
+Possible values for c are given by the <code>graphcolormap</code> default,
+factory setting are</p>
+<p>
+1 = black, 2 = blue, 3 = violetred, 4 = red, 5 = green, 6 = grey, 7 = gainsborough.</p>
+<p>
+but this can be considerably extended.</p>
+
+<hr></hr>
+<a name="plotcopy"></a>
+<h4>plotcopy(<em>sourcew</em>,<em>destw</em>,<em>dx</em>,<em>dy</em>,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Copy the contents of rectwindow <em>sourcew</em> to rectwindow <em>destw</em>
+with offset (dx,dy). If flag's bit 1 is set, dx and dy express fractions of
+the size of the current output device, otherwise dx and dy are in pixels. dx
+and dy are relative positions of northwest corners if other bits of flag
+vanish, otherwise of: 2: southwest, 4: southeast, 6: northeast corners</p>
+
+<hr></hr>
+<a name="plotcursor"></a>
+<h4>plotcursor(w)</h4>
+<p></p>
+<p>Give as a 2-component vector the current
+(scaled) position of the virtual cursor corresponding to the rectwindow w.</p>
+
+<hr></hr>
+<a name="plotdraw"></a>
+<h4>plotdraw(<em>list</em>, {<em>flag</em> = 0})</h4>
+<p></p>
+<p>Physically draw the rectwindows given in list
+which must be a vector whose number of components is divisible by 3. If
+list = [w1,x1,y1,w2,x2,y2,...], the windows w1, w2, etc.&nbsp;are
+physically placed with their upper left corner at physical position
+(x1,y1), (x2,y2),...respectively, and are then drawn together.
+Overlapping regions will thus be drawn twice, and the windows are considered
+transparent. Then display the whole drawing in a special window on your
+screen. If <em>flag</em> != 0, x1, y1 etc. express fractions of the size of the
+current output device</p>
+
+<hr></hr>
+<a name="ploth"></a>
+<h4>ploth(X = a,b,<em>expr</em>,{<em>flags</em> = 0},{n = 0})</h4>
+<p></p>
+<p>High precision plot of the function y = f(x) represented by the expression
+<em>expr</em>, x going from a to b. This opens a specific window (which is
+killed whenever you click on it), and returns a four-component vector giving
+the coordinates of the bounding box in the form
+[<em>xmin</em>,<em>xmax</em>,<em>ymin</em>,<em>ymax</em>].</p>
+<p>
+<b>Important note.</b> <code>ploth</code> may evaluate <code>expr</code> thousands of
+times; given the relatively low resolution of plotting devices, few
+significant digits of the result will be meaningful. Hence you should keep
+the current precision to a minimum (e.g.&nbsp;9) before calling this function.</p>
+<p>
+n specifies the number of reference point on the graph, where a value of 0
+means we use the hardwired default values (1000 for general plot, 1500 for
+parametric plot, and 8 for recursive plot).</p>
+<p>
+If no <em>flag</em> is given, <em>expr</em> is either a scalar expression f(X), in which
+case the plane curve y = f(X) will be drawn, or a vector
+[f_1(X),...,f_k(X)], and then all the curves y = f_i(X) will be drawn in
+the same window.</p>
+<p>
+The binary digits of <em>flag</em> mean:</p>
+<p>
+<b>*</b> 1 = <code>Parametric</code>: <em>parametric plot</em>. Here <em>expr</em> must
+be a vector with an even number of components. Successive pairs are then
+understood as the parametric coordinates of a plane curve. Each of these are
+then drawn.</p>
+<p>
+For instance:</p>
+<p>
+<pre class="code">  ploth(X=0,2*Pi,[sin(X),cos(X)], "Parametric")
+  ploth(X=0,2*Pi,[sin(X),cos(X)])
+  ploth(X=0,2*Pi,[X,X,sin(X),cos(X)], "Parametric")
+</pre>
+draw successively a circle, two entwined sinusoidal curves
+and a circle cut by the line y = x.</p>
+<p>
+<b>*</b> 2 = <code>Recursive</code>: <em>recursive plot</em>. If this flag is set,
+only <em>one</em> curve can be drawn at a time, i.e.&nbsp;<em>expr</em> must be either a
+two-component vector (for a single parametric curve, and the parametric flag
+<em>has</em> to be set), or a scalar function. The idea is to choose pairs of
+successive reference points, and if their middle point is not too far away
+from the segment joining them, draw this as a local approximation to the
+curve. Otherwise, add the middle point to the reference points. This is
+fast, and usually more precise than usual plot. Compare the results of</p>
+<p>
+<pre class="code">  ploth(X=-1,1, sin(1/X), "Recursive")
+  ploth(X=-1,1, sin(1/X))
+</pre></p>
+<p>
+for instance. But beware that if you are extremely unlucky, or choose too few
+reference points, you may draw some nice polygon bearing little resemblance
+to the original curve. For instance you should <em>never</em> plot recursively
+an odd function in a symmetric interval around 0. Try</p>
+<p>
+<pre class="code">  ploth(x = -20, 20, sin(x), "Recursive")
+</pre></p>
+<p>
+to see why. Hence, it's usually a good idea to try and plot the same curve
+with slightly different parameters.</p>
+<p>
+The other values toggle various display options:</p>
+<p>
+<b>*</b> 4 = <code>no_Rescale</code>: do not rescale plot according to the
+computed extrema. This is used in conjunction with <code>plotscale</code> when
+graphing multiple functions on a rectwindow (as a <code>plotrecth</code> call):</p>
+<p>
+<pre class="code">    s = plothsizes();
+    plotinit(0, s[2]-1, s[2]-1);
+    plotscale(0, -1,1, -1,1);
+    plotrecth(0, t=0,2*Pi, [cos(t),sin(t)], "Parametric|no_Rescale")
+    plotdraw([0, -1,1]);
+</pre></p>
+<p>
+This way we get a proper circle instead of the distorted ellipse produced by</p>
+<p>
+<pre class="code">    ploth(t=0,2*Pi, [cos(t),sin(t)], "Parametric")
+</pre></p>
+<p></p>
+<p>
+<b>*</b> 8 = <code>no_X_axis</code>: do not print the x-axis.</p>
+<p>
+<b>*</b> 16 = <code>no_Y_axis</code>: do not print the y-axis.</p>
+<p>
+<b>*</b> 32 = <code>no_Frame</code>: do not print frame.</p>
+<p>
+<b>*</b> 64 = <code>no_Lines</code>: only plot reference points, do not join them.</p>
+<p>
+<b>*</b> 128 = <code>Points_too</code>: plot both lines and points.</p>
+<p>
+<b>*</b> 256 = <code>Splines</code>: use splines to interpolate the points.</p>
+<p>
+<b>*</b> 512 = <code>no_X_ticks</code>: plot no x-ticks.</p>
+<p>
+<b>*</b> 1024 = <code>no_Y_ticks</code>: plot no y-ticks.</p>
+<p>
+<b>*</b> 2048 = <code>Same_ticks</code>: plot all ticks with the same length.</p>
+<p>
+<b>*</b> 4096 = <code>Complex</code>: is a parametric plot but where each member of
+<code>expr</code> is considered a complex number encoding the two coordinates of a
+point. For instance:</p>
+<p>
+<pre class="code">  ploth(X=0,2*Pi,exp(I*X), "Complex")
+  ploth(X=0,2*Pi,[(1+I)*X,exp(I*X)], "Complex")
+</pre>
+will draw respectively a circle and a circle cut by the line
+y = x.</p>
+
+<hr></hr>
+<a name="plothraw"></a>
+<h4>plothraw(<em>listx</em>,<em>listy</em>,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Given <em>listx</em> and <em>listy</em> two vectors of equal length, plots (in
+high precision) the points whose (x,y)-coordinates are given in
+<em>listx</em> and <em>listy</em>. Automatic positioning and scaling is done, but
+with the same scaling factor on x and y. If <em>flag</em> is 1, join points,
+other non-0 flags toggle display options and should be combinations of bits
+2^k, k <code>&#62;=</code> 3 as in <code>ploth</code>.</p>
+
+<hr></hr>
+<a name="plothsizes"></a>
+<h4>plothsizes({<em>flag</em> = 0})</h4>
+<p></p>
+<p>Return data corresponding to the output window
+in the form of a 6-component vector: window width and height, sizes for ticks
+in horizontal and vertical directions (this is intended for the <code>gnuplot</code>
+interface and is currently not significant), width and height of characters.</p>
+<p>
+If <em>flag</em> = 0, sizes of ticks and characters are in
+pixels, otherwise are fractions of the screen size</p>
+
+<hr></hr>
+<a name="plotinit"></a>
+<h4>plotinit(w,{x},{y},{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Initialize the rectwindow w,
+destroying any rect objects you may have already drawn in w. The virtual
+cursor is set to (0,0). The rectwindow size is set to width x and height
+y; omitting either x or y means we use the full size of the device
+in that direction.
+If <em>flag</em> = 0, x and y represent pixel units. Otherwise, x and y
+are understood as fractions of the size of the current output device (hence
+must be between 0 and 1) and internally converted to pixels.</p>
+<p>
+The plotting device imposes an upper bound for x and y, for instance the
+number of pixels for screen output. These bounds are available through the
+<code>plothsizes</code> function. The following sequence initializes in a portable
+way (i.e independent of the output device) a window of maximal size, accessed
+through coordinates in the [0,1000]  x [0,1000] range:</p>
+<p></p>
+<p>
+<pre class="code">  s = plothsizes();
+  plotinit(0, s[1]-1, s[2]-1);
+  plotscale(0, 0,1000, 0,1000);
+</pre></p>
+<p></p>
+
+<hr></hr>
+<a name="plotkill"></a>
+<h4>plotkill(w)</h4>
+<p></p>
+<p>Erase rectwindow w and free the corresponding memory. Note that if you
+want to use the rectwindow w again, you have to use <code>plotinit</code> first
+to specify the new size. So it's better in this case to use <code>plotinit</code>
+directly as this throws away any previous work in the given rectwindow.</p>
+
+<hr></hr>
+<a name="plotlines"></a>
+<h4>plotlines(w,X,Y,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Draw on the rectwindow w
+the polygon such that the (x,y)-coordinates of the vertices are in the
+vectors of equal length X and Y. For simplicity, the whole
+polygon is drawn, not only the part of the polygon which is inside the
+rectwindow. If <em>flag</em> is non-zero, close the polygon. In any case, the
+virtual cursor does not move.</p>
+<p>
+X and Y are allowed to be scalars (in this case, both have to).
+There, a single segment will be drawn, between the virtual cursor current
+position and the point (X,Y). And only the part thereof which
+actually lies within the boundary of w. Then <em>move</em> the virtual cursor
+to (X,Y), even if it is outside the window. If you want to draw a
+line from (x1,y1) to (x2,y2) where (x1,y1) is not necessarily the
+position of the virtual cursor, use <code>plotmove(w,x1,y1)</code> before using this
+function.</p>
+
+<hr></hr>
+<a name="plotlinetype"></a>
+<h4>plotlinetype(w,<em>type</em>)</h4>
+<p></p>
+<p>Change the type of lines subsequently plotted in rectwindow w.
+<em>type</em> -2 corresponds to frames, -1 to axes, larger values may
+correspond to something else. w = -1 changes highlevel plotting. This is
+only taken into account by the <code>gnuplot</code> interface.</p>
+
+<hr></hr>
+<a name="plotmove"></a>
+<h4>plotmove(w,x,y)</h4>
+<p></p>
+<p>Move the virtual cursor of the rectwindow w to position (x,y).</p>
+
+<hr></hr>
+<a name="plotpoints"></a>
+<h4>plotpoints(w,X,Y)</h4>
+<p></p>
+<p>Draw on the rectwindow w the
+points whose (x,y)-coordinates are in the vectors of equal length X and
+Y and which are inside w. The virtual cursor does <em>not</em> move. This
+is basically the same function as <code>plothraw</code>, but either with no scaling
+factor or with a scale chosen using the function <code>plotscale</code>.</p>
+<p>
+As was the case with the <code>plotlines</code> function, X and Y are allowed to
+be (simultaneously) scalar. In this case, draw the single point (X,Y) on
+the rectwindow w (if it is actually inside w), and in any case
+<em>move</em> the virtual cursor to position (x,y).</p>
+
+<hr></hr>
+<a name="plotpointsize"></a>
+<h4>plotpointsize(w,<em>size</em>)</h4>
+<p></p>
+<p>Changes the "size" of following points in rectwindow w. If w = -1,
+change it in all rectwindows. This only works in the <code>gnuplot</code> interface.</p>
+
+<hr></hr>
+<a name="plotpointtype"></a>
+<h4>plotpointtype(w,<em>type</em>)</h4>
+<p></p>
+<p>Change the type of points subsequently plotted in rectwindow w.
+<em>type</em> = -1 corresponds to a dot, larger values may correspond to
+something else. w = -1 changes highlevel plotting. This is only taken into
+account by the <code>gnuplot</code> interface.</p>
+
+<hr></hr>
+<a name="plotrbox"></a>
+<h4>plotrbox(w,<em>dx</em>,<em>dy</em>)</h4>
+<p></p>
+<p>Draw in the rectwindow w the outline of the rectangle which is such
+that the points (x1,y1) and (x1+dx,y1+dy) are opposite corners, where
+(x1,y1) is the current position of the cursor. Only the part of the
+rectangle which is in w is drawn. The virtual cursor does <em>not</em> move.</p>
+
+<hr></hr>
+<a name="plotrecth"></a>
+<h4>plotrecth(w,X = a,b,<em>expr</em>,{<em>flag</em> = 0},{n = 0})</h4>
+<p></p>
+<p>Writes to rectwindow w the curve output of
+<code>ploth</code>(w,X = a,b,<em>expr</em>,<em>flag</em>,n). Returns a vector for the bounding box.</p>
+
+<hr></hr>
+<a name="plotrecthraw"></a>
+<h4>plotrecthraw(w,<em>data</em>,{<em>flags</em> = 0})</h4>
+<p></p>
+<p>Plot graph(s) for
+<em>data</em> in rectwindow w. <em>flag</em> has the same significance here as in
+<code>ploth</code>, though recursive plot is no more significant.</p>
+<p>
+<em>data</em> is a vector of vectors, each corresponding to a list a coordinates.
+If parametric plot is set, there must be an even number of vectors, each
+successive pair corresponding to a curve. Otherwise, the first one contains
+the x coordinates, and the other ones contain the y-coordinates
+of curves to plot.</p>
+
+<hr></hr>
+<a name="plotrline"></a>
+<h4>plotrline(w,<em>dx</em>,<em>dy</em>)</h4>
+<p></p>
+<p>Draw in the rectwindow w the part of the segment
+(x1,y1)-(x1+dx,y1+dy) which is inside w, where (x1,y1) is the current
+position of the virtual cursor, and move the virtual cursor to
+(x1+dx,y1+dy) (even if it is outside the window).</p>
+
+<hr></hr>
+<a name="plotrmove"></a>
+<h4>plotrmove(w,<em>dx</em>,<em>dy</em>)</h4>
+<p></p>
+<p>Move the virtual cursor of the rectwindow w to position
+(x1+dx,y1+dy), where (x1,y1) is the initial position of the cursor
+(i.e.&nbsp;to position (dx,dy) relative to the initial cursor).</p>
+
+<hr></hr>
+<a name="plotrpoint"></a>
+<h4>plotrpoint(w,<em>dx</em>,<em>dy</em>)</h4>
+<p></p>
+<p>Draw the point (x1+dx,y1+dy) on the rectwindow w (if it is inside
+w), where (x1,y1) is the current position of the cursor, and in any case
+move the virtual cursor to position (x1+dx,y1+dy).</p>
+
+<hr></hr>
+<a name="plotscale"></a>
+<h4>plotscale(w,<em>x1</em>,<em>x2</em>,<em>y1</em>,<em>y2</em>)</h4>
+<p></p>
+<p>Scale the local coordinates of the rectwindow w so that x goes from
+x1 to x2 and y goes from y1 to y2 (x2 &#60; x1 and y2 &#60; y1 being
+allowed). Initially, after the initialization of the rectwindow w using
+the function <code>plotinit</code>, the default scaling is the graphic pixel count,
+and in particular the y axis is oriented downwards since the origin is at
+the upper left. The function <code>plotscale</code> allows to change all these
+defaults and should be used whenever functions are graphed.</p>
+
+<hr></hr>
+<a name="plotstring"></a>
+<h4>plotstring(w,x,{<em>flags</em> = 0})</h4>
+<p></p>
+<p>Draw on the rectwindow w the String x (see Section [<b>Label: se:strings</b>]), at
+the current position of the cursor.</p>
+<p>
+<em>flag</em> is used for justification: bits 1 and 2 regulate horizontal alignment:
+left if 0, right if 2, center if 1. Bits 4 and 8 regulate vertical
+alignment: bottom if 0, top if 8, v-center if 4. Can insert additional small
+gap between point and string: horizontal if bit 16 is set, vertical if bit
+32 is set (see the tutorial for an example).</p>
+
+<hr></hr>
+<a name="psdraw"></a>
+<h4>psdraw(<em>list</em>, {<em>flag</em> = 0})</h4>
+<p></p>
+<p>Same as <code>plotdraw</code>, except that the output is a PostScript program
+appended to the <code>psfile</code>, and flag != 0 scales the plot from size of the
+current output device to the standard PostScript plotting size</p>
+
+<hr></hr>
+<a name="psploth"></a>
+<h4>psploth(X = a,b,<em>expr</em>,{<em>flags</em> = 0},{n = 0})</h4>
+<p></p>
+<p>Same as <code>ploth</code>, except that the output is a PostScript program
+appended to the <code>psfile</code>.</p>
+
+<hr></hr>
+<a name="psplothraw"></a>
+<h4>psplothraw(<em>listx</em>,<em>listy</em>,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Same as <code>plothraw</code>, except that the output is a PostScript program
+appended to the <code>psfile</code>.</p>
+<p></p>
+
+<hr></hr>
+
+</BODY>
+</HTML>

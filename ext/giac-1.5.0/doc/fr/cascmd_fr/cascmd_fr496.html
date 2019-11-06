@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Pour fabriquer une séquence ou une liste : seq $</title>
+</head>
+<body >
+<a href="cascmd_fr495.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr497.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec619" class="subsection">6.40.5  Pour fabriquer une séquence ou une liste : <span style="font-family:monospace">seq $</span></h3>
+<p><a id="hevea_default896"></a><a id="hevea_default897"></a><a id="sec:seq"></a>
+<span style="font-family:monospace">seq</span> peut renvoyer une séquence (avec la même syntaxe que
+<span style="font-family:monospace">Maple</span>) ou une liste (avec la même syntaxe que <span style="font-family:monospace">TI</span>) selon la forme 
+de ses arguments qui sont : une expression dépendant d’un paramètre (par 
+exemple <span style="font-style:italic">j</span>) et des paramètres décrivant la variation de <span style="font-style:italic">j</span>.<br>
+<span style="font-family:monospace">$</span> renvoie toujours une séquence et c’est la version infixée de 
+<span style="font-family:monospace">seq</span> lorsque <span style="font-family:monospace">seq</span> a comme arguments : une expression dépendant 
+d’un paramètre (par exemple <span style="font-style:italic">j</span>) et (<span style="font-style:italic">j</span>=<span style="font-style:italic">a</span>..<span style="font-style:italic">b</span>) où <span style="font-style:italic">a</span> et <span style="font-style:italic">b</span> sont des 
+nombres réels (par exemple <span style="font-family:monospace">j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2$ (j=-1..3)</span>).<br>
+Mais lorsque <span style="font-family:monospace">seq</span> a comme arguments une expression constante et un nombre
+<span style="font-style:italic">n</span> <span style="font-family:monospace">seq</span> renvoie une liste (par exemple <span style="font-family:monospace">seq(4,3)</span> renvoie 
+<span style="font-family:monospace">[4,4,4]</span>) alors que <span style="font-family:monospace">4$3</span> renvoie la séquence <span style="font-family:monospace">(4,4,4)</span>.<br>
+<span style="font-family:monospace">seq</span> a deux, quatre ou cinq arguments car on peut exprimer
+la variation de <span style="font-style:italic">j</span> de <span style="font-style:italic">a</span> à <span style="font-style:italic">b</span> avec un seul argument (<span style="font-style:italic">j</span>=<span style="font-style:italic">a</span>..<span style="font-style:italic">b</span>) (avec la 
+syntaxe <span style="font-family:monospace">Maple</span> où il n’y a pas la possibilité de mettre un paramètre
+de saut) ou avec trois arguments (<span style="font-style:italic">j</span>,<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>) 
+ou avec quatre arguments (<span style="font-style:italic">j</span>,<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>,<span style="font-style:italic">p</span>) (syntaxe <span style="font-family:monospace">TI</span>
+avec la possibilité de mettre <span style="font-style:italic">p</span> comme paramètre de saut).
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-weight:bold">Syntaxe</span> simplifiée <span style="font-family:monospace">Xcas</span><br>
+Si <span style="font-family:monospace">seq</span> a <span style="font-weight:bold">deux</span> arguments un intervalle de réels <span style="font-style:italic">a</span>..<span style="font-style:italic">b</span> et un réel <span style="font-style:italic">p</span> (le pas)
+<span style="font-family:monospace">seq</span> renvoie la séquence des réels entre <span style="font-style:italic">a</span> et <span style="font-style:italic">b</span> par pas de <span style="font-style:italic">p</span>.<br>
+ <span style="font-family:monospace">$</span> a les même arguments mais est une fonction infixée et 
+il faut parenthéser les arguments.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">seq(1..3,0.2)</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">(1..3)$0.2</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(1,1.2,1.4,1.6,1.8,2.0,2.2,2.4,2.6,2.8,3.0)</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">seq(1..3,2/10)</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">(1..3)$(2/10)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(1,6/5,7/5,8/5,9/5,2,11/5,12/5,13/5,14/5,3)</span></div>
+Pour avoir une liste il suffit de rajouter des crochets :<br>
+On tape :
+<div class="center"><span style="font-family:monospace">[seq(1..3,0.2)</span>]</div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">[(1..3)$0.2]</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[1,1.2,1.4,1.6,1.8,2.0,2.2,2.4,2.6,2.8,3.0]</span></div>
+Si <span style="font-family:monospace">seq</span> a <span style="font-weight:bold">deux</span> (resp <span style="font-weight:bold">trois ou quatre</span>) arguments une expression 
+dépendant d’un paramètre (par exemple <span style="font-style:italic">j</span>) et <span style="font-style:italic">j</span>=<span style="font-style:italic">a</span>..<span style="font-style:italic">b</span> (resp <span style="font-style:italic">j</span>,<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>)
+où <span style="font-style:italic">a</span> et <span style="font-style:italic">b</span> sont des nombres réels <span style="font-family:monospace">seq</span> renvoie la séquence (resp 
+la liste) obtenue en remplacant <span style="font-style:italic">j</span> par <span style="font-style:italic">a</span>, 
+<span style="font-style:italic">a</span>+1..<span style="font-style:italic">b</span> si <span style="font-style:italic">b</span>&gt;<span style="font-style:italic">a</span> dans l’expression et par <span style="font-style:italic">a</span>, <span style="font-style:italic">a</span>−1..<span style="font-style:italic">b</span> si <span style="font-style:italic">b</span>&lt;<span style="font-style:italic">a</span>.<br>
+On tape avec 2 arguments :<br>
+<div class="center"><span style="font-family:monospace">seq(2k+1,k=0..6)</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">(2k+1)$(k=0..6)</span></div>
+On obtient une séquence :
+<div class="center"><span style="font-family:monospace">(1,3,5,7,9,11,13])</span></div>
+Mais si on tape 4 arguments :
+<div class="center"><span style="font-family:monospace">seq(2k+1,k,0,6)</span></div>
+On obtient une liste :
+<div class="center"><span style="font-family:monospace">[1,3,5,7,9,11,13]</span></div>
+Dans ce cas, on peut ajouter un troisième ou un cinquième argument, 
+le pas (qui vaut par défaut 1 ou -1).<br>
+On tape :<br>
+<div class="center"><span style="font-family:monospace">seq(2k+1,k=0..6,2)</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">seq(2k+1,k,0,6,2)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[1,5,9,13]</span></div>
+Si <span style="font-family:monospace">seq</span> a <span style="font-weight:bold">trois</span> arguments :<br>
+une expression dépendant d’une variable, le nom de cette variable et une 
+liste.<br>
+<span style="font-family:monospace">seq(expression,variable,liste)</span> équivaut à :<br>
+<span style="font-family:monospace">map(liste,unapply(expression,variable))</span>
+On tape :
+<div class="center"><span style="font-family:monospace">seq(2k+1,k=0..6,2)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[1,5,9,13]</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">seq(2k+1,k,[1,5,10,15])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[3,11,21,31]</span></div>
+ <br>
+<span style="font-family:monospace">$</span> a les même arguments mais est une fonction infixée et 
+il faut parenthéser les arguments.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">seq(1..3,0.2)</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">(1..3)$0.2</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(1,1.2,1.4,1.6,1.8,2.0,2.2,2.4,2.6,2.8,3.0)</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">seq(2k+1,k=0..2)</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">(2k+1)$(k=0..2)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(1,3,5)</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">seq(2k+1,k=(0..6)$2)</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">(2k+1)$(k=0..6,2)</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">(2k+1)$(k=(0..6)$2)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[1,5,9,13]</span></div>
+</li><li class="li-itemize"><span style="font-weight:bold">Syntaxe</span> compatible <span style="font-family:monospace">Maple</span><br>
+Si <span style="font-family:monospace">seq</span> a comme arguments une expression constante et un nombre <span style="font-style:italic">n</span>, 
+<span style="font-family:monospace">seq</span> renvoie la liste formée par <span style="font-style:italic">n</span> fois la constante : par exemple 
+<span style="font-family:monospace">seq(4,3)</span> renvoie la liste
+<span style="font-family:monospace">[4,4,4]</span> alors que <span style="font-family:monospace">4$3</span> renvoie la séquence <span style="font-family:monospace">(4,4,4)</span>.<br>
+Si <span style="font-family:monospace">seq</span> a comme arguments une expression dépendant d’un 
+paramètre (par exemple <span style="font-style:italic">j</span>) et <span style="font-style:italic">j</span>=<span style="font-style:italic">a</span>..<span style="font-style:italic">b</span> où <span style="font-style:italic">a</span> et <span style="font-style:italic">b</span> sont des nombres 
+réels <span style="font-family:monospace">seq</span> renvoie la séquence obtenue en remplacant <span style="font-style:italic">j</span> par <span style="font-style:italic">a</span>, 
+<span style="font-style:italic">a</span>+1..<span style="font-style:italic">b</span> si <span style="font-style:italic">b</span>&gt;<span style="font-style:italic">a</span> dans l’expression et par <span style="font-style:italic">a</span>, <span style="font-style:italic">a</span>−1..<span style="font-style:italic">b</span> si <span style="font-style:italic">b</span>&lt;<span style="font-style:italic">a</span> : par 
+exemple <span style="font-family:monospace">seq(2k+1,k=0..3)</span> renvoie <span style="font-family:monospace">(1,3,5,7)</span> et <span style="font-family:monospace">seq(2k+1,k=3..0)</span>
+renvoie <span style="font-family:monospace">(7,5,3,1)</span>. Dans ce cas, on peut ajouter un troisième argument, 
+le pas (qui vaut par défaut 1 ou -1) : par exemple <span style="font-family:monospace">seq(2k+1,k=0..6,2)</span> 
+renvoie <span style="font-family:monospace">(1,5,9,13)</span>. <br>
+<span style="font-family:monospace">$</span> a les même arguments mais est une fonction infixée et 
+il faut parenthéser les arguments et le pas (qui vaut par défaut 1 ou -1) 
+doit être précédé de $ : par exemple <span style="font-family:monospace">(2k+1)$(k=0..3)</span> renvoie 
+<span style="font-family:monospace">(1,3,5,7)</span> et <span style="font-family:monospace">(2k+1)$(k=(0..6)$2</span> renvoie <span style="font-family:monospace">(1,5,9,13)</span>.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">seq(0.4,5)</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">0.4$5</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(0.4,0.4,0.4,0.4,0.4)</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">seq(t,5)</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">t$5</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(t,t,t,t,t)</span></div>
+<span style="font-weight:bold">Attention</span> si <span style="font-family:monospace">t</span> est une séquence il faut évaluer le résultat 
+à l’aide de la commande <span style="font-family:monospace">eval</span>, par exemple :<br>
+On tape :
+<div class="center"><span style="font-family:monospace">t:=(1,2,3)</span></div>
+<div class="center"><span style="font-family:monospace">eval(seq(t,4))</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[1,2,3,1,2,3,1,2,3,1,2,3]</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">eval(t$4)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(1,2,3,1,2,3,1,2,3,1,2,3)</span></div>
+Lorsque le 2ième argument est de la forme <span style="font-family:monospace">k=a..b</span>
+On tape :
+<div class="center"><span style="font-family:monospace">seq(2*k+1,k=1..5)</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">(2*k+1)$(k=1..5)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(3,5,7,9,11)</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">seq(2*k+1,k=1..10,2)</span></div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">(2*k+1)$(k=(1..10$2))</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(3,7,11,15,19)</span></div>
+Pour avoir une liste il suffit de rajouter des crochets :<br>
+On tape :
+<div class="center"><span style="font-family:monospace">[seq(2*k+1,k=1..5)]</span>]</div>
+Ou on tape :
+<div class="center"><span style="font-family:monospace">[(2*k+1)$(k=1..5)]</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[3,5,7,9,11]</span></div></li><li class="li-itemize"><span style="font-weight:bold">Syntaxe</span> compatible <span style="font-family:monospace">TI</span><br>
+Si <span style="font-family:monospace">seq</span> a quatre arguments une expression dépendant d’un 
+paramètre (par exemple <span style="font-style:italic">j</span>), le nom du paramètre (par exemple <span style="font-style:italic">j</span>), puis 
+<span style="font-style:italic">a</span> et <span style="font-style:italic">b</span> où <span style="font-style:italic">a</span> et <span style="font-style:italic">b</span> sont des nombres réels. <span style="font-family:monospace">seq</span> définit la 
+liste obtenue en remplaçant dans l’expression <span style="font-style:italic">j</span> par <span style="font-style:italic">a</span>, <span style="font-style:italic">a</span>+1..<span style="font-style:italic">b</span> si 
+<span style="font-style:italic">b</span>&gt;<span style="font-style:italic">a</span> ou par <span style="font-style:italic">a</span>, <span style="font-style:italic">a</span>−1..<span style="font-style:italic">b</span> si <span style="font-style:italic">b</span>&lt;<span style="font-style:italic">a</span>).<br>
+ Si <span style="font-family:monospace">seq</span> a cinq arguments une expression dépendant d’un 
+paramètre (par exemple <span style="font-style:italic">j</span>), le nom du paramètre (par exemple <span style="font-style:italic">j</span>), puis 
+<span style="font-style:italic">a</span> et <span style="font-style:italic">b</span> (où <span style="font-style:italic">a</span> et <span style="font-style:italic">b</span> sont des nombres réels) et <span style="font-style:italic">p</span> le pas (où <span style="font-style:italic">p</span> 
+est un nombre réel positif ou négatif).<br>
+<span style="font-family:monospace">seq</span> définit la liste obtenue en remplaçant dans l’expression <span style="font-style:italic">j</span> 
+par <span style="font-style:italic">a</span>, <span style="font-style:italic">a</span>+<span style="font-style:italic">p</span>..<span style="font-style:italic">a</span>+<span style="font-style:italic">k</span>*<span style="font-style:italic">p</span> (<span style="font-style:italic">a</span>+<span style="font-style:italic">k</span>*<span style="font-style:italic">p</span> ≤ <span style="font-style:italic">b</span> &lt;<span style="font-style:italic">a</span>+(<span style="font-style:italic">k</span>+1)*<span style="font-style:italic">p</span> ou 
+<span style="font-style:italic">a</span>+<span style="font-style:italic">k</span>*<span style="font-style:italic">p</span> ≥ <span style="font-style:italic">b</span>&gt; <span style="font-style:italic">a</span>+(<span style="font-style:italic">k</span>+1)*<span style="font-style:italic">p</span>). Par défaut, on a <span style="font-style:italic">p</span>=1 si <span style="font-style:italic">b</span>&gt;<span style="font-style:italic">a</span> et <span style="font-style:italic">p</span>=-1 si 
+<span style="font-style:italic">b</span>&lt;<span style="font-style:italic">a</span>. Si <span style="font-style:italic">p</span> n’a pas le bon signe, ce signe est rectifié par le logiciel!<br>
+</li></ul><p>
+<span style="font-weight:bold">Remarque</span> :<br>
+ Dans la syntaxe <span style="font-family:monospace">Maple</span>, <span style="font-family:monospace">seq</span> renvoie une séquence et il n’y a pas 
+la possibilité de mettre un paramètre de saut, contrairement à la syntaxe
+<span style="font-family:monospace">TI</span> où <span style="font-family:monospace">seq</span> renvoie une liste avec 
+la possibilité de mettre un paramètre de saut.<br>
+On tape pour avoir une liste d’éléments identiques :
+</p><div class="center"><span style="font-family:monospace">seq(t,4)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[t,t,t,t]</span></div><p>
+Ou on tape pour avoir une séquence d’éléments identiques : 
+</p><div class="center"><span style="font-family:monospace">seq(t,k=1..4)</span></div><p>
+Ou on tape
+</p><div class="center"><span style="font-family:monospace">t$4</span></div><p> 
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(t,t,t,t)</span></div><p>
+<span style="font-weight:bold">Attention</span> si <span style="font-family:monospace">t</span> est une séquence il faut évaluer le résultat 
+à l’aide de la commande <span style="font-family:monospace">eval</span>, par exemple :<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">t:=(1,2,3)</span></div><div class="center"><span style="font-family:monospace">eval(seq(t,4))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[1,2,3,1,2,3,1,2,3,1,2,3]</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">eval(t$4)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(1,2,3,1,2,3,1,2,3,1,2,3)</span></div><p>
+On tape pour avoir une séquence :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j=1..4)</span></div><p>
+Ou on tape 
+</p><div class="center"><span style="font-family:monospace">(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3)$(j=1..4)</span></div><p> 
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(1,4,9,16)</span></div><p>
+Ou on tape pour avoir une liste :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j,1,4)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[1,4,9,16]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j,0,5,2)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[0,8,64]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j,5,0,-2)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j,5,0,2)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[125,27,1]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j,1,3,0.5)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[1,3.375,8,15.625,27]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">seq(j</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,j,1,3,1/2)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[1,27/8,8,125/8,27]</span></div><p>
+<span style="font-weight:bold">Exemples d’utilisation du $ ou de </span><span style="font-weight:bold"><span style="font-family:monospace">seq</span></span>
+</p><ul class="itemize"><li class="li-itemize">
+On tape pour avoir la dérivée troisième de ln(<span style="font-style:italic">x</span>) (bien mettre 
+les <span style="font-family:monospace">’</span> autour de <span style="font-family:monospace">x</span> ou mettre <span style="font-family:monospace">quote(x)</span> car sinon il faut que 
+<span style="font-family:monospace">x</span> soit purgé):
+<div class="center"><span style="font-family:monospace">diff(ln(x),’x’$3)</span></div>
+ou bien
+<div class="center"><span style="font-family:monospace">diff(ln(x),x,x,x)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">2)/x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3)</span></div>
+ou on tape en utilisant <span style="font-family:monospace">function_diff</span> et <span style="font-family:monospace">@@</span>),
+(<span style="font-weight:bold">attention !</span> <span style="font-family:monospace">function_diff</span> a comme argument une fonction et 
+renvoie une fonction) :
+<div class="center"><span style="font-family:monospace">g:=function_diff @@3;g(ln)(x)</span></div>
+On obtient :
+<div class="center">
+<span style="font-family:monospace">(‘ x‘)-&gt;((’function_diff’)@@3)(‘ x‘),2/x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3</span>
+</div>
+On tape :
+<div class="center"><span style="font-family:monospace">l:=[[2,3],[5,1],[7,2]]</span></div>
+<div class="center"><span style="font-family:monospace">eval(seq((l[k][0])$(l[k][1]),k=0..size(l)-1))</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">2,2,2,5,7,7</span></div>
+</li><li class="li-itemize">On tape pour transformer une chaîne en la séquence de ses 
+caractères :
+<div class="center">
+<span style="font-family:monospace">char(asc("abracadabrant")[k])$(k=0..dim("abracadabrant")-1)</span>
+</div>
+ou on tape :
+<div class="center"><span style="font-family:monospace">f(chn):={
+local l;
+l:=size(chn);
+return seq(chn[j],j,0..l-1);
+}</span></div>
+puis,
+<div class="center"><span style="font-family:monospace">f("abracadabrant")</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">("a","b","r","a","c","a","d","a","b","r","a","n","t"]))</span></div>
+</li><li class="li-itemize">On tape pour avoir la séquence des carrés des nombres premiers de 
+0 à 10 :
+<div class="center">
+<span style="font-family:monospace">eval(seq(ifte(isprime(k),k</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,NULL),k=0..10))</span>
+</div>
+ou on tape :
+<div class="center">
+<span style="font-family:monospace">eval(ifte(isprime(k),k</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,NULL)$(k=0..10))</span>
+</div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(4,9,25,49)</span></div>
+Pour avoir une liste on tape :
+<div class="center">
+<span style="font-family:monospace">eval(seq(ifte(isprime(k),k</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,NULL),k,0,10))</span>
+</div>
+ou on tape :
+<div class="center">
+<span style="font-family:monospace">eval([ifte(isprime(k),k</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,NULL)$(k=0..10)])</span>
+</div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[4,9,25,49]</span></div>
+</li></ul>
+<hr>
+<a href="cascmd_fr495.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr497.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

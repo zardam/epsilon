@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Appliquer une fonction de plusieurs variables à un polynôme 
+donné au format interne :map</title>
+</head>
+<body >
+<a href="cascmd_fr542.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr544.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec672" class="subsection">6.42.38  Appliquer une fonction de plusieurs variables à un polynôme 
+donné au format interne :<span style="font-family:monospace">map</span></h3>
+<p><a id="hevea_default977"></a>
+Le polynôme <span style="font-style:italic">x</span><sup>2</sup>+2<span style="font-style:italic">xy</span>+<span style="font-style:italic">y</span><sup>2</sup> s’écrit au format interne :<br>
+<span style="font-family:monospace">% % % {1,[2,0]% % % }+% % % {2,[1,1]% % % }+% % % {1,[0,2]% % % }</span><br>
+On peut transformer <span style="font-style:italic">x</span><sup>2</sup>+2<span style="font-style:italic">xy</span>+<span style="font-style:italic">y</span><sup>2</sup> au format interne avec la commande 
+<span style="font-family:monospace">symb2poly</span> (voir <a href="cascmd_fr367.html#sec%3Ainterne">6.28.6</a>). Par exemple <span style="font-family:monospace">p:=symb2poly((x+y)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,[x,y])</span> renvoie
+<span style="font-family:monospace">% % % {1,[2,0]% % % }+% % % {2,[1,1]% % % }+% % % {1,[0,2]% % % }</span><br>
+Pour un polynôme de <span style="font-style:italic">n</span> variables, <span style="font-style:italic">f</span> va agir sur les coefficients de
+chaque monôme du polynôme.<br>
+Pour agir sur un monôme de <span style="font-style:italic">n</span> variables, <span style="font-style:italic">f</span> doit être une fonction de 
+<span style="font-style:italic">n</span>+1 variables, on considère que ces variables représentent le coefficient,
+l’exposant de la première variable,...,l’exposant de la <span style="font-style:italic">n</span>-ième variable 
+et <span style="font-style:italic">f</span> transforme le coefficient de ce monôme.<br>
+Par exemple, si le monôme est 5<span style="font-style:italic">x</span><sup>2</sup><span style="font-style:italic">y</span><sup>3</sup>, au format interne il s’écrit :
+<span style="font-family:monospace">% % % {5,[2,3]% % % }</span> <br>
+et si <span style="font-style:italic">f</span> est dédfinie par :<br>
+<span style="font-family:monospace">f(a,b,c):=a*(2*b+3*c)</span><br>
+alors <br>
+<span style="font-family:monospace">map(% % % {5,[2,3]% % % },f)</span> renvoie le monôme 
+<span style="font-style:italic">f</span>(5,2,3)<span style="font-style:italic">x</span><sup>2</sup><span style="font-style:italic">y</span><sup>3</sup>=65<span style="font-style:italic">x</span><sup>2</sup><span style="font-style:italic">y</span><sup>3</sup> écrit au format interne, c’est à dire
+<span style="font-family:monospace">% % % {65,[2,3]% % % }</span> <br>
+On tape :<br>
+<span style="font-family:monospace">map(% % % {5,[2,3]% % % },(a,b,c)-&gt;a*(2b+3c))</span><br>
+On obtient :<br>
+<span style="font-family:monospace">% % % {65,[2,3]% % % }</span> <br>
+On tape :<br>
+<span style="font-family:monospace">map(% % % {1,[2,0]% % % }+% % % {2,[1,1]% % % }+% % % {1,[0,2]% % % },(a,b,c)-&gt;a*(b+2c))</span><br>
+On obtient :<br>
+<span style="font-family:monospace">% % % {2,[2,0]% % % }+% % % {6,[1,1]% % % }+% % % {4,[0,2]% % % }</span>
+car si <span style="font-style:italic">f</span> est la fonction (<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>,<span style="font-style:italic">c</span>)−&gt;<span style="font-style:italic">a</span>*(<span style="font-style:italic">b</span>+2<span style="font-style:italic">c</span>) alors <span style="font-style:italic">f</span>(1,2,0)=2,<span style="font-style:italic">f</span>(2,1,1)=6, <span style="font-style:italic">f</span>(1,0,2)=4
+</p>
+<hr>
+<a href="cascmd_fr542.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr544.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

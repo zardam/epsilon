@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Euler-Lagrange equation(s) : euler_lagrange</title>
+</head>
+<body >
+<a href="cascmd_en234.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en236.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec294" class="subsection">5.21.2  Euler-Lagrange equation(s) : <span style="font-family:monospace">euler_lagrange</span><a id="hevea_default405"></a></h3>
+<p>
+<span style="font-family:monospace">euler_lagrange</span> takes from one to three arguments :
+</p><ul class="itemize"><li class="li-itemize">
+expression <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">y</span>′),
+</li><li class="li-itemize">independent variable (optional, by default <span style="font-style:italic">x</span>),
+</li><li class="li-itemize">dependent variable (optional, by default <span style="font-style:italic">y</span>).
+</li></ul><p>
+If <span style="font-style:italic">y</span>∈ℝ<sup><span style="font-style:italic">n</span></sup> is required (by default <span style="font-style:italic">n</span>=1), one can enter <span style="font-style:italic">y</span>=(<span style="font-style:italic">y</span><sub>1</sub>,<span style="font-style:italic">y</span><sub>2</sub>,…,<span style="font-style:italic">y</span><sub><span style="font-style:italic">n</span></sub>) as a vector [<span style="font-style:italic">y</span><sub>1</sub>,<span style="font-style:italic">y</span><sub>2</sub>,…,<span style="font-style:italic">y</span><sub><span style="font-style:italic">n</span></sub>]. In that case, <span style="font-style:italic">y</span>′:=(<span style="font-style:italic">y</span><sub>1</sub>′,<span style="font-style:italic">y</span><sub>2</sub>′,…,<span style="font-style:italic">y</span><sub><span style="font-style:italic">n</span></sub>′). Alternatively, one can specify two arguments, <span style="font-style:italic">f</span> and either <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>) or [<span style="font-style:italic">y</span><sub>1</sub>(<span style="font-style:italic">x</span>),<span style="font-style:italic">y</span><sub>2</sub>(<span style="font-style:italic">x</span>),…,<span style="font-style:italic">y</span><sub><span style="font-style:italic">n</span></sub>(<span style="font-style:italic">x</span>)].</p><p>The return value is a system of differential Euler-Lagrange equations, which represent necessary conditions for extremum of the functional
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">F</span>(<span style="font-style:italic">y</span>)=</td><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left"><span style="font-style:italic">b</span></td></tr>
+<tr><td class="dcell" style="text-align:left"><br>
+<br>
+</td></tr>
+<tr><td class="dcell" style="text-align:left"><span style="font-style:italic">a</span></td></tr>
+</table></td><td class="dcell"><span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">y</span>′) <span style="font-style:italic">d</span><span style="font-style:italic">x</span>,   <span style="font-style:italic">y</span>∈ <span style="font-style:italic">C</span><sup>2</sup>[<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>] </td></tr>
+</table><p>
+with boundary conditions <span style="font-style:italic">y</span>(<span style="font-style:italic">a</span>)=<span style="font-style:italic">A</span> and <span style="font-style:italic">y</span>(<span style="font-style:italic">b</span>)=<span style="font-style:italic">B</span> where <span style="font-style:italic">A</span>,<span style="font-style:italic">B</span>∈ℝ. If <span style="font-style:italic">n</span>=1, a single equation is returned :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><a id="eq:euler-lagrange"></a></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">∂ <span style="font-style:italic">f</span></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">∂ <span style="font-style:italic">y</span></td></tr>
+</table></td><td class="dcell">=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">d</span></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">d</span><span style="font-style:italic">x</span></td></tr>
+</table></td><td class="dcell"> </td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">∂ <span style="font-style:italic">f</span></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">∂ <span style="font-style:italic">y</span>′</td></tr>
+</table></td><td class="dcell">.    (1)</td></tr>
+</table><p>
+If <span style="font-style:italic">n</span>&gt;1, there are <span style="font-style:italic">n</span> Euler-Lagrange equations :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">∂ <span style="font-style:italic">f</span></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">∂ <span style="font-style:italic">y</span><sub><span style="font-style:italic">k</span></sub></td></tr>
+</table></td><td class="dcell">=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">d</span></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">d</span><span style="font-style:italic">x</span></td></tr>
+</table></td><td class="dcell"> </td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">∂ <span style="font-style:italic">f</span></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">∂ <span style="font-style:italic">y</span><sub><span style="font-style:italic">k</span></sub>′</td></tr>
+</table></td><td class="dcell">,   <span style="font-style:italic">k</span>=1,2,…,<span style="font-style:italic">n</span>. </td></tr>
+</table><p>
+The degrees of these differential equations are kept as low as possible. If, for example, ∂ <span style="font-style:italic">f</span>/∂ <span style="font-style:italic">y</span>=0, the equation ∂ <span style="font-style:italic">f</span>/∂ <span style="font-style:italic">y</span>′=<span style="font-style:italic">K</span> is returned, where <span style="font-style:italic">K</span>∈ℝ is an arbitrary constant. Similarly, using the Hamiltonian
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">H</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">y</span>′)=<span style="font-style:italic">y</span>′ </td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">∂</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">∂ <span style="font-style:italic">y</span>′</td></tr>
+</table></td><td class="dcell"> <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">y</span>′)−<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">y</span>′) </td></tr>
+</table><p>
+the Euler-Lagrange equation is simplified in case <span style="font-style:italic">n</span>=1 and ∂ <span style="font-style:italic">f</span>/∂ <span style="font-style:italic">t</span>=0 to :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><a id="eq:hamiltonian"></a><span style="font-style:italic">H</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">y</span>′)=<span style="font-style:italic">K</span>,    (2)</td></tr>
+</table><p>
+since it can be shown that <span style="font-style:italic">d</span>/<span style="font-style:italic">d</span><span style="font-style:italic">x</span> <span style="font-style:italic">H</span>(<span style="font-style:italic">y</span>,<span style="font-style:italic">y</span>′,<span style="font-style:italic">x</span>)=0. Therefore the Euler-Lagrange equations, which are generally of order two in <span style="font-style:italic">y</span>, are returned in simpler form of order one in the aforementioned cases. If <span style="font-style:italic">n</span>=1 and ∂ <span style="font-style:italic">f</span>/∂ <span style="font-style:italic">t</span>=0 then both equations (<a href="#eq%3Aeuler-lagrange">1</a>) and (<a href="#eq%3Ahamiltonian">2</a>) are returned, each of them being sufficient to determine <span style="font-style:italic">y</span> (one of the returned equations is usually simpler than the other).</p><p>It can be proven that if <span style="font-style:italic">f</span> is convex (as a function of three independent variables), then a solution <span style="font-style:italic">y</span> to Euler-Lagrange equations minimizes the functional <span style="font-style:italic">F</span>.</p><p>For example, input :
+</p><div class="center">
+<span style="font-family:monospace">euler_lagrange(sqrt(x’(t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+y’(t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),[x(t),y(t)])
+</span></div><p>
+We obtain a system of two differential equations of order one :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:left;white-space:nowrap" ><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span>′(<span style="font-style:italic">t</span>)</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">x</span>′(<span style="font-style:italic">t</span>)<sup>2</sup>+<span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>)<sup>2</sup></td></tr>
+</table></td></tr>
+</table></td></tr>
+</table></td><td style="text-align:left;white-space:nowrap" >=<span style="font-style:italic">K</span><sub>0</sub>,</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" ><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>)</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">x</span>′(<span style="font-style:italic">t</span>)<sup>2</sup>+<span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>)<sup>2</sup></td></tr>
+</table></td></tr>
+</table></td></tr>
+</table></td><td style="text-align:left;white-space:nowrap" >=<span style="font-style:italic">K</span><sub>1</sub></td></tr>
+</table></td></tr>
+</table></td></tr>
+</table><p>
+where <span style="font-style:italic">K</span><sub>0</sub>,<span style="font-style:italic">K</span><sub>1</sub>∈ℝ are arbitrary (these constants are generated automatically).</p><p>In the following example we find the Euler-Lagrange equation for the brachistochrone problem, in which the functional
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">F</span>(<span style="font-style:italic">y</span>)=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >2 <span style="font-style:italic">g</span></td></tr>
+</table></td></tr>
+</table></td></tr>
+</table></td><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left"><span style="font-style:italic">x</span><sub>1</sub></td></tr>
+<tr><td class="dcell" style="text-align:left"><br>
+<br>
+</td></tr>
+<tr><td class="dcell" style="text-align:left">0</td></tr>
+</table></td><td class="dcell"><table style="border-spacing:0" class="cellpadding0"><tr><td ALIGN="right"><div CLASS="vbar" STYLE="height:2em;"></div></td></tr>
+<tr><td><span style="font-size:xx-large"><span style="font-size:150%">√</span></span></td></tr>
+</table></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><table class="display"><tr><td class="dcell" style="text-align:center">1+<span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>)<sup>2</sup></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>)</td></tr>
+</table></td></tr>
+</table></td><td class="dcell"> <span style="font-style:italic">d</span><span style="font-style:italic">x</span> </td></tr>
+</table><p>
+for some function <span style="font-style:italic">y</span>≥ 0 such that <span style="font-style:italic">y</span>(0)=0 and <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span><sub>1</sub>)=<span style="font-style:italic">h</span>&gt;0. It represents a curve alongside which an object travels, forced by the force of gravity (its vector pointing upwards), from the point (0,0) to the point (<span style="font-style:italic">x</span><sub>1</sub>,<span style="font-style:italic">h</span>) in shortest possible time. To obtain the corresponding Euler-Lagrange equation, input :
+</p><div class="center">
+<span style="font-family:monospace">assume(y&gt;=0):; euler_lagrange(sqrt((1+y</span><code><span style="font-family:monospace">'^</span></code><span style="font-family:monospace">2)/y),t,y)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[-1/sqrt(y(t)*(1+diff(y(t),t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2))=K_2,
+diff(y(t),t,2)=(diff(y(t),t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1)/(2*y(t))]
+</span></div><p>
+It is easier to solve the first equation for <span style="font-style:italic">y</span>, since it is first-order and separable.</p><p>In the next example we minimize the functional <span style="font-style:italic">F</span> for 0&lt;<span style="font-style:italic">a</span>&lt;<span style="font-style:italic">b</span> and
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">y</span>′)=<span style="font-style:italic">x</span><sup>2</sup> <span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>)<sup>2</sup>+<span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>)<sup>2</sup>. </td></tr>
+</table><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">f:=x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*diff(y(x),x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2:; eq:=euler_lagrange(f)
+</span></div><p>
+We obtain the following Euler-Lagrange equation :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>″=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span><sup>2</sup></td></tr>
+</table></td><td class="dcell"> (<span style="font-style:italic">y</span>−2 <span style="font-style:italic">x</span> <span style="font-style:italic">y</span>′). </td></tr>
+</table><p>
+It can be solved by assuming <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>)=<span style="font-style:italic">x</span><sup><span style="font-style:italic">r</span></sup> for some <span style="font-style:italic">r</span>∈ℝ. Input :
+</p><div class="center">
+<span style="font-family:monospace">solve(subs(eq,y(x)=x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">r),r)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[-(sqrt(5)+1)/2,(sqrt(5)-1)/2]
+</span></div><p>
+Note that a pair of independent solutions is also returned by <span style="font-family:monospace">kovacicsols</span> command :
+</p><div class="center">
+<span style="font-family:monospace">assume(x&gt;=0):; kovacicsols(y</span><code><span style="font-family:monospace">''</span></code><span style="font-family:monospace">=(y-2x*y’)/x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x,y)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[sqrt(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(sqrt(5)-1)),sqrt(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(-(sqrt(5))-1))]
+</span></div><p>
+Anyway, we conclude that <span style="font-style:italic">y</span>=<span style="font-style:italic">C</span><sub>1</sub> <span style="font-style:italic">x</span><sup>−√<span style="text-decoration:overline">5</span>+1/2</sup>+<span style="font-style:italic">C</span><sub>2</sub> <span style="font-style:italic">x</span><sup>√<span style="text-decoration:overline">5</span>+1/2</sup>. The values of <span style="font-style:italic">C</span><sub>1</sub> and <span style="font-style:italic">C</span><sub>2</sub> are determined from the boundary conditions. Finally we prove that <span style="font-style:italic">f</span> is convex :
+</p><div class="center">
+<span style="font-family:monospace">convex(f,y(x))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">true
+</span></div><p>
+Therefore, <span style="font-style:italic">y</span> minimizes <span style="font-style:italic">F</span> on [<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>].</p><p>In the example below we find the function </p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>∈</td><td class="dcell">⎧<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎩</td><td class="dcell"><span style="font-style:italic">y</span>∈ <span style="font-style:italic">C</span><sup>1</sup></td><td class="dcell">⎡<br>
+⎢<br>
+⎢<br>
+⎣</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">,1</td><td class="dcell">⎤<br>
+⎥<br>
+⎥<br>
+⎦</td><td class="dcell">:<span style="font-style:italic">y</span></td><td class="dcell">⎛<br>
+⎜<br>
+⎜<br>
+⎝</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">⎞<br>
+⎟<br>
+⎟<br>
+⎠</td><td class="dcell">=−</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >3</td></tr>
+</table></td></tr>
+</table></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">,<span style="font-style:italic">y</span>(1)=0</td><td class="dcell">⎫<br>
+⎪<br>
+⎬<br>
+⎪<br>
+⎭</td></tr>
+</table><p> which minimizes the functional
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">F</span>(<span style="font-style:italic">y</span>)=</td><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left">1</td></tr>
+<tr><td class="dcell" style="text-align:left"><br>
+<br>
+</td></tr>
+<tr><td class="dcell" style="text-align:left">1/2</td></tr>
+</table></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >1+<span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>)<sup>2</sup></td></tr>
+</table></td></tr>
+</table></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span></td></tr>
+</table></td><td class="dcell"> <span style="font-style:italic">d</span><span style="font-style:italic">x</span>. </td></tr>
+</table><p>
+To obtain the corresponding Euler-Lagrange equation, input :
+</p><div class="center">
+<span style="font-family:monospace">f:=sqrt(1+diff(y(x),x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)/x:; eq:=euler_lagrange(f)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">diff(y(x),x)/(sqrt(diff(y(x),x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1)*x)=K_3
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">sol:=dsolve(eq)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[c_0-(sqrt(-K_3</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1))/K_3]
+</span></div><p>
+The sought solution is the function of the above form which satisfies the boundary conditions. Input :
+</p><div class="center">
+<span style="font-family:monospace">y0:=sol[0]:; c:=[K_3,c_0]:; v:=solve([subs(y0,x=1/2)=-sqrt(3)/2,subs(y0,x=1)=0],c)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[[1,0]]
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">y0:=normal(subs(y0,c,v[0])
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-sqrt(1-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)
+</span></div><p>
+To prove that <span style="font-style:italic">y</span><sub>0</sub>(<span style="font-style:italic">x</span>)=−√<span style="text-decoration:overline">1−</span><span style="text-decoration:overline"><span style="font-style:italic">x</span></span><sup><span style="text-decoration:overline">2</span></sup> is indeed a minimizer for <span style="font-style:italic">F</span>, we show that the integrand in <span style="font-style:italic">F</span>(<span style="font-style:italic">y</span>) is convex. Input :
+</p><div class="center">
+<span style="font-family:monospace">convex(sqrt(1+y’</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)/x,y(x))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">x&gt;=0
+</span></div><p>
+Hence the integrand is convex for <span style="font-style:italic">x</span>∈[1/2,1].</p><p>Similarly, we find the minimizer for
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">F</span>(<span style="font-style:italic">y</span>)=</td><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left">π</td></tr>
+<tr><td class="dcell" style="text-align:left"><br>
+<br>
+</td></tr>
+<tr><td class="dcell" style="text-align:left">0</td></tr>
+</table></td><td class="dcell">⎛<br>
+⎝</td><td class="dcell">2 sin(<span style="font-style:italic">x</span>) <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>)+<span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>)<sup>2</sup></td><td class="dcell">⎞<br>
+⎠</td><td class="dcell"> <span style="font-style:italic">d</span><span style="font-style:italic">x</span> </td></tr>
+</table><p>
+where <span style="font-style:italic">y</span>∈ <span style="font-style:italic">C</span><sup>1</sup>[0,π] and <span style="font-style:italic">y</span>(0)=<span style="font-style:italic">y</span>(π)=0. Input :
+</p><div class="center">
+<span style="font-family:monospace">f:=2*sin(x)*y(x)+diff(y(x),x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2:; eq:=euler_lagrange(f)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">diff(y(x),x,2)=sin(x)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">dsolve(eq and y(0)=0 and y(pi)=0,x,y)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-sin(x)
+</span></div><p>
+The above function is the sought minimizer as the integrand <span style="font-style:italic">f</span> is convex :
+</p><div class="center">
+<span style="font-family:monospace">convex(f,y(x))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">true
+</span></div><p>In the next example we minimize the functional <span style="font-style:italic">F</span>(<span style="font-style:italic">y</span>)=∫<sub>0</sub><sup>1</sup>(<span style="font-style:italic">y</span>′(<span style="font-style:italic">x</span>)<sup>4</sup>−4 <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>)) <span style="font-style:italic">d</span><span style="font-style:italic">x</span> on <span style="font-style:italic">C</span><sup>1</sup>[0,1] with boundary conditions <span style="font-style:italic">y</span>(0)=1 and <span style="font-style:italic">y</span>(1)=2. First we solve the associated Euler-Lagrange equation :
+</p><div class="center">
+<span style="font-family:monospace">eq:=euler_lagrange(y’</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4-4y,x,y)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[(3*diff(y(x),x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4+4*y(x))=K_4, diff(y(x),x,2)=-1/(3*diff(y(x),x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)]
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">dsolve(eq[1] and y(0)=1 and y(1)=2,x,y)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[-3*(-x+1.52832425067)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(4/3)/4+2.32032831141]
+</span></div><p>
+We find that the integrand in <span style="font-style:italic">F</span>(<span style="font-style:italic">y</span>) is convex :
+</p><div class="center">
+<span style="font-family:monospace">convex(y</span><code><span style="font-family:monospace">'^</span></code><span style="font-family:monospace">4-4y,[x,y])
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">true
+</span></div><p>
+Hence the minimizer is
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span><sub>0</sub>(<span style="font-style:italic">x</span>)=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">3</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">4</td></tr>
+</table></td><td class="dcell"> (1.52832425067−<span style="font-style:italic">x</span>)<sup>4/3</sup>+2.32032831141,   0≤ <span style="font-style:italic">x</span>≤ 1. </td></tr>
+</table>
+<hr>
+<a href="cascmd_en234.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en236.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

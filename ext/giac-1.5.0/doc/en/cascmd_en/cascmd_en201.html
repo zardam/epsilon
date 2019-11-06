@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Eliminate one or more variables from a list of equations: eliminate</title>
+</head>
+<body >
+<a href="cascmd_en200.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en202.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec241" class="subsection">5.13.24  Eliminate one or more variables from a list of equations: <span style="font-family:monospace">eliminate</span></h3>
+<p><a id="hevea_default308"></a></p><p>The <span style="font-family:monospace">eliminate</span> commands takes two arguments; a list of
+equations and the variable (or list of variables) to eliminate.<br>
+<span style="font-family:monospace">eliminate</span> returns the equations with the requested variables
+eliminated. (The equations will be given as expressions, assumed to
+be equal to 0.)</p><p>Assuming the variables used haven’t been set to any values:<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">eliminate ([x = v0*t, y = y0-g*t^2], t)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[v0^2*y0-x^2*g-v0^2*y] 
+</span></div><p>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">eliminate ([x = 2*t, y = 1 - 10*t^2, z = x + y - t], t)
+</span></div><p>
+Output:
+</p><div class="center">
+<span style="font-family:monospace">[10*y^2-20*y*z+10*z^2+y-1,x+2*y-2*z] 
+</span></div><p>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">eliminate([x+y+z+t-2,x*y*t=1,x^2+t^2=z^2],[x,z])
+</span></div><p>
+Output:
+</p><div class="center">
+<span style="font-family:monospace">[2*t^2*y^2+t*y^3-4*t^2*y-4*t*y^2+4*t*y+2*t+2*y-4] 
+</span></div><p>If the variable(s) can’t be eliminated, then <span style="font-family:monospace">eliminate</span>
+returns <span style="font-family:monospace">[1]</span> or <span style="font-family:monospace">[-1]</span>. If <span style="font-family:monospace">eliminate</span> returns
+<span style="font-family:monospace">[]</span>, that means the equations determine the values of the
+variables to be eliminated.</p><p>Input:
+</p><div class="center">
+<span style="font-family:monospace">x:=2;y:=-5<br>
+ eliminate([x=2*t,y=1-10*t^2],t)
+</span></div><p>
+Output:
+</p><div class="center">
+<span style="font-family:monospace">[1] 
+</span></div><p>
+since <span style="font-family:monospace">t</span> cannot be eliminated from both equations.
+Input:
+</p><div class="center">
+<span style="font-family:monospace">x:=2;y:=-9
+eliminate([x=2*t,y=1-10*t^2],t)
+</span></div><p>
+Output:
+</p><div class="center">
+<span style="font-family:monospace">[]
+</span></div><p>
+since the first equation gives <span style="font-family:monospace">t</span>=1, which satisfies the
+second equation.<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">x := 2; y := -9<br>
+ eliminate ([x = 2*t, y = 1-10*t^2, z = x + y - t], t) 
+</span></div><p>
+Output:
+</p><div class="center">
+<span style="font-family:monospace">[z+8] 
+</span></div><p>
+since the first equation gives <span style="font-family:monospace">t</span>=1, which satisfies the
+second equation, and so that leaves <span style="font-family:monospace">z = 2 - 9 - 1 = -8</span>, or
+<span style="font-family:monospace">z + 8 = 0</span>.</p>
+<hr>
+<a href="cascmd_en200.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en202.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Local variables</title>
+</head>
+<body >
+<a href="cascmd_en780.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en782.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1007" class="subsection">11.1.3  Local variables</h3>
+<p>Local variables in a function definition can be given initial values
+in the line they are declared in if you put their initialization in
+parentheses; for example,
+</p><pre class="verbatim">local a,b;
+a := 1;
+</pre><p>
+is the same as
+</p><pre class="verbatim">local (a := 1), b;
+</pre><p>Local variables should be given values within the function definition.
+If you want to use a local variable as a symbolic variable, then you
+can indicate that with the <span style="font-family:monospace">assume</span><a id="hevea_default1349"></a> command. For
+example, if you define a function <span style="font-family:monospace">myroots</span> by
+</p><pre class="verbatim">myroots (a) := {
+local x;
+return solve(x^2=a,x);
+}
+</pre><p>
+then calling
+</p><div class="center">
+<span style="font-family:monospace">myroots(4)</span>
+</div><p>
+will simply return the empty list. You could leave <span style="font-family:monospace">x</span>
+undeclared, but that would make <span style="font-family:monospace">x</span> a global variable and could
+interact with other functions in unexpected ways. You can get the
+behavior you probably expected by explicitly assuming <span style="font-family:monospace">x</span> to be a
+symbol<a id="hevea_default1350"></a>; 
+</p><pre class="verbatim">myroots (a) := {
+local x;
+assume(x,symbol);
+return solve(x^2=a,x);
+}
+</pre><p>
+(Alternatively, you could use <span style="font-family:monospace">purge(x)</span><a id="hevea_default1351"></a> instead
+of <span style="font-family:monospace">assume(x,symbol)</span>.) Now if you enter
+</p><div class="center">
+<span style="font-family:monospace">myroots(4)</span>
+</div><p>
+you will get
+</p><div class="center">
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">[−2,2]</td></tr>
+</table>
+</div>
+<hr>
+<a href="cascmd_en780.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en782.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

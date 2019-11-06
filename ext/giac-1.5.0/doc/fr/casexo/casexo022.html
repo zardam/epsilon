@@ -1,0 +1,756 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casexo.css">
+<TITLE>Les suites</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casexo021.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo023.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc325">Chapitre 22</A>  Les suites</H1><H2 CLASS="section"><A NAME="toc120"></A><A NAME="htoc326">22.1</A>  Les suites récurrentes</H2><H3 CLASS="subsection"><A NAME="htoc327">22.1.1</A>  L’énoncé d’une suite d’itérations</H3><P>
+Soit la suite définie par :<BR>
+<I>u</I><SUB>0</SUB>=1<BR>
+<I>u</I><SUB><I>n</I>+1</SUB>=1/10<I>u</I><SUB><I>n</I></SUB>(20−<I>u</I><SUB><I>n</I></SUB>)<BR>
+Calculer <I>u</I><SUB>1</SUB> édutier les variations de la fonction <I>f</I>(<I>x</I>)=1/10<I>x</I>(20−<I>x</I>).<BR>
+En déduire que pour tout <I>n</I> <I>u</I><SUB><I>n</I></SUB> ∈ [0;10] et que <I>u</I> est croissante.<BR>
+l’expression de <I>u</I><SUB><I>n</I></SUB> en fonction de <I>n</I>.
+</P><H3 CLASS="subsection"><A NAME="htoc328">22.1.2</A>  La réponse</H3><P>
+On montre facilement que <I>f</I> est une bijection de [0;10] sur [0;10] et donc
+puisque <I>u</I><SUB>0</SUB> ∈ [0;10] et que <I>u</I><SUB><I>n</I>+1</SUB>=<I>f</I>(<I>u</I><SUB><I>n</I></SUB>), 
+pour tout <I>n</I>≥ 0 <I>u</I><SUB><I>n</I></SUB> ∈ [0;10].
+On a <I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>(10−<I>u</I><SUB><I>n</I></SUB>)/10 donc puisque pour tout <I>n</I> <I>u</I><SUB><I>n</I></SUB> ∈ [0;10],
+la suite <I>u</I> est croissante et majorée par 10, donc <I>u</I> est convergente et 
+sa limite <I>l</I> vérifie <I>l</I>≥ <I>u</I><SUB>0</SUB> et <I>l</I>=1/10<I>l</I>(20−<I>l</I>) 
+puisque <I>f</I> est continue.<BR>
+Donc <I>u</I> converge vers <I>l</I>=10. 
+</P><H3 CLASS="subsection"><A NAME="htoc329">22.1.3</A>  La réponse avec <TT>Xcas</TT></H3><P>
+On tape pour définir la fonction <I>f</I> :<BR>
+<TT>f(x):=x*(20-x)/10</TT><BR>
+On tape pour voir les 6 premiers termes de la suite <I>u</I> :<BR>
+<TT>plotseq(f(x),x=1,6)</TT><BR>
+On obtient :<BR>
+ <IMG SRC="casexo107.png"><BR>
+On tape pour avoir le signe de <I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB> :<BR>
+<TT>factor(f(un)-un)</TT><BR>
+On obtient :<BR>
+<TT>(-(un-10)*un)/10</TT><BR>
+On tape pour résoudre <I>l</I>=1/10<I>l</I>(20−<I>l</I>) :<BR>
+<TT>solve(f(x)=x)</TT><BR>
+On obtient :<BR>
+<TT>[0,10]</TT><BR>
+</P><H3 CLASS="subsection"><A NAME="htoc330">22.1.4</A>  L’énoncé</H3><P>
+Soit la suite définie par :<BR>
+<I>u</I><SUB>0</SUB>=1<BR>
+<I>u</I><SUB><I>n</I>+1</SUB>=<I>u</I><SUB><I>n</I></SUB>/3+<I>n</I>−1<BR>
+Déterminer <I>a</I> et <I>b</I> pour que la suite :<BR>
+<I>v</I><SUB><I>n</I></SUB>=<I>k</I>*<I>u</I><SUB><I>n</I></SUB>+<I>a</I>*<I>n</I>+<I>b</I> soit une suite géométrique dont on déterminera la 
+raison.<BR>
+En déduire l’expression de <I>u</I><SUB><I>n</I></SUB> en fonction de <I>n</I>.
+</P><H3 CLASS="subsection"><A NAME="htoc331">22.1.5</A>  La réponse</H3><P>
+On a :<BR>
+<I>v</I><SUB><I>n</I>+1</SUB>=<I>k</I>*<I>u</I><SUB><I>n</I>+1</SUB>+<I>a</I>*(<I>n</I>+1)+<I>b</I>=<I>k</I>*<I>u</I><SUB><I>n</I></SUB>/3+<I>k</I>*<I>n</I>−<I>k</I>+<I>a</I>*(<I>n</I>+1)+<I>b</I><BR>
+donc :<BR>
+ <I>v</I><SUB><I>n</I>+1</SUB>=<I>k</I>*<I>u</I><SUB><I>n</I></SUB>/3+(<I>a</I>*<I>n</I>+<I>b</I>)/3+2*(<I>a</I>*<I>n</I>+<I>b</I>)/3+<I>k</I>*<I>n</I>+<I>a</I>−<I>k</I><BR>
+ <I>v</I><SUB><I>n</I>+1</SUB>=<I>v</I><SUB><I>n</I></SUB>/3+2*(<I>a</I>*<I>n</I>+<I>b</I>)/3+<I>k</I>*<I>n</I>+<I>a</I>−<I>k</I><BR>
+Si on veut que <I>v</I> soit une suite géométrique , il faut que :<BR>
+2*(<I>a</I>*<I>n</I>+<I>b</I>)+3*<I>k</I>*<I>n</I>+3*<I>a</I>−3*<I>k</I>=0<BR>
+ou encore :<BR>
+2*<I>a</I>+3*<I>k</I>=0 et 2*<I>b</I>+3*<I>a</I>−3*<I>k</I>=0 
+cela donne :<BR>
+3*<I>k</I>=−2*<I>a</I> et 2*<I>b</I>=−5*<I>a</I><BR>
+On choisit <I>a</I>=−6 et alors <I>k</I>=4 et <I>b</I>=15 et alors :<BR>
+ <I>v</I><SUB><I>n</I>+1</SUB>=<I>v</I><SUB><I>n</I></SUB>/3 avec <I>v</I><SUB><I>n</I></SUB>=4*<I>u</I><SUB><I>n</I></SUB>−6*<I>n</I>+15 donc <I>v</I><SUB>0</SUB>=19<BR>
+On en déduit que :<BR>
+ <I>v</I><SUB><I>n</I></SUB>= 19*1/3<SUP><I>n</I></SUP><BR>
+donc<BR>
+ <I>u</I><SUB><I>n</I></SUB>= 19/4*1/3<SUP><I>n</I></SUP>+3/2*<I>n</I>−15/4</P><H3 CLASS="subsection"><A NAME="htoc332">22.1.6</A>  L’énoncé</H3><P>
+Soit la suite définie par :<BR>
+<I>u</I><SUB>0</SUB>=1<BR>
+<I>n</I>*<I>u</I><SUB><I>n</I></SUB>=(<I>n</I>+1)*<I>u</I><SUB><I>n</I>−1</SUB>+1 si <I>n</I>&gt;0<BR>
+Calculer <I>u</I><SUB>1</SUB>,<I>u</I><SUB>2</SUB>,<I>u</I><SUB>3</SUB>,<I>u</I><SUB>4</SUB>,<I>u</I><SUB>5</SUB>.<BR>
+À votre avis quelle est l’expression de <I>u</I><SUB><I>n</I></SUB> en fonction de <I>n</I> ?<BR>
+Démontrez que cette expression est la bonne.<BR>
+Généraliser lorsque <I>u</I><SUB>0</SUB>=<I>a</I> et <I>n</I>*<I>u</I><SUB><I>n</I></SUB>=(<I>n</I>+1)*<I>u</I><SUB><I>n</I>−1</SUB>+1 si <I>n</I>&gt;0<BR>
+
+</P><H3 CLASS="subsection"><A NAME="htoc333">22.1.7</A>  La réponse avec <TT>Xcas</TT></H3><P>
+On tape :<BR>
+<TT>u(n):=ifte(n==0,1,u(n-1)*(n+1)/n+1/n)</TT><BR>
+<TT>u(n)$(n=0..5)</TT><BR>
+On obtient :<BR>
+<TT>1,3,5,7,9,11</TT><BR>
+On pense que <I>u</I><SUB><I>n</I></SUB>=2*<I>n</I>+1 et on va le montrer par récurrence.
+La relation est vrai pour <I>n</I>=0 : <I>u</I><SUB>0</SUB>=2*0+1=1
+Supposons que pour tout 0≤ <I>k</I>&lt;<I>n</I>, <I>u</I><SUB><I>k</I></SUB>=2*<I>k</I>+1 donc <I>u</I><SUB><I>n</I>−1</SUB>=2*<I>n</I>−1
+On a <I>n</I>*<I>u</I><SUB><I>n</I></SUB>=(<I>n</I>+1)*(2*<I>n</I>−1)+1<BR>
+On tape :<BR>
+<TT>factor((n+1)*(2*n-1)+1)</TT><BR>
+On obtient :<BR>
+<TT>(2*n+1)*n</TT><BR>
+donc <I>n</I>*<I>u</I><SUB><I>n</I></SUB>=(2*<I>n</I>+1)*<I>n</I> et comme <I>n</I>&gt;0 on peut diviser par <I>n</I> donc
+<I>u</I><SUB><I>n</I></SUB>=2*<I>n</I>+1.<BR>
+<B>Généralisation</B><BR>
+On tape :<BR>
+<TT>u(n):=ifte(n==a,1,u(n-1)*(n+1)/n+1/n)</TT><BR>
+<TT>normal(u(n)$(n=0..5))</TT><BR>
+On obtient :<BR>
+<TT>a,2*a+1,3*a+2,4*a+3,5*a+4,6*a+5</TT><BR>
+On pense que <I>u</I><SUB><I>n</I></SUB>=(<I>n</I>+1)*<I>a</I>+<I>n</I> et on va le montrer par récurrence.
+La relation est vrai pour <I>n</I>=0 : <I>u</I><SUB>0</SUB>=(0+1)*<I>a</I>+0=<I>a</I>
+Supposons que pour tout 0≤ <I>k</I>&lt;<I>n</I>, <I>u</I><SUB><I>k</I></SUB>=(<I>k</I>+1)+<I>k</I> donc <I>u</I><SUB><I>n</I>−1</SUB>=<I>n</I>*<I>a</I>+<I>n</I>−1
+On a <I>n</I>*<I>u</I><SUB><I>n</I></SUB>=(<I>n</I>+1)*(<I>n</I>*<I>a</I>+<I>n</I>−1)+1<BR>
+On tape :<BR>
+<TT>factor((n+1)*(n*a+n-1)+1)</TT><BR>
+On obtient :<BR>
+<TT>n*(a*n+a+n)</TT><BR>
+donc <I>n</I>*<I>u</I><SUB><I>n</I></SUB>=<I>n</I>*(<I>a</I>*<I>n</I>+<I>a</I>+<I>n</I>) et comme <I>n</I>&gt;0 on peut diviser par <I>n</I> donc
+<I>u</I><SUB><I>n</I></SUB>=<I>a</I>*<I>n</I>+<I>a</I>+<I>n</I>=(<I>n</I>+1)*<I>a</I>+<I>n</I>.</P><P>On peut aussi chercher à calculer :<BR>
+<I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>n</I>−1</SUB> en fonction de <I>u</I><SUB><I>n</I>−1</SUB>−<I>u</I><SUB><I>n</I>−2</SUB>.<BR>
+On a :<BR>
+<I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>n</I>−1</SUB>=(<I>n</I><SUP>2</SUP>*<I>u</I><SUB><I>n</I>−1</SUB>−<I>n</I><SUP>2</SUP>*<I>u</I><SUB><I>n</I>−2</SUB>−<I>u</I><SUB><I>n</I>−1</SUB>−1)/(<I>n</I><SUP>2</SUP>−<I>n</I>)<BR>
+On sait que :<BR>
+<I>u</I><SUB><I>n</I>−1</SUB>=<I>n</I>*<I>u</I><SUB><I>n</I>−2</SUB>+<I>n</I>*<I>u</I><SUB><I>n</I>−1</SUB>−1 donc<BR>
+<I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>n</I>−1</SUB>=<I>u</I><SUB><I>n</I>−1</SUB>−<I>u</I><SUB><I>n</I>−2</SUB>=...=<I>u</I><SUB>1</SUB>−<I>u</I><SUB>0</SUB>=<I>a</I>+1<BR>
+Ainsi, <I>u</I><SUB><I>n</I></SUB> est une suite arithmétique de raison <I>a</I>+1 et donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>u</I><SUB><I>n</I></SUB>=<I>n</I>(<I>a</I>+1)+<I>u</I><SUB>0</SUB>=<I>n</I>(<I>a</I>+1)+<I>a</I>=<I>a</I>(<I>n</I>+1)+<I>n</I></TD></TR>
+</TABLE><P>
+Avec <TT>Xcas</TT>, on pose <TT>un</TT>=<I>u</I><SUB><I>n</I></SUB>, <TT>un1</TT>=<I>u</I><SUB><I>n</I>−1</SUB> et 
+<TT>un2</TT>=<I>u</I><SUB><I>n</I>−2</SUB>.<BR>
+On tape :<BR>
+<TT>un:=(n*un1+un1+1)/n</TT><BR>
+<TT>un1:=(n*un2+1)/(n-1)</TT><BR>
+<TT>simplify(un-un1)</TT><BR>
+On obtient :<BR>
+<TT>(un2+1)/(n-1)</TT><BR>
+<TT>simplify(un1-un2)</TT><BR>
+On obtient :<BR>
+<TT>(un2+1)/(n-1)</TT><BR>
+Donc <I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>n</I>−1</SUB>=<I>u</I><SUB><I>n</I>−1</SUB>−<I>u</I><SUB><I>n</I>−2</SUB>=...<I>u</I><SUB>1</SUB>−<I>u</I><SUB>0</SUB>=<I>a</I>+1.<BR>
+Avec <TT>Xcas</TT>, si on veut obtenir directement <TT>un-un1=un1-un2</TT>,
+on doit faire la différence entre :
+<TT>un11</TT>=<I>u</I><SUB><I>n</I>−1</SUB> que l’on exprime en fonction de <TT>un2</TT>=<I>u</I><SUB><I>n</I>−2</SUB> et
+<TT>un1</TT>=<I>u</I><SUB><I>n</I>−1</SUB> qui ne doit pas changer. La difficulté ici est que dans
+<TT>un</TT>=<I>u</I><SUB><I>n</I></SUB>, il y a (<I>n</I>*<I>u</I><SUB><I>n</I>−1</SUB>+<I>u</I><SUB><I>n</I>−1</SUB>+1) et on doit laisser <I>n</I>*<I>u</I><SUB><I>n</I>−1</SUB> 
+inchangé alors qu’il faut exprimer <I>u</I><SUB><I>n</I>−1</SUB>+1 en fonction de 
+<TT>un2</TT>=<I>u</I><SUB><I>n</I>−2</SUB>.<BR>
+On tape :<BR>
+<TT>un:=(n*un1+un11+1)/n</TT><BR>
+<TT>un11:=(n*un2+1)/(n-1)</TT><BR>
+<TT>simplify(un-un11)</TT><BR>
+On obtient :<BR>
+<TT>un1-un2</TT><BR>
+Donc on a :<BR>
+ <I>u</I><SUB><I>n</I></SUB>−<I>u</I><SUB><I>n</I>−1</SUB>=<I>u</I><SUB><I>n</I>−1</SUB>−<I>u</I><SUB><I>n</I>−2</SUB>=...=<I>u</I><SUB>1</SUB>−<I>u</I><SUB>0</SUB>=<I>a</I>+1<BR>
+<B>Remarque</B><BR>
+On peut aussi remarquer que <I>l</I>=−1 est solutipon de <I>n</I>*<I>l</I>=(<I>n</I>+1)*<I>l</I>+1.<BR>
+Donc si <I>v</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>+1, alors <I>v</I> vérifie :<BR>
+<I>v</I><SUB>0</SUB>=<I>a</I>+1 et <I>nv</I><SUB><I>n</I></SUB>=(<I>n</I>+1)<I>v</I><SUB><I>n</I>−1</SUB> ou encore<BR>
+<I>v</I><SUB><I>n</I></SUB>=<I>n</I>+1/<I>n</I><I>v</I><SUB><I>n</I>−1</SUB>=<I>n</I>+1/<I>n</I>−1<I>v</I><SUB><I>n</I>−2</SUB>=...=(<I>n</I>+1)<I>v</I><SUB>0</SUB>=(<I>n</I>+1)(<I>a</I>+1)<BR>
+donc 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>u</I><SUB><I>n</I></SUB>=(<I>n</I>+1)(<I>a</I>+1)−1=(<I>n</I>+1)<I>a</I>+<I>n</I></TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc334">22.1.8</A>  Un énoncé du même type</H3><P>
+Soit la suite définie par :<BR>
+<I>u</I><SUB>0</SUB>=5=<I>a</I><BR>
+<I>n</I>*<I>u</I><SUB><I>n</I></SUB>=(<I>n</I>+2)*<I>u</I><SUB><I>n</I>−1</SUB>+6 si <I>n</I>&gt;0<BR>
+et soit <I>d</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB>.<BR>
+Calculer <I>u</I><SUB>1</SUB>,<I>u</I><SUB>2</SUB>,<I>u</I><SUB>3</SUB>,<I>u</I><SUB>4</SUB>,<I>u</I><SUB>5</SUB> et <I>d</I><SUB>0</SUB>,<I>d</I>1,<I>d</I><SUB>2</SUB>,<I>d</I><SUB>3</SUB>,<I>d</I><SUB>4</SUB>.
+À votre avis quelle est l’expression de <I>d</I><SUB><I>n</I></SUB> en fonction de <I>n</I> ?
+Démontrez que cette expression est la bonne.
+En déduire l’expression de <I>u</I><SUB><I>n</I></SUB> en fonction de <I>n</I>
+Généraliser lorsque <I>u</I><SUB>0</SUB>=<I>a</I> et <I>n</I>*<I>u</I><SUB><I>n</I></SUB>=(<I>n</I>+1)*<I>u</I><SUB><I>n</I>−1</SUB>+1 si <I>n</I>&gt;0<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc335">22.1.9</A>  La solution</H3><P>
+On peut suivre les questions et montrer que :<BR>
+<I>d</I><SUB><I>n</I></SUB>=8(<I>n</I>+2) et que <I>u</I><SUB><I>n</I></SUB>=4<I>n</I>(<I>n</I>+3).<BR>
+On peut aussi remarquer que l’équation en <I>x</I> :<BR>
+<I>n</I>*<I>x</I>=(<I>n</I>+2)*<I>x</I>+6 a une solution indépendante de <I>n</I> qui est <I>l</I>=−3.<BR>
+On pose alors <I>v</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>+3 et <I>v</I> vérifie :<BR>
+<I>v</I><SUB>0</SUB>=<I>u</I><SUB>0</SUB>+3 et <I>n</I>*<I>v</I><SUB><I>n</I></SUB>=<I>n</I>*(<I>u</I><SUB><I>n</I></SUB>+3)=(<I>n</I>+2)*(<I>u</I><SUB><I>n</I>−1</SUB>+3)=(<I>n</I>+2)*<I>v</I><SUB><I>n</I>−1</SUB>, donc<BR>
+<I>v</I><SUB><I>n</I></SUB>=<I>n</I>+2/<I>n</I><I>v</I><SUB><I>n</I>−1</SUB>=<I>n</I>+2/<I>n</I><I>n</I>+1/<I>n</I>−1=....(<I>n</I>+2)(<I>n</I>+1)/2<I>v</I><SUB>0</SUB><BR>
+Donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>u</I><SUB><I>n</I></SUB>=<I>v</I><SUB><I>n</I></SUB>−3=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(<I>n</I>+2)(<I>n</I>+1)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(<I>u</I><SUB>0</SUB>+3)−3=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(<I>a</I>−3)<I>n</I><SUP>2</SUP>+(3<I>a</I>−9)<I>n</I>+2<I>a</I>−12</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD></TR>
+</TABLE><P>
+Pour <I>a</I>=5 on trouve :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>u</I><SUB><I>n</I></SUB>=4<I>n</I><SUP>2</SUP>+12<I>n</I>+5</TD></TR>
+</TABLE><H2 CLASS="section"><A NAME="toc121"></A><A NAME="htoc336">22.2</A>  Les suites homographiques</H2><H3 CLASS="subsection"><A NAME="htoc337">22.2.1</A>  L’énoncé</H3><H4 CLASS="subsubsection">Partie A</H4><P>
+Soit <I>f</I> la fonction définie sur ]−∞;−1[∪]−1;+∞[ par 
+<I>f</I>(<I>x</I>)=<I>x</I>+2/<I>x</I>+1.<BR>
+1/ Résoudre <I>f</I>(<I>x</I>)=<I>x</I>.<BR>
+On notera <I>r</I><SUB>1</SUB> la racine positive et <I>r</I><SUB>2</SUB> la racine négative.<BR>
+2/ Soit (u) la suite définie par :<BR>
+<I>u</I><SUB>1</SUB>=1<BR>
+<I>u</I><SUB><I>n</I></SUB>=<I>f</I>(<I>u</I><SUB><I>n</I>−1</SUB>) pour <I>n</I>&gt;1<BR>
+Calculer <I>u</I><SUB><I>n</I></SUB> pour <I>n</I>=1,2,3,4,5<BR>
+3/ Soit (v) la suite définie par :<BR>
+<I>v</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>−<I>r</I><SUB>1</SUB>/<I>u</I><SUB><I>n</I></SUB>−<I>r</I><SUB>2</SUB>=<I>g</I>(<I>u</I><SUB><I>n</I></SUB>)<BR>
+a) Démontrer que (v) est une suite géométrique.<BR>
+b) Expliciter <I>v</I><SUB><I>n</I></SUB> en fonction de <I>n</I><BR>
+c) Expliciter <I>u</I><SUB><I>n</I></SUB> en fonction de <I>n</I><BR>
+d) Calculer <I>l</I>=lim<SUB><I>n</I> → +∞</SUB> <I>u</I><SUB><I>n</I></SUB><BR>
+4/ Donner la plus petite valeur de <I>n</I> pour laquelle |<I>u</I><SUB><I>n</I></SUB>−<I>l</I>|&lt;10<SUP>−1000</SUP>
+</P><H4 CLASS="subsubsection">Partie B</H4><P>
+1/ Exprimer <I>u</I><SUB>2<I>n</I></SUB> en fonction de <I>u</I><SUB><I>n</I></SUB>.<BR>
+2/ Determiner et étudier la fonction <I>f</I><SUB>2</SUB> telle que <I>u</I><SUB>2<I>n</I></SUB>=<I>f</I><SUB>2</SUB>(<I>u</I><SUB><I>n</I></SUB>).<BR>
+3/ Soit (<I>w</I>) la suite définie par :<BR>
+<I>w</I><SUB>0</SUB>=1 et <I>w</I><SUB><I>n</I></SUB>=<I>f</I><SUB>2</SUB>(<I>w</I><SUB><I>n</I>−1</SUB>) pour tout <I>n</I>&gt;0.<BR>
+Montrer que (<I>w</I>) a la même limite <I>l</I> que (<I>u</I>).<BR>
+4/ Donner la plus petite valeur de <I>n</I> pour laquelle |<I>w</I><SUB><I>n</I></SUB>−<I>l</I>|&lt;10<SUP>−1000</SUP>
+</P><H4 CLASS="subsubsection">Partie C</H4><P>
+1/ Exprimer <I>u</I><SUB>3<I>n</I></SUB> en fonction de <I>u</I><SUB><I>n</I></SUB>.<BR>
+2/ Determiner et étudier la fonction <I>f</I><SUB>3</SUB> telle que <I>u</I><SUB>3<I>n</I></SUB>=<I>f</I><SUB>3</SUB>(<I>u</I><SUB><I>n</I></SUB>).<BR>
+3/ Soit (<I>t</I>) la suite définie par :<BR>
+<I>t</I><SUB>0</SUB>=1 et <I>t</I><SUB><I>n</I></SUB>=<I>f</I><SUB>3</SUB>(<I>t</I><SUB><I>n</I>−1</SUB>) pour tout <I>n</I>&gt;0.<BR>
+Montrer que (<I>t</I>) a la même limite <I>l</I> que (<I>u</I>).<BR>
+4/ Donner la plus petite valeur de <I>n</I> pour laquelle |<I>t</I><SUB><I>n</I></SUB>−<I>l</I>|&lt;10<SUP>−1000</SUP>
+</P><H4 CLASS="subsubsection">Partie D</H4><P>
+Étant donné <I>p</I> entier positif, refaire la même chose à partir de la 
+fonction :<BR>
+<I>f</I>(<I>x</I>)=<I>x</I>+<I>p</I>/<I>x</I>+1<BR>
+pour trouver une valeur approchée de √<SPAN style="text-decoration:overline"><I>p</I></SPAN>.</P><H3 CLASS="subsection"><A NAME="htoc338">22.2.2</A>  La correction</H3><H4 CLASS="subsubsection">Partie A</H4><P>
+1/ On tape :<BR>
+<TT>f(x):=(x+2)/(x+1)</TT><BR>
+puis :<BR>
+<TT>solve(f(x)=x)</TT><BR>
+On obtient :<BR>
+<TT>[-sqrt(2),sqrt(2)]</TT></P><P>2/ On tape :<BR>
+<TT>1</TT>
+puis :<BR>
+<TT>f(ans())</TT><BR>
+puis :<BR>
+<TT>enter enter enter enter</TT><BR>
+On obtient :<BR>
+ <TT>3/2</TT>, <TT>7/5</TT>,  <TT>17/12</TT>, <TT>41/29</TT></P><P>3/ On a :<BR>
+ <I>v</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I></SUB>−√<SPAN style="text-decoration:overline">2</SPAN>/<I>u</I><SUB><I>n</I></SUB>+√<SPAN style="text-decoration:overline">2</SPAN><BR>
+On tape :<BR>
+<TT>g(x):=(x-sqrt(2))/(x+sqrt(2))</TT><BR>
+Puis, on tape :<BR>
+<TT>v(n):=g(u(n))</TT><BR>
+puis :<BR>
+<TT>h(x):=solve(g(y)=x,y)[0]</TT>
+puis :<BR>
+<TT>h(x)</TT><BR>
+On obtient :<BR>
+<TT>(x*sqrt(2)+sqrt(2))/(-x+1)</TT>
+donc<BR>
+ <I>u</I><SUB><I>n</I></SUB>=√<SPAN style="text-decoration:overline">2</SPAN> <I>v</I><SUB><I>n</I></SUB>+1/−<I>v</I><SUB><I>n</I></SUB>+1 et<BR>
+<I>v</I><SUB><I>n</I>+1</SUB>=<I>g</I>(<I>v</I><SUB><I>n</I>+1</SUB>)=<I>g</I>(<I>f</I>(<I>u</I><SUB><I>n</I></SUB>))=<I>g</I>(<I>f</I>(<I>h</I>(<I>v</I><SUB><I>n</I></SUB>)))<BR>
+On tape :<BR>
+<TT>k:=g@f@h</TT>
+puis :<BR>
+<TT>normal(k(x))</TT><BR>
+On obtient :<BR>
+<TT>((sqrt(2)-2)*x)/(sqrt(2)+2)</TT><BR>
+ donc  <I>v</I><SUB><I>n</I>+1</SUB>=(√<SPAN style="text-decoration:overline">2</SPAN>−2)*<I>v</I><SUB><I>n</I></SUB>/√<SPAN style="text-decoration:overline">2</SPAN>+2<BR>
+la suite (<I>v</I>) est donc une suite géométrique de raison :<BR>
+<TT>(sqrt(2)-2)/(sqrt(2)+2)=2*sqrt(2)-3</TT><BR>
+puis on tape :<BR>
+<TT>normal(expand(mult_conjugate(g(1))))</TT><BR>
+On obtient :<BR>
+<TT>2*sqrt(2)-3</TT><BR>
+Donc :<BR>
+<I>v</I><SUB><I>n</I></SUB>=(2*√<SPAN style="text-decoration:overline">2</SPAN>−3)<SUP><I>n</I></SUP><BR>
+Donc on tape <I>h</I>(<I>v</I><SUB><I>n</I></SUB>) :<BR>
+<TT>h((2*sqrt(2)-3)</TT><CODE><TT>^</TT></CODE><TT>n)</TT><BR>
+On obtient <I>u</I><SUB><I>n</I></SUB> :<BR>
+<TT>((2*sqrt(2)-3)</TT><CODE><TT>^</TT></CODE><TT>n*sqrt(2)+sqrt(2))/(-(2*sqrt(2)-3)</TT><CODE><TT>^</TT></CODE><TT>n+1)</TT><BR>
+On sait que (<I>v</I>) converge vers 0 car on a :<BR>
+ <I>v</I><SUB><I>n</I></SUB>=(2*√<SPAN style="text-decoration:overline">2</SPAN>−3)<SUP><I>n</I></SUP> et −1&lt;2*√<SPAN style="text-decoration:overline">2</SPAN>−3&lt;0.<BR>
+Quand <I>x</I> tend vers 0, <I>h</I>(<I>x</I>) tend vers <I>h</I>(0)=√<SPAN style="text-decoration:overline">2</SPAN>, donc (<I>u</I>) converge 
+vers √<SPAN style="text-decoration:overline">2</SPAN>.<BR>
+On a <TT>normal(h(x)-h(0))=(-(2*sqrt(2))*x)/(x-1)</TT></P><P>4/ On tape :<BR>
+<TT>normal(diff(h(x)))</TT><BR>
+On obtient :<BR>
+<TT>(2*sqrt(2))/(x</TT><CODE><TT>^</TT></CODE><TT>2-2*x+1)</TT><BR>
+On a :<BR>
+pour tout <I>n</I>, −|<I>v</I><SUB>0</SUB>|=−3+2√<SPAN style="text-decoration:overline">2</SPAN> ≤ <I>v</I><SUB><I>n</I></SUB> ≤ 3−2√<SPAN style="text-decoration:overline">2</SPAN>=|<I>v</I><SUB>0</SUB>|, donc :<BR>
+−1.2&lt;−4+2 √<SPAN style="text-decoration:overline">2</SPAN> ≤ <I>v</I><SUB><I>n</I></SUB>−1 ≤ 2−2 √<SPAN style="text-decoration:overline">2</SPAN>&lt;−0.8, donc :<BR>
+si −3+2 √<SPAN style="text-decoration:overline">2</SPAN> ≤ <I>x</I> ≤ 3−2√<SPAN style="text-decoration:overline">2</SPAN>,<BR>
+On a<BR>
+|<I>h</I>′(<I>x</I>)|&lt;(2*√<SPAN style="text-decoration:overline">2</SPAN>)/(2−2*√<SPAN style="text-decoration:overline">2</SPAN>)<SUP>2</SUP>=(3*√<SPAN style="text-decoration:overline">2</SPAN>+4)/2<BR>
+ et<BR>
+|<I>u</I><SUB><I>n</I></SUB>−√<SPAN style="text-decoration:overline">2</SPAN>|=|<I>h</I>(<I>v</I><SUB><I>n</I></SUB>)−<I>h</I>(0)|&lt;|<I>v</I><SUB><I>n</I></SUB>|*(3*√<SPAN style="text-decoration:overline">2</SPAN>+4)/2 &lt;5* (0.2)<SUP><I>n</I></SUP><BR>
+On tape :<BR>
+<TT>solve(5*0.2</TT><CODE><TT>^</TT></CODE><TT>n&lt;10</TT><CODE><TT>^</TT></CODE><TT>-1000,n)</TT><BR>
+log10(5)+<I>n</I>*log10(0.2)&lt;−1000<BR>
+donc<BR>
+<I>n</I>&gt;=1432&gt;(1000+log10(5))/(1−log10(2))&gt;1431
+</P><H4 CLASS="subsubsection">Partie B</H4><P>
+1/ On a :<BR>
+<I>v</I><SUB>2<I>n</I></SUB>=(2√<SPAN style="text-decoration:overline">2</SPAN>−3)<SUP>(</SUP>2<I>n</I>)=<I>v</I><SUB><I>n</I></SUB><SUP>2</SUP>,<BR>
+donc<BR>
+<I>u</I><SUB>2<I>n</I></SUB>=<I>h</I>(<I>v</I><SUB>2<I>n</I></SUB>)=<I>h</I>(<I>v</I><SUB><I>n</I></SUB><SUP>2</SUP>)=<I>h</I>((<I>g</I>(<I>u</I><SUB><I>n</I></SUB>))<SUP>2</SUP> </P><P>2/ On tape puisque <TT>sq(x)=x</TT><CODE><TT>^</TT></CODE><TT>2</TT> :<BR>
+<TT>f2(x):=normal((h@sq@g)(x))</TT><BR>
+puis<BR>
+<TT>f2(x)</TT><BR>
+On obtient :<BR>
+ <TT>((x</TT><CODE><TT>^</TT></CODE><TT>2+2)*1/2)/x</TT><BR>
+On reconnait la fonction obtenue par la méthode de Newton et
+qu’il faut itérer pour obtenir une approximation de √<SPAN style="text-decoration:overline">2</SPAN>.</P><P>3/ On a :<BR>
+<I>w</I><SUB>0</SUB>=<I>u</I><SUB>1</SUB><BR>
+<I>w</I><SUB>1</SUB>=<I>f</I><SUB>2</SUB>(<I>w</I><SUB>0</SUB>)=<I>f</I><SUB>2</SUB>(<I>w</I><SUB>1</SUB>)=<I>u</I><SUB>2</SUB><BR>
+<I>w</I><SUB>2</SUB>=<I>f</I><SUB>2</SUB>(<I>w</I><SUB>1</SUB>)=<I>f</I><SUB>2</SUB>(<I>u</I><SUB>2</SUB>)=<I>u</I><SUB>4</SUB><BR>
+<I>w</I><SUB>3</SUB>=<I>f</I><SUB>2</SUB>(<I>w</I><SUB>2</SUB>)=<I>f</I><SUB>2</SUB>(<I>u</I><SUB>4</SUB>)=<I>u</I><SUB>8</SUB><BR>
+....donc<BR>
+<I>w</I><SUB><I>n</I></SUB>=<I>u</I><SUB>2<SUP><I>n</I></SUP></SUB></P><P>4/ Si on prend 2<SUP><I>n</I></SUP> ≥ 1432, on aura |<I>w</I><SUB><I>n</I></SUB>−<I>l</I>|&lt;10<SUP>−1000</SUP><BR>
+On tape :<BR>
+<TT>solve(2</TT><CODE><TT>^</TT></CODE><TT>n&gt;1432.,n)</TT><BR>
+On obtient :<BR>
+ <TT>n&gt;10.48...</TT><BR>
+Donc si <I>n</I>≥ 11), on aura |<I>w</I><SUB><I>n</I></SUB>−<I>l</I>|&lt;10<SUP>−1000</SUP>
+</P><H4 CLASS="subsubsection">Partie C</H4><P>
+1/ On a :<BR>
+<I>v</I><SUB>3<I>n</I></SUB>=(2√<SPAN style="text-decoration:overline">2</SPAN>−3)<SUP>(</SUP>3<I>n</I>)=<I>v</I><SUB><I>n</I></SUB><SUP>3</SUP>,<BR>
+donc :<BR>
+<I>u</I><SUB>3<I>n</I></SUB>=<I>h</I>(<I>v</I><SUB>3<I>n</I></SUB>)=<I>h</I>(<I>v</I><SUB><I>n</I></SUB><SUP>3</SUP>)=<I>h</I>((<I>g</I>(<I>u</I><SUB><I>n</I></SUB>))<SUP>3</SUP> </P><P>2/ On tape :<BR>
+<TT>p3(x):=x</TT><CODE><TT>^</TT></CODE><TT>3</TT><BR>
+<TT>f3(x):=normal((h@p3@g)(x))</TT><BR>
+puis<BR>
+<TT>f3(x)</TT><BR>
+On obtient :<BR>
+ <TT>(x</TT><CODE><TT>^</TT></CODE><TT>3+6*x)/(3*x</TT><CODE><TT>^</TT></CODE><TT>2+2)</TT></P><P>3/ On a :<BR>
+<I>t</I><SUB>0</SUB>=<I>u</I><SUB>1</SUB><BR>
+<I>t</I><SUB>1</SUB>=<I>f</I><SUB>3</SUB>(<I>t</I><SUB>0</SUB>)=<I>f</I><SUB>3</SUB>(<I>u</I><SUB>1</SUB>)=<I>u</I><SUB>3</SUB><BR>
+<I>t</I><SUB>2</SUB>=<I>f</I><SUB>3</SUB>(<I>t</I><SUB>1</SUB>)=<I>f</I><SUB>3</SUB>(<I>u</I><SUB>3</SUB>)=<I>u</I><SUB>9</SUB><BR>
+<I>t</I><SUB>3</SUB>=<I>f</I><SUB>3</SUB>(<I>t</I><SUB>2</SUB>)=<I>f</I><SUB>3</SUB>(<I>u</I><SUB>9</SUB>)=<I>u</I><SUB>2</SUB>7<BR>
+....donc<BR>
+<I>t</I><SUB><I>n</I></SUB>=<I>u</I><SUB>3<SUP><I>n</I></SUP></SUB></P><P>4/Si on prend 3<SUP><I>n</I></SUP> ≥ 1432, on aura |<I>t</I><SUB><I>n</I></SUB>−<I>l</I>|&lt;10<SUP>−1000</SUP>
+On tape :<BR>
+<TT>solve(3</TT><CODE><TT>^</TT></CODE><TT>n&gt;1432.,n)</TT><BR>
+On obtient :<BR>
+ <TT>n&gt;6.61...</TT><BR>
+Donc si <I>n</I>≥ 7), on aura |<I>w</I><SUB><I>n</I></SUB>−<I>l</I>|&lt;10<SUP>−1000</SUP>
+</P><H4 CLASS="subsubsection">Partie D</H4><P>
+1/ Étant donné <I>p</I> entier positif, on peut refaire la même chose pour 
+trouver une valeur approchée de 
+√<SPAN style="text-decoration:overline"><I>p</I></SPAN> en prenant comme fonction <I>f</I> :<BR>
+ <I>f</I>(<I>x</I>)=<I>x</I>+<I>p</I>/<I>x</I>+1<BR>
+On tape :<BR>
+<TT>f(x):=(x+p)/(x+1)</TT><BR>
+On tape :<BR>
+<TT>solve(f(x)=x,x)</TT><BR>
+On obtient :<BR>
+<TT>[-(sqrt(p)),sqrt(p)]</TT><BR>
+On tape :<BR>
+<TT>g(x):=(x-sqrt(p))/(x+sqrt(p))</TT><BR>
+On tape :<BR>
+<TT>h(x):=solve(g(y)=x,y)[0]</TT><BR>
+On obtient :<BR>
+<TT>(x*sqrt(p)+sqrt(p))/(-x+1)</TT><BR>
+donc<BR>
+ <I>u</I><SUB><I>n</I></SUB>=√<SPAN style="text-decoration:overline"><I>p</I></SPAN> <I>v</I><SUB><I>n</I></SUB>+1/−<I>v</I><SUB><I>n</I></SUB>+1 et<BR>
+<I>v</I><SUB><I>n</I>+1</SUB>=<I>g</I>(<I>v</I><SUB><I>n</I>+1</SUB>)=<I>g</I>(<I>f</I>(<I>u</I><SUB><I>n</I></SUB>))=<I>g</I>(<I>f</I>(<I>h</I>(<I>v</I><SUB><I>n</I></SUB>)))<BR>
+On tape :<BR>
+<TT>k:=g@f@h</TT>
+puis :<BR>
+<TT>normal(k(x))</TT><BR>
+On obtient :<BR>
+<TT>((sqrt(p)-p)*x)/(sqrt(p)+p)</TT><BR>
+ donc<BR>
+<I>v</I><SUB><I>n</I>+1</SUB>=((√<SPAN style="text-decoration:overline"><I>p</I></SPAN>−<I>p</I>)*<I>v</I><SUB><I>n</I></SUB>)/(√<SPAN style="text-decoration:overline"><I>p</I></SPAN>+<I>p</I>)<BR>
+La suite (<I>v</I>) est donc une suite géométrique de raison :<BR>
+<TT>(sqrt(p)-p)/(sqrt(p)+p)=-g(1)</TT><BR>
+puis on tape :<BR>
+<TT>normal(expand(mult_conjugate(k(1))))</TT><BR>
+On obtient :<BR>
+<TT>(-p-1+2*sqrt(p))/(p-1)</TT><BR>
+la suite (<I>v</I>) est donc une suite géomtrique de raison :<BR>
+<TT>(-p-1+2*sqrt(p))/(p-1)</TT><BR>
+Donc :<BR>
+<I>v</I><SUB><I>n</I></SUB>=((−<I>p</I>−1+2*√<SPAN style="text-decoration:overline"><I>p</I></SPAN>)/(<I>p</I>−1))<SUP><I>n</I></SUP><BR>
+Donc on tape <I>h</I>(<I>v</I><SUB><I>n</I></SUB>) :<BR>
+<TT>h((((sqrt(p)-p)*x)/(sqrt(p)+p))</TT><CODE><TT>^</TT></CODE><TT>n)</TT><BR>
+On obtient <I>u</I><SUB><I>n</I></SUB> :<BR>
+<TT>((((sqrt(p)-p)*x)/(sqrt(p)+p))</TT><CODE><TT>^</TT></CODE><TT>n*sqrt(p)+sqrt(p))/<BR>
+(-(((sqrt(p)-p)*x)/(sqrt(p)+p))</TT><CODE><TT>^</TT></CODE><TT>n+1)</TT></P><P>2/ On a :<BR>
+<I>v</I><SUB>2<I>n</I></SUB>=<I>v</I><SUB><I>n</I></SUB><SUP>2</SUP>, donc 
+<I>u</I><SUB>2<I>n</I></SUB>=<I>h</I>(<I>v</I><SUB>2<I>n</I></SUB>)=<I>h</I>(<I>v</I><SUB><I>n</I></SUB><SUP>2</SUP>)=<I>h</I>((<I>g</I>(<I>u</I><SUB><I>n</I></SUB>))<SUP>2</SUP>) car <I>v</I><SUB>2<I>n</I></SUB>=<I>v</I>(<I>n</I>)<SUP>2</SUP> et <I>v</I>(<I>n</I>)=<I>g</I>(<I>u</I>(<I>n</I>))<BR>
+On tape puisque <TT>sq(x)=x</TT><CODE><TT>^</TT></CODE><TT>2</TT> :<BR>
+<TT>f2(x):=normal((h@sq@g)(x))</TT><BR>
+puis<BR>
+<TT>f2(x)</TT><BR>
+On obtient :<BR>
+ <TT>((x</TT><CODE><TT>^</TT></CODE><TT>2+p)*1/2)/x</TT><BR>
+On reconnait la fonction obtenue par la méthode de Newton et
+qu’il faut itérer pour obtenir une approximation de √<SPAN style="text-decoration:overline"><I>p</I></SPAN>.</P><P>3/ On a :<BR>
+<I>v</I><SUB>3<I>n</I></SUB>=<I>v</I><SUB><I>n</I></SUB><SUP>3</SUP>, donc 
+<I>u</I><SUB>3<I>n</I></SUB>=<I>h</I>(<I>v</I><SUB>3<I>n</I></SUB>)=<I>h</I>(<I>v</I><SUB><I>n</I></SUB><SUP>3</SUP>)=<I>h</I>((<I>g</I>(<I>u</I><SUB><I>n</I></SUB>))<SUP>3</SUP>)<BR>
+On tape :<BR>
+<TT>p3(x):=x</TT><CODE><TT>^</TT></CODE><TT>3</TT>
+<TT>f3(x):=normal((h@p3@g)(x))</TT><BR>
+puis<BR>
+<TT>f3(x)</TT><BR>
+On obtient :<BR>
+ <TT>(x</TT><CODE><TT>^</TT></CODE><TT>3+3*p*x)/(3*x</TT><CODE><TT>^</TT></CODE><TT>2+p)</TT>
+</P><H4 CLASS="subsubsection">Avec le tableur</H4><P>
+Avec le tableur, on voit les différentes vitesses de convergences des suites
+<TT>(u)</TT>, <TT>(v)</TT> et <TT>(t)</TT>.
+Il faut prévoir 6 colonnes : une colonne des valeurs exactes des termes de 
+la suite et une colonne donnant les valeurs approchées des termes de 
+la suite et cela pour chacune des suites.</P><H2 CLASS="section"><A NAME="toc122"></A><A NAME="htoc339">22.3</A>  Exemple d’une suite instable</H2><H3 CLASS="subsection"><A NAME="htoc340">22.3.1</A>  L’énoncé</H3><P>
+Soient les suites <I>u</I> et <I>v</I> définies par :
+<I>u</I><SUB>0</SUB>=11/2<BR>
+<I>u</I><SUB>1</SUB>=61/11<BR>
+<I>u</I><SUB><I>n</I></SUB>=111−1130/<I>u</I><SUB><I>n</I>−1</SUB>+3000/<I>u</I><SUB><I>n</I>−1</SUB>*<I>u</I><SUB><I>n</I>−2</SUB><BR>
+et<BR>
+<I>v</I><SUB>0</SUB>=5.5<BR>
+<I>v</I><SUB>1</SUB>=<I>evalf</I>(61/11)<BR>
+<I>v</I><SUB><I>n</I></SUB>=111−1130/<I>v</I><SUB><I>n</I>−1</SUB>+3000/<I>v</I><SUB><I>n</I>−1</SUB>*<I>v</I><SUB><I>n</I>−2</SUB><BR>
+Quelles sont les limites possibles de ces suites ?
+À l’aide de <TT>Xcas</TT>, calculer la valeur approchée des 30 premiers termes
+de ces deux suites en utilisant 20 digits.
+</P><H3 CLASS="subsection"><A NAME="htoc341">22.3.2</A>  Le programme</H3><P>
+On tape :
+</P><PRE CLASS="verbatim">  instable(n,u0,u1):={
+    local j,un;
+    if (n==0) return u0;
+    if (n==1) return u1;
+    for(j:=2;j&lt;=n;j++){
+      un:=111-1130/u1+3000/(u0*u1);
+      u0:=u1;
+      u1:=un;
+    }
+    return un;
+  }
+:;
+</PRE><P>On a alors :<BR>
+<I>u</I><SUB><I>n</I></SUB>=<I>instable</I>(<I>n</I>,11/2,61/11)<BR>
+<I>v</I><SUB><I>n</I></SUB>=<I>instable</I>(<I>n</I>,5.5,<I>evalf</I>(61/11))
+</P><H3 CLASS="subsection"><A NAME="htoc342">22.3.3</A>  Les résultats</H3><P>
+Soit <I>f</I>(<I>x</I>,<I>y</I>)=111−1130/<I>x</I>+3000/<I>x</I>*<I>y</I>.<BR>
+Si une suite <I>w</I> vérifie la relation de récurrence :
+<I>w</I><SUB><I>n</I></SUB>=<I>f</I>(<I>w</I><SUB><I>n</I>−1</SUB>*<I>w</I><SUB><I>n</I>−2</SUB>), les limites possibles d’une telle suite sont les 
+solutions de <I>f</I>(<I>x</I>,<I>x</I>)=<I>x</I>.<BR>
+On tape :<BR>
+<TT>solve(111-1130/x+3000/x</TT><CODE><TT>^</TT></CODE><TT>2=x,x)</TT><BR>
+On obtient :<BR>
+<TT>[100,6,5]</TT><BR>
+Les limites possibles sont donc 5,6 et 100.<BR>
+<B>Remarque</B>
+La suite <I>v</I> dépend de la valeur de <TT>evalf(61/11)</TT>, donc dépend du 
+nombre de digits utilisés et du mode de calcul utilisé.<BR>
+On tape :
+</P><PRE CLASS="verbatim">Digits:=20;
+for(n:=0;n&lt;=30;n++){
+print(n);
+print(instable(n,5.5,evalf(61/11)));
+print(evalf(instable(n,11/2,61/11)));}
+</PRE><P>On obtient :
+</P><PRE CLASS="verbatim">n:0
+5.50000000000000000000
+5.50000000000000000000
+n:1
+5.54545454545454545456
+5.54545454545454545456
+n:2
+5.59016393442622950768
+5.59016393442622950817
+n:3
+5.63343108504398826144
+5.63343108504398826979
+n:4
+5.67464862051015081490
+5.67464862051015096306
+n:5
+5.71332905238051293965
+5.71332905238051554900
+n:6
+5.74912091970259238934
+5.74912091970263804374
+n:7
+5.78181092048482174472
+5.78181092048561557945
+n:8
+5.81131423828027015958
+5.81131423829399572318
+n:9
+5.83765654872259110580
+5.83765654895871196153
+n:10
+5.86095151847234420526
+5.86095152251613197273
+n:11
+5.88137714686097474136
+5.88137721584141860362
+n:12
+5.89915273314948416898
+5.89915390579006532873
+n:13
+5.91450507580732900460
+5.91452495067898343240
+n:14
+5.92740541888982367183
+5.92774140777679525195
+n:15
+5.93338276962798092957
+5.93905048546111815120
+n:16
+5.85317477456212541080
+5.94868749248041657029
+n:17
+4.32520225792017284829
+5.95687073191822040100
+n:18
+-0.317580966868753489379e2
+5.96379872081940311587
+n:19
+0.124741088526995943127e3
+5.96964914404788717708
+n:20
+0.101183955312637480034e3
+5.97457902866672280000
+n:21
+0.100069905575441095835e3
+5.97872572175269217080
+n:22
+0.100004176388280681510e3
+5.98220835071100136336
+n:23
+0.100000249822052284540e3
+5.98512953056300350037
+n:24
+0.100000014951746801213e3
+5.98757715320858086895
+n:25
+0.100000000895227729755e3
+5.98962614887996719755
+n:26
+0.100000000053619816097e3
+5.99134015140329529141
+n:27
+0.100000000003212496604e3
+5.99277302875661600204
+n:28
+0.100000000000192515177e3
+5.99397026117232788471
+n:29
+0.100000000000011539180e3
+5.99497016287623956976
+n:30
+0.100000000000000691764e3
+5.99580495232911448068
+</PRE><P>Il semble que la suite <I>u</I> converge vers 6 alors que la suite <I>v</I> semble 
+converger vers 100 alors qu’au début ces 2 suites sont très proches.<BR>
+Cela ne provient pas d’erreurs d’arrondis car si on ne fait que du calcul 
+formel et que l’on tape :
+</P><PRE CLASS="verbatim">Digits:=20;
+for(n:=0;n&lt;=30;n++){
+print(n);
+print(evalf(instable(n,5.5,554545454545454545454/100000000000000000000)));
+print(evalf(instable(n,11/2,61/11)));}
+</PRE><P>On obtient le même genre de résultat.
+</P><H2 CLASS="section"><A NAME="toc123"></A><A NAME="htoc343">22.4</A>  Suites doubles et calcul de 1/<I>k</I> pour <I>k</I>∈]0;2[</H2><H3 CLASS="subsection"><A NAME="htoc344">22.4.1</A>  L’énoncé</H3><P>
+Soient deux suites <I>a</I><SUB><I>n</I></SUB> et <I>b</I><SUB><I>n</I></SUB> définies par :<BR>
+<I>a</I><SUB>0</SUB>=1, <I>b</I><SUB>0</SUB>=1−<I>k</I> où <I>k</I> est un réel de ]0;2[ et<BR>
+<I>a</I><SUB><I>n</I></SUB>=<I>a</I><SUB><I>n</I>−1</SUB>(1+<I>b</I><SUB><I>n</I>−1</SUB>) et <I>b</I><SUB><I>n</I></SUB>=<I>b</I><SUB><I>n</I>−1</SUB><SUP>2</SUP>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Montrer que <I>b</I><SUB><I>n</I></SUB>=<I>b</I><SUB>0</SUB><SUP>2<SUP><I>n</I></SUP></SUP> et que <I>a</I><SUB><I>n</I></SUB>=(1−<I>b</I><SUB><I>n</I></SUB>)/<I>k</I>.
+</LI><LI CLASS="li-itemize">En utilisant le tableur afficher les valeurs de <I>a</I><SUB><I>n</I></SUB> et <I>b</I><SUB><I>n</I></SUB> pour 
+<I>k</I>=0.25, 0.5, 0.75, 1.25, 1.5, 1.75. En déduire le comportement des 
+suites <I>a</I><SUB><I>n</I></SUB> et <I>b</I><SUB><I>n</I></SUB>
+</LI><LI CLASS="li-itemize">En déduire un programme qui calcule 1/<I>k</I> avec une précision donnée
+en ne faisant que des additions et des multiplications.
+</LI></UL><H3 CLASS="subsection"><A NAME="htoc345">22.4.2</A>  La correction avec <TT>Xcas</TT></H3><UL CLASS="itemize"><LI CLASS="li-itemize">
+Il est facile de montrer par récurrence que <I>b</I><SUB><I>n</I></SUB>=<I>b</I><SUB>0</SUB><SUP>2<SUP><I>n</I></SUP></SUP>, en 
+effet :<BR>
+<I>b</I><SUB>0</SUB>=<I>b</I><SUB>0</SUB><SUP>2<SUP>0</SUP></SUP>=<I>b</I><SUB>0</SUB><SUP>1</SUP><BR>
+si =<I>b</I><SUB><I>n</I>−1</SUB>=<I>b</I><SUB>0</SUB><SUP>2<SUP><I>n</I>−1</SUP></SUP> alors <I>b</I><SUB><I>n</I></SUB>=<I>b</I><SUB><I>n</I>−1</SUB><SUP>2</SUP>=<I>b</I><SUB>0</SUB><SUP>2<SUP><I>n</I>−1</SUP>*2</SUP>=<I>b</I><SUB>0</SUB><SUP>2<SUP><I>n</I></SUP></SUP>.<BR>
+Montrons par récurrence que <I>a</I><SUB><I>n</I></SUB>=(1−<I>b</I><SUB><I>n</I></SUB>)/<I>k</I>, on a :<BR>
+<I>a</I><SUB>0</SUB>=(1−<I>b</I><SUB>0</SUB>)/<I>x</I>=1 et<BR>
+si <I>a</I><SUB><I>n</I>−1</SUB>=(1−<I>b</I><SUB><I>n</I>−1</SUB>)/<I>k</I> alors<BR>
+<I>a</I><SUB><I>n</I></SUB>=(1−<I>b</I><SUB><I>n</I>−1</SUB>)/<I>k</I>*(1+<I>b</I><SUB><I>n</I>−1</SUB>)=(1−<I>b</I><SUB><I>n</I>−1</SUB><SUP>2</SUP>)/<I>k</I>=(1−<I>b</I><SUB><I>n</I></SUB>)/<I>k</I>. 
+</LI><LI CLASS="li-itemize">On met dans la colonne <I>A</I> les valeurs de <I>a</I><SUB><I>n</I></SUB> :<BR>
+1 dans <I>A</I>0 puis<BR>
+=<I>A</I>0*(1+<I>B</I>0) dans <I>A</I>1 puis on remplit vers le bas,<BR>
+1−<I>C</I>0 dans <I>B</I>0 puis<BR>
+=<I>B</I>0<SUP>2</SUP> dans <I>B</I>1 puis on remplit vers le bas,<BR>
+On met dans <I>C</I>0 la valeur de <I>k</I>.<BR>
+On remarque la suite <I>b</I><SUB><I>n</I></SUB> converge vers 0 et que <I>a</I><SUB><I>n</I></SUB> converge vers 1/<I>k</I>.
+On a en effet :<BR>
+|<I>b</I><SUB>0</SUB>|=|1−<I>k</I>|&lt;1 donc <I>b</I><SUB><I>n</I></SUB>=<I>b</I><SUB>0</SUB><SUP>2<SUP><I>n</I></SUP></SUP> tend vers 0 quand <I>n</I> tend vers l’infini,<BR>
+<I>a</I><SUB><I>n</I></SUB>=(1−<I>b</I><SUB><I>n</I></SUB>)/<I>k</I> tend donc vers 1/<I>k</I> quand <I>n</I> tend vers l’infini et on a :<BR>
+<I>a</I><SUB><I>n</I></SUB>−1/<I>k</I>=−<I>b</I><SUB><I>n</I></SUB>/<I>k</I>&lt;0 et |<I>a</I><SUB><I>n</I></SUB>−1/<I>k</I>|=<I>abs</I>(<I>b</I><SUB><I>n</I></SUB>)/<I>k</I>&lt;<I>eps</I> équivaut à |<I>b</I><SUB><I>n</I></SUB>|&lt;<I>k</I>*<I>eps</I>
+</LI><LI CLASS="li-itemize"><PRE CLASS="verbatim">Invers(k,eps):={
+local a,b;
+a:=1;
+b:=1-k;
+tantque k*eps&lt;=abs(b) faire
+a:=a*(1+b);
+b:=b^2;
+ftantque;
+retourne a;  
+}:;
+</PRE>On tape : <TT>Invers(1.75,1e-20)</TT><BR>
+On obtient : <TT>0.571428571428571428570</TT>
+</LI></UL><H2 CLASS="section"><A NAME="toc124"></A><A NAME="htoc346">22.5</A>  Encore des suites !</H2><H3 CLASS="subsection"><A NAME="htoc347">22.5.1</A>  L’énoncé</H3><P>
+Soient <I>a</I>∈[0;1[ et <I>b</I>∈[0;1[.
+On considère les suites <I>a</I><SUB><I>n</I></SUB> et <I>b</I><SUB><I>n</I></SUB> qui vérifient <I>a</I><SUB>0</SUB>=<I>a</I> et <I>b</I><SUB>0</SUB>=<I>b</I> et 
+la même relation de récurrence :<BR>
+si 2<I>a</I><SUB><I>n</I>−1</SUB>&lt;1, <I>a</I><SUB><I>n</I></SUB>=2<I>a</I><SUB><I>n</I>−1</SUB> et sinon <I>a</I><SUB><I>n</I></SUB>=1−2<I>a</I><SUB><I>n</I>−1</SUB>.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Écrire un programme qui calcule <I>a</I><SUB>0</SUB>,<I>a</I><SUB>1</SUB>...<I>a</I><SUB><I>n</I></SUB>. 
+</LI><LI CLASS="li-itemize">On considère la suite <I>u</I><SUB><I>n</I></SUB>=<I>a</I><SUB><I>n</I></SUB>−<I>b</I><SUB><I>n</I></SUB>
+Écrire un programme qui trace le graphe (<I>n</I>,<I>u</I><SUB><I>n</I></SUB>) pour <I>n</I>∈[0;100]. 
+</LI><LI CLASS="li-itemize">On observe que pour <I>n</I>&gt;=50 <I>u</I><SUB><I>n</I></SUB>=0. Qu’en pensez-vous?
+</LI></UL><H3 CLASS="subsection"><A NAME="htoc348">22.5.2</A>  La correction avec <TT>Xcas</TT></H3><UL CLASS="itemize"><LI CLASS="li-itemize">
+<PRE CLASS="verbatim">suite(a,n):={
+  local u,u1,j,L;
+  u:=a;
+  L:=a;
+  si a&gt;=1 alors retourne "erreur"; fsi
+  pour j de 1 jusque n faire
+  u1:=2*u;
+  si u1&lt;1 alors 
+     u:=u1;
+  sinon 
+     u:=u1-1;
+  fsi;
+  L:=L,u;
+  fpour;
+  retourne L;  
+}:;
+</PRE>On tape : <TT>suite(0.4,6)</TT><BR>
+On obtient :<BR>
+<TT>0.4,0.8,0.6,0.2,0.4,0.8,0.599999999999</TT>
+</LI><LI CLASS="li-itemize"><PRE CLASS="verbatim">diffsuite(a,b,n):={
+  local u,u1,v,v1,j,L;
+  u:=a;
+  v:=b;
+  L:=point((a-b)*i);
+  si a&gt;=1 ou b&gt;=1 alors retourne "erreur"; fsi
+  pour j de 1 jusque n faire
+  u1:=2*u;
+  v1:=2*v;
+  si u1&lt;1 alors 
+     u:=u1;
+  sinon 
+     u:=u1-1;
+  fsi;
+  si v1&lt;1 alors 
+     v:=v1;
+  sinon 
+     v:=v1-1;
+  fsi
+  L:=L,point(j+(u-v)*i);
+  fpour;
+  retourne L;  
+}:;
+</PRE>On tape : <TT>diffsuite(0.4,0.82,100)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casexo108.png"></LI><LI CLASS="li-itemize">On tape : <TT>diffsuite(4/10,82/100,100)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casexo109.png">
+La suite <I>u</I><SUB><I>n</I></SUB>=<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB> semble être périodique quand <I>a</I> et <I>b</I> sont des 
+nombres d’ecimaux et ce sont les erreurs 
+d’arrondis qui font que <I>u</I><SUB><I>n</I></SUB> semble nulle pour <I>n</I>&gt;50.<BR>
+On tape : <TT>diffsuite(pi-3,e-2,100)</TT><BR>
+On obtient avec 20 chiffres significatifs :<BR>
+
+<IMG SRC="casexo110.png"></LI><LI CLASS="li-itemize">On tape : <TT>diffsuite(pi-3,e-2,100)</TT><BR>
+On obtient avec 35 chiffres significatifs :<BR>
+
+<IMG SRC="casexo111.png"></LI></UL><H2 CLASS="section"><A NAME="toc125"></A><A NAME="htoc349">22.6</A>  Le modèle de Volterra Lotka</H2><P>
+L’objectif de l’exercice est de modéliser l’évolution de la population de 2
+espèces, avec des hypothèses simples.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+La première espèce est une proie. Elle dispose de ressources en 
+quantité illimitées
+</LI><LI CLASS="li-itemize">La seconde espèce est un prédateur. Sa seule ressource est la proie.
+</LI><LI CLASS="li-itemize">Les espèces sont isolées et n’interagissent qu’entre elles.
+</LI></UL><P>
+Le modèle de Volterra Lotka discret est un modèle d’évolution 
+correspondant à ces hypothèses.<BR>
+Le temps est discrétisé. À chaque entier <I>n</I>, on associe le nombre 
+d’individus de la proie <I>l</I><SUB><I>n</I></SUB> (pour lapin) et du prédateur <I>r</I><SUB><I>n</I></SUB> (pour renard)
+à la <I>n</I> ième étape. L’évolution suit les règles suivantes :<BR>
+<I>l</I><SUB>0</SUB> et <I>r</I><SUB>0</SUB> sont les populations initiales et pour tout <I>n</I> ∈ ℕ on a :<BR>
+<I>l</I><SUB><I>n</I>+1</SUB>− <I>l</I><SUB><I>n</I></SUB> = α <I>l</I><SUB><I>n</I></SUB> − β <I>l</I><SUB><I>n</I></SUB> <I>r</I><SUB><I>n</I></SUB><BR>
+<I>r</I><SUB><I>n</I>+1</SUB> − <I>r</I><SUB> <I>n</I></SUB> = γ <I>l</I><SUB> <I>n</I></SUB> <I>r</I><SUB> <I>n</I></SUB> − δ <I>r</I><SUB> <I>n</I></SUB><BR>
+α, β, γ, δ sont des coefficients réels strictement 
+positifs.
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Que se passe-t-il en l’absence de prédateur ?
+</LI><LI CLASS="li-enumerate">Que se passe-t-il en l’absence de proie ?
+</LI><LI CLASS="li-enumerate">Donner en fonction des paramètres une position d’équilibre du 
+système.
+</LI><LI CLASS="li-enumerate">Ecrire une fonction volterra(N,l0,r0,alpha,beta,gamma,delta) qui affiche à l’écran les <I>N</I>+1 
+premières valeurs des deux suites (<I>r</I><SUB><I>n</I></SUB>) et (<I>l</I><SUB><I>n</I></SUB>). L’affichage des valeurs doit se terminer si l’une des 
+espèces s’éteint.
+</LI><LI CLASS="li-enumerate">Modifier la fonction précédente pour produire le dessin des <I>N</I>+1 premières 
+valeurs des deux suites. 
+le couple (<I>l</I><SUB><I>n</I></SUB>, <I>r</I><SUB><I>n</I></SUB>) sera considéré comme un point. Les points seront reliés entre 
+eux par des segments.
+</LI><LI CLASS="li-enumerate">Utilisez la fonction précédente pour explorer le modèle, en jouant sur ses 
+paramètres.
+</LI><LI CLASS="li-enumerate">Le modèle de Volterra Lotka est un modèle sans saturation (En l’absence de 
+prédateur, la population des proies croit exponentiellement, ce qui traduit l’hypothèse 
+de ressources illimitées). 
+Proposez un modèle avec saturation et simulez le.
+</LI></OL><P>
+La solution avec <TT>Xcas</TT>
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+En l’absence de prédateur on a pour tout <I>n</I> ∈ ℕ <I>r</I><SUB><I>n</I></SUB>=0 donc :<BR>
+<I>l</I><SUB> <I>n</I>+1</SUB> =(1+ α) <I>l</I><SUB><I>n</I></SUB><BR>
+<I>l</I><SUB><I>n</I></SUB> est une suite géométrique et <I>l</I><SUB><I>n</I></SUB>=<I>l</I><SUB>0</SUB>(1+ α)<SUP><I>n</I></SUP> avec 1+ α)&gt;1.<BR>
+Donc en l’absence de prédateur, <I>l</I>(<I>n</I> tend vers +∞ quand <I>n</I> tend vers +∞
+</LI><LI CLASS="li-enumerate">En l’absence de proie on a pour tout <I>n</I> ∈ ℕ <I>l</I><SUB><I>n</I></SUB>=0 donc :<BR>
+<I>r</I><SUB> <I>n</I>+1</SUB> =(1− δ) <I>r</I><SUB><I>n</I></SUB><BR>
+<I>r</I><SUB><I>n</I></SUB> est une suite géométrique et <I>r</I><SUB><I>n</I></SUB>=<I>r</I><SUB>0</SUB>(1− δ)<SUP><I>n</I></SUP> avec 1− δ)&lt;1.
+Donc en l’absence de proie, <I>r</I>(<I>n</I> tend vers +∞ quand <I>n</I> tend vers 0
+</LI><LI CLASS="li-enumerate">La position d’équilibre du système se fait lorsque à partir d’un
+certain rang <I>n</I>, on a : <I>l</I><SUB> <I>n</I>+1</SUB> = <I>l</I><SUB><I>n</I></SUB> et <I>r</I><SUB> <I>n</I>+1</SUB> =<I>r</I><SUB><I>n</I></SUB>.<BR>
+c’est à dire :<BR>
+α <I>l</I><SUB><I>n</I></SUB> − β <I>l</I><SUB><I>n</I></SUB> <I>r</I><SUB><I>n</I></SUB> =0 et<BR>
+γ <I>l</I><SUB> <I>n</I></SUB> <I>r</I><SUB> <I>n</I></SUB> − δ <I>r</I><SUB> <I>n</I></SUB>=0
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">, </TD></TR>
+</TABLE>
+On tape :<BR>
+<TT>assume(a&gt;0)</TT><BR>
+<TT>assume(b&gt;0)</TT><BR>
+<TT>assume(c&gt;0)</TT><BR>
+<TT>assume(d&gt;0)</TT><BR>
+<TT>normal(solve([x=(a+1)*x-b*x*y, y=c*x*y+(1-d)*y],[x,y]))</TT><BR>
+On obtient :<BR>
+<TT>[[0,0],[d/c,a/b]]</TT><BR>
+Donc une position déquilibre du système est pour un rang <I>n</I> :<BR>
+<I>l</I><SUB><I>n</I></SUB>=<I>d</I>/<I>c</I> et <I>r</I><SUB><I>n</I></SUB>=<I>a</I>/<I>b</I>.<BR>
+On tape :<BR>
+<TT>factor(solve([(a+1)*x-b*x*y=d/c,y*(1-d)+c*x*y=a/b],[x,y]))</TT><BR>
+On obtient :<BR>
+<TT>[[d/c,a/b],[(d-1)/(c*(a+1)),(-a-1)/((d-1)*b)]]</TT><BR>
+ce qui veut dire que si <I>l</I><SUB><I>n</I></SUB>=<I>d</I>/<I>c</I> et <I>r</I><SUB><I>n</I></SUB>=<I>a</I>/<I>b</I> c’est que 
+<I>l</I><SUB><I>n</I>−1</SUB>=<I>d</I>/<I>c</I> et <I>r</I><SUB><I>n</I>−1</SUB>=<I>a</I>/<I>b</I> ou que<BR>
+<I>l</I><SUB><I>n</I>−1</SUB>=(<I>d</I>−1)/(<I>c</I>*(<I>a</I>+1)) et <I>r</I><SUB><I>n</I>−1</SUB>=−(<I>a</I>+1)/((<I>d</I>−1)*<I>b</I>) 
+mais comme <I>l</I><SUB><I>n</I></SUB>&gt;=0 et <I>r</I><SUB><I>n</I></SUB>&gt;=0 cela entraine <I>d</I>=1 ce qui correspond à 
+l’absence de proie.
+</LI><LI CLASS="li-enumerate">On tape :
+<PRE CLASS="verbatim">volterra(N,l0,r0,a,b,c,d):={
+local l,r,n,la,L,k ;
+l:=l0;r:=r0;L:=NULL;
+L:=L,[l,r];  
+pour k de 1 jusque N faire
+la:=l;
+l:=l*(a+1)-b*l*r;
+r:=r*(1-d)+c*la*r;
+L:=L,[l,r];  
+si l&lt;=0 ou r&lt;=0 alors return L; fsi;
+fpour;
+return L;
+}:;
+</PRE></LI></OL>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casexo021.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo023.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

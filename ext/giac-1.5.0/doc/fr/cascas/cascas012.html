@@ -1,0 +1,1928 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>Pour s’amuser en géométrie dans l’espace</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascas011.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas013.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc197">Chapitre 12</A>  Pour s’amuser en géométrie dans l’espace</H1><H2 CLASS="section"><A NAME="toc72"></A><A NAME="htoc198">12.1</A>  Un patron du cube avec une animation</H2><P>
+On peut montrer qu’il y a 35 hexominos non superposoables (figure formèe par 
+6 carrés ayant au moins une arrête en commun) et que parmi ces 35 hexominos
+il y en a 11 qui peuvent être le patron d’un cube.<BR>
+Ce sont :<BR>
+<IMG SRC="cascas085.png"><BR>
+
+Pour faire le dessin ci-dessus on a tapé :<BR>
+</P><PRE CLASS="verbatim">patron(a):={
+  local L,L1,L2,L3,L4,L5,L6;
+  L(a):=carre(a+k,a+1+k)$(k=0..3);
+  L1:=L(a),carre(a+2+i,a+3+i),carre(a+2-i,a+3-i);
+  a:=a+5;
+  L2:=L(a),carre(a+3+i,a+4+i),carre(a+3-i,a+4-i);
+  a:=a+5;
+  L3:=L(a),carre(a+3+i,a+4+i),carre(a+2-i,a+3-i);
+  a:=a-4i-10;
+  L4:=L(a),carre(a+3+i,a+4+i),carre(a+1-i,a+2-i);
+  a:=a+5;
+  L5:=L(a),carre(a+3+i,a+4+i),carre(a-i,a+1-i);
+  a:=a+5;
+  L6:=L(a),carre(a+2+i,a+3+i),carre(a+1-i,a+2-i);
+retourne L1,L2,L3,L4,L5,L6;
+}:;
+patron2(a):={
+  local L,L1,L2,L3,L4,L5;
+  L(a):=carre(a+k,a+1+k)$(k=0..2);
+  L1:=L(a-1),L(a+1+i);
+  a:=a+6;
+  L2:=L(a),carre(a+i,a+1+i),carre(a-i,a+1-i),carre(a-1-i,a-i);
+  a:=a+5;
+  L3:=L(a),carre(a+1+i,a+2+i),carre(a-i,a+1-i),carre(a-1-i,a-i);
+  a:=a-4i-11;
+  L4:=L(a),carre(a+2+i,a+3+i),carre(a-i,a+1-i),carre(a-1-i,a-i);
+  a:=a+6;
+  L(a):=carre(a+k,a+1+k)$(k=0..1)
+  L5:=L(a),L(a+1+i),L(a-1-i);
+  retourne L1,L2,L3,L4,L5;
+}:;
+patron(-6+3i);
+patron2(-6-5i);
+</PRE><P>On veut faire une animation permettant de faire le patron numéro 1 du cube.<BR>
+Cette animation permet de voir comment on passe du cube au patron et du patron 
+au cube.<BR>
+On tape :<BR>
+</P><PRE CLASS="verbatim">cubeani(t):={
+local A,B,C,D,A1,B1,C1,D1,C2,D2,A3,B3,C3,D3,L;
+A:=point([0,0,0]);
+B:=point([1,0,0]);
+C:=point([1,1,0]);C1:=point([1,1,1]);
+D:=point([0,1,0]);
+L:=cube(A,B,C);
+A1:=point(0,-(sin(t)),cos(t));
+B1:=point([1,-sin(t),cos(t)]);
+C1:=point([1,cos(2t)-sin(t),sin(2t)+cos(t)]);
+D1:=point([0,cos(2t)-sin(t),sin(2t)+cos(t)]);
+C2:=point([1,1+sin(t),cos(t)]);
+D2:=point([0,1+sin(t),cos(t)]);
+C3:=point([1+sin(t),1,cos(t)]);
+D3:=point([-sin(t),1,cos(t)]);
+B3:=point([1+sin(t),0,cos(t)]);
+A3:=point([-sin(t),0,cos(t)]);
+L:=L,polygone(A1,B1,C1,D1,affichage=128+rempli):;
+L:=L,polygone(A1,B1,B,A,affichage=129+rempli);
+L:=L,polygone(D,C,C2,D2,affichage=130+rempli);
+L:=L,polygone(C3,B3,B,C,affichage=131+rempli);
+L:=L,polygone(D3,A3,A,D,affichage=132+rempli);
+L:=L,segment(A1,B1);
+L:=L,polygone(A,B,C,D,affichage=133+rempli);
+return [L];
+}:;
+</PRE><P>On a comme paramètres :<BR>
+<TT>A,B,C,D</TT> sont les sommets fixes de la base du cube,<BR>
+<TT>A1,B1 C1,D1,C2,D2,A3,B3,C3,D3</TT> sont les sommets de la face parallèle à 
+<TT>A,B,C,D</TT> du cube qui ont subi des rotations : rotation d’angle <I>t</I> 
+(<I>t</I>=0..π/2) et<BR>
+d’axe <TT>line(A,B)</TT> pour <TT>A1,B1</TT>, donc<BR>
+<TT>[B1,A1]:=rotation(line(A,B),t,[point(1,0,1),point(0,0,1)])</TT>,<BR>
+d’axe <TT>line(A,B)</TT> puis d’axe <TT>line(A1,B1)</TT> pour <TT>C1,D1</TT>, donc<BR>
+<TT>[C1,D1]:=rotation(line(A1,B1),t,rotation(line(A,B),a,
+[point(1,1,1),point(0,1,1)]))</TT>,<BR>
+d’axe <TT>line(C,D)</TT> pour <TT>C2,D2</TT>, donc<BR>
+<TT>[C2,D2]:=rotation(line(C,D),t,[point(1,1,1),point(0,1,1)])</TT><BR>
+d’axe <TT>line(B,C)</TT> pour <TT>B3,C3</TT>, donc<BR>
+<TT>[B3,C3]:=rotation(line(B,C),t,[point(1,0,1),point(1,1,1)])</TT><BR>
+d’axe <TT>line(D,A)</TT> pour <TT>A3,D3</TT> donc :<BR>
+<TT>[D3,A3]:=rotation(line(D,A),t,[point(0,1,1),point(0,0,1)])</TT>
+<IMG SRC="cascas086.png">
+Puis, on tape :
+<TT>L1:=seq([cubeani(t)],t=0..1.57,0.1):;</TT><BR>
+<TT>L2:=seq([cubeani(t)],t=1.57..0,-0.1):;</TT><BR>
+<TT>animation(L1,L2)</TT>
+</P><H2 CLASS="section"><A NAME="toc73"></A><A NAME="htoc199">12.2</A>  Les pliages pour construire des deltaèdres</H2><P>
+Selon les deltaèdres à construire, on aura besoin de pièces identiques 
+à la pièce élémentaire et aussi de pièces symétriques à la pièce élémentaire.
+</P><H3 CLASS="subsection"><A NAME="htoc200">12.2.1</A>  Le rectangle de base</H3><P>
+La pièce élémentaire se fait avec un rectangle de dimension
+<I>a</I>× <I>a</I>√<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+On peut obtenir 2 rectanges de cette dimension par pliage :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+on plie une feuille <I>A</I><SUB>4</SUB> de largeur <I>AB</I> selon la médiatrice de <I>AB</I> 
+</LI><LI CLASS="li-itemize">on fait un pli partant de <I>B</I> qui améne le point <I>A</I> en un point <I>C</I> 
+situé sur cette médiatrice pour obtenir un triangle équilatéral <I>ABC</I>.
+</LI><LI CLASS="li-itemize">On enlève la bande horizontale au dessus de <I>C</I>.
+</LI><LI CLASS="li-itemize">On coupe selon la médiatrice pour obtenir 2 rectangles identiques 
+ayant les bonnes proportions.
+</LI></UL><H3 CLASS="subsection"><A NAME="htoc201">12.2.2</A>  Le pliage du rectangle</H3><H4 CLASS="subsubsection">Fabrication de la pièce élémentaire</H4><P>
+Prendre un rectangle <I>ABCD</I> de dimension <I>a</I>× <I>a</I>√<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+Voilà comment on procède :</P><DIV CLASS="minipage">
+On améne <I>A</I> en <I>C</I> pour former le pli <I>G</I>1<I>G</I>2
+</DIV><P>
+ 
+</P><DIV CLASS="minipage">
+<IMG SRC="cascas087.png">
+</DIV><DIV CLASS="minipage">
+On améne <I>C</I> en <I>G</I>1 selon le pli <I>C</I>1<I>G</I>2 et
+<I>A</I> en <I>G</I>2 selon le pli <I>G</I>1<I>C</I>2
+</DIV><P>
+ 
+</P><DIV CLASS="minipage">
+<IMG SRC="cascas088.png">
+</DIV><DIV CLASS="minipage">
+On obtient :
+</DIV><P>
+ 
+</P><DIV CLASS="minipage">
+<IMG SRC="cascas089.png">
+</DIV><DIV CLASS="minipage">
+On plie selon <I>C</I>1<I>G</I>1 pour cacher le petit triangle vert sous le rabat <I>CC</I>1<I>G</I>2.<BR>
+On plie selon <I>C</I>2<I>G</I>2 pour cacher le petit triangle vert sous le rabat <I>AC</I>2<I>G</I>1.
+</DIV><P>
+ 
+</P><DIV CLASS="minipage">
+<IMG SRC="cascas090.png">
+</DIV><DIV CLASS="minipage">
+On retourne la pièce et on effectue les plis :<BR>
+<I>M</I>1<I>G</I>1, <I>M</I>1<I>M</I>2, <I>M</I>2<I>G</I>2 et on obtient la pièce élémentaire formées de 
+4 triangles équilatèraux.
+</DIV><P>
+ 
+</P><DIV CLASS="minipage">
+<IMG SRC="cascas091.png">
+</DIV><P><BR>
+Les triangles situés à chaque bout seront appelés : <B>languettes</B> et
+les triangles du centre seront appelés : <B>pochettes</B>.
+Pour construire, on met les languettes dans les pochettes.
+</P><H4 CLASS="subsubsection">Fabrication de la pièce symétrique</H4><P>
+Prendre un rectangle <I>ABCD</I> de dimension <I>a</I>× <I>a</I>√<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+On améne <I>B</I> en <I>D</I> pour former le pli <I>g</I>1<I>g</I>2 symétrique de <I>G</I>1<I>G</I>2 par 
+rapport à la médiatrice de <I>AB</I>, puis on continue comme 
+précédemment...
+</P><H4 CLASS="subsubsection">Le tétraèdre régulier</H4><DIV CLASS="minipage">
+Réaliser 2 pièces : l’une identique à la pièce élémentaire (en noir)
+l’autre la symétrique de la pièce élémentaire (en rouge).<BR>
+Pour construire le tétraèdre régulier il suffit de glisser les languettes sous la fente centrale (i.e. dans les pochettes).<BR>
+Début de la construction :<BR>
+</DIV><P>
+ 
+</P><DIV CLASS="minipage">
+<IMG SRC="cascas092.png">
+</DIV><H3 CLASS="subsection"><A NAME="htoc202">12.2.3</A>  Les Deltaèdres</H3><P> 
+Pour construire :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Le tétraèdre régulier (4 faces) il faut 
+1 pièce élémentaire + 1 pièce symétrique. 
+</LI><LI CLASS="li-itemize">L’héxaèdre (6 faces) il faut 
+3 pièces identiques ou<BR>
+2 pièces identiques + 1 pièce symétrique. 
+</LI><LI CLASS="li-itemize">L’octaèdre (8 faces) il faut
+4 pièces identiques ou<BR>
+2 pièces identiques + 2 pièces symétriques. 
+</LI><LI CLASS="li-itemize">Le décaèdre (10 faces) il faut 
+5 pièces identiques ou<BR>
+3 pièces identiques + 2 pièces symétriques. 
+</LI><LI CLASS="li-itemize">L’icosaèdre (20 faces) il faut
+5 pièces identiques + 5 pièces symétriques 
+</LI><LI CLASS="li-itemize">Le rhomboèdre dont les faces sont des losanges formés par 2 triangles
+équilatéraux, il faut
+3 pièces identiques + 3 pièces symétriques. 
+</LI><LI CLASS="li-itemize">L’étoile de Kepler (60 faces constituées par les faces des 20
+tétraèdres réguliers construits sur les faces de l’icosaèdre) 
+il faut 30 pièces identiques.
+</LI></UL><H3 CLASS="subsection"><A NAME="htoc203">12.2.4</A>  Activité en classe</H3><P>
+Refaire les opérations de pliage et montrer qu’une pièce 
+élémentaire est constituée de 4 triangles équilatéraux (le pli 
+<I>G</I>1<I>G</I>2 est la médiatrice de <I>AC</I> et <I>ABC</I> étant la moitié d’un triangle 
+équilatéral, <I>G</I>2 est le centre de gravité de ce triangle 
+équilatéral etc...).
+</P><H2 CLASS="section"><A NAME="toc74"></A><A NAME="htoc204">12.3</A>  Le rhomboèdre</H2><H3 CLASS="subsection"><A NAME="htoc205">12.3.1</A>  La définition et la construction avec <TT>Xcas</TT></H3><P>
+On veut construire le rhomboèdre <I>AB</I>,<I>AD</I>,<I>AF</I>
+On construit un rhomboèdre dont les faces sont des losanges de côtés de 
+longueur <I>l</I> et ayant un angle égal à <I>a</I> avec 0≤ <I>a</I>≤ 2π/3.<BR>
+Pour faciliter les calculs, on choisit tout d’abord le point <I>A</I> sur l’axe des <I>z</I> et on suppose que 3 losanges <I>ABCD</I>,<I>ADEF</I>,<I>AFGB</I> sont issus 
+du sommet <I>A</I>, l’angle <I>A</I> de ces 3 losanges valant <I>a</I> et que <I>B</I>,<I>D</I>,<I>E</I> sont 
+dans le plan <I>Oxy</I> avec <I>B</I> sur l’axe des <I>x</I>.<BR>
+On tape:
+</P><PRE CLASS="verbatim">rhomboedre0(l,a):={
+local d,r,h,A,B,C,D,E,F,G;
+d:=2*l*sin(a/2);
+r:=d/sqrt(3);
+h:=sqrt(l*l-r*r);
+A:=point(0,0,h);
+B:=point(r,0,0);
+D:=point(-r/2,r*sqrt(3)/2,0);
+F:=point(-r/2,-r*sqrt(3)/2,0);
+C:=point(r/2,r*sqrt(3)/2,-h);
+E:=point(r/2,-r*sqrt(3)/2,-h);
+G:=point(-r/2,0,-h);
+retourne parallelepipede(A,B,D,F);
+}:;
+</PRE><P>On peut prendre un autre point de vue. pour faire le rhomboèdre
+<I>AB</I>,<I>AC</I>,<I>AD</I>, on choisit <I>A</I> à l’origine, <I>B</I> sur l’axe des <I>x</I> (<I>AB</I>=<I>l</I>), <I>C</I> 
+dans le plan <I>ABM</I> et l’angle <I>AB</I>,<I>AC</I>=<I>a</I>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">rhomboedre1(A,l,M,a):={
+  local B,C,D,E;
+  B:=point(l,0,0);
+  losange(A,B,[M,a],C,D);
+  E:=point(l*cos(a)*tan(a/2),l*cos(a),l*tan(a/2));
+  retourne parallelepipede(A,B,C,E);
+}:;
+</PRE><P>On fait maintenant un changement de repère, pour que <I>A</I> et <I>B</I> 
+soient quelconques.<BR>
+<TT>changrep(A,B,M)</TT> renvoie la matrice de passage du repère (<I>O</I>,<I>i</I>,<I>j</I>,<I>k</I>)
+au repère <I>A</I>,<I>I</I>,<I>J</I>,<I>K</I> avec :<BR>
+<I>AI</I>=<I>AB</I>/<I>AB</I>,
+<I>AK</I>=(<I>AI</I>∧<I>AM</I>)/|<I>AI</I><BR>
+<I>wedge</I><I>AM</I>|,<BR>
+<I>AJ</I>=(<I>AK</I>∧<BR>
+<I>overrightarrow</I><I>AI</I>)
+On tape:<BR>
+</P><PRE CLASS="verbatim">changrep(A,B,M):={
+local V,nV,W,nW,I,J,K;
+V:=B-A;
+nV:=sqrt(V*V); 
+I:=A+V/nV; 
+W:=cross(B-A,M-A);
+nW:=sqrt(W*W); 
+K:=A+W/nW;
+J:=A+cross(W/nW,V/nV);
+retourne  normal([coordonnees(I),coordonnees(J),coordonnees(K)]);
+}:;
+</PRE><P>On tape :
+</P><PRE CLASS="verbatim">rhomboedre(A,B,M,a):={
+  local l,C,D,E,P;
+  P:=changrep(A,B,M);
+  l:=longueur(A,B);
+  M1:=A+tran(P)*coordonnees(M);
+  retourne rhomboedre1(A,l,M1,a);
+}:;
+</PRE><H3 CLASS="subsection"><A NAME="htoc206">12.3.2</A>  Activité en classe</H3><P>
+Construire avec du carton un rhomboèdre : chaque groupe de 6 élèves 
+choisit de faire un rhomboèdre à partir d’un losange donné par son angle
+aigu (le même losange peut donner lieu à la construction de 2 
+rhomboèdres).<BR>
+Faire faire ensuite le dessin dans <TT>Xcas</TT> en prenant comme paramètre un 
+angle du losange (on pourra suggérer de choisir la représentation de 
+<TT>rhomboedre0</TT>).
+</P><H2 CLASS="section"><A NAME="toc75"></A><A NAME="htoc207">12.4</A>  Le dodécaèdre rhombique</H2><H3 CLASS="subsection"><A NAME="htoc208">12.4.1</A>  La définition à partir d’un cube</H3><P>
+Pour tracer facilement le dodécaèdre rhombique en perspective cavalière, 
+il faut tout d’abord tracer un cube de centre <I>O</I>, puis tracer les 6
+symétriques <I>S</I>0<SUB><I>j</I></SUB> de <I>O</I> par rapport au centre <I>O</I><SUB><I>j</I></SUB> des faces 
+du cube (<I>j</I>=1..6).<BR>
+On joint <I>SO</I><SUB><I>j</I></SUB> aux quatre sommets de la face du cube de centre <I>O</I><SUB><I>j</I></SUB> 
+(<I>j</I>=1..6).<BR>
+Le dodécaèdre rhombique est le solide qui a 12 
+faces en forme de losanges et 14 sommets qui sont les 8 sommets du cube et les 
+6 symétriques <I>S</I>0<SUB><I>j</I></SUB> de <I>O</I> par rapport au centre <I>O</I><SUB><I>j</I></SUB> des faces du cube
+(<I>j</I>=1..6).
+</P><H3 CLASS="subsection"><A NAME="htoc209">12.4.2</A>  La définition et la construction avec <TT>Xcas</TT></H3><P>
+Le dodécaèdre rhombique est un polyèdre ayant 12 faces et 14 sommets. 
+Chaque face est ègale à un même losange.<BR>
+Le dodécaèdre rhombique a 6 sommets d’ordre 4 (sommet commun á 4 
+losanges) et 8 sommets d’ordre 3 (sommet commun á 3 losanges).<BR>
+Pour se faire une idèe de sa forme, avec 8 losanges égaux de forme 
+quelconque, on construit deux "pointes" en accolant 4 losanges. Si <I>S</I> et <I>SS</I> 
+sont les sommets (d’ordre 4) de ces deux pointes, on ammène ensuite en 
+coincidence les sommets opposés à <I>S</I> et <I>SS</I>.
+On obtient un polyèdre ayant 8 faces pleines et 4 faces vides qui peuvent 
+être comblés par 4 losanges qui sont à priori différents des losanges 
+initiaux. Mais pour le dodécaèdre rhombique ces losanges doivent être 
+égaux aux losanges initiaux. Il faut donc trouver les dimensions d’une face.
+<B>Détermination des dimensions d’une face :</B><BR>
+On suppose qu’une face est un losange de côté <I>l</I> et d’angle aigu <I>a</I>.<BR>
+Montrons que tan(<I>a</I>)=2√<SPAN style="text-decoration:overline">2</SPAN>.<BR>
+Considérons la pointe de sommet <I>S</I> qui accolle 4 losanges.<BR>
+<IMG SRC="cascas093.png"><BR>
+Elle est constituée par les 4 losanges 
+<I>SAA</I>−1<I>B</I>, <I>SBB</I><SUB>1</SUB><I>C</I>, <I>SCC</I><SUB>1</SUB><I>D</I>, <I>SDD</I><SUB>1</SUB><I>A</I> où <I>SABCD</I> est une pyramide de hauteur
+<I>h</I> et de base carrée <I>ABCD</I> ((<I>AC</I>/2)<SUP>2</SUP>=<I>l</I><SUP>2</SUP>−<I>h</I><SUP>2</SUP> et <I>AB</I>=<I>AC</I>/√<SPAN style="text-decoration:overline">2</SPAN>) et 
+où <I>A</I><SUB>1</SUB> est le symétrique de <I>S</I> par rapport au 
+milieu de <I>AB</I>, <I>B</I><SUB>1</SUB> est le symétrique de <I>S</I> par rapport au 
+milieu de <I>BC</I> etc...<BR>
+On a : <I>A</I><SUB>1</SUB><I>BB</I><SUB>1</SUB>=<I>ASC</I>
+On veut avoir : <I>A</I><SUB>1</SUB><I>BB</I><SUB>1</SUB>=π−<I>a</I>
+Dans le triangle <I>SAB</I> avec le théorème d’Al-Kashi on a :<BR>
+<I>AB</I><SUP>2</SUP>=<I>SA</I><SUP>2</SUP>+<I>SB</I><SUP>2</SUP>−2<I>SA</I>*<I>SB</I>cos(<I>ASB</I>)=2<I>l</I><SUP>2</SUP>−2<I>l</I><SUP>2</SUP>cos(<I>a</I>)
+Dans le triangle <I>SAC</I> avec le théorème d’Al-Kashi on a :<BR>
+<I>AC</I><SUP>2</SUP>=<I>SA</I><SUP>2</SUP>+<I>SC</I><SUP>2</SUP>−2<I>SA</I>*<I>SC</I>cos(<I>ASC</I>)=2<I>l</I><SUP>2</SUP>+2<I>l</I><SUP>2</SUP>cos(<I>a</I>)
+Donc :<BR>
+<I>AC</I><SUP>2</SUP>+<I>AB</I><SUP>2</SUP>=2<I>l</I><SUP>2</SUP>+2<I>l</I><SUP>2</SUP>cos(<I>a</I>)+2<I>l</I><SUP>2</SUP>−2<I>l</I><SUP>2</SUP>cos(<I>a</I>)=4<I>l</I><SUP>2</SUP>
+Or <I>AC</I><SUP>2</SUP>=<I>AB</I><SUP>2</SUP>+<I>BC</I><SUP>2</SUP>=2<I>AB</I><SUP>2</SUP>=4(<I>l</I><SUP>2</SUP>−<I>h</I><SUP>2</SUP>)
+Donc :<BR>
+<I>AC</I><SUP>2</SUP>+<I>AB</I><SUP>2</SUP>=4<I>l</I><SUP>2</SUP>=4<I>l</I><SUP>2</SUP>−4<I>h</I><SUP>2</SUP>+2<I>l</I><SUP>2</SUP>−2<I>h</I><SUP>2</SUP><BR>
+Soit :<BR>
+<I>l</I><SUP>2</SUP>=3<I>h</I><SUP>2</SUP>, <I>AC</I><SUP>2</SUP>=4<I>l</I><SUP>2</SUP>−4<I>h</I><SUP>2</SUP>=4<I>l</I><SUP>2</SUP>(1−1/3)=8<I>l</I><SUP>2</SUP>/3, <I>AB</I><SUP>2</SUP>=<I>AC</I><SUP>2</SUP>/2=4<I>l</I><SUP>2</SUP>/3<BR>
+D’où sin(<I>a</I>/2)=<I>AB</I>/(2<I>l</I>)=1/√<SPAN style="text-decoration:overline">3</SPAN> et cos(<I>a</I>/2)=√<SPAN style="text-decoration:overline">2</SPAN>/√<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+Puisque 4<I>l</I><SUP>2</SUP>/3=<I>AB</I><SUP>2</SUP>=2<I>l</I><SUP>2</SUP>−2<I>l</I><SUP>2</SUP>cos(<I>a</I>), on a :<BR>
+cos(<I>a</I>)=1−<I>AB</I><SUP>2</SUP>/(2<I>l</I><SUP>2</SUP>)=1−2/3=1/3 sin(<I>a</I>)=√<SPAN style="text-decoration:overline">2</SPAN>2/3 et donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">tan(<I>a</I>)=2</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Pour avoir une valeur de <I>a</I> en radians, on tape :<BR>
+<TT>evalf(atan(2*sqrt(2))</TT><BR>
+On obtient : <TT>1.23095941734</TT> radians<BR>
+Pour avoir une valeur de <I>a</I> en degrés, on tape :<BR>
+<TT>evalf(atan(2*sqrt(2))*180/pi)</TT><BR>
+On obtient : <TT>70.5287793655</TT> degrés.<BR>
+On tape pour faire le dessin d’une "pointe" :
+</P><PRE CLASS="verbatim">dodecarhomb():={
+S:=point(0,0,1/sqrt(3));
+A:=point(sqrt(2/3),0,0);
+B:=point(0,sqrt(2/3),0);
+C:=point(-sqrt(2/3),0,0);
+D:=point(0,-sqrt(2/3),0);
+polyedre(S,A,B,C,D);
+A1:=symetrie(milieu(A,B),S);
+B1:=symetrie(milieu(B,C),S);
+C1:=symetrie(milieu(C,D),S);
+D1:=symetrie(milieu(D,A),S);
+polygone(A,A1,B,B1,C,C1,D,D1,A);
+}:;
+</PRE><P>On tape pour faire le dessin du dodécaèdre rhombique :
+</P><PRE CLASS="verbatim">dodecarhomb():={
+S:=point(0,0,1/sqrt(3));
+A:=point(sqrt(2/3),0,0);
+B:=point(0,sqrt(2/3),0);
+C:=point(-sqrt(2/3),0,0);
+D:=point(0,-sqrt(2/3),0);
+polyedre(S,A,B,C,D);
+A1:=symetrie(milieu(A,B),S);
+B1:=symetrie(milieu(B,C),S);
+C1:=symetrie(milieu(C,D),S);
+D1:=symetrie(milieu(D,A),S);
+polygone(A,A1,B,B1,C,C1,D,D1,A);
+SS:=point(0,0,-3/sqrt(3));
+AA:=point(sqrt(2/3),0,-2/sqrt(3));
+BB:=point(0,sqrt(2/3),-2/sqrt(3));
+CC:=point(-sqrt(2/3),0,-2/sqrt(3));
+DD:=point(0,-sqrt(2/3),-2/sqrt(3));
+polyedre(SS,AA,BB,CC,DD);
+polygone(AA,A1,BB,B1,CC,C1,DD,D1,AA);
+}:;
+</PRE><P>On obtient en cachant les faces :<BR>
+<IMG SRC="cascas094.png"></P><H3 CLASS="subsection"><A NAME="htoc210">12.4.3</A>  Activité en classe</H3><P>
+Trouver les dimensions du losange qui sera les faces du 
+dodécaèdre rhombique.
+Faire la construction d’un tel losange et construire le polyèdre avec du 
+carton puisavec <TT>Xcas</TT>.<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc211">12.4.4</A>  Le graphe du dodécaèdre rhombique</H3><P>
+On tape :
+</P><PRE CLASS="verbatim">L:=[0,5,5+5*i,5*i,1+i,3+i,3+3*i,1+3*i,2+2*i,4+2*i,
+    4+4*i,2+4*i,2+3*i,3+2*i]];
+affichage(point(L[k])$(k=0..13),1+point_point+ epaisseur_point_3);
+carre(L[0],L[1]);
+carre(L[4],L[5]);
+carre(L[8],L[9]);
+segment(L[0],L[8]);
+segment(L[1],L[5]);
+segment(L[1],L[9]);
+segment(L[2],L[6]);
+segment(L[3],L[11]);
+segment(L[3],L[7]);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas095.png"><BR>
+Le squelette ou le graphe de ce dodécaèdre rhombique n’est pas hamiltonien
+i.e. il n’existe pas de chemin qui en empruntant les arêtes, passe une fois 
+et une seule par chaque sommet. En effet chaque sommet d’ordre 4 n’est relié 
+qu’à des sommets d’ordre 3 et chaque sommet d’ordre 3 n’est relié 
+qu’à des sommets d’ordre 4. Donc le chemin ne peut passer qu’en alternant 
+sommet d’ordre 3, sommet d’ordre 4, sommet d’ordre 3 etc...Comme il y a 6 
+sommets d’ordre 4 et 8 sommets d’ordre 3, un chemin passant une fois 
+et une seule par chaque sommet n’existe pas.<BR>
+La formule de Descartes dit un polyèdre convexe qui a <I>F</I> faces polygomales, <I>A</I> arêtes, <I>S</I> sommets alors <I>F</I>+<I>S</I>−<I>A</I>=2 (ici on a 12 faces 14 sommets et 
+24 arêtes et on a bien 12+14-24=2).
+En effet on suppose que ce polyèdre est inscrit dans une sphère sinon on 
+le déforme pour que ce soit le cas. En rajoutant 1 sommet on obtient <I>N</I>−1 
+faces supplémentaires, 1 sommet supplémentaires et <I>N</I> arêtes 
+supplémentaires donc <I>F</I>+<I>S</I>−<I>A</I>=<I>cste</I>. Pour un tétraèdre on a 4 faces,
+4 sommet et 6 arêtes donc <I>cste</I>=2
+</P><H3 CLASS="subsection"><A NAME="htoc212">12.4.5</A>  Le patron du dodécaèdre rhombique</H3><PRE CLASS="verbatim">losange_dode(A,B):={
+  local C,D,l,a;
+  a:=atan(2*sqrt(2));
+  D:=rotation(A,a,B);
+  C:=D+(B-A);
+  retourne quadrilatere(A,B,C,D);
+  }:;
+patron_dode(A,B):={
+local C,D,E,F,G,L,a,b,los;
+  a:=atan(2*sqrt(2));
+  b:=pi-a;
+  D:=rotation(A,a,B);
+  C:=D+(B-A);
+los:=quadrilatere(A,B,C,D);
+E:=rotation(C,a,A);
+F:=rotation(C,a,B);
+G:=rotation(F,pi-3*a,C);
+L:=los,rotation(A,-atan(2*sqrt(2)),los),rotation(C,atan(2*sqrt(2)),los),losange_dode(E,E+(B-A));
+retourne G,[L];
+}:;
+patron_dodeca(A,B):={
+local C,D,E,F,G,L,L1,L2,a,los;
+  a:=atan(2*sqrt(2));
+  F,L:=patron_dode(A,B);
+  G,L1:= patron_dode(F,F+(B-A));
+  L2:= patron_dode(G,G+(B-A))[1];
+L:==op(L),op(L1),op(L2)
+  retourne L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>a:=atan(2*sqrt(2));patron_dodeca(point(0),point(exp(-i*a/2)))</TT><BR>
+On obtient :<BR>
+<IMG SRC="cascas096.png"><BR>
+On peut aussi faire tracer ce patron par la tortue : avec la tortue il faut 
+travailler en degrés.<BR>
+On tape :<BR>
+<TT>evalf(atan(2*sqrt(2))*180/pi);</TT><BR>
+On obtient la valeur approchée de <I>a</I> en degrés :<BR>
+<TT>70.5287793655</TT> soit
+70<SUP><I>o</I></SUP>31.72676193′, soit 70<SUP><I>o</I></SUP>31′43.6057158"<BR>
+On tape :<BR>
+</P><PRE CLASS="verbatim">los(l,a):={
+repete(2,avance(l),tourne_gauche(a),avance(l),
+       tourne_gauche(180-a));
+}:;
+loss(l,a):={
+repete( 3,los(l,180-a),tourne_gauche(180-a));
+tourne_droite(180-3*a);avance(l);tourne_gauche(180-2*a);
+los(l,a);avance(l);tourne_gauche(a); 
+avance(l);tourne_gauche(180-2*a); 
+saute(l);tourne_droite(-3*a);
+}:;
+patron(l):={
+local a;
+a:=evalf(atan(2*sqrt(2))*180/pi);
+tourne_droite(180-3*a/2);
+repete(3,loss(l,a));
+}:;
+</PRE><P>On tape :<BR>
+<TT>patron(30)</TT><BR>
+On obtient :<BR>
+<IMG SRC="cascas097.png"><BR>
+</P><H2 CLASS="section"><A NAME="toc76"></A><A NAME="htoc213">12.5</A>  Le triacontaèdre rhombique</H2><H3 CLASS="subsection"><A NAME="htoc214">12.5.1</A>  La définition et la construction avec <TT>Xcas</TT></H3><P>
+Le triacontaèdre rhombique est un polyèdre qui a 30 faces. Ses faces sont 
+des losanges d’or (le rapport des diagonales est égal au nombre d’or) de 
+petit angle atan(2) radians soit environ 63.4349488229 degrés 
+(≃ 63<SUP><I>o</I></SUP> 25′) et de grand angle π−atan(2) radians soit environ 
+116.565051177degrés (≃ 116<SUP><I>o</I></SUP> 34′).<BR>
+<B>Étymologie</B> : du grec triaconta "trente" et rhombos "losange" (polyèdre à trente faces en losange).<BR>
+Il a été étudié par Catalan en 1862.<BR>
+Il a des 32 sommets (20 sommets de degré 3 i.e. commun à 3 losanges, 12 sommets de degré 5 i.e. commun à 5 losanges)) et 60 arêtes de 
+longueur a. Son angle dièdre vaut 4π/5 <I>rad</I> = 144<SUP><I>o</I></SUP>.
+</P><H4 CLASS="subsubsection">La construction d’une face</H4><P>
+Construction d’un losange <I>ABCD</I> tel que 
+<I>AB</I>,<I>AD</I>=
+atan(2) et <I>AB</I>=√<SPAN style="text-decoration:overline">5</SPAN>:<BR>
+On porte sur <I>AB</I> le point <I>M</I> tel que <I>AM</I>=1 et sur la perpendiculaire en <I>M</I> 
+à <I>AB</I>, on définit le point <I>N</I> tel que <I>MN</I>=2 et l’angle 
+<I>AM</I>,<I>AN</I>&gt;0.<BR>
+ Alors l’angle 
+<I>AM</I>,<I>AN</I>=atan(2).<BR>
+On finit ensuite la construction du losange <I>ABCD</I>.<BR>
+Le segment <I>AN</I> a pour longueur √<SPAN style="text-decoration:overline">5</SPAN> donc on peut aussi construire le 
+losange <I>APQN</I> en portant sur <I>AB</I> le point <I>P</I> tel que <I>AP</I>=<I>AN</I>=√<SPAN style="text-decoration:overline">5</SPAN>.<BR>
+On tape dans un niveau de géométrie 2d :
+</P><PRE CLASS="verbatim">A:=point(0);
+B:=point(5);
+M:=point(1);
+N:=point(1+2i);
+losange(A,B,angle(A,M,N),C,D);
+P:=point(sqrt(5));
+losange(A,P,atan(2),Q);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas098.png">
+</P><H4 CLASS="subsubsection">L’angle dièdre du triacontaèdre</H4><P>
+Soit <I>D</I> un sommet de degré 3 du triacontaèdre. Ce sommet est relié à 
+un triangle équilatèral <I>ABC</I> par les 3 arêtes <I>DA</I>,<I>DB</I>,<I>DC</I>.<BR>
+On pose <I>a</I>=atan(2). donc 
+l’angle <I>ADB</I>=π−atan(2)=π−<I>a</I>.<BR>
+On choisit un repère tel que :<BR>
+<I>ABC</I> est dans le plan <I>Oxy</I>,<BR>
+<I>D</I> se projette en <I>O</I> et<BR>
+<I>A</I>=(1,0,0).<BR>
+Donc <I>AB</I>=<I>AC</I>=<I>BC</I>=√<SPAN style="text-decoration:overline">3</SPAN><BR>
+Si <I>l</I>=<I>AD</I>, on a, en considérant le triangle <I>ABD</I> :<BR>
+<I>AB</I><SUP>2</SUP>=2*<I>l</I><SUP>2</SUP>−2*<I>l</I><SUP>2</SUP>cos(π−<I>a</I>) donc<BR>
+2*<I>l</I><SUP>2</SUP>+2*<I>l</I><SUP>2</SUP>cos(<I>a</I>)=3 
+Donc <I>l</I><SUP>2</SUP>=3/2/(1+<I>cos</I>(<I>a</I>))<BR>
+On tape :<BR>
+<TT>cos(atan(2))</TT><BR>
+On obtient : <TT>(sqrt(5))/5</TT><BR>
+On tape :<BR>
+<TT>normal(solve(2*x-2*x*cos(pi-atan(2))-3=0))</TT><BR>
+On obtient : <TT>[(-3*sqrt(5)+15)/8]</TT><BR>
+Donc <I>l</I><SUP>2</SUP>=−3√<SPAN style="text-decoration:overline">5</SPAN>+15/8<BR>
+La hauteur <I>h</I>=<I>DO</I> du tétraèdre <I>DABC</I> vaut donc :<BR>
+<I>h</I><SUP>2</SUP>=<I>l</I><SUP>2</SUP>−1=7−3√<SPAN style="text-decoration:overline">5</SPAN>/8
+On cherche à évaluer l’angle des plans <I>ADB</I> et <I>ADC</I>.<BR>
+On tape dans un niveau de géométrie 3d :
+</P><PRE CLASS="verbatim">A:=point(1,0,0);
+B:=point(-1/2,sqrt(3)/2,0);
+C:=point(-1/2,-sqrt(3)/2,0);
+a:=atan(2);
+l2:=normal(3/2/(1+cos(a)));
+h:=simplify(sqrt(l2-1));
+//h:=(3-sqrt(5))/4;
+D:=point(0,0,h);
+P:=plan(A,B,D);
+Q:=plan(A,C,D);
+angle(P,Q);
+</PRE><P>On obtient :<BR>
+<TT>acos((-(sqrt(5))-1)/4)</TT>
+On sait que cos(4π/5)=2*cos(π/5)<SUP>2</SUP>−1 et que :<BR>
+cos(2π/5)=√<SPAN style="text-decoration:overline">5</SPAN>−1/4 donc<BR>
+cos(4π/5)= 3−√<SPAN style="text-decoration:overline">5</SPAN>/4−1=−√<SPAN style="text-decoration:overline">5</SPAN>−1/4<BR>
+Donc l’angle dièdre du triacontaèdre est de  4π/5</P><H4 CLASS="subsubsection">Le patron du triacontaèdre</H4><P>
+On tape :
+</P><PRE CLASS="verbatim">losange_triac(A,B):={
+  local C,D,l,a;
+  a:=atan(2);
+  D:=rotation(A,a,B);
+  C:=D+(B-A);
+  retourne quadrilatere(A,B,C,D);
+  }:;
+patron_triac1(A,B):={
+local C,D,E,F,a,b,los;
+  a:=atan(2);
+  b:=pi-a;
+  D:=rotation(A,a,B);
+  C:=D+(B-A);
+los:=quadrilatere(A,B,C,D);
+los:=los,losange_triac(A,D);
+E:=rotation(A,-2*a,D);
+los:=los,losange_triac(A,E);
+F:=rotation(B,2*a,A);
+retourne F,[los];
+}:;
+patron_triac2(A,B):={
+local C,D,E,F,a,b,los;
+  a:=atan(2);
+  b:=pi-a;
+  D:=rotation(A,a,B);
+  C:=D+(B-A);
+los:=quadrilatere(A,B,C,D);
+los:=los,losange_triac(A,D);
+E:=rotation(A,-2*a,D);
+los:=los,losange_triac(A,E);
+F:=rotation(D,b,C);
+retourne F,[los];
+}:;
+patron_triaconta(A,B):={
+local C,D,E,F,G,l,L1,L2,a,b,j,los;
+  a:=atan(2.);b:=pi-a;
+  los:=NULL;
+  l:=B-A;
+  pour j de 1 jusque 5 faire 
+  F,L1:=patron_triac1(A,B);
+  G,L2:= patron_triac2(F,F+l);
+  los:=los,L1,L2;
+  A:=G;
+  B:=A+l;
+  fpour;
+  retourne los;
+}:;
+</PRE><P>On tape :<BR>
+<TT>a:=atan(2.);patron_triaconta(point(0),point(exp(-i*a/2)))</TT><BR>
+On obtient :<BR>
+<IMG SRC="cascas099.png"><BR>
+
+</P><H4 CLASS="subsubsection">La construction du triacontaèdre avec du carton</H4><P>
+Il faut débuter la construction du triacontaèdre en accolant 5 losanges pour
+former une "pointe" ayant pour base un pentagone régulier : c’est la calotte
+du dessus. Puis, on rajoute 5 losanges pour combler les vides 
+(cf dessin). On forme ainsi le début de 5 nouvelles "pointes". Faire 
+la même chose pour faire la calotte du dessous. Il vous reste alors 10 
+losanges pour relier les 2 calottes et terminer les amorces des 5 "pointes" du 
+dessus et les 5 "pointes" du dessous.<BR>
+En tout, le triacontaèdre a 12 "pointes". Chaque losange appartient à 2 
+"pointes",le triacontaèdre est donc composé de 12*5/2=30 losanges.<BR>
+On tape dans un niveau de géométrie 2d pour avoir la vue de dessus d’une 
+calotte :
+</P><PRE CLASS="verbatim">losangetria(A,B):=losange(A,B,atan(2));
+vuedessus (A,B):={
+local C,D,L,j;
+L:=NULL;
+pour j:=1 jusque 5 faire 
+L:=L,losange(A,B,2*pi/5,C,D);
+L:=L,losange(D,C,4*pi/5);
+B:=D;
+fpour;
+retourne L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>vuedessus(0,-2*i)</TT><BR>
+On obtient :<BR>
+<IMG SRC="cascas100.png">
+</P><H4 CLASS="subsubsection">La construction du triacontaèdre avec <TT>Xcas</TT></H4><P>
+On peut faire le dessin dans l’écran de géométrie 3D.<BR>
+On prend un losange de côté <I>a</I>√<SPAN style="text-decoration:overline">5</SPAN>. 
+Pour faire le dessin avec <TT>Xcas</TT>, on doit faire quelques calculs.<BR>
+On rappelle que :<BR>
+cos(2π/5)=(√<SPAN style="text-decoration:overline">5</SPAN> −1)/4    
+cos(2π/5)<SUP>2</SUP>=(3−√<SPAN style="text-decoration:overline">5</SPAN>)/8<BR>
+cos(π/5)=(√<SPAN style="text-decoration:overline">5</SPAN> +1)/4     
+cos(π/5)<SUP>2</SUP>=(3+√<SPAN style="text-decoration:overline">5</SPAN>)/8<BR>
+sin(2π/5)<SUP>2</SUP>=(5+√<SPAN style="text-decoration:overline">5</SPAN>)/8     
+sin(π/5)<SUP>2</SUP>=(5−√<SPAN style="text-decoration:overline">5</SPAN>)/8<BR>
+En effet, 1+2cos(2π/5)+2cos(4π/5)=0 donc 
+cos(2π/5) est la solution positive de 4<I>X</I><SUP>2</SUP>+2<I>X</I>−1=0.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Calcul de la diagonale <I>BD</I><SUP>2</SUP> lorsque <I>AB</I><SUP>2</SUP>=5<I>a</I><SUP>2</SUP>.<BR>
+<I>BD</I><SUP>2</SUP>=(<I>AB</I>−<I>a</I>)<SUP>2</SUP>+(2<I>a</I>)<SUP>2</SUP>=<I>a</I><SUP>2</SUP>(√<SPAN style="text-decoration:overline">5</SPAN>−1)<SUP>2</SUP>+4<I>a</I><SUP>2</SUP>)=<I>a</I><SUP>2</SUP>(10−2√<SPAN style="text-decoration:overline">5</SPAN>)=2<I>a</I><SUP>2</SUP>(5−√<SPAN style="text-decoration:overline">5</SPAN>)
+</LI><LI CLASS="li-itemize">Calcul de la diagonale <I>AC</I><SUP>2</SUP> lorsque <I>AB</I><SUP>2</SUP>=5<I>a</I><SUP>2</SUP>.<BR>
+<I>AC</I><SUP>2</SUP>=(<I>AB</I>+<I>a</I>)<SUP>2</SUP>+(2<I>a</I>)<SUP>2</SUP>=<I>a</I><SUP>2</SUP>(√<SPAN style="text-decoration:overline">5</SPAN>+1)<SUP>2</SUP>+2<SUP>2</SUP>)=<I>a</I><SUP>2</SUP>(10+2√<SPAN style="text-decoration:overline">5</SPAN>)=2<I>a</I><SUP>2</SUP>(5+√<SPAN style="text-decoration:overline">5</SPAN>)
+</LI><LI CLASS="li-itemize">Calculons de la hauteur <I>h</I>=<I>AO</I> issue de <I>A</I> de la pyramide de sommet <I>A</I>
+et de base le pentagone de côté <I>BD</I>. Cette pyramide a pour arête 
+<I>AB</I>=<I>a</I>√<SPAN style="text-decoration:overline">5</SPAN> et calculons le rayon <I>r</I>=<I>OB</I> du cercle circonscrit à ce 
+pentagone.<BR>
+<IMG SRC="cascas101.png"><BR>
+On a :<BR>
+<I>BD</I>=2<I>r</I>sin(π/5)<BR>
+On sait que cos(2π/5)=(√<SPAN style="text-decoration:overline">5</SPAN>−1)/4 donc on tape :<BR>
+<TT>normal(1-((sqrt(5)-1)/4)</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient la valeur de sin(2π/5)<SUP>2</SUP> :<BR>
+<TT>(sqrt(5)+5)/8</TT><BR>
+On sait que cos(π/5)=(√<SPAN style="text-decoration:overline">5</SPAN>+1)/4 donc on tape :<BR>
+<TT>normal(1-((sqrt(5)+1)/4)</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient la valeur de sin(π/5)<SUP>2</SUP> :<BR>
+<TT>(5-sqrt(5))/8</TT><BR>
+<I>BD</I><SUP>2</SUP>=4<I>r</I><SUP>2</SUP>sin(π/5)<SUP>2</SUP>=<I>r</I><SUP>2</SUP>(5−√<SPAN style="text-decoration:overline">5</SPAN>)/2=<I>a</I><SUP>2</SUP>(10−2√<SPAN style="text-decoration:overline">5</SPAN>)<BR>
+Donc <I>r</I><SUP>2</SUP>=4<I>a</I><SUP>2</SUP><BR>
+<I>h</I><SUP>2</SUP>=<I>AB</I><SUP>2</SUP>−<I>r</I><SUP>2</SUP>=5<I>a</I><SUP>2</SUP>−4<I>a</I><SUP>2</SUP>=<I>a</I><SUP>2</SUP><BR>
+Donc si <I>AB</I>=<I>a</I>√<SPAN style="text-decoration:overline">5</SPAN> on a <I>h</I>=<I>AO</I>=<I>a</I> et <I>OB</I>=<I>OC</I>=<I>r</I>=2<I>a</I>
+</LI><LI CLASS="li-itemize">Calculons les angles <I>b</I>=<I>MAO</I> et <I>c</I>=<I>OAC</I>.<BR>
+On a :<BR>
+tan(<I>b</I>)=2*<I>OB</I>cos(π/5)/<I>OA</I>=2cos(π/5)=(√<SPAN style="text-decoration:overline">5</SPAN>+1)/2 et tan(<I>c</I>)=<I>OC</I>/<I>OA</I>=2
+Donc l’angle <I>MAC</I>=<I>b</I>+<I>c</I>. Dans la suite on appellera cet angle :<BR>
+"angle au sommet" de la pyramide de sommet <I>A</I> et on dira que <I>AC</I> est 
+l’arête opposée à <I>AM</I> (<I>M</I> etant le milieu de <I>BD</I>).<BR>
+</LI><LI CLASS="li-itemize">Traçons le losange <I>ABA</I><SUB>1</SUB><I>D</I>. <I>A</I>1 est aussi le sommet d’une pyramide 
+à base pentagonale. Cette pyramide a le losange <I>ABA</I><SUB>1</SUB><I>D</I> en commun avec la 
+pyramide de sommet <I>A</I>. Son "angle au sommet" vaut donc aussi <I>b</I>+<I>c</I>.<BR>
+Le plan médiateur de <I>BD</I> contient le segment <I>AA</I><SUB>1</SUB> ainsi que les arêtes
+opposées <I>AC</I> et <I>A</I><SUB>1</SUB><I>C</I><SUB>1</SUB> où <I>A</I><SUB>1</SUB><I>C</I><SUB>1</SUB> l’arête opposée à <I>A</I><SUB>1</SUB><I>M</I> pour 
+la pyramide de sommet <I>A</I><SUB>1</SUB>. On va montrer que 
+<I>A</I><SUB>1</SUB><I>C</I><SUB>1</SUB> est parallèle à <I>AO</I> (<I>O</I> pied de la fauteur de la pyramide de 
+sommet <I>A</I>).<BR>
+Calculons <I>C</I><SUB>1</SUB><I>A</I><SUB>1</SUB><I>A</I>+<I>MAO</I>=<I>b</I>+<I>c</I>+<I>b</I>=2<I>b</I>+<I>c</I>.<BR>
+On a tan(2<I>b</I>+<I>c</I>)=(2tan(<I>b</I>)/(1−tan(<I>b</I>)<SUP>2</SUP>)+tan(<I>c</I>))/(1−tan(2<I>b</I>)tan(<I>c</I>)).<BR>
+Donc tan(2<I>b</I>+<I>c</I>)=(2tan(<I>b</I>)+tan(<I>c</I>)−tan(<I>c</I>)tan(<I>b</I>)<SUP>2</SUP>)/<I>D</I>
+Calculons le numérateur on a tan(<I>b</I>)<SUP>2</SUP>=√<SPAN style="text-decoration:overline">5</SPAN>+3 donc :<BR>
+(2tan(<I>b</I>)+<I>tan</I>(<I>c</I>)−tan(<I>b</I>)<SUP>2</SUP>tan(<I>c</I>))=√<SPAN style="text-decoration:overline">5</SPAN>+1+2−√<SPAN style="text-decoration:overline">5</SPAN>−3=0<BR>
+Donc tan(2<I>b</I>+<I>c</I>)=0.
+Donc si <I>AO</I> est vertical, il en est de même de <I>A</I><SUB>1</SUB><I>C</I><SUB>1</SUB>. Ainsi les losanges 
+qui relient 2 calottes de sommets opposés <I>S</I><SUB>1</SUB><I>S</I><SUB>2</SUB> ont des côtés 
+parrallèles à <I>S</I><SUB>1</SUB><I>S</I><SUB>2</SUB>.<BR>
+<DIV CLASS="center"><IMG SRC="cascas102.png"></DIV>
+</LI></UL><P>
+On tape pour voir les 2 calottes et la tranche du milieu :
+</P><PRE CLASS="verbatim">S1:=point(0,0,5.5):;S1;
+S2:=point(0,0,-5.5):;S2;
+P1:=isopolygone(point([0,0,4.5]),point([2.,0,4.5]),point([0,1.,4.5]),-5):;
+P1:;
+P2:=isopolygone(point([0,0,-4.5]),point([2*cos(pi/5.),2*sin(pi/5.),-4.5]), 
+point([0,1.,-4.5]),-5):;P2:;
+LS1:=sommets(P1):;LS1:=op(LS1),LS1[0]:;
+LS2:=sommets(P2):;LS2:=op(LS2),LS2[0]:;
+L1:=losange(S1,LS1[0],LS1[1],C1):;
+losange(S1,LS1[1],LS1[2],C2):;
+LL1:=losange(LS1[1],C1,C2,C3):;
+affichage(rotation(droite(S1,S2),2*k*pi/5,L1)$(k=0..4), 1);
+affichage(rotation(droite(S1,S2),2*k*pi/5,LL1)$(k=0..4), 1);
+L2:=losange(S2,LS2[0],LS2[1],D1):;
+losange(S2,LS2[1],LS2[2],D2):;
+LL2:=losange(LS2[1],D1,D2):;
+affichage(rotation(droite(S1,S2),-2*k*pi/5,L2)$(k=0..4), 4);
+affichage(rotation(droite(S1,S2),-2*k*pi/5,LL2)$(k=0..4), 4);
+C4:=translation([0,0,-2.],C3):;
+C5:=translation([0,0,-2.-sqrt(5.)],C3):;
+C6:=translation([0,0,-2.],C1):;
+losange(LS1[1],C1,C2,C3):;
+C7:=translation([0,0,-2.],C2):;
+LL4:=losange(C4,C5,C7):; LL3:=losange(C4,C6,C5):;
+affichage(rotation(droite(S1,S2),2*k*pi/5,LL4)$(k=0..4),0);
+affichage(rotation(droite(S1,S2),2*k*pi/5,LL3)$(k=0..4),0);
+</PRE><P>On obtient les 2 calottes et la tranche du milieu :<BR>
+<IMG SRC="cascas103.png"><BR>
+<IMG SRC="cascas104.png"><BR>
+<IMG SRC="cascas105.png"><BR>
+On peut remarquer que si <I>A</I> et <I>B</I> sont des sommets opposés et si <I>P</I><SUB><I>A</I></SUB> et
+<I>P</I><SUB><I>B</I></SUB> sont les plans perpendiculaires à <I>AB</I> passant respectivement par <I>A</I> 
+et <I>B</I> alors les autres sommets des losanges sont disposés sur des cercles 
+dont les 6 plans sont perpendiculaires à <I>AB</I> et les 8 plans (ces 6 plans + <I>P</I><SUB><I>A</I></SUB> et <I>P</I><SUB><I>B</I></SUB>) sont distants 
+de <I>A</I> de (0,<I>a</I>,2<I>a</I>,3<I>a</I>,<I>a</I>(√<SPAN style="text-decoration:overline">5</SPAN>+2),<I>a</I>(√<SPAN style="text-decoration:overline">5</SPAN>+3)),<I>a</I>(√<SPAN style="text-decoration:overline">5</SPAN>+4),<I>a</I>(√<SPAN style="text-decoration:overline">5</SPAN>+5). 
+C’est à dire que <I>AB</I>=<I>a</I>(5+√<SPAN style="text-decoration:overline">5</SPAN>) i.e. les sommets opposés sont distants
+de <I>a</I>(5+√<SPAN style="text-decoration:overline">5</SPAN>).<BR>
+Ses différents sommets sont sur des cercles de rayon : 
+0, 2<I>a</I>, 4<I>a</I>cos(π/5), 4<I>a</I>cos(π/5), 4<I>a</I>cos(π/5), 4<I>a</I>cos(π/5), 2<I>a</I>, 0.<BR>
+<IMG SRC="cascas106.png"><BR>
+
+Pour faire le triacontaèdre il reste à rassembler 
+les 2 calottes et la tranche du milieu. Pour cela il suffit de changer les 
+cotes des objets géométriques afin de rassambler les 3 images ou bien on
+taper :
+</P><PRE CLASS="verbatim">//on est en dimension 2
+P1:=isopolygone(point(0),2,-5):;
+LS1:=op(sommets_abca(P1)):;
+P2:=isopolygone(point(0),2+2*exp(i*2*pi/5),-5):;
+LS2:=op(sommets_abca(P2)):;
+//on passe en dimension 3
+LS1:=append(evalf(coordonnees(LS1[k])),0)$(k=0..5);
+LS2:=append(evalf(coordonnees(LS2[k])),-1)$(k=0..5):;
+P:=seq(polygone(point(0,0,1),LS1[k],LS2[k],LS1[k+1]) ,k,0,4):;
+P;
+C:=NULL:;LS2:=evalf(LS2[4]),LS2:;
+L:=seq(losange(LS1[k],LS2[k],LS2[k+1],C[k]),k,0,4):;L;
+D:=(translation([0,0,-sqrt(5)],C[k]))$(k=0..4):;
+F:=(translation([0,0,-sqrt(5)],point(LS2[k])))$(k=0..4):;
+polygone(LS2[1],C[0],D[0],F[1]);
+polygone(point(LS2[k+1]),C[k],D[k],point(F[k+1]))$(k=0..3):;
+polygone(LS2[1],F[1],D[1],C[1]);
+polygone(LS2[0],C[4],D[4],F[0]);
+polygone(LS2[k],F[k],D[k],C[k])$(k=0..4);
+polygone(LS2[k+1],C[k],D[k],F[k+1])$(k=0..3);
+LL4:=losange(F[0],D[4],D[0],G4):;G:=NULL:;
+L4:=(losange(F[k+1],D[k],D[k+1],G[k])$(k=0..3)),LL4:;
+L4;G:=G4,G:;  
+L5:=losange(D[k],G[k],G[k+1])$(k=0..3);
+LL5:=losange(D[4],G[4],G[0],AAA):;
+coordonnees(AAA);L5:=L5,LL5[0]:;
+affichage(L5[k],1+epaisseur_ligne_2)$(k=0..4);
+</PRE><P><IMG SRC="cascas107.png"><BR>
+Les coordonnées de <I>AAA</I> sont (0,0,−4−√<SPAN style="text-decoration:overline">5</SPAN>). Donc si une pointe a comme 
+coordonnéees 0,0,1 les coordonnées de la pointe 
+opposée est [0,0,−4−√<SPAN style="text-decoration:overline">5</SPAN>].<BR>
+Un triacontaèdre de côté √<SPAN style="text-decoration:overline">5</SPAN> a comme hauteur 5+<I>sqrt</I>(5) : la bande 
+intermédiaire a des sommets sur une verticale de côté √<SPAN style="text-decoration:overline">5</SPAN> mais ces 
+sommets sont alternativement sur des plans horizontaux distants de 1.
+</P><H4 CLASS="subsubsection">Le graphe du triacontaèdre</H4><P>
+Le triacontaèdre a 30 faces qui sont des losanges d’or, 32 sommets et 30 arêtes.</P><P><B>Exercice</B> (niveau 3-ième)<BR>
+Le triacontaèdre a 30 faces qui sont des losanges d’or et 32 sommets qui sont
+soit d’ordre 3 soit d’ordre 5 (i.e. soit communs à 3 faces, soit communs à 
+5 faces).<BR>
+Combien y-a-t-il de sommets d’ordre 3 et de sommets d’ordre 5 ?</P><P>Soit <I>x</I> le nombre de sommets d’ordre 3 et <I>y</I> le nombre de sommets d’ordre 5.<BR>
+On a à résoudre le système :<BR>
+<I>x</I>+<I>y</I>=32 et 3*<I>x</I>+5<I>y</I>=30*4 qui est équivalent à<BR>
+<I>x</I>=32−<I>y</I> et 3*32+2<I>y</I>=4*30 soit<BR>
+<I>x</I>=32−<I>y</I> et <I>y</I>=60−48<BR>
+Donc <I>x</I>=20 et <I>y</I>=12.<BR>
+Ou bien avec <TT>Xcas</TT>, on tape :<BR>
+<TT>linsolve([x+y=32,3x+5y=120],[x,y])</TT>
+On obtient <TT>[20,12]</TT></P><P><B>Le graphe du triacontaèdre</B><BR>
+On tape :
+</P><PRE CLASS="verbatim">LA:==[-6,-4,-2,-1,1,2,4,6,-6i,-4i,-2i,-i,i,2i,4i,6i];
+LB:=[3+i,1+2*i,1+3*i,2+3*i,-3+i,-1+2*i,-1+3*i,-2+3*i,
+     -3-i,-1-2*i,-1-3*i,-2-3*i,3-i,1-2*i,1-3*i,2-3*i];
+affichage(point(LA[k]),1+ epaisseur_point_3+point_point)$(k=0..15);
+affichage(point(LB[k]),1+ epaisseur_point_3+point_point)$(k=0..15);
+polygone(LA[0],LA[8],LA[7],LA[15]);
+polygone(LA[1],LA[9],LA[6],LA[14]);
+polygone(LA[1],LA[8],LA[6],LA[15]);
+polygone(LA[4],LA[5],LB[1],LA[12]);
+polygone(LA[3],LA[2],LB[5],LA[12]);
+polygone(LA[3],LA[2],LB[9],LA[11]);
+polygone(LA[4],LA[5],LB[13],LA[11]);
+segment(LB[0],LA[5]) ,segment(LB[12],LA[5]);
+segment(LB[4],LA[2]) ,segment(LB[8],LA[2]);
+segment(LB[2],LB[3]), segment(LB[2],LB[1]); 
+segment(LB[2],LA[13]);
+segment(LB[6],LB[7]), segment(LB[6],LB[5]); 
+segment(LB[6],LA[13]);
+segment(LB[10],LB[11]), segment(LB[10],LB[9]);
+segment(LB[10],LA[10]);
+segment(LB[14],LB[15]), segment(LB[14],LB[13]); 
+segment(LB[14],LA[10]);
+segment(LA[0],LA[1]), segment(LA[6],LA[7]);
+segment(LA[8],LA[9]), segment(LA[14],LA[15]);
+ segment(LA[10],LA[11]), segment(LA[12],LA[13]);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas108.png"><BR>
+
+Le squelette de ce triacontaèdre n’est pas hamiltonien
+i.e. il n’existe pas de chemin qui en empruntant les arêtes, passe une fois 
+et une seule par chaque sommet. En effet chaque sommet d’ordre 5 n’est relié 
+qu’à des sommets d’ordre 3 et chaque sommet d’ordre 3 n’est relié 
+qu’à des sommets d’ordre 5. Donc le chemin ne peut passer qu’en alternant 
+sommet d’ordre 3, sommet d’ordre 5, sommet d’ordre 3 etc...Comme il y a 12 
+sommets d’ordre 5 et 20 sommets d’ordre 3, un chemin passant une fois 
+et une seule par chaque sommet n’existe pas. 
+</P><H3 CLASS="subsection"><A NAME="htoc215">12.5.2</A>  Activité en classe</H3><P>
+Faire faire le patron du losange de base de côté √<SPAN style="text-decoration:overline">5</SPAN> aux èlèves 
+pour obtenir 30 losanges (c’est parfait pour une classe de 30 élèves !).<BR>
+Faire le montage avec du scotch pour obtenir le triacontaèdre.<BR>
+Ou encore faire le patron de 5 losanges accolés pour pouvoir faire facilement 
+une "pointe". il faut 12 "pointes" : le montage sera plus facile car le
+triacontaèdre final aura une epaisseur de 2 feuilles.<BR>
+Choisir un repère orthonormé et faire calculer les coordonnées de chaque 
+sommet du triacontaèdre : c’est un bon exercice qui utilise la géométrie
+analytique (en particulier, trouver les coordonnées de la somme de 2 vecteurs,
+l’utilité du produit scalaire...) et un peu de géométrie pure.<BR>
+Voici une coupe du triacontaèdre par un plan passant par 2 sommets opposés 
+et par une "pointe".<BR>
+On tape :<BR>
+</P><PRE CLASS="verbatim">S:=point(i);
+A:=point(-2);
+A1:=point(2*cos(pi/5));
+S1:=symetrie(A1,S);
+segment(A,S);
+segment(S1,S);
+d:=parallele(S1,droite(A,S)):;
+O1:=inter_unique(d,droite(x=0));
+segment(S1,O1);
+longueur(S,O1);
+S2:=S1-i*sqrt(5);
+B:=point(-i-4*cos(pi/5)^2);
+B1:=symetrie(B,A);
+B2:=B1-i*sqrt(5);
+S3:=point(-i*(sqrt(5)+4));
+droite(milieu(B2,S3),2+milieu(B2,S3)));
+M:=milieu(B2,S3);
+N:=point(2-i*(3+sqrt(5)));
+segment(S1,B2);
+segment(S2,B1);
+polygone(S,A,B1,B2,S3,N,S2,S1);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas109.png">
+Un exemple d’exercice:<BR>
+On a dit :
+"Il faut débuter la construction du triacontaèdre en accolant 5 losanges
+dont un angle vaut atan(2) pour former une "pointe" (la calotte du dessus) 
+ayant pour base un pentagone régulier.<BR>
+Puis, on rajoute 5 losanges pour combler les vides.<BR>
+Pmontrons les vides peuvent être comblés par un losange ayant des
+côtés de longueurs √<SPAN style="text-decoration:overline">5</SPAN> et comme angles α=atan(2) et π−α :<BR>
+On tape :<BR>
+<TT>S:=point(0,0,1);A:=point(2,0,0),B:=point(2*cos(4*pi/5),2*sin(4*pi/5),0)</TT><BR>
+Alors le produit scalaire de <I>SA</I>.<I>SB</I> vaut :<BR>
+4cos(4π/5)+1=1−4cos(π/5)=1−(1+√<SPAN style="text-decoration:overline">5</SPAN>)=−√<SPAN style="text-decoration:overline">5</SPAN>=5*cos(<I>x</I>).<BR>
+Donc cos(<I>x</I>)=−√<SPAN style="text-decoration:overline">5</SPAN>/5. Puisque cos(α)=√<SPAN style="text-decoration:overline">5</SPAN>/5 on a 
+cos(<I>x</I>)=−cos(α).<BR>
+Donc l’autre angle <I>x</I> du losange vaut <I>x</I>=π−α<BR>
+Donc le vide peut être comblé par un losange d’angles 
+α=atan(2) et π−α.
+</P><H2 CLASS="section"><A NAME="toc77"></A><A NAME="htoc216">12.6</A>  La forme géométrique d’une molécule dans l’espace</H2><H3 CLASS="subsection"><A NAME="htoc217">12.6.1</A>  Présentation du problème</H3><P>
+Ce qui suit a été inspiré d’une épreuve à l’oral de l’agrégation
+externe de Mathématiques session 2008 dont voila le lien :<BR>
+ http://agreg.dnsalias.org/Textes/pub2008-C2.pdf<BR>
+Les différentes configurations possibles de chaque molécule formant un 
+cycle de 6 atomes (comme le cyclohexane et le glucose) sont déterminées par
+la longueur de ses liaisons et par les angles que doivent faire entre elles les
+différentes liaisons.<BR>
+Nous étudions ici la forme des molécules du cyclohexane et du glucose.
+Nous allons commencer tout d’abord par un lemme utile pour l’étude de ces 
+2 cas.
+</P><H3 CLASS="subsection"><A NAME="htoc218">12.6.2</A>  Un lemme</H3><P>
+Pour étudier la forme de la molécule du cyclohexane, on a besoin de 
+résoudre le système en <I>u</I>,<I>v</I>,<I>w</I> de la forme :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>R</I>(<I>u</I>,<I>v</I>)=0,<I>R</I>(<I>v</I>,<I>w</I>)=0,<I>R</I>(<I>u</I>,<I>w</I>)=0</TD></TR>
+</TABLE><P>
+lorsque <I>R</I>(<I>u</I>,<I>v</I>)=α <I>u</I><SUP>2</SUP><I>v</I><SUP>2</SUP>+β(<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)+γ <I>uv</I>+δ<BR>
+et<BR>
+pour étudier la forme de la molécule du glucose, on a besoin de 
+résoudre le système en <I>u</I>,<I>v</I>,<I>w</I> de la forme :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>u</I>,<I>v</I>)=0,<I>R</I>(<I>v</I>,<I>w</I>)=0,<I>R</I>(<I>u</I>,<I>w</I>)=0</TD></TR>
+</TABLE><P>
+lorsque <I>P</I>(<I>u</I>,<I>v</I>)=α<SUB>1</SUB> <I>u</I><SUP>2</SUP><I>v</I><SUP>2</SUP>+β<SUB>1</SUB>(<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)+γ<SUB>1</SUB> <I>uv</I>+δ<SUB>1</SUB> et<BR>
+ <I>R</I>(<I>u</I>,<I>w</I>)=α <I>u</I><SUP>2</SUP><I>w</I><SUP>2</SUP>+β <I>u</I><SUP>2</SUP>+γ <I>uw</I>+η <I>w</I><SUP>2</SUP>+δ.<BR>
+On commence par chercher à résoudre le système en <I>u</I>,<I>v</I>,<I>w</I> de la forme :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>u</I>,<I>v</I>)=0,<I>R</I>(<I>v</I>,<I>w</I>)=0,<I>R</I>(<I>u</I>,<I>w</I>)=0</TD></TR>
+</TABLE><P>
+lorsque <I>P</I>(<I>u</I>,<I>v</I>)=α<SUB>1</SUB> <I>u</I><SUP>2</SUP><I>v</I><SUP>2</SUP>+β<SUB>1</SUB>(<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)+γ<SUB>1</SUB> <I>uv</I>+δ<SUB>1</SUB> et<BR>
+ <I>R</I>(<I>u</I>,<I>w</I>)=α <I>u</I><SUP>2</SUP><I>w</I><SUP>2</SUP>+β <I>u</I><SUP>2</SUP>+γ <I>uw</I>+η <I>w</I><SUP>2</SUP>+δ.<BR>
+ 
+Pour cela on cherche <I>u</I> et <I>v</I> en fonction de <I>w</I> pour que :<BR>
+<I>R</I>(<I>v</I>,<I>w</I>)=0,<I>R</I>(<I>u</I>,<I>w</I>)=0<BR>
+On a donc à résoudre tout d’abord l’équation du second degré en <I>w</I> :<BR>
+<I>R</I>(<I>x</I>,<I>w</I>)=α <I>x</I><SUP>2</SUP><I>w</I><SUP>2</SUP>+β <I>x</I><SUP>2</SUP>+γ <I>wx</I>+η <I>w</I><SUP>2</SUP>+δ=(α <I>w</I><SUP>2</SUP>+β)<I>x</I><SUP>2</SUP>+γ <I>wx</I>+η <I>w</I><SUP>2</SUP>+δ.<BR>
+En posant :<BR>
+<I>a</I>=α <I>w</I><SUP>2</SUP>+β<BR>
+<I>b</I>=γ <I>w</I><BR>
+<I>c</I>=η <I>w</I><SUP>2</SUP>+δ<BR>
+On a donc à résoudre l’équation du second degré :<BR>
+<I>R</I>(<I>x</I>,<I>w</I>)=<I>ax</I><SUP>2</SUP>+<I>bx</I>+<I>c</I>=0 où <I>a</I>,<I>b</I>,<I>c</I> dépendent de <I>w</I>.<BR>
+Cette équation a 2 solutions <I>x</I><SUB>1</SUB> et <I>x</I><SUB>2</SUB> qui dépendent de <I>w</I>.<BR>
+Donc on peut avoir :<BR>
+<I>u</I>=<I>v</I>=<I>x</I><SUB>1</SUB> ou <I>u</I>=<I>v</I>=<I>x</I><SUB>2</SUB> ou <I>u</I>=<I>x</I><SUB>1</SUB>,<I>v</I>=<I>x</I><SUB>2</SUB> ou <I>u</I>=<I>x</I><SUB>2</SUB>,<I>v</I>=<I>x</I><SUB>1</SUB>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Pour les 2 premiers cas, on a <I>u</I>=<I>v</I>, donc<BR>
+<I>u</I> est égal à une des solutions <I>u</I><SUB>1</SUB>,<I>u</I><SUB>2</SUB>,<I>u</I><SUB>3</SUB>,<I>u</I><SUB>4</SUB> de 
+l’équation bicarrée :<BR>
+<I>P</I>(<I>x</I>,<I>x</I>)=α<SUB>1</SUB> <I>x</I><SUP>4</SUP>+(2β<SUB>1</SUB>+γ<SUB>1</SUB>) <I>x</I><SUP>2</SUP>+δ<SUB>1</SUB> et<BR>
+les solutions des équations :<BR>
+<I>R</I>(<I>u</I><SUB><I>j</I></SUB>,<I>x</I>)=0 pour <I>j</I>=1,2,3,4<BR>
+donneront les valeurs de <I>w</I>.<BR>
+Si on cherche seulement des solutions réelles en <I>u</I>,<I>v</I>,<I>w</I> il faudra faire des 
+vérifications...
+</LI><LI CLASS="li-itemize">Pour les 2 derniers cas, on a <I>u</I>=<I>x</I><SUB>1</SUB> et <I>v</I>=<I>x</I><SUB>2</SUB> ou <I>u</I>=<I>x</I><SUB>2</SUB> et <I>v</I>=<I>x</I><SUB>1</SUB> 
+donc:<BR>
+<I>uv</I>=<I>x</I><SUB>1</SUB><I>x</I><SUB>2</SUB>=<I>c</I>/<I>a</I>  et  <I>u</I>+<I>v</I>=<I>x</I><SUB>1</SUB>+<I>x</I><SUB>2</SUB>=−<I>b</I>/<I>a</I> donc<BR>
+<I>u</I><SUP>2</SUP><I>v</I><SUP>2</SUP>=<I>x</I><SUB>1</SUB><SUP>2</SUP><I>x</I><SUB>2</SUB><SUP>2</SUP>=<I>c</I><SUP>2</SUP>/<I>a</I><SUP>2</SUP> et<BR>
+ <I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>=(<I>u</I>+<I>v</I>)<SUP>2</SUP>−2<I>uv</I>=(<I>x</I><SUB>1</SUB>+<I>x</I><SUB>2</SUB>)<SUP>2</SUP>−2<I>x</I><SUB>1</SUB><I>x</I><SUB>2</SUB>=(<I>b</I><SUP>2</SUP>−2<I>ca</I>)/<I>a</I><SUP>2</SUP>.<BR>
+On doit donc résoudre l’équation bicarrée en <I>w</I> <I>Eq</I>=<I>P</I>(<I>x</I><SUB>1</SUB>,<I>x</I><SUB>2</SUB>)=0 que 
+l’on écrit en fonction de <I>a</I>,<I>b</I>,<I>c</I> :<BR>
+<I>Eq</I>=<I>P</I>(<I>x</I><SUB>1</SUB>,<I>x</I><SUB>2</SUB>)=α<SUB>1</SUB> <I>c</I><SUP>2</SUP>+β<SUB>1</SUB> (<I>b</I><SUP>2</SUP>−2<I>ca</I>)+γ<SUB>1</SUB> <I>ca</I> +δ<SUB>1</SUB> <I>a</I><SUP>2</SUP>=0<BR>
+Avec <TT>Xcas</TT> , il faudra taper pour résoudre <I>Eq</I>=0 :
+<PRE CLASS="verbatim">a:=alpha*w^2+beta;
+b:=gamma*w;
+c:=eta*w^2+delta;
+Eq:=normal(alpha1*c^2+beta1*(b^2-2*c*a)+gamma1*c*a+
+    delta1*a^2);
+solve(Eq=0,w);
+</PRE></LI></UL><P>
+<B>Cas </B><B><I>P</I></B><B>, </B><B><I>Q</I></B><B> et </B><B><I>R</I></B><B> sont symétriques et ont les mêmes coefficients</B><BR>
+On a :
+α<SUB>1</SUB>=α, β<SUB>1</SUB>=β=η, γ<SUB>1</SUB>=γ, δ<SUB>1</SUB>=δ<BR>
+Il faut résoudre <I>Eq</I>=0 qui est une équation bicarrée en <I>w</I>, mais dans 
+ce cas <I>Eq</I> se factorise.<BR>
+ On tape :
+</P><PRE CLASS="verbatim">a:=alpha*w^2+beta;
+b:=gamma*w;
+c:=beta*w^2+delta;
+Eq:=normal(alpha*c^2+beta*(b^2-2*c*a)+gamma*c*a+
+    delta*a^2);
+</PRE><P>On factorise <I>Eq</I>, on tape :
+<TT>factor(Eq)</TT><BR>
+On obtient :<BR>
+<TT>(alpha*delta-beta</TT><CODE><TT>^</TT></CODE><TT>2+beta*gamma)*</TT><BR>
+<TT>(alpha*w</TT><CODE><TT>^</TT></CODE><TT>4+delta+2*w</TT><CODE><TT>^</TT></CODE><TT>2*beta+w</TT><CODE><TT>^</TT></CODE><TT>2*gamma)</TT><BR>
+On voit que <TT>(alpha*delta-beta</TT><CODE><TT>^</TT></CODE><TT>2+beta*gamma)</TT> est un facteur de 
+<TT>Eq</TT> donc :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+si <TT>(alpha*delta-beta</TT><CODE><TT>^</TT></CODE><TT>2+beta*gamma)=0</TT> (on verra dans 
+l’étude qui suit que c’est le cas pour le cyclohexane),
+alors le polynôme <I>Eq</I> est identique à 0 et pour toutes les valeurs de 
+<I>w</I>, si <I>x</I><SUB>1</SUB> et <I>x</I><SUB>2</SUB> sont les solutions différentes de 
+<I>R</I>(<I>w</I>,<I>x</I>)=(α <I>w</I><SUP>2</SUP>+β)<I>x</I><SUP>2</SUP>+(γ <I>w</I>)<I>x</I>+(β <I>w</I><SUP>2</SUP>+δ)=0 alors,<BR>
+<I>R</I>(<I>u</I>,<I>v</I>)=0,<I>R</I>(<I>v</I>,<I>w</I>)=0,<I>R</I>(<I>w</I>,<I>u</I>)=0 a une infinité de solutions :<BR>
+ <I>u</I>=<I>x</I><SUB>1</SUB>, <I>v</I>=<I>x</I><SUB>2</SUB> et <I>w</I> où <I>x</I><SUB>1</SUB> et <I>x</I><SUB>2</SUB> sont les solutions différentes 
+dépendant de <I>w</I> de l’équation en <I>x</I>, <I>R</I>(<I>x</I>,<I>w</I>)=0.<BR>
+Si on cherche seulement des solutions réelles en <I>u</I>,<I>v</I>,<I>w</I> il faudra faire des 
+vérifications...
+</LI><LI CLASS="li-itemize">si <TT>(alpha*delta-beta</TT><CODE><TT>^</TT></CODE><TT>2+beta*gamma)</TT><TT>≠</TT><TT> 0</TT><BR>
+Il reste à résoudre :<BR>
+<TT>alpha*w</TT><CODE><TT>^</TT></CODE><TT>4+(2*beta+gamma)*w</TT><CODE><TT>^</TT></CODE><TT>2+delta=0</TT><BR>
+ce qui donne en général 4 solutions pour <I>w</I> : <I>w</I><SUB>1</SUB>,<I>w</I><SUB>2</SUB>,−<I>w</I><SUB>1</SUB>,−<I>w</I><SUB>2</SUB>.<BR>
+Là aussi si on cherche seulement des solutions réelles en <I>u</I>,<I>v</I>,<I>w</I> il 
+faudra faire des vérifications...
+</LI></UL><P>
+<B>Cas </B><B><I>P</I></B><B> est symétrique et </B><B><I>Q</I></B><B> et </B><B><I>R</I></B><B> ont les mêmes coefficients</B><BR>
+C’est le cas du glucose.<BR>
+Il n’y a pas de simplification, il faut résoudre <I>Eq</I>=0 et taper :
+</P><PRE CLASS="verbatim">a:=alpha*w^2+beta;
+b:=gamma*w;
+c:=eta*w^2+delta;
+Eq:=normal(alpha1*c^2+beta1*(b^2-2*c*a)+ gamma1*c*a+
+    delta1*a^2);
+solve(Eq=0,w);
+</PRE><H3 CLASS="subsection"><A NAME="htoc219">12.6.3</A>  Molécule du cyclohexane</H3><P>
+On choisit ici la molécule du cyclohexane constituée de 6 atomes de
+carbone et dans la modélisation ci-dessous, on ne prend en compte que les 
+liaisons entre les atomes constituant le cycle, et non celles avec les atomes 
+voisins du cycle.<BR>
+Pour la molécule du cyclohexane la chimie nous impose :
+</P><DIV CLASS="center"><IMG SRC="cascas110.png"></DIV><P>
+Le triangle <I>ACE</I> est équilatéral et les triangles <I>ABC</I>, <I>CDE</I>, <I>EFA</I> sont 
+isocèles avec <I>AB</I>=<I>AC</I>=<I>DC</I>=<I>DE</I>=<I>FE</I>=<I>FA</I>=1 unité de longueur et les angles <I>B</I>, 
+<I>D</I>, <I>F</I> de ces triangles ainsi que les angles <I>FAB</I>, 
+<I>BCD</I> et <I>DEF</I> sont égaux à 109 degrés.
+Donc on a :<BR>
+<I>l</I>=<I>AC</I>=<I>AE</I>=<I>CE</I>=2cos(π/2−109π/360)=2cos(71π/360).<BR>
+D’après les chimistes, il y a 2 conformations appelées 
+"chaise" et "bateau" : les points <I>B</I>,<I>D</I>,<I>F</I> sont d’un même côté du plan 
+<I>ACE</I> (c’est le "bateau") ou 2 des points <I>B</I>,<I>D</I>,<I>F</I> sont d’un même côté du
+plan <I>ACE</I> et l’autre point est de l’autre côté (c’est la "chaise").
+</P><H4 CLASS="subsubsection">La "chaise" et le "bateau" symétrique en géométrie</H4><P>
+L’étude géométrique faite ici est simplifiée car on ne cherche que les 
+solutions admettant des symétries mais on verra qu’il y beaucoup d’autres 
+solutions.<BR>
+ On peut commencer par faire un modèle en carton du problème (les traits 
+marquent les pliures).<BR>
+<IMG SRC="cascas111.png"><BR>
+et on améne en coincidence :<BR>
+<I>CDD</I> avec <I>CD</I> en pliant selon <I>BC</I> et <I>EC</I>,<BR>
+ <I>EFF</I> avec <I>EF</I> en pliant selon <I>ED</I> et <I>EA</I>, et<BR>
+ <I>ABB</I> avec <I>AB</I> en pliant selon <I>FA</I> et <I>AC</I>.<BR>
+Lorsqu’on plie selon <I>AC</I>, le point <I>B</I> se déplace dans le plan médiateur 
+de <I>AC</I> sur le cercle de centre le milieu <I>H</I> de <I>AC</I> rayon <I>BH</I>=sin(<I>a</I><SUB>1</SUB>) 
+où <I>a</I><SUB>1</SUB>=<I>BAC</I>.<BR>
+Lorsque <I>FF</I> est en <I>F</I> pour pouvoir amener <I>DD</I> en <I>D</I> et <I>BB</I> en <I>B</I>, il 
+faut que <I>BD</I>=<I>BF</I> donc <I>B</I> se trouve dans le plan médiateur de <I>DF</I> sur le 
+cercle de centre le milieu <I>H</I><SUB>1</SUB> de <I>FD</I> et de rayon <I>AC</I>√<SPAN style="text-decoration:overline">3</SPAN>/2.<BR>
+Donc quand la molécule est formée, <I>B</I> est à l’intersection du cercle de 
+centre <I>E</I> et de rayon <I>AC</I>√<SPAN style="text-decoration:overline">3</SPAN>/2 du plan médiateur de <I>FD</I> et du cercle 
+de centre <I>H</I> et de rayon <I>BH</I>=sin(<I>a</I><SUB>1</SUB>) du plan médiateur de <I>AC</I>.<BR>
+Quand la molécule est formèe, cherchons tout d’abord les solutions lorsque 
+<I>FD</I> est parallèle à <I>AC</I> i.e. lorsque le plan médiateur de <I>AC</I> et le 
+plan médiateur de <I>FD</I> sont confondus. 
+Cela entraine que les angles des plans <I>CDE</I>, <I>EFA</I> avec le plan <I>ACE</I> sont 
+égaux si on suppose que <I>F</I> et <I>D</I> sont d’un même côté du plan <I>ACE</I>.<BR>
+En effet les points <I>B</I>, <I>F</I> et <I>D</I> sont soit tous les trois d’un même 
+côté du plan <I>ACE</I> (c’est la forme "bateau"), soit deux de ces points sont 
+d’un même côté du plan <I>ACE</I> et le troisième point est de l’autre 
+côté (c’est la forme "chaise").<BR>
+Dans la suite, on suppose que <I>F</I> et <I>D</I> sont au dessus du plan <I>ACE</I> lorsque
+l’on se place dans le repère orthonormé directe 
+(<I>A</I>,<I>i</I>,<I>j</I>,<I>k</I>) tel que
+<I>i</I> dirige <I>AC</I> et <I>j</I> soit dans le plan
+<I>ACE</I> pour que l’ordonnée de <I>E</I> soit positive.<BR>
+Du fait des symétries, on ne va considérer que les 2 possibilités :<BR>
+soit <I>B</I>, <I>F</I> et <I>D</I> sont soit tous les trois au dessus du plan <I>ACE</I>,<BR>
+soit <I>F</I> et <I>D</I> sont au dessus du plan <I>ACE</I> et <I>B</I> est en dessous de ce plan.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<I>B</I>, <I>F</I> et <I>D</I> sont soit tous les trois au dessus du plan <I>ACE</I><BR>
+Cherchons les coordonnées de <I>B</I> lorsque les angles des plans <I>ABC</I>, 
+<I>CDE</I>, <I>EFA</I> avec le plan <I>ACE</I> sont égaux. Dans ce cas le triangle <I>BDF</I> est
+un triangle équilatéral et du fait de la symétrie du cycle, si on regarde 
+la vue de dessus, on voit que <I>BDF</I> forme avec <I>ACE</I> une étoile à 6 
+branches.<BR>
+La vue de dessus :<BR>
+<IMG SRC="cascas112.png">
+les 2 plans 
+<I>ACE</I> et <I>BDF</I> sont parallèles et distant de <I>z</I><SUB><I>B</I></SUB>=<I>h</I>.<BR>
+Donc si on pose :<BR>
+<TT>b:=109/180*pi; a1:=normal(pi/2-b/2);AC=l:=2*cos(a1)</TT><BR>
+les coordonnées de <I>B</I> sont :<BR>
+<I>x</I><SUB><I>B</I></SUB>=cos(<I>a</I><SUB>1</SUB>),  <I>y</I><SUB><I>B</I></SUB>=−<I>l</I>*√<SPAN style="text-decoration:overline">3</SPAN>/6, 
+ <I>z</I><SUB><I>B</I></SUB>=√<SPAN style="text-decoration:overline">sin</SPAN><SPAN style="text-decoration:overline">(<I>a</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−</SPAN><SPAN style="text-decoration:overline"><I>l</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">/12</SPAN>=√<SPAN style="text-decoration:overline">sin</SPAN><SPAN style="text-decoration:overline">(<I>a</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−</SPAN><SPAN style="text-decoration:overline">cos</SPAN><SPAN style="text-decoration:overline">(<I>a</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">/3</SPAN><BR>
+Les coordonnées de <I>D</I> sont :<BR>
+<I>x</I><SUB><I>D</I></SUB>=<I>l</I>,  <I>y</I><SUB><I>D</I></SUB>=<I>l</I>*√<SPAN style="text-decoration:overline">3</SPAN>/3, 
+ <I>h</I>=<I>z</I><SUB><I>D</I></SUB>=<I>z</I><SUB><I>B</I></SUB>=√<SPAN style="text-decoration:overline">sin</SPAN><SPAN style="text-decoration:overline">(<I>a</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−</SPAN><SPAN style="text-decoration:overline">cos</SPAN><SPAN style="text-decoration:overline">(<I>a</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">/3</SPAN><BR>
+les coordonnées de <I>F</I> sont :<BR>
+<I>x</I><SUB><I>F</I></SUB>=0,  <I>y</I><SUB><I>F</I></SUB>=<I>l</I>*√<SPAN style="text-decoration:overline">3</SPAN>/3, 
+ <I>z</I><SUB><I>F</I></SUB>=<I>z</I><SUB><I>B</I></SUB>=√<SPAN style="text-decoration:overline">sin</SPAN><SPAN style="text-decoration:overline">(<I>a</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−</SPAN><SPAN style="text-decoration:overline">cos</SPAN><SPAN style="text-decoration:overline">(<I>a</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">/3</SPAN><BR>
+<B>Vue en 3d du bateau symétrique</B><BR>
+Avec <TT>Xcas</TT> on ouvre un niveau de géométrie 3<I>d</I> et on tape :<BR>
+<PRE CLASS="verbatim">a1:=71/360*pi;
+l:=2*cos(a1);
+h:=sqrt(sin(a1)^2-cos(a1)^2/3);
+triangle(point(0,0,0),point(l,0,0),
+         point(l/2,l*sqrt(3)/2,0),affichage=1);
+triangle(point(0,0,0),point(l,0,0),
+         point(cos(a1),-l*sqrt(3)/6,h));
+triangle(point(l,0,0),point(l/2,l*sqrt(3)/2,0),
+         point(l,l*sqrt(3)/3,h));
+triangle(point(0,0,0),point(l/2,l*sqrt(3)/2,0),
+         point(0,l*sqrt(3)/3,h));
+triangle(point(cos(a1),-l*sqrt(3)/6,h),point(l,l*sqrt(3)/3,h),
+         point(0,l*sqrt(3)/3,h),affichage=4);
+</PRE>On obtient (en rouge le triangle <I>ACE</I> et en bleu le triangle <I>BDF</I>) :<BR>
+<IMG SRC="cascas113.png">
+</LI><LI CLASS="li-itemize"><I>F</I> et <I>D</I> sont au dessus du plan <I>ACE</I> et <I>B</I> est en dessous de ce plan.<BR>
+Cherchons les coordonnées de <I>B</I> lorsque les angles des plans <I>CDE</I>, 
+<I>EFA</I> avec le plan <I>ACE</I> sont égaux et lorsque <I>B</I> a une cote négative.<BR>
+Faisons une coupe selon le plan médiateur de <I>AC</I> (qui est aussi le plan 
+médiateur de <I>FD</I>).<BR>
+Ce plan médiateur est parallèle à <I>A</I><I>j</I><I>k</I>
+et on munit ce plan médiateur du repère 
+<I>H</I><I>j</I><I>k</I> (<I>H</I> milieu de <I>AC</I> se projéte en 
+<I>A</I>).<BR>
+<I>H</I><SUB>1</SUB> le milieu de <I>FD</I> a pour coordonnées :<BR>
+2cos(<I>a</I><SUB>1</SUB>)/√<SPAN style="text-decoration:overline">(</SPAN>3),<I>h</I>=√<SPAN style="text-decoration:overline">sin</SPAN><SPAN style="text-decoration:overline">(<I>a</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−</SPAN><SPAN style="text-decoration:overline">cos</SPAN><SPAN style="text-decoration:overline">(<I>a</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">/3</SPAN><BR>
+Traçons le cercle de centre <I>H</I> et de rayon <I>l</I>*√<SPAN style="text-decoration:overline">(</SPAN>3)/6 et 
+le cercle de centre <I>H</I><SUB>1</SUB> et de rayon cos(<I>a</I><SUB>1</SUB>). Les 2 points d’intersections 
+correspondent à deux points <I>B</I> qui sont solutions : on retrouve ainsi la 
+solution précédente ainsi qu’une autre solution.<BR>
+Avec <TT>Xcas</TT>, on tape :
+<PRE CLASS="verbatim"> 
+a1:=71/360*pi;
+l:=2*cos(a1);
+H:=point(0);
+H1:=point(2*cos(a1)/sqrt(3),sqrt(sin(a1)^2-cos(a1)^2/3));
+CH1:=cercle(H1,l*sqrt(3)/2):;CH1;
+CH:=cercle(H,sin(a1)):;CH;
+S:=inter(CH,CH1):;
+B0:=S[0];
+B1:=S[1];
+</PRE>On a :<BR>
+<TT>evalf(coordonnees(B0))</TT> renvoie <TT>[-0.470029813674,0.341010112795]</TT><BR>
+<TT>evalf(coordonnees(B1))</TT> renvoie <TT>[-0.142077142237,-0.563054178943]</TT><BR>
+Ce qui donne comme coordonnèes des points <I>B</I> qui sont les solutions :<BR>
+ <TT>[0.814115518356,-0.470029813674,0.341010112795]</TT> et<BR>
+<TT>[0.814115518356,-0.142077142237,-0.563054178943]</TT><BR>
+puisque <TT>evalf(cos(a1))</TT> renvoie <TT>0.814115518356</TT><BR>
+et on obtient :<BR>
+<IMG SRC="cascas114.png"><BR>
+Le point <TT>SB0:=point(cos(a1),l*sqrt(3)/6,h)</TT> 
+(<I>h</I>:=√<SPAN style="text-decoration:overline">sin</SPAN><SPAN style="text-decoration:overline">(<I>a</I>1)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−</SPAN><SPAN style="text-decoration:overline">cos</SPAN><SPAN style="text-decoration:overline">(<I>a</I>1)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">/3</SPAN>) est le point <TT>B</TT> trouvé 
+précédemment et correspond à <TT>B0</TT> du plan médiateur de <I>AC</I> et la 
+deuxième solution <I>SB</I>1 est le point <TT>B1</TT> du plan médiateur
+de <I>AC</I>.<BR>
+<I>B</I>1 est donc le symétrique de <I>B</I>0 (cos(<I>a</I><SUB>1</SUB>)√<SPAN style="text-decoration:overline">3</SPAN>/3,√<SPAN style="text-decoration:overline">sin</SPAN><SPAN style="text-decoration:overline">(<I>a</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−</SPAN><SPAN style="text-decoration:overline">cos</SPAN><SPAN style="text-decoration:overline">(<I>a</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">/3</SPAN>) par rapport à la droite <I>HH</I>1 d’équation :<BR>
+<I>y</I>=<I>hx</I>/(2*cos(<I>a</I><SUB>1</SUB>)√<SPAN style="text-decoration:overline">3</SPAN>).<BR>
+On tape :<BR>
+<TT>LB1:=simplify(coordonnees(symetrie(droite(y=h1*x/(2*k1)), point(k1,h1))))</TT><BR>
+On obtient :<BR>
+<TT>[(5*h1</TT><CODE><TT>^</TT></CODE><TT>2*k1-4*k1</TT><CODE><TT>^</TT></CODE><TT>3)/(h1</TT><CODE><TT>^</TT></CODE><TT>2+4*k1</TT><CODE><TT>^</TT></CODE><TT>2),<BR>
+(h1</TT><CODE><TT>^</TT></CODE><TT>3-8*h1*k1</TT><CODE><TT>^</TT></CODE><TT>2)/(h1</TT><CODE><TT>^</TT></CODE><TT>2+4*k1</TT><CODE><TT>^</TT></CODE><TT>2)]</TT><BR>
+On tape :<BR>
+<TT>h1:=sqrt(sin(a1)</TT><CODE><TT>^</TT></CODE><TT>2-cos(a1)</TT><CODE><TT>^</TT></CODE><TT>2/3);</TT><BR>
+<TT>k1:=cos(a1)/sqrt(3);</TT><BR>
+<TT>trigsin(tlin(LB1))</TT><BR>
+On obtient les coordonnées de <I>B</I><SUB>1</SUB> :<BR>
+<TT>[sqrt(3)*(2*cos(49*pi/120)-cos(71*pi/360))/3,</TT><BR>
+<TT>((-2*sqrt(12*sin(71*pi/360)</TT><CODE><TT>^</TT></CODE><TT>2-3))*cos(71*pi/180)-<BR>
+(sqrt(12*sin(71*pi/360)</TT><CODE><TT>^</TT></CODE><TT>2-3)))/3]</TT><BR>
+après un <TT>evalf</TT> on trouve les coordonnées approchées de <I>B</I><SUB>1</SUB> :<BR>
+<TT>[-0.142077142237,-0.563054178943]</TT><BR>
+La deuxième solution <I>SB</I>1 a donc comme coordonnées :<BR>
+<TT>[cos(a),sqrt(3)*(2*cos(49*pi/120)-cos(71*pi/360))/3,<BR>
+((-2*sqrt(12*sin(71*pi/360)</TT><CODE><TT>^</TT></CODE><TT>2-3))*cos(71*pi/180)-<BR>
+(sqrt(12*sin(71*pi/360)</TT><CODE><TT>^</TT></CODE><TT>2-3)))/3]])</TT><BR>
+ou encore en fonction de <I>h</I> et <I>l</I> :<BR>
+[(15*√<SPAN style="text-decoration:overline">3</SPAN>*<I>h</I><SUP>2</SUP>*<I>l</I>+(−(√<SPAN style="text-decoration:overline">3</SPAN>))*<I>l</I><SUP>3</SUP>)/(18*<I>h</I><SUP>2</SUP>+6*<I>l</I><SUP>2</SUP>),<BR>
+(3*<I>h</I><SUP>3</SUP>−2*<I>h</I>*<I>l</I><SUP>2</SUP>)/(3*<I>h</I><SUP>2</SUP>+<I>l</I><SUP>2</SUP>)]<BR>
+<B>Vue en 3d de la chaise symétrique</B><BR>
+Avec <TT>Xcas</TT> on ouvre un niveau de géométrie 3<I>d</I> et on tape :
+<PRE CLASS="verbatim">b:=109/180*pi; 
+a1:=normal(pi/2-b/2);
+l:=2*cos(a);
+h:=sqrt(sin(a1)^2-cos(a1)^2/3);
+B1:=point(cos(a),sqrt(3)*(2*cos(49*pi/120)-cos(71*pi/360))/3,
+    ((-2*sqrt(12*sin(71*pi/360)^2-3))*cos(71*pi/180)-
+     (sqrt(12*sin(71*pi/360)^2-3)))/3):;
+triangle(point(0,0,0),point(l,0,0),point(l/2,l*sqrt(3)/2,0),
+         affichage=1);
+triangle(point(0,0,0),point(l,0,0),B1);
+triangle(point(l,0,0),point(l/2,l*sqrt(3)/2,0),
+         point(l,l*sqrt(3)/3,h));
+triangle(point(0,0,0),point(l/2,l*sqrt(3)/2,0),
+         point(0,l*sqrt(3)/3,h));
+segment(point(l,l*sqrt(3)/3,h),point(0,l*sqrt(3)/3,h),
+        affichage=4);
+segment(point(l,l*sqrt(3)/3,h),B1,affichage=2);
+segment(B1,point(0,l*sqrt(3)/3,h),affichage=2);
+</PRE>On obtient (en rouge le triangle <I>ACE</I>, en bleu le segment <I>FD</I> et en vert les 
+segments <I>DB</I> et <I>FB</I>) :<BR>
+<IMG SRC="cascas115.png">
+</LI></UL><H4 CLASS="subsubsection">Solution analytique de la forme du cyclohexane</H4><P>
+Voilà ce qu suggère le texte de l’épreuve de modélisation de 
+l’agrégation pour trouver les coordonnées de <I>B</I>, <I>D</I> et <I>F</I>.<BR>
+On se place dans le repère orthonormé directe 
+(<I>A</I>,<I>i</I>,<I>j</I>,<I>k</I>) tel que
+<I>i</I> dirige <I>AC</I> et <I>j</I> soit dans le plan
+<I>ACE</I> (ordonnée de <I>E</I> est positive).<BR>
+Comme <I>B</I> se déplace sur le cercle de centre <I>H</I> (milieu de <I>AC</I>) et de rayon
+<I>BH</I> dans le plan <I>x</I>=<I>AC</I>/2, on peut paramétrer ce cercle sous la forme :<BR>
+ <I>x</I>=<I>AC</I>/2,<I>y</I>=<I>BH</I>1−<I>u</I><SUP>2</SUP>/1+<I>u</I><SUP>2</SUP>,<I>z</I>=<I>BH</I>2<I>u</I>/1+<I>u</I><SUP>2</SUP> 
+(<I>u</I>=tan(<I>t</I>/2) lorsque <I>t</I> est l’angle du plan <I>ABC</I> avec le plan <I>ACE</I>).<BR>
+On a <I>ABC</I> est isocèle de sommet <I>B</I> et l’angle <I>A</I> de ce triangle a comme 
+mesure en radians : <I>a</I><SUB>1</SUB>=π/2−109*π/360=71π/360<BR>
+Si <I>AB</I>=1 on a <I>AC</I>/2=cos(<I>a</I><SUB>1</SUB>) et <I>BH</I>=sin(<I>a</I><SUB>1</SUB>) donc les coordonnées de <I>B</I> 
+sont :<BR>
+ <I>x</I>=cos(<I>a</I><SUB>1</SUB>)/2,<I>y</I>=sin(<I>a</I><SUB>1</SUB>)1−<I>u</I><SUP>2</SUP>/1+<I>u</I><SUP>2</SUP>,<I>z</I>=sin(<I>a</I><SUB>1</SUB>)2<I>u</I>/1+<I>u</I><SUP>2</SUP>.<BR>
+Pour avoir les coordonnées de <I>F</I> en fonction de <I>v</I>, il suffit d’écrire 
+les coordonnées de <I>F</I> en imaginant <I>AC</I> et <I>AE</I> superposés, puis de faire 
+une rotation appropriée.<BR>
+Ici, <I>F</I> est l’image du point <I>SB</I> symétrique de <I>B</I> 
+par rapport à <I>AC</I> (de paramètre <I>v</I>) par une rotation d’axe 
+<I>A</I><I>k</I> d’angle <I>a</I>=π/3.<BR>
+Pour avoir les coordonnèes de <I>D</I>, on dit que <I>D</I> est l’image de <I>SB</I> (de 
+paramètre <I>w</I>) par la rotation de centre <I>C</I><I>k</I> et d’angle 
+−π/3.<BR>
+On évalue <I>sa</I>1=sin(<I>a</I><SUB>1</SUB>), <I>ca</I>1=cos(<I>a</I><SUB>1</SUB>) et <I>cb</I>=cos(π−2<I>a</I><SUB>1</SUB>)
+en fonction de :<BR>
+<I>t</I>=tan(<I>a</I><SUB>1</SUB>/2)=tan(71π/720)<BR>
+On a:<BR>
+<I>a</I><SUB>1</SUB>=71π/360<BR>
+<I>t</I>=tan(<I>a</I><SUB>1</SUB>/2)<BR>
+<I>sa</I>1=sin(71π/360)=2<I>t</I>/(1+<I>t</I><SUP>2</SUP>)<BR>
+<I>ca</I>1=cos(71π/360)=(1−<I>t</I><SUP>2</SUP>)/(1+<I>t</I><SUP>2</SUP>)<BR>
+<I>cb</I>:=cos(109π/180)=cos(π−2<I>a</I><SUB>1</SUB>)=−(2<I>ca</I>1<SUP>2</SUP>−1)<BR>
+<I>a</I><SUB>1</SUB>=71π/360.<BR>
+On tape :
+</P><PRE CLASS="verbatim">//t:=tan(71*pi/720);
+a:=pi/3;
+ca1:=(1-t^2)/(1+t^2); sa1:=2*t/(1+t^2);
+cb:=-(2*ca1^2-1);
+cA:=coordinates(point(0,0,0));
+cC:=coordinates(point(2*ca1,0,0));
+cB:=normal(coordinates(point(ca1,sa1*(1-u^2)/(1+u^2),
+           sa1*2*u/(1+u^2))));
+cE:=normal(coordinates(point(ca1,ca1*sqrt(3),0)));
+cF:=normal(coordinates(rotation(line(x=0,y=0),a,
+    point(ca1,-sa1*(1-v^2)/(1+v^2),sa1*2*v/(1+v^2)))));
+cD:=normal(coordinates(rotation(line(x=2*ca1,y=0),-a,
+    point(ca1,-sa1*(1-w^2)/(1+w^2),sa1*2*w/(1+w^2)))));
+P:=numer(cB*cF-cb);
+Q:=numer((cD-cE)*(cF-cE)-cb);
+R:=numer((cB-cC)*(cD-cC)-cb);
+</PRE><P>On tape :<BR>
+<TT>P:=normal(P)</TT><BR>
+<TT>Q:=normal(Q)</TT><BR>
+<TT>R:=normal(R)</TT><BR>
+On obtient pour <I>R</I> :
+</P><PRE CLASS="verbatim">3/2*t^4*u^2*w^2+3/2*t^4*u^2+3/2*t^4*w^2+
+3/2*t^4+2*sqrt(3)*t^3*u^2*w^2+(-2*sqrt(3))*t^3-
+9*t^2*u^2*w^2-5*t^2*u^2+16*t^2*u*w-5*t^2*w^2-
+9*t^2+(-2*sqrt(3))*t*u^2*w^2+2*sqrt(3)*t+
+3/2*u^2*w^2+3/2*u^2+3/2*w^2+3/2
+</PRE><P>On sait qu’en raison des symétries de la configuration les conditions 
+<I>P</I>=0,<I>Q</I>=0,<I>R</I>=0 peuvent s’exprimer en fonction de <I>R</I>.<BR>
+Pour le vérifier, on tape :<BR>
+<TT>simplify(R-subst(P,v,w))</TT><BR>
+On obtient : <TT>0</TT><BR>
+et on tape :<BR>
+<TT>simplify(R-subst(Q,v,u))</TT><BR>
+On obtient : <TT>0</TT><BR>
+On définit les coefficients α, β, γ, δ, pour 
+que :<BR>
+<I>R</I>=α <I>u</I><SUP>2</SUP><I>w</I><SUP>2</SUP>+β(<I>u</I><SUP>2</SUP>+<I>w</I><SUP>2</SUP>)+γ <I>uw</I>+δ<BR>
+On tape :
+</P><PRE CLASS="verbatim">LC:=coeffs(R,u)
+alpha,x,beta:=coeffs(LC[0],w);
+gamma,x:=coeffs(LC[1],w);
+beta,x,delta:=coeffs(LC[2],w);
+purge(x);
+</PRE><P>Pour avoir une valeur approchée de <I>R</I>, on tape :<BR>
+<TT>a1:=71*pi/360.;t:=tan(a1/2);</TT><BR>
+<TT>normal(R)</TT><BR>
+On obtient : 
+</P><PRE CLASS="verbatim">-0.803377348547*u^2*w^2+2.00684135654*u^2+3.27890002175*u*w+
+2.00684135654*w^2+3.17761005070
+</PRE><H4 CLASS="subsubsection">Application du lemme pour la molécule de cyclohexane</H4><P>
+<B>On cherche les solutions approchées telles que </B><B><I>u</I>=<I>v</I></B><B>.</B><BR>
+On tape pour avoir les solutions telles que <I>u</I>=<I>w</I> :<BR>
+<TT>purge(t,a1);</TT><BR>
+<TT>S1:=solve(subst(P,v,u)=0,u)</TT><BR>
+<TT>t:=tan(71*pi/720);</TT><BR>
+On obtient :
+</P><PRE CLASS="verbatim">[(sqrt(-9*t^4+30*t^2-9))/(3*t^2+(-2*sqrt(3))*t-3),
+-(sqrt(-9*t^4+30*t^2-9))/(3*t^2+(-2*sqrt(3))*t-3),
+(sqrt(-t^4+14*t^2-1))/(t^2+2*sqrt(3)*t-1),
+-(sqrt(-t^4+14*t^2-1))/(t^2+2*sqrt(3)*t-1)]
+</PRE><P>On tape 
+<TT>t:=tan(71*pi/720)</TT>
+<TT>evalf(S1)</TT><BR>
+On obtient :<BR>
+<TT>[-0.645454288199*i,0.645454288199*i,</TT><BR>
+<TT>3.08123639142,-3.08123639142]</TT><BR>
+On tape pour avoir les solutions <I>u</I>,<I>v</I>,<I>w</I> telles que <I>u</I>=<I>v</I>=3.08123639142 :<BR>
+<TT>solve(subst(R,u,3.08123639142)=0,w)</TT><BR>
+On obtient 2 valeurs de <I>w</I>:<BR>
+<TT>[-1.28367770808,3.08123639141]</TT><BR>
+Donc les solutions qui vérifient <I>u</I>=<I>w</I> sont :<BR>
+<I>u</I>,<I>v</I>,<I>w</I>=3.08123639141,3.08123639141,3.08123639141<BR>
+<I>u</I>,<I>v</I>,<I>w</I>=3.08123639141,3.08123639141,−1.28367770808<BR>
+ainsi que les solutions symétriques :<BR>
+<I>u</I>,<I>v</I>,<I>w</I>=3.08123639141,−1.28367770808,3.08123639141<BR>
+<I>u</I>,<I>v</I>,<I>w</I>=−1.28367770808,3.08123639141,3.08123639141<BR>
+ainsi que les solutions opposées :<BR>
+<I>u</I>,<I>v</I>,<I>w</I>=−3.08123639141,−3.08123639141,−3.08123639141<BR>
+<I>u</I>,<I>v</I>,<I>w</I>=−3.08123639141,−3.08123639141,1.28367770808<BR>
+<I>u</I>,<I>v</I>,<I>w</I>=−3.08123639141,1.28367770808,−3.08123639141<BR>
+<I>u</I>,<I>v</I>,<I>w</I>=1.28367770808,−3.08123639141,−3.08123639141<BR>
+<B>On cherche les solutions approchées telles que </B><B><I>u</I>≠ <I>v</I></B><B>.</B><BR>
+On tape :<BR>
+<TT>normal(beta</TT><CODE><TT>^</TT></CODE><TT>2-beta*gamma-alpha*delta)</TT><BR>
+On obtient : <TT>0</TT><BR>
+Donc lorsque l’on fixe <I>w</I> les solutions différentes <I>u</I><SUB>1</SUB>,<I>u</I><SUB>2</SUB> (dépendant 
+de <I>w</I>) de l’équation en <I>u</I> <TT>R=0</TT> sont solution de : 
+<TT>subst(subst(P,u,u1),v,u2)=0</TT>.<BR>
+On tape :<BR>
+<TT>S2:=normal(evalf(solve(R=0,u)))</TT><BR>
+On obtient :<BR>
+<TT>[(1.63945001088*w-sqrt(d))/(0.803377348547*w</TT><CODE><TT>^</TT></CODE><TT>2-2.00684135654),</TT><BR>
+<TT>(1.63945001088*w+sqrt(d))/(0.803377348547*w</TT><CODE><TT>^</TT></CODE><TT>2-2.00684135654)]</TT><BR>
+avec :
+<TT>d:=1.61225088797*w</TT><CODE><TT>^</TT></CODE><TT>4+1.21320404513*w</TT><CODE><TT>^</TT></CODE><TT>2-6.37695926481</TT><BR>
+On cherche le signe de <I>d</I>, on tape :<BR>
+<TT>factor(d)</TT><BR>
+On obtient :
+</P><PRE CLASS="verbatim">1.61225088797*(w-1.28367770808)*(w+1.28367770808)*
+(w^2+2.40031931071)}
+</PRE><P>Donc <I>d</I>≥ 0 si <I>w</I>≥ 1.28367770808 ou si <I>w</I>≤ −1.28367770808.<BR>
+On a alors des solutions 
+réelles <I>u</I>,<I>v</I> qui sont <I>x</I><SUB>1</SUB>,<I>x</I><SUB>2</SUB> les solutions de <TT>solve(R=0,u)</TT> :<BR>
+ 1.63945001088*<I>w</I>−√<SPAN style="text-decoration:overline"><I>d</I></SPAN>/0.803377348547*<I>w</I><SUP>2</SUP>−2.00684135654, 1.63945001088*<I>w</I>+√<SPAN style="text-decoration:overline"><I>d</I></SPAN>/0.803377348547*<I>w</I><SUP>2</SUP>−2.00684135654<BR>
+avec <I>d</I>=1.61225088797*<I>w</I><SUP>4</SUP>+1.21320404513*<I>w</I><SUP>2</SUP>−6.37695926481
+et si <I>w</I>=1.28367770808 ou si <I>w</I>=−1.28367770808 on a <I>d</I>=0 donc <I>u</I>=<I>v</I> et on 
+retouve une des solutions trouvées précédemment à savoir :<BR>
+<I>u</I>,<I>v</I>,<I>w</I>=3.08123639148, 3.08123639148,−1.28367770808 et<BR>
+<I>u</I>,<I>v</I>,<I>w</I>=−3.08123639148, −3.08123639148,1.28367770808.<BR>
+On remarque que si <I>w</I><SUP>2</SUP>&gt;1.28367770808<SUP>2</SUP>=1.6478284582 alors les solutions de 
+l’équation en <I>u</I> <TT>R=0</TT>, seront de même signe si :<BR>
+ <TT>normal(subst(R,u,0))</TT>=<TT>2.00684135654*w</TT><CODE><TT>^</TT></CODE><TT>2+3.17761005075</TT>
+est de même signe que :<BR>
+<TT>normal(coeffs(R,u)[0])</TT> =<TT>-0.803377348547*w</TT><CODE><TT>^</TT></CODE><TT>2+2.00684135654</TT><BR>
+ c’est à dire si −0.803377348547*<I>w</I><SUP>2</SUP>+2.00684135654&gt;0<BR>
+ c’est à dire si <I>w</I><SUP>2</SUP>&lt;2.49800589993.
+On a √<SPAN style="text-decoration:overline">2.49800589993</SPAN>=1.58050811448 donc :<BR>
+Les solutions <I>u</I>,<I>v</I> qui dépendent de <I>w</I> sont de même signe négatif si :<BR>
+−1.58050811448&lt;<I>w</I>&lt;−1.28367770808 ou 1.28367770808&lt;<I>w</I>&lt;1.58050811448.<BR>
+et sinon sont de signe opposé.<BR>
+<B>Des exemples de solutions</B><BR>
+On tape :<BR>
+<TT>d(w):=1.61225088797*w</TT><CODE><TT>^</TT></CODE><TT>4+1.21320404513*w</TT><CODE><TT>^</TT></CODE><TT>2-6.37695926481</TT><BR>
+<TT>u(w):=(1.63945001088*w-sqrt(d(w)))/(0.803377348547*w</TT><CODE><TT>^</TT></CODE><TT>2-2.00684135654)</TT><BR>
+<TT>v(w):=(1.63945001088*w+sqrt(d(w)))/(0.803377348547*w</TT><CODE><TT>^</TT></CODE><TT>2-2.00684135654)</TT><BR>
+<TT>u(1.5),v(1.5),1.5</TT><BR>
+On obtient :<BR>
+<TT>-1.67823888288,-23.0070286629,1.5</TT><BR>
+On tape :<BR>
+<TT>u(2),v(2),2</TT><BR>
+On obtient :<BR>
+<TT>-1.36553633921,6.80017108457,2</TT><BR>
+On tape :<BR>
+<TT>u(3),v(3),3</TT><BR>
+On obtient :<BR>
+<TT>-1.28387158972,3.16701448356,3</TT><BR>
+On tape :<BR>
+<TT>u(30),v(30),30</TT><BR>
+On obtient :<BR>
+<TT>-1.51735311476,1.65377825995,30</TT><BR>
+Lorsque <I>w</I> tend vers l’infini (ce qui correspond à un angle plat entre le 
+plan <I>ACE</I> et le plan <I>CDE</I> on tape :<BR>
+On tape :<BR>
+<TT>purge(w)</TT><BR>
+<TT>limit(u(w),w=inf)</TT><BR>
+On obtient :<BR>
+<TT>-1.58050811448</TT><BR>
+On tape :<BR>
+<TT>limit(v(w),w=inf)</TT><BR>
+On obtient :<BR>
+<TT>1.58050811448</TT><BR>
+<B>Remarque</B>
+si <I>w</I>=3.08123639148 alors √<SPAN style="text-decoration:overline"><I>d</I></SPAN>=12.266363249, on trouve alors
+<I>u</I>=−1.28367770808 et <I>v</I>=3.08123639148 car si <I>w</I>&gt; 1.28367770808 ou
+si <I>w</I>&lt;−1.28367770808, <I>u</I> et <I>v</I> seront différents.<BR>
+Pour retrouver la solution <I>u</I>=<I>v</I>=<I>w</I> et faudrait résoudre les équations en 
+<I>w</I> :<BR>
+<TT>subst(subst(P,u,x1),v,x1)=0</TT> et <TT>subst(subst(P,u,x2),v,x2)=0</TT><BR>
+Mais il est plus simple de résoudre directement l’équation en 
+<I>u</I> :<BR>
+<TT>subst(P,v,u)=0</TT> qui a 4 solutions <I>u</I><SUB><I>j</I></SUB> (<I>j</I>=1..4) puis de résoudre pour 
+chaque solution l’équation en <I>w</I> :<BR>
+<TT>subst(R,u,uj)=0</TT>.</P><H4 CLASS="subsubsection">Avec le résultant</H4><P>
+On tape :
+</P><PRE CLASS="verbatim">purge(t);
+P:=3/2*t^4*u^2*v^2+3/2*t^4*u^2+3/2*t^4*v^2+
+3/2*t^4+2*sqrt(3)*t^3*u^2*v^2+(-2*sqrt(3))*t^3-
+9*t^2*u^2*v^2-5*t^2*u^2+16*t^2*u*v-5*t^2*v^2-
+9*t^2+(-2*sqrt(3))*t*u^2*v^2+2*sqrt(3)*t+
+3/2*u^2*v^2+3/2*u^2+3/2*v^2+3/2;
+
+Q:=3/2*t^4*v^2*w^2+3/2*t^4*v^2+3/2*t^4*w^2+
+3/2*t^4+2*sqrt(3)*t^3*v^2*w^2+(-2*sqrt(3))*t^3-
+9*t^2*v^2*w^2-5*t^2*v^2+16*t^2*v*w-5*t^2*w^2-
+9*t^2+(-2*sqrt(3))*t*v^2*w^2+2*sqrt(3)*t+
+3/2*v^2*w^2+3/2*v^2+3/2*w^2+3/2;
+
+R:=3/2*t^4*u^2*w^2+3/2*t^4*u^2+3/2*t^4*w^2+
+3/2*t^4+2*sqrt(3)*t^3*u^2*w^2+(-2*sqrt(3))*t^3-
+9*t^2*u^2*w^2-5*t^2*u^2+16*t^2*u*w-5*t^2*w^2-
+9*t^2+(-2*sqrt(3))*t*u^2*w^2+2*sqrt(3)*t+
+3/2*u^2*w^2+3/2*u^2+3/2*w^2+3/2
+</PRE><P>On tape pour éliminer <I>w</I> des équations <I>Q</I>=0,<I>R</I>=0 :<BR>
+<TT>RQ:=resultant(Q,R,w)</TT><BR>
+On factorise <I>RQ</I>, on tape :<BR>
+<TT>fRQ:=factor(RQ)</TT><BR>
+On obtient :<BR>
+<TT>1024*t</TT><CODE><TT>^</TT></CODE><TT>4*(t-(sqrt(3)))*(t+(sqrt(3))/3)*(t+sqrt(3))*(3*t-(sqrt(3)))*(v-u)</TT><CODE><TT>^</TT></CODE><TT>2*fRQ[8]</TT><BR>
+On trouve <I>u</I>=<I>v</I> ou <I>fRQ</I>[8]=0<BR>
+On tape pour éliminer <I>v</I> des équations <I>P</I>=0,<I>fRQ</I>[8]=0 :<BR>
+<TT>PfRQ:=resultant(P,fRQ[8],v)</TT><BR>
+On obtient :<BR>
+<TT>0</TT><BR>
+On tape :<BR>
+<TT>normal(2*P-fRQ[8])</TT><BR>
+On obtient :<BR>
+<TT>0</TT><BR>
+donc 2<I>P</I> et <I>fRQ</I>[8] sont les mêmes polynômes.<BR>
+On sait qu’il existe <I>U</I> et <I>V</I> tel que :<BR>
+<I>U</I>*<I>Q</I>+<I>V</I>*<I>R</I>=<I>RQ</I> (on a :<TT>U,V:=abcuv(Q,R,RQ,w)</TT>)
+On a montré que :<BR>
+<I>RQ</I>=<I>U</I>*<I>Q</I>+<I>V</I>*<I>R</I>=<I>k</I>*(<I>u</I>−<I>v</I>)*<I>P</I> où <I>k</I> est une constante.<BR>
+On fixe <I>w</I>. 
+Si <I>u</I> et <I>v</I> vérifient <I>Q</I>=0 et <I>R</I>=0 alors (<I>u</I>−<I>v</I>)*<I>P</I>=0 c’est à dire:<BR>
+si <I>u</I> et <I>v</I> vérifient <I>Q</I>=0 et <I>R</I>=0 alors soit <I>u</I>=<I>v</I> soit <I>P</I>=0.<BR>
+Donc on retrouve les solutions :<BR>
+(<I>u</I>,<I>v</I>=<I>u</I>,<I>w</I> lorsque <I>u</I>=<I>u</I><SUB><I>j</I></SUB> avec <I>u</I><SUB><I>j</I></SUB> solution de <TT>solve(subst(P,v,u))=0,u)</TT>
+et <I>w</I>=<I>w</I><SUB><I>k</I></SUB> avec <I>w</I><SUB><I>k</I></SUB> solution de <TT>solve(subst(R,u,uj))=0,w)</TT> et<BR>
+<I>u</I>,<I>v</I>≠ <I>u</I>,<I>w</I> lorsque <I>u</I> et <I>v</I> sont les solutions différentes dépendant 
+de <I>w</I> de <TT>solve(R=0,u)</TT>
+Il reste a regarder quand ces solutions sont réelles.</P><H3 CLASS="subsection"><A NAME="htoc220">12.6.4</A>  La molécule de glucose</H3><P>
+On choisit ici la molécule de glucose qui est constituée de 6 atomes (un 
+atome d’oxygène et 5 atomes de carbone) et dans la modélisation ci-dessous, 
+nous ne prenons en compte que les liaisons entre les atomes constituant le 
+cycle, et non celles avec les atomes voisins du cycle.<BR>
+Pour la molécule de glucose la chimie nous impose :<BR>
+<IMG SRC="cascas116.png"><BR>
+<I>L</I><SUB>1</SUB>=<I>AB</I>=<I>AF</I>=1.43 Angström,<BR>
+<I>L</I><SUB>2</SUB>=<I>BC</I>=<I>CD</I>=<I>DE</I>=<I>EF</I>=1.54 Angström<BR>
+<I>t</I><SUB>1</SUB>=<I>BAF</I>=106*π/180 radians<BR>
+<I>t</I><SUB>2</SUB>=<I>ABC</I>=<I>BCD</I>=<I>CDE</I>=<I>DEF</I>=<I>EFA</I>=109*π/180 radians<BR>
+On calcule :<BR>
+<I>l</I><SUB>1</SUB>=<I>AC</I>=<I>AE</I>=√<SPAN style="text-decoration:overline"><I>AB</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>BC</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−2<I>AB</I>*<I>BC</I>*</SPAN><SPAN style="text-decoration:overline">cos</SPAN><SPAN style="text-decoration:overline">(109π/180)</SPAN><BR>
+<I>l</I><SUB>1</SUB>=√<SPAN style="text-decoration:overline"><I>L</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>L</I></SPAN><SUB><SPAN style="text-decoration:overline">2</SPAN></SUB><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−2<I>L</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SPAN style="text-decoration:overline"><I>L</I></SPAN><SUB><SPAN style="text-decoration:overline">2</SPAN></SUB><SPAN style="text-decoration:overline">cos</SPAN><SPAN style="text-decoration:overline">(<I>t</I></SPAN><SUB><SPAN style="text-decoration:overline">2</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN><BR>
+<I>l</I><SUB>2</SUB>=<I>CE</I>=√<SPAN style="text-decoration:overline">2<I>CD</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−2<I>CD</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">*</SPAN><SPAN style="text-decoration:overline">cos</SPAN><SPAN style="text-decoration:overline">(109π/180)</SPAN>=√<SPAN style="text-decoration:overline">2<I>L</I></SPAN><SUB><SPAN style="text-decoration:overline">2</SPAN></SUB><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−2<I>L</I></SPAN><SUB><SPAN style="text-decoration:overline">2</SPAN></SUB><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">cos</SPAN><SPAN style="text-decoration:overline">(<I>t</I></SPAN><SUB><SPAN style="text-decoration:overline">2</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN><BR>
+<I>l</I><SUB>3</SUB>=<I>AH</I>=√<SPAN style="text-decoration:overline"><I>l</I>1</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−<I>l</I>2</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">/4)</SPAN> (où <I>H</I> est le milieu de <I>CE</I>)<BR>
+<I>l</I><SUB>4</SUB>=<I>FB</I>=√<SPAN style="text-decoration:overline">2<I>L</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−2<I>L</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">cos</SPAN><SPAN style="text-decoration:overline">(<I>t</I></SPAN><SUB><SPAN style="text-decoration:overline">1</SPAN></SUB><SPAN style="text-decoration:overline">)</SPAN> (<I>l</I><SUB>4</SUB> est le troisième côté
+du triangle isocèle d’angle 106 degrés et de côtés 1.43).<BR>
+<I>h</I><SUB>4</SUB>=<I>DJ</I>=√<SPAN style="text-decoration:overline"><I>l</I></SPAN><SUB><SPAN style="text-decoration:overline">2</SPAN></SUB><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−<I>l</I></SPAN><SUB><SPAN style="text-decoration:overline">4</SPAN></SUB><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">/4</SPAN> (où <I>J</I> est le milieu de <I>BF</I>)
+On pose :<BR>
+<I>c</I><SUB>0</SUB>=<I>DCE</I>π/2−<I>t</I><SUB>2</SUB>/2=71*π/360.<BR>
+<I>c</I><SUB>1</SUB>=<I>ECA</I><BR>
+<I>c</I><SUB>2</SUB>=<I>ACB</I><BR>
+<I>a</I><SUB>3</SUB>=<I>CAB</I><BR>
+<I>cc</I>1=cos(<I>c</I><SUB>1</SUB>)=<I>l</I><SUB>2</SUB>/(2<I>l</I><SUB>1</SUB>)<BR>
+<I>sc</I>1=sin(<I>c</I><SUB>1</SUB>)=<I>l</I><SUB>3</SUB>/<I>l</I><SUB>1</SUB><BR>
+<I>sc</I>2=sin(<I>c</I>2)=<I>L</I>1*sin(<I>t</I><SUB>2</SUB>)/<I>l</I><SUB>1</SUB><BR>
+<I>cc</I>2=cos(<I>c</I>2)=(<I>l</I><SUB>1</SUB><SUP>2</SUP>+<I>L</I><SUB>2</SUB><SUP>2</SUP>−<I>L</I><SUB>1</SUB><SUP>2</SUP>)/(2*<I>l</I><SUB>1</SUB>*<I>L</I><SUB>2</SUB>)=(<I>L</I><SUB>2</SUB>−<I>L</I><SUB>1</SUB>*cos(<I>t</I><SUB>2</SUB>))/<I>l</I><SUB>1</SUB>;<BR>
+<I>sa</I>3=sin(<I>a</I>3)=<I>L</I>2*sin(<I>t</I><SUB>2</SUB>)/<I>l</I><SUB>1</SUB><BR>
+<I>ca</I>3=cos(<I>a</I>3)=(<I>L</I><SUB>1</SUB><SUP>2</SUP>+<I>l</I><SUB>1</SUB><SUP>2</SUP>−<I>L</I><SUB>2</SUB><SUP>2</SUP>)/(2*<I>L</I><SUB>1</SUB>*<I>l</I><SUB>1</SUB>)=(<I>L</I><SUB>1</SUB>−<I>L</I><SUB>2</SUB>*cos(<I>t</I><SUB>2</SUB>)/<I>l</I><SUB>1</SUB><BR>
+On tape pour un calcul approché de <I>AC</I> et <I>AE</I> :<BR>
+<TT>l1:=sqrt(1.43</TT><CODE><TT>^</TT></CODE><TT>2+1.54</TT><CODE><TT>^</TT></CODE><TT>2-2*1.43*1.54*cos(109*pi/180))</TT><BR>
+On obtient : <TT>AC=AE==2.4187667063</TT><BR>
+On tape pour un calcul approché de <I>CE</I> :<BR>
+<TT>l2:=sqrt(2*1.54</TT><CODE><TT>^</TT></CODE><TT>2-2*1.54</TT><CODE><TT>^</TT></CODE><TT>2*cos(109*pi/180));</TT><BR>
+On obtient : <TT>2.50747579654</TT><BR>
+On tape pour un calcul approché de <I>AH</I> :<BR>
+<TT>l3:=sqrt(l1</TT><CODE><TT>^</TT></CODE><TT>2-l2</TT><CODE><TT>^</TT></CODE><TT>2/4);</TT><BR>
+On obtient : <TT>2.50747579654</TT><BR>
+On tape pour un calcul approché de <I>l</I><SUB>4</SUB>=<I>FB</I> (lorsque la molécule est 
+formée):<BR>
+<TT>l4:=sqrt(2*1.43</TT><CODE><TT>^</TT></CODE><TT>2-2*1.43</TT><CODE><TT>^</TT></CODE><TT>2*cos(106*pi/180));</TT><BR>
+On obtient : <TT>2.28409755874</TT></P><H4 CLASS="subsubsection">La "chaise" et le "bateau" symétrique du glucose en géométrie</H4><P>
+<B>Le modéle en carton</B><BR>
+On peut commencer par faire un modéle en carton du problème : parmi les 
+triangles qui bordent <I>ACE</I> il y a 3 triangles isocèles (<I>CBDD</I>, <I>CDE</I> et 
+<I>EDFF</I>) d’angle 109 degrés et de côtés 5 cm, 1 triangle isocèle 
+(<I>AFBB</I>) d’angle 106 degrés et de côtés 5*1.43/1.54 cm≃ 4.64 cm 
+et 2 triangles (<I>ABC</I> et <I>AFE</I>) de cotés 5 cm et 4.64 cm et d’angle 
+109 degrés.<BR>
+Le modéle :<BR>
+ <IMG SRC="cascas117.png"><BR>
+
+Puis, on forme la molécule en amenant en coincidence :<BR>
+<I>CDD</I> avec <I>CD</I> en pliant selon <I>BC</I> et <I>EC</I>, <I>EFF</I> avec <I>EF</I> en pliant selon 
+<I>ED</I> et <I>EA</I>, et <I>ABB</I> avec <I>AB</I> en pliant selon <I>FA</I> et <I>AC</I>.<BR>
+<B>Les solutions symétriques en géométrie</B><BR>
+Pour privilégier, la sym’etrie par rapport à la médiatrice de <I>CE</I>, il 
+semble plus judicieux de se placer dans le repère orthonormé direct :<BR>
+<I>C</I>,<I>i</I>,<I>j</I>,<I>k</I> tel que 
+<I>i</I> dirige <I>CE</I>, <I>j</I> dirige 
+<I>HA</I> où <I>H</I> est le milieu de <I>CE</I>.<BR>
+
+Voici les notations :<BR>
+<IMG SRC="cascas118.png"><BR>
+On tape :
+</P><PRE CLASS="verbatim">L1:=1.43;L2:=1.54;
+t1:=106*pi/180.;
+t2:=109*pi/180.;
+c0:=71*pi/360.;
+l1:=sqrt(normal(L1^2+L2^2-2*L1*L2*cos(t2)));
+l2:=sqrt(normal(2*L2^2-2*L2^2*cos(t2)));
+l3:=sqrt(normal(l1^2-l2^2/4));
+l4:=sqrt(normal(2*L1^2-2*L1^2*cos(t1)));
+h4:=sqrt(normal(l2^2-l4^2/4));
+sc1:=sin(c1);
+cc1:=cos(c1);
+sc2:=sin(c2);
+cc2:=cos(c2);
+sa3:=sin(a3);
+ca3:=cos(a3);
+</PRE><P>Le but est de calculer <I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>z</I><SUB>0</SUB> les coordonnées de <I>B</I> lorsque la 
+molécule est formée de façon à ce que <I>B</I> et <I>D</I> soient symétriques
+par rapport au plan médiateur de <I>CF</I> et on suppose <I>z</I><SUB>0</SUB>&gt;0.<BR>
+Pour cela nous projetons la molécule de glucose 3d symétrique sur le plan
+<I>ACE</I> et sur le plan médiateur de <I>CE</I>.</P><P><B>Faisons maintenant une projection sur le plan </B><B><I>ACE</I></B><BR>
+<IMG SRC="cascas119.png"><BR>
+<I>B</I> se projette en <I>N</I> sur <I>AC</I> et on a <I>AN</I>=<I>L</I>1cos(<I>a</I><SUB>3</SUB>)<BR>
+<I>B</I> se projette en <I>B</I><SUB><I>p</I></SUB> sur le plan <I>ACE</I> et <I>B</I><SUB><I>p</I></SUB><I>N</I> est perpendiculaire 
+à <I>AC</I> (c’est le théorème des 3 perpendiculaires)<BR>
+<I>B</I><SUB><I>p</I></SUB> se projette en <I>M</I><SUB><I>p</I></SUB> sur la médiatrice de <I>CE</I> et on a <I>B</I><SUB><I>p</I></SUB><I>M</I><SUB><I>p</I></SUB>=<I>l</I>4/2.<BR>
+Si <I>K</I> est l’intersection de <I>B</I><SUB><I>p</I></SUB><I>N</I> et de la médiatrice de <I>CE</I>, on a :<BR>
+ <I>AN</I>/<I>AK</I>=sin(<I>c</I><SUB>1</SUB>) et <I>AN</I>=<I>L</I><SUB>1</SUB>cos(<I>a</I><SUB>3</SUB>) donc
+<I>AK</I>=<I>L</I><SUB>1</SUB>cos(<I>a</I><SUB>3</SUB>)/sin(<I>c</I><SUB>1</SUB>)<BR>
+ <I>B</I><SUB><I>p</I></SUB><I>M</I><SUB><I>p</I></SUB>/<I>KM</I><SUB><I>p</I></SUB>=tan(<I>c</I><SUB>1</SUB>) donc <I>KM</I><SUB><I>p</I></SUB>=<I>l</I><SUB>4</SUB>/(2tan(<I>c</I><SUB>1</SUB>))=<I>l</I><SUB>4</SUB>*cos(<I>c</I><SUB>1</SUB>)/(2*sin(<I>c</I><SUB>1</SUB>)) et<BR>
+ <I>AM</I><SUB><I>p</I></SUB>=<I>AK</I>−<I>KM</I><SUB><I>p</I></SUB>=<I>L</I>1cos(<I>a</I><SUB>3</SUB>)/sin(<I>c</I><SUB>1</SUB>)−<I>l</I><SUB>4</SUB>*cos(<I>c</I><SUB>1</SUB>)/(2*sin(<I>c</I><SUB>1</SUB>))<BR>
+Donc <I>B</I><SUB><I>p</I></SUB> a pour coordonnées :<BR>
+ <I>x</I><SUB>0</SUB>=<I>l</I><SUB>2</SUB>/2−<I>l</I><SUB>4</SUB>/2, <I>y</I><SUB>0</SUB>= <I>l</I><SUB>3</SUB>−<I>L</I><SUB>1</SUB>cos(<I>a</I><SUB>3</SUB>)/sin(<I>c</I><SUB>1</SUB>)+<I>l</I><SUB>4</SUB>/(2tan(<I>c</I><SUB>1</SUB>)).<BR>
+Avec les notations que l’on a choisies on tape :<BR>
+<TT>Bp:=point(l2/2-l4/2,l3-L1*ca3/sc1+l4*cc1/(2*sc1))</TT><BR>
+Cherchons la cote <I>z</I><SUB>0</SUB> de <I>B</I>.<BR>
+On sait que:<BR>
+<I>B</I> se projette en <I>N</I> sur <I>AC</I><BR>
+<I>AB</I>=<I>L</I>1<BR>
+<I>BN</I>=<I>L</I>1sin(<I>a</I><SUB>3</SUB>) donc<BR>
+<I>z</I><SUB>0</SUB><SUP>2</SUP>=<I>AB</I><SUP>2</SUP>−<I>AB</I><SUB><I>p</I></SUB><SUP>2</SUP>=<I>L</I><SUB>1</SUB><SUP>2</SUP>−<I>l</I><SUB>4</SUB><SUP>2</SUP>/4−<I>AM</I><SUB><I>p</I></SUB><SUP>2</SUP>=<BR>
+<I>z</I><SUB>0</SUB><SUP>2</SUP>=<I>L</I><SUB>1</SUB><SUP>2</SUP>−<I>l</I><SUB>4</SUB><SUP>2</SUP>/4−(<I>L</I>1cos(<I>a</I><SUB>3</SUB>)/sin(<I>c</I><SUB>1</SUB>)+<I>l</I><SUB>4</SUB>cos(<I>c</I><SUB>1</SUB>)/(2sin(<I>c</I><SUB>1</SUB>)))<SUP>2</SUP><BR>
+Avec les notations que l’on a choisies on tape :<BR>
+<TT>z0:=normal(sqrt(L1</TT><CODE><TT>^</TT></CODE><TT>2-longueur2(A,Bp)));</TT><BR>
+Donc <I>B</I> a pour coordonnées <I>x</I>0,<I>y</I>0,<I>z</I>0 soit :<BR>
+0.111689118901, 1.42546684563, 0.571987598417<BR>
+et <I>F</I> a pour coordonnées <I>x</I>0+<I>l</I>4,<I>y</I>0,<I>z</I>0:<BR>
+2.39578667764, 1.42546684563, 0.571987598417</P><P><B>Faisons maintenant une coupe selon le plan médiateur de </B><B><I>CE</I></B><BR>
+Soit <I>M</I> la projection de <I>B</I> sur le plan médiateur de <I>CE</I><BR>
+Lorsque la molécule symétrique est formée, le point <I>D</I> se trouve dans ce 
+plan médiateur sur le cercle de centre <I>H</I> et de rayon <I>L</I><SUB>2</SUB>sin(<I>c</I><SUB>0</SUB>).<BR>
+Le triangle <I>BDF</I> est un triangle isocèle de côtés <I>l</I><SUB>4</SUB>,<I>l</I><SUB>2</SUB>,<I>l</I><SUB>2</SUB> et de 
+hauteur :<BR>
+  <I>h</I><SUB>4</SUB>=√<SPAN style="text-decoration:overline"><I>l</I></SPAN><SUB><SPAN style="text-decoration:overline">2</SPAN></SUB><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−<I>l</I></SPAN><SUB><SPAN style="text-decoration:overline">4</SPAN></SUB><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">/4</SPAN> donc<BR>
+ <I>D</I> est aussi sur le cercle de centre <I>M</I> et de rayon <I>h</I><SUB>4</SUB>.<BR>
+On fait la figure dans le plan médiateur avec comme repère <I>Hyz</I>.<BR>
+<IMG SRC="cascas120.png"><BR>
+On tape :
+</P><PRE CLASS="verbatim">H:=point(0);
+A:=point(l3);
+M:=point(y0,z0);
+h4:=sqrt(l2^2-l4^2/4);
+C1:=cercle(M,h4);
+C2:=cercle(H,L2*sin(c0));
+D0,D1:=inter(CE1,CE2);
+coordonnees(D0);
+coordonnees(D1);
+</PRE><P>On obtient pour <I>D</I><SUB>0</SUB>:<BR>
+<TT>[-0.302153034804,-0.84169164544]</TT><BR>
+On obtient pour <I>D</I><SUB>1</SUB>:<BR>
+<TT>[-0.800148906999,0.399378278168]</TT><BR>
+Donc dans l’espace le point <I>D</I> a comme abscisse <I>l</I><SUB>2</SUB>/2=1.25373789827 et a 
+donc comme coordonnèes 3d :<BR>
+[1.25373789827,−0.302153034804,−0.84169164544]<BR>
+ou :<BR>
+[1.25373789827,−0.800148906999,0.399378278168]<BR>
+Il y a donc comme solutions :<BR>
+<I>B</I> de coordonnées 0.111689118901, 1.42546684563, 0.571987598417<BR>
+<I>F</I> de coordonnées 2.39578667764, 1.42546684563, 0.571987598417<BR>
+<I>D</I> de coordonnées 1.25373789827, −0.302153034804, −0.84169164544<BR>
+soit<BR>
+<I>B</I> de coordonnées 0.111689118901, 1.42546684563, 0.571987598417<BR>
+<I>F</I> de coordonnées 2.39578667764, 1.42546684563, 0.571987598417<BR>
+<I>D</I> de coordonnées 1.25373789827, −0.800148906999, 0.399378278168<BR>
+soit<BR>
+<I>B</I> de coordonnées 0.111689118901, 1.42546684563, −0.571987598417<BR>
+<I>F</I> de coordonnées 2.39578667764, 1.42546684563, −0.571987598417<BR>
+<I>D</I> de coordonnées 1.25373789827, −0.302153034804, +0.84169164544<BR>
+soit<BR>
+<I>B</I> de coordonnées 0.111689118901, 1.42546684563, −0.571987598417<BR>
+<I>F</I> de coordonnées 2.39578667764, 1.42546684563, −0.571987598417<BR>
+<I>D</I> de coordonnées 1.25373789827, −0.800148906999, −0.399378278168</P><H4 CLASS="subsubsection">Solution analytique et coordonnées des points en 3d</H4><P>
+Comme pour le cyclohexane on va paramétrer les points <I>D</I>,<I>B</I>,<I>F</I>.<BR>
+On a :
+<I>CD</I>=<I>L</I><SUB>2</SUB> et <I>DCE</I>=<I>c</I><SUB>0</SUB> donc :<BR>
+ <I>D</I> est le point de coordonnées :<BR>
+<I>L</I><SUB>2</SUB>cos(<I>c</I><SUB>0</SUB>),<I>L</I><SUB>2</SUB>sin(<I>c</I><SUB>0</SUB>)*(1−<I>w</I><SUP>2</SUP>)/(1+<I>w</I><SUP>2</SUP>),<I>L</I><SUB>2</SUB>sin(<I>c</I><SUB>0</SUB>)*2*<I>w</I>/(1+<I>w</I><SUP>2</SUP>)<BR>
+<I>B</I> est le transfomé du point de coordonnées :<BR>
+<I>L</I><SUB>2</SUB>cos(<I>c</I><SUB>2</SUB>),−<I>L</I><SUB>2</SUB>sin(<I>c</I><SUB>2</SUB>)*(1−<I>u</I><SUP>2</SUP>)/(1+<I>u</I><SUP>2</SUP>),2<I>L</I><SUB>2</SUB>sin(<I>c</I><SUB>2</SUB>)<I>u</I>/(1+<I>u</I><SUP>2</SUP>) dans la 
+rotation d’axe <I>C</I><I>k</I> et d’angle <I>c</I><SUB>1</SUB> :
+<I>F</I> est le transfomé du point de coordonnées :<BR>
+<I>L</I><SUB>2</SUB>cos(<I>c</I><SUB>2</SUB>),<I>l</I><SUB>2</SUB>−<I>L</I><SUB>2</SUB>sin(<I>c</I><SUB>2</SUB>)*(1−<I>v</I><SUP>2</SUP>)/(1+<I>v</I><SUP>2</SUP>),2<I>L</I><SUB>2</SUB>sin(<I>c</I><SUB>2</SUB>)<I>v</I>/(1+<I>v</I><SUP>2</SUP>) dans la 
+rotation d’axe <I>E</I><I>k</I> et d’angle −<I>c</I><SUB>1</SUB>.<BR>
+On cherche à résoudre le système constitué des 3 relations :<BR>
+<I>P</I>=<I>AB</I>*<I>AF</I>−<I>L</I><SUB>1</SUB><SUP>2</SUP>*cos(<I>t</I><SUB>1</SUB>)=0<BR>
+<I>Q</I>=<I>ED</I>*<I>EF</I>−<I>L</I><SUB>2</SUB><SUP>2</SUP>*cos(<I>t</I><SUB>2</SUB>)=0<BR>
+<I>R</I>=<I>CD</I>*<I>CB</I>−<I>L</I><SUB>2</SUB><SUP>2</SUP>*cos(<I>t</I><SUB>2</SUB>)=0<BR>
+Du fait de la symétrie par rapport à la médiatrice de <I>CE</I>, les 
+polynômes <I>Q</I> et <I>R</I> auront les mêmes coefficients et le polynôme <I>P</I> sera
+symétrique en <I>u</I> et <I>v</I>.<BR>
+Pour privilégier, la symétrie par rapport à la médiatrice de <I>CE</I>, on se
+place dans le repère orthonormé direct :<BR>
+<I>C</I>,<I>i</I>,<I>j</I>,<I>k</I> tel que 
+<I>i</I> dirige <I>CE</I>, <I>j</I> dirige 
+<I>HA</I> où <I>H</I> est le milieu de <I>CE</I>.<BR>
+On ne fera pour le glucose que le calcul approché des coefficients de <I>P</I>,
+<I>Q</I> et <I>R</I>.<BR>
+On a les mêmes notations qu’en géométrie :<BR>
+<I>L</I><SUB>1</SUB>=1.43;<I>L</I><SUB>2</SUB>=1.54;<I>t</I><SUB>1</SUB>=106*<I>pi</I>/180.;<I>t</I><SUB>2</SUB>=109*<I>pi</I>/180.;<I>c</I><SUB>0</SUB>=71*<I>pi</I>/360.<BR>
+<I>c</I><SUB>1</SUB>=<I>ECA</I><BR>
+<I>cc</I>1=cos(<I>c</I><SUB>1</SUB>)=<I>l</I><SUB>2</SUB>/(2<I>l</I><SUB>1</SUB>)<BR>
+<I>sc</I>1=sin(<I>c</I><SUB>1</SUB>)=<I>l</I><SUB>3</SUB>/<I>l</I><SUB>1</SUB><BR>
+<I>E</I> est le point de coordonnées (<I>l</I><SUB>2</SUB>,0,0)<BR>
+<I>A</I> a pour coordonnées : <I>l</I><SUB>2</SUB>/2,<I>l</I><SUB>3</SUB>,0<BR>
+<I>CD</I>=<I>L</I><SUB>2</SUB> donc, <I>D</I> est le point de coordonnées :<BR>
+<I>L</I><SUB>2</SUB>*cos(<I>c</I><SUB>0</SUB>),<I>L</I><SUB>2</SUB>*sin(<I>c</I><SUB>0</SUB>)*(1−<I>w</I><SUP>2</SUP>)/(1+<I>w</I><SUP>2</SUP>),<I>L</I><SUB>2</SUB>*sin(<I>c</I><SUB>0</SUB>)*2*<I>w</I>/(1+<I>w</I><SUP>2</SUP>)<BR>
+<I>B</I> est l’image du point de coordonnées :<BR>
+<I>L</I><SUB>2</SUB>*cos(<I>c</I><SUB>2</SUB>),−<I>L</I><SUB>2</SUB>*sin(<I>c</I><SUB>2</SUB>)*(1−<I>u</I><SUP>2</SUP>)/(1+<I>u</I><SUP>2</SUP>),<I>L</I><SUB>2</SUB>*sin(<I>c</I><SUB>2</SUB>)*2*<I>u</I>/(1+<I>u</I><SUP>2</SUP>)]<BR>
+par la rotation d’axe <I>C</I><I>k</I> d’angle <I>c</I><SUB>1</SUB><BR>
+<I>F</I> est l’image du point de coordonnées :<BR>
+[<I>L</I>2*cos(<I>c</I><SUB>2</SUB>),<I>l</I><SUB>2</SUB>−<I>L</I><SUB>2</SUB>*sin(<I>c</I><SUB>2</SUB>)*(1−<I>v</I><SUP>2</SUP>)/(1+<I>v</I><SUP>2</SUP>),<I>L</I><SUB>2</SUB>*sin(<I>c</I><SUB>2</SUB>)*2*<I>v</I>/(1+<I>v</I><SUP>2</SUP>)]<BR>
+ par la rotation d’axe <I>E</I><I>k</I> d’angle −<I>c</I><SUB>1</SUB><BR>
+<I>F</I> est aussi le symétrique par rapport au plan médiateur de <I>CE</I>
+du point <I>B</I> de paramètre <I>w</I>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">L1:=1.43;L2:=1.54;
+t1:=106*pi/180.;
+t2:=109*pi/180.;
+a2:=71*pi/360.;
+l1:=sqrt(normal(L1^2+L2^2-2*L1*L2*cos(t2)));
+l2:=sqrt(normal(2*L2^2-2*L2^2*cos(t2)));
+l3:=sqrt(normal(l1^2-l2^2/4));
+l4:=sqrt(normal(2*L1^2-2*L1^2*cos(t1)));
+sc1:=sqrt(normal(l3^2/(l1^2)));
+cc1:==sqrt(normal(l2^2/(4*l1^2)));
+sc2:=L1/l1*sin(t2);
+cc2:==(L2-L1*cos(t2))/l1;
+cC:=coordonnees(point(0,0,0));
+cE:=coordonnees(point(l2,0,0));
+cA:=coordonnees(point(l2/2,l3,0));
+cD:=normal([L2*cos(a2),L2*sin(a2)*(1-w^2)/(1+w^2),
+            L2*sin(a2)*2*w/(1+w^2)]);
+cB:=normal(coordonnees(rotation(droite(x=0,y=0),c1,
+            point(L2*cc2,-L2*sc2*(1-u^2)/(1+u^2),
+                  L2*sc2*2*u/(1+u^2)))));
+cB:=normal(subst(subst(cB,cos(c1),cc1),sin(c1),sc1));
+cF:=normal(subst([l2-cB[0],cB[1],cB[2]],u,v));
+P:=numer((cB-cA)*(cF-cA)-L1^2*cos(t1));
+Q:=numer((cD-cE)*(cF-cE)-L2^2*cos(t2));
+R:=numer(cB*cD-L2^2*cos(t2));
+</PRE><P>On obtient les coefficients approchés de <I>P</I>, <I>Q</I> et de <I>R</I>.<BR>
+<I>P</I>:=−0.918886458988*<I>u</I><SUP>2</SUP>*<I>v</I><SUP>2</SUP>+1.50972814948*<I>u</I><SUP>2</SUP>+2.96432403045*<I>u</I>*<I>v</I>+1.50972814948*<I>v</I><SUP>2</SUP>+2.56689196034<BR>
+<I>Q</I>:=−0.696642093056*<I>v</I><SUP>2</SUP>*<I>w</I><SUP>2</SUP>+2.05453942839*<I>v</I><SUP>2</SUP>+3.07941052911*<I>v</I>*<I>w</I>+1.94741717452*<I>w</I><SUP>2</SUP>+3.10242421803<BR>
+<I>R</I>:=−0.696642093056*<I>u</I><SUP>2</SUP>*<I>w</I><SUP>2</SUP>+2.05453942839*<I>u</I><SUP>2</SUP>+3.07941052911*<I>u</I>*<I>w</I>+1.94741717452*<I>w</I><SUP>2</SUP>+3.10242421803<BR>
+Pour faire un calcul exact, on pose :<BR>
+<TT>L1:=143/100;L2:=154/100;t1:=106*pi/180.;t2:=109*pi/180.</TT><BR>
+Si <I>c</I><SUB>0</SUB>=π/2−<I>t</I><SUB>2</SUB>/2=71*π/360, on évalue :<BR>
+cos(<I>t</I><SUB>2</SUB>), cos(<I>c</I><SUB>0</SUB>) et sin(<I>c</I><SUB>0</SUB>) en fonction de <I>t</I>:=tan(71π/720) :<BR>
+ cos(<I>t</I><SUB>2</SUB>)=2cos(<I>t</I><SUB>2</SUB>/2)<SUP>2</SUP>−1=2sin(<I>c</I><SUB>0</SUB>)<SUP>2</SUP>−1=8<I>t</I><SUP>2</SUP>/(1+<I>t</I><SUP>2</SUP>)<SUP>2</SUP>−1=−<I>t</I><SUP>4</SUP>+6<I>t</I><SUP>2</SUP>−1/(1+<I>t</I><SUP>2</SUP>)<SUP>2</SUP><BR>
+ sin(<I>t</I><SUB>2</SUB>)=2cos(<I>t</I><SUB>2</SUB>/2)*sin(<I>t</I><SUB>2</SUB>/2)=2sin(<I>c</I><SUB>0</SUB>)cos(<I>c</I><SUB>0</SUB>)=
+4<I>t</I>(1−<I>t</I><SUP>2</SUP>)/(1+<I>t</I><SUP>2</SUP>)<SUP>2</SUP>=4<I>t</I>−4<I>t</I><SUP>3</SUP>/(1+<I>t</I><SUP>2</SUP>)<SUP>2</SUP><BR>
+
+ cos(<I>c</I><SUB>0</SUB>)=1−<I>t</I><SUP>2</SUP>/1+<I>t</I><SUP>2</SUP><BR>
+ sin(<I>c</I><SUB>0</SUB>)=2<I>t</I>/1+<I>t</I><SUP>2</SUP><BR>
+On a donc :<BR>
+<I>l</I><SUB>1</SUB>=<I>AC</I>=<I>AE</I>=√<SPAN style="text-decoration:overline"><I>L</I>1</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>L</I>2</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−2*<I>L</I>1*<I>L</I>2*(−<I>t</I></SPAN><SUP><SPAN style="text-decoration:overline">4</SPAN></SUP><SPAN style="text-decoration:overline">+6*<I>t</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−1)/(1+<I>t</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><BR>
+<I>l</I><SUB>2</SUB>=<I>CE</I>=√<SPAN style="text-decoration:overline">2*<I>L</I>2</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−2*<I>L</I>2</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">*(−<I>t</I></SPAN><SUP><SPAN style="text-decoration:overline">4</SPAN></SUP><SPAN style="text-decoration:overline">+6*<I>t</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−1)/(1+<I>t</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">)</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><BR>
+<I>l</I><SUB>3</SUB>=<I>AH</I>=√<SPAN style="text-decoration:overline"><I>l</I>1</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">−<I>l</I>2</SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">/4)</SPAN><BR>
+On tape :
+</P><PRE CLASS="verbatim">L1:=143/100;L2:=154/100;
+t1:=106*pi/180;t2:=109*pi/180;
+t:=tan(71*pi/720);
+l1:=sqrt(normal(L1^2+L2^2-2*L1*L2*(-t^4+6*t^2-1)/(1+t^2)^2));
+l2:=sqrt(normal(2*L2^2-2*L2^2*(-t^4+6*t^2-1)/(1+t^2)^2));
+l3:=sqrt(normal(l1^2-l2^2/4));
+l4:=sqrt(normal(2*L1^2-2*L1^2*cos(t1)));
+sc1:=sqrt(normal(l3^2/l1^2));
+cc1:==sqrt(normal(l2^2/(4*l1^2)));
+sc2:=normal(L1/l1*(4t-4t^3)/(1+t^2)^2);
+cc2:==normal((L2-L1*(-t^4+6*t^2-1)/(1+t^2)^2)/l1);
+cC:=coordonnees(point(0,0,0));
+cE:=coordonnees(point(l2,0,0));
+cA:=coordonnees(point(l2/2,l3,0));
+cD:=normal([L2*(1-t^2)/(1+t^2),
+    L2*2*t/(1+t^2)*(1-w^2)/(1+w^2),L2*4*t/(1+t^2)*w/(1+w^2)]);
+cB:=normal(coordonnees(rotation(droite(x=0,y=0),c1,
+    point(L2*cc2,-L2*sc2*(1-u^2)/(1+u^2),
+          L2*sc2*2*u/(1+u^2)))));
+cB:=normal(subst(subst(cB,cos(c1),cc1),sin(c1),sc1));
+//cF:=normal(coordonnees(rotation(droite(x=l2,y=0),-c1,
+//point(l2-L2*cc2,-L2*sc2*(1-v^2)/(1+v^2),L2*sc2*2*v/(1+v^2)))));
+cF:=normal(subst([l2-cB[0],cB[1],cB[2]],u,v));
+Pe:=numer((cB-cA)*(cF-cA)-L1^2*cos(t1));
+Qe:=numer((cD-cE)*(cF-cE)-L2^2*(-t^4+6*t^2-1)/(1+t^2)^2);
+Re:=numer(cB*cD-L2^2*(-t^4+6*t^2-1)/(1+t^2)^2);
+</PRE><P>mais cela donne des expressions vraiment compliquées !!!
+</P><H4 CLASS="subsubsection">Application du lemme pour le glucose</H4><P>
+On a:<BR>
+<I>P</I>=α<SUB>1</SUB> <I>u</I><SUP>2</SUP><I>v</I><SUP>2</SUP>+β<SUB>1</SUB>(<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)+γ<SUB>1</SUB> <I>uv</I>+δ<SUB>1</SUB>=−0.918886458988*<I>u</I><SUP>2</SUP><I>v</I><SUP>2</SUP>+1<BR>
+1.50972814948*<I>u</I><SUP>2</SUP>+2.96432403045*<I>u</I>*<I>v</I>+1.50972814948*<I>v</I><SUP>2</SUP>+2.56689196034<BR>
+<I>R</I>=α <I>u</I><SUP>2</SUP><I>w</I><SUP>2</SUP>+β <I>u</I><SUP>2</SUP>+γ <I>uw</I>++η <I>w</I><SUP>2</SUP>δ=(−0.696642093056)*<I>u</I><SUP>2</SUP>*<I>w</I><SUP>2</SUP>+<BR>
+2.05453942839*<I>u</I><SUP>2</SUP>+3.07941052911*<I>u</I>*<I>w</I>+1.94741717452*<I>w</I><SUP>2</SUP>+3.10242421803
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+si <I>u</I>=<I>v</I> alors <I>u</I> est égal à une des solutions 
+<I>u</I><SUB>1</SUB>,<I>u</I><SUB>2</SUB>,<I>u</I><SUB>3</SUB>=−<I>u</I><SUB>1</SUB>,<I>u</I><SUB>4</SUB>=−<I>u</I><SUB>2</SUB> de l’équation bicarrée :<BR>
+<I>P</I>(<I>x</I>,<I>x</I>)=α<SUB>1</SUB> <I>x</I><SUP>4</SUP>+(2β<SUB>1</SUB>+γ<SUB>1</SUB>) <I>x</I><SUP>2</SUP>+δ<SUB>1</SUB> et <I>w</I> est alors 
+solution de :<BR>
+<I>P</I>(<I>u</I><SUB><I>j</I></SUB>,<I>x</I>)=0 pour <I>j</I>=1,2,3,4<BR>
+On tape :<BR>
+<TT>solve(subst(P,v,u)=0,u)</TT><BR>
+On obtient :<BR>
+<TT>[-2.1224247841e-72-0.635547690206*i,</TT><BR>
+<TT>-2.1224247841e-72+0.635547690206*i,</TT><BR>
+<TT>-2.62981213076,2.62981213076]</TT><BR>
+On tape :<BR>
+<TT>solve(subst(R,u,2.62981213076)=0,w)</TT><BR>
+On obtient :<BR>
+<TT>[-1.42146544175,4.24267305313]</TT><BR>
+Donc les solutions [<I>u</I>,<I>v</I>,<I>w</I>] sont :<BR>
+<TT>[2.62981213076,2.62981213076,-1.42146544175]</TT><BR>
+<TT>[2.62981213076,2.62981213076,4.24267305313]</TT><BR>
+ce qui donne comme coordonnées de <I>B</I>,<I>D</I>,<I>F</I> :<BR>
+<TT>u,v,w:=[2.62981213076,2.62981213076,-1.42146544175]</TT><BR>
+<TT>cB</TT> renvoie<BR>
+<TT>[0.111689118901,1.42546684563,0.571987598416]</TT><BR>
+<TT>cF</TT> renvoie<BR>
+<TT>[2.39578667764,1.42546684563,0.571987598416]</TT><BR>
+<TT>cD</TT> renvoie<BR>
+<TT>[1.25373789827,-0.302153034806,-0.841691645439]</TT><BR>
+<TT>u,v,w:=[2.62981213076,2.62981213076,4.24267305313]</TT><BR>
+<TT>cB</TT> renvoie<BR>
+<TT>[0.111689118901,1.42546684563,0.571987598416]</TT><BR>
+<TT>cF</TT> renvoie<BR>
+<TT>[2.39578667764,1.42546684563,0.571987598416]</TT><BR>
+<TT>cD</TT> renvoie<BR>
+<TT>[1.25373789827,-0.800148906999,0.399378278169]</TT><BR>
+<TT>purge(u,v,w)</TT><BR>
+Que l’on compare avec les coordonnées trouvées par la géométrie:<BR>
+<I>B</I> de coordonnées 0.111689118901, 1.42546684563, 0.571987598417<BR>
+<I>F</I> de coordonnées 2.39578667764, 1.42546684563, 0.571987598417<BR>
+<I>D</I> de coordonnées 1.25373789827, −0.302153034804, −0.84169164544<BR>
+soit<BR>
+<I>B</I> de coordonnées 0.111689118901, 1.42546684563, 0.571987598417<BR>
+<I>F</I> de coordonnées 2.39578667764, 1.42546684563, 0.571987598417<BR>
+<I>D</I> de coordonnées 1.25373789827, −0.800148906999, 0.399378278168</LI><LI CLASS="li-itemize">si <I>u</I> ≠ <I>v</I> on a <I>u</I> et <I>v</I> sont les solutions différentes de:<BR>
+<I>subst</I>(<I>R</I>,<I>u</I>,<I>x</I>)=(α <I>w</I><SUP>2</SUP><I>x</I><SUP>2</SUP>+β)<I>x</I><SUP>2</SUP>+γ <I>wx</I>+η <I>w</I><SUP>2</SUP>+δ=<I>ax</I><SUP>2</SUP>+<I>bx</I>+<I>c</I><BR>
+On a :<BR>
+<I>uv</I>=<I>x</I><SUB>1</SUB><I>x</I><SUB>2</SUB>=<I>c</I>/<I>a</I> et <I>u</I>+<I>v</I>=<I>x</I><SUB>1</SUB>+<I>x</I><SUB>2</SUB>=−<I>b</I>/<I>a</I> donc<BR>
+<I>u</I><SUP>2</SUP><I>v</I><SUP>2</SUP>=<I>x</I><SUB>1</SUB><SUP>2</SUP><I>x</I><SUB>2</SUB><SUP>2</SUP>=<I>c</I><SUP>2</SUP>/<I>a</I><SUP>2</SUP> et<BR>
+ <I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>=(<I>u</I>+<I>v</I>)<SUP>2</SUP>−2<I>uv</I>=<I>x</I><SUB>1</SUB><SUP>2</SUP>+<I>x</I><SUB>2</SUB><SUP>2</SUP>=(<I>b</I><SUP>2</SUP>−2<I>ca</I>)/<I>a</I><SUP>2</SUP>.<BR>
+On doit donc résoudre l’équation en <I>w</I> <TT>subst(subst(P,u,x1),v,x2)=0</TT> :<BR>
+α<SUB>1</SUB> <I>c</I><SUP>2</SUP>+β<SUB>1</SUB> (<I>b</I><SUP>2</SUP>−2<I>ca</I>)+γ<SUB>1</SUB> <I>ca</I> +δ<SUB>1</SUB> <I>a</I><SUP>2</SUP>=0<BR>
+On tape :<BR>
+<TT>a:=alpha*w</TT><CODE><TT>^</TT></CODE><TT>2+beta;</TT><BR>
+<TT>b:=gamma*w;</TT><BR>
+<TT>c:=eta*w</TT><CODE><TT>^</TT></CODE><TT>2+delta;</TT><BR>
+On tape :
+<PRE CLASS="verbatim">alpha1:=-0.918886458988;
+beta1:=1.50972814948;
+gamma1:=2.96432403045;
+delta1:=2.56689196034;
+alpha:=-0.696642093056;
+beta:=2.05453942839;
+gamma:=3.07941052911;
+eta:=1.94741717452;
+delta:=3.10242421803;
+a:=alpha*w^2+beta;
+b:=gamma*w;
+c:=eta*w^2+delta;
+Eq:=normal(alpha1*c^2+beta1*(b^2-2*c*a)+gamma1*c*a+
+           delta1*a^2);
+</PRE>On obtient :<BR>
+<TT>-2.16428171835*w</TT><CODE><TT>^</TT></CODE><TT>4-4.2362009215*w</TT><CODE><TT>^</TT></CODE><TT>2+1.63945920012</TT><BR>
+On tape :<BR>
+<TT>solve(Eq=0,w)</TT><BR>
+On obtient :<BR>
+<TT>[5.72819569555e-13+1.51272986977*i,</TT><BR>
+<TT>5.72819569555e-13-1.51272986977*i,</TT><BR>
+<TT>[-0.575349882482,0.575349882482]</TT><BR>
+On tape :<BR>
+<TT>solve(subst(R,w,0.575349882482)=0,u)</TT><BR>
+On obtient des solutions complexes :<BR>
+<TT>[-0.485692101424-1.34851633381*i,</TT><BR>
+<TT>-0.485692101424+1.34851633381*i]</TT><BR>
+Il n’y a donc pas d’autres solutions réelles que celles obtenues quand <I>u</I>=<I>v</I>.
+Donc les solutions [<I>u</I>,<I>v</I>,<I>w</I>] sont :<BR>
+<TT>[2.62981213076,2.62981213076,-1.42146544175]</TT><BR>
+<TT>[2.62981213076,2.62981213076,4.24267305313]</TT><BR>
+et leurs opposées :<BR>
+<TT>[-2.62981213076,-2.62981213076,1.42146544175]</TT><BR>
+<TT>[-2.62981213076,-2.62981213076,-4.24267305313]</TT><BR>
+</LI></UL><H4 CLASS="subsubsection">Avec le résultant</H4><P>
+On tape pour éliminer <I>w</I> des équations <I>Q</I>=0,<I>R</I>=0 :<BR>
+<TT>RQ:=resultant(exact(Q),exact(R),w)</TT><BR>
+On tape pour éliminer <I>v</I> des équations <I>P</I>=0,<I>RQ</I>=0 :<BR>
+<TT>PRQ:=resultant(exact(P),RQ,v)</TT><BR>
+On tape pour résoudre l’équation en <I>u</I> <I>PRQ</I>=0 :<BR>
+<TT>solve(PRQ=0,u)</TT><BR>
+On trouve 2 solutions réelles pour <I>u</I> :<BR>
+<TT>[2.62981213079,-2.62981213079]</TT><BR>
+On tape pour résoudre l’équation en <I>v</I> 
+<TT>subst</TT>(<I>RQ</I>,<I>u</I>,2.62981213079)=0 :<BR>
+<TT>solve(subst(RQ,u,2.62981213079)=0,v)</TT><BR>
+On trouve pour <I>v</I> :<BR>
+<TT>[-1.38377770635,2.62981187867,2.62981232198,4.13642081511]</TT><BR>
+On tape pour résoudre l’équation en <I>w</I> <TT>subst</TT>(<I>R</I>,<I>u</I>,2.62981213079)=0 :<BR>
+<TT>solve(subst(R,u,2.62981213079)=0,v)</TT><BR>
+On trouve pour <I>w</I> :<BR>
+<TT>[-1.42146544174,4.24267305306]</TT><BR>
+Il reste à vérifier parmi ces solutions celles qui vérifient :<BR>
+<I>P</I>=0,<I>Q</I>=0,<I>R</I>=0.<BR>
+<TT>u,v,w:=2.62981213079,-1.38377770635,-1.42146544174</TT> pas bon car<BR>
+<TT>P,Q,R</TT> renvoie :<BR>
+<TT>-7.0571646318,14.3332486634,6.43467501504e-11</TT><BR>
+
+<TT>u,v,w:=2.62981213079,2.62981187867,-1.42146544174</TT> bon car<BR>
+<TT>P,Q,R</TT> renvoie :<BR>
+<TT>4.45846289665e-06,2.45798105425e-07,6.43467501504e-11</TT><BR>
+
+<TT>u,v,w:=2.62981213079,2.62981232198,-1.42146544174</TT> bon car<BR>
+<TT>P,Q,R</TT> renvoie :<BR>
+<TT>-3.38296679558e-06,-1.86282647974e-07,6.43467501504e-11</TT><BR>
+
+<TT>u,v,w:=2.62981213079,4.13642081511,-1.42146544174</TT> pas bon car<BR>
+<TT>P,Q,R</TT> renvoie :<BR>
+<TT>-37.6474413798,1.72803993337e-10,6.43467501504e-11</TT><BR>
+
+<TT>u,v,w:=2.62981213079,-1.38377770635,4.24267305306</TT> pas bon car<BR>
+<TT>P,Q,R</TT> renvoie :<BR>
+<TT>-32.1653712253,-83435.2258003-144.016035042*i,-9.13125437063e+14</TT><BR>
+
+<TT>u,v,w:=2.62981213079,2.62981187867,4.24267305306</TT> bon car<BR>
+<TT>P,Q,R</TT> renvoie :<BR>
+<TT>4.45846289665e-06,1.06109131082e-05,8.6524210019e-10</TT><BR>
+
+<TT>u,v,w:=2.62981213079,2.62981232198,4.24267305306</TT> bon car<BR>
+<TT>P,Q,R</TT> renvoie :<BR>
+<TT>-3.38296679558e-06,-8.04602305493e-06,-1.10418341137e-10</TT><BR>
+
+<TT>u,v,w:=2.62981213079,4.13642081511,4.24267305306</TT> pas bon car<BR>
+<TT>P,Q,R</TT> renvoie :<BR>
+<TT>-37.6474413798,-87.2031710848,-1.10418341137e-10</TT><BR>
+Donc les solutions approchées sont <I>u</I>,<I>v</I>,<I>w</I> :<BR>
+2.62981213079,2.62981187867,-1.42146544174<BR>
+2.62981213079,2.62981187867,4.24267305306<BR>
+On retrouve les valeurs précédentes qui étaient meilleures:<BR>
+<TT>[2.62981213076,2.62981213076,-1.42146544175]</TT> pour lesquelles<BR>
+<I>P</I>,<I>Q</I>,<I>R</I>=-6.62367938276e-11,-6.89368562234e-11,-6.89368562234e-11<BR>
+<TT>[2.62981213076,2.62981213076,4.24267305313]</TT> pour lesquelles<BR>
+<I>P</I>,<I>Q</I>,<I>R</I>=-6.62367938276e-11,1.35003119794e-11,1.35003119794e-11</P><H3 CLASS="subsection"><A NAME="htoc221">12.6.5</A>  Les commandes des figures</H3><P> 
+<B>Pour le cyclohexane</B>
+le modéle en carton<BR>
+Pour avoir le modéle on tape dans un niveau de géométrie 2d :
+</P><PRE CLASS="verbatim">a1:=71*pi/360;
+l:=2*cos(a1);
+A:=point(0);C:=point(l);
+triangle_equilateral(A,C,E);
+B:=point(l/2-i*sin(a1));
+triangle_isocele(B,A,-109*pi/180);
+F:=rotation(A,pi/3,point(l/2+i*sin(a1)));
+triangle(A,E,F);
+D:=rotation(C,-pi/3,point(l/2+i*sin(a1)));
+triangle(C,E,D);
+DD:=translation(C-A,B));
+triangle(B,C,DD);
+FF:=translation(E-C,D);
+triangle(E,D,FF);
+BB:=translation(A-E,F);
+triangle(F,A,BB);
+H:=milieu(A,C);
+segment(F,D,affichage=2);H1:=milieu(F,D);
+angle(A,B,C,"a1");angle(A,C,E,"a");
+</PRE><P><B>Pour le glucose</B>
+le modéle en carton<BR>
+Pour avoir le modéle on tape :<BR>
+</P><PRE CLASS="verbatim">L1:=1.43;L2:=1.54;
+t1:=106*pi/180.;
+t2:=109*pi/180.;
+c0:=71*pi/360.;
+l1:=sqrt(normal(L1^2+L2^2-2*L1*L2*cos(t2)));
+l2:=sqrt(normal(2*L2^2-2*L2^2*cos(t2)));
+l3:=sqrt(normal(l1^2-l2^2/4));
+l4:=sqrt(normal(2*L1^2-2*L1^2*cos(t1)));
+A:=point(l2/2,l3);
+C:=point(0);
+E:=point(l2);
+H:=point(l2/2);
+D:=point(L2*cos(c0),-L2*sin(c0));
+triangle(A,C,E);
+triangle(D,C,E);
+B:=inter_unique(cercle(C,L2),cercle(A,L1));
+F:=inter_unique(cercle(E,L2),cercle(A,L1));
+triangle(A,C,B);
+triangle(A,E,F);
+FF:=D+l2;
+triangle(D,E,FF);
+BB:=similitude(F,l4/L1,-37*pi/180,A);
+triangle(A,BB,F);
+DD:=similitude(B,l2/L2,-71*pi/360,C);
+triangle(C,B,DD);
+</PRE><P>les notations<BR>
+Pour avoir la figure avec les notations, on tape :
+</P><PRE CLASS="verbatim">A:=point(l2/2,l3);
+C:=point(0);
+E:=point(l2);
+H:=point(l2/2);
+D:=point(L2*cos(c0),-L2*sin(c0));
+triangle(A,C,E);
+triangle(D,C,E);
+angle(C,D,E,"c0");
+angle(E,C,D,"c0");
+angle(C,E,A,"c1");
+angle(E,A,C,"c1");
+B:=inter_unique(cercle(C,L2),cercle(A,L1));
+F:=inter_unique(cercle(E,L2),cercle(A,L1));
+triangle(A,C,B);
+triangle(A,E,F);
+angle(C,A,B,"c2");
+angle(A,C,B,"a3");
+angle(D,E,C,"t2");
+angle(F,A,E,"t2");
+angle(B,A,C,"t2");
+angle(A,F,E,"a3");
+angle(E,F,A,"c2");
+legende(milieu(A,B),"L1",quadrant2);
+legende(milieu(C,B),"L2",quadrant2);
+legende(milieu(C,D),"L2",quadrant3);
+segment(A,H);
+legende(milieu(A,H),"l3",quadrant3);
+legende(milieu(A,C),"l1",quadrant2);
+legende(milieu(E,C),"l2",quadrant4);
+BB:=point(3.3);
+FF:=point(3.3+l4);
+AA:=point(3.3+l4/2,L1*sin(37*pi/180),affichage=quadrant1);
+triangle(AA,BB,FF);
+angle(AA,BB,FF,"t1");
+legende(milieu(AA,BB),"L1",quadrant2);
+legende(milieu(AA,FF),"L1");
+</PRE><HR>
+<A HREF="cascas011.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas013.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

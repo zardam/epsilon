@@ -1,0 +1,561 @@
+\documentclass{article}
+%\oddsidemargin 5 mm
+%\evensidemargin 5 mm
+%\textwidth 16cm
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{ifpdf}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\ifpdf
+ \usepackage[pdftex,colorlinks]{hyperref}
+\else
+ \usepackage[ps2pdf,breaklinks=true,colorlinks=true,linkcolor=red,citecolor=green]{hyperref}
+ \fi
+
+\newtheorem{rem}{Remark}
+\newcommand{\R}{{\mathbb{R}}}
+\newcommand{\C}{{\mathbb{C}}}
+\newcommand{\Z}{{\mathbb{Z}}}
+\newcommand{\N}{{\mathbb{N}}}
+\newcommand{\Q}{{\mathbb{Q}}}
+\newcommand{\faux}{$\square\;$}
+\newcommand{\vrai}{$\square\;$}
+%\newcommand{\vrai}{$\boxtimes\;$}
+%\newcommand{\item}{\item \faux}
+%\newcommand{\item}{\item \faux}
+\newtheorem{thm}{Theorem}
+
+\newtheorem{exo}{Exercice}[section]
+\input{giac.tex}
+\giacmathjax
+%HEVEA\renewcommand{\footertext}{}
+
+\title{Compiling \LaTeX\ to computer algebra-enabled HTML5}
+
+\author{Bernard Parisse\\Institut Fourier\\UMR 5582 du
+  CNRS\\Universit\'e de Grenoble I}
+\date{2017}
+
+\makeindex
+\bibliographystyle{plain}
+
+\begin{document}
+\begin{giacjshere}
+\maketitle
+
+\begin{abstract}
+This document explains how to create or modify an
+existing \LaTeX\ document with commands enabling computations in 
+the HTML5 output: when the reader opens the HTML5
+output, he can run a computation in his browser, or
+modify the command to be executed and run it.
+This is done by combining different softwares: \verb|hevea|\cite{hevea}
+for compilation to HTML5, \verb|giac.js| for the CAS computing kernel
+(itself compiled from the C++ Giac\cite{giac} library with 
+\verb|emscripten|\cite{emscripten}), and 
+a modified version\cite{hevea2mml} of \verb|itex2MML|\cite{itex2mml} 
+for fast and nice rendering in
+MathML in browsers that support MathML.
+\end{abstract}
+
+\tableofcontents
+\printindex
+
+
+\section{Introduction}
+Combining \LaTeX\ rendering quality and CAS computing is not new:
+\begin{enumerate}
+\item math softwares provide converters to export data to a \LaTeX\ file,
+or provide automated computations in a way similar 
+to the way bibtex provides bibliography, like sagetex (\cite{sagetex}).
+\item some softwares handle both \LaTeX-like rendering and
+computation, for example texmacs (\cite{texmacs}), lyx (\cite{lyx}), 
+Jupyter notebook (\cite{jupyter}). 
+ \end{enumerate}
+However, in the first case,
+the reader can not modify the CAS commandlines, and in the second
+case the data format is not standard \LaTeX\ (the writer can not
+start from an existing document)
+and requires additional software to be installed on
+the reader device or a net access to a server 
+to run the computations.
+
+The solution presented here is new in that the writer will edit
+a standard \LaTeX\ file, add a few easy to learn commands like
+\verb|\giacinputmath{factor(x^10-1)}| or \verb|\giacinput{plot(sin(x))}|
+and compile it to produce a HTML5+MathML
+document. 
+The reader can see the document in any browser 
+(it's optimized for Firefox), without installation, and he can 
+modify computation commandlines
+and run them on his own computer.
+
+If you are reading this file in PDF format, it is highly recommended to
+open 
+\footahref{https://www-fourier.ujf-grenoble.fr/\home{parisse}/giac/castex.html}{the HTML5/Mathml version}
+in order to test interactivity
+and look at the \LaTeX\ 
+\footahref{https://www-fourier.ujf-grenoble.fr/\home{parisse}/giac/castex.tex}{source}
+
+\section{User manual}
+\subsection{Installation on the writer computer}
+If you have done a standard Unix install of \verb|Giac/Xcas| 1.5 or greater, 
+copy files from \verb|/usr/share/giac/doc| (or a variation)
+in your \LaTeX\ working directory with a command like:
+\begin{verbatim}
+cd /usr/share/giac/doc
+cp giac.tex giacfr.tex giac.js giacwasm.* hevea.sty mathjax.sty ~/Tex
+\end{verbatim}
+Install the \verb|hevea| package for your distribution
+(\verb|hevea -version| should return 2.30 or higher).
+
+Installation by hand: install 
+\begin{itemize}
+\item version 2.30 (or greater) 
+of \footahref{http://hevea.inria.fr/}{{\tt hevea}} 
+(\cite{hevea})
+or a forked version 
+\footahref{https://github.com/YannickChevalier/hevea-mathjax}{{\tt hevea-mathjax}} (\cite{heveamathjax})),
+\item \footahref{https://www-fourier.ujf-grenoble.fr/\home{parisse}/giac.html}{{\tt Giac/Xcas}} (\cite{giac}) 
+for computing-enabled output
+\item \footahref{https://www-fourier.ujf-grenoble.fr/\home{parisse}/giac/heveatomml.tgz}{\tt heveatomml} (\cite{hevea2mml}) 
+for MathML output
+\end{itemize}
+The files 
+\footahref{https://www-fourier.ujf-grenoble.fr/\home{parisse}/giac/giac.tex}{{\tt giac.tex}} (or the French version
+\footahref{https://www-fourier.ujf-grenoble.fr/\home{parisse}/giac/giacfr.tex}{{\tt giacfr.tex}})
+\footahref{https://www-fourier.ujf-grenoble.fr/\home{parisse}/giac.js}{{\tt giac.js}}, 
+\footahref{https://www-fourier.ujf-grenoble.fr/\home{parisse}/giacwasm.js}{{\tt giacwasm.js}}, 
+\footahref{https://www-fourier.ujf-grenoble.fr/\home{parisse}/giacwasm.wasm}{{\tt giacwasm.wasm}}, 
+\footahref{https://www-fourier.ujf-grenoble.fr/\home{parisse}/giac/hevea.sty}{{\tt hevea.sty}}, 
+\footahref{https://www-fourier.ujf-grenoble.fr/\home{parisse}/giac/mathjax.sty}{{\tt mathjax.sty}} must
+be copied in the \LaTeX\ working directory.
+
+On an Internet connected linux box, 
+the following shell script will install\index{install} the tools required 
+for HTML5/MathML output~:
+\begin{verbatim}
+#! /bin/bash
+wget https://www-fourier.ujf-grenoble.fr/~parisse/giac/giac.tex
+wget https://www-fourier.ujf-grenoble.fr/~parisse/giac/giacfr.tex
+wget https://www-fourier.ujf-grenoble.fr/~parisse/giac/giac.js
+wget https://www-fourier.ujf-grenoble.fr/~parisse/giac/giacwasm.js
+wget https://www-fourier.ujf-grenoble.fr/~parisse/giac/giacwasm.wasm
+wget https://www-fourier.ujf-grenoble.fr/~parisse/giac/hevea.sty
+wget https://www-fourier.ujf-grenoble.fr/~parisse/giac/mathjax.sty
+wget http://hevea.inria.fr/distri/hevea-2.31.tar.gz
+tar xvfz hevea-2.31.tar.gz
+cd hevea-2.31
+make
+sudo make install
+cd ..
+wget https://www-fourier.ujf-grenoble.fr/~parisse/giac/heveatomml.tgz
+tar xvfz heveatomml.tgz
+cd heveatomml/src
+make
+sudo make install
+cd ../..
+\end{verbatim}
+
+\subsection{On the writer side}
+We now assume that the installation is done.
+The writer opens a \LaTeX\ file with his usual editor. He must add in
+the preamble the following lines
+\begin{verbatim}
+\makeindex
+\input{giac.tex}
+\giacmathjax
+\end{verbatim}
+Add \verb|\giacpython| if you want to enable Python syntax compatibility.
+% \usepackage[auto]{mathjax}
+% \ifhevea
+% \renewcommand{\jax@meta}{\begin{rawhtml}<script language="javascript"> 
+% var ua = window.navigator.userAgent;  
+% var old_ie = ua.indexOf('MSIE ');  
+% var new_ie = ua.indexOf('Trident/');  
+% if ((old_ie > -1) || (new_ie > -1) || Boolean(window.chrome)){
+%  (function () {
+%   var script = document.createElement("script");
+%   script.type = "text/javascript";
+%   script.src  = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML";
+%   document.getElementsByTagName("head")[0].appendChild(script);
+% })();
+% }
+% </script>
+% \end{rawhtml}}
+% \fi
+For interactive CAS \LaTeX\ commands support,
+the writer should add 
+\begin{verbatim}
+\begin{giacjshere}
+\tableofcontents
+\printindex
+\end{verbatim}
+just after \verb|\begin{document}| and 
+\begin{verbatim}
+\end{giacjshere}
+\end{verbatim}
+just before \verb|\end{document}|.
+Printing the table of contents and index before the first \LaTeX\
+section command is recommended, otherwise the HTML output
+\verb|Table| and \verb|Index| buttons will not link correctly.
+
+The rest of the source file is standard \LaTeX\ except that
+\begin{itemize}
+\item References to numbered equations should be inside additional 
+backslash-ed parenthesis, for example
+\ifhevea
+\begin{rawhtml}
+\begin{verbatim}
+\begin{equation} \label{eq_test}
+ \frac{2}{x^2-1}=\frac{1}{x-1}-\frac{1}{x+1} 
+\end{equation}
+From equation (\(\ref{eq_test}\)) ...
+\end{verbatim}
+\end{rawhtml}
+\else
+\begin{verbatim}
+\begin{equation} \label{eq:test}
+ \frac{2}{x^2-1}=\frac{1}{x-1}-\frac{1}{x+1} 
+\end{equation}
+From equation (\(\ref{eq:test}\)) ...
+\end{verbatim}
+\fi
+\begin{equation} \label{eq:test}
+ \frac{2}{x^2-1}=\frac{1}{x-1}-\frac{1}{x+1} 
+\end{equation}
+From equation (\(\ref{eq:test}\)) ...
+\item \verb|\mathbb{}| should be explicit, commands like
+\verb|\R| where \verb|\R| is defined
+by \verb|\newcommand{\R}{\mathbb{R}}| will not work.
+\item New commands are available for interactive CAS support
+\begin{itemize}
+\item 
+\verb|\giacinputmath{commandline}|\index{giacinputmath} will output 
+an inline
+\verb|commandline| 
+that the user can modify and execute, the answer will be displayed
+in MathML (or SVG for 2-d graph output).\\
+Example~: \verb|\giacinputmath{factor(x^10-1)}|\\
+\giacinputmath{factor(x^10-1)}\\
+{\bf Warnings}, if your command contains \verb|<| or \verb|>|, you must
+replace them by \verb|&lt;| or \verb|&gt;|, 
+otherwise they will be interpreted as HTML delimiters. You can also
+use the \verb|giacprog| and \verb|giaconload| environments explained below.\\
+If the output 
+is a 2-d graph, do not skip a line with \verb|\\| after the command 
+for PDF output
+\item
+\verb|\giaccmdmath{command}{arguments}|\index{giaccmdmath} 
+will output \verb|command| in a button following the \verb|arguments|, 
+the reader can only modify the arguments:\\
+\verb|\giaccmdmath{factor}{x^4-1}|\index{giaccmdmath}\\
+\giaccmdmath{factor}{x^4-1}\\
+\item 
+These commands may take an optional HTML style argument, for example\\
+\verb|\giacinputmath[style="width:200px;"]{factor(x^10-1)}|\\
+\giacinputmath[style="width:200px;"]{factor(x^10-1)}\\
+\verb|\giaccmdmath[style="font-size:x-large"]{factor}{x^4-1}|\\
+\giaccmdmath[style="font-size:x-large"]{factor}{x^4-1}\\
+\item
+There are similar commands for outlined output
+\verb|\giacinputbigmath{}|\index{giacinputbigmath} 
+or \verb|\giaccmdbigmath{}{}|\index{giaccmdbigmath}:\\
+For example \verb|\giacinputbigmath{factor(x^25-1)}|\\
+\giacinputbigmath{factor(x^25-1)}\\
+Example with an optional style argument 
+\verb|\giacinputbigmath[style="width:600px;height:20px;"]{factor(x^25-1)}|\\
+\giacinputbigmath[style="width:600px;height:20px;"]{factor(x^25-1)}\\
+\verb|\giaccmdbigmath{factor}{x^25-1}|\index{giaccmdbigmath}\\
+\giaccmdbigmath{factor}{x^25-1}\\
+\verb|\giaccmdbigmath[style="width:600px;height:20px;"]{factor}{x^25-1}|\\
+\giaccmdbigmath[style="width:600px;height:20px;"]{factor}{x^25-1}
+\item Similar commands with text (or plot) output 
+\verb|\giacinput|\index{giacinput} and \verb|\giacinputbig|\index{giacinputbig} and
+\verb|\giaccmd|\index{giaccmd}, 
+example:\\
+\verb|\giacinput{factor(x^4-1)}|\index{giacinput}~:\\
+\giacinput{factor(x^4-1)}\\
+\verb|\giaccmd{print}{"Hello world"}|\index{giaccmd}~:\\
+\giaccmd{print}{"Hello world"}\\
+With optional style argument\\
+\verb|\giacinput[style="font-size:x-large"]{plot(1/x)}|\\
+\giacinput[style="font-size:x-large"]{plot(1/x)}
+\verb|\giaccmd[style="font-size:x-large"]{factor}{x^4-1}|\\
+\giaccmd[style="font-size:x-large"]{factor}{x^4-1}\\
+
+\item
+The \verb|giacprog|\index{giacprog} environment should be used for programs or multi-line commands\\
+\verb|\begin{giacprog}...\end{giacprog}|\\
+Inside this environment, you can keep \verb|<| and \verb|>|. The
+program will be parsed once the user press the \verb|ok| button. After
+parse, the program may be modified and parsed again.\\
+{\bf Warning}: Do not use the \verb|giacprog| environment in another environment (like itemize or
+enumerate).\\
+If you want the program to be parsed at load-time, replace
+\verb|giacprog| with \verb|giaconload|\index{giaconload}:\\
+\verb|\begin{giaconload}...\end{giaconload}|\\
+If you want to hide the input after execution, replace
+with \verb|giaconloadhide|.
+\item
+The \verb|\giacslider{idname}{min}{max}{step}{value}{command}| 
+command will add
+a slider. When the user modifies the slider interactively, the new
+\verb|value| is stored in \verb|idname| and the \verb|command| 
+(depending on \verb|idname|)
+is executed. Example:\\ 
+\verb|\giacslider{a}{-5}{5}{0.1}{0.5}{plot(sin(a*x))}|\index{giacslider}\\
+\giacslider{a}{-5}{5}{0.1}{0.5}{plot(sin(a*x))}
+
+\item
+The \verb|\giachidden|\index{giachidden} command behaves like
+\verb|\giaccmd| except that the default HTML5 style is ``hidden''
+until the command button has been pressed.
+
+\item
+The \verb|\giaclink|\index{giaclink} command will add a link in the
+HTML version and nothing in PDF/DVI. The links open in a new tab, and the
+corresponding text may be specified as optional argument (default 
+is Test online). Note that \verb|hevea.sty| provides similar commands
+(\verb|\ahref|, \verb|\footahref|, \verb|\ahrefurl|) 
+with output in PDF/DVI.\\
+Example with a link to Xcas for Firefox with a few commands\\
+\verb|\giaclink{http://www-fourier.ujf-grenoble.fr/\%7eparisse/xcasen.html#+factor(x^4-1)&+a:=idn(3)&}|\\
+\giaclink{http://www-fourier.ujf-grenoble.fr/\%7eparisse/xcasen.html#+factor(x^4-1)&+a:=idn(3)&}
+\end{itemize}
+\end{itemize}
+
+Once the source file is written, it is compiled to HTML5 with the command\\
+\verb|hevea2mml sourcefile.tex|\\
+The HTML output and the \verb|giac.js| files should be in the same
+directory on the web server.
+Index and bibliography should be processed with \verb|makeindex|
+and \verb|bibhva|.
+
+If a PDF output is desired,
+the command \verb|icas| from a Giac/Xcas installation
+should be used
+instead of \verb|pdflatex| 
+because it will run all CAS commands, output them in a temporary
+\LaTeX\ file, 
+and run \verb|pdflatex| on the output 
+(this was inspired by the 
+\footahref{http://melusine.eu.org/syracuse/giac/pgiac/}{pgiac script} 
+from Jean-Michel Sarlat \cite{pgiac}). The temporary file name
+is obtained by adding a {\tt\_ } at the end of the initial file name
+(without the {\tt .tex} extension). Therefore, if you have 
+an index and or citations, you should run \verb|makeindex| and \verb|bibtex|
+on the file name with \verb|_| appended. For \verb|bibtex| citations in
+the HTML files, you should run \verb|bibhva|.
+For example, the PDF version of this document is available
+\footahref{https://www-fourier.ujf-grenoble.fr/\home{parisse}/giac/castex.pdf}{here}.
+
+\subsection{On the reader side}
+The reader's browser opens an HTML5+MathML file (linking to the JavaScript
+\verb|giac.js|). The MathML is rendered natively on Firefox or Safari,
+while Chrome or Internet Explorer will automatically load MathJax to
+render MathML (this is of course noticeably slower if the document is
+large).
+Computations are run by the reader's browser (the CAS is JavaScript
+code). This is slower than native code but faster than net access to
+a server and it does not require setting up a specific server for
+computations.
+
+\subsection{More examples}
+\subsubsection{Trace (2-d graph)}
+This example illustrates with a slider that the evolute of a curve 
+is the envelope of the normals to the curve, here the curve is an ellipsis
+and the envelop an astroid. 
+The list of normals \verb|L| is initialized empty at load-time.
+\begin{giaconload}L:=[]\end{giaconload}
+Now move the slider:
+\giacslider{t0}{-5}{5}{0.1}{0.7}{gl_x=-6..6;gl_y=-4..4;G:=plotparam([2*cos(t),sin(t)],t=0..2*pi);M:=element(G,evalf(t0));T:=tangent(M);N:=perpendicular(M,T);L:=append(L,N);evolute(G,color=red)}
+
+\subsubsection{Cone section (3-d graph)}
+$C$ is a cone of center the origin, axis of direction $(0,0,1)$, and angle
+$\frac{\pi}{6}$, $P$ is a plane of equation $z=my+3$. 
+$m$ is controlled by the slider, when $m$ moves the intersection 
+is an ellipsis or hyperbola (limit value is a parabola).
+\giacslider{m}{-5}{5}{0.1}{0.7}{
+C:=cone([0,0,0],[0,0,1],pi/6, display=green+filled);
+P:=plane(z=evalf(m)*y+3,display=cyan+filled);
+}
+
+\subsubsection{Dunford decomposition (CAS)}
+A program computing the Dunford decomposition
+of a matrix with Newton method. 
+It is parsed at load-time (\verb|giaconload| environment).
+\begin{giaconload}
+function dunford(A)
+  local U,p,q,q1,j,d,n;
+  U:=A;
+  n:=nrows(U);
+  p:=charpoly(U);
+  q:=p/gcd(p,p'); // square free part
+  q1:=q';
+  for (j:=1;j<=n;j:=2*j){
+    d:=inv(horner(q1,U))*horner(q,U); // Newton step
+    if (d==0*d) return U,A-U;
+    U:=U-d;
+  }
+  return U,A-U;
+end:;
+\end{giaconload}
+Example~: we define $J$ an almost diagonal matrix and $A$ a similar matrix
+and we check the Dunford decomposition of $A$.
+$$ J=\left(\begin{array}{ccc}
+2 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right) , \quad
+P=\left(\begin{array}{ccc}
+1 & 0 & 0 \\
+2 & -1 & 0 \\
+3 & 4 & 1
+\end{array}\right), \quad
+A=PJP^{-1} $$
+
+\giacinputbigmath{J:=[[2,0,0],[0,1,1],[0,0,1]]; P:=trn([[1,2,3],[0,-1,4],[0,0,1]]); A:=P*J*inv(P)}\\
+\giacinputbigmath{D,N:=dunford(A); N^2; P*diag(diag(J))*inv(P)}\\
+
+\subsubsection{Slopefield}
+This will display the slopefield of an ordinary differential equation
+$$\frac{dy}{dt}=-y+cos(t)$$
+and one solution corresponding to an initial condition $y(0)$ that the user may
+modify with the slider.
+\giacslider{y0}{-5}{5}{0.1}{1.0}{gl_x=-5..5; gl_y=-3..3;
+plotfield(-y+cos(t),[t=-5..5,y=-3..3],xstep=0.4,ystep=0.4);
+plotode(-y+cos(t),[t=-5..5,y],[0,y0],tstep=0.1,color=red)
+}
+
+\subsubsection{Gr\"obner basis (CAS)}
+The CAS kernel can compute non-trivial Gr\"obner basis. Of course,
+the JavaScript version is significantly slower than the native Giac/Xcas
+kernel.
+\begin{giaconload}
+kat7:=[-x1+2*x8^2+2*x7^2+2*x6^2+2*x5^2+2*x4^2+2*x3^2+2*x2^2+x1^2,
+ -x2+2*x8*x7+2*x7*x6+2*x6*x5+2*x5*x4+2*x4*x3+2*x3*x2+2*x2*x1,
+ -x3+2*x8*x6+2*x7*x5+2*x6*x4+2*x5*x3+2*x4*x2+2*x3*x1+x2^2,
+ -x4+2*x8*x5+2*x7*x4+2*x6*x3+2*x5*x2+2*x4*x1+2*x3*x2,
+ -x5+2*x8*x4+2*x7*x3+2*x6*x2+2*x5*x1+2*x4*x2+x3^2,
+ -x6+2*x8*x3+2*x7*x2+2*x6*x1+2*x5*x2+2*x4*x3,
+ -x7+2*x8*x2+2*x7*x1+2*x6*x2+2*x5*x3+x4^2,
+ -1+2*x8+2*x7+2*x6+2*x5+2*x4+2*x3+2*x2+x1]:;
+\end{giaconload}
+Basis over $\mathbb{Z}/16777213$
+\giacinputbigmath{G:=gbasis(kat7 mod 16777213,[x1,x2,x3,x4,x5,x6,x7,x8]):; size(G); G[20];}
+Basis over $\mathbb{Q}$
+\giacinputbigmath{G:=gbasis(kat7,[x1,x2,x3,x4,x5,x6,x7,x8]):; size(G); G[20];}
+
+\subsubsection{Logo turtle}
+\begin{giaconload}
+def polyg(n,l):
+  for j in range(n):
+    avance l
+    tourne_gauche 360/n
+\end{giaconload}
+\begin{giacprog}
+efface;
+for n in range(3,11):
+  polyg(n,20)
+\end{giacprog}
+\giacinput{
+efface;
+for n from 3 to 10 do polyg(n,20) od;
+}
+
+\subsubsection{Fractals}
+\begin{giaconload}
+def fra1(X,Y,Nmax):
+  w=2.7/X
+  h=-1.87/Y
+  res1=makelist(-ceil(X*Y/2)-1)
+  res2=copy(res1)
+  Y=Y-1
+  for y in range(ceil(Y/2)+1):
+    c = -2.1+i*(h*y+0.935)
+    for x in range(X):
+      z = 0
+      for j in range(Nmax):
+        if abs(z=z**2+c)>2:
+           break
+      res1.append(pixon(x,y,5100*j+512))
+      res2.append(pixon(x,Y-y,5100*j+512))
+      c = c+w;
+  return res1,res2
+\end{giaconload}
+\ifhevea
+\giacinput{axes=0;pixon(1);fra1(160,160,10)}
+\else
+\giacinput{axes=0;pixon(1);fra1(320,320,10)}
+\fi
+
+\section{How this is done}
+The \LaTeX\ \verb|\giac...| commands are defined in \verb|giac.tex|.
+For example \verb|\giacinput| is defined like this:
+\begin{verbatim}
+\newcommand{\giacinput}[2][style="width:400px;font-size:large"]{
+\ifhevea
+\@print{<textarea onkeypress="UI.ckenter(event,this,1)" }
+\@getprint{#1>#2}
+\@print{</textarea><button onclick="previousSibling.style.display='inherit';var tmp=UI.caseval(previousSibling.value);tmp=UI.rmquote(tmp); nextSibling.innerHTML='&nbsp;'+tmp;UI.render_canvas(nextSibling);">ok</button><span></span><br>}
+\else
+\lstinline@#2@
+\fi
+}
+\end{verbatim}
+If \verb|hevea| compiles the command, the \verb|\ifhevea| part is
+active, and the command will output an HTML5 \verb|<textarea>| element
+and a OK \verb|<button>|, with a callback to JavaScript code
+that will evaluate the CAS command inside the textarea \\
+\verb|var tmp=UI.caseval(previousSibling.value)|\\
+and fill the next HTML5 \verb|<span>| field with the result of the CAS
+command.
+
+The CAS evaluation is performed by a call to \verb|giaceval| in the
+\verb|UI.caseval| code (defined in \verb|giac.tex|), where
+\verb|giaceval| is a global JavaScript variable assigned at page load-time
+from the \verb|Module| interface created by compiling Giac/Xcas with
+the C++ to JavaScript compiler 
+\footahref{http://kripken.github.io/emscripten-site/}{{\tt emscripten}}. 
+The CAS code being in JavaScript, it can be run on every
+JavaScript-enabled browser. It will be faster on browsers that have
+support for \verb|asm.js| (\verb|asmjs.org|) 
+like Mozilla Firefox: numerical computations
+are 1 to 2 times slower than native code, while exact computations
+are 2 to 10 times slower than native code (the main reason being that
+JavaScript has currently no 64 bits integer type).
+
+For a PDF output, if \verb|pdflatex| is run on the tex file,
+giac commands will be written verbatim, but they will not be processed.
+The \verb|icas| command from the Giac/Xcas package will filter all
+giac commands, process them and output the result in math mode in a
+temporary \LaTeX\ file. If the
+answer is a 2-d graph output, \verb|icas| will output a pdf file on
+the hard disk and output a corresponding \verb|\includegraphics|
+command in the temporary \LaTeX\ file. After that, the temporary file 
+will be processed by \verb|pdflatex|.
+
+\section{Conclusion}
+The current version of \verb|icas| and \verb|giac.tex| are already
+usable to easily produce HTML interactive CAS-enabled document from 
+\LaTeX\ documents. They may be completed in future versions depending
+on user requests. For example, online courses might have commands to
+enable student exercises answers auto-check.
+
+{\bf Acknowledgements} \\
+Thanks to Luc Maranget and Yannick Chevalier for fixing bugs in
+mathjax-enabled hevea. 
+Thanks to Ren\'ee De Graeve and Murielle Stepec who have tested
+preliminary versions of this compilation method.
+
+\bibliography{latex.bib}
+
+\end{giacjshere}
+\end{document}

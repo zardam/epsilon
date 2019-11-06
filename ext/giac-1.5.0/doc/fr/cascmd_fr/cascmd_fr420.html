@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Base de Gröbner : gbasis</title>
+</head>
+<body >
+<a href="cascmd_fr419.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr421.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec534" class="subsection">6.31.1  Base de Gröbner : <span style="font-family:monospace">gbasis</span></h3>
+<p><a id="hevea_default785"></a>
+<a id="sec:gbasis"></a>
+<span style="font-family:monospace">gbasis</span> a au moins deux arguments : 
+une liste de polynômes de 
+plusieurs variables et la liste du nom de ces variables.<br>
+<span style="font-family:monospace">gbasis</span> renvoie une base de Gröbner de l’idéal polynomial engendré
+par les polynômes donnés dans le premier argument.<br>
+On choisit d’ordonner les monômes selon l’ordre lexicographique en accord 
+avec la liste donnée par le dernier 
+argument et selon les puissances décroissantes : par exemple on écrira
+<span style="font-style:italic">x</span><sup>2</sup>*<span style="font-style:italic">y</span><sup>4</sup>*<span style="font-style:italic">z</span><sup>3</sup> puis <span style="font-style:italic">x</span><sup>2</sup>*<span style="font-style:italic">y</span><sup>3</sup>*<span style="font-style:italic">z</span><sup>4</sup> si le deuxième argument est [<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>] car
+(2,4,3)&gt;(2,3,4) mais on écrira <span style="font-style:italic">x</span><sup>2</sup>*<span style="font-style:italic">y</span><sup>3</sup><span style="font-style:italic">z</span><sup>4</sup> puis <span style="font-style:italic">x</span><sup>2</sup>*<span style="font-style:italic">y</span><sup>4</sup>*<span style="font-style:italic">z</span><sup>3</sup> si le
+deuxième argument est [<span style="font-style:italic">x</span>,<span style="font-style:italic">z</span>,<span style="font-style:italic">y</span>].<br>
+Si <span style="font-style:italic">I</span> est un idéal et si 
+(<span style="font-style:italic">G</span><sub><span style="font-style:italic">k</span></sub>)<sub><span style="font-style:italic">k</span> ∈ <span style="font-style:italic">K</span></sub> est une base de Gröbner de l’idéal <span style="font-style:italic">I</span> alors,
+si <span style="font-style:italic">F</span> est un polynôme non nul de <span style="font-style:italic">I</span>, le terme dominant de <span style="font-style:italic">F</span> 
+est divisible par le terme dominant d’un <span style="font-style:italic">G</span><sub><span style="font-style:italic">k</span></sub>. <br>
+Propriété : Si on fait la division euclidienne de <span style="font-style:italic">F</span> par un des <span style="font-style:italic">G</span><sub><span style="font-style:italic">k</span></sub> 
+puis, si on recommence avec le reste obtenu et le <span style="font-style:italic">G</span><sub><span style="font-style:italic">k</span></sub> suivant, on finit par obtenir un reste nul.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">gbasis([2*x*y-y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2*x*y],[x,y])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,x*y+(-1/2)*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2]</span></div><p>On peut donner des arguments supplémentaires :
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">plex</span> (lexicographique pur utilisé par défaut)), <span style="font-family:monospace">tdeg</span> 
+(degré total puis ordre lexicographique),
+<span style="font-family:monospace">revlex</span> (degré total puis ordre lexicographique inverse), pour
+spécifier un ordre sur les monômes différent de l’ordre
+par défaut (qui est <span style="font-family:monospace">plex</span>),
+</li><li class="li-itemize"><span style="font-family:monospace">with_cocoa=true</span> ou <span style="font-family:monospace">with_cocoa=false</span>, si on veut
+utiliser la librairie <span style="font-family:monospace">CoCoA</span> pour faire le calcul de la base
+de Gröbner.
+</li><li class="li-itemize"><span style="font-family:monospace">with_f5=true</span> ou <span style="font-family:monospace">with_f5=false</span> pour utiliser
+l’implémentation de l’algorithme F5 de la librairie <span style="font-family:monospace">CoCoA</span>.
+L’ordre spécifié n’est alors pas utilisé, les polynômes étant 
+homogénéisés.
+</li></ul><p>
+On tape :
+</p><div class="center">
+<code>gbasis([x1+x2+x3,x1*x2+x1*x3+x2*x3,x1*x2*x3-1],</code><br>
+<code>[x1,x2,x3],tdeg,with_cocoa=false)</code>
+</div><p>
+On obtient
+</p><div class="center">
+<code>[x3^3-1,-x2^2-x2*x3-x3^2,x1+x2+x3]</code>
+</div>
+<hr>
+<a href="cascmd_fr419.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr421.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

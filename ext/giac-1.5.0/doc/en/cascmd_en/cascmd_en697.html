@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Covariance and correlation: covariance correlation covariance_correlation</title>
+</head>
+<body >
+<a href="cascmd_en696.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en698.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec854" class="subsection">8.2.1  Covariance and correlation: <span style="font-family:monospace">covariance</span><a id="hevea_default1179"></a> <span style="font-family:monospace">correlation</span><a id="hevea_default1180"></a> <span style="font-family:monospace">covariance_correlation</span><a id="hevea_default1181"></a></h3>
+<p>The covariance of two random variables measures their connectedness;
+i.e., whether they tend to change with each other.
+If <span style="font-style:italic">X</span> and <span style="font-style:italic">Y</span> are two random variables, then the covariance is the
+expected value of (<span style="font-style:italic">X</span>−<span style="text-decoration:overline">X</span>)(<span style="font-style:italic">Y</span>−Ȳ), where <span style="text-decoration:overline">X</span> and
+Ȳ are the means of <span style="font-style:italic">X</span> and <span style="font-style:italic">Y</span>, respectively. You can
+calculate covariances with the <span style="font-family:monospace">covariance</span> command.</p><p>If <span style="font-style:italic">X</span> and <span style="font-style:italic">Y</span> are given by lists of the same size, then
+<span style="font-family:monospace">covariance(</span><span style="font-style:italic">X</span><span style="font-family:monospace">,</span><span style="font-style:italic">Y</span><span style="font-family:monospace">)</span> will return their covariance. For example,
+if you enter
+</p><div class="center">
+<span style="font-family:monospace">covariance([1,2,3,4],[1,4,9,16])
+</span></div><p>
+then you will get
+</p><div class="center">
+<span style="font-family:monospace">25/4
+</span></div><p>
+Alternatively, you could use a matrix with two columns instead of two
+lists to enter <span style="font-style:italic">X</span> and <span style="font-style:italic">Y</span>; the command
+</p><div class="center">
+<span style="font-family:monospace">covariance([[1,1],[2,4],[3,9],[4,16]])
+</span></div><p>
+is another way to enter the above calculation.</p><p>If the entries in the lists <span style="font-style:italic">X</span>=[<span style="font-style:italic">a</span><sub>0</sub>,…,<span style="font-style:italic">a</span><sub><span style="font-style:italic">n</span>−1</sub>] and
+<span style="font-style:italic">Y</span>=[<span style="font-style:italic">b</span><sub>0</sub>,…,<span style="font-style:italic">b</span><sub><span style="font-style:italic">n</span>−1</sub>] have different weights, say <span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span></sub> and <span style="font-style:italic">b</span><sub><span style="font-style:italic">j</span></sub> have
+weight <span style="font-style:italic">w</span><sub><span style="font-style:italic">j</span></sub>, then <span style="font-family:monospace">covariance</span> can be given a third list
+<span style="font-style:italic">W</span>=[<span style="font-style:italic">w</span><sub>0</sub>,…,<span style="font-style:italic">w</span><sub><span style="font-style:italic">n</span>−1</sub>] (or alternatively, you could use a matrix with
+three columns). For example, if you enter
+</p><div class="center">
+<span style="font-family:monospace">covariance([1,2,3,4],[1,4,9,16],[3,1,5,2])
+</span></div><p>
+then you will get
+</p><div class="center">
+<span style="font-family:monospace">662/121
+</span></div><p>If each pair of entries in the lists <span style="font-style:italic">X</span>=[<span style="font-style:italic">a</span><sub>0</sub>,…,<span style="font-style:italic">a</span><sub><span style="font-style:italic">m</span>−1</sub>] and
+<span style="font-style:italic">Y</span>=[<span style="font-style:italic">b</span><sub>0</sub>,…,<span style="font-style:italic">b</span><sub>0</sub>] have different weights, say <span style="font-style:italic">a</span><sub><span style="font-style:italic">j</span></sub> and <span style="font-style:italic">b</span><sub><span style="font-style:italic">k</span></sub> have
+weight <span style="font-style:italic">w</span><sub><span style="font-style:italic">jk</span></sub>, then <span style="font-family:monospace">covariance</span> can be given a third
+argument of an <span style="font-style:italic">m</span>× <span style="font-style:italic">n</span> matrix <span style="font-style:italic">W</span>=(<span style="font-style:italic">w</span><sub><span style="font-style:italic">jk</span></sub>). (Note that in this
+case the lists <span style="font-style:italic">X</span> and <span style="font-style:italic">Y</span> don’t have to be the same length.) For
+example, the covariance computed above could also have been computed
+by entering
+</p><div class="center">
+<span style="font-family:monospace">covariance([1,2,3,4],[1,4,9,16],
+[[3,0,0,0],[0,1,0,0],[0,0,5,0],[0,0,0,2]])
+</span></div><p>
+which would of course return
+</p><div class="center">
+<span style="font-family:monospace">662/121
+</span></div><p>
+In this case, to make it simpler to enter the data in a spreadsheet,
+the lists <span style="font-style:italic">X</span> and <span style="font-style:italic">Y</span> and the matrix <span style="font-style:italic">W</span> can be combined into a single
+matrix, by augmenting <span style="font-style:italic">W</span> with the list <span style="font-style:italic">Y</span> on the top and the
+transpose of the list <span style="font-style:italic">X</span> on the left, with a filler in the upper left
+hand corner;
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">⎛<br>
+⎜<br>
+⎝</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >"<span style="font-style:italic">XY</span>"</td><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">Y</span></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">X</span><sup><span style="font-style:italic">T</span></sup></td><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">W</span>
+</td></tr>
+</table></td><td class="dcell">⎞<br>
+⎟<br>
+⎠</td></tr>
+</table></td></tr>
+</table><p>
+When you use this method, you need to give <span style="font-family:monospace">covariance</span> a
+second argument of -1. The above covariance can then be computed with
+the command 
+</p><div class="center">
+<span style="font-family:monospace">covariance([["XY", 1,4,9,16],[1,3,0,5,0],[2,0,1,0,0],[3,0,0,5,0],[4,0,0,0,2]],-1)
+</span></div><p>The linear correlation coefficient of two random variables is another
+way to measure their connectedness. Given random variables <span style="font-style:italic">X</span> and
+<span style="font-style:italic">Y</span>, their correlation is defined as
+<span style="font-style:italic">cov</span>(<span style="font-style:italic">X</span>,<span style="font-style:italic">Y</span>)/(σ(<span style="font-style:italic">X</span>)σ(<span style="font-style:italic">Y</span>)), where σ(<span style="font-style:italic">X</span>) and σ(<span style="font-style:italic">Y</span>) are
+the standard deviations of <span style="font-style:italic">X</span> and <span style="font-style:italic">Y</span>, respectively. The correlation
+can be computed with the <span style="font-family:monospace">correlation</span> command, which takes the
+same types of arguments as the <span style="font-family:monospace">covariance</span> command. If you
+enter
+</p><div class="center">
+<span style="font-family:monospace">correlation([1,2,3,4],[1,4,9,16])
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">100/(4*sqrt(645))
+</span></div><p>The <span style="font-family:monospace">covariance_correlation</span> command will compute both the
+covariance and correlation simultaneously, and return a list with both
+values. This command takes the same type of arguments as the
+<span style="font-family:monospace">covariance</span> and <span style="font-family:monospace">correlation</span> commands. For example,
+if you enter
+</p><div class="center">
+<span style="font-family:monospace">covariance_correlation([1,2,3,4],[1,4,9,16])
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">[25/4,100/(4*sqrt(645))]
+</span></div>
+<hr>
+<a href="cascmd_en696.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en698.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

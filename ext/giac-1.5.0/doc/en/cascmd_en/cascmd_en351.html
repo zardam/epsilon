@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Trigonometric interpolation : triginterp</title>
+</head>
+<body >
+<a href="cascmd_en350.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en352.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec423" class="subsection">5.29.30  Trigonometric interpolation : <span style="font-family:monospace">triginterp</span></h3>
+<p>
+<span style="font-family:monospace">triginterp(y,x=a..b)</span> or <span style="font-family:monospace">triginterp(y,a,b,x)</span> returns the trigonometric polynomial that interpolates data given in the list  <span style="font-weight:bold">y</span> . It is assumed that the list  <span style="font-weight:bold">y</span>  contains ordinate components of the points with equidistant abscissa components between  <span style="font-style:italic">a</span>  and  <span style="font-style:italic">b</span>  such that the first element from  <span style="font-weight:bold">y</span>  corresponds to  <span style="font-style:italic">a</span>  and the last element to  <span style="font-style:italic">b</span> .</p><p>For example,  <span style="font-weight:bold">y</span>  may be a list of experimental measurements of some quantity taken in regular intervals, with the first observation in the moment  <span style="font-style:italic">t</span>=<span style="font-style:italic">a</span>  and the last observation in the moment  <span style="font-style:italic">t</span>=<span style="font-style:italic">b</span> . The resulting trigonometric polynomial has the period
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">T</span>=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">n</span> (<span style="font-style:italic">b</span>−<span style="font-style:italic">a</span>)</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">n</span>−1</td></tr>
+</table></td><td class="dcell">, </td></tr>
+</table><p>
+where  <span style="font-style:italic">n</span>  is the number of observations ( <span style="font-style:italic">n</span> =<span style="font-family:monospace">size(y)</span>). For example, assume that the following data is obtained by measuring the temperature every three hours:
+</p><div class="center">
+	<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:right;border:solid 1px;white-space:nowrap" >hour of the day</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >0</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >3</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >6</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >9</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >12</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >15</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >18</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >21</td></tr>
+<tr><td style="text-align:right;border:solid 1px;white-space:nowrap" >temperature (deg C)</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >11</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >10</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >17</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >24</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >32</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >26</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >23</td><td style="text-align:center;border:solid 1px;white-space:nowrap" >19</td></tr>
+<tr><td style="text-align:right;border:solid 1px;white-space:nowrap" >	</td></tr>
+</table>
+</div><p>
+Furthermore, assume that an estimate of the temperature at 13:45 is required. To obtain a trigonometric interpolation of the data, input :
+</p><div class="center">
+	<span style="font-family:monospace">tp:=triginterp([11,10,17,24,32,26,23,19],x=0..21)</span>
+</div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">81/4+(-21*sqrt(2)-42)/8*cos(pi/12*x)+<br>
+		(-11*sqrt(2)-12)/8*sin(pi/12*x)+3/4*cos(pi/6*x)<br>
+		-7/4*sin(pi/6*x)+(21*sqrt(2)-42)/8*cos(pi/4*x)<br>
+		+(-11*sqrt(2)+12)/8*sin(pi/4*x)+1/2*cos(pi/3*x)</span>
+</div><p>
+Now a temperature at 13:45 hrs can be approximated with the value of <span style="font-family:monospace">tp</span> for  <span style="font-style:italic">x</span>=13.75 . Input :
+</p><div class="center">
+	<span style="font-family:monospace">tp | x=13.75</span>
+</div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">29.4863181684</span>
+</div><p>If one of the input parameters is inexact, the result will be inexact too. For example, input :
+</p><div class="center">
+	<span style="font-family:monospace">Digits:=3;<br>
+		triginterp([11,10,17,24,32,26,23,19],x=0..21.0)</span>
+</div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">0.5*cos(1.05*x)-1.54*cos(0.785*x)+0.75*cos(0.524*x)<br>
+		-8.96*cos(0.262*x)-0.445*sin(0.785*x)-1.75*sin(0.524*x)<br>
+		-3.44*sin(0.262*x)+20.2</span>
+</div>
+<hr>
+<a href="cascmd_en350.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en352.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

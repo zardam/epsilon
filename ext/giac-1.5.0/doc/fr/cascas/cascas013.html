@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>Les fractions continues</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascas012.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas014.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc222">Chapitre 13</A>  Les fractions continues</H1><P>
+<TT>Définition</TT> Une fraction continue est une expression de la forme :<BR>
+<TT><I>a</I></TT><SUB><TT>1</TT></SUB><TT>+</TT><TT><I>b</I></TT><SUB><TT>1</TT></SUB><TT>/<I>a</I></TT><SUB><TT>2</TT></SUB><TT>+</TT><TT><I>b</I></TT><SUB><TT>2</TT></SUB><TT>/<I>a</I></TT><SUB><TT>3</TT></SUB><TT>+</TT><TT><I>b</I></TT><SUB><TT>3</TT></SUB><TT>/<I>a</I></TT><SUB><TT>4</TT></SUB><TT>+...</TT><BR>
+avec pour <I>k</I>&gt;1 <I>a</I><SUB><I>k</I></SUB>&gt;0 et pour <I>k</I>≥ 1 <I>b</I><SUB><I>k</I></SUB>&gt;0
+Une fraction continue simple est une fraction continue où les <I>b</I><SUB><I>k</I></SUB>=1, c’est 
+donc une expression de la forme :<BR>
+<TT><I>a</I></TT><SUB><TT>1</TT></SUB><TT>+</TT><TT>1/<I>a</I></TT><SUB><TT>2</TT></SUB><TT>+</TT><TT>1/<I>a</I></TT><SUB><TT>3</TT></SUB><TT>+</TT><TT>1/<I>a</I></TT><SUB><TT>4</TT></SUB><TT>+...</TT><BR>
+Ici on ne s’intéressera qu’aux fractions continues simples car sinon 
+l’écriture n’est pas unique, par exemple :
+<TT>√</TT><TT><SPAN style="text-decoration:overline">13</SPAN></TT><TT>=3+</TT><TT>4/6+</TT><TT>4/6+</TT><TT>4/6+...</TT><TT>=</TT><BR>
+<TT>2+</TT><TT>9/4+</TT><TT>9/4+</TT><TT>9/4+...</TT><TT>=</TT><BR>
+<TT>3+</TT><TT>1/1+</TT><TT>1/1+</TT><TT>1/1++</TT><TT>1/1++</TT><TT>1/6+...</TT><BR>
+<TT>Notation</TT>
+Si <TT><I>n</I>=<I>a</I></TT><SUB><TT>1</TT></SUB><TT>+</TT><TT>1/<I>a</I></TT><SUB><TT>2</TT></SUB><TT>+</TT><TT>1/<I>a</I></TT><SUB><TT>3</TT></SUB><TT>+</TT><TT>1/<I>a</I></TT><SUB><TT>4</TT></SUB><TT>+...</TT><BR>
+on notera :<BR>
+<I>n</I>=([<I>a</I><SUB>1</SUB>,<I>a</I><SUB>2</SUB>,...<I>a</I><SUB><I>n</I></SUB>,..],[]) si le développement n’est pas périodique et<BR>
+<I>n</I>=([<I>a</I><SUB>1</SUB>,<I>a</I><SUB>2</SUB>,...<I>a</I><SUB><I>s</I></SUB>],[<I>b</I><SUB>1</SUB>,<I>b</I><SUB>2</SUB>,...<I>b</I><SUB><I>t</I></SUB>]) si le développement est périodique de période [<I>c</I><SUB>1</SUB>,<I>c</I><SUB>2</SUB>,...<I>c</I><SUB><I>t</I></SUB>] ie lorsque
+<I>n</I>=[<I>a</I><SUB>1</SUB>,<I>a</I><SUB>2</SUB>,...<I>a</I><SUB><I>s</I></SUB>,<I>c</I><SUB>1</SUB>,<I>c</I><SUB>2</SUB>,...<I>c</I><SUB><I>t</I></SUB>,<I>c</I><SUB>1</SUB>,<I>c</I><SUB>2</SUB>,...<I>c</I><SUB><I>t</I></SUB>,<I>c</I><SUB>1</SUB>....]<BR>
+Par exemple :<BR>
+<TT>√</TT><TT><SPAN style="text-decoration:overline">13</SPAN></TT><TT>=([3,1,1,1,1,6],[1,1,1,1,6])</TT></P><P><TT>Propriétés</TT><BR>
+Un nombre rationnel a un développement en fraction continue fini.<BR>
+Les réels qui ont un développement en fraction continue périodique sont 
+solution d’une équation du second degré à coefficients dans ℕ.<BR>
+<TT>Le programme</TT> :
+</P><PRE CLASS="verbatim">f2dfc(x,n):={
+local r,q,lq,lr,p,j;
+q:=floor(x);
+r:=normal(x-q);
+lq:=[];
+lr:=[];
+for (j:=1;j&lt;=n;j:=j+1) {
+lq:=concat(lq,q);
+if (x==q){return (lq,[]);}
+p:=member(r,lr);
+if (p) {return (lq,mid(lq,p))};
+lr:=concat(lr,r);
+x:=normal(1/r);
+q:=floor(x);
+r:=normal(x-q);
+}
+return (concat(lq,x),[]);
+};
+
+dfc2f1(d,t):={
+local s,st,x,l,xt,k;
+s:=size(d);
+x:=d[s-1];
+for (k:=s-2;k&gt;=0;k:=k-1) {x:=normal(d[k]+1/x);}
+if (t==[]) {return normal(x);}
+st:=size(t);
+purge(y);
+xt:=t[st-1]+y;
+for (k:=st-2;k&gt;=0;k:=k-1) {xt:=normal(t[k]+1/xt);}
+l:=solve(y=1/xt,y);
+if (l[0]&gt;0){y:=normal(l[0]);}else{y:=normal(l[1]);};
+x:=d[s-1]+y;
+for (k:=s-2;k&gt;=0;k:=k-1) {x:=normal(d[k]+1/x);}
+return(normal(x));
+};
+dfc2f2(d,t):={
+local s,st,x,xt;
+s:=size(d);
+x:=d[s-1];
+for (k:=s-2;s&gt;=0;s:=s-1) {x:=d[k]+1/x;}
+if (t==[]) {return x;}
+st:=size(t);
+xt:=t[st-1];
+for (k:=st-2;st&gt;=0;st:=st-1) {xt:=st[k]+1/xt;}
+return(x+1/2*(sqrt(xt^2+4)-xt));
+};
+</PRE><HR>
+<A HREF="cascas012.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas014.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

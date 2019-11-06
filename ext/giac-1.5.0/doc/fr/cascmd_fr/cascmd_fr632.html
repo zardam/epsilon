@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Résolution d’un problème d’optimisation linéaire : lpsolve</title>
+</head>
+<body >
+<a href="cascmd_fr631.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr633.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec773" class="subsection">6.54.6  Résolution d’un problème d’optimisation linéaire : <span style="font-family:monospace">lpsolve</span></h3>
+<p><a id="hevea_default1165"></a>
+<span style="font-family:monospace">lpsolve</span> a au plus 4 arguments qui sont dans l’ordre :
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">obj</span> : expression symbolique representant la fonction objectif,
+</li><li class="li-itemize"><span style="font-family:monospace">constr</span> (optionnel) : liste des contraintes linéaires qui sont soit des équalités, soit des inéequalités, soit des expressions bornées
+définies par <span style="font-family:monospace">expr=a..b</span>,
+</li><li class="li-itemize"><span style="font-family:monospace">bd</span> (optionnel) : séquence d’expressions du type <span style="font-family:monospace">var=a..b</span> 
+specifiant que la variable <span style="font-family:monospace">var</span> est comprise entre <span style="font-family:monospace">a</span> et <span style="font-family:monospace">b</span>,
+</li><li class="li-itemize"><span style="font-family:monospace">opts</span> (optionnel) : séquence de paramètres <span style="font-family:monospace">option=value</span> 
+pour le solver, où <span style="font-family:monospace">option</span> est choisi parmi <span style="font-family:monospace">assume</span>, <span style="font-family:monospace">lp_maximize</span>, <span style="font-family:monospace">lp_variables</span>, <span style="font-family:monospace">lp_integervariables</span>, 
+<span style="font-family:monospace">lp_binaryvariables</span> or <span style="font-family:monospace">lp_depthlimit</span>.
+</li></ul><p>
+<span style="font-family:monospace">lpsolve</span> résout un problème d’optimisation linéaire de fonction 
+objectif <span style="font-family:monospace">obj</span> sous contraintes optionnelles <span style="font-family:monospace">constr</span>.<br>
+<span style="font-family:monospace">lpsolve</span> trouve le maximum ou le minimum d’une fonction linéaire de 
+plusieurs variables assujétit à vérifier des contraintes qui sont 
+égalités ou des inégalités linéaires mixed integer problems</p><p>La valeur renvoyée est de la forme <span style="font-family:monospace">[optimum,soln]</span> où <span style="font-family:monospace">optimum</span> is
+est la valeu du minimum/maximum de la fonction objectif et <span style="font-family:monospace">soln</span> est la 
+liste des coordonnées correspondant au point pour lequel la valeur optimale
+est atteinte. Si il n’y a pas de solution, If there is no feasible solution,une
+liste vide est is retournée. Lorsque la the fonction objectif n’est pas 
+bornée, <span style="font-family:monospace">optimum</span> est <span style="font-family:monospace">+infinity</span> (pour les problèmes de 
+maximisation) ou <span style="font-family:monospace">-infinity</span> (pour les problèmes de minimisation), <span style="font-family:monospace">soln</span> est généralement sans signification.</p><p>If <span style="font-family:monospace">obj</span> is given as constant (for example, zero) then only a feasible point is returned as a list, if one exists. If the problem is infeasible, an empty list is returned. This may be used as a test to check whether a set of linear constraints is feasible or not.</p><p>The given objective function is minimized by default. To maximize it, include the option <span style="font-family:monospace">lp_maximize=true</span> or simply <span style="font-family:monospace">lp_maximize</span>.</p><p>By default, all variables are considered continuous and unrestricted in sign.</p><p>The solver combines the two-phase simplex method and the dual simplex method to find the optimal solution.</p>
+<h4 id="sec774" class="subsubsection">Problèmes à variables continues</h4>
+<p>
+Par exemple, pour résoudre le problem définit en (<a href="cascmd_fr627.html#eq%3Alpexample">1</a>), 
+On tape :
+</p><div class="center">
+<span style="font-family:monospace">constr:=[x&lt;=1,y&gt;=2,x+3y-z=2,3x-y+z&lt;=8,-x+y&lt;=5];</span><br>
+<span style="font-family:monospace">lpsolve(2x+y-z+4,constr)</span>
+</div><p>
+On obtient :
+</p><div class="center">
+<span style="font-family:monospace">[-4,[x=0,y=5,z=13]]
+</span></div><p>
+Donc, le minimum de <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>)=2 <span style="font-style:italic">x</span>+<span style="font-style:italic">y</span>−<span style="font-style:italic">z</span>+4  est egal à −4 lorsqu’on impose 
+comme contraintes <span style="font-style:italic">x</span> <span style="font-style:italic">leq</span> 1,<span style="font-style:italic">y</span> <span style="font-style:italic">geq</span> 2,<span style="font-style:italic">x</span>+3<span style="font-style:italic">y</span>−<span style="font-style:italic">z</span>=2,3<span style="font-style:italic">x</span>−<span style="font-style:italic">y</span>+<span style="font-style:italic">z</span> <span style="font-style:italic">leq</span> 8,−<span style="font-style:italic">x</span>+<span style="font-style:italic">y</span> <span style="font-style:italic">leq</span> 5 .<br>
+La valeur minimum est atteinte au point (<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>)=(0,5,13).</p><p>Les Contraintes peuvent aussi s’écrire <span style="font-family:monospace">expr=a..b</span> pour des expressions
+linéaires et bornées.<br>
+On tape :
+</p><div class="center">
+<span style="font-family:monospace">lpsolve(x+2y+3z,[x+y=1..5,y+z+1=2..4,x&gt;=0,y&gt;=0])</span>
+</div><p>
+On obtient :
+</p><div class="center">
+<span style="font-family:monospace">[-2,[x=0,y=5,z=-4]]</span>
+</div><p>On utilise l’option <span style="font-family:monospace">assume=lp_nonnegative</span>comme 3ième argument pour 
+spécifier que toutes les variables sont nonnegatives : ce qui est plus 
+simple que d’entrer explicitement des contraintes nonnegatives.<br>
+On tape :
+</p><div class="center">
+<span style="font-family:monospace">lpsolve(-x-y,[y&lt;=3x+1/2,y&lt;=-5x+2],assume=lp_nonnegative)</span>
+</div><p>
+On obtient :
+</p><div class="center">
+<span style="font-family:monospace">[-5/4,[x=3/16,y=17/16]]</span>
+</div><p>Les bornes peuvent être ajoutées séparément pour certaines variables.<br>
+On les met alors en 3ième argument.
+On tape :
+</p><div class="center">
+<span style="font-family:monospace">constr:=[5x-10y&lt;=20,2z-3y=6,-x+3y&lt;=3];</span><br>
+<span style="font-family:monospace">lpsolve(-6x+4y+z,constr,x=1..20,y=0..inf)</span>
+</div><p>
+On obtient :
+</p><div class="center">
+<span style="font-family:monospace">[-133/2,[x=18,y=7,z=27/2]]</span>
+</div>
+<h4 id="sec775" class="subsubsection">Integer programming</h4>
+<p>
+Use the <span style="font-family:monospace">assume=integer</span> or <span style="font-family:monospace">assume=lp_integer</span> option to solve integer
+programming problems. The function <span style="font-family:monospace">lpsolve</span> uses branch and bound method 
+in such cases. The total number of investigated nodes is printed out before the function returns. To limit branch and bound tree depth, use the option : 
+</p><div class="center">
+<span style="font-family:monospace">lp_depthlimit=&lt;positive integer&gt;</span>
+</div><p> 
+In that case optimality of the solution can’t be guaranteed.
+Dans ce cas optimisation de la solution n’est pas garantie.<br>
+On tape :
+</p><div class="center">
+<span style="font-family:monospace">lpsolve(-5x-7y,[7x+y&lt;=35,-x+3y&lt;=6],assume=integer)</span>
+</div><p>
+On obtient :
+</p><div class="center">
+<span style="font-family:monospace">[-41,[x=4,y=3]]</span>
+</div><p>On utilise l’option <span style="font-family:monospace">assume=lp_binary</span> pour spécifier que toutes les 
+variables are binaires, i.e. les seules valeurs autorisées sont 0 et 1.<br>
+Généralement, les variables binaires representent <span style="font-family:monospace">vrai</span> et <span style="font-family:monospace">faux</span>,
+ce qui est compréhensible en logique.
+On tape :
+</p><div class="center">
+<span style="font-family:monospace">lpsolve(8x1+11x2+6x3+4x4,[5x1+7x2+4x3+3x4&lt;=14],assume=lp_binary,lp_maximize)</span>
+</div><p>
+On obtient :
+</p><div class="center">
+<span style="font-family:monospace">[21,[x1=0,x2=1,x3=1,x4=1]]</span>
+</div><p>Options 
+</p><div class="center">
+<span style="font-family:monospace">lp_integervariables=&lt;list of integer variables&gt;</span>
+</div><p> 
+and 
+</p><div class="center">
+<span style="font-family:monospace">lp_binaryvariables=&lt;list of binary variables&gt;</span>
+</div><p> 
+are used for specifying mixed integer/binary programming problems. Also, the 
+</p><div class="center">
+<span style="font-family:monospace">lp_variables=&lt;list of continuous variables&gt;</span>
+</div><p> 
+option may be used, which overrides integer and binary settings. For example, a linear programming problem with mostly integer variables may be specified using the option <span style="font-family:monospace">assume=integer</span> and specifying continuous variables with <span style="font-family:monospace">lp_variables</span>, which overrides the global integer setting.</p><p>On tape :
+</p><div class="center">
+<span style="font-family:monospace">lpsolve(x+3y+3z,[x+3y+2z&lt;=7,2x+2y+z&lt;=11],</span><br>
+<span style="font-family:monospace">assume=lp_nonnegative,lp_maximize,</span>
+<span style="font-family:monospace">lp_integervariables=[x,z])</span>
+</div><p>
+On obtient :
+</p><div class="center">
+<span style="font-family:monospace">[10,[x=0,y=1/3,z=3]]</span>
+</div><p>Use the <span style="font-family:monospace">assume=lp_nonnegint</span> or <span style="font-family:monospace">assume=nonnegint</span> option to get nonnegative integer values.</p><p>On tape :
+</p><div class="center">
+<span style="font-family:monospace">lpsolve(2x+5y,[3x-y=1,x-y&lt;=5],assume=nonnegint)</span>
+</div><p>
+On obtient :
+</p><div class="center">
+<span style="font-family:monospace">[12,[x=1,y=2]]</span>
+</div>
+<h4 id="sec776" class="subsubsection">Entering linear programs in matrix form</h4>
+<p>
+The function <span style="font-family:monospace">lpsolve</span> supports entering linear programming problems in matrix form, which is convenient for problems with relatively large number of variables and/or constraints.</p><p>To enter a problem in matrix form, the parameter <span style="font-family:monospace">obj</span> must be a vector of coefficients  <span style="font-weight:bold"><span style="font-style:italic">c</span></span>  and <span style="font-family:monospace">constr</span>, which is mandatory this case, must be a list  [<span style="font-weight:bold"><span style="font-style:italic">A</span></span>,<span style="font-weight:bold"><span style="font-style:italic">b</span></span>,<span style="font-weight:bold"><span style="font-style:italic">A</span></span><sub><span style="font-style:italic">e</span><span style="font-style:italic">q</span></sub>,<span style="font-weight:bold"><span style="font-style:italic">b</span></span><sub><span style="font-style:italic">e</span><span style="font-style:italic">q</span></sub>] , where  <span style="font-weight:bold"><span style="font-style:italic">A</span></span>,<span style="font-weight:bold"><span style="font-style:italic">A</span></span><sub><span style="font-style:italic">e</span><span style="font-style:italic">q</span></sub>  are matrices and  <span style="font-weight:bold"><span style="font-style:italic">b</span></span>,<span style="font-weight:bold"><span style="font-style:italic">b</span></span><sub><span style="font-style:italic">e</span><span style="font-style:italic">q</span></sub>  are vectors of real numbers. Without any other parameters, this minimizes  <span style="font-weight:bold"><span style="font-style:italic">c</span></span><sup><span style="font-style:italic">T</span></sup> <span style="font-weight:bold"><span style="font-style:italic">x</span></span>  under conditions  <span style="font-weight:bold"><span style="font-style:italic">A</span></span> <span style="font-weight:bold"><span style="font-style:italic">x</span></span>≤<span style="font-weight:bold"><span style="font-style:italic">b</span></span>  and  <span style="font-weight:bold"><span style="font-style:italic">A</span></span><sub><span style="font-style:italic">e</span><span style="font-style:italic">q</span></sub> <span style="font-weight:bold"><span style="font-style:italic">x</span></span>=<span style="font-weight:bold"><span style="font-style:italic">b</span></span><sub><span style="font-style:italic">e</span><span style="font-style:italic">q</span></sub> . If a problem does not contain equality constraints, parameters  <span style="font-weight:bold"><span style="font-style:italic">A</span></span><sub><span style="font-style:italic">e</span><span style="font-style:italic">q</span></sub>  and  <span style="font-weight:bold"><span style="font-style:italic">b</span></span><sub><span style="font-style:italic">e</span><span style="font-style:italic">q</span></sub>  may be omitted. For a problem that does not contain inequality constraints, empty lists must be passed as  <span style="font-weight:bold"><span style="font-style:italic">A</span></span>  and  <span style="font-weight:bold"><span style="font-style:italic">b</span></span> . Also, <span style="font-family:monospace">constr</span> may be an empty list.</p><p>The parameter <span style="font-family:monospace">bd</span> is entered as a list of two vectors  <span style="font-weight:bold"><span style="font-style:italic">b</span></span><sub><span style="font-style:italic">l</span></sub>  and  <span style="font-weight:bold"><span style="font-style:italic">b</span></span><sub><span style="font-style:italic">u</span></sub>  of the same length as the vector  <span style="font-weight:bold"><span style="font-style:italic">c</span></span>  such that  <span style="font-weight:bold"><span style="font-style:italic">b</span></span><sub><span style="font-style:italic">l</span></sub>≤<span style="font-weight:bold"><span style="font-style:italic">x</span></span>≤<span style="font-weight:bold"><span style="font-style:italic">b</span></span><sub><span style="font-style:italic">u</span></sub> . For unbounded variables use <span style="font-family:monospace">+infinity</span> or <span style="font-family:monospace">-infinity</span>.</p><p>When specifying mixed problems in matrix form, variables are entered as the corresponding indexes, which are 1-based, i.e. the first variable has index 1, the second variable has index 2 and so on. Other options for <span style="font-family:monospace">lpsolve</span> are passed to a problem in matrix form in the same way as if it was in symbolic form.</p><p>Input :
+</p><div class="center">
+<span style="font-family:monospace">c:=[-2,1];A:=[[-1,1],[1,1],[-1,0],[0,-1]];</span><br>
+<span style="font-family:monospace">b:=[3,5,0,0];lpsolve(c,[A,b])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[-10,[5,0]]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">c:=[-2,5,-3];bl:=[2,3,1];bu:=[6,10,3.5];</span><br>
+<span style="font-family:monospace">lpsolve(c,[],[bl,bu])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[-7.5,[6.0,3.0,3.5]]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">c:=[4,5];Aeq:=[[-1,1.5],[-3,2]];beq:=[2,3];</span><br>
+<span style="font-family:monospace">lpsolve(c,[[],[],Aeq,beq])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[5.2,[-0.2,1.2]]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">c:=[2,-3,-5];A:=[[-5,4,-5],[2,5,7],[2,-3,4]];</span><br>
+<span style="font-family:monospace">b:=[3,1,-2];lpsolve(c,[A,b],lp_integervariables=[1,3])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[19,[1,3/4,-1]]</span>
+</div>
+<hr>
+<a href="cascmd_fr631.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr633.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

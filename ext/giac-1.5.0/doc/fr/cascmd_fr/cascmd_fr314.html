@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Longueur d’un arc de courbe : arcLen</title>
+</head>
+<body >
+<a href="cascmd_fr313.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr315.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec413" class="subsection">6.21.7  Longueur d’un arc de courbe : <span style="font-family:monospace">arcLen</span></h3>
+<p><a id="hevea_default585"></a><a id="sec:longarc"></a>
+<span style="font-family:monospace">arcLen</span> a soit 1 soit quatre paramètres.<br>
+</p><ul class="itemize"><li class="li-itemize">
+le paramètre est soit un cercle ou un arc de cercle, soit un polygone.<br>
+ On tape
+<div class="center"><span style="font-family:monospace">arcLen(cercle(0,1,0,pi/2))</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">pi/4</span></div>
+On tape
+<div class="center"><span style="font-family:monospace">arcLen(hexagone(0,1))</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">6</span></div>
+</li><li class="li-itemize">les 4 paramètres sont :une expression <span style="font-style:italic">expr</span> (resp une 
+liste de 2 expressions [<span style="font-style:italic">expr</span>1,<span style="font-style:italic">expr</span>2]), le nom d’un paramètre et deux valeurs 
+<span style="font-style:italic">a</span> et <span style="font-style:italic">b</span> de ce paramètre.<br>
+<span style="font-family:monospace">arcLen</span> calcule la longueur de l’arc de courbe définie par l’équation
+<span style="font-style:italic">y</span>=<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)=<span style="font-style:italic">expr</span> (resp par <span style="font-style:italic">x</span>=<span style="font-style:italic">expr</span>1,<span style="font-style:italic">y</span>=<span style="font-style:italic">expr</span>2) pour les valeurs du paramètre 
+comprises entre <span style="font-style:italic">a</span> et <span style="font-style:italic">b</span>.<br>
+On a donc <span style="font-family:monospace">arcLen(f(x),x,a,b)=</span> :<br>
+<span style="font-family:monospace">integrate(sqrt(diff(f(x),x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1),x,a,b)</span><br>
+ou <br>
+<span style="font-family:monospace">integrate(sqrt(diff(x(t),t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+diff(y(t),t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),t,a,b)</span>.<br>
+</li></ul><p>
+<span style="font-weight:bold">Exemples</span>
+</p><ul class="itemize"><li class="li-itemize">
+Calculer la longueur de l’arc de cercle <span style="font-style:italic">AB</span> (avec <span style="font-style:italic">A</span>=(0,0) et 
+<span style="font-style:italic">B</span>=(0,1)) et d’angle au centre π/2.<br>
+On tape
+<div class="center"><span style="font-family:monospace">arcLen(arc(0,1,pi/2))</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">sqrt(2)*pi/4</span></div>
+</li><li class="li-itemize">Calculer le périmètre du triangle <span style="font-style:italic">ABC</span> (avec <span style="font-style:italic">A</span>=(0,0), <span style="font-style:italic">B</span>=(0,1) et
+<span style="font-style:italic">C</span>=(1,1)).<br>
+On tape
+<div class="center"><span style="font-family:monospace">arcLen(triangle(0,1,1+i))</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">sqrt(2)+2</span></div>
+On tape
+
+On obtient :
+
+</li><li class="li-itemize">Calculer la longueur de l’arc de parabole <span style="font-style:italic">y</span>=<span style="font-style:italic">x</span><sup>2</sup> pour <span style="font-style:italic">x</span> allant de 0 
+à <span style="font-style:italic">x</span>=1.<br>
+ On tape
+<div class="center"><span style="font-family:monospace">arcLen(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x,0,1)</span></div>
+ou
+<div class="center"><span style="font-family:monospace">arcLen([t,t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2],t,0,1)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(sqrt(5))/2-ln(sqrt(5)-2)/4</span></div> 
+</li><li class="li-itemize">Calculer la longueur de l’arc de la courbe <span style="font-style:italic">y</span>=cosh(<span style="font-style:italic">x</span>) pour <span style="font-style:italic">x</span> allant 
+de 0 à <span style="font-style:italic">x</span>=ln(2).<br>
+On tape :
+<div class="center"><span style="font-family:monospace">arcLen(cosh(x),x,0,log(2))</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">3/4</span></div>
+</li><li class="li-itemize">Calculer la longueur de l’arc de cercle <span style="font-style:italic">x</span>=cos(<span style="font-style:italic">t</span>),<span style="font-style:italic">y</span>=sin(<span style="font-style:italic">t</span>) pour <span style="font-style:italic">t</span> 
+allant de 0 à <span style="font-style:italic">t</span>=2*π.<br>
+ On tape 
+<div class="center"><span style="font-family:monospace">arcLen([cos(t),sin(t)],t,0,2*pi)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">2*pi</span></div>
+</li></ul>
+<hr>
+<a href="cascmd_fr313.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr315.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

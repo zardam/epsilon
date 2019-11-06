@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="tutoriel.css">
+<title>Analysis with Xcas</title>
+</head>
+<body >
+<a href="tutoriel004.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel006.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h2 id="sec22" class="section">4&#XA0;&#XA0;Analysis with <span style="font-family:monospace">Xcas</span></h2>
+<h3 id="sec23" class="subsection">4.1&#XA0;&#XA0;Derivatives</h3>
+<p>
+<a id="deriv"></a></p><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Derivatives</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">diff(ex,t)</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >the derivative of an expression with respect to t</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">function_diff(f)</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >the derivative of a function</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">diff(ex,x$n,y$m)</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >partial derivatives</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">grad</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >gradient</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">divergence</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >divergence</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">curl</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >curl</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">laplacian</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >laplacian</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">hessian</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >hessian matrix</td></tr>
+</table>
+</div><p>
+<a id="hevea_default170"></a>
+<a id="hevea_default171"></a>
+<a id="hevea_default172"></a>
+<a id="hevea_default173"></a>
+<a id="hevea_default174"></a>
+<a id="hevea_default175"></a>
+<a id="hevea_default176"></a>
+<a id="hevea_default177"></a>
+<a id="hevea_default178"></a>
+<a id="hevea_default179"></a></p><p>The <span style="font-family:monospace">diff</span> function will find the derivative of an expression
+and returns the derivative as an expression. If you have a function
+<span style="font-style:italic">f</span>, you can find the derivative by entering
+</p><blockquote class="quote"><span style="font-family:monospace">diff(f(x),x)
+</span></blockquote><p>
+Note that the result will itself be an expression; do not define the
+deritivave function by <span style="font-family:monospace">fprime(x) := diff(f(x),x)</span>. If you
+want to define the derivative as a function, you can use
+<span style="font-family:monospace">unapply</span>:<a id="hevea_default180"></a>
+</p><blockquote class="quote"><span style="font-family:monospace">fprime := unapply(diff(f(x),x),x)
+</span></blockquote><p>
+Alternatively, you can use <span style="font-family:monospace">function_diff</span>, which takes a
+function (not an expression) as input and returns the derivative
+function;
+</p><blockquote class="quote"><span style="font-family:monospace">fprime := function_diff(f)
+</span></blockquote><p>The <span style="font-family:monospace">diff</span> function can take a sequence of variables as the
+second argument, and so can calculate successive partial derivatives.
+Given
+</p><blockquote class="quote"><span style="font-family:monospace">E := sin(x*y)
+</span></blockquote><p>
+then
+</p><blockquote class="quote"><span style="font-family:monospace">diff(E,x)
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+<span style="font-style:italic">y</span>*cos(<span style="font-style:italic">x</span>*<span style="font-style:italic">y</span>)
+</td></tr>
+</table><blockquote class="quote"><span style="font-family:monospace">diff(E,y)
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+<span style="font-style:italic">x</span>*cos(<span style="font-style:italic">x</span>*<span style="font-style:italic">y</span>)
+</td></tr>
+</table><blockquote class="quote"><span style="font-family:monospace">diff(E,x,y)
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+&#X2212;<span style="font-style:italic">x</span>*<span style="font-style:italic">y</span>*sin(<span style="font-style:italic">x</span>*<span style="font-style:italic">y</span>)&#XA0;+&#XA0;cos(<span style="font-style:italic">x</span>*<span style="font-style:italic">y</span>)
+</td></tr>
+</table><p>
+and
+</p><blockquote class="quote"><span style="font-family:monospace">diff(E,x $ 2)
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+&#X2212;<span style="font-style:italic">y</span><sup>2</sup>*sin(<span style="font-style:italic">x</span>*<span style="font-style:italic">y</span>)
+</td></tr>
+</table><p>If the second argument to <span style="font-family:monospace">diff</span> is a list, then a list of
+derivatives is returned. For example, to find the gradient of
+<span style="font-family:monospace">E</span>, you can enter
+</p><blockquote class="quote"><span style="font-family:monospace">diff(E,[x,y])
+</span></blockquote><p>
+and get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+[<span style="font-style:italic">y</span>*cos(<span style="font-style:italic">x</span>*<span style="font-style:italic">y</span>),<span style="font-style:italic">x</span>*cos(<span style="font-style:italic">x</span>*<span style="font-style:italic">y</span>)]
+</td></tr>
+</table><p>
+There is also a special <span style="font-family:monospace">grad</span> command for this, as well as
+commands for other types of special derivatives.</p>
+<h3 id="sec24" class="subsection">4.2&#XA0;&#XA0;Limits and series</h3>
+<div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Limits and series</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">limit</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >the limit of an expression</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">taylor</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >Taylor series</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">series</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >Taylor series</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">order_size</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >used in the remainder term of a series expansion</td></tr>
+</table>
+</div><p>
+<a id="hevea_default181"></a>
+<a id="hevea_default182"></a>
+<a id="hevea_default183"></a>
+<a id="hevea_default184"></a>
+<a id="hevea_default185"></a></p><p>The <span style="font-family:monospace">limit</span> function will take an expression, a variable and a
+point and return the limit at the point. If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">limit(sin(x)/x,x,0)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+1
+</td></tr>
+</table><p>
+<span style="font-family:monospace">Xcas</span> can also find limits at plus and minus infinity;
+</p><blockquote class="quote"><span style="font-family:monospace">limit(sin(x)/x,x,+infinity)
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+0
+</td></tr>
+</table><p>
+as well as limits of infinity;
+</p><blockquote class="quote"><span style="font-family:monospace">limit(1/x,x,0)
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+&#X221E;
+</td></tr>
+</table><p>
+which recall is unsigned infinity.
+An optional fourth argument can be used to find one-sided limits; if
+the fourth argument is <span style="font-family:monospace">1</span> it will be a right-handed limit and
+if the argument is <span style="font-family:monospace">-1</span> it will be a left-handed limit.
+Entering
+</p><blockquote class="quote"><span style="font-family:monospace">limit(1/x,x,0,-1)
+</span></blockquote><p>
+will result in
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+&#X2212;&#X221E;
+</td></tr>
+</table><p>Given an expression and a variable, the <span style="font-family:monospace">taylor</span> function will
+find the Taylor series of the expression. If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">taylor(sin(x)/x,x)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+1&#X2212;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span><sup>2</sup></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">6</td></tr>
+</table></td><td class="dcell">&#XA0;+&#XA0;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span><sup>4</sup></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">120</td></tr>
+</table></td><td class="dcell">&#XA0;+&#XA0;<span style="font-style:italic">x</span><sup>6</sup>*<span style="font-family:monospace">order_size</span>(<span style="font-style:italic">x</span>)
+</td></tr>
+</table><p>
+The <span style="font-family:monospace">series</span> function works the same as the <span style="font-family:monospace">taylor</span>
+function.</p><p>By default, <span style="font-family:monospace">taylor</span> will find the terms up to the fifth
+degree. The <span style="font-family:monospace">order_size(x)</span> represents a factor for which 
+for all <span style="font-style:italic">a</span>&gt;0, the term <span style="font-style:italic">x</span><sup><span style="font-style:italic">a</span></sup><span style="font-family:monospace">order_size</span>(<span style="font-style:italic">x</span>) will approach 0
+as <span style="font-style:italic">x</span> approaches 0. </p><p>The series returned by <span style="font-family:monospace">taylor</span> will also
+be centered about 0 by default; if you want to center it around the number
+<span style="font-family:monospace">a</span>, you can replace <span style="font-family:monospace">x</span> by <span style="font-family:monospace">x=a</span>;
+</p><blockquote class="quote"><span style="font-family:monospace">taylor(exp(x),x=1)
+</span></blockquote><p>
+will result in
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+exp(1)+exp(1)*(<span style="font-style:italic">x</span>&#X2212;1)+exp(1)*(<span style="font-style:italic">x</span>&#X2212;1)<sup>2</sup>/2+&#XA0;exp(1)*(<span style="font-style:italic">x</span>&#X2212;1)<sup>3</sup>/6+
+</td></tr>
+</table><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+exp(1)*(<span style="font-style:italic">x</span>&#X2212;1)<sup>4</sup>/24+exp(1)*(<span style="font-style:italic">x</span>&#X2212;1)<sup>5</sup>/120+(<span style="font-style:italic">x</span>&#X2212;1)<sup>6</sup>*<span style="font-family:monospace">order_size</span>(<span style="font-style:italic">x</span>&#X2212;1)
+</td></tr>
+</table><p>
+You can also give the center of the series with a third argument.
+To find the terms to a different you can add an extra argument
+giving the order;
+</p><blockquote class="quote"><span style="font-family:monospace">taylor(sin(x)/x,x=0,3)
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+1&#X2212;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span><sup>2</sup></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">6</td></tr>
+</table></td><td class="dcell">&#XA0;+&#XA0;<span style="font-style:italic">x</span><sup>4</sup>*<span style="font-family:monospace">order_size</span>(<span style="font-style:italic">x</span>)
+</td></tr>
+</table><p>
+Note that in this case you must explicitly give the center of the
+series, even if it is 0.</p><p>To find the Taylor polynomial, you can add an extra argument of
+<span style="font-family:monospace">polynom</span>;
+</p><blockquote class="quote"><span style="font-family:monospace">taylor(sin(x)/x,x,polynom)
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+1&#X2212;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span><sup>2</sup></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">6</td></tr>
+</table></td><td class="dcell">&#XA0;+&#XA0;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span><sup>4</sup></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">120</td></tr>
+</table></td></tr>
+</table>
+<h3 id="sec25" class="subsection">4.3&#XA0;&#XA0;Antiderivatives and integrals</h3>
+<div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Integrals</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">int</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >antiderivatives and exact integrals</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">romberg</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >approximation of integrals</td></tr>
+</table>
+</div><p>
+<a id="hevea_default186"></a>
+<a id="hevea_default187"></a>
+<a id="hevea_default188"></a>
+<a id="hevea_default189"></a></p><p>The <span style="font-family:monospace">int</span> function will find an antiderivative of an
+expression. By default, it will assume that the variable is <span style="font-style:italic">x</span>, to
+use another variable you can give it as an argument.
+</p><blockquote class="quote"><span style="font-family:monospace">int(x*sin(x))
+</span></blockquote><p>
+will result in
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+sin(<span style="font-style:italic">x</span>)&#XA0;&#X2212;&#XA0;<span style="font-style:italic">x</span>*cos(<span style="font-style:italic">x</span>)
+</td></tr>
+</table><p>
+and
+</p><blockquote class="quote"><span style="font-family:monospace">int(t*sin(t),t)
+</span></blockquote><p>
+will result in
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+sin(<span style="font-style:italic">t</span>)&#XA0;&#X2212;&#XA0;<span style="font-style:italic">t</span>*cos(<span style="font-style:italic">t</span>)
+</td></tr>
+</table><p>To compute a definite integral, you can give the limits of integration
+as arguments after the variable; to integrate <span style="font-style:italic">x</span>*sin(<span style="font-style:italic">x</span>) from <span style="font-style:italic">x</span>=0 to
+<span style="font-style:italic">x</span>=&#X3C0;, you can enter
+</p><blockquote class="quote"><span style="font-family:monospace">int(x*sin(x),x,0,pi)
+</span></blockquote><p>
+and get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+&#X3C0;
+</td></tr>
+</table><p>
+The limits of integration are allowed to be expressions; this can be
+useful when computing a multiple integral over a non-rectangular
+region. For example, you can integrate <span style="font-style:italic">x</span> <span style="font-style:italic">y</span> over the triangle 0 &#X2264;
+<span style="font-style:italic">x</span> &#X2264; 1, 0 &#X2264; <span style="font-style:italic">y</span> &#X2264; <span style="font-style:italic">x</span> with
+</p><blockquote class="quote"><span style="font-family:monospace">int(int(x*y,y,0,x),x,0,1)
+</span></blockquote><p>
+resulting in
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">8</td></tr>
+</table></td></tr>
+</table><p>The <span style="font-family:monospace">romberg</span> function will approximate the value of a definite
+integral, for cases when the exact value can&#X2019;t be computed or you
+don&#X2019;t want to compute it. For example,
+</p><blockquote class="quote"><span style="font-family:monospace">romberg(exp(-x^2),x,0,10)
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+0.886226925452
+</td></tr>
+</table>
+<h3 id="sec26" class="subsection">4.4&#XA0;&#XA0;Solving equations</h3>
+<p>
+<a id="solve"></a></p><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Solving equations</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">solve(eq,x)</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >exact solutions of an equation</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">solve([eq1,eq2],[x,y])</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >exact solutions of a system of equations</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">fsolve(eq,x)</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >approximate solution of an equation</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">fsolve([eq1,eq2],[x,y])</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >approximate solution of a system of equations</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">linsolve</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >solve a linear system</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">proot</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >approximate roots of a polynomial</td></tr>
+</table>
+</div><p>
+<a id="hevea_default190"></a>
+<a id="hevea_default191"></a>
+<a id="hevea_default192"></a>
+<a id="hevea_default193"></a></p><p>Solving equations is important, but it is often impossible to find
+exact solutions. <span style="font-family:monospace">Xcas</span> has the ability to find exact
+solutions in some cases and to approximate solutions.</p><p>The <span style="font-family:monospace">solve</span> function will attempt to find the exact solution of
+an equation that you give it. If you enter an expression that isn&#X2019;t
+an equation, it will try to solve for the expression equal to zero.
+By default, the variable will be <span style="font-style:italic">x</span>, but you can give a different
+variable as a second argument. If you enter 
+</p><blockquote class="quote"><span style="font-family:monospace">solve(x^3 -2*x^2 + 1=0, x)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+</td><td class="dcell">&#X23A1;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A3;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X2212;(</td><td class="dcell"><span style="font-size:x-large">&#X221A;</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >5</td></tr>
+</table></td><td class="dcell">)+1</td></tr>
+</table></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">,1,</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">&#X221A;</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >5</td></tr>
+</table></td><td class="dcell">+1</td></tr>
+</table></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">&#X23A4;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A6;</td></tr>
+</table><p>
+By default, <span style="font-family:monospace">solve</span> will only try to find real solutions; if
+you enter
+</p><blockquote class="quote"><span style="font-family:monospace">solve(x^3+1=0,x)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+[&#X2212;1]
+</td></tr>
+</table><p>
+You can configure <span style="font-family:monospace">Xcas</span> to find complex solutions (see
+section <a href="tutoriel003.html#config">2.3</a>, &#X201C;Configuration&#X201D;). If you do that,
+then entering
+</p><blockquote class="quote"><span style="font-family:monospace">solve(x^3+1=0,x)
+</span></blockquote><p>
+will result in
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+</td><td class="dcell">&#X23A1;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A3;</td><td class="dcell">&#X2212;1,</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X2212;</td><td class="dcell"><span style="font-size:x-large">&#X221A;</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >3</td></tr>
+</table></td><td class="dcell">*<span style="font-style:italic">i</span>+1</td></tr>
+</table></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">,</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">&#X221A;</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >3</td></tr>
+</table></td><td class="dcell">*<span style="font-style:italic">i</span>+1</td></tr>
+</table></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">&#X23A4;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A6;</td></tr>
+</table><p>For linear and quadratic functions, <span style="font-family:monospace">solve</span> will always return
+the exact solution. For higher degree polynomials, <span style="font-family:monospace">solve</span>
+will try some approaches, but may return intermediate results or
+approximate solutions. (It doesn&#X2019;t use the Cardan and Ferrari
+formulas for polynomials of degrees 3 and 4, since the solutions would
+then not be easily managable.)</p><p>For trigonometric equations, the primary solutions are returned. For
+example,
+</p><blockquote class="quote"><span style="font-family:monospace">solve(cos(x) + sin(x) = 0, x)
+</span></blockquote><p>
+will result in
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+</td><td class="dcell">&#X23A1;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A3;</td><td class="dcell">&#X2212;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">&#X3C0;</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">4</td></tr>
+</table></td><td class="dcell">,</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">3*&#X3C0;</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">4</td></tr>
+</table></td><td class="dcell">&#X23A4;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A6;</td></tr>
+</table><p>
+You can configure <span style="font-family:monospace">Xcas</span> to find all solutions (see section
+<a href="tutoriel003.html#config">2.3</a>, &#X201C;Configuration&#X201D;). If you do that, then
+</p><blockquote class="quote"><span style="font-family:monospace">solve(cos(x) + sin(x) = 0, x)
+</span></blockquote><p>
+will result in
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+</td><td class="dcell">&#X23A1;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A3;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">4*<span style="font-style:italic">n</span><sub>0</sub>*&#X3C0;&#X2212;&#X3C0;</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">4</td></tr>
+</table></td><td class="dcell">&#X23A4;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A6;</td></tr>
+</table><p>
+where <span style="font-style:italic">n</span><sub>0</sub> represents an arbitrary integer.</p><p>The <span style="font-family:monospace">solve</span> function can also handle systems of equations.
+For this, use a list of equations for the first argument and a list of
+variables for the second. If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">solve([x^2 + y - 2, x + y^2 - 2],[x,y])
+</span></blockquote><p>
+you will get all four solutions as a matrix; each row represents one
+solution.
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+
+</td><td class="dcell">&#X23A1;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A2;<br>
+&#X23A3;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >1,</td><td style="text-align:center;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >&#X2212;2,</td><td style="text-align:center;white-space:nowrap" >&#X2212;2</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><table class="display"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">&#X221A;</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >5</td></tr>
+</table></td><td class="dcell">+1</td></tr>
+</table></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">,</td></tr>
+</table></td><td style="text-align:center;white-space:nowrap" ><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X2212;</td><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">&#X221A;</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >5</td></tr>
+</table></td><td class="dcell">+1</td></tr>
+</table></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X239F;<br>
+&#X23A0;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left">2</td></tr>
+<tr><td class="dcell" style="text-align:left"><br>
+<br>
+<br>
+</td></tr>
+<tr><td class="dcell" style="text-align:left">&nbsp;</td></tr>
+</table></td><td class="dcell">&#XA0;+&#XA0;2</td></tr>
+</table></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><table class="display"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X2212;(</td><td class="dcell"><span style="font-size:x-large">&#X221A;</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >5</td></tr>
+</table></td><td class="dcell">)+1</td></tr>
+</table></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">,</td></tr>
+</table></td><td style="text-align:center;white-space:nowrap" ><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X2212;</td><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X2212;(</td><td class="dcell"><span style="font-size:x-large">&#X221A;</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >5</td></tr>
+</table></td><td class="dcell">)+1</td></tr>
+</table></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X239F;<br>
+&#X23A0;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left">2</td></tr>
+<tr><td class="dcell" style="text-align:left"><br>
+<br>
+<br>
+</td></tr>
+<tr><td class="dcell" style="text-align:left">&nbsp;</td></tr>
+</table></td><td class="dcell">&#XA0;+&#XA0;2
+</td></tr>
+</table></td></tr>
+</table></td><td class="dcell">&#X23A4;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A5;<br>
+&#X23A6;</td></tr>
+</table><p>To approximate a solution to an equation or system of equations,
+<span style="font-family:monospace">Xcas</span> provides the <span style="font-family:monospace">fsolve</span> command. If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">fsolve(x^3 -3*x + 1,x)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+[&#X2212;1.87938524157,0.347296355334,1.53208888624]
+</td></tr>
+</table><p>
+Algorithms for approximating solutions of equations 
+typically involve starting with a given point and finding a sequence
+which converges to a solution. The <span style="font-family:monospace">fsolve</span> command can take
+a starting point, if you enter
+</p><blockquote class="quote"><span style="font-family:monospace">fsolve(x^3 -3*x + 1,x,1)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+0.347296355334
+</td></tr>
+</table>
+<h3 id="sec27" class="subsection">4.5&#XA0;&#XA0;Differential equations</h3>
+<div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Commands for differential equations</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">desolve</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >exact solution</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">odesolve</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >approximate solution</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">plotode</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >graph of solution</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">plotfield</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >vector field</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">interactive_plotode</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >clickable interface</td></tr>
+</table>
+</div><p>
+<a id="hevea_default194"></a>
+<a id="hevea_default195"></a>
+<a id="hevea_default196"></a>
+<a id="hevea_default197"></a>
+<a id="hevea_default198"></a></p><p>The <span style="font-family:monospace">desolve</span> command is used to try to find exact solutions of
+differential equations. The first argument is the differential
+equation itself, the second argument is the function. The derivative
+of an unknown function <span style="font-style:italic">y</span> is denoted <span style="font-family:monospace">diff(y)</span>, which can be
+abbreviated <span style="font-family:monospace">y&#X2019;</span>. The second derivative will be
+<span style="font-family:monospace">diff(diff(y))</span> or <span style="font-family:monospace">y&#X2019;&#X2019;</span>, etc.
+If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">desolve(x^2*y&#X2019; = y,y)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+<span style="font-style:italic">c</span><sub>0</sub>&#XA0;*&#XA0;exp(&#X2212;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span></td></tr>
+</table></td><td class="dcell">)
+</td></tr>
+</table><p>
+where <span style="font-style:italic">c</span><sub>0</sub> is an arbitrary constant. By default the variable is <span style="font-style:italic">x</span>,
+if you want to use a different variable, put it in the function in the
+second argument;
+</p><blockquote class="quote"><span style="font-family:monospace">desolve(t^2*y&#X2019; = y,y(t))
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+<span style="font-style:italic">c</span><sub>0</sub>&#XA0;*&#XA0;exp(&#X2212;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">t</span></td></tr>
+</table></td><td class="dcell">)
+</td></tr>
+</table><p>If you want to solve a differential equation with initial conditions,
+the first argument should be a list with the differential equation and
+the conditions. If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">desolve([y&#X2019;&#X2019; + 2*y&#X2019; + y = 0, y(0) = 1, y&#X2019;(0) = 2],y)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+exp(&#X2212;<span style="font-style:italic">x</span>)*(3*<span style="font-style:italic">x</span>+1)
+</td></tr>
+</table><p>To solve a differential equation numerically, you can use the
+<span style="font-family:monospace">odesolve</span> command. This will allow you to solve the equation
+<span style="font-style:italic">y</span>&#X2032;=<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>) where the graph passes through a point (<span style="font-style:italic">x</span><sub>0</sub>,<span style="font-style:italic">y</span><sub>0</sub>). The
+command
+</p><blockquote class="quote"><span style="font-family:monospace">odesolve(f(x,y),[x,y],[x_0,y_0],a)
+</span></blockquote><p>
+will find <span style="font-style:italic">y</span>(<span style="font-style:italic">a</span>) in this case. For example, to calculate <span style="font-style:italic">y</span>(2) where
+<span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>) is the solution of <span style="font-style:italic">y</span>&#X2032;(<span style="font-style:italic">x</span>) =sin(<span style="font-style:italic">xy</span>) with <span style="font-style:italic">y</span>(0)=1, you can
+enter
+</p><blockquote class="quote"><span style="font-family:monospace">odesolve(sin(x*y),[x,y],[0,1],2)
+</span></blockquote><p>
+The result will be 
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+[1.82241255674]
+</td></tr>
+</table><p>
+The <span style="font-family:monospace">plotode</span> command will plot the graph of the solution; if
+you enter
+</p><blockquote class="quote"><span style="font-family:monospace">plotode(sin(x*y),[x,y],[0,1])
+</span></blockquote><p>
+you will get
+</p><div class="center">
+<img src="tutoriel006.png">
+</div><p>
+The <span style="font-family:monospace">plotfield</span> command will plot the entire vector field;
+</p><blockquote class="quote"><span style="font-family:monospace">plotfield(sin(x*y),[x,y])
+</span></blockquote><p>
+will result in
+</p><div class="center">
+<img src="tutoriel007.png">
+</div><p>
+If you use the <span style="font-family:monospace">interactive_odeplot</span> command, you will get the
+vector field and you will be able to click on a point to find the
+graph of the solution passing through the point.</p>
+<hr>
+<a href="tutoriel004.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel006.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

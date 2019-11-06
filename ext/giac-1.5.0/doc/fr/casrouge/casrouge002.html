@@ -1,0 +1,1261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Les différentes instructions selon le mode choisi</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casrouge001.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge003.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc13">Chapitre 2</A>  Les différentes instructions selon le mode choisi</H1><P>
+<TT>Xcas</TT> propose un mode de compatibilité avec <TT>Maple</TT>, <TT>MuPAD</TT> et 
+la <TT>TI89/92</TT> :<BR>
+pour cela, il suffit de le spécifier dans <TT>Prog style</TT> du menu de 
+configuration du <TT>cas</TT> (bouton <TT>Config</TT> ou menu
+<TT>Cfg-&gt;Configuration du CAS</TT>) ou avec le menu 
+<TT>Cfg-&gt;Mode (syntax)</TT>. On peut choisir, en 
+cliquant sur la flèche située à coté de <TT>Prog style</TT> : <TT>Xcas</TT>
+ou <TT>Maple</TT> ou <TT>MuPAD</TT> ou <TT>TI89/92</TT>.<BR>
+On a aussi la possibilité d’importer une session <TT>Maple</TT>
+ou une archive <TT>TI89/92</TT> en choisissant 
+<TT>Importer</TT> du menu <TT>Fich</TT>, ou importer dans
+un niveau éditeur de programmes un fichier écrit
+en syntaxe <TT>Maple</TT>, <TT>Mupad</TT> ou <TT>TI89/92</TT>
+par le menu <TT>Prog-&gt;Inserer</TT>.</P><P>On présente ici le mode <TT>Xcas</TT> qui est proche de la syntaxe <TT>C</TT>.
+On a aussi la possibilité d’avoir toutes les instructions en français de
+façon à être proche du langage Algorithmique.</P><H2 CLASS="section"><A NAME="toc6"></A><A NAME="htoc14">2.1</A>  Les commentaires</H2><H3 CLASS="subsection"><A NAME="htoc15">2.1.1</A>  Traduction Algorithmique</H3><P>
+Il faut prendre l’habitude de commenter les programmes. 
+En algorithmique un commentaire commence par 
+<TT>// </TT> et se termine par un passage à la ligne.<BR>
+Exemple :<BR>
+//ceci est un commentaire 
+</P><H3 CLASS="subsection"><A NAME="htoc16">2.1.2</A>  Traduction Xcas</H3><P>
+Avec <TT>Xcas</TT> un commentaire commence par 
+<TT>// </TT> et se termine par un passage à la ligne.<BR>
+Exemple :<BR>
+//ceci est un commentaire 
+</P><H3 CLASS="subsection"><A NAME="htoc17">2.1.3</A>  Traduction MapleV</H3><P>
+Un commentaire commence par <TT>#</TT> et se termine par un passage à la 
+ligne.<BR>
+Exemple :<BR>
+# ceci est un commentaire 
+</P><H3 CLASS="subsection"><A NAME="htoc18">2.1.4</A>  Traduction MuPAD</H3><P>
+Un commentaire est entouré de deux <TT>#</TT> ou 
+commence par <TT>/*</TT> et se termine par <TT>*/</TT>.<BR>
+Exemple :<BR>
+# ceci est un commentaire #<BR>
+/* ceci est un commentaire */
+</P><H3 CLASS="subsection"><A NAME="htoc19">2.1.5</A>  Traduction TI89 92</H3><P>
+Le commentaire commence par
+<TT>©</TT> (F2 9) et se termine par un passage à la ligne.<BR>
+Exemple :<BR>
+© ceci est un commentaire<BR>
+</P><H2 CLASS="section"><A NAME="toc7"></A><A NAME="htoc20">2.2</A>  Les variables</H2><P><A NAME="sec:var2"></A>
+Voir aussi <A HREF="casrouge001.html#sec:var1">1.5.3</A>
+</P><H3 CLASS="subsection"><A NAME="htoc21">2.2.1</A>  Leurs noms</H3><P><A NAME="@default11"></A><A NAME="@default12"></A><A NAME="@default13"></A><A NAME="@default14"></A>
+Ce sont les endroits où l’on peut stocker des valeurs, des nombres, des 
+expressions.<BR>
+Avec <TT>Xcas</TT> les noms des variables ou des fonctions commencent par une 
+lettre et sont formés par des lettres ou des chiffres.<BR>
+Par exemple :<BR>
+<TT>azertyuiop:=2</TT> met la valeur 2 dans la variable <TT>azertyuiop</TT><BR>
+<TT>azertyuio?:=1</TT> renvoie un message d’erreur car <TT>azertyuio?</TT> contient
+<TT>?</TT> qui n’est pas une lettre.<BR>
+Étant donné que <TT>Xcas</TT> fait du calcul formel il faut quelquefois purger 
+une variable <TT>var</TT> pour qu’elle redevienne formelle avec la commande
+<TT>purge(var)</TT> ou encore utiliser la commande <TT>assume(var,symbol)</TT> pour 
+que <TT>var</TT> redevienne formelle.<BR>
+On tape :<BR>
+<TT>x:=2;</TT>
+<TT>x</TT> contient <TT>2</TT> et n’est pas formelle.<BR>
+On tape :<BR>
+<TT>purge(x)</TT> : cela renvoie la valeur <TT>x</TT> si <TT>x</TT> est 
+affecté et <TT>x</TT> redevient une variable formelle, et, si <TT>x</TT> n’est 
+pas affecté <TT>purge(x)</TT> renvoie <TT>"x not assigned"</TT>.<BR>
+ou bien, on tape :<BR>
+<TT>assume(x,symbol)</TT><BR>
+et cela renvoie dans tous les cas <TT>DOM_SYMBOLIC</TT>.<BR>
+Avec <TT>MapleV</TT> et <TT>MuPAD</TT>, un nom doit commencer par une lettre, ne pas contenir d’espace, de symbole 
+opératoire (+, -, ...) et ne pas être un mot réservé comme D, I, ... pour <TT>MapleV</TT>.<BR>
+On peut utiliser des noms ayant plus de 8 caractères.<BR>
+Pour <TT>TI89/92</TT> un nom doit commencer par une lettre, ne pas contenir
+d’espace, de symbole opératoire (+, -, ...), ne pas être un mot 
+réservé et ne doit pas avoir plus de 8 caractères.
+</P><H3 CLASS="subsection"><A NAME="htoc22">2.2.2</A>  Notion de variables locales</H3><P><A NAME="@default15"></A>
+Pour <TT>Xcas</TT> il faut définir les variables locales en début de programme
+en écrivant :<BR>
+<TT>local a,b,c;</TT><BR>
+<B>Attention</B><BR>
+Dans un programme toutes les variables sont des variables qui sont initialisées par défaut à <TT>0</TT>.<BR>
+Mais ces variables peuvent être initialisées au moment de leur 
+déclaration avec <TT>local</TT>, par exemple :
+<TT>local a,(b:=1),c;</TT><BR>
+<B>Remarque</B><BR>
+<TT>Xcas</TT> accepte qu’il y ait plusieurs <TT>local</TT> dans un programme, par 
+exemple :
+</P><PRE CLASS="verbatim">essailoc(n):={
+local s:=0;
+local j;
+for (j:=1;j&lt;=n;j++){
+s:=s+1/j;
+}
+return s;
+}
+</PRE><P>Pour <TT>MapleV</TT>, il faut définir les variables locales en début 
+de programme en écrivant :<BR>
+<TT>local a,b</TT><BR>
+Pour <TT>MuPAD</TT>, il faut définir les variables locales en début de programme en écrivant :<BR>
+<TT>local a,b</TT><BR>
+Pour la <TT>TI89/92</TT> il faut définir les variables locales en début de programme en écrivant :<BR>
+<TT>:local a,b</TT><BR>
+</P><H2 CLASS="section"><A NAME="toc8"></A><A NAME="htoc23">2.3</A>  Les paramètres</H2><P>
+Quand on écrit une fonction il est possible d’utiliser des paramètres.<BR>
+Par exemple si <TT>A</TT> et <TT>B</TT> sont les paramètres de la fonction <TT>PGCD</TT> on écrit :<BR>
+<TT>PGCD(A,B)</TT><BR>
+Ces paramètres se comportent comme des variables locales, la seule 
+différence est qu’ils sont initialisés lors de l’appel de la fonction. 
+L’exécution se fait en demandant par exemple :
+<TT>PGCD(15,75)</TT><BR>
+</P><H3 CLASS="subsection"><A NAME="htoc24">2.3.1</A>  Traduction Xcas</H3><P>
+Avec <TT>Xcas</TT> on peut définir une fonction :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+en lui donnant un nom :<BR>
+ on met alors le nom de la fonction puis, entre parenthèses et séparés 
+par une virgule, le nom des paramètres, 
+par exemple :<BR>
+<TT>addition(a,b):=a+b</TT>;<BR>
+L’exécution se fera alors en tapant : <TT>addition(2,5)</TT>.<BR>
+</LI><LI CLASS="li-itemize">en mettant le nom des paramètres entre parenthèses puis <TT>-&gt;</TT>
+puis entre des accolades le corps de la fonction, par exemple :<BR>
+<TT>(a,b)-&gt;</TT><TT>a+b;</TT>.<BR>
+cette façon d’écrire une fonction peut être utile quand on doit mettre 
+une fonction comme argument d’une commande par exemple :<BR>
+<TT>makelist((j)-&gt;j</TT><CODE><TT>^</TT></CODE><TT>2+1,1..3)</TT> ou<BR>
+<TT>makelist((j)-&gt;j</TT><CODE><TT>^</TT></CODE><TT>2+1,1..9,2)</TT>.<BR>
+<B>Remarque</B><BR>
+Le langage de <TT>Xcas</TT> est fonctionnel puisque on peut 
+passer des programmes ou des fonctions en paramètre.<BR>
+</LI></UL><P>
+Autre exemple :
+</P><PRE CLASS="verbatim">pgcd(a,b):={
+  local r; 
+  while (b!=0){
+  r:=irem(a,b);
+  a:=b;
+  b:=r;
+  } 
+  return(a);
+};
+</PRE><P>ou encore :
+</P><PRE CLASS="verbatim">pgcd:=(a,b)-&gt; {
+  local r; 
+  while (b!=0){
+  r:=irem(a,b);
+  a:=b;
+  b:=r;
+  } 
+  return(a);
+};
+</PRE><P>L’exécution se fera alors en tapant : <TT>pgcd(15,75)</TT>.<BR>
+
+</P><H3 CLASS="subsection"><A NAME="htoc25">2.3.2</A>  Traduction MapleV</H3><P>
+<TT>PGCD:=proc(A,B)</TT><BR>
+....<BR>
+....<BR>
+<TT>end:</TT><BR>
+<B>Attention</B><BR>
+Ces paramètres NE se comportent PAS comme des variables locales : ils sont 
+initialisés lors de l’appel de la fonction mais ne peuvent pas être
+changés au cours de la procédure. 
+L’exécution se fait en demandant par exemple :
+<TT>PGCD(15,75)</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc26">2.3.3</A>  Traduction MuPAD</H3><P>
+<TT>PGCD:=proc(A,B)</TT><BR>
+<TT>begin</TT><BR>
+....<BR>
+<TT>end_proc:</TT><BR>
+
+Ces paramètres se comportent comme des variables locales, la seule différence 
+est qu’ils sont initialisés lors de l’appel de la fonction. 
+L’exécution se fait en demandant par exemple :
+<TT>PGCD(15,75)</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc27">2.3.4</A>  Traduction TI89/92</H3><P>
+Pour les <TT>TI 89/92</TT> on met le nom des paramètres dans le nom de la 
+fonction par exemple :<BR>
+<TT>:addition(a,b)</TT><BR>
+<TT>:pgcd(a,b)</TT><BR>
+</P><H2 CLASS="section"><A NAME="toc9"></A><A NAME="htoc28">2.4</A>  Les Entrées</H2><P><A NAME="@default16"></A><A NAME="@default17"></A>
+</P><H3 CLASS="subsection"><A NAME="htoc29">2.4.1</A>  Traduction Algorithmique</H3><P>
+Pour que l’utilisateur puisse entrer une valeur dans la variable <TT>A</TT> au 
+cours de l’exécution d’un programme, on écrira, en algorithmique :<BR>
+<TT>saisir A</TT><BR>
+Et pour entrer des valeurs dans <TT>A</TT> et <TT>B</TT> on écrira :<BR>
+<TT>saisir A,B</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc30">2.4.2</A>  Traduction Xcas</H3><P>
+On écrit :<BR>
+<TT>input(A);</TT><BR>
+ou<BR>
+<TT>saisir(A);</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc31">2.4.3</A>  Traduction MapleV</H3><P>
+On peut utiliser :<BR>
+<TT>A := readline() ;</TT> ou<BR>
+<TT>A:=readstat(’A=?’);</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc32">2.4.4</A>  Traduction MuPAD</H3><P>
+<TT>input("A=",A)</TT><BR>
+<TT>input("A=",A,"B=",B )</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc33">2.4.5</A>  Traduction TI89/92</H3><P>
+<TT>:Prompt A</TT><BR>
+<TT>:Prompt A,B</TT><BR>
+ou encore :<BR>
+<TT>:Input ‘‘A=’’,A</TT>
+</P><H2 CLASS="section"><A NAME="toc10"></A><A NAME="htoc34">2.5</A>  Les Sorties</H2><P><A NAME="@default18"></A><A NAME="@default19"></A>
+</P><H3 CLASS="subsection"><A NAME="htoc35">2.5.1</A>  Traduction Algorithmique</H3><P>
+En algorithmique on écrit :<BR>
+<TT>afficher A</TT><BR>
+ou si on veut connaitre le nom de la variable qui est affichée<BR>
+<TT>afficher "A=",A</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc36">2.5.2</A>  Traduction Xcas</H3><P>
+On écrit :<BR>
+<TT>A:=2;B:=3;</TT><BR>
+<TT>print(A);</TT><BR>
+ou<BR>
+<TT>afficher(A);</TT><BR>
+On obtient, en bleu dans la zone intermédaire <TT>2,3</TT><BR>
+<TT>print(A,B);</TT><BR>
+ou<BR>
+<TT>afficher(A,B);</TT><BR>
+On obtient, en bleu dans la zone intermédaire <TT>2,3</TT><BR>
+
+ou encore<BR>
+<TT>print("A=",A);</TT><BR>
+ou<BR>
+<TT>afficher("A=",A);</TT>
+On obtient, en bleu dans la zone intermédaire <TT>"A=",2</TT><BR>
+ou encore<BR>
+<TT>print("A="+A);</TT><BR>
+ou<BR>
+<TT>afficher("A="+A);</TT>
+On obtient, en bleu dans la zone intermédaire <TT>A=2</TT><BR>
+<TT>print("A=",A,"B=",B);</TT><BR>
+ou<BR>
+<TT>afficher("A=",A,"B=",B);</TT>
+On obtient, en bleu dans la zone intermédaire <TT>"A=",2,"B=",3</TT><BR>
+<TT>print</TT> ou <TT>afficher</TT> permet de réaliser des affichages en cours de 
+programmme.<BR>
+Ces affichages s’écriront alors en bleu dans la zone intermédaire .<BR>
+On tape par exemple dans un niveau éditeur de programmes (que l’on ouvre avec
+<TT>Alt+p</TT>) :
+</P><PRE CLASS="verbatim">carres(n):={
+local j;
+for (j:=1;j&lt;n+1;j++) {
+print(j^2);
+}
+return n^2;
+}
+</PRE><P>Puis on complile ce programme en cliquant sur <TT>OK</TT>.<BR>
+On tape ensuite dans une ligne de commandes :
+<TT>carres(5)</TT><BR>
+On obtient :<BR>
+<TT>1<BR>
+4<BR>
+9<BR>
+16<BR>
+25</TT><BR>
+ écrit en bleu dans la zone intermédaire<BR>
+et<BR>
+<TT>25</TT><BR>
+ le résultat écrit en noir dans la zone des réponses.
+</P><H3 CLASS="subsection"><A NAME="htoc37">2.5.3</A>  Traduction MapleV</H3><P>
+<TT>print(‘A=‘.A):</TT><BR>
+On préférera <TT>‘</TT> (accent grave) à <TT>"</TT> (guillemet), comme délimiteur de chaîne, car le premier n’est pas affiché, alors que le deuxième l’est.
+</P><H3 CLASS="subsection"><A NAME="htoc38">2.5.4</A>  Traduction MuPAD</H3><P>
+<TT>print("A=",A)</TT><BR>
+Il fait savoir que lorsqu’une procèdure est appelée, la suite d’instructions entre 
+<TT>begin</TT> et <TT>end_proc</TT> est exécutée, et le résultat est égal au
+résultat de la dernière évaluation.
+</P><H3 CLASS="subsection"><A NAME="htoc39">2.5.5</A>  Traduction TI89/92</H3><P>
+<TT>:Disp "A=",A</TT><BR>
+<TT>:ClrIO</TT> efface l’écran.<BR>
+<TT>:ClrHome</TT> efface l’écran pour la <TT>TI 83+</TT>.<BR>
+<TT>:Pause</TT> arrête le programme (on appuie sur <TT>ENTER</TT> pour reprendre l’exécution).
+</P><H2 CLASS="section"><A NAME="toc11"></A><A NAME="htoc40">2.6</A>  La séquence d’instructions ou action ou bloc</H2><P><A NAME="@default20"></A>
+Une <TT>action</TT> ou <TT>bloc</TT> est une séquence d’une ou plusieurs 
+instructions.<BR>
+En langage algorithmique, on utilisera l’espace ou le passage à la ligne 
+pour terminer une instruction.
+</P><H3 CLASS="subsection"><A NAME="htoc41">2.6.1</A>  Traduction Xcas</H3><P>
+Avec <TT>Xcas</TT> la séquence d’instructions est parenthèsées par 
+<TT>{ }</TT>. La séquence d’instructions est appelée un <TT>bloc</TT> ou une 
+<TT>action</TT> et <TT>;</TT> termine chaque instruction.
+Seule la dernière instruction d’un programme génére la réponse. Si on 
+veut des sorties intermédiaires il faudra le faire à l’aide de la commade 
+<TT>print</TT> ou <TT>afficher</TT> et ces sorties se feront alors avant 
+la réponse, dans la zone intermédaire en écriture bleue.<BR>
+Par exemple si on écrit dans un niveau éditeur de programmes 
+(que l’on ouvre avec <TT>Alt+p</TT>) :
+</P><PRE CLASS="verbatim">pgcd(a,b):={
+  local r; 
+  while (b!=0){
+  r:=irem(a,b);
+  print(r);
+  a:=b;
+  b:=r;
+  } 
+  return(a);
+};
+</PRE><P>On compile en appuyant sur <TT>OK</TT> et on tape :<BR>
+<TT>pgcd(15,25)</TT><BR>
+On obtient :<BR>
+ <TT>5</TT> comme réponse et :<BR>
+<TT>r:15</TT><BR>
+<TT>r:10</TT><BR>
+<TT>r:5</TT><BR>
+<TT>r:0</TT><BR>
+s’écrivent en bleu dans un écran appelé zone intermédaire qui se met 
+avant la réponse.<BR>
+Si la dernière instruction est géométrique, elle 
+génère une sortie dans unécran géométrique. Les instructions 
+<TT>print</TT> ou <TT>afficher</TT> se feront alors en bleu dans la zone 
+intermédaire située avant l’écran géométrique où se trouve la 
+réponse. Mais les instructions géométriques intermédiaires se feront 
+dans l’écran <TT>DispG</TT> qui est un écran géométrique que l’on obtient 
+avec la commande <TT>DispG()</TT> ou avec le menu <TT>Cfg-&gt;Montrer-&gt;DispG</TT>.<BR>
+Par exemple si on écrit dans un niveau éditeur de programmes (que l’on ouvre avec <TT>Alt+p</TT>) :
+</P><PRE CLASS="verbatim">pgcdg(a,b):={
+  local r; 
+  while (b!=0){
+  r:=irem(a,b);
+  print(r);
+  point(a+i*b);
+  segment(a+i*b,b+i*r);
+  a:=b;
+  b:=r;
+  } 
+  return(point(a+i*b));
+};
+</PRE><P>On compile en appuyant sur <TT>OK</TT> et on tape :<BR>
+<TT>A:=pgcdg(15,25)</TT><BR>
+On obtient :<BR>
+Un écran de graphique s’ouvre avec le point <TT>A</TT> de coordonnées (0;5) 
+et :<BR>
+<TT>r:15</TT><BR>
+<TT>r:10</TT><BR>
+<TT>r:5</TT><BR>
+<TT>r:0</TT><BR>
+s’écrivent en bleu dans un écran appelé zone intermédaire qui se met 
+avant l’écran de géométrie.<BR>
+On ouvre l’écran géométrique <TT>DispG</TT> (avec la commande <TT>DispG()</TT> 
+ou avec le menu <TT>Cfg-&gt;Montrer-&gt;DispG</TT>)
+Sur l’écran <TT>DispG</TT> il y a les différents segments et les points (sans 
+la lettre <TT>A</TT>) 
+Pour tout voir, vous devez soit appuyer sur le bouton <TT>auto</TT> de l’écran 
+<TT>DispG</TT>, soit changer la configuration avec le bouton <TT>cfg</TT> de 
+l’écran <TT>DispG</TT>.
+</P><H3 CLASS="subsection"><A NAME="htoc42">2.6.2</A>  Traduction MapleV</H3><P>
+<TT> : </TT> ou <TT> ; </TT> indique la fin d’une instruction.<BR>
+Une instruction terminée par point-virgule ( <TT> ; </TT> ) génére une sortie et celle 
+terminée par deux points ( <TT> : </TT> ) n’en génére pas.
+</P><H3 CLASS="subsection"><A NAME="htoc43">2.6.3</A>  Traduction MuPAD</H3><P>
+Le <TT> : </TT> ou <TT> ; </TT> est un séparateur d’ instructions.<BR>
+Le <TT> ; </TT> génére une sortie alors que le <TT> : </TT> n’en génére 
+pas.
+</P><H3 CLASS="subsection"><A NAME="htoc44">2.6.4</A>  Traduction TI89/92</H3><P>
+<TT>:</TT> indique la fin d’une instruction. Il faut noter qu’à chaque passage à la ligne le <TT>:</TT> est mis automatiquement.</P><H2 CLASS="section"><A NAME="toc12"></A><A NAME="htoc45">2.7</A>  L’instruction d’affectation</H2><P><A NAME="@default21"></A><A NAME="@default22"></A>
+L’affectation est utilisée pour stocker une valeur ou une expression dans 
+une variable.
+</P><H3 CLASS="subsection"><A NAME="htoc46">2.7.1</A>  Traduction Algorithmique</H3><P>
+En algorithmique on écrira par exemple :<BR>
+<TT>3=&gt;A</TT><BR>
+<TT>2*A=&gt;B</TT><BR>
+pour stocker <TT>3</TT> dans <TT>A</TT>, <TT>2*A</TT> (c’est à dire 6) dans <TT>B</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc47">2.7.2</A>  Traduction Xcas</H3><P>
+Avec <TT>Xcas</TT> on écrira :<BR>
+<TT>a:=3;</TT><BR>
+<TT>b:=2*a;</TT><BR>
+ou encore<BR>
+<TT>3=&gt;a;</TT><BR>
+<TT>2*a=&gt;b;</TT><BR>
+pour stocker <TT>3</TT> dans <TT>a</TT>, <TT>2*a</TT> (c’est à dire 6) dans <TT>b</TT></P><P>En tapant le nom d’une variable dans <TT>Xcas</TT> on peut voir le contenu de 
+cette variable. Si on tape le nom d’une fonction, on verra la définition de 
+la fonction.<BR>
+<B>Attention</B><BR>
+On peut écrire :<BR>
+<TT>(a,b):=(1,2)</TT> ou <TT>(a,b):=[1,2]</TT> ou <TT>[a,b]:=[1,2]</TT>
+ou <TT>[a,b]:=(1,2)</TT> qui est équivalent à <TT>a:=1;b:=2</TT><BR>
+c’est à dire ici à <TT>a:=1;b:=2</TT> mais<BR>
+<TT>a:=1;b:=2; (a,b):=(a+b,a-b)</TT> est équivalent à 
+<TT>c:=a;a:=a+b;b:=c-b</TT> donc ici à <TT>a:=3;b:=-1</TT><BR>
+Donc si on tape :<BR>
+<TT>(a,b):=(1,2);(a,b):=(a+b,a-b)</TT><BR>
+On obtient :<BR>
+<TT>3</TT> dans <TT>a</TT> et <TT>-1</TT> dans <TT>b</TT><BR>
+Donc si on tape :<BR>
+<TT>a:=1;(a,b):=(2,a)</TT> 
+On obtient :<BR>
+<TT>2</TT> dans <TT>a</TT> et <TT>1</TT> dans <TT>b</TT><BR>
+mais <TT>purge(a);(a,b):=(2,a)</TT><BR>
+On obtient :<BR>
+<TT>2</TT> dans <TT>a</TT> et <TT>2</TT> dans <TT>b</TT><BR>
+Donc méfiance ....et utiliser <TT>(a,b):=(b,a)</TT> qu’avec prudence !</P><H3 CLASS="subsection"><A NAME="htoc48">2.7.3</A>  Traduction Maple</H3><P>
+Avec <TT>Maple</TT> on écrit :<BR>
+<TT>b:=2*a</TT> pour stocker <TT>2*a</TT> dans <TT>b</TT>.
+</P><H3 CLASS="subsection"><A NAME="htoc49">2.7.4</A>  Traduction MuPAD</H3><P>
+Avec <TT>MuPAD</TT> on écrit :<BR>
+<TT>b:=2*a</TT> pour stocker <TT>2*a</TT> dans <TT>b</TT>.
+</P><H3 CLASS="subsection"><A NAME="htoc50">2.7.5</A>  Traduction TI89/92</H3><P>
+On écrit <TT>2*A=&gt;B</TT> pour stocker 2*A dans B.
+</P><H2 CLASS="section"><A NAME="toc13"></A><A NAME="htoc51">2.8</A>  L’instruction d’affectation par référence</H2><P><A NAME="@default23"></A>
+L’affectation <TT>:=</TT> est utilisée pour stocker une valeur ou une 
+expression dans une variable. Mais lorsque <TT>Xcas</TT> réalise cette 
+affectation il effectue une recopie de la valeur dans la variable ce qui peut 
+être long lorsqu’il s’agit d’une liste de grande taille. C’est pourquoi 
+quand la variable contient une liste, avec <TT>Xcas</TT>, il faut utiliser 
+l’opérateur infixé <TT>=&lt;</TT> qui stocke par référence le deuxième 
+argument dans la variable donnée en premier argument.<BR>
+On tape par exemple :<BR>
+<TT>L=&lt;makelist(x-&gt;x</TT><CODE><TT>^</TT></CODE><TT>2,0,10000):;</TT> 
+puis, par exemple :<BR>
+<TT>for(j:=0;j&lt;=1000;j++) </TT><TT>L[10*j]=&lt;0</TT>
+</P><H2 CLASS="section"><A NAME="toc14"></A><A NAME="htoc52">2.9</A>  L’instruction pour faire des hypothèses sur une variable formelle</H2><P><A NAME="@default24"></A><A NAME="@default25"></A><A NAME="@default26"></A>
+L’instruction <TT>assume</TT> ou <TT>supposons</TT> permet de faire une hypothèse 
+sur une variable formelle par exemple d’attribuer une valeur à une variable 
+pour faire une figure, tout en laissant cette variable reste formelle lorsqu’on
+l’utilise pour faire des calculs ou encore de supposer que <TT>n</TT> est une v
+ariable entère ce qui permet de simplifier certaines expressions comme 
+<TT>cos(n*pi)</TT>....
+</P><H3 CLASS="subsection"><A NAME="htoc53">2.9.1</A>  Traduction Algorithmique</H3><P>
+En algorithmique on écrira par exemple :<BR>
+<TT>supposons(n,entier)</TT><BR>
+<TT>supposons(a&gt;2)</TT><BR>
+<TT>supposons(a=2)</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc54">2.9.2</A>  Traduction Xcas</H3><P>
+Avec <TT>Xcas</TT> on écrira :<BR>
+<TT>assume(n,integer);</TT> ou <TT>supposons(n,integer);</TT>
+puis par exemple <TT>cos(n*pi)</TT> et on obtient <TT>(-1)</TT><CODE><TT>^</TT></CODE><TT>n</TT><BR>
+<TT>assume(a&gt;2);</TT><BR>
+On peut faire plusieurs hypothèses sur une variable avec <TT>assume</TT> et
+<TT>additionally</TT> par exemple, pour dire que <TT>n</TT> est un entier plus grand 
+que 3, on tape :<BR>
+<TT>assume(n,integer);additionally(n&gt;3);</TT>
+Il faut noter que si on écrit dans l’écran de géométrie:<BR>
+<TT>assume(a=2);</TT> ou <TT>supposons(a=2);</TT><BR>
+ou encore<BR>
+<TT>assume(a:=2);</TT> ou <TT>supposons(a:=2);</TT><BR>
+cela a pour effet de mettre en haut et à droite un curseur noté <TT>a</TT>. 
+En effet, cela veut dire que l’on va faire 
+une figure de géométrie en donnant à <TT>a</TT> la valeur <TT>2</TT>, mais que 
+les différents calculs se feront avec <TT>a</TT> formelle. Bien sur la valeur 
+donnée à <TT>a</TT> pourra être modifièe à l’aide du curseur et ainsi 
+modifier la figure selon les valeurs de <TT>a</TT>. 
+</P><H3 CLASS="subsection"><A NAME="htoc55">2.9.3</A>  Traduction Maple</H3><P>
+Avec <TT>Maple</TT> on écrit :<BR>
+<TT>assume(n,integer);</TT><BR>
+<TT>assume(a&gt;2);</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc56">2.9.4</A>  Traduction MuPAD</H3><P>
+Avec <TT>MuPAD</TT> on écrit :<BR>
+<TT>assume(n,integer);</TT><BR>
+<TT>assume(a&gt;2);</TT> 
+</P><H3 CLASS="subsection"><A NAME="htoc57">2.9.5</A>  Traduction TI89/92</H3><P>
+Il n’y a pas d’hypothèse en mode <TT>TI</TT>.
+</P><H2 CLASS="section"><A NAME="toc15"></A><A NAME="htoc58">2.10</A>  L’instruction pour connaitre les contraintes d’une variable</H2><P><A NAME="@default27"></A><A NAME="@default28"></A><A NAME="@default29"></A><A NAME="@default30"></A>
+</P><H3 CLASS="subsection"><A NAME="htoc59">2.10.1</A>  Traduction Algorithmique</H3><P>
+En algorithmique on écrira par exemple :<BR>
+<TT>domaine(A)</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc60">2.10.2</A>  Traduction Xcas</H3><P>
+Avec <TT>Xcas</TT> on écrira :<BR>
+<TT>about(a)</TT> ou <TT>domaine(a)</TT><BR>
+<TT>assume(a)</TT> ou <TT>supposons(a)</TT> 
+</P><H3 CLASS="subsection"><A NAME="htoc61">2.10.3</A>  Traduction Maple</H3><P>
+Avec <TT>Maple</TT> on écrit :<BR>
+<TT>about(a)</TT> ou <TT>domaine(a)</TT><BR>
+<TT>assume(a)</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc62">2.10.4</A>  Traduction MuPAD</H3><P>
+Avec <TT>MuPAD</TT> on écrit :<BR>
+<TT>getprop(a)</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc63">2.10.5</A>  Traduction TI89/92</H3><P>
+Il n’y a pas d’hypothèse en mode <TT>TI</TT>.</P><H2 CLASS="section"><A NAME="toc16"></A><A NAME="htoc64">2.11</A>  Les instructions conditionnelles</H2><P><A NAME="@default31"></A>
+</P><H3 CLASS="subsection"><A NAME="htoc65">2.11.1</A>  Traduction Algorithmique</H3><P>
+<TT>si </TT><TT><EM>condition</EM></TT><TT> alors
+</TT><TT><EM>action</EM></TT><TT>
+fsi</TT><BR>
+<TT>si </TT><TT><EM>condition</EM></TT><TT> alors
+</TT><TT><EM>action1</EM></TT><TT> sinon
+</TT><TT><EM>action2</EM></TT><TT>
+fsi</TT><BR>
+<B>Exemple</B> :<BR>
+<TT>si A = 10 ou A &lt; B alors B-A=&gt;B sinon A-B=&gt;A fsi</TT></P><H3 CLASS="subsection"><A NAME="htoc66">2.11.2</A>  Traduction Xcas</H3><P><A NAME="@default32"></A><A NAME="@default33"></A><A NAME="@default34"></A><A NAME="@default35"></A><A NAME="@default36"></A><A NAME="@default37"></A><A NAME="@default38"></A>
+<TT>if (</TT><TT><EM>condition</EM></TT><TT>) {</TT><TT><EM>action</EM></TT><TT>;}</TT><BR>
+ou encore<BR>
+<TT>if (</TT><TT><EM>condition</EM></TT><TT>) then </TT><TT><EM>action</EM></TT><TT>; end</TT><BR>
+ou encore<BR>
+<TT>si (</TT><TT><EM>condition</EM></TT><TT>) alors </TT><TT><EM>action</EM></TT><TT>; fsi</TT><BR>
+et<BR>
+<TT>if (</TT><TT><EM>condition</EM></TT><TT>) {<BR>
+</TT><TT><EM>action1</EM></TT><TT>;<BR>
+} else {<BR>
+</TT><TT><EM>action2</EM></TT><TT>;<BR>
+}<BR>
+</TT><BR>
+ou encore<BR>
+<TT>if (</TT><TT><EM>condition</EM></TT><TT>) then<BR>
+</TT><TT><EM>action1</EM></TT><TT>;<BR>
+else
+</TT><TT><EM>action2</EM></TT><TT>;<BR>
+end</TT><BR>
+ou encore<BR>
+<TT>si (</TT><TT><EM>condition</EM></TT><TT>) alors<BR>
+</TT><TT><EM>action1</EM></TT><TT>;<BR>
+sinon 
+</TT><TT><EM>action2</EM></TT><TT>;<BR>
+fsi</TT><BR>
+
+<B>Exemples</B><BR>
+<TT>if ((a==10) or (a&lt;b)) {b:=b-a;} else {a:=a-b;}</TT>
+</P><PRE CLASS="verbatim">essaiif(a,b):={
+  if ((a==10) or (a&lt;b)) {
+    b:=b-a;
+  } else {
+    a:=a-b;
+  }
+  return([a,b]);
+};
+
+essaisi(a,b):={
+  si ((a==10) or (a&lt;b)) 
+   alors
+    b:=b-a;
+   sinon
+    a:=a-b;
+  fsi;
+  return([a,b]);
+};
+
+idivsi(a,b):={
+  local (q:=0),(r:=a);
+  if (b!=0){
+    q:=iquo(a,b);
+    r:=irem(a,b);
+  } 
+  return([q,r]);
+};
+
+idivsi(a,b):={
+  local (q:=0),(r:=a);
+  si (b!=0)
+   alors
+    q:=iquo(a,b);
+    r:=irem(a,b);
+  fsi 
+  return([q,r]);
+};
+</PRE><P>Avec <TT>Xcas</TT>, lorsqu’il y a plusieurs <TT>if...else if...</TT> à la suite
+on peut aussi utiliser un <TT>elif</TT> qui est une écriture 
+condensée de <TT>else if</TT> et se traduit par :<BR>
+<A NAME="@default39"></A><A NAME="@default40"></A><A NAME="@default41"></A><A NAME="@default42"></A>
+<TT>if (</TT><TT><EM>condition1</EM></TT><TT>) then<BR>
+</TT><TT><EM>action1</EM></TT><TT>;<BR>
+elif (</TT><TT><EM>condition2</EM></TT><TT>) then<BR>
+</TT><TT><EM>action2</EM></TT><TT>;<BR>
+elif (</TT><TT><EM>condition3</EM></TT><TT>) then<BR>
+</TT><TT><EM>action3</EM></TT><TT>;<BR>
+end</TT><BR>
+ou bien
+<TT>if (</TT><TT><EM>condition</EM></TT><TT>) then<BR>
+</TT><TT><EM>action1</EM></TT><TT>;<BR>
+elif (</TT><TT><EM>condition</EM></TT><TT>) then<BR>
+</TT><TT><EM>action2</EM></TT><TT>;<BR>
+elif (</TT><TT><EM>condition</EM></TT><TT>) then<BR>
+</TT><TT><EM>action3</EM></TT><TT>;<BR>
+else 
+</TT><TT><EM>action4</EM></TT><TT>;<BR>
+end</TT><BR>
+<B>Exemples</B>
+</P><PRE CLASS="verbatim"> 
+s(a):={
+local r;
+if a&gt;=10 then
+r:=5;
+elif  a&gt;=8 then
+r:=4;
+elif  a&gt;=6 then
+r:=3; 
+elif  a&gt;=4 then
+r:=2
+else
+r:=1;
+end;
+return r;
+}
+</PRE><P>Avec <TT>Xcas</TT>, on peut aussi utiliser un "case" lorsque les différentes 
+instructions à effectuer correspondantes à la valeur d’une expression qui 
+doit être une valeur entière et qui se traduit par :<BR>
+<A NAME="@default43"></A><A NAME="@default44"></A><A NAME="@default45"></A><A NAME="@default46"></A>
+</P><PRE CLASS="verbatim"> 
+switch (&lt;nom_de_variable&gt;){
+case val_de_la_variable : {
+.....
+break;
+}
+case val_de_la_variable : {
+.....
+break;
+} default : {  
+...
+}
+}
+</PRE><P>Exemple :
+</P><PRE CLASS="verbatim"> 
+s(a):={
+local r;
+switch(a) {
+case 1 :{
+r:=1;
+break;
+}
+case 2 :{
+r:=-1;
+break;
+}
+default :{
+r:=0;
+}
+}
+return r;
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc67">2.11.3</A>  Traduction MapleV</H3><P>
+si ... alors<BR>
+<TT>if &lt;</TT><TT><EM>condition</EM></TT><TT>&gt; 
+then &lt;</TT><TT><EM>action</EM></TT><TT>&gt; 
+fi</TT>;<BR>
+si ... alors ... sinon ...<BR>
+<TT>if &lt;</TT><TT><EM>condition</EM></TT><TT>&gt; 
+then &lt;</TT><TT><EM>action1&gt;</EM></TT><TT> 
+else &lt;</TT><TT><EM>action2&gt;</EM></TT><TT>
+fi</TT>;<BR>
+Le schéma général à n cas :<BR>
+<TT>if &lt;</TT><TT><EM>condition_1</EM></TT><TT>&gt; then &lt;</TT><TT><EM>action_1</EM></TT><TT>&gt;<BR>
+elif &lt;</TT><TT><EM>condition_2</EM></TT><TT>&gt; then &lt;</TT><TT><EM>action_2</EM></TT><TT>&gt;<BR>
+... elif &lt;</TT><TT><EM>condition_n-1</EM></TT><TT>&gt; then &lt;</TT><TT><EM>action_n-1</EM></TT><TT>&gt; else &lt;</TT><TT><EM>action_n</EM></TT><TT>&gt; fi ;</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc68">2.11.4</A>  Traduction MuPAD</H3><P>
+<TT>if &lt;</TT><TT><EM>condition</EM></TT><TT>&gt;
+then 
+&lt;</TT><TT><EM>action</EM></TT><TT>&gt; 
+end_if</TT><BR>
+<TT>if &lt;</TT><TT><EM>condition</EM></TT><TT>&gt; then 
+&lt;</TT><TT><EM>action1</EM></TT><TT>&gt; else 
+&lt;</TT><TT><EM>action2&gt;</EM></TT><TT>
+end_if</TT><BR>
+Exemple :<BR>
+<TT>if a = 10 or A &lt; B then b:=b-a else a:=a-b end_if</TT><BR>
+Lorsque il y a plusiuers <TT>if else</TT> à la suite on écrit <TT>elif</TT> au
+lieu de <TT>else if</TT>.
+</P><H3 CLASS="subsection"><A NAME="htoc69">2.11.5</A>  Traduction TI89/92</H3><P>
+Si ..alors<BR>
+<TT>:If </TT><TT><EM>condition</EM></TT><TT> Then :
+</TT><TT><EM>action</EM></TT><TT> : 
+EndIf</TT><BR>
+Si..alors sinon<BR>
+<TT>:If </TT><TT><EM>condition</EM></TT><TT> Then :
+</TT><TT><EM>action1</EM></TT><TT> : Else :
+</TT><TT><EM>action2</EM></TT><TT>:
+EndIf</TT><BR>
+Exemple :<BR>
+<TT>:If A = 10 or A &lt; B Then : B-A=&gt;B : Else : A-B=&gt;A : EndIf</TT>
+</P><H2 CLASS="section"><A NAME="toc17"></A><A NAME="htoc70">2.12</A>  Les instructions "Pour" </H2><P><A NAME="@default47"></A>
+On utilise l’instruction "pour" lorsqu’on connait le nombre de fois que l’on 
+doit effectuer les instructions ("pour" peut aussi servir à faire 
+des boucles complètement génériques). 
+</P><H3 CLASS="subsection"><A NAME="htoc71">2.12.1</A>  Traduction Algorithmique</H3><P><A NAME="@default48"></A><A NAME="@default49"></A>
+<TT>pour I de A jusque B faire </TT><TT><EM>action</EM></TT><TT> fpour</TT><BR>
+<TT>pour I de A jusque B (pas P) faire </TT><TT><EM>action</EM></TT><TT> fpour</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc72">2.12.2</A>  Traduction Xcas</H3><P>
+<B>Attention</B> si vous avez coché <TT>pas de test de i</TT> dans la 
+<TT>configuration generale</TT>, on ne doit pas employer la variable <TT>i</TT> 
+car <TT>i</TT> represente le nombre complexe de module 1 et d’argument π/2.<BR>
+<TT>for (j:=1;j&lt;=b;j:=j+1) {</TT><TT><EM>action</EM></TT><TT>;}</TT> ou encore<BR>
+<TT>for (j:=1;j&lt;=b;j:=j++) {</TT><TT><EM>action</EM></TT><TT>;}</TT><BR>
+ou encore<BR>
+<TT>pour j de 1 jusque b faire </TT><TT><EM>action</EM></TT><TT>; fpour</TT><BR>
+et<BR>
+<TT>for (j:=1;j&lt;=b;j:=j+p) {</TT><TT><EM>action</EM></TT><TT>;}</TT><BR>
+ ou encore<BR>
+<TT>pour j de 1 jusque b pas p faire </TT><TT><EM>action</EM></TT><TT>; fpour</TT></P><P><B>Exemples</B>
+</P><PRE CLASS="verbatim">essaifor(a,b):={
+  local s:=0;
+  for (j:=a;j&lt;b+1;j++){
+    s:=s+1/j^2;
+  } 
+  return(s);
+};
+
+essaiford(a,b):={
+  local s:=0; 
+  for (j:=b;j&gt;a-1;j--){
+    s:=s+1/j^2; 
+  }
+  return(s);
+};
+</PRE><H3 CLASS="subsection"><A NAME="htoc73">2.12.3</A>  Traduction MapleV</H3><P>
+Voici la syntaxe exacte :<BR>
+<TT>for &lt;</TT><TT><EM>nom</EM></TT><TT>&gt; from &lt;</TT><TT><EM>expr</EM></TT><TT>&gt; by &lt;</TT><TT><EM>expr</EM></TT><TT>&gt; to &lt;</TT><TT><EM>expr</EM></TT><TT>&gt;<BR>
+do &lt;</TT><TT><EM>action</EM></TT><TT>&gt; od ;</TT><BR>
+Par exemple<BR>
+<TT>for i from 1 to n do 
+&lt;</TT><TT><EM>action</EM></TT><TT>:&gt; 
+od</TT><BR>
+<TT>for i from 1 by p to n do 
+&lt;</TT><TT><EM>action</EM></TT><TT>:&gt; 
+od</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc74">2.12.4</A>  Traduction MuPAD</H3><P>
+<TT>for i from a to b do &lt;</TT><TT><EM>action</EM></TT><TT>&gt; end_for</TT><BR>
+<TT>for i from b downto a do &lt;</TT><TT><EM>action</EM></TT><TT>&gt; end_for</TT><BR>
+<TT>for i from a to b step p do &lt;</TT><TT><EM>action</EM></TT><TT>&gt; end_for </TT><BR>
+Vous pouvez aussi ouvrir le menu <TT>MuPAD</TT> sous menu <TT>Shapes</TT> et 
+séléctionner <TT>for</TT>.
+</P><H3 CLASS="subsection"><A NAME="htoc75">2.12.5</A>  Traduction TI89 92</H3><P>
+<TT>:For I,A,B : </TT><TT><EM>action</EM></TT><TT> : EndFor</TT><BR>
+<TT>:For I,A,B,P : </TT><TT><EM>action</EM></TT><TT> : EndFor</TT></P><H2 CLASS="section"><A NAME="toc18"></A><A NAME="htoc76">2.13</A>  L’instruction "Tant que"</H2><P><A NAME="@default50"></A><A NAME="@default51"></A>
+On effectue les instructions tant que la condition est vraie :<BR>
+on teste la condition si elle est fausse on s’arrête (arret=
+(condition =fausse)) sinon on effectue les instructions etc ... 
+On arrête la boucle quand la condition devient fausse c’est à dire :<BR>
+tantque (non arret) on effectue les instructions.
+</P><H3 CLASS="subsection"><A NAME="htoc77">2.13.1</A>  Traduction Algorithmique</H3><P>
+<TT>tantque </TT><TT><EM>condition</EM></TT><TT> faire<BR>
+</TT><TT><EM>action</EM></TT><TT><BR>
+ftantque</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc78">2.13.2</A>  Traduction Xcas</H3><P>
+<TT>while (</TT><TT><EM>condition</EM></TT><TT>) {<BR>
+</TT><TT><EM>action</EM></TT><TT>;<BR>
+}</TT><BR>
+ou encore<BR>
+<TT>tantque (</TT><TT><EM>condition</EM></TT><TT>) faire<BR>
+</TT><TT><EM>action</EM></TT><TT>;<BR>
+ftantque</TT><BR>
+
+<B>Exemple</B>
+</P><PRE CLASS="verbatim">essaiwhile(a,b):={
+  while ((a==10) or (a&lt;b)) {
+    b:=b-a; 
+  }
+  return([a,b]);
+};
+</PRE><H3 CLASS="subsection"><A NAME="htoc79">2.13.3</A>  Traduction MapleV</H3><P>
+<TT>while &lt;</TT><TT><EM>condition</EM></TT><TT>&gt; do 
+&lt;</TT><TT><EM>action</EM></TT><TT>&gt; 
+od</TT>: 
+</P><H3 CLASS="subsection"><A NAME="htoc80">2.13.4</A>  Traduction MuPAD</H3><P>
+<TT>while &lt;</TT><TT><EM>condition</EM></TT><TT>&gt; do
+&lt;</TT><TT><EM>action</EM></TT><TT>&gt; 
+end_while</TT><BR>
+Vous pouvez aussi ouvrir le menu <TT>MuPAD</TT> sous menu <TT>Shapes</TT> et 
+séléctionner <TT>while</TT>.
+</P><H3 CLASS="subsection"><A NAME="htoc81">2.13.5</A>  Traduction TI89/92</H3><P>
+<TT>:While </TT><TT><EM>condition</EM></TT><TT> :</TT><TT><EM>action</EM></TT><TT> :EndWhile</TT> 
+</P><H2 CLASS="section"><A NAME="toc19"></A><A NAME="htoc82">2.14</A>  L’instruction "repeter"</H2><P>
+On répéte les instructions jusqu’à ce que la condition devienne vraie.
+On fait les instructions (les instructions se font donc au moins une fois) 
+puis on teste la condition si elle est vraie on s’arrête 
+(arret= (condition=vraie)) sinon on effectue les 
+instructions etc ...On arrête la boucle quand la condition devient vraie.</P><H3 CLASS="subsection"><A NAME="htoc83">2.14.1</A>  Traduction Algorithmique</H3><P>
+<TT>repeter<BR>
+</TT><TT><EM>action</EM></TT><TT><BR>
+jusqua </TT><TT><EM> condition</EM></TT>
+</P><H3 CLASS="subsection"><A NAME="htoc84">2.14.2</A>  Traduction Xcas</H3><P>
+<TT>repeat<BR>
+</TT><TT><EM>action</EM></TT><TT><BR>
+ until </TT><TT><EM> (condition)</EM></TT><BR>
+ou encore<BR>
+<TT>repeter<BR>
+</TT><TT><EM>action</EM></TT><TT><BR>
+jusqua </TT><TT><EM> (condition)</EM></TT><BR>
+L’instruction "repeter" est traduite en :<BR>
+<TT>while (true){<BR>
+ </TT><TT><EM>action</EM></TT><TT>;<BR>
+ if </TT><TT><EM>(condition)</EM></TT><TT> break;<BR>
+}</TT><BR>
+cette traduction reste invisible à l’utilisateur (tant qu’il n’exécute pas 
+son programme au débugueur).
+</P><H3 CLASS="subsection"><A NAME="htoc85">2.14.3</A>  Traduction MapleV</H3><P>
+Pas de schéma "repeter" en <TT>MapleV</TT>, on utilise une
+boucle infinie et un <TT>break</TT><BR>
+<TT>do </TT><TT><EM>action </EM></TT><TT> if </TT><TT><EM>condition</EM></TT><TT> then break; fi; od;</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc86">2.14.4</A>  Traduction MuPAD</H3><P>
+<TT>repeat<BR>
+</TT><TT><EM>action</EM></TT><TT><BR>
+ until </TT><TT><EM> condition</EM></TT><TT><BR>
+end_repeat</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc87">2.14.5</A>  Traduction TI89/92</H3><P>
+Pas de schéma "repeter" chez <TT>TI</TT>, on utilise une
+boucle infinie et un <TT>Exit</TT><BR>
+<TT>:Loop :</TT><TT><EM>action</EM></TT><TT> :If </TT><TT><EM>(condition)</EM></TT><TT> :Exit :Endloop</TT>
+</P><H2 CLASS="section"><A NAME="toc20"></A><A NAME="htoc88">2.15</A>  Les conditions ou expressions booléennes</H2><P>
+Une condition est une fonction qui a comme valeur un booléen, à savoir elle
+est soit <TT>vraie</TT> soit <TT>fausse</TT>.
+</P><H3 CLASS="subsection"><A NAME="htoc89">2.15.1</A>  Les opérateurs relationnels</H3><H4 CLASS="subsubsection">Traduction Algorithmique</H4><P>
+Pour exprimer une condition simple on utilise en algorithmique 
+les opérateurs :<BR>
+<TT>=   &gt;   &lt;   ≤   ≥   ≠</TT><BR>
+</P><H4 CLASS="subsubsection">Traduction Xcas</H4><P>
+Ces opérateurs se traduisent pour <TT>Xcas</TT> par :
+</P><PRE CLASS="verbatim">==  &gt;  &lt;  &lt;=  &gt;=  !=
+</PRE><P>Attention pour <TT>Xcas</TT> l’égalité se traduit comme en langage <TT>C</TT> par : <TT>==</TT><BR>
+</P><H4 CLASS="subsubsection">Traduction MapleV, MuPAD, TI89/92</H4><P> 
+Ces opérateurs se traduisent pour <TT>MapleV</TT>, <TT>MuPAD</TT> et <TT>TI89/92</TT> 
+par :
+</P><PRE CLASS="verbatim">=  &gt;  &lt;  &lt;=  &gt;=  &lt;&gt;
+</PRE><H3 CLASS="subsection"><A NAME="htoc90">2.15.2</A>  Les opérateurs logiques</H3><P><A NAME="@default52"></A><A NAME="@default53"></A><A NAME="@default54"></A>
+Pour traduire des conditions complexes, on utilise en algorithmique, 
+les opérateurs logiques :<BR>
+<TT>ou et non</TT><BR>
+Pour <TT>Xcas</TT>, ces opérateurs se traduisent par :<BR>
+<TT>or and not</TT> ou encore par <TT>∥ &amp;&amp;  !</TT> <A NAME="@default55"></A>
+<A NAME="@default56"></A><A NAME="@default57"></A><BR>
+Pour <TT>MapleV</TT>, <TT>MuPAD</TT> et <TT>TI89/92</TT>, ces opérateurs se 
+traduisent par :<BR>
+<TT>or and not</TT> 
+</P><H2 CLASS="section"><A NAME="toc21"></A><A NAME="htoc91">2.16</A>  Les fonctions</H2><P><A NAME="@default58"></A><A NAME="@default59"></A>
+Dans une fonction on ne fait pas de saisie de données :
+on utilise des paramètres qui seront initialisés lors de l’appel.<BR>
+Les entrées se font donc par passage de paramètres.<BR>
+Dans une fonction on veut pouvoir réutiliser le résultat :<BR>
+en algorithmique, c’est la commande <TT>retourne</TT> qui renvoie la valeur de la 
+fonction.<BR>
+Si la fonction est utilisée seule, sa valeur sera affichée et si la 
+fonction est utilisée dans une expression sa valeur sera utilisée pour calculer cette expression. 
+</P><H3 CLASS="subsection"><A NAME="htoc92">2.16.1</A>  Traduction Algorithmique</H3><P><A NAME="@default60"></A><A NAME="@default61"></A>
+On écrit par exemple en algorithmique :
+</P><PRE CLASS="verbatim">fonction addition(A,B)
+retourne A+B
+ffonction
+</PRE><P>Cela signifie que :<BR>
+- Si on fait exécuter la fonction, ce qui se trouve juste après 
+<TT>retourne</TT> sera la valeur de la fonction, mais les instructions qui 
+suivent <TT>retourne</TT> seront ignorées (<TT>retourne</TT> fait sortir 
+immédiatement de la fonction).<BR>
+- On peut utiliser la fonction dans une expression ou directement dans la 
+ligne de commande et, dans ce cas, sa valeur sera affichée.<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc93">2.16.2</A>  Traduction Xcas</H3><P>
+<TT>Xcas</TT> utilise <TT>return</TT> ou <TT>retourne</TT>.
+</P><PRE CLASS="verbatim">addition(a,b):={
+  return(a+b);
+}
+</PRE><P><B>Remarques</B> : 
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<TT>return</TT> n’est pas obligatoire on peut aussi écrire :
+<PRE CLASS="verbatim">addition(a,b):=a+b;
+</PRE></LI><LI CLASS="li-itemize"><TT>return</TT> fait sortir immédiatement de la fonction.
+Pour définir le minimum de 2 nombres on écrit soit avec 1 instruction
+<PRE CLASS="verbatim">mini1(a,b):={
+si(a&gt;b) alors 
+ return b 
+sinon 
+ return a;
+fsi
+}
+</PRE>soit avec 2 instructions
+<PRE CLASS="verbatim">mini2(a,b):={
+si(a&gt;b) alors 
+ return b; 
+fsi
+return a;
+}
+</PRE></LI></UL><H3 CLASS="subsection"><A NAME="htoc94">2.16.3</A>  Traduction MapleV</H3><P>
+<TT>retourne</TT> se traduit par <TT>RETURN</TT>
+</P><PRE CLASS="verbatim">addition:= proc(a,b)
+RETURN(a+b);
+end:
+</PRE><P><B>Remarque</B><BR>
+ <TT>RETURN</TT> fait sortir immédiatement de la fonction.
+</P><H3 CLASS="subsection"><A NAME="htoc95">2.16.4</A>  Traduction MuPAD</H3><P>
+<TT>retourne</TT> se traduit <TT>MuPAD</TT> par <TT>return</TT> :
+</P><PRE CLASS="verbatim">addition:=proc(a,b)
+begin
+return(a+b)
+end_proc;
+</PRE><P><B>Remarque</B><BR>
+<TT>return</TT> fait sortir immédiatement de la fonction.
+</P><H3 CLASS="subsection"><A NAME="htoc96">2.16.5</A>  Traduction TI89 92</H3><PRE CLASS="verbatim">:addition(a,b)
+:Func
+:Return a+b
+:EndFunc
+</PRE><P><B>Remarque</B><BR>
+<TT>Return</TT> fait sortir immédiatement de la fonction.
+</P><H2 CLASS="section"><A NAME="toc22"></A><A NAME="htoc97">2.17</A>  Les listes</H2><H3 CLASS="subsection"><A NAME="htoc98">2.17.1</A>  Traduction Algorithmique</H3><P>
+On utilise les { } pour délimiter une liste.<BR>
+Attention!!!<BR>
+En algorithmique, on a choisi cette notation car c’est celle qui est employée
+par les calculatrices...à ne pas confondre avec la notion d’ensemble en
+mathématiques : dans un ensemble l’ordre des éléments n’a pas 
+d’importance mais dans une liste l’ordre est important...<BR>
+ Par exemple {} désigne la liste vide et {1, 2, 3} est une liste de 3 éléments.<BR>
+<TT>concat</TT> sera utilisé pour concaténer 2 listes ou une liste et un 
+élément ou un élément et une liste :<BR>
+<TT>{1, 2, 3}=&gt;TAB</TT><BR>
+<TT>concat(TAB,4)=&gt;TAB</TT> (maintenant <TT>TAB</TT> désigne {1, 2, 3, 4}<BR>
+<TT>TAB[2]</TT> désigne le deuxième élément de <TT>TAB</TT> ici 2.
+</P><H3 CLASS="subsection"><A NAME="htoc99">2.17.2</A>  Traduction Xcas</H3><P><A NAME="@default62"></A>
+Avec <TT>Xcas</TT> il existe différentes notions :
+la liste ou le vecteur, la séquence et l’ensemble.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Les listes et les vecteurs<BR>
+Une liste ou un vecteur est délimité par <TT>[ ]</TT> et les éléments 
+situés à l’intérieur des crochets sont séparés par des virgules.
+</LI><LI CLASS="li-itemize">Les séquences<BR>
+Une séquence n’a pas de délimiteurs, les éléments sont séparés par 
+des virgules, mais on doit parfois parenthèser par
+<TT>( )</TT> (on écrit <TT>1,2,3,4</TT> ou <TT>(1,2,3,4)</TT> ou encore 
+<TT>seq[1,2,3]</TT><A NAME="@default63"></A>).
+</LI><LI CLASS="li-itemize">Les ensembles<BR>
+Un ensemble est délimité par <TT>%{ %}</TT> et les éléments situés à l’intérieur des délimiteurs sont séparés par des virgules 
+(on écrit <TT>%{ 1,2,3,4%}</TT> ou encore <TT>set[1,2,3,4]</TT><A NAME="@default64"></A>).<BR>
+</LI></UL><H4 CLASS="subsubsection">Les fonctions pour les listes</H4><P>
+La liste vide est désignée par <TT>[ ]</TT> et la séquence vide par <TT>NULL</TT>.<BR>
+La commande <TT>makelist</TT> <A NAME="@default65"></A> permet de fabriquer une liste à 
+partir d’une fonction <I>f</I>. Les paramètres sont : la fonction, l’intervalle de variation de l’argument de <I>f</I> et le pas de son incrémentation.<BR>
+On tape :<BR>
+<TT><I>f</I>(<I>x</I>):=<I>x</I></TT><SUP><TT>2</TT></SUP><BR>
+<TT><I>l</I>:=<I>makelist</I>(<I>f</I>,2,10,3)</TT> ou encore<BR>
+<TT><I>l</I>:=<I>makelist</I>(<I>x</I>-&gt;<I>x</I></TT><SUP><TT>2</TT></SUP><TT>,2,10,3)</TT> ou encore<BR>
+<TT><I>l</I>:=<I>makelist</I>(<I>x</I>-&gt;<I>x</I></TT><SUP><TT>2</TT></SUP><TT>,2..10,3)</TT> ou encore<BR>
+<TT><I>l</I>:=<I>makelist</I>(<I>sq</I>,2,10,3)</TT><BR>
+On obtient <TT>l= [4,25,64]</TT><BR>
+Pour avoir une liste constante on peut taper par exemple :<BR>
+<TT><I>l</I>:=<I>makelist</I>(3,1..5)</TT> on obtient <TT>l= [3,3,3,3,3]]</TT><BR>
+On peut écrire <TT>l:=[1,2,3]</TT>.<BR>
+Attention Les éléments sont indicés à partir de zéro (contrairement
+à <TT>Maple</TT> ou <TT>MuPAD</TT> qui commencent les indices à 1):<BR>
+dans l’exemple <TT>l[0]</TT> vaut <TT>1</TT>.<BR>
+Si on tape ensuite :<BR>
+<TT>l[0]:=4</TT> : après cette instruction <TT>l</TT> sera la liste <TT>[4,2,3]</TT>.<BR>
+La commande <TT>append(l,elem)</TT> <A NAME="@default66"></A> permet de mettre à la fin 
+d’une liste <TT>l</TT>,
+un élément (ou une liste) <TT>elem</TT>.<BR>
+La commande <TT>prepend(l,elem)</TT> <A NAME="@default67"></A> permet de mettre au début d’une liste <TT>l</TT>,
+un élément (ou une liste) <TT>elem</TT>.<BR>
+La commande <TT>tail(l)</TT> <A NAME="@default68"></A> renvoie la liste <TT>l</TT> privée de son premier élément et,<BR>
+la commande <TT>head(l)</TT><A NAME="@default69"></A> renvoie le premier élément de la liste.<BR>
+La commande <TT>concat</TT> <A NAME="@default70"></A> permet de concaténer deux listes ou une liste et un élément.<BR>
+La commande <TT>augment</TT> <A NAME="@default71"></A> permet de concaténer deux listes.<BR>
+La commande <TT>size</TT> <A NAME="@default72"></A> ou <TT>nops</TT> <A NAME="@default73"></A> renvoie la longueur d’une liste ou d’une séquence.
+</P><H4 CLASS="subsubsection">Les fonctions pour les séquences</H4><P>
+La commande <TT>op</TT> transforme une liste en une séquence.<BR>
+On a la relation :<BR>
+si <TT>l</TT> est une liste <TT>op(l)</TT> <A NAME="@default74"></A> est une séquence.<BR>
+<B>Exemple </B><BR>
+<TT>l:=[1,2,3]</TT><BR>
+<TT>s:=op(l)</TT> (<TT>s</TT> est la séquence <TT>1,2,3</TT>),<BR>
+<TT>a:=[s]</TT> (<TT>a</TT> est la liste <TT>l</TT> égale à <TT>[1,2,3]</TT>),<BR>
+Pour concaténer deux séquences il suffit d’écrire :<BR>
+<TT>s1:=(1,2,3)</TT><BR>
+<TT>s:=(s1,4,5)</TT><BR>
+ou encore<BR>
+<TT>s:=s1,4,5</TT> car la virgule (<TT>,</TT><A NAME="@default75"></A>) est prioritaire par rapport 
+à l’affectation (<TT>:=</TT>).<BR>
+La commande <TT>seq</TT> <A NAME="@default76"></A> permet de fabriquer une séquence à 
+partir d’une expression. Les paramètres sont : l’expression,
+la variable=l’intervalle de variation (le pas d’incrémentation de la 
+variable est toujours 1).<BR>
+On tape :<BR>
+<TT>seq(j</TT><CODE><TT>^</TT></CODE><TT>2,j=1..4)</TT><BR>
+On obtient ;<BR>
+<TT>(1,4,9,16)</TT><BR>
+On peut aussi utiliser $ <A NAME="@default77"></A>
+qui est une fonction infixée.<BR>
+ On tape :<BR>
+<TT>(j</TT><CODE><TT>^</TT></CODE><TT>2) $ (j=1..4)</TT><BR>
+On obtient ;<BR>
+<TT>(1,4,9,16)</TT><BR>
+</P><H4 CLASS="subsubsection">Les fonctions pour les ensembles</H4><P>
+Soit <TT>A:=set[1,2,3,4]; B:=set[3,4,4,6];</TT>
+<TT>union(A,B)</TT> désigne l’union de <TT>A</TT> et <TT>B</TT>,<BR>
+<TT>intersect(A,B)</TT> désigne l’intersection de <TT>A</TT> et <TT>B</TT>,<BR>
+<TT>minus(A,B)</TT> désigne la différence de <TT>A</TT> et <TT>B</TT>.<BR>
+On a :<BR>
+<TT>union(A,B)=set[1,2,3,4,5,6]</TT><BR>
+<TT>intersect(A,B)=set[3,4]</TT><BR>
+<TT>minus(A,B)=set[1,2]</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc100">2.17.3</A>  Traduction MapleV</H3><P>
+En <TT>Maple</TT> on utilise <TT>{ }</TT>, comme en mathématiques, pour représenter un <B>ensemble</B>.<BR>
+Exemple : <TT>De := {1, 2, 3, 4, 5, 6}</TT><BR>
+Dans un ensemble, l’ordre n’a pas d’importance. La répétition est 
+interdite.<BR>
+Pour délimiter une <B>liste</B>, on utilise <TT>[ ]</TT>.<BR>
+L’ordre est pris en compte, la répétition est possible.<BR>
+Exemple : <TT>[Pile, Face, Pile]</TT><BR>
+Une <B>séquence</B> est une suite d’objets, séparés par une virgule.<BR>
+Si <TT>C</TT> est un ensemble ou une liste, <TT>op(C)</TT> est la séquence des 
+objets de <TT>C</TT>.<BR>
+<TT>nops(C)</TT> est le nombre d’éléments de <TT>C</TT>.<BR>
+Ainsi, si <TT>L</TT> est une liste, <TT>{op(L)}</TT> est l’ensemble des objets 
+(non répétés) de <TT>L</TT>.<BR>
+Exemples<BR>
+On écrit :<BR>
+<TT>S:=NULL:</TT> (pour la séquence vide)<BR>
+<TT>S:=S,A:</TT> (pour ajouter un élément à <TT>S</TT>)<BR>
+Une liste est une séquence entourée de crochets :<BR>
+<TT>L:=[S]:</TT><BR>
+<TT>L[i]</TT> est le iéme élément de la liste <TT>L</TT>.<BR>
+On peut aussi revenir à la séquence :
+<TT>S:=op(L):</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc101">2.17.4</A>  Traduction MuPAD</H3><P>
+Une liste est une suite d’expressions entre un crochet ouvrant <TT>[</TT> et un crochet 
+fermant <TT>]</TT>.<BR>
+<TT>[ ]</TT> désigne la liste vide.<BR>
+Exemple :<BR>
+<TT>l:=[1,2,2,3]</TT><BR>
+<TT>nops(l)</TT> renvoie le nombre d’éléments de la liste <TT>l</TT>.<BR>
+<TT>l[1]</TT> ou <TT>op(l,1)</TT> renvoie le premier élément de la liste <TT>l</TT> : les 
+éléments sont numérotés de 1 à <TT>nops(l)</TT>.<BR>
+<TT>op(l)</TT> renvoie <TT>1,2,2,3</TT><BR>
+<TT>append(l,4)</TT> ajoute l’élément <TT>4</TT> à la fin de la liste <TT>l</TT>.<BR>
+De plus, les listes peuvent être concaténées avec le signe <TT>.</TT> 
+(un point), par exemple <TT>[1,2].[2,3]=[1,2,2,3]</TT>.<BR>
+<TT>Attention</TT> une suite d’expressions entre une accolade ouvrante { et une 
+accolade fermante } désigne un ensemble.<BR>
+Exemple d’ensembles et de fonctions agissant sur les ensembles :<BR>
+<TT>A:={a,b,c}; B:={a,d}</TT><BR>
+<TT>A union B</TT> désigne <TT>{a,b,c,d}</TT><BR>
+<TT>A intersect B</TT> désigne <TT>{a}</TT><BR>
+<TT>A minus B</TT> désigne <TT>{b,c}</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc102">2.17.5</A>  Traduction TI89/92</H3><P>
+<TT>augment</TT> permet de concaténer deux listes.<BR>
+{} désigne la liste vide.
+Pour travailler avec des listes, on peut initialiser une liste de
+<TT>n</TT> éléments avec la commande <TT>newlist</TT>, par exemple :<BR>
+<TT>newlist(10)=&gt;L</TT> (<TT>L</TT> est alors une liste de 10 éléments nuls).<BR>
+On peut utiliser les commandes suivantes :<BR>
+<TT>seq(i*i, i, 1, 10)</TT> qui désigne la liste des carrés des 10 premiers entiers, ou <TT>seq(i*i, i, 0, 10, 2)</TT> qui désigne la liste des carrés des 5 premiers entiers pairs (le pas est ici égal à 2).<BR>
+Exemple :<BR>
+<TT><I>seq</I>(<I>i</I>*<I>i</I>, <I>i</I>, 0, 10, 2) =&gt;<I>L</I></TT> va par exemple créer la liste :<BR>
+{0, 4, 16, 36, 64, 100} c’est à dire la liste des carrés de 0 à 10 
+avec un pas de 2 que l’on stocke dans <TT>L</TT>.<BR>
+<TT>L[j] </TT> qui désigne le jème élément de la liste <TT>L</TT>.<BR>
+On peut aussi écrire :<BR>
+<TT>2=&gt;L[2]</TT><BR>
+La liste <TT>L</TT> est alors {0, 2, 16, 36, 64, 100}<BR>
+ou si <TT><I>L</I></TT> est de longueur <TT>n</TT> on peut rajouter un élément (par 
+exemple 121) à <TT><I>L</I></TT> en écrivant :<BR>
+<TT>121 =&gt; L[n+1]</TT><BR>
+Dans l’exemple précédent <TT>n=6</TT> on peut donc écrire :<BR>
+<TT>121 =&gt; L[7]</TT> (<TT>L</TT> est alors égale à {0, 2, 16, 36, 64, 100, 121}).<BR>
+<TT>left (L, 5)</TT> désigne les 5 premiers éléments de la liste <TT>L</TT>.
+</P><H2 CLASS="section"><A NAME="toc23"></A><A NAME="htoc103">2.18</A>  Un exemple : le crible d’Eratosthène</H2><H3 CLASS="subsection"><A NAME="htoc104">2.18.1</A>  Description</H3><P>
+Pour trouver les nombres premiers inférieurs ou égaux à <I>N</I> :
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On écrit les nombres de 2 à <I>N</I> dans une liste.
+</LI><LI CLASS="li-enumerate">On met 2 dans la case <I>P</I> .
+</LI><LI CLASS="li-enumerate">Si <I>P</I> × <I>P</I> ≤ <I>N</I> il faut traiter les éléments de <I>P</I> à <I>N</I> :
+on barre tous les multiples de <I>P</I> à partir de <I>P</I> × <I>P</I>.
+</LI><LI CLASS="li-enumerate">On augmente <I>P</I> de 1.<BR>
+Si <I>P</I>× <I>P</I> est strictement supérieur à <I>N</I>, on arrête
+</LI><LI CLASS="li-enumerate">On met le plus petit élément non barré de la liste dans la case
+<I>P</I>. On reprend à l’étape 3
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc105">2.18.2</A>  Écriture de l’algorithme</H3><PRE CLASS="verbatim">Fonction crible(N)
+local TAB PREM I P
+// TAB et PREM sont des listes
+{} =&gt;TAB
+{} =&gt;PREM
+//on suppose que les indices d'une liste debutent par 0
+//si ils commencent par 1, mettre pour I de 1 a N
+pour I de 0 a N faire 
+  concat(TAB, I) =&gt; TAB
+fpour
+//On met 0 dans TAB[1] car 1 n'est pas premier
+//barrer 1 a ete realise en le remplacant par 0
+0 =&gt; TAB[1]
+//TAB est la liste 0 0 2 3 4 ...N 
+2 =&gt; P
+// On a fait les points 1 et 2
+tantque P*P &lt;= N faire
+  pour I de P a E(N/P) faire
+//E(N/P) designe la partie entiere de N/P
+    0 =&gt; TAB[I*P]
+  fpour
+// On a barre tous les multiples de P a partir de P*P
+  P+1 =&gt; P
+//On cherche le plus petit nombre &lt;= N non barre (non nul)
+// entre P et N
+  tantque (P*P &lt;= N) et (TAB[P]=0) faire
+    P+1 =&gt; P
+  ftantque
+ftantque
+//on ecrit le resultat dans une liste PREM
+pour I de 2 a N faire
+  si TAB[I]!= 0 alors 
+     concat(PREM, I) =&gt; PREM
+  fsi
+fpour
+retourne PREM
+</PRE><H3 CLASS="subsection"><A NAME="htoc106">2.18.3</A>  Traduction Xcas</H3><PRE CLASS="verbatim">//renvoie la liste des nombres premiers&lt;=n selon eratosthene
+crible(n):={
+  local tab,prem,p,j;
+  tab:=[0,0];
+  prem:=[];
+  for (j:=2;j&lt;=n;j++){
+    tab:=append(tab,j);
+  }
+  p:=2;
+  while (p*p&lt;=n) {
+    for (j:=p;j*p&lt;=n;j++){
+      tab[eval(j*p)]:=0;
+    }
+    p:=p+1;
+    while ((p*p&lt;=n) and (tab[p]==0)) {
+      p:=p+1;
+    } 
+  }
+  for (j:=2;j&lt;=n;j++) {
+    if (tab[j]!=0) { 
+      prem:=append(prem,j);
+    }
+  } 
+  return(prem);
+};
+</PRE><P>ou avec les instructions françaises
+</P><PRE CLASS="verbatim">//renvoie la liste des nombres premiers&lt;=n selon eratosthene
+crible(n):={
+  local tab,prem,p,j;
+  [0,0]=&gt;tab;
+  []=&gt;prem;
+  pour j de 2 jusque n faire
+    append(tab,j)=&gt;tab;
+  fpour;
+  2=&gt;p;
+  tantque (p*p&lt;=n) faire
+    pour j de p jusque n/p faire
+      0=&gt;tab[eval(j*p)];
+    fpour
+    p+1=&gt;p;
+    tantque ((p*p&lt;=n) et (tab[p]==0)) faire
+      p+1=&gt;p;
+    ftantque;
+  ftantque;
+  pour j de 2 jusque n faire
+    si (tab[j]!=0) alors 
+      append(prem,j)=&gt;prem;
+    fsi
+  fpour
+  retourne(prem);
+};
+</PRE><H3 CLASS="subsection"><A NAME="htoc107">2.18.4</A>  Traduction TI89/92</H3><P>
+Voici la fonction crible :<BR>
+- n est le paramètre de cette fonction.<BR>
+- crible(n) est égal à la liste des nombres premiers inférieurs ou 
+égaux à n.
+</P><PRE CLASS="verbatim">:crible(n)
+:Func
+:local tab,prem,i,p
+:newList(n)=&gt;tab
+:newList(n)=&gt;prem
+:seq(i,i,1,n) =&gt;tab
+:0 =&gt; tab[1]
+:2 =&gt; p 
+:While p*p &lt;= n
+:For i,p,floor(n/p)
+:0 =&gt; tab[i*p]
+:EndFor
+:p+1 =&gt; p
+:While p*p&lt;= n and tab[p]=0
+:p+1 =&gt; p
+:EndWhile
+:EndWhile
+:0 =&gt; p
+:For i,2,n
+:If tab[i]!= 0 Then
+:p+1 =&gt;p
+:i =&gt;prem[p]
+:EndIf
+:EndFor
+:Return left(prem,p)
+:EndFunc
+</PRE><H2 CLASS="section"><A NAME="toc24"></A><A NAME="htoc108">2.19</A>  Un exemple de fonction vraiement récursive</H2><H3 CLASS="subsection"><A NAME="htoc109">2.19.1</A>  La définition</H3><P>
+Voici la définition de la fonction <TT>a</TT> dite fonction de <TT>ackermann</TT> 
+qui est une fonction de 
+ℕ×ℕ dans ℕ :<BR>
+</P><PRE CLASS="verbatim">a(0,y)=y+1,
+a(x,0)=a(x-1,1) si x&gt;0,
+a(x,y)=a(x-1,a(x,y-1) si x&gt;0 et si y&gt;0.
+</PRE><P>Ainsi on a :<BR>
+<TT>a(0,0)=1</TT><BR>
+<TT>a(1,0)=a(0,1)=2</TT><BR>
+<TT>a(1,1)=a(0,a(1,0))=a(0,2)=3</TT><BR>
+<TT>a(1,2)=a(0,a(1,1))=4</TT><BR>
+<TT>a(1,n)=a(0,a(1,n-1))=1+a(1,n-1)=...=n+2</TT><BR>
+<TT>a(2,0)=a(1,1)=3</TT><BR>
+<TT>a(2,1)=a(1,a(2,0))=a(1,3)=5</TT><BR>
+<TT>a(2,2)=a(1,a(2,1))=2+a(2,1)=7</TT><BR>
+<TT>a(2,n)=a(1,a(2,n-1))=2+a(2,n-1)=2n+3</TT><BR>
+<TT>a(3,0)=a(2,1)=5</TT><BR>
+<TT>a(3,1)=a(2,a(3,0))=2*a(3,0)+3=13</TT><BR>
+<TT>a(3,2)=a(2,a(3,1))=2*a(3,1)+3=29</TT><BR>
+<TT>a(3,n)=a(2,a(3,n-1))=2*a(3,n-1)+3</TT><BR>
+    <TT>=2</TT><CODE><TT>^</TT></CODE><TT>(n+1)+3*(2</TT><CODE><TT>^</TT></CODE><TT>n+2</TT><CODE><TT>^</TT></CODE><TT>(n-1)...+1)</TT><BR>
+    <TT>=2</TT><CODE><TT>^</TT></CODE><TT>(n+1)+3*(2</TT><CODE><TT>^</TT></CODE><TT>(n+1)-1)=
+2</TT><CODE><TT>^</TT></CODE><TT>(n+3)-3</TT><BR>
+On a donc par exemple : <TT>a(3,5)=2</TT><CODE><TT>^</TT></CODE><TT>8-3=253</TT><BR>
+Les calculs sont vite gigantesques on a par exemple :<BR>
+<TT>a(4,1)=a(3,a(4,0))=a(3,a(3,1))=a(3,13)=65533</TT><BR>
+<TT>a(4,2)=a(3,a(4,1))=a(3,65533)=2</TT><CODE><TT>^</TT></CODE><TT>65536-3</TT><BR>
+<TT>a(4,3)=a(3,a(4,2))=a(3,2</TT><CODE><TT>^</TT></CODE><TT>65533-3)=2</TT><CODE><TT>^</TT></CODE><TT>(2</TT><CODE><TT>^</TT></CODE><TT>65536-3)-3</TT><BR>
+On a donc :<BR>
+<TT>a(4,y)=a(3,a(4,y-1))=2</TT><CODE><TT>^</TT></CODE><TT>(a(4,y-1)+3)-3</TT><BR>
+    <TT>=2</TT><CODE><TT>^</TT></CODE><TT>(2</TT><CODE><TT>^</TT></CODE><TT>(a(4,y-2)+3)-3+3)-3=2</TT><CODE><TT>^</TT></CODE><TT>(2</TT><CODE><TT>^</TT></CODE><TT>(a(4,y-2)+3))-3</TT><BR>
+et donc<BR>
+<TT>a(4,y)=2</TT><CODE><TT>^</TT></CODE><TT>(2</TT><CODE><TT>^</TT></CODE><TT>..(2</TT><CODE><TT>^</TT></CODE><TT>(a(4,0)+3))..)-3=
+2</TT><CODE><TT>^</TT></CODE><TT>(2</TT><CODE><TT>^</TT></CODE><TT>..(2</TT><CODE><TT>^</TT></CODE><TT>16)..)-3</TT>,<BR>
+ avec <TT>2</TT><CODE><TT>^</TT></CODE> qui se répète <I>y</I> fois, et comme 
+<TT>16=2</TT><CODE><TT>^</TT></CODE><TT>(2</TT><CODE><TT>^</TT></CODE><TT>2)</TT> on a,<BR>
+<TT>a(4,y)=2</TT><CODE><TT>^</TT></CODE><TT>(2</TT><CODE><TT>^</TT></CODE><TT>..(2</TT><CODE><TT>^</TT></CODE><TT>2)..)-3</TT>,<BR>
+ avec <TT>2</TT> qui se répète <I>y</I>+3 fois.
+</P><H3 CLASS="subsection"><A NAME="htoc110">2.19.2</A>  Le programme</H3><P>
+Voici un premier programme :
+</P><PRE CLASS="verbatim">akc(x,y):={
+if (x==0) return y+1;
+if (y==0) return akc(x-1,1);
+return ack(x-1,ack(x,y-1));
+}
+</PRE><P>ou bien en utilisant <TT>ifte</TT> :
+</P><PRE CLASS="verbatim">ack(x,y):=ifte(x==0,y+1,
+               ifte(y==0,ack(x-1,1),ack(x-1,ack(x,y-1))));
+</PRE><P>On remarque que le temps pour calculer la valeur pour <TT>a(3,5)</TT> est de 5.06s
+ce qui est tres long, mais on peut donc améliorer le programme en arrêtant
+la récursivité lorsque <TT>x==3</TT>.<BR>
+On écrit :
+</P><PRE CLASS="verbatim">a(x,y):={
+if (x==0) return y+1;
+if (x==1) return y+2;
+if (x==2) return 2*y+1;
+if (x==3) return 2^(y+3)-3;
+if (y==0) return a(x-1,1);
+return a(x-1,a(x,y-1));
+}
+</PRE><P>On peut aussi améliorer le programme en arrêtant
+la récursivité lorsque <TT>x==4</TT>.<BR>
+On écrit :
+</P><PRE CLASS="verbatim">a(x,y):={
+if (x==0) return y+1;
+if (x==1) return y+2;
+if (x==2) return 2*y+1;
+if (x==3) return 2^(y+3)-3;
+if (x==4) {
+local p:=1;
+for (j:=1;j&lt;=y+3;j++) p:=2^p;
+return p-3; 
+}
+if (y==0) return a(x-1,1);
+return a(x-1,a(x,y-1));
+}
+</PRE><P>Essayez <TT>a(4,1)=65533</TT>, <TT>a(4,2)</TT>....
+</P><HR>
+<A HREF="casrouge001.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge003.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Variables réelles ou complexes : complex_variables</title>
+</head>
+<body >
+<a href="cascmd_fr030.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr032.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec46" class="subsection">1.7.9  Variables réelles ou complexes : <span style="font-family:monospace">complex_variables</span></h3>
+<p><a id="hevea_default21"></a>
+<span style="font-family:monospace">complex_variables</span> permet de spécifier si on veut travailler
+avec des variables formelles réelles (dans ce cas par exemple <span style="font-family:monospace">re(A)=A</span>) ou complexes.<br>
+Si on veut travailler avec des variables formelles complexes, on tape :
+</p><div class="center"><span style="font-family:monospace">complex_variables:=1</span></div><p>
+Si on veut travailler avec des variables formelles réelles, on tape :
+</p><div class="center"><span style="font-family:monospace">complex_variables:=0</span></div><p>
+On peut aussi cocher ou décocher <span style="font-family:monospace">Variables_ complexes</span> dans l’écran 
+de la <span style="font-family:monospace">Configuration du CAS</span> du menu <span style="font-family:monospace">Cfg</span>.<br>
+<span style="font-weight:bold">Attention !!!</span><br>
+Dans <span style="font-family:monospace">csolve</span> l’inconnue est toujours considérée comme une variable 
+formelle complexe et dans <span style="font-family:monospace">solve</span> l’inconnue est considérée comme une 
+variable formelle complexe seulement si l’equation à résoudre contient 
+<span style="font-family:monospace">i</span> et si on est en mode complexe.<br>
+On tape en mode complexe (<span style="font-family:monospace">Complexe</span> est coché et <span style="font-family:monospace">Variables_complexes</span> est décoché) :
+</p><div class="center"><span style="font-family:monospace">solve(re(r*exp(-(i)*t))-1,r)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[‘ x‘+(i)*1/(sin(t))*(-‘ x‘*cos(t)+1)]</span></div><p>
+cela veut dire que la solution <span style="font-family:monospace">r</span> est un nombre complexe qui vaut 
+<span style="font-family:monospace">‘ x‘+(i)*1/(sin(t))*(-‘ x‘*cos(t)+1)</span> où <span style="font-family:monospace">’x’</span> est arbitraire.<br>
+On tape en mode complexe (<span style="font-family:monospace">Complexe</span> est coché et <span style="font-family:monospace">Variables_complexes</span> est décoché) :
+</p><div class="center"><span style="font-family:monospace">solve(expand(re(r*exp(-(i)*t))-1),r)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[1/(cos(t))]</span></div><p>
+car <span style="font-family:monospace">(expand(re(r*exp(-(i)*t))-1)</span> renvoie une expression qui ne contient 
+pas de <span style="font-family:monospace">i</span> donc <span style="font-family:monospace">solve</span> considère <span style="font-family:monospace">r</span> comme une variable 
+réelle.<br>
+<span style="font-weight:bold">Règle</span> Pour ne pas se tromper, lorqu’on veut des solutions complexes, il
+faut utiliser <span style="font-family:monospace">csolve</span>.<br>
+On tape en mode complexe ou réel :
+</p><div class="center"><span style="font-family:monospace">csolve(re(r*exp(-(i)*t))-1,r)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[‘ x‘+(i)*1/(sin(t))*(-‘ x‘*cos(t)+1)]</span></div><p>
+cela veut dire que la solution <span style="font-family:monospace">r</span> est un nombre complexe qui vaut 
+<span style="font-family:monospace">‘ x‘+(i)*1/(sin(t))*(-‘ x‘*cos(t)+1)</span> où <span style="font-family:monospace">’x’</span> est arbitraire.
+</p>
+<hr>
+<a href="cascmd_fr030.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr032.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

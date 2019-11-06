@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="tutoriel.css">
+<title>Outils pour l&#X2019;Analyse</title>
+</head>
+<body >
+<a href="tutoriel002.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel004.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h2 id="sec14" class="section">3&#XA0;&#XA0;Outils pour l&#X2019;Analyse</h2>
+<h3 id="sec15" class="subsection">3.1&#XA0;&#XA0;D&#XE9;riv&#XE9;es</h3>
+<p>
+<a id="hevea_default142"></a>
+<a id="hevea_default143"></a>
+<a id="hevea_default144"></a>
+<a id="hevea_default145"></a>
+La fonction <code>diff</code> permet de calculer la d&#XE9;riv&#XE9;e d&#X2019;une
+expression par rapport &#XE0; une ou plusieurs de ses variables. Pour
+d&#XE9;river une fonction <span style="font-style:italic">f</span>, 
+on peut appliquer <code>diff</code> &#XE0; l&#X2019;expression <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>), mais alors le
+r&#XE9;sultat est une expression. Si on souhaite d&#XE9;finir la fonction
+d&#XE9;riv&#XE9;e, il faut utiliser <code>function_diff</code>.
+</p><pre class="verbatim">E:=x^2-1; diff(E);
+f:=unapply(E,x); diff(f(x));
+f1:=function_diff(f);f1(x);
+</pre><p>
+Il ne <span style="font-weight:bold">faut pas</span> d&#XE9;finir la fonction d&#XE9;riv&#XE9;e par
+<code>f1(x):=diff(f(x))</code>, car dans cette d&#XE9;finition, <code>x</code> aurait 
+deux sens incompatibles&#XA0;: c&#X2019;est d&#X2019;une part la
+variable formelle de d&#XE9;rivation et d&#X2019;autre part l&#X2019;argument
+de la fonction <code>f1</code>. D&#X2019;autre part, cette d&#XE9;finition
+&#XE9;valuerait <code>diff</code> &#XE0; chaque appel de la fonction (car
+le membre de droite d&#X2019;une affectation n&#X2019;est jamais &#XE9;valu&#XE9;), ce 
+qui serait inefficace.<br>
+Il faut utiliser
+<code>f1:=function_diff(f)</code>, 
+ou
+<code>f1:=unapply(diff(f(x)),x)</code>.</p><p>La fonction <code>diff</code> s&#X2019;applique &#XE0; n&#X2019;importe quelle combinaison de
+variables, et permet de calculer des d&#XE9;riv&#XE9;es partielles
+successives.
+<a id="hevea_default146"></a>
+</p><pre class="verbatim">E:=sin(x*y)
+diff(E,x)
+diff(E,y)
+diff(E,x,y)-diff(E,y,x)
+simplify(ans())
+diff(E,x$2,y$3)
+</pre><p>
+Si le deuxi&#XE8;me argument de <code>diff</code> est une liste, une
+liste de d&#XE9;riv&#XE9;es est retourn&#XE9;e. Par exemple pour calculer
+le gradient de sin(<span style="font-style:italic">xy</span>)&#XA0;:
+<code>diff(sin(x*y),[x,y])</code> (on peut aussi utiliser <code>grad</code>). 
+Des commandes particuli&#XE8;res permettent de calculer les 
+combinaisons classiques de d&#XE9;riv&#XE9;es partielles.</p><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">D&#XE9;riv&#XE9;es</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>diff(ex,t)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >d&#XE9;riv&#XE9;e d&#X2019;une expression par rapport &#XE0; t</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>function_diff(f)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >fonction d&#XE9;riv&#XE9;e d&#X2019;une fonction</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>diff(ex,x$n,y$m)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >d&#XE9;riv&#XE9;es partielles</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>grad</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >gradient</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>divergence</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >divergence</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>curl</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >rotationnel</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>laplacian</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >laplacien</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>hessian</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >matrice hessienne</td></tr>
+</table>
+</div><p>
+<a id="hevea_default147"></a>
+<a id="hevea_default148"></a>
+<a id="hevea_default149"></a>
+<a id="hevea_default150"></a>
+<a id="hevea_default151"></a>
+<a id="hevea_default152"></a>
+<a id="hevea_default153"></a>
+<a id="hevea_default154"></a>
+<a id="hevea_default155"></a>
+<a id="hevea_default156"></a>
+</p>
+<h3 id="sec16" class="subsection">3.2&#XA0;&#XA0;Limites et d&#XE9;veloppements limit&#XE9;s</h3>
+<p>
+La fonction <code>limit</code> calcule les limites finies ou
+infinies, quand elles existent. On peut demander une limite 
+&#XE0; gauche ou &#XE0; droite &#XE0; l&#X2019;aide d&#X2019;un quatri&#XE8;me argument (+1 ou -1). 
+Quand la fonction d&#XE9;pend d&#X2019;un
+param&#XE8;tre, la limite obtenue peut d&#XE9;pendre des hypoth&#XE8;ses
+faites, avec la fonction <span style="font-family:monospace">assume</span>, sur ce param&#XE8;tre. 
+<a id="hevea_default157"></a>
+<a id="hevea_default158"></a>
+<a id="hevea_default159"></a>
+<a id="hevea_default160"></a>
+</p><pre class="verbatim">limit(1/x,x,0)
+limit(1/x,x,0,1)
+limit(1/x,x,0,-1)
+limit(a/x,x,0,1)
+assume(a&gt;0)
+limit(a/x,x,0,1)
+</pre><p>
+Pour les d&#XE9;veloppements limit&#XE9;s,
+deux fonctions sont disponibles, <code>series</code> et <code>taylor</code>. La
+diff&#XE9;rence est que l&#X2019;ordre du d&#XE9;veloppement doit &#XEA;tre
+sp&#XE9;cifi&#XE9; pour <code>series</code>, il est &#XE9;gal &#XE0; 6 par d&#XE9;faut
+pour <code>taylor</code>. 
+<a id="hevea_default161"></a>
+<a id="hevea_default162"></a>
+<a id="hevea_default163"></a></p><p>L&#X2019;ordre du d&#XE9;veloppement limit&#XE9; demand&#XE9; est utilis&#XE9; par 
+<span style="font-family:monospace">Xcas</span> en interne pour faire ses d&#XE9;veloppements. En cas de 
+simplifications, l&#X2019;ordre du d&#XE9;veloppement obtenu pourra &#XEA;tre inf&#XE9;rieur, 
+il faudra alors recommencer le calcul avec un ordre plus grand. L&#X2019;expression
+retourn&#XE9;e est constitu&#XE9;e du polyn&#XF4;me de Taylor, plus un reste
+dans lequel appara&#XEE;t une fonction <code>order_size</code> qui est telle que
+pour tout <span style="font-style:italic">a</span>&gt;0, <span style="font-style:italic">x</span><sup><span style="font-style:italic">a</span></sup><code>order_size</code>(<span style="font-style:italic">x</span>) tend vers 0
+quand <span style="font-style:italic">x</span> tend vers 0. Pour supprimer le reste et ne garder
+que le polyn&#XF4;me de Taylor, on peut utiliser <code>convert</code> avec l&#X2019;option 
+<span style="font-family:monospace">polynom</span>.
+</p><pre class="verbatim">taylor(1/(x^2+1),0)
+taylor(1/(x^2+a^2),x=0)
+series(1/(x^2+1),0,11)
+series(1/(x^2+1),+infinity,11)
+series(tan(x),pi/4,3)
+series(sin(x)^3/((1-cos(x))*tan(x)),0,4)
+series(sin(x)^3/((1-cos(x))*tan(x)),0,6)
+series(tan(sin(x))-sin(tan(x)),0,13)
+convert(ans(),polynom)
+series(f(x),0,3)
+g:=f@f; series(g(x),0,2)
+</pre><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Limites et d&#XE9;veloppements limit&#XE9;s</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>limit(ex,x,a)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >limite en a</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>limit(ex,x,a,1)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >limite &#XE0; droite en a</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>limit(ex,x,a,-1)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >limite &#XE0; gauche en a</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>taylor(ex,a)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >d&#XE9;veloppement limit&#XE9; en <span style="font-style:italic">a</span> ordre 6</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>series(ex,a,n)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >d&#XE9;veloppement limit&#XE9; en <span style="font-style:italic">a</span> ordre <span style="font-style:italic">n</span></td></tr>
+</table>
+</div>
+<h3 id="sec17" class="subsection">3.3&#XA0;&#XA0;Primitives et int&#XE9;grales</h3>
+<p>
+<a id="hevea_default164"></a>
+<a id="hevea_default165"></a>
+<a id="hevea_default166"></a>
+<a id="hevea_default167"></a>
+La fonction <code>int</code> calcule une primitive d&#X2019;une expressionpar rapport &#XE0; 
+<span style="font-style:italic">x</span> ou par rapport &#XE0; la variable donn&#XE9;e en argument. Si
+l&#X2019;expression comporte plusieurs variables, il vaut pr&#XE9;ciser la
+variable d&#X2019;int&#XE9;gration. Si on ajoute deux arguments <span style="font-style:italic">a</span> et <span style="font-style:italic">b</span> 
+apr&#XE8;s la variable d&#X2019;int&#XE9;gration, on calcule l&#X2019;int&#XE9;grale sur
+l&#X2019;intervalle [<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>]. Eventuellement les
+bornes de l&#X2019;int&#XE9;grale peuvent &#XEA;tre des expressions, ce qui permet
+de calculer des int&#XE9;grales multiples.
+</p><pre class="verbatim">int(x^2-1)
+int(x^2-1,x,-1,1)
+int(x*y,x)
+int(x*y,y,0,x)
+int(int(x*y,y,0,x),x,0,1)
+</pre><p>
+Pour calculer une int&#XE9;grale, un logiciel de calcul formel recherche 
+une primitive puis l&#X2019;&#XE9;value entre les bornes, afin d&#X2019;obtenir
+une valeur exacte. Dans certains cas, il est inutile de calculer
+une primitive, soit parce qu&#X2019;il n&#X2019;en existe pas qui s&#X2019;exprime
+avec les fonctions &#XE9;l&#XE9;mentaires, soit 
+parce qu&#X2019;un calcul num&#XE9;rique est plus adapt&#XE9; (par exemple si 
+le temps de calcul de la primitive est trop long, si la fonction
+pr&#XE9;sente des singularit&#XE9;s dans l&#X2019;intervalle d&#X2019;int&#XE9;gration, etc&#X2026;).
+Dans ce cas, on demande une valeur approch&#XE9;e en utilisant
+<code>evalf</code>, ou bien on utilise directement 
+la fonction <code>romberg</code>, qui est
+appel&#XE9;e par <code>evalf</code>.
+<a id="hevea_default168"></a>
+</p><pre class="verbatim">int(exp(-x^2))
+int(exp(-x^2),x,0,10)
+evalf(int(exp(-x^2),x,0,10))
+romberg(exp(-x^2),x,0,10)
+ans()/sqrt(pi))
+</pre><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Int&#XE9;grales</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>int(E)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >primitive d&#X2019;une expression</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>int(E,x,a,b)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >int&#XE9;grale exacte</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>romberg(E,x,a,b)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >int&#XE9;grale approch&#XE9;e</td></tr>
+</table>
+</div>
+<h3 id="sec18" class="subsection">3.4&#XA0;&#XA0;R&#XE9;solution d&#X2019;&#XE9;quations</h3>
+<p>
+<a id="hevea_default169"></a>
+Comme pour les int&#XE9;grales on distingue&#XA0;:
+</p><ul class="itemize"><li class="li-itemize">
+la r&#XE9;solution exacte qui renvoie toutes les solutions 
+lorsque c&#X2019;est possible (par exemple pour certaines &#XE9;quations polynomiales
+ou s&#X2019;y ramenant)
+</li><li class="li-itemize">la r&#XE9;solution approch&#XE9;e qui calcule par un algorithme it&#XE9;ratif
+une valeur proche d&#X2019;une des solutions.
+</li></ul><p>
+<a id="hevea_default170"></a>
+<a id="hevea_default171"></a>
+La r&#XE9;solution exacte s&#X2019;effectue &#XE0; l&#X2019;aide de <code>solve</code>, dont le
+premier argument est une &#XE9;quation. Le membre de droite est
+suppos&#XE9; nul s&#X2019;il n&#X2019;est pas pr&#XE9;cis&#XE9;. Par 
+d&#XE9;faut <code>solve</code> ne retourne pas les solutions complexes. 
+Pour les obtenir, il faut cocher <code>Complexe</code> dans la configuration du CAS
+(<span style="font-family:monospace">Cfg-&gt;Configuration de CAS</span> ou sur la barre-bouton 
+<span style="font-family:monospace">Config :exact...</span>)<br>
+Ex&#XE9;cutez les commandes suivantes
+avant et apr&#XE8;s avoir activ&#XE9; l&#X2019;option <code>Complex</code>. 
+<a id="hevea_default172"></a>
+</p><pre class="verbatim">solve(x^2-a*x+2,x)
+solve(x^2+2,x)
+solve(x^3=1,x)
+</pre><p>
+Les racines exactes sont calcul&#XE9;es pour les polyn&#XF4;mes de
+degr&#XE9; 1 et 2 (les formules de Cardan et Ferrari pour les degr&#XE9;s
+3 et 4 ne sont pas utilis&#XE9;es, car les solutions obtenues
+ne sont pas facilement maniables). En degr&#XE9; sup&#XE9;rieur,
+la fonction <code>solve</code> affiche un message d&#X2019;erreur et renvoie
+une liste vide.</p><p>Pour les &#XE9;quations trigonom&#XE9;triques, les solutions principales
+sont renvoy&#XE9;es. Pour obtenir toutes les solutions, il faut activer
+l&#X2019;option <code>All_trig_sol</code>. Comparer les commandes suivantes avec et
+sans cette option.
+</p><pre class="verbatim">solve(cos(x),x)
+solve(cos(x)+sin(x),x)
+</pre><p>La fonction <code>solve</code> peut aussi r&#XE9;soudre des syst&#XE8;mes
+d&#X2019;&#XE9;quations. Le premier argument est la liste des &#XE9;quations, le
+second est la liste des variables.
+<a id="hevea_default173"></a>
+</p><pre class="verbatim">solve([x^2+y-2,x+y^2-2],[x,y])
+</pre><p><a id="hevea_default174"></a>
+La fonction de r&#XE9;solution approch&#XE9;e est <code>fsolve</code>. Elle
+propose en option diff&#XE9;rents algorithmes
+(menus <code>Calc-&gt;Num_solve_eq </code> et <code>Calc-&gt;Num_solve_syst</code>).
+Le plus c&#XE9;l&#XE8;bre est
+l&#X2019;algorithme de Newton, qui a de multiples variantes. Le principe
+g&#XE9;n&#XE9;ral de tous ces algorithmes est de calculer les termes
+successifs d&#X2019;une suite qui converge vers une solution de l&#X2019;&#XE9;quation
+ou du syst&#XE8;me propos&#XE9;. Il faut pour cela choisir selon les cas
+un point de d&#XE9;part, ou un intervalle de recherche.
+</p><pre class="verbatim">fsolve((x^5+2*x+1)=0,x,1,newton_solver)
+newton(x^5+2*x+1,x,1.0)
+newton(x^5+2*x+1,x,1+i)
+newton(x^5+2*x+1,x,-1+i)
+</pre><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Equations</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>solve(eq,x)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >r&#XE9;solution exacte d&#X2019;une &#XE9;quation</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>solve([eq1,eq2],[x,y])</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >r&#XE9;solution exacte d&#X2019;un syst&#XE8;me</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>fsolve(eq,x)</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >r&#XE9;solution approch&#XE9;e d&#X2019;une &#XE9;quation</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>fsolve([eq1,eq2],[x,y])</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >r&#XE9;solution approch&#XE9;e d&#X2019;un syst&#XE8;me</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>newton</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >m&#XE9;thode de Newton</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>linsolve</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >syst&#XE8;me lin&#XE9;aire</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>proot</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >racines approch&#XE9;es d&#X2019;un polyn&#XF4;me</td></tr>
+</table>
+</div><p>
+<a id="hevea_default175"></a>
+<a id="hevea_default176"></a>
+<a id="hevea_default177"></a>
+</p>
+<h3 id="sec19" class="subsection">3.5&#XA0;&#XA0;Equations diff&#XE9;rentielles</h3>
+<p>
+<a id="hevea_default178"></a>
+Comme dans les deux sections pr&#XE9;c&#XE9;dentes, on distingue le
+calcul exact, qui n&#X2019;est pas toujours possible, du calcul
+approch&#XE9;. La r&#XE9;solution exacte s&#X2019;effectue par <code>desolve</code>. 
+Les d&#XE9;riv&#XE9;es de la fonction inconnue <span style="font-style:italic">y</span> peuvent s&#X2019;&#XE9;crire <span style="font-style:italic">y</span>&#X2032;,
+<span style="font-style:italic">y</span>&#X2033;, qui sont traduits en <code>diff(y)</code>, <code>diff(diff(y))</code>.
+Si on ne sp&#XE9;cifie pas de condition initiale, le r&#XE9;sultat est donn&#XE9;
+en fonction de constantes arbitraires.
+</p><pre class="verbatim">desolve(y'=y,y)
+desolve(y''+2*y'+y=0,y)
+desolve((x^2-1)*y'+2*y=0,y)
+</pre><p>
+Les conditions initiales sont vues comme des &#XE9;quations
+suppl&#XE9;mentaires, qui forment une liste avec l&#X2019;&#XE9;quation 
+diff&#XE9;rentielle.
+</p><pre class="verbatim">desolve([y'=y,y(0)=1],y)
+desolve([y"+2*y'+y=0,y(0)=1],y)
+desolve([y"+2*y'+y=0,y(0)=1,y'(0)=1],y)
+desolve([y"+2*y'+y=0,y(0)=1,y(1)=0],y)
+desolve([(x^2-1)*y'+2*y=0,y(0)=1],y)
+desolve((t^2-1)*diff(y(t),t)+2*y(t)=0,y(t))
+</pre><p>
+<a id="hevea_default179"></a>
+<a id="hevea_default180"></a></p><p>La fonction <code>odesolve</code> permet de r&#XE9;soudre par des m&#XE9;thodes
+num&#XE9;riques une &#XE9;quation diff&#XE9;rentielle <span style="font-style:italic">y</span>&#X2032;=<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>) passant par
+un point (<span style="font-style:italic">x</span><sub>0</sub>,<span style="font-style:italic">y</span><sub>0</sub>). Par exemple
+</p><pre class="verbatim">odesolve(sin(x*y),[x,y],[0,1],2)
+</pre><p>
+permet de calculer <span style="font-style:italic">y</span>(2) o&#XF9; <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>) est la solution de <span style="font-style:italic">y</span>&#X2032;(<span style="font-style:italic">x</span>)=sin(<span style="font-style:italic">xy</span>),
+telle que <span style="font-style:italic">y</span>(0)=1.
+La fonction <code>plotode</code> repr&#XE9;sente graphiquement
+la solution d&#X2019;une &#XE9;quation diff&#XE9;rentielle,
+<code>plotfield</code> repr&#XE9;sente le champ
+des tangentes. La fonction 
+<code>interactive_odeplot</code> repr&#XE9;sente le champ
+des tangentes et permet de cliquer sur le graphique pour tracer
+les solutions passant par les points cliqu&#XE9;s.
+</p><pre class="verbatim">plotfield(sin(x*y),[x,y])
+plotode(sin(x*y),[x,y],[0,1])
+erase()
+interactive_plotode(sin(x*y),[x,y])
+</pre><div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Equations diff&#XE9;rentielles</span></td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>desolve</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >r&#XE9;solution exacte</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>odesolve</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >r&#XE9;solution approch&#XE9;e</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>plotode</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >trac&#XE9; de trajectoire</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>plotfield</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >trac&#XE9; d&#X2019;un champ de vecteurs</td></tr>
+<tr><td style="text-align:left;border:solid 1px;white-space:nowrap" ><code>interactive_plotode</code></td><td style="text-align:left;border:solid 1px;white-space:nowrap" >interface cliquable</td></tr>
+</table>
+</div><p>
+<a id="hevea_default181"></a>
+<a id="hevea_default182"></a>
+<a id="hevea_default183"></a>
+</p>
+<hr>
+<a href="tutoriel002.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel004.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

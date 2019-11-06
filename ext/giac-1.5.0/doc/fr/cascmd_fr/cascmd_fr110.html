@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Calcul approché d’intègrales par une quadrature de Gauss adaptative à 15 points : gaussquad</title>
+</head>
+<body >
+<a href="cascmd_fr109.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr111.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec166" class="subsection">4.3.4  Calcul approché d’intègrales par une quadrature de Gauss adaptative à 15 points : <span style="font-family:monospace">gaussquad</span></h3>
+<p><a id="hevea_default197"></a>
+<span style="font-family:monospace">gaussquad</span> a comme arguments : une expression 
+<span style="font-family:monospace">Xpr</span>, le nom de la variable de cette expression (par défaut <span style="font-family:monospace">x</span>), et 
+deux valeurs <span style="font-family:monospace">a,b</span>.<br>
+<span style="font-family:monospace">gaussquad(Xpr,x,a,b)</span> calcule de 
+façon approchée l’intégrale ∫<sub><span style="font-style:italic">a</span></sub><sup><span style="font-style:italic">b</span></sup> <span style="font-style:italic">Xpr</span> <span style="font-style:italic">dx</span> par une 
+méthode adaptative (Ernst Hairer) utilisant des quadratures de 
+Gauss à 15 points (méthode d’ordre 30). 
+On commence par faire la quadrature à 15 points
+sur l’intervalle [<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>] tout entier et on estime l’erreur par une
+méthode emboitée (à 14 et 6 points choisis parmi les 15 points), 
+si l’erreur relative<sup><a id="text3" href="cascmd_fr125.html#note3">1</a></sup> est
+inférieure à la tolérance, l’algorithme s’arrête. Sinon on
+divise [<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>] en deux, et on calcule la quadrature sur chaque
+morceau, on estime l’erreur, si on dépasse la tolérance on divise
+en deux l’intervalle amenant l’erreur la plus grande, et ainsi
+de suite, on divise toujours en deux l’intervalle amenant l’erreur
+la plus grande, jusqu’à ce que l’erreur relative soit plus petite
+que la tolérance ou que le nombre de subdivisions dépasse le nombre
+maximal de subdivisions autorisées.
+<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">gaussquad(exp(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),x,0,1)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">1.46265174591</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">gaussquad(exp(-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),x,-1,1)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">1.49364826562</span></div>
+<hr>
+<a href="cascmd_fr109.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr111.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

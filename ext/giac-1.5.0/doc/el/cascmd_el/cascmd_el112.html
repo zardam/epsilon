@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Αντικατάσταση μιας μεταβλητής με μια τιμή : subst</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el111.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el113.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc125">1.12.16</A>  Αντικατάσταση μιας μεταβλητής με μια τιμή : <TT>subst</TT></H3><P><A NAME="@default176"></A><A NAME="sec:subst"></A>
+	
+<TT>subst</TT> παίρνει δύο ή τρία ορίσματα : 
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+μια παράσταση που εξαρτάται από μια μεταβλητή,
+μια ισότητα (μεταβλητή=τιμή αντικατάστασης) ή μια λίστα από ισότητες.
+</LI><LI CLASS="li-itemize">μια παράσταση που εξαρτάται από μια μεταβλητή, μια μεταβλητή ή μια λίστα από μεταβλητές, μία τιμή ή μια λίστα από τιμές για αντικατάσταση.
+</LI></UL><P>
+	
+<TT>subst</TT> επιστρέφει την παράσταση όπου έχει γίνει η αντικατάσταση.
+Να σημειωθεί πως το 	
+<TT>subst</TT> δεν αναφέρει (	
+quote) το όρισμά του, γιαυτό το λόγο
+σε μια κανονική διαδικασία αποτίμησης, δεν θα πρέπει να έχει γίνει απόδοση τιμής στην μεταβλητή που αντικαθίσταται, αλλιώς θα αντικαθίσται από την τιμή που της αποδόθηκε
+πριν να γίνει η αντικατάσταση.<BR>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>subst(a</TT><CODE><TT>^</TT></CODE><TT>2+1,a=2)</TT></DIV><P> 
+ή :
+</P><DIV CLASS="center">	
+<TT>subst(a</TT><CODE><TT>^</TT></CODE><TT>2+1,a,2)</TT></DIV><P> 
+Έξοδος (εάν δεν έχει αποδοθεί τιμή στην 	
+<TT>a</TT> αλλιώς πρώτα πληκτρολογείστε 	
+<TT>purge(a)</TT>) :
+</P><DIV CLASS="center">	
+<TT>5</TT></DIV><P> 
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>subst(a</TT><CODE><TT>^</TT></CODE><TT>2+b,[a,b],[2,1])</TT></DIV><P> 
+Ή:
+</P><DIV CLASS="center">	
+<TT>subst(a</TT><CODE><TT>^</TT></CODE><TT>2+b,[a=2,b=1])</TT></DIV><P> 
+Έξοδος (εάν δεν έχουν αποδοθεί τιμές στις 	
+<TT>a</TT> και 	
+<TT>b</TT> αλλιώς πρώτα πληκτρολογείστε
+	
+<TT>purge(a,b)</TT>) :
+</P><DIV CLASS="center">	
+<TT>2</TT><CODE><TT>^</TT></CODE><TT>2+1</TT></DIV><P>
+	
+<TT>subst</TT> μπορεί να χρησιμοποιηθεί για αλλαγή μεταβλητής σε ένα ολοκλήρωμα. 
+Σε αυτή την περίπτωση, η εντολή 	
+<TT>integrate</TT> θα πρέπει να αναφέρεται
+(διαφορετικά, το ολοκλήρωμα θα υπολογίζεται πριν την αντικατάσταση) ή 
+να χρησιμοποιείται η αδρανής μορφή 	
+<TT>Int</TT>.
+Και στις δύο περιπτώσεις, το όνομα της μεταβλητής πρέπει να δίνεται ως
+όρισμα του 	
+<TT>Int</TT> ή 	
+<TT>integrate</TT> ακόμα και αν ολοκληρώνετε ως προς 	
+<TT>x</TT>.<BR>
+Είσοδος:
+</P><DIV CLASS="center">	
+<TT>subst(</TT><TT>’</TT><TT>integrate(sin(x</TT><CODE><TT>^</TT></CODE><TT>2)*x,x,0,pi/2)</TT><TT>’</TT><TT>,x=sqrt(t))</TT></DIV><P>
+Ή :
+</P><DIV CLASS="center">	
+<TT>subst(Int(sin(x</TT><CODE><TT>^</TT></CODE><TT>2)*x,x,0,pi/2),x=sqrt(t))</TT></DIV><P>
+Έξοδος
+</P><DIV CLASS="center">	
+<TT>integrate(sin(t)*sqrt(t)*1/2*1/t*sqrt(t),t,0,(pi/2)</TT><CODE><TT>^</TT></CODE><TT>2)</TT></DIV><P> 
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>subst(</TT><TT>’</TT><TT>integrate(sin(x</TT><CODE><TT>^</TT></CODE><TT>2)*x,x)</TT><TT>’</TT><TT>,x=sqrt(t))</TT></DIV><P>
+Ή :
+</P><DIV CLASS="center">	
+<TT>subst(Int(sin(x</TT><CODE><TT>^</TT></CODE><TT>2)*x,x),x=sqrt(t))</TT></DIV><P>
+Έξοδος
+</P><DIV CLASS="center">	
+<TT>integrate(sin(t)*sqrt(t)*1/2*1/t*sqrt(t),t)</TT></DIV><HR>
+<A HREF="cascmd_el111.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el113.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,2172 @@
+<HTML>
+<HEAD>
+  <TITLE>
+    Catalogue of GP/PARI Functions: Vectors, matrices, linear algebra and sets
+  </TITLE>
+
+  <META NAME="author"       CONTENT="Nils-Peter Skoruppa">
+  <META NAME="created"      CONTENT="Sat Mar 22 18:13:28 2014">
+  <META NAME="author-email" CONTENT="skoruppa@math.uni-siegen.de">
+  <META NAME="keywords"     CONTENT="PARI, GP, DOC">
+  <link rel="stylesheet" href="/pari.css">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+
+<h3 align=center>Vectors, matrices, linear algebra and sets</h3>
+
+<a name="algdep"></a>
+<h4>algdep(x,k,{<em>flag</em> = 0})</h4>
+<p></p>
+<p></p>
+<p>x being real/complex, or p-adic, finds a polynomial of degree at most
+k with integer coefficients having x as approximate root. Note that the
+polynomial which is obtained is not necessarily the "correct" one. In fact
+it is not even guaranteed to be irreducible. One can check the closeness
+either by a polynomial evaluation (use <code>subst</code>), or by computing the
+roots of the polynomial given by <code>algdep</code> (use <code>polroots</code>).</p>
+<p>
+Internally, <code>lindep</code>([1,x,...,x^k], <em>flag</em>) is used.
+A non-zero value of <em>flag</em> may improve on the default behavior
+if the input number is known to a <em>huge</em> accuracy, and you suspect the
+last bits are incorrect  (this truncates the number, throwing away the least
+significant bits), but default values are usually sufficient:</p>
+<p>
+<pre class="code">  ? \p200
+  ? algdep(2^(1/6)+3^(1/5), 30);      \\ wrong in 0.8s
+  ? algdep(2^(1/6)+3^(1/5), 30, 100); \\ wrong in 0.4s
+  ? algdep(2^(1/6)+3^(1/5), 30, 170); \\ right in 0.8s
+  ? algdep(2^(1/6)+3^(1/5), 30, 200); \\ wrong in 1.0s
+  ? \p250
+  ? algdep(2^(1/6)+3^(1/5), 30);      \\ right in 1.0s
+  ? algdep(2^(1/6)+3^(1/5), 30, 200); \\ right in 1.0s
+  ? \p500
+  ? algdep(2^(1/6)+3^(1/5), 30);      \\ right in 2.9s
+  ? \p1000
+  ? algdep(2^(1/6)+3^(1/5), 30);      \\ right in 10.6s
+</pre></p>
+<p>
+The changes in <code>defaultprecision</code> only affect the quality of the
+initial approximation to 2^{1/6} + 3^{1/5}, <code>algdep</code> itself uses
+exact operations (the size of its operands depend on the accuracy of the
+input of course: more accurate input means slower operations).</p>
+<p>
+Proceeding by increments of 5 digits of accuracy, <code>algdep</code> with default
+flag produces its first correct result at 205 digits, and from then on a
+steady stream of correct results.</p>
+<p>
+The above example is the test case studied in a 2000 paper by Borwein and
+Lisonek: Applications of integer relation algorithms, <em>Discrete Math.</em>,
+<b>217</b>, p.&nbsp;65--82. The version of PARI tested there was 1.39, which
+succeeded reliably from precision 265 on, in about 200 as much time as the
+current version.</p>
+<p>
+The library syntax is <code>GEN <b>algdep0</b>(GEN x, long k, long flag)</code>.
+Also available is <code>GEN <b>algdep</b>(GEN x, long k)</code> (<em>flag</em> = 0).</p>
+
+<hr></hr>
+<a name="charpoly"></a>
+<h4>charpoly(A,{v = 'x},{<em>flag</em> = 5})</h4>
+<p></p>
+<p>characteristic polynomial
+of A with respect to the variable v, i.e.&nbsp;determinant of v*I-A if A
+is a square matrix.</p>
+<p>
+<pre class="code">  ? charpoly([1,2;3,4]);
+  %1 = x^2 - 5*x - 2
+  ? charpoly([1,2;3,4],, 't)
+  %2 = t^2 - 5*t - 2
+</pre></p>
+<p>
+If A is not a square matrix, the function returns the characteristic
+polynomial of the map "multiplication by A" if A is a scalar:</p>
+<p>
+<pre class="code">  ? charpoly(Mod(x+2, x^3-2))
+  %1 = x^3 - 6*x^2 + 12*x - 10
+  ? charpoly(I)
+  %2 = x^2 + 1
+  ? charpoly(quadgen(5))
+  %3 = x^2 - x - 1
+  ? charpoly(ffgen(ffinit(2,4)))
+  %4 = Mod(1, 2)*x^4 + Mod(1, 2)*x^3 + Mod(1, 2)*x^2 + Mod(1, 2)*x + Mod(1, 2)
+</pre></p>
+<p></p>
+<p>
+The value of <em>flag</em> is only significant for matrices, and we advise to stick
+to the default value. Let n be the dimension of A.</p>
+<p>
+If <em>flag</em> = 0, same method (Le Verrier's) as for computing the adjoint matrix,
+i.e.&nbsp;using the traces of the powers of A. Assumes that n! is
+invertible; uses O(n^4) scalar operations.</p>
+<p>
+If <em>flag</em> = 1, uses Lagrange interpolation which is usually the slowest method.
+Assumes that n! is invertible; uses O(n^4) scalar operations.</p>
+<p>
+If <em>flag</em> = 2, uses the Hessenberg form. Assumes that the base ring is a field.
+Uses O(n^3) scalar operations, but suffers from coefficient explosion
+unless the base field is finite or <b>R</b>.</p>
+<p>
+If <em>flag</em> = 3, uses Berkowitz's division free algorithm, valid over any
+ring (commutative, with unit). Uses O(n^4) scalar operations.</p>
+<p>
+If <em>flag</em> = 4, x must be integral. Uses a modular algorithm: Hessenberg form
+for various small primes, then Chinese remainders.</p>
+<p>
+If <em>flag</em> = 5 (default), uses the "best" method given x.
+This means we use Berkowitz unless the base ring is <b>Z</b> (use <em>flag</em> = 4)
+or a field where coefficient explosion does not occur,
+e.g.&nbsp;a finite field or the reals (use <em>flag</em> = 2).</p>
+<p>
+The library syntax is <code>GEN <b>charpoly0</b>(GEN A, long v = -1, long flag)</code>, where <code>v</code> is a variable number.
+Also available are
+<code>GEN <b>charpoly</b>(GEN x, long v)</code> (<em>flag</em> = 5),
+<code>GEN <b>caract</b>(GEN A, long v)</code> (<em>flag</em> = 1),
+<code>GEN <b>carhess</b>(GEN A, long v)</code> (<em>flag</em> = 2),
+<code>GEN <b>carberkowitz</b>(GEN A, long v)</code> (<em>flag</em> = 3) and
+<code>GEN <b>caradj</b>(GEN A, long v, GEN *pt)</code>. In this
+last case, if <em>pt</em> is not <code>NULL</code>, <code>*pt</code> receives the address of
+the adjoint matrix of A (see <code>matadjoint</code>), so both can be obtained at
+once.</p>
+
+<hr></hr>
+<a name="concat"></a>
+<h4>concat(x,{y})</h4>
+<p></p>
+<p>Concatenation of x and y. If x or y is
+not a vector or matrix, it is considered as a one-dimensional vector. All
+types are allowed for x and y, but the sizes must be compatible. Note
+that matrices are concatenated horizontally, i.e.&nbsp;the number of rows stays
+the same. Using transpositions, one can concatenate them vertically,
+but it is often simpler to use <code>matconcat</code>.</p>
+<p>
+<pre class="code">  ? x = matid(2); y = 2*matid(2);
+  ? concat(x,y)
+  %2 =
+  [1 0 2 0]
+  
+  [0 1 0 2]
+  ? concat(x~,y~)~
+  %3 =
+  [1 0]
+  
+  [0 1]
+  
+  [2 0]
+  
+  [0 2]
+  ? matconcat([x;y])
+  %4 =
+  [1 0]
+  
+  [0 1]
+  
+  [2 0]
+  
+  [0 2]
+</pre></p>
+<p>
+To concatenate vectors sideways (i.e.&nbsp;to obtain a two-row or two-column
+matrix), use <code>Mat</code> instead, or <code>matconcat</code>:</p>
+<p>
+<pre class="code">  ? x = [1,2];
+  ? y = [3,4];
+  ? concat(x,y)
+  %3 = [1, 2, 3, 4]
+  
+  ? Mat([x,y]~)
+  %4 =
+  [1 2]
+  
+  [3 4]
+  ? matconcat([x;y])
+  %5 =
+  [1 2]
+  
+  [3 4]
+</pre></p>
+<p>
+Concatenating a row vector to a matrix having the same number of columns will
+add the row to the matrix (top row if the vector is x, i.e.&nbsp;comes first, and
+bottom row otherwise).</p>
+<p>
+The empty matrix <code>[;]</code> is considered to have a number of rows compatible
+with any operation, in particular concatenation. (Note that this is
+<em>not</em> the case for empty vectors <code>[&nbsp;]</code> or <code>[&nbsp;]~</code>.)</p>
+<p>
+If y is omitted, x has to be a row vector or a list, in which case its
+elements are concatenated, from left to right, using the above rules.</p>
+<p>
+<pre class="code">  ? concat([1,2], [3,4])
+  %1 = [1, 2, 3, 4]
+  ? a = [[1,2]~, [3,4]~]; concat(a)
+  %2 =
+  [1 3]
+  
+  [2 4]
+  
+  ? concat([1,2; 3,4], [5,6]~)
+  %3 =
+  [1 2 5]
+  
+  [3 4 6]
+  ? concat([%, [7,8]~, [1,2,3,4]])
+  %5 =
+  [1 2 5 7]
+  
+  [3 4 6 8]
+  
+  [1 2 3 4]
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>concat</b>(GEN x, GEN y = NULL)</code>.
+<code>GEN <b>concat1</b>(GEN x)</code> is a shortcut for <code>concat(x,NULL)</code>.</p>
+
+<hr></hr>
+<a name="forqfvec"></a>
+<h4>forqfvec(v,q,b,<em>expr</em>)</h4>
+<p></p>
+<p>q being a square and symmetric matrix representing a positive definite
+quadratic form, evaluate <code>expr</code> for all vector v such that q(v) <code>&#60;=</code> b.
+The formal variable v runs through all such vectors in turn.</p>
+<p>
+<pre class="code">  ? forqfvec(v, [3,2;2,3], 3, print(v))
+  [0, 1]~
+  [1, 0]~
+  [-1, 1]~
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>void <b>forqfvec0</b>(GEN v, GEN q = NULL, GEN b)</code>.
+The following function is also available:
+<code>void <b>forqfvec</b>(void *E, long (*fun)(void *, GEN, double), GEN q, GEN b)</code>:
+Evaluate <code>fun(E,v,m)</code> on all v such that q(v) &#60; b, where v is a
+<code>t_VECSMALL</code> and m = q(v) is a C double. The function <code>fun</code> must
+return 0, unless <code>forqfvec</code> should stop, in which case, it should
+return 1.</p>
+
+<hr></hr>
+<a name="lindep"></a>
+<h4>lindep(v,{<em>flag</em> = 0})</h4>
+<p></p>
+<p> finds a small non-trivial integral linear
+combination between components of v. If none can be found return an empty
+vector.</p>
+<p>
+If v is a vector with real/complex entries we use a floating point
+(variable precision) LLL algorithm. If <em>flag</em> = 0 the accuracy is chosen
+internally using a crude heuristic. If <em>flag</em> &#62; 0 the computation is done with
+an accuracy of <em>flag</em> decimal digits. To get meaningful results in the latter
+case, the parameter <em>flag</em> should be smaller than the number of correct
+decimal digits in the input.</p>
+<p></p>
+<p>
+<pre class="code">  ? lindep([sqrt(2), sqrt(3), sqrt(2)+sqrt(3)])
+  %1 = [-1, -1, 1]~
+</pre></p>
+<p></p>
+<p>
+If v is p-adic, <em>flag</em> is ignored and the algorithm LLL-reduces a
+suitable (dual) lattice.</p>
+<p>
+<pre class="code">  ? lindep([1, 2 + 3 + 3^2 + 3^3 + 3^4 + O(3^5)])
+  %2 = [1, -2]~
+</pre></p>
+<p></p>
+<p>
+If v is a matrix, <em>flag</em> is ignored and the function returns a non trivial
+kernel vector (combination of the columns).</p>
+<p>
+<pre class="code">  ? lindep([1,2,3;4,5,6;7,8,9])
+  %3 = [1, -2, 1]~
+</pre></p>
+<p></p>
+<p>
+If v contains polynomials or power series over some base field, finds a
+linear relation with coefficients in the field.</p>
+<p>
+<pre class="code">  ? lindep([x*y, x^2 + y, x^2*y + x*y^2, 1])
+  %4 = [y, y, -1, -y^2]~
+</pre>
+For better control, it is preferable to use <code>t_POL</code> rather
+than <code>t_SER</code> in the input, otherwise one gets a linear combination which is
+t-adically small, but not necessarily 0. Indeed, power series are first
+converted to the minimal absolute accuracy occuring among the entries of v
+(which can cause some coefficients to be ignored), then truncated to
+polynomials:</p>
+<p>
+<pre class="code">  ? v = [t^2+O(t^4), 1+O(t^2)]; L=lindep(v)
+  %1 = [1, 0]~
+  ? v*L
+  %2 = t^2+O(t^4)  \\ small but not 0
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>lindep0</b>(GEN v, long flag)</code>.
+Also available are <code>GEN <b>lindep</b>(GEN v)</code> (real/complex entries,
+<em>flag</em> = 0), <code>GEN <b>lindep2</b>(GEN v, long flag)</code> (real/complex entries)
+<code>GEN <b>padic_lindep</b>(GEN v)</code> (p-adic entries) and
+<code>GEN <b>Xadic_lindep</b>(GEN v)</code> (polynomial entries).
+Finally <code>GEN <b>deplin</b>(GEN v)</code> returns a non-zero kernel vector for a
+<code>t_MAT</code> input.</p>
+
+<hr></hr>
+<a name="listcreate"></a>
+<h4>listcreate()</h4>
+<p></p>
+<p>Creates an empty list. This routine used to have a mandatory argument,
+which is now ignored (for backward compatibility). In fact, this function
+has become redundant and obsolete; it will disappear in future versions of
+PARI: just use <code>List()</code></p>
+<p></p>
+
+<hr></hr>
+<a name="listinsert"></a>
+<h4>listinsert(L,x,n)</h4>
+<p></p>
+<p>Inserts the object x at
+position n in L (which must be of type <code>t_LIST</code>). This has
+complexity O(#L - n + 1): all the
+remaining elements of <em>list</em> (from position n+1 onwards) are shifted
+to the right.</p>
+<p>
+The library syntax is <code>GEN <b>listinsert</b>(GEN L, GEN x, long n)</code>.</p>
+
+<hr></hr>
+<a name="listkill"></a>
+<h4>listkill(L)</h4>
+<p></p>
+<p>Obsolete, retained for backward compatibility. Just use <code>L = List()</code>
+instead of <code>listkill(L)</code>. In most cases, you won't even need that, e.g.
+local variables are automatically cleared when a user function returns.</p>
+<p>
+The library syntax is <code>void <b>listkill</b>(GEN L)</code>.</p>
+
+<hr></hr>
+<a name="listpop"></a>
+<h4>listpop(<em>list</em>,{n})</h4>
+<p></p>
+<p>Removes the n-th element of the list
+<em>list</em> (which must be of type <code>t_LIST</code>). If n is omitted,
+or greater than the list current length, removes the last element.
+If the list is already empty, do nothing. This runs in time O(#L - n + 1).</p>
+<p>
+The library syntax is <code>void <b>listpop</b>(GEN list, long n)</code>.</p>
+
+<hr></hr>
+<a name="listput"></a>
+<h4>listput(<em>list</em>,x,{n})</h4>
+<p></p>
+<p>Sets the n-th element of the list
+<em>list</em> (which must be of type <code>t_LIST</code>) equal to x. If n is omitted,
+or greater than the list length, appends x.
+You may put an element into an occupied cell (not changing the
+list length), but it is easier to use the standard <code>list[n] = x</code>
+construct. This runs in time O(#L) in the worst case (when the list must
+be reallocated), but in time O(1) on average: any number of successive
+<code>listput</code>s run in time O(#L), where #L denotes the list
+<em>final</em> length.</p>
+<p>
+The library syntax is <code>GEN <b>listput</b>(GEN list, GEN x, long n)</code>.</p>
+
+<hr></hr>
+<a name="listsort"></a>
+<h4>listsort(L,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Sorts the <code>t_LIST</code> <em>list</em> in place, with respect to the (somewhat
+arbitrary) universal comparison function <code>cmp</code>. In particular, the
+ordering is the same as for sets and <code>setsearch</code> can be used on a sorted
+list.</p>
+<p>
+<pre class="code">  ? L = List([1,2,4,1,3,-1]); listsort(L); L
+  %1 = List([-1, 1, 1, 2, 3, 4])
+  ? setsearch(L, 4)
+  %2 = 6
+  ? setsearch(L, -2)
+  %3 = 0
+</pre>
+This is faster than the <code>vecsort</code> command since the list
+is sorted in place: no copy is made. No value returned.</p>
+<p>
+If <em>flag</em> is non-zero, suppresses all repeated coefficients.</p>
+<p>
+The library syntax is <code>void <b>listsort</b>(GEN L, long flag)</code>.</p>
+
+<hr></hr>
+<a name="matadjoint"></a>
+<h4>matadjoint(M,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>adjoint matrix of M, i.e.&nbsp;a matrix N
+of cofactors of M, satisfying M*N = det(M)*Id. M must be a
+(non-necessarily invertible) square matrix of dimension n.
+If <em>flag</em> is 0 or omitted, we try to use Leverrier-Faddeev's algorithm,
+which assumes that n! invertible. If it fails or <em>flag</em> = 1,
+compute T = <code>charpoly</code>(M) independently first and return
+(-1)^{n-1} (T(x)-T(0))/x evaluated at M.</p>
+<p>
+<pre class="code">  ? a = [1,2,3;3,4,5;6,7,8] * Mod(1,4);
+  %2 =
+  [Mod(1, 4) Mod(2, 4) Mod(3, 4)]
+  
+  [Mod(3, 4) Mod(0, 4) Mod(1, 4)]
+  
+  [Mod(2, 4) Mod(3, 4) Mod(0, 4)]
+</pre></p>
+<p>
+Both algorithms use O(n^4) operations in the base ring, and are usually
+slower than computing the characteristic polynomial or the inverse of M
+directly.</p>
+<p>
+The library syntax is <code>GEN <b>matadjoint0</b>(GEN M, long flag)</code>.
+Also available are
+<code>GEN <b>adj</b>(GEN x)</code> (<em>flag</em> = 0) and
+<code>GEN <b>adjsafe</b>(GEN x)</code> (<em>flag</em> = 1).</p>
+
+<hr></hr>
+<a name="matcompanion"></a>
+<h4>matcompanion(x)</h4>
+<p></p>
+<p>The left companion matrix to the non-zero polynomial x.</p>
+<p>
+The library syntax is <code>GEN <b>matcompanion</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="matconcat"></a>
+<h4>matconcat(v)</h4>
+<p></p>
+<p>Returns a <code>t_MAT</code> built from the entries of v, which may
+be a <code>t_VEC</code> (concatenate horizontally), a <code>t_COL</code> (concatenate
+vertically), or a <code>t_MAT</code> (concatenate vertically each column, and
+concatenate vertically the resulting matrices). The entries of v are always
+considered as matrices: they can themselves be <code>t_VEC</code> (seen as a row
+matrix), a <code>t_COL</code> seen as a column matrix), a <code>t_MAT</code>, or a scalar (seen
+as an 1  x 1 matrix).</p>
+<p>
+<pre class="code">  ? A=[1,2;3,4]; B=[5,6]~; C=[7,8]; D=9;
+  ? matconcat([A, B]) \\ horizontal
+  %1 =
+  [1 2 5]
+  
+  [3 4 6]
+  ? matconcat([A, C]~) \\ vertical
+  %2 =
+  [1 2]
+  
+  [3 4]
+  
+  [7 8]
+  ? matconcat([A, B; C, D]) \\ block matrix
+  %3 =
+  [1 2 5]
+  
+  [3 4 6]
+  
+  [7 8 9]
+</pre></p>
+<p>
+If the dimensions of the entries to concatenate do not match up, the above
+rules are extended as follows:</p>
+<p>
+<b>*</b> each entry v_{i,j} of v has a natural length and height: 1  x 
+1 for a scalar, 1  x n for a <code>t_VEC</code> of length n, n  x 1
+for a <code>t_COL</code>, m  x n for an m x n <code>t_MAT</code></p>
+<p>
+<b>*</b> let H_i be the maximum over j of the lengths of the v_{i,j},
+let L_j be the maximum over i of the heights of the v_{i,j}.
+The dimensions of the (i,j)-th block in the concatenated matrix are
+H_i  x L_j.</p>
+<p>
+<b>*</b> a scalar s = v_{i,j} is considered as s times an identity matrix
+of the block dimension \min (H_i,L_j)</p>
+<p>
+<b>*</b> blocks are extended by 0 columns on the right and 0 rows at the
+bottom, as needed.</p>
+<p></p>
+<p>
+<pre class="code">  ? matconcat([1, [2,3]~, [4,5,6]~]) \\ horizontal
+  %4 =
+  [1 2 4]
+  
+  [0 3 5]
+  
+  [0 0 6]
+  ? matconcat([1, [2,3], [4,5,6]]~) \\ vertical
+  %5 =
+  [1 0 0]
+  
+  [2 3 0]
+  
+  [4 5 6]
+  ? matconcat([B, C; A, D]) \\ block matrix
+  %6 =
+  [5 0 7 8]
+  
+  [6 0 0 0]
+  
+  [1 2 9 0]
+  
+  [3 4 0 9]
+  ? U=[1,2;3,4]; V=[1,2,3;4,5,6;7,8,9];
+  ? matconcat(matdiagonal([U, V])) \\ block diagonal
+  %7 =
+  [1 2 0 0 0]
+  
+  [3 4 0 0 0]
+  
+  [0 0 1 2 3]
+  
+  [0 0 4 5 6]
+  
+  [0 0 7 8 9]
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>matconcat</b>(GEN v)</code>.</p>
+
+<hr></hr>
+<a name="matdet"></a>
+<h4>matdet(x,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Determinant of the square matrix x.</p>
+<p>
+If <em>flag</em> = 0, uses an appropriate algorithm depending on the coefficients:</p>
+<p>
+<b>*</b> integer entries: modular method due to Dixon, Pernet and Stein.</p>
+<p>
+<b>*</b> real or p-adic entries: classical Gaussian elimination using maximal
+pivot.</p>
+<p>
+<b>*</b> intmod entries: classical Gaussian elimination using first non-zero
+pivot.</p>
+<p>
+<b>*</b> other cases: Gauss-Bareiss.</p>
+<p>
+If <em>flag</em> = 1, uses classical Gaussian elimination with appropriate pivoting
+strategy (maximal pivot for real or p-adic coefficients). This is usually
+worse than the default.</p>
+<p>
+The library syntax is <code>GEN <b>det0</b>(GEN x, long flag)</code>.
+Also available are <code>GEN <b>det</b>(GEN x)</code> (<em>flag</em> = 0),
+<code>GEN <b>det2</b>(GEN x)</code> (<em>flag</em> = 1) and <code>GEN <b>ZM_det</b>(GEN x)</code> for integer
+entries.</p>
+
+<hr></hr>
+<a name="matdetint"></a>
+<h4>matdetint(B)</h4>
+<p></p>
+<p>Let B be an m x n matrix with integer coefficients. The
+<em>determinant</em> D of the lattice generated by the columns of B is
+the square root of det(B^T B) if B has maximal rank m, and 0
+otherwise.</p>
+<p>
+This function uses the Gauss-Bareiss algorithm to compute a positive
+<em>multiple</em> of D. When B is square, the function actually returns
+D = |det B|.</p>
+<p>
+This function is useful in conjunction with <code>mathnfmod</code>, which needs to
+know such a multiple. If the rank is maximal and the matrix non-square,
+you can obtain D exactly using</p>
+<p>
+<pre class="code">    matdet( mathnfmod(B, matdetint(B)) )
+</pre></p>
+<p>
+Note that as soon as one of the dimensions gets large (m or n is larger
+than 20, say), it will often be much faster to use <code>mathnf(B, 1)</code> or
+<code>mathnf(B, 4)</code> directly.</p>
+<p>
+The library syntax is <code>GEN <b>detint</b>(GEN B)</code>.</p>
+
+<hr></hr>
+<a name="matdiagonal"></a>
+<h4>matdiagonal(x)</h4>
+<p></p>
+<p>x being a vector, creates the diagonal matrix
+whose diagonal entries are those of x.</p>
+<p>
+<pre class="code">  ? matdiagonal([1,2,3]);
+  %1 =
+  [1 0 0]
+  
+  [0 2 0]
+  
+  [0 0 3]
+</pre>
+Block diagonal matrices are easily created using
+<code>matconcat</code>:</p>
+<p>
+<pre class="code">  ? U=[1,2;3,4]; V=[1,2,3;4,5,6;7,8,9];
+  ? matconcat(matdiagonal([U, V]))
+  %1 =
+  [1 2 0 0 0]
+  
+  [3 4 0 0 0]
+  
+  [0 0 1 2 3]
+  
+  [0 0 4 5 6]
+  
+  [0 0 7 8 9]
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>diagonal</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="mateigen"></a>
+<h4>mateigen(x,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Returns the (complex) eigenvectors of x as columns of a matrix.
+If <em>flag</em> = 1, return [L,H], where L contains the
+eigenvalues and H the corresponding eigenvectors; multiple eigenvalues are
+repeated according to the eigenspace dimension (which may be less
+than the eigenvalue multiplicity in the characteristic polynomial).</p>
+<p>
+This function first computes the characteristic polynomial of x and
+approximates its complex roots (<font color=#FF0000>lambda</font>_i), then tries to compute the
+eigenspaces as kernels of the x - <font color=#FF0000>lambda</font>_i. This algorithm is
+ill-conditioned and is likely to miss kernel vectors if some roots of the
+characteristic polynomial are close, in particular if it has multiple roots.</p>
+<p>
+<pre class="code">  ? A = [13,2; 10,14]; mateigen(A)
+  %1 =
+  [-1/2 2/5]
+  
+  [   1   1]
+  ? [L,H] = mateigen(A, 1);
+  ? L
+  %3 = [9, 18]
+  ? H
+  %4 =
+  [-1/2 2/5]
+  
+  [   1   1]
+</pre></p>
+<p>
+For symmetric matrices, use <code>qfjacobi</code> instead; for Hermitian matrices,
+compute</p>
+<p>
+<pre class="code">   A = real(x);
+   B = imag(x);
+   y = matconcat([A, -B; B, A]);
+</pre>
+and apply <code>qfjacobi</code> to y.</p>
+<p>
+The library syntax is <code>GEN <b>mateigen</b>(GEN x, long flag, long prec)</code>.
+Also available is <code>GEN <b>eigen</b>(GEN x, long prec)</code> (<em>flag</em> = 0)</p>
+
+<hr></hr>
+<a name="matfrobenius"></a>
+<h4>matfrobenius(M,{<em>flag</em>},{v = 'x})</h4>
+<p></p>
+<p>Returns the Frobenius form of
+the square matrix <code>M</code>. If <em>flag</em> = 1, returns only the elementary divisors as
+a vector of polynomials in the variable <code>v</code>.  If <em>flag</em> = 2, returns a
+two-components vector [F,B] where <code>F</code> is the Frobenius form and <code>B</code> is
+the basis change so that M = B^{-1}FB.</p>
+<p>
+The library syntax is <code>GEN <b>matfrobenius</b>(GEN M, long flag, long v = -1)</code>, where <code>v</code> is a variable number.</p>
+
+<hr></hr>
+<a name="mathess"></a>
+<h4>mathess(x)</h4>
+<p></p>
+<p>Returns a matrix similar to the square matrix x, which is in upper Hessenberg
+form (zero entries below the first subdiagonal).</p>
+<p>
+The library syntax is <code>GEN <b>hess</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="mathilbert"></a>
+<h4>mathilbert(n)</h4>
+<p></p>
+<p>x being a <code>long</code>, creates the
+Hilbert matrixof order x, i.e.&nbsp;the matrix whose coefficient
+(i,j) is 1/ (i+j-1).</p>
+<p>
+The library syntax is <code>GEN <b>mathilbert</b>(long n)</code>.</p>
+
+<hr></hr>
+<a name="mathnf"></a>
+<h4>mathnf(M,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Let R be a Euclidean ring, equal to <b>Z</b> or to K[X] for some field
+K. If M is a (not necessarily square) matrix with entries in R, this
+routine finds the <em>upper triangular</em> Hermite normal form of M.
+If the rank of M is equal to its number of rows, this is a square
+matrix. In general, the columns of the result form a basis of the R-module
+spanned by the columns of M.</p>
+<p>
+The values 0,1,2,3 of <em>flag</em> have a binary meaning, analogous to the one
+in <code>matsnf</code>; in this case, binary digits of <em>flag</em> mean:</p>
+<p>
+<b>*</b> 1 (complete output): if set, outputs [H,U], where H is the Hermite
+normal form of M, and U is a transformation matrix such that MU = [0|H].
+The matrix U belongs to {GL}(R). When M has a large kernel, the
+entries of U are in general huge.</p>
+<p>
+<b>*</b> 2 (generic input): <em>Deprecated</em>. If set, assume that R = K[X] is
+a polynomial ring; otherwise, assume that R = <b>Z</b>. This flag is now useless
+since the routine always checks whether the matrix has integral entries.</p>
+<p>
+For these 4 values, we use a naive algorithm, which behaves well
+in small dimension only. Larger values correspond to different algorithms,
+are restricted to <em>integer</em> matrices, and all output the unimodular
+matrix U. From now on all matrices have integral entries.</p>
+<p>
+<b>*</b> <em>flag</em> = 4, returns [H,U] as in "complete output" above, using a
+variant of LLL reduction along the way. The matrix U is provably
+small in the L_2 sense, and in general close to optimal; but the
+reduction is in general slow, although provably polynomial-time.</p>
+<p>
+If <em>flag</em> = 5, uses Batut's algorithm and output [H,U,P], such that H and
+U are as before and P is a permutation of the rows such that P applied
+to MU gives H. This is in general faster than <em>flag</em> = 4 but the matrix U
+is usually worse; it is heuristically smaller than with the default algorithm.</p>
+<p>
+When the matrix is dense and the dimension is large (bigger than 100, say),
+<em>flag</em> = 4 will be fastest. When M has maximal rank, then</p>
+<p>
+<pre class="code">    H = mathnfmod(M, matdetint(M))
+</pre>
+will be even faster. You can then recover U as M^{-1}H.</p>
+<p></p>
+<p>
+<pre class="code">  ? M = matrix(3,4,i,j,random([-5,5]))
+  %1 =
+  [ 0 2  3  0]
+  
+  [-5 3 -5 -5]
+  
+  [ 4 3 -5  4]
+  
+  ? [H,U] = mathnf(M, 1);
+  ? U
+  %3 =
+  [-1 0 -1 0]
+  
+  [ 0 5  3 2]
+  
+  [ 0 3  1 1]
+  
+  [ 1 0  0 0]
+  
+  ? H
+  %5 =
+  [19 9 7]
+  
+  [ 0 9 1]
+  
+  [ 0 0 1]
+  
+  ? M*U
+  %6 =
+  [0 19 9 7]
+  
+  [0  0 9 1]
+  
+  [0  0 0 1]
+</pre></p>
+<p></p>
+<p>
+For convenience, M is allowed to be a <code>t_VEC</code>, which is then
+automatically converted to a <code>t_MAT</code>, as per the <code>Mat</code> function.
+For instance to solve the generalized extended gcd problem, one may use</p>
+<p>
+<pre class="code">  ? v = [116085838, 181081878, 314252913,10346840];
+  ? [H,U] = mathnf(v, 1);
+  ? U
+  %2 =
+  [ 103 -603    15  -88]
+  
+  [-146   13 -1208  352]
+  
+  [  58  220   678 -167]
+  
+  [-362 -144   381 -101]
+  ? v*U
+  %3 = [0, 0, 0, 1]
+</pre>
+This also allows to input a matrix as a <code>t_VEC</code> of
+<code>t_COL</code>s of the same length (which <code>Mat</code> would concatenate to
+the <code>t_MAT</code> having those columns):</p>
+<p>
+<pre class="code">  ? v = [[1,0,4]~, [3,3,4]~, [0,-4,-5]~]; mathnf(v)
+  %1 =
+  [47 32 12]
+  
+  [ 0  1  0]
+  
+  [ 0  0  1]
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>mathnf0</b>(GEN M, long flag)</code>.
+Also available are <code>GEN <b>hnf</b>(GEN M)</code> (<em>flag</em> = 0) and
+<code>GEN <b>hnfall</b>(GEN M)</code> (<em>flag</em> = 1). To reduce <em>huge</em> relation matrices
+(sparse with small entries, say dimension 400 or more), you can use the
+pair <code>hnfspec</code> / <code>hnfadd</code>. Since this is quite technical and the
+calling interface may change, they are not documented yet. Look at the code
+in <code>basemath/hnf_snf.c</code>.</p>
+
+<hr></hr>
+<a name="mathnfmod"></a>
+<h4>mathnfmod(x,d)</h4>
+<p></p>
+<p>If x is a (not necessarily square) matrix of
+maximal rank with integer entries, and d is a multiple of the (non-zero)
+determinant of the lattice spanned by the columns of x, finds the
+<em>upper triangular</em> Hermite normal form of x.</p>
+<p>
+If the rank of x is equal to its number of rows, the result is a square
+matrix. In general, the columns of the result form a basis of the lattice
+spanned by the columns of x. Even when d is known, this is in general
+slower than <code>mathnf</code> but uses much less memory.</p>
+<p>
+The library syntax is <code>GEN <b>hnfmod</b>(GEN x, GEN d)</code>.</p>
+
+<hr></hr>
+<a name="mathnfmodid"></a>
+<h4>mathnfmodid(x,d)</h4>
+<p></p>
+<p>Outputs the (upper triangular)
+Hermite normal form of x concatenated with the diagonal
+matrix with diagonal d. Assumes that x has integer entries.
+Variant: if d is an integer instead of a vector, concatenate d times the
+identity matrix.</p>
+<p>
+<pre class="code">  ? m=[0,7;-1,0;-1,-1]
+  %1 =
+  [ 0  7]
+  
+  [-1  0]
+  
+  [-1 -1]
+  ? mathnfmodid(m, [6,2,2])
+  %2 =
+  [2 1 1]
+  
+  [0 1 0]
+  
+  [0 0 1]
+  ? mathnfmodid(m, 10)
+  %3 =
+  [10 7 3]
+  
+  [ 0 1 0]
+  
+  [ 0 0 1]
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>hnfmodid</b>(GEN x, GEN d)</code>.</p>
+
+<hr></hr>
+<a name="mathouseholder"></a>
+<h4>mathouseholder(Q,v)</h4>
+<p></p>
+<p>applies a sequence Q of Householder
+transforms, as returned by <code>matqr</code>(M,1) to the vector or matrix v.</p>
+<p>
+The library syntax is <code>GEN <b>mathouseholder</b>(GEN Q, GEN v)</code>.</p>
+
+<hr></hr>
+<a name="matid"></a>
+<h4>matid(n)</h4>
+<p></p>
+<p>Creates the n x n identity matrix.</p>
+<p>
+The library syntax is <code>GEN <b>matid</b>(long n)</code>.</p>
+
+<hr></hr>
+<a name="matimage"></a>
+<h4>matimage(x,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Gives a basis for the image of the
+matrix x as columns of a matrix. A priori the matrix can have entries of
+any type. If <em>flag</em> = 0, use standard Gauss pivot. If <em>flag</em> = 1, use
+<code>matsupplement</code> (much slower: keep the default flag!).</p>
+<p>
+The library syntax is <code>GEN <b>matimage0</b>(GEN x, long flag)</code>.
+Also available is <code>GEN <b>image</b>(GEN x)</code> (<em>flag</em> = 0).</p>
+
+<hr></hr>
+<a name="matimagecompl"></a>
+<h4>matimagecompl(x)</h4>
+<p></p>
+<p>Gives the vector of the column indices which
+are not extracted by the function <code>matimage</code>, as a permutation
+(<code>t_VECSMALL</code>). Hence the number of
+components of <code>matimagecompl(x)</code> plus the number of columns of
+<code>matimage(x)</code> is equal to the number of columns of the matrix x.</p>
+<p>
+The library syntax is <code>GEN <b>imagecompl</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="matindexrank"></a>
+<h4>matindexrank(x)</h4>
+<p></p>
+<p>x being a matrix of rank r, returns a vector with two
+<code>t_VECSMALL</code> components y and z of length r giving a list of rows
+and columns respectively (starting from 1) such that the extracted matrix
+obtained from these two vectors using <code>vecextract</code>(x,y,z) is
+invertible.</p>
+<p>
+The library syntax is <code>GEN <b>indexrank</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="matintersect"></a>
+<h4>matintersect(x,y)</h4>
+<p></p>
+<p>x and y being two matrices with the same
+number of rows each of whose columns are independent, finds a basis of the
+<b>Q</b>-vector space equal to the intersection of the spaces spanned by the
+columns of x and y respectively. The faster function
+<code>idealintersect</code> can be used to intersect fractional ideals (projective
+<b>Z</b>_K modules of rank 1); the slower but much more general function
+<code>nfhnf</code> can be used to intersect general <b>Z</b>_K-modules.</p>
+<p>
+The library syntax is <code>GEN <b>intersect</b>(GEN x, GEN y)</code>.</p>
+
+<hr></hr>
+<a name="matinverseimage"></a>
+<h4>matinverseimage(x,y)</h4>
+<p></p>
+<p>Given a matrix x and
+a column vector or matrix y, returns a preimage z of y by x if one
+exists (i.e such that x z = y), an empty vector or matrix otherwise. The
+complete inverse image is z + {Ker} x, where a basis of the kernel of
+x may be obtained by <code>matker</code>.</p>
+<p>
+<pre class="code">  ? M = [1,2;2,4];
+  ? matinverseimage(M, [1,2]~)
+  %2 = [1, 0]~
+  ? matinverseimage(M, [3,4]~)
+  %3 = []~    \\  no solution
+  ? matinverseimage(M, [1,3,6;2,6,12])
+  %4 =
+  [1 3 6]
+  
+  [0 0 0]
+  ? matinverseimage(M, [1,2;3,4])
+  %5 = [;]    \\  no solution
+  ? K = matker(M)
+  %6 =
+  [-2]
+  
+  [1]
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>inverseimage</b>(GEN x, GEN y)</code>.</p>
+
+<hr></hr>
+<a name="matisdiagonal"></a>
+<h4>matisdiagonal(x)</h4>
+<p></p>
+<p>Returns true (1) if x is a diagonal matrix, false (0) if not.</p>
+<p>
+The library syntax is <code>GEN <b>isdiagonal</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="matker"></a>
+<h4>matker(x,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Gives a basis for the kernel of the matrix x as columns of a matrix.
+The matrix can have entries of any type, provided they are compatible with
+the generic arithmetic operations (+,  x  and /).</p>
+<p>
+If x is known to have integral entries, set <em>flag</em> = 1.</p>
+<p>
+The library syntax is <code>GEN <b>matker0</b>(GEN x, long flag)</code>.
+Also available are <code>GEN <b>ker</b>(GEN x)</code> (<em>flag</em> = 0),
+<code>GEN <b>keri</b>(GEN x)</code> (<em>flag</em> = 1).</p>
+
+<hr></hr>
+<a name="matkerint"></a>
+<h4>matkerint(x,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Gives an LLL-reduced <b>Z</b>-basis
+for the lattice equal to the kernel of the matrix x as columns of the
+matrix x with integer entries (rational entries are not permitted).</p>
+<p>
+If <em>flag</em> = 0, uses an integer LLL algorithm.</p>
+<p>
+If <em>flag</em> = 1, uses <code>matrixqz</code>(x,-2). Many orders of magnitude slower
+than the default: never use this.</p>
+<p>
+The library syntax is <code>GEN <b>matkerint0</b>(GEN x, long flag)</code>.
+See also <code>GEN <b>kerint</b>(GEN x)</code> (<em>flag</em> = 0), which is a trivial
+wrapper around</p>
+<p>
+<pre class="code">  ZM_lll(ZM_lll(x, 0.99, LLL_KER), 0.99, LLL_INPLACE);
+</pre>
+Remove the outermost <code>ZM_lll</code> if LLL-reduction is not
+desired (saves time).</p>
+
+<hr></hr>
+<a name="matmuldiagonal"></a>
+<h4>matmuldiagonal(x,d)</h4>
+<p></p>
+<p>Product of the matrix x by the diagonal
+matrix whose diagonal entries are those of the vector d. Equivalent to,
+but much faster than x*<code>matdiagonal</code>(d).</p>
+<p>
+The library syntax is <code>GEN <b>matmuldiagonal</b>(GEN x, GEN d)</code>.</p>
+
+<hr></hr>
+<a name="matmultodiagonal"></a>
+<h4>matmultodiagonal(x,y)</h4>
+<p></p>
+<p>Product of the matrices x and y assuming that the result is a
+diagonal matrix. Much faster than x*y in that case. The result is
+undefined if x*y is not diagonal.</p>
+<p>
+The library syntax is <code>GEN <b>matmultodiagonal</b>(GEN x, GEN y)</code>.</p>
+
+<hr></hr>
+<a name="matpascal"></a>
+<h4>matpascal(n,{q})</h4>
+<p></p>
+<p>Creates as a matrix the lower triangular
+Pascal triangle of order x+1 (i.e.&nbsp;with binomial coefficients
+up to x). If q is given, compute the q-Pascal triangle (i.e.&nbsp;using
+q-binomial coefficients).</p>
+<p>
+The library syntax is <code>GEN <b>matqpascal</b>(long n, GEN q = NULL)</code>.
+Also available is <code>GEN <b>matpascal</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="matqr"></a>
+<h4>matqr(M,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Returns [Q,R], the QR-decomposition of the square invertible
+matrix M with real entries: Q is orthogonal and R upper triangular. If
+<em>flag</em> = 1, the orthogonal matrix is returned as a sequence of Householder
+transforms: applying such a sequence is stabler and faster than
+multiplication by the corresponding Q matrix.
+More precisely, if</p>
+<p>
+<pre class="code">    [Q,R] = matqr(M);
+    [q,r] = matqr(M, 1);
+</pre>
+then r = R and <code>mathouseholder</code>(q, M) is R;
+furthermore</p>
+<p>
+<pre class="code">    mathouseholder(q, matid(#M)) == Q~
+</pre>
+the inverse of Q. This function raises an error if the
+precision is too low or x is singular.</p>
+<p>
+The library syntax is <code>GEN <b>matqr</b>(GEN M, long flag, long prec)</code>.</p>
+
+<hr></hr>
+<a name="matrank"></a>
+<h4>matrank(x)</h4>
+<p></p>
+<p>Rank of the matrix x.</p>
+<p>
+The library syntax is <code>long <b>rank</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="matrix"></a>
+<h4>matrix(m,n,{X},{Y},{<em>expr</em> = 0})</h4>
+<p></p>
+<p>Creation of the
+m x n matrix whose coefficients are given by the expression
+<em>expr</em>. There are two formal parameters in <em>expr</em>, the first one
+(X) corresponding to the rows, the second (Y) to the columns, and X
+goes from 1 to m, Y goes from 1 to n. If one of the last 3 parameters
+is omitted, fill the matrix with zeroes.</p>
+<p></p>
+
+<hr></hr>
+<a name="matrixqz"></a>
+<h4>matrixqz(A,{p = 0})</h4>
+<p></p>
+<p>A being an m x n matrix in M_{m,n}(<b>Q</b>), let
+{Im}_<b>Q</b> A (resp.&nbsp;{Im}_<b>Z</b> A) the <b>Q</b>-vector space
+(resp.&nbsp;the <b>Z</b>-module) spanned by the columns of A. This function has
+varying behavior depending on the sign of p:</p>
+<p>
+If p <code>&#62;=</code> 0, A is assumed to have maximal rank n <code>&#60;=</code> m. The function
+returns a matrix B belongs to M_{m,n}(<b>Z</b>), with {Im}_<b>Q</b> B = {Im}_<b>Q</b> A,
+such that the GCD of all its n x n minors is coprime to
+p; in particular, if p = 0 (default), this GCD is 1.</p>
+<p>
+<pre class="code">  ? minors(x) = vector(#x[,1], i, matdet(x[^i,]));
+  ? A = [3,1/7; 5,3/7; 7,5/7]; minors(A)
+  %1 = [4/7, 8/7, 4/7]   \\ determinants of all 2x2 minors
+  ? B = matrixqz(A)
+  %2 =
+  [3 1]
+  
+  [5 2]
+  
+  [7 3]
+  ? minors(%)
+  %3 = [1, 2, 1]   \\ B integral with coprime minors
+</pre></p>
+<p></p>
+<p>
+If p = -1, returns the HNF basis of the lattice <b>Z</b>^n cap {Im}_<b>Z</b> A.</p>
+<p>
+If p = -2, returns the HNF basis of the lattice <b>Z</b>^n cap {Im}_<b>Q</b> A.</p>
+<p>
+<pre class="code">  ? matrixqz(A,-1)
+  %4 =
+  [8 5]
+  
+  [4 3]
+  
+  [0 1]
+  
+  ? matrixqz(A,-2)
+  %5 =
+  [2 -1]
+  
+  [1 0]
+  
+  [0 1]
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>matrixqz0</b>(GEN A, GEN p = NULL)</code>.</p>
+
+<hr></hr>
+<a name="matsize"></a>
+<h4>matsize(x)</h4>
+<p></p>
+<p>x being a vector or matrix, returns a row vector
+with two components, the first being the number of rows (1 for a row vector),
+the second the number of columns (1 for a column vector).</p>
+<p>
+The library syntax is <code>GEN <b>matsize</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="matsnf"></a>
+<h4>matsnf(X,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>If X is a (singular or non-singular) matrix outputs the vector of
+elementary divisors of X, i.e.&nbsp;the diagonal of the
+Smith normal form of X, normalized so that d_n | d_{n-1} | 
+... | d_1.</p>
+<p>
+The binary digits of <em>flag</em> mean:</p>
+<p>
+1 (complete output): if set, outputs [U,V,D], where U and V are two
+unimodular matrices such that UXV is the diagonal matrix D. Otherwise
+output only the diagonal of D. If X is not a square matrix, then D
+will be a square diagonal matrix padded with zeros on the left or the top.</p>
+<p>
+2 (generic input): if set, allows polynomial entries, in which case the
+input matrix must be square. Otherwise, assume that X has integer
+coefficients with arbitrary shape.</p>
+<p>
+4 (cleanup): if set, cleans up the output. This means that elementary
+divisors equal to 1 will be deleted, i.e.&nbsp;outputs a shortened vector D'
+instead of D. If complete output was required, returns [U',V',D'] so
+that U'XV' = D' holds. If this flag is set, X is allowed to be of the
+form `vector of elementary divisors' or [U,V,D] as would normally be output with the cleanup flag
+unset.</p>
+<p>
+The library syntax is <code>GEN <b>matsnf0</b>(GEN X, long flag)</code>.</p>
+
+<hr></hr>
+<a name="matsolve"></a>
+<h4>matsolve(M,B)</h4>
+<p></p>
+<p>M being an invertible matrix and B a column
+vector, finds the solution X of MX = B, using Dixon p-adic lifting method
+if M and B are integral and Gaussian elimination otherwise. This
+has the same effect as, but is faster, than M^{-1}*B.</p>
+<p>
+The library syntax is <code>GEN <b>gauss</b>(GEN M, GEN B)</code>.
+For integral input, the function
+<code>GEN <b>ZM_gauss</b>(GEN M,GEN B)</code> is also available.</p>
+
+<hr></hr>
+<a name="matsolvemod"></a>
+<h4>matsolvemod(M,D,B,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>M being any integral matrix,
+D a column vector of non-negative integer moduli, and B an integral
+column vector, gives a small integer solution to the system of congruences
+<font color=#FF0000>sum</font>_i m_{i,j}x_j = b_i (mod d_i) if one exists, otherwise returns
+zero. Shorthand notation: B (resp.&nbsp;D) can be given as a single integer,
+in which case all the b_i (resp.&nbsp;d_i) above are taken to be equal to B
+(resp.&nbsp;D).</p>
+<p>
+<pre class="code">  ? M = [1,2;3,4];
+  ? matsolvemod(M, [3,4]~, [1,2]~)
+  %2 = [-2, 0]~
+  ? matsolvemod(M, 3, 1) \\ M X = [1,1]~ over F_3
+  %3 = [-1, 1]~
+  ? matsolvemod(M, [3,0]~, [1,2]~) \\ x + 2y = 1 (mod 3), 3x + 4y = 2 (in Z)
+  %4 = [6, -4]~
+</pre></p>
+<p>
+If <em>flag</em> = 1, all solutions are returned in the form of a two-component row
+vector [x,u], where x is a small integer solution to the system of
+congruences and u is a matrix whose columns give a basis of the homogeneous
+system (so that all solutions can be obtained by adding x to any linear
+combination of columns of u). If no solution exists, returns zero.</p>
+<p>
+The library syntax is <code>GEN <b>matsolvemod0</b>(GEN M, GEN D, GEN B, long flag)</code>.
+Also available are <code>GEN <b>gaussmodulo</b>(GEN M, GEN D, GEN B)</code>
+(<em>flag</em> = 0) and <code>GEN <b>gaussmodulo2</b>(GEN M, GEN D, GEN B)</code> (<em>flag</em> = 1).</p>
+
+<hr></hr>
+<a name="matsupplement"></a>
+<h4>matsupplement(x)</h4>
+<p></p>
+<p>Assuming that the columns of the matrix x
+are linearly independent (if they are not, an error message is issued), finds
+a square invertible matrix whose first columns are the columns of x,
+i.e.&nbsp;supplement the columns of x to a basis of the whole space.</p>
+<p>
+<pre class="code">  ? matsupplement([1;2])
+  %1 =
+  [1 0]
+  
+  [2 1]
+</pre></p>
+<p>
+Raises an error if x has 0 columns, since (due to a long standing design
+bug), the dimension of the ambient space (the number of rows) is unknown in
+this case:</p>
+<p>
+<pre class="code">  ? matsupplement(matrix(2,0))
+    ***   at top-level: matsupplement(matrix
+    ***                 ^--------------------
+    *** matsupplement: sorry, suppl [empty matrix] is not yet implemented.
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>suppl</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="mattranspose"></a>
+<h4>mattranspose(x)</h4>
+<p></p>
+<p>Transpose of x (also x~).
+This has an effect only on vectors and matrices.</p>
+<p>
+The library syntax is <code>GEN <b>gtrans</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="minpoly"></a>
+<h4>minpoly(A,{v = 'x})</h4>
+<p></p>
+<p>minimal polynomial
+of A with respect to the variable v., i.e. the monic polynomial P
+of minimal degree (in the variable v) such that P(A) = 0.</p>
+<p>
+The library syntax is <code>GEN <b>minpoly</b>(GEN A, long v = -1)</code>, where <code>v</code> is a variable number.</p>
+
+<hr></hr>
+<a name="norml2"></a>
+<h4>norml2(x)</h4>
+<p></p>
+<p>Square of the L^2-norm of x. More precisely,
+if x is a scalar, <code>norml2</code>(x) is defined to be the square
+of the complex modulus of x (real <code>t_QUAD</code>s are not supported).
+If x is a polynomial, a (row or column) vector or a matrix, <code>norml2(x)</code> is
+defined recursively as <font color=#FF0000>sum</font>_i <code>norml2</code>(x_i), where (x_i) run through
+the components of x. In particular, this yields the usual <font color=#FF0000>sum</font> |x_i|^2
+(resp.&nbsp;<font color=#FF0000>sum</font> |x_{i,j}|^2) if x is a polynomial or vector (resp.&nbsp;matrix) with
+complex components.</p>
+<p></p>
+<p>
+<pre class="code">  ? norml2( [ 1, 2, 3 ] )      \\ vector
+  %1 = 14
+  ? norml2( [ 1, 2; 3, 4] )   \\ matrix
+  %2 = 30
+  ? norml2( 2*I + x )
+  %3 = 5
+  ? norml2( [ [1,2], [3,4], 5, 6 ] )   \\ recursively defined
+  %4 = 91
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>gnorml2</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="normlp"></a>
+<h4>normlp(x,{p})</h4>
+<p></p>
+<p>L^p-norm of x; sup norm if p is omitted. More precisely,
+if x is a scalar, <code>normlp</code>(x, p) is defined to be <code>abs</code>(x).
+If x is a polynomial, a (row or column) vector or a matrix:</p>
+<p>
+<b>*</b>  if p is omitted, <code>normlp(x)</code> is defined recursively as
+\max_i <code>normlp</code>(x_i)), where (x_i) run through the components of&nbsp;x.
+In particular, this yields the usual sup norm if x is a polynomial or
+vector with complex components.</p>
+<p>
+<b>*</b> otherwise, <code>normlp(x, p)</code> is defined recursively as (<font color=#FF0000>sum</font>_i
+<code>normlp</code>^p(x_i,p))^{1/p}. In particular, this yields the usual (<font color=#FF0000>sum</font>
+|x_i|^p)^{1/p} if x is a polynomial or vector with complex components.</p>
+<p></p>
+<p>
+<pre class="code">  ? v = [1,-2,3]; normlp(v)      \\ vector
+  %1 = 3
+  ? M = [1,-2;-3,4]; normlp(M)   \\ matrix
+  %2 = 4
+  ? T = (1+I) + I*x^2; normlp(T)
+  %3 = 1.4142135623730950488016887242096980786
+  ? normlp([[1,2], [3,4], 5, 6])   \\ recursively defined
+  %4 = 6
+  
+  ? normlp(v, 1)
+  %5 = 6
+  ? normlp(M, 1)
+  %6 = 10
+  ? normlp(T, 1)
+  %7 = 2.4142135623730950488016887242096980786
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>gnormlp</b>(GEN x, GEN p = NULL, long prec)</code>.</p>
+
+<hr></hr>
+<a name="qfauto"></a>
+<h4>qfauto(G,{<em>fl</em>})</h4>
+<p></p>
+<p>G being a square and symmetric matrix with integer entries representing a
+positive definite quadratic form, outputs the automorphism group of the
+associate lattice.
+Since this requires computing the minimal vectors, the computations can
+become very lengthy as the dimension grows. G can also be given by an
+<code>qfisominit</code> structure.
+See <code>qfisominit</code> for the meaning of <em>fl</em>.</p>
+<p>
+The output is a two-components vector [o,g] where o is the group order
+and g is the list of generators (as a vector). For each generators H,
+the equality G = {^t}H G H holds.</p>
+<p>
+The interface of this function is experimental and will likely change in the
+future.</p>
+<p>
+This function implements an algorithm of Plesken and Souvignier, following
+Souvignier's implementation.</p>
+<p>
+The library syntax is <code>GEN <b>qfauto0</b>(GEN G, GEN fl = NULL)</code>.
+Also available is <code>GEN <b>qfauto</b>(GEN G, GEN fl)</code>
+where G is a vector of <code>zm</code>.</p>
+
+<hr></hr>
+<a name="qfautoexport"></a>
+<h4>qfautoexport(<em>qfa</em>,{<em>flag</em>})</h4>
+<p></p>
+<p><em>qfa</em> being an automorphism group as output by
+<code>qfauto</code>, export the underlying matrix group as a string suitable
+for (no flags or <em>flag</em> = 0) GAP or (<em>flag</em> = 1) Magma. The following example
+computes the size of the matrix group using GAP:</p>
+<p>
+<pre class="code">  ? G = qfauto([2,1;1,2])
+  %1 = [12, [[-1, 0; 0, -1], [0, -1; 1, 1], [1, 1; 0, -1]]]
+  ? s = qfautoexport(G)
+  %2 = "Group([[-1, 0], [0, -1]], [[0, -1], [1, 1]], [[1, 1], [0, -1]])"
+  ? extern("echo \"Order("s");\" | gap -q")
+  %3 = 12
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>qfautoexport</b>(GEN qfa, long flag)</code>.</p>
+
+<hr></hr>
+<a name="qfbil"></a>
+<h4>qfbil(x,y,{q})</h4>
+<p></p>
+<p>Evaluate the bilinear form q (symmetric matrix)
+at the vectors (x,y); if q omitted, use the standard Euclidean scalar
+product, corresponding to the identity matrix.</p>
+<p>
+Roughly equivalent to <code>x~ * q * y</code>, but a little faster and
+more convenient (does not distinguish between column and row vectors):</p>
+<p>
+<pre class="code">  ? x = [1,2,3]~; y = [-1,0,1]~; qfbil(x,y)
+  %1 = 2
+  ? q = [1,2,3;2,2,-1;3,-1,0]; qfbil(x,y, q)
+  %2 = -13
+  ? for(i=1,10^6, qfbil(x,y,q))
+  %3 = 568ms
+  ? for(i=1,10^6, x~*q*y)
+  %4 = 717ms
+</pre>
+The associated quadratic form is also available, as
+<code>qfnorm</code>, slightly faster:</p>
+<p>
+<pre class="code">  ? for(i=1,10^6, qfnorm(x,q))
+  time = 444ms
+  ? for(i=1,10^6, qfnorm(x))
+  time = 176 ms.
+  ? for(i=1,10^6, qfbil(x,y))
+  time = 208 ms.
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>qfbil</b>(GEN x, GEN y, GEN q = NULL)</code>.</p>
+
+<hr></hr>
+<a name="qfgaussred"></a>
+<h4>qfgaussred(q)</h4>
+<p></p>
+<p>decomposition into squares of the
+quadratic form represented by the symmetric matrix q. The result is a
+matrix whose diagonal entries are the coefficients of the squares, and the
+off-diagonal entries on each line represent the bilinear forms. More
+precisely, if (a_{ij}) denotes the output, one has
+ q(x) = <font color=#FF0000>sum</font>_i a_{ii} (x_i + <font color=#FF0000>sum</font>_{j != i} a_{ij} x_j)^2 </p>
+<p>
+<pre class="code">  ? qfgaussred([0,1;1,0])
+  %1 =
+  [1/2 1]
+  
+  [-1 -1/2]
+</pre>
+This means that 2xy = (1/2)(x+y)^2 - (1/2)(x-y)^2.</p>
+<p>
+The library syntax is <code>GEN <b>qfgaussred</b>(GEN q)</code>.
+<code>GEN <b>qfgaussred_positive</b>(GEN q)</code> assumes that q is
+ positive definite and is a little faster; returns <code>NULL</code> if a vector
+ with negative norm occurs (non positive matrix or too many rounding errors).</p>
+
+<hr></hr>
+<a name="qfisom"></a>
+<h4>qfisom(G,H,{<em>fl</em>})</h4>
+<p></p>
+<p>G, H being square and symmetric matrices with integer entries representing
+positive definite quadratic forms, return an invertible matrix S such that
+G = {^t}S H S. This defines a isomorphism between the corresponding lattices.
+Since this requires computing the minimal vectors, the computations can
+become very lengthy as the dimension grows.
+See <code>qfisominit</code> for the meaning of <em>fl</em>.</p>
+<p>
+G can also be given by an <code>qfisominit</code> structure which is preferable if
+several forms H need to be compared to G.</p>
+<p>
+This function implements an algorithm of Plesken and Souvignier, following
+Souvignier's implementation.</p>
+<p>
+The library syntax is <code>GEN <b>qfisom0</b>(GEN G, GEN H, GEN fl = NULL)</code>.
+Also available is <code>GEN <b>qfisom</b>(GEN G, GEN H, GEN fl)</code>
+where G is a vector of <code>zm</code>, and H is a <code>zm</code>.</p>
+
+<hr></hr>
+<a name="qfisominit"></a>
+<h4>qfisominit(G,{<em>fl</em>})</h4>
+<p></p>
+<p>G being a square and symmetric matrix with integer entries representing a
+positive definite quadratic form, return an <code>isom</code> structure allowing to
+compute isomorphisms between G and other quadratic forms faster.</p>
+<p>
+The interface of this function is experimental and will likely change in future
+release.</p>
+<p>
+If present, the optional parameter <em>fl</em> must be a <code>t_VEC</code> with two
+components. It allows to specify the invariants used, which can make the
+computation faster or slower. The components are</p>
+<p>
+<b>*</b> <code>fl[1]</code> Depth of scalar product combination to use.</p>
+<p>
+<b>*</b> <code>fl[2]</code> Maximum level of Bacher polynomials to use.</p>
+<p>
+Since this function computes the minimal vectors, it can become very lengthy
+as the dimension of G grows.</p>
+<p>
+The library syntax is <code>GEN <b>qfisominit0</b>(GEN G, GEN fl = NULL)</code>.
+Also available is
+<code>GEN <b>qfisominit</b>(GEN F, GEN fl)</code>
+where F is a vector of <code>zm</code>.</p>
+
+<hr></hr>
+<a name="qfjacobi"></a>
+<h4>qfjacobi(A)</h4>
+<p></p>
+<p>Apply Jacobi's eigenvalue algorithm to the real symmetric matrix A.
+This returns [L, V], where</p>
+<p>
+<b>*</b> L is the vector of (real) eigenvalues of A, sorted in increasing
+order,</p>
+<p>
+<b>*</b> V is the corresponding orthogonal matrix of eigenvectors of A.</p>
+<p></p>
+<p>
+<pre class="code">  ? \p19
+  ? A = [1,2;2,1]; mateigen(A)
+  %1 =
+  [-1 1]
+  
+  [ 1 1]
+  ? [L, H] = qfjacobi(A);
+  ? L
+  %3 = [-1.000000000000000000, 3.000000000000000000]~
+  ? H
+  %4 =
+  [ 0.7071067811865475245 0.7071067811865475244]
+  
+  [-0.7071067811865475244 0.7071067811865475245]
+  ? norml2( (A-L[1])*H[,1] )       \\ approximate eigenvector
+  %5 = 9.403954806578300064 E-38
+  ? norml2(H*H~ - 1)
+  %6 = 2.350988701644575016 E-38   \\ close to orthogonal
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>jacobi</b>(GEN A, long prec)</code>.</p>
+
+<hr></hr>
+<a name="qflll"></a>
+<h4>qflll(x,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>LLL algorithm applied to the
+<em>columns</em> of the matrix x. The columns of x may be linearly
+dependent. The result is a unimodular transformation matrix T such that x
+.T is an LLL-reduced basis of the lattice generated by the column
+vectors of x. Note that if x is not of maximal rank T will not be
+square. The LLL parameters are (0.51,0.99), meaning that the Gram-Schmidt
+coefficients for the final basis satisfy <font color=#FF0000>mu</font>_{i,j} <code>&#60;=</code> |0.51|, and the
+Lov\'{a}sz's constant is 0.99.</p>
+<p>
+If <em>flag</em> = 0 (default), assume that x has either exact (integral or
+rational) or real floating point entries. The matrix is rescaled, converted
+to integers and the behavior is then as in <em>flag</em> = 1.</p>
+<p>
+If <em>flag</em> = 1, assume that x is integral. Computations involving Gram-Schmidt
+vectors are approximate, with precision varying as needed (Lehmer's trick,
+as generalized by Schnorr). Adapted from Nguyen and Stehl&eacute;'s algorithm
+and Stehl&eacute;'s code (<code>fplll-1.3</code>).</p>
+<p>
+If <em>flag</em> = 2, x should be an integer matrix whose columns are linearly
+independent. Returns a partially reduced basis for x, using an unpublished
+algorithm by Peter Montgomery: a basis is said to be <em>partially reduced</em>
+if |v_i &#177; v_j| <code>&#62;=</code> |v_i| for any two distinct basis vectors v_i, 
+v_j.</p>
+<p>
+This is faster than <em>flag</em> = 1, esp. when one row is huge compared
+to the other rows (knapsack-style), and should quickly produce relatively
+short vectors. The resulting basis is <em>not</em> LLL-reduced in general.
+If LLL reduction is eventually desired, avoid this partial reduction:
+applying LLL to the partially reduced matrix is significantly <em>slower</em>
+than starting from a knapsack-type lattice.</p>
+<p>
+If <em>flag</em> = 4, as <em>flag</em> = 1, returning a vector [K, T] of matrices: the
+columns of K represent a basis of the integer kernel of x
+(not LLL-reduced in general) and T is the transformation
+matrix such that x.T is an LLL-reduced <b>Z</b>-basis of the image
+of the matrix x.</p>
+<p>
+If <em>flag</em> = 5, case as case 4, but x may have polynomial coefficients.</p>
+<p>
+If <em>flag</em> = 8, same as case 0, but x may have polynomial coefficients.</p>
+<p>
+The library syntax is <code>GEN <b>qflll0</b>(GEN x, long flag)</code>.
+Also available are <code>GEN <b>lll</b>(GEN x)</code> (<em>flag</em> = 0),
+<code>GEN <b>lllint</b>(GEN x)</code> (<em>flag</em> = 1), and <code>GEN <b>lllkerim</b>(GEN x)</code> (<em>flag</em> = 4).</p>
+
+<hr></hr>
+<a name="qflllgram"></a>
+<h4>qflllgram(G,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Same as <code>qflll</code>, except that the
+matrix G = <code>x~ * x</code> is the Gram matrix of some lattice vectors x,
+and not the coordinates of the vectors themselves. In particular, G must
+now be a square symmetric real matrix, corresponding to a positive
+quadratic form (not necessarily definite: x needs not have maximal rank).
+The result is a unimodular
+transformation matrix T such that x.T is an LLL-reduced basis of
+the lattice generated by the column vectors of x. See <code>qflll</code> for
+further details about the LLL implementation.</p>
+<p>
+If <em>flag</em> = 0 (default), assume that G has either exact (integral or
+rational) or real floating point entries. The matrix is rescaled, converted
+to integers and the behavior is then as in <em>flag</em> = 1.</p>
+<p>
+If <em>flag</em> = 1, assume that G is integral. Computations involving Gram-Schmidt
+vectors are approximate, with precision varying as needed (Lehmer's trick,
+as generalized by Schnorr). Adapted from Nguyen and Stehl&eacute;'s algorithm
+and Stehl&eacute;'s code (<code>fplll-1.3</code>).</p>
+<p>
+<em>flag</em> = 4: G has integer entries, gives the kernel and reduced image of x.</p>
+<p>
+<em>flag</em> = 5: same as 4, but G may have polynomial coefficients.</p>
+<p>
+The library syntax is <code>GEN <b>qflllgram0</b>(GEN G, long flag)</code>.
+Also available are <code>GEN <b>lllgram</b>(GEN G)</code> (<em>flag</em> = 0),
+<code>GEN <b>lllgramint</b>(GEN G)</code> (<em>flag</em> = 1), and <code>GEN <b>lllgramkerim</b>(GEN G)</code>
+(<em>flag</em> = 4).</p>
+
+<hr></hr>
+<a name="qfminim"></a>
+<h4>qfminim(x,{b},{m},{<em>flag</em> = 0})</h4>
+<p></p>
+<p>x being a square and symmetric matrix representing a positive definite
+quadratic form, this function deals with the vectors of x whose norm is
+less than or equal to b, enumerated using the Fincke-Pohst algorithm,
+storing at most m vectors (no limit if m is omitted). The function
+searches for the minimal non-zero vectors if b is omitted. The behavior is
+undefined if x is not positive definite (a "precision too low" error is
+most likely, although more precise error messages are possible). The precise
+behavior depends on <em>flag</em>.</p>
+<p>
+If <em>flag</em> = 0 (default), seeks at most 2m vectors. The result is a
+three-component vector, the first component being the number of vectors
+found, the second being the maximum norm found, and the last vector is a
+matrix whose columns are the vectors found, only one being given for each
+pair &#177; v (at most m such pairs, unless m was omitted). The vectors
+are returned in no particular order.</p>
+<p>
+If <em>flag</em> = 1, ignores m and returns [N,v], where v is a non-zero vector
+of length N <code>&#60;=</code> b, or [] if no non-zero vector has length  <code>&#60;=</code> b.
+If no explicit b is provided, return a vector of smallish norm
+(smallest vector in an LLL-reduced basis).</p>
+<p>
+In these two cases, x must have <em>integral</em> entries. The
+implementation uses low precision floating point computations for maximal
+speed, which gives incorrect result when x has large entries. (The
+condition is checked in the code and the routine raises an error if
+large rounding errors occur.) A more robust, but much slower,
+implementation is chosen if the following flag is used:</p>
+<p>
+If <em>flag</em> = 2, x can have non integral real entries. In this case, if b
+is omitted, the "minimal" vectors only have approximately the same norm.
+If b is omitted, m is an upper bound for the number of vectors that
+will be stored and returned, but all minimal vectors are nevertheless
+enumerated. If m is omitted, all vectors found are stored and returned;
+note that this may be a huge vector!</p>
+<p></p>
+<p>
+<pre class="code">  ? x = matid(2);
+  ? qfminim(x)  \\  4 minimal vectors of norm 1: &#177;[0,1], &#177;[1,0]
+  %2 = [4, 1, [0, 1; 1, 0]]
+  ? { x =
+  [4, 2, 0, 0, 0,-2, 0, 0, 0, 0, 0, 0, 1,-1, 0, 0, 0, 1, 0,-1, 0, 0, 0,-2;
+   2, 4,-2,-2, 0,-2, 0, 0, 0, 0, 0, 0, 0,-1, 0, 0, 0, 0, 0,-1, 0, 1,-1,-1;
+   0,-2, 4, 0,-2, 0, 0, 0, 0, 0, 0, 0,-1, 1, 0, 0, 1, 0, 0, 1,-1,-1, 0, 0;
+   0,-2, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1,-1, 0, 0, 0, 1,-1, 0, 1,-1, 1, 0;
+   0, 0,-2, 0, 4, 0, 0, 0, 1,-1, 0, 0, 1, 0, 0, 0,-2, 0, 0,-1, 1, 1, 0, 0;
+  -2, -2,0, 0, 0, 4,-2, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0,-1, 1, 1;
+   0, 0, 0, 0, 0,-2, 4,-2, 0, 0, 0, 0, 0, 1, 0, 0, 0,-1, 0, 0, 0, 1,-1, 0;
+   0, 0, 0, 0, 0, 0,-2, 4, 0, 0, 0, 0,-1, 0, 0, 0, 0, 0,-1,-1,-1, 0, 1, 0;
+   0, 0, 0, 0, 1,-1, 0, 0, 4, 0,-2, 0, 1, 1, 0,-1, 0, 1, 0, 0, 0, 0, 0, 0;
+   0, 0, 0, 0,-1, 0, 0, 0, 0, 4, 0, 0, 1, 1,-1, 1, 0, 0, 0, 1, 0, 0, 1, 0;
+   0, 0, 0, 0, 0, 0, 0, 0,-2, 0, 4,-2, 0,-1, 0, 0, 0,-1, 0,-1, 0, 0, 0, 0;
+   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-2, 4,-1, 1, 0, 0,-1, 1, 0, 1, 1, 1,-1, 0;
+   1, 0,-1, 1, 1, 0, 0,-1, 1, 1, 0,-1, 4, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1,-1;
+  -1,-1, 1,-1, 0, 0, 1, 0, 1, 1,-1, 1, 0, 4, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1;
+   0, 0, 0, 0, 0, 0, 0, 0, 0,-1, 0, 0, 0, 1, 4, 0, 0, 0, 1, 0, 0, 0, 0, 0;
+   0, 0, 0, 0, 0, 0, 0, 0,-1, 1, 0, 0, 1, 1, 0, 4, 0, 0, 0, 0, 1, 1, 0, 0;
+   0, 0, 1, 0,-2, 0, 0, 0, 0, 0, 0,-1, 0, 0, 0, 0, 4, 1, 1, 1, 0, 0, 1, 1;
+   1, 0, 0, 1, 0, 0,-1, 0, 1, 0,-1, 1, 1, 0, 0, 0, 1, 4, 0, 1, 1, 0, 1, 0;
+   0, 0, 0,-1, 0, 1, 0,-1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 4, 0, 1, 1, 0, 1;
+  -1, -1,1, 0,-1, 1, 0,-1, 0, 1,-1, 1, 0, 1, 0, 0, 1, 1, 0, 4, 0, 0, 1, 1;
+   0, 0,-1, 1, 1, 0, 0,-1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 4, 1, 0, 1;
+   0, 1,-1,-1, 1,-1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 4, 0, 1;
+   0,-1, 0, 1, 0, 1,-1, 1, 0, 1, 0,-1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 4, 1;
+  -2,-1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,-1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 4]; }
+  ? qfminim(x,,0)  \\ the Leech lattice has 196560 minimal vectors of norm 4
+  time = 648 ms.
+  %4 = [196560, 4, [;]]
+  ? qfminim(x,,0,2); \\ safe algorithm. Slower and unnecessary here.
+  time = 18,161 ms.
+  %5 = [196560, 4.000061035156250000, [;]]
+</pre></p>
+<p>
+In the last example, we store 0 vectors to limit memory use. All minimal
+vectors are nevertheless enumerated. Provided <code>parisize</code> is about 50MB,
+<code>qfminim(x)</code> succeeds in 2.5 seconds.</p>
+<p>
+The library syntax is <code>GEN <b>qfminim0</b>(GEN x, GEN b = NULL, GEN m = NULL, long flag, long prec)</code>.
+Also available are
+<code>GEN <b>minim</b>(GEN x, GEN b = NULL, GEN m = NULL)</code> (<em>flag</em> = 0),
+<code>GEN <b>minim2</b>(GEN x, GEN b = NULL, GEN m = NULL)</code> (<em>flag</em> = 1).
+<code>GEN <b>minim_raw</b>(GEN x, GEN b = NULL, GEN m = NULL)</code> (do not perform LLL
+reduction on x).</p>
+
+<hr></hr>
+<a name="qfnorm"></a>
+<h4>qfnorm(x,{q})</h4>
+<p></p>
+<p>Evaluate the binary quadratic form q (symmetric matrix)
+at the vector x. If q omitted, use the standard Euclidean form,
+corresponding to the identity matrix.</p>
+<p>
+Equivalent to <code>x~ * q * x</code>, but about twice faster and
+more convenient (does not distinguish between column and row vectors):</p>
+<p>
+<pre class="code">  ? x = [1,2,3]~; qfnorm(x)
+  %1 = 14
+  ? q = [1,2,3;2,2,-1;3,-1,0]; qfnorm(x, q)
+  %2 = 23
+  ? for(i=1,10^6, qfnorm(x,q))
+  time = 384ms.
+  ? for(i=1,10^6, x~*q*x)
+  time = 729ms.
+</pre>
+We also allow <code>t_MAT</code>s of compatible dimensions for x,
+and return <code>x~ * q * x</code> in this case as well:</p>
+<p>
+<pre class="code">  ? M = [1,2,3;4,5,6;7,8,9]; qfnorm(M) \\ Gram matrix
+  %5 =
+  [66  78  90]
+  
+  [78  93 108]
+  
+  [90 108 126]
+  
+  ? for(i=1,10^6, qfnorm(M,q))
+  time = 2,144 ms.
+  ? for(i=1,10^6, M~*q*M)
+  time = 2,793 ms.
+</pre></p>
+<p>
+The polar form is also available, as <code>qfbil</code>.</p>
+<p>
+The library syntax is <code>GEN <b>qfnorm</b>(GEN x, GEN q = NULL)</code>.</p>
+
+<hr></hr>
+<a name="qfperfection"></a>
+<h4>qfperfection(G)</h4>
+<p></p>
+<p>G being a square and symmetric matrix with
+integer entries representing a positive definite quadratic form, outputs the
+perfection rank of the form. That is, gives the rank of the family of the s
+symmetric matrices v_iv_i^t, where s is half the number of minimal
+vectors and the v_i (1 <code>&#60;=</code> i <code>&#60;=</code> s) are the minimal vectors.</p>
+<p>
+Since this requires computing the minimal vectors, the computations can
+become very lengthy as the dimension of x grows.</p>
+<p>
+The library syntax is <code>GEN <b>perf</b>(GEN G)</code>.</p>
+
+<hr></hr>
+<a name="qfrep"></a>
+<h4>qfrep(q,B,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>q being a square and symmetric matrix with integer entries representing a
+positive definite quadratic form, count the vectors representing successive
+integers.</p>
+<p>
+<b>*</b> If <em>flag</em> = 0, count all vectors. Outputs the vector whose i-th
+entry, 1 <code>&#60;=</code> i <code>&#60;=</code> B is half the number of vectors v such that q(v) = i.</p>
+<p>
+<b>*</b> If <em>flag</em> = 1, count vectors of even norm. Outputs the vector
+whose i-th entry, 1 <code>&#60;=</code> i <code>&#60;=</code> B is half the number of vectors such
+that q(v) = 2i.</p>
+<p></p>
+<p>
+<pre class="code">  ? q = [2, 1; 1, 3];
+  ? qfrep(q, 5)
+  %2 = Vecsmall([0, 1, 2, 0, 0]) \\ 1 vector of norm 2, 2 of norm 3, etc.
+  ? qfrep(q, 5, 1)
+  %3 = Vecsmall([1, 0, 0, 1, 0]) \\ 1 vector of norm 2, 0 of norm 4, etc.
+</pre></p>
+<p>
+This routine uses a naive algorithm based on <code>qfminim</code>, and
+will fail if any entry becomes larger than 2^{31} (or 2^{63}).</p>
+<p>
+The library syntax is <code>GEN <b>qfrep0</b>(GEN q, GEN B, long flag)</code>.</p>
+
+<hr></hr>
+<a name="qfsign"></a>
+<h4>qfsign(x)</h4>
+<p></p>
+<p>Returns [p,m] the signature of the quadratic form represented by the
+symmetric matrix x. Namely, p (resp.&nbsp;m) is the number of positive
+(resp.&nbsp;negative) eigenvalues of x.The result is computed using Gaussian
+reduction.</p>
+<p>
+The library syntax is <code>GEN <b>qfsign</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="seralgdep"></a>
+<h4>seralgdep(s,p,r)</h4>
+<p></p>
+<p> finds a linear relation between powers (1,s,
+..., s^p) of the series s, with polynomial coefficients of degree
+ <code>&#60;=</code> r. In case no relation is found, return 0.</p>
+<p>
+<pre class="code">  ? s = 1 + 10*y - 46*y^2 + 460*y^3 - 5658*y^4 + 77740*y^5 + O(y^6);
+  ? seralgdep(s, 2, 2)
+  %2 = -x^2 + (8*y^2 + 20*y + 1)
+  ? subst(%, x, s)
+  %3 = O(y^6)
+  ? seralgdep(s, 1, 3)
+  %4 = (-77*y^2 - 20*y - 1)*x + (310*y^3 + 231*y^2 + 30*y + 1)
+  ? seralgdep(s, 1, 2)
+  %5 = 0
+</pre>
+The series main variable must not be x, so as to be able
+to express the result as a polynomial in x.</p>
+<p>
+The library syntax is <code>GEN <b>seralgdep</b>(GEN s, long p, long r)</code>.</p>
+
+<hr></hr>
+<a name="setbinop"></a>
+<h4>setbinop(f,X,{Y})</h4>
+<p></p>
+<p>The set whose elements are the f(x,y), where x,y run through X,Y.
+respectively. If Y is omitted, assume that X = Y and that f is symmetric:
+f(x,y) = f(y,x) for all x,y in X.</p>
+<p>
+<pre class="code">  ? X = [1,2,3]; Y = [2,3,4];
+  ? setbinop((x,y)-&#62;x+y, X,Y) \\ set X + Y
+  %2 = [3, 4, 5, 6, 7]
+  ? setbinop((x,y)-&#62;x-y, X,Y) \\ set X - Y
+  %3 = [-3, -2, -1, 0, 1]
+  ? setbinop((x,y)-&#62;x+y, X)   \\ set 2X = X + X
+  %2 = [2, 3, 4, 5, 6]
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>setbinop</b>(GEN f, GEN X, GEN Y = NULL)</code>.</p>
+
+<hr></hr>
+<a name="setintersect"></a>
+<h4>setintersect(x,y)</h4>
+<p></p>
+<p>Intersection of the two sets x and y (see <code>setisset</code>).
+If x or y is not a set, the result is undefined.</p>
+<p>
+The library syntax is <code>GEN <b>setintersect</b>(GEN x, GEN y)</code>.</p>
+
+<hr></hr>
+<a name="setisset"></a>
+<h4>setisset(x)</h4>
+<p></p>
+<p>Returns true (1) if x is a set, false (0) if
+not. In PARI, a set is a row vector whose entries are strictly
+increasing with respect to a (somewhat arbitray) universal comparison
+function. To convert any object into a set (this is most useful for
+vectors, of course), use the function <code>Set</code>.</p>
+<p>
+<pre class="code">  ? a = [3, 1, 1, 2];
+  ? setisset(a)
+  %2 = 0
+  ? Set(a)
+  %3 = [1, 2, 3]
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>long <b>setisset</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="setminus"></a>
+<h4>setminus(x,y)</h4>
+<p></p>
+<p>Difference of the two sets x and y (see <code>setisset</code>),
+i.e.&nbsp;set of elements of x which do not belong to y.
+If x or y is not a set, the result is undefined.</p>
+<p>
+The library syntax is <code>GEN <b>setminus</b>(GEN x, GEN y)</code>.</p>
+
+<hr></hr>
+<a name="setsearch"></a>
+<h4>setsearch(S,x,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Determines whether x belongs to the set S (see <code>setisset</code>).</p>
+<p>
+We first describe the default behaviour, when <em>flag</em> is zero or omitted. If x
+belongs to the set S, returns the index j such that S[j] = x, otherwise
+returns 0.</p>
+<p>
+<pre class="code">  ? T = [7,2,3,5]; S = Set(T);
+  ? setsearch(S, 2)
+  %2 = 1
+  ? setsearch(S, 4)      \\ not found
+  %3 = 0
+  ? setsearch(T, 7)      \\ search in a randomly sorted vector
+  %4 = 0 \\ WRONG !
+</pre></p>
+<p>
+If S is not a set, we also allow sorted lists with
+respect to the <code>cmp</code> sorting function, without repeated entries,
+as per <code>listsort</code>(L,1); otherwise the result is undefined.</p>
+<p>
+<pre class="code">  ? L = List([1,4,2,3,2]); setsearch(L, 4)
+  %1 = 0 \\ WRONG !
+  ? listsort(L, 1); L    \\ sort L first
+  %2 = List([1, 2, 3, 4])
+  ? setsearch(L, 4)
+  %3 = 4                 \\ now correct
+</pre></p>
+<p>
+If <em>flag</em> is non-zero, this function returns the index j where x should be
+inserted, and 0 if it already belongs to S. This is meant to be used for
+dynamically growing (sorted) lists, in conjunction with <code>listinsert</code>.</p>
+<p>
+<pre class="code">  ? L = List([1,5,2,3,2]); listsort(L,1); L
+  %1 = List([1,2,3,5])
+  ? j = setsearch(L, 4, 1)  \\ 4 should have been inserted at index j
+  %2 = 4
+  ? listinsert(L, 4, j); L
+  %3 = List([1, 2, 3, 4, 5])
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>long <b>setsearch</b>(GEN S, GEN x, long flag)</code>.</p>
+
+<hr></hr>
+<a name="setunion"></a>
+<h4>setunion(x,y)</h4>
+<p></p>
+<p>Union of the two sets x and y (see <code>setisset</code>).
+If x or y is not a set, the result is undefined.</p>
+<p>
+The library syntax is <code>GEN <b>setunion</b>(GEN x, GEN y)</code>.</p>
+
+<hr></hr>
+<a name="trace"></a>
+<h4>trace(x)</h4>
+<p></p>
+<p>This applies to quite general x. If x is not a
+matrix, it is equal to the sum of x and its conjugate, except for polmods
+where it is the trace as an algebraic number.</p>
+<p>
+For x a square matrix, it is the ordinary trace. If x is a
+non-square matrix (but not a vector), an error occurs.</p>
+<p>
+The library syntax is <code>GEN <b>gtrace</b>(GEN x)</code>.</p>
+
+<hr></hr>
+<a name="vecextract"></a>
+<h4>vecextract(x,y,{z})</h4>
+<p></p>
+<p>Extraction of components of the vector or matrix x according to y.
+In case x is a matrix, its components are the <em>columns</em> of x. The
+parameter y is a component specifier, which is either an integer, a string
+describing a range, or a vector.</p>
+<p>
+If y is an integer, it is considered as a mask: the binary bits of y are
+read from right to left, but correspond to taking the components from left to
+right. For example, if y = 13 = (1101)_2 then the components 1,3 and 4 are
+extracted.</p>
+<p>
+If y is a vector (<code>t_VEC</code>, <code>t_COL</code> or <code>t_VECSMALL</code>), which must have
+integer entries, these entries correspond to the component numbers to be
+extracted, in the order specified.</p>
+<p>
+If y is a string, it can be</p>
+<p>
+<b>*</b> a single (non-zero) index giving a component number (a negative
+index means we start counting from the end).</p>
+<p>
+<b>*</b> a range of the form <code>"a..b"</code>, where a and b are
+indexes as above. Any of a and b can be omitted; in this case, we take
+as default values a = 1 and b = -1, i.e.&nbsp;the first and last components
+respectively. We then extract all components in the interval [a,b], in
+reverse order if b &#60; a.</p>
+<p>
+In addition, if the first character in the string is <code>^</code>, the
+complement of the given set of indices is taken.</p>
+<p>
+If z is not omitted, x must be a matrix. y is then the <em>row</em>
+specifier, and z the <em>column</em> specifier, where the component specifier
+is as explained above.</p>
+<p></p>
+<p>
+<pre class="code">  ? v = [a, b, c, d, e];
+  ? vecextract(v, 5)         \\  mask
+  %1 = [a, c]
+  ? vecextract(v, [4, 2, 1]) \\  component list
+  %2 = [d, b, a]
+  ? vecextract(v, "2..4")    \\  interval
+  %3 = [b, c, d]
+  ? vecextract(v, "-1..-3")  \\  interval + reverse order
+  %4 = [e, d, c]
+  ? vecextract(v, "^2")      \\  complement
+  %5 = [a, c, d, e]
+  ? vecextract(matid(3), "2..", "..")
+  %6 =
+  [0 1 0]
+  
+  [0 0 1]
+</pre></p>
+<p>
+The range notations <code>v[i..j]</code> and <code>v[^i]</code> (for <code>t_VEC</code> or
+<code>t_COL</code>) and <code>M[i..j, k..l]</code> and friends (for <code>t_MAT</code>) implement a
+subset of the above, in a simpler and <em>faster</em> way, hence should be
+preferred in most common situations. The following features are not
+implemented in the range notation:</p>
+<p>
+<b>*</b> reverse order,</p>
+<p>
+<b>*</b> omitting either a or b in <code>a..b</code>.</p>
+<p>
+The library syntax is <code>GEN <b>extract0</b>(GEN x, GEN y, GEN z = NULL)</code>.</p>
+
+<hr></hr>
+<a name="vecsearch"></a>
+<h4>vecsearch(v,x,{<em>cmpf</em>})</h4>
+<p></p>
+<p>Determines whether x belongs to the sorted vector or list v: return
+the (positive) index where x was found, or 0 if it does not belong to
+v.</p>
+<p>
+If the comparison function cmpf is omitted, we assume that v is sorted in
+increasing order, according to the standard comparison function  &#60; , thereby
+restricting the possible types for x and the elements of v (integers,
+fractions or reals).</p>
+<p>
+If <code>cmpf</code> is present, it is understood as a comparison function and we
+assume that v is sorted according to it, see <code>vecsort</code> for how to
+encode comparison functions.</p>
+<p>
+<pre class="code">  ? v = [1,3,4,5,7];
+  ? vecsearch(v, 3)
+  %2 = 2
+  ? vecsearch(v, 6)
+  %3 = 0 \\ not in the list
+  ? vecsearch([7,6,5], 5) \\ unsorted vector: result undefined
+  %4 = 0
+</pre></p>
+<p></p>
+<p>
+By abuse of notation, x is also allowed to be a matrix, seen as a vector
+of its columns; again by abuse of notation, a <code>t_VEC</code> is considered
+as part of the matrix, if its transpose is one of the matrix columns.</p>
+<p>
+<pre class="code">  ? v = vecsort([3,0,2; 1,0,2]) \\ sort matrix columns according to lex order
+  %1 =
+  [0 2 3]
+  
+  [0 2 1]
+  ? vecsearch(v, [3,1]~)
+  %2 = 3
+  ? vecsearch(v, [3,1])  \\ can search for x or x~
+  %3 = 3
+  ? vecsearch(v, [1,2])
+  %4 = 0 \\ not in the list
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>long <b>vecsearch</b>(GEN v, GEN x, GEN cmpf = NULL)</code>.</p>
+
+<hr></hr>
+<a name="vecsort"></a>
+<h4>vecsort(x,{<em>cmpf</em>},{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Sorts the vector x in ascending order, using a mergesort method.
+x must be a list, vector or matrix (seen as a vector of its columns).
+Note that mergesort is stable, hence the initial ordering of "equal"
+entries (with respect to the sorting criterion) is not changed.</p>
+<p>
+If <code>cmpf</code> is omitted, we use the standard comparison function
+<code>lex</code>, thereby restricting the possible types for the elements of x
+(integers, fractions or reals and vectors of those). If <code>cmpf</code> is
+present, it is understood as a comparison function and we sort according to
+it. The following possibilities exist:</p>
+<p>
+<b>*</b> an integer k: sort according to the value of the k-th
+subcomponents of the components of&nbsp;x.</p>
+<p>
+<b>*</b> a vector: sort lexicographically according to the components listed in
+the vector. For example, if <code>cmpf</code> = <code>[2,1,3]</code>, sort with respect to
+the second component, and when these are equal, with respect to the first,
+and when these are equal, with respect to the third.</p>
+<p>
+<b>*</b> a comparison function (<code>t_CLOSURE</code>), with two arguments x and y,
+and returning an integer which is  &#60; 0,  &#62; 0 or  = 0 if x &#60; y, x &#62; y or
+x = y respectively. The <code>sign</code> function is very useful in this context:</p>
+<p>
+<pre class="code">  ? vecsort([3,0,2; 1,0,2]) \\ sort columns according to lex order
+  %1 =
+  [0 2 3]
+  
+  [0 2 1]
+  ? vecsort(v, (x,y)-&#62;sign(y-x))            \\  reverse sort
+  ? vecsort(v, (x,y)-&#62;sign(abs(x)-abs(y)))  \\  sort by increasing absolute value
+  ? cmpf(x,y) = my(dx = poldisc(x), dy = poldisc(y)); sign(abs(dx) - abs(dy))
+  ? vecsort([x^2+1, x^3-2, x^4+5*x+1], cmpf)
+</pre></p>
+<p>
+The last example used the named <code>cmpf</code> instead of an anonymous function,
+and sorts polynomials with respect to the absolute value of their
+discriminant. A more efficient approach would use precomputations to ensure
+a given discriminant is computed only once:</p>
+<p>
+<pre class="code">  ? DISC = vector(#v, i, abs(poldisc(v[i])));
+  ? perm = vecsort(vector(#v,i,i), (x,y)-&#62;sign(DISC[x]-DISC[y]))
+  ? vecextract(v, perm)
+</pre>
+Similar ideas apply whenever we sort according to the values
+of a function which is expensive to compute.</p>
+<p>
+The binary digits of <em>flag</em> mean:</p>
+<p>
+<b>*</b> 1: indirect sorting of the vector x, i.e.&nbsp;if x is an
+n-component vector, returns a permutation of [1,2,...,n] which
+applied to the components of x sorts x in increasing order.
+For example, <code>vecextract(x, vecsort(x,,1))</code> is equivalent to
+<code>vecsort(x)</code>.</p>
+<p>
+<b>*</b> 4: use descending instead of ascending order.</p>
+<p>
+<b>*</b> 8: remove "duplicate" entries with respect to the sorting function
+(keep the first occurring entry).  For example:</p>
+<p>
+<pre class="code">    ? vecsort([Pi,Mod(1,2),z], (x,y)-&#62;0, 8)   \\  make everything compare equal
+    %1 = [3.141592653589793238462643383]
+    ? vecsort([[2,3],[0,1],[0,3]], 2, 8)
+    %2 = [[0, 1], [2, 3]]
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>GEN <b>vecsort0</b>(GEN x, GEN cmpf = NULL, long flag)</code>.</p>
+
+<hr></hr>
+<a name="vecsum"></a>
+<h4>vecsum(v)</h4>
+<p></p>
+<p>Return the sum of the component of the vector v</p>
+<p>
+The library syntax is <code>GEN <b>vecsum</b>(GEN v)</code>.</p>
+
+<hr></hr>
+<a name="vector"></a>
+<h4>vector(n,{X},{<em>expr</em> = 0})</h4>
+<p></p>
+<p>Creates a row vector (type
+<code>t_VEC</code>) with n components whose components are the expression
+<em>expr</em> evaluated at the integer points between 1 and n. If one of the
+last two arguments is omitted, fill the vector with zeroes.</p>
+<p>
+Avoid modifying X within <em>expr</em>; if you do, the formal variable
+still runs from 1 to n. In particular, <code>vector(n,i,expr)</code> is not
+equivalent to</p>
+<p>
+<pre class="code">  v = vector(n)
+  for (i = 1, n, v[i] = expr)
+</pre></p>
+<p>
+as the following example shows:</p>
+<p>
+<pre class="code">  n = 3
+  v = vector(n); vector(n, i, i++)            ----&#62; [2, 3, 4]
+  v = vector(n); for (i = 1, n, v[i] = i++)   ----&#62; [2, 0, 4]
+</pre></p>
+<p></p>
+<p></p>
+
+<hr></hr>
+<a name="vectorsmall"></a>
+<h4>vectorsmall(n,{X},{<em>expr</em> = 0})</h4>
+<p></p>
+<p>Creates a row vector of small integers (type
+<code>t_VECSMALL</code>) with n components whose components are the expression
+<em>expr</em> evaluated at the integer points between 1 and n. If one of the
+last two arguments is omitted, fill the vector with zeroes.</p>
+<p></p>
+
+<hr></hr>
+<a name="vectorv"></a>
+<h4>vectorv(n,{X},{<em>expr</em> = 0})</h4>
+<p></p>
+<p>As <code>vector</code>, but returns a column vector (type <code>t_COL</code>).</p>
+<p></p>
+<p></p>
+
+<hr></hr>
+
+</BODY>
+</HTML>

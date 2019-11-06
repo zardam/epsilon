@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Le PGCD : gcd igcd</title>
+</head>
+<body >
+<a href="cascmd_fr161.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr163.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec234" class="subsection">6.7.2  Le PGCD : <span style="font-family:monospace">gcd igcd</span></h3>
+<p><a id="hevea_default297"></a><a id="hevea_default298"></a><a id="sec:igcd"></a>
+<span style="font-family:monospace">gcd</span> ou <span style="font-family:monospace">igcd</span> désigne le PGCD de deux (ou de plusieurs) 
+entiers ou rationnels ou entiers de Gauss (pour les polynômes voir alors 
+<a href="cascmd_fr402.html#sec%3Agcd">6.29.7</a>).<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">gcd(18,15) </span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">igcd(18,15) </span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">3</span></div><p> 
+On tape :
+</p><div class="center"><span style="font-family:monospace">gcd(5,2+i)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">igcd(5,2+i) </span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">2+i</span></div><p>
+en effet (2+<span style="font-style:italic">i</span>)*(2−<span style="font-style:italic">i</span>)=5<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">gcd(1+3i,7-4i)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">igcd(1+3i,7-4i) </span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">2+i</span></div><p>
+en effet (1+<span style="font-style:italic">i</span>)*(2+<span style="font-style:italic">i</span>)= 1+3*<span style="font-style:italic">i</span>  et −<span style="font-style:italic">i</span>*(2+<span style="font-style:italic">i</span>)*(3+2<span style="font-style:italic">i</span>)=(7−4<span style="font-style:italic">i</span>)<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">igcd(15/7,50/9)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">gcd(15/7,50/9)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">5/63</span></div><p>
+en effet 15/7=275/63 et 50/9=705/63.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">gcd(18,15,21,36)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">igcd(18,15,21,36)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">3</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">gcd([18,15,21,36])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">3</span></div><p>On peut aussi mettre comme paramètres deux listes de même longueur (ou une 
+matrice ayant 2 lignes), dans ce cas <span style="font-family:monospace">gcd</span> renvoie le PGCD des 
+éléments de même indice (ou d’une même colonne).
+On tape :
+</p><div class="center"><span style="font-family:monospace">gcd([6,10,12],[21,5,8])</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">gcd([[6,10,12],[21,5,8]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[3,5,4]</span></div><p>
+On peut aussi utiliser la librairie Pari qui a une fonction <span style="font-family:monospace">gcd</span> plus 
+générale car <span style="font-family:monospace">pari("gcd",x,y)</span> fonctionne aussi lorsque <span style="font-style:italic">x</span> et <span style="font-style:italic">y</span> 
+sont rationnels et aussi lorsque <span style="font-style:italic">x</span> et <span style="font-style:italic">y</span> sont des listes ou des matrices qui
+n’ont pas forcément la même dimension (c’est alors le type de <span style="font-style:italic">y</span> qui donne
+le type du résultat.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">pari("gcd",5/7,50/9)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">5/63</span></div><p> 
+car  5/7= 9*5/63 et 50/9=70*5/63.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">pari("gcd", [4,3],[20,30,50,75]))</span></div><p>
+On obtient une matrice <span style="font-style:italic">A</span> de dimension 4× 2, c’est aussi une liste de 
+même longueur que <span style="font-style:italic">y</span> i.e. de longueur 4:
+</p><div class="center"><span style="font-family:monospace">[[4,1],[2,3],[2,1],[1,3]]</span></div><p> 
+car gcd(4,20)=4, gcd(3,20)=1, gcd(4,30)=2, gcd(3,30)=3...<br>
+Pour obtenir ce résultat avec <span style="font-family:monospace">Xcas</span>, on doit taper 2 instructions :
+</p><div class="center"><span style="font-family:monospace">gcd( [4,4,4,4],[20,30,50,75])</span></div><p>
+On obtient la première colonne de <span style="font-style:italic">A</span>:
+</p><div class="center"><span style="font-family:monospace">[4,2,2,1]</span></div><p> 
+et on tape 
+</p><div class="center"><span style="font-family:monospace">gcd( [3,3,3,3],[20,30,50,75])</span></div><p>
+On obtient la deuxième colonne de <span style="font-style:italic">A</span> :
+</p><div class="center"><span style="font-family:monospace">[1,3,1,3] </span></div><p> :
+On tape :
+</p><div class="center"><span style="font-family:monospace">diag(pari("gcd", [5,4,3,2],[20,30,50,75])))</span></div><p>
+ou on tape :
+</p><div class="center"><span style="font-family:monospace">gcd([5,4,3,2],[20,30,50,75])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[5,2,1,1]</span></div><p> 
+<span style="font-weight:bold">Un exemple</span><br>
+Déterminer le pgcd de 4<span style="font-style:italic">n</span>+1 et de 5<span style="font-style:italic">n</span>+3 quand <span style="font-style:italic">n</span> ∈ ℕ.<br>
+On définit :<br>
+</p><div class="center"><span style="font-family:monospace">f(n):=gcd(4*n+1,5*n+3)</span></div><p>
+Puis on tape le programme <span style="font-family:monospace">essai(n)</span> qui renvoie pour <span style="font-style:italic">j</span>=−<span style="font-style:italic">n</span> à <span style="font-style:italic">n</span> la 
+liste des valeurs de <span style="font-style:italic">j</span>,<span style="font-style:italic">a</span> lorsque le pgcd de 4<span style="font-style:italic">j</span>+1 et 5<span style="font-style:italic">j</span>+3 est égal à
+<span style="font-style:italic">a</span>≠ 1 :
+</p><pre class="verbatim">  essai(n):={
+    local j,a,L; 
+    L:=NULL;
+    for (j:=-n;j&lt;n;j++) {
+      a:=f(j);
+      if (a!=1) {
+        L:=L,[j,a];
+      } 
+    }
+    return L;
+  }
+</pre><p>
+Puis on tape :<br>
+</p><div class="center"><span style="font-family:monospace">essai(20)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[-16,7],[-9,7],[-2,7],[5,7],[12,7],[19,7]</span></div><p>
+On voit donc que 4<span style="font-style:italic">n</span>+1 et 5<span style="font-style:italic">n</span>+3 sont soit premiers entre eux soit leur pgcd 
+vaut 7 lorsque <span style="font-style:italic">n</span>∈ [−16,−9,−2,5,12,19] c’est à dire lorsque <span style="font-style:italic">n</span>=5+<span style="font-style:italic">k</span>*7.<br>
+ On doit donc montrer que :<br>
+si <span style="font-style:italic">n</span>!=5+<span style="font-style:italic">k</span>*7 pour <span style="font-style:italic">k</span> ∈ ℤ, 4<span style="font-style:italic">n</span>+1 et 5<span style="font-style:italic">n</span>+3 sont premiers entre eux,
+et<br>
+si <span style="font-style:italic">n</span>=5+<span style="font-style:italic">k</span>*7 pour <span style="font-style:italic">k</span> ∈ ℤ, 4<span style="font-style:italic">n</span>+1 et 5<span style="font-style:italic">n</span>+3 ont 7 comme pgcd.
+</p>
+<hr>
+<a href="cascmd_fr161.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr163.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

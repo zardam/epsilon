@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Trier : sort</title>
+</head>
+<body >
+<a href="cascmd_fr527.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr529.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec655" class="subsection">6.42.23  Trier : <span style="font-family:monospace">sort</span></h3>
+<p><a id="hevea_default946"></a>
+<span style="font-family:monospace">sort</span> a comme argument une liste de nombres ou une matrice
+ou une liste de chaines de caractères ou une expression.<br>
+lorsque le 1ier argument est une liste, <span style="font-family:monospace">sort</span> accepte comme 2-ième 
+argument une fonction de tri <span style="font-style:italic">f</span> qui doit définir un ordre strict faible ( par
+exemple (x,y)-&gt;x&gt;y pour avoir la liste triée selon l’ordre décroissant).<br>
+</p><ol class="enumerate" type=1><li class="li-enumerate">
+<span style="font-weight:bold">Avec 1 argument</span><br>
+<ul class="itemize"><li class="li-itemize">
+Pour une liste, <span style="font-family:monospace">sort</span> renvoie les éléments de la liste triés 
+selon l’ordre croissant.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">sort([1,3,4,3,2])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[1,2,3,3,4]</span></div>
+</li><li class="li-itemize">Pour une matrice ou une liste de chaines de caractères<br>
+Si la liste est une matrice (resp une liste de chaines 
+de caractères), <span style="font-family:monospace">sort</span> renvoie la matrice dont 
+les lignes sont triées selon l’ordre croissant en triant les lignes selon 
+l’ordre [<span style="font-style:italic">a</span><sub>0</sub>,<span style="font-style:italic">a</span><sub>1</sub>,..<span style="font-style:italic">a</span><sub><span style="font-style:italic">n</span></sub>]&lt;[<span style="font-style:italic">b</span><sub>0</sub>,<span style="font-style:italic">b</span><sub>1</sub>,..<span style="font-style:italic">b</span><sub><span style="font-style:italic">n</span></sub>] si <span style="font-style:italic">a</span><sub>0</sub>&lt;<span style="font-style:italic">b</span><sub>0</sub> ou si il existe <span style="font-style:italic">k</span>≤ <span style="font-style:italic">n</span>
+tel que <span style="font-style:italic">a</span><sub>0</sub>=<span style="font-style:italic">b</span><sub>0</sub>,...<span style="font-style:italic">a</span><sub><span style="font-style:italic">k</span>−1</sub>&lt;<span style="font-style:italic">b</span><sub><span style="font-style:italic">k</span>−1</sub> et <span style="font-style:italic">a</span><sub><span style="font-style:italic">k</span></sub>&lt;<span style="font-style:italic">b</span><sub><span style="font-style:italic">k</span></sub> (resp la liste de chaines 
+de caractères triées par l’ordre lexicographique).<br>
+On tape :
+<div class="center"><span style="font-family:monospace">sort([[3,4,2],[4,2,3],[2,3,4],[2,4,3]])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[2,3,4],[2,4,3],[3,4,2],[4,2,3]]</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">sort(["assertion","aberrant","arret"])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">["aberrant","arret","assertion"]</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">sort(["dac","bac","sac","asc","cab"])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">["asc","bac","cab","dac","sac"]</span></div>
+</li><li class="li-itemize">Pour une expression, <span style="font-family:monospace">sort</span> trie et collecte les termes égaux 
+dans les sommes et produits.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">sort(y*2*x+x*y+y*x)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">4*x*y</span></div>
+On tape : 
+<div class="center"><span style="font-family:monospace">sort(exp(2*ln(x))+x*y-x+y*x+2*x)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">2*x*y+exp(2*ln(x))+x</span></div> 
+On tape : 
+<div class="center"><span style="font-family:monospace">simplifier(exp(2*ln(x))+x*y-x+y*x+2*x)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+2*x*y+x</span></div> 
+</li></ul>
+</li><li class="li-enumerate"><span style="font-weight:bold">Avec 2 arguments</span><br>
+Le deuxième argument doit être une fonction de tri <span style="font-style:italic">f</span> qui doit définir 
+un ordre strict faible sinon l’algorithme employé risque de boucler....
+c’est à dire que :<br>
+<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>) est un fonction toujours définie renvoyant 0 (faux) ou 1 (vrai) .<br>
+<span style="font-style:italic">f</span> doit renvoyer 0 si 2 éléments ne sont pas comparables et doit 
+vérifier :
+<ul class="itemize"><li class="li-itemize">
+<span style="font-style:italic">f</span> doit définir une 
+relation transitive (si <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>) et <span style="font-style:italic">f</span>(<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>) sont vrais alors
+<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">z</span>) est vrai)
+</li><li class="li-itemize">on ne peut pas avoir
+<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>) et <span style="font-style:italic">f</span>(<span style="font-style:italic">y</span>,<span style="font-style:italic">x</span>) vrai en même temps et <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">x</span>) est faux (ce que l’on 
+appelle une antisymétrie <span style="font-weight:bold">non réflexive</span>)
+</li><li class="li-itemize"><span style="font-style:italic">f</span> ne définit pas forcément une relation
+d’ordre total, on peut avoir <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>) et <span style="font-style:italic">f</span>(<span style="font-style:italic">y</span>,<span style="font-style:italic">x</span>) simultanément faux.<br>
+Si on définit la relation <span style="font-style:italic">E</span> par <span style="font-style:italic">x</span> <span style="font-style:italic">E</span> <span style="font-style:italic">y</span> est vrai lorsque 
+<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>) et <span style="font-style:italic">f</span>(<span style="font-style:italic">y</span>,<span style="font-style:italic">x</span>) sont simultanément faux
+alors <span style="font-style:italic">E</span> doit être une relation d’équivalence.
+</li></ul>
+Par exemple, on ne peut pas mettre comme
+fonction de tri : <span style="font-family:monospace">(x,y)-&gt;x[1]&gt;=y[1]</span>. 
+On tape :
+<div class="center"><span style="font-family:monospace">sort([3,4,2],(x,y)-&gt;x&gt;y)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[4,3,2]</span></div><p><span style="font-weight:bold">Exemples pour trier des listes de listes</span><br>
+Avec un seul argument, <span style="font-family:monospace">sort</span> trie les listes de listes par ordre croissant.
+</p><div class="center"><span style="font-family:monospace">sort([[1,3],[2,4],[2,3],[1,4]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1,3],[1,4],[2,3],[2,4]]</span></div><p>
+Pour un ordre différent, il faut mettre
+une fonction de tri comme 2ième argument.<br>
+Par exemple :
+</p><ol class="enumerate" type=a><li class="li-enumerate">
+Si on veut trier par ordre décroissant la première colonne ou en cas 
+d’égalité par ordre décroissant la 2ième colonne (ordre 
+lexicographique pour les 2 premières colonnes).<br>
+On tape :
+<div class="center"><span style="font-family:monospace">sort([[1,3],[2,4],[2,3],[1,4]], <br>
+(x,y)-&gt;when(x[0]==y[0],x[1]&gt;y[1],x[0]&gt;y[0]))</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[2,4],[2,3],[1,4],[1,3]]</span></div>
+</li><li class="li-enumerate">Si on veut trier par ordre décroissant la 2ième
+colonne ou en cas d’égalité par ordre décroissant la première colonne.<br>
+ On tape :
+<div class="center"><span style="font-family:monospace">sort([[1,3],[2,4],[2,3],[1,4]],<br>
+(x,y)-&gt;when(x[1]==y[1],x[0]&gt;y[0],x[1]&gt;y[1]))</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[2,4],[1,4],[2,3],[1,3]]</span></div>
+<span style="font-weight:bold">Attention</span> 
+Dans l’exemple précédent,
+<ul class="itemize"><li class="li-itemize">
+on ne peut pas mettre comme
+fonction de tri
+<span style="font-family:monospace">(x,y)-&gt;x[1]&gt;=y[1]</span> car l’ordre n’est pas strict 
+</li><li class="li-itemize">on peut mettre comme fonction de tri
+<span style="font-family:monospace">f:=(x,y)-&gt;x[1]&gt;y[1]</span> bien que l’ordre ne soit pas total. 
+</li></ul>
+Soient :<br>
+<span style="font-family:monospace">L1:=[[1,2],[2,3],[4,3]]</span><br>
+<span style="font-family:monospace">L2:=[[1,2],[4,3],[2,3]]</span><br>
+Dans ce cas :<br>
+<span style="font-family:monospace">sort(L1,(x,y)-&gt;x[1]&gt;y[1])</span> et<br>
+<span style="font-family:monospace">sort(L2,(x,y)-&gt;x[1]&gt;y[1])</span> <br>
+renvoient des réponses
+différentes parce que l’ordre n’est pas total et que
+<span style="font-family:monospace">[2,3]</span> et <span style="font-family:monospace">[4,3]</span> sont considérés comme équivalents.<br>
+</li></ol><p>
+<span style="font-weight:bold">Exemple pour trier par ordre lexicographique des matrices ou des chaines de caractères</span><br>
+Pour trier par ordre lexicographique des matrices ou des chaines de 
+caractères, il faut mettre en second argument comme fonction de tri, par 
+exemple, la fonction booléenne <span style="font-family:monospace">super</span> ci-dessous : <br>
+Si <span style="font-family:monospace">L1</span> et <span style="font-family:monospace">L2</span> sont 2 listes ou 2 chaines de caractères alors
+<span style="font-family:monospace">super(L1,L2)</span> renvoie <span style="font-family:monospace">1</span> si <span style="font-family:monospace">L1&gt;L2</span> et <span style="font-family:monospace">0</span> sinon.<br>
+On tape :
+</p><pre class="verbatim">super(L1,L2):={
+  local s,j;
+  s:=min(size(L1),size(L2))-1;
+  j:=0;
+  tantque L1[j]==L2[j] and j&lt;s faire
+    j:=j+1;
+  ftantque;
+  //si L2[j]&gt;=L1[j] alors return 0 sinon return 1; fsi;
+  si [sort(L1[j],L2[j])]==[L1[j],L2[j]] alors 
+     return 0 
+    sinon 
+     return 1;
+  fsi;
+}:; 
+</pre><p>
+On a remplacé <span style="font-family:monospace">L2[j]&gt;=L1[j]</span> par <span style="font-family:monospace">[sort(L1[j],L2[j])]==[L1[j],L2[j]]</span>
+pour que <span style="font-family:monospace">super</span> soit aussi valable pour les chaines de caractères.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">sort(["dac","bac","sac","asc","cab"],super)</span></div><p>
+ou on tape
+</p><div class="center"><span style="font-family:monospace">sort(["dac","bac","sac","asc","cab"],(x,y)-&gt;super(x,y))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">["sac","dac","cab","bac","asc"]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">sort([[3,4,2],[4,2,3],[2,3,4],[2,4,3]],super)</span></div><p>
+ou on tape
+</p><div class="center"><span style="font-family:monospace">sort([[3,4,2],[4,2,3],[2,3,4],[2,4,3]],(x,y)-&gt;super(x,y))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[2,3,4],[2,4,3],[3,4,2],[4,2,3]][[2,3,4],[2,4,3],[3,4,2],[4,2,3]]</span></div></li></ol><p>
+<span style="font-weight:bold">Remarque</span>
+Si on veut trier la liste <span style="font-family:monospace">L:=[1,3,4,3,2]</span> et mettre le résultat dans 
+<span style="font-family:monospace">L</span>, on a 2 façon de le faire.
+On tape :
+</p><div class="center"><span style="font-family:monospace">L:=[1,3,4,3,2]</span></div><div class="center"><span style="font-family:monospace">L:=sort(L)</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">L:=[1,3,4,3,2]</span></div><div class="center"><span style="font-family:monospace">L.sort()</span></div><p>
+On obtient comme nouvelle valeur de <span style="font-family:monospace">L</span> :
+</p><div class="center"><span style="font-family:monospace">L:=[1,2,3,3,4]</span></div><p>
+Ou encore <br>
+Si on veut trier la liste <span style="font-family:monospace">L:=[[1,3],[2,4],[2,3],[1,4]]</span> avec 
+<span style="font-family:monospace">(x,y)-&gt;when(x[0]==y[0],x[1]&gt;y[1],x[0]&gt;y[0])</span> et mettre le résultat dans 
+<span style="font-family:monospace">L</span>, on a 2 façon de le faire.
+On définit <span style="font-family:monospace">L</span>, on tape :
+</p><div class="center"><span style="font-family:monospace">L:=[[1,3],[2,4],[2,3],[1,4]]</span></div><div class="center"><span style="font-family:monospace">L:=sort(L,(x,y)-&gt;when(x[0]==y[0],x[1]&gt;y[1],x[0]&gt;y[0]))</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">L:=[[1,3],[2,4],[2,3],[1,4]]</span></div><div class="center"><span style="font-family:monospace">L.sort((x,y)-&gt;when(x[0]==y[0],x[1]&gt;y[1],x[0]&gt;y[0]))</span></div><p>
+On obtient comme nouvelle valeur de <span style="font-family:monospace">L</span> :
+</p><div class="center"><span style="font-family:monospace">[[2,4],[2,3],[1,4],[1,3]]</span></div>
+<hr>
+<a href="cascmd_fr527.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr529.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

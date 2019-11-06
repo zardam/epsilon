@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Values of a recurrence relation or a system: rsolve</title>
+</head>
+<body >
+<a href="cascmd_en205.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en207.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec247" class="subsection">5.14.3  Values of a recurrence relation or a system: <span style="font-family:monospace">rsolve</span></h3>
+<p>
+<a id="hevea_default313"></a>
+<a id="ssec:rsolve"></a></p><p>See also section <a href="cascmd_en205.html#ssec%3Aseqsolve">5.14.2</a></p><p>The <span style="font-family:monospace">rsolve</span> command takes three arguments; an equation or
+list of equations that define a recurrence relation, the functions
+(with their variables) used, and equations for the starting values. 
+For example, if a recurrence relation is defined by <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub> =
+<span style="font-style:italic">f</span>(<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>,<span style="font-style:italic">n</span>) with <span style="font-style:italic">u</span><sub>0</sub> = <span style="font-style:italic">a</span>, the arguments to <span style="font-family:monospace">rsolve</span> will be 
+<span style="font-family:monospace">u(n+1) = f(u(n),n)</span>, <span style="font-family:monospace">u(n)</span> and
+<span style="font-family:monospace">u(0)=a</span>. The recurrence relation must either be a homogeneous
+linear part with a nonhomogeneous part being a linear combination of
+polynomials in <span style="font-family:monospace">n</span> times geometric terms in <span style="font-family:monospace">n</span> (such as
+<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub> = 2 <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> + <span style="font-style:italic">n</span> 3<sup><span style="font-style:italic">n</span></sup>), or a
+linear fractional transformation (such as <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub> =
+(<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>−1)/(<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>−2)).<br>
+<span style="font-family:monospace">rsolve</span> returns a matrix whose rows are the values of the
+sequence as functions of <span style="font-family:monospace">n</span>.</p><p>Note that <span style="font-family:monospace">rsolve</span> is more flexible than <span style="font-family:monospace">seqsolve</span> since:
+</p><ul class="itemize"><li class="li-itemize">
+the sequence doesn’t have to start with <span style="font-style:italic">u</span><sub>0</sub>.
+</li><li class="li-itemize">the sequence can have several starting values, such as initial
+condition <span style="font-style:italic">u</span><sub>0</sub><sup>2</sup> = 1, which is why <span style="font-family:monospace">rsolve</span> returns a list.
+</li><li class="li-itemize">the notation for the recurrence relation is similar to how it
+is written in mathematics.
+</li></ul><p><span style="font-weight:bold">Examples:</span><br>
+</p><ul class="itemize"><li class="li-itemize">
+To find <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>, given that <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub> = 2<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> + <span style="font-style:italic">n</span> and <span style="font-style:italic">u</span><sub>0</sub>=3:
+Input:
+<div class="center">
+<span style="font-family:monospace">rsolve(u(n+1) = 2*u(n) + n, u(n), u(0)=3)
+</span></div>
+Output:
+<div class="center">
+<span style="font-family:monospace">[-n+4*2^n-1]
+</span></div></li><li class="li-itemize">To find <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>, given that <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub> = 2<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> + <span style="font-style:italic">n</span> and <span style="font-style:italic">u</span><sub>1</sub><sup>2</sup> = 1:
+Input:
+<div class="center">
+<span style="font-family:monospace">rsolve(u(n+1) = 2*u(n) + n, u(n), u(1)^2 = 1)
+</span></div>
+Output:
+<div class="center">
+<span style="font-family:monospace">[-n+3/2*2^n-1,-n+1/2*2^n-1]
+</span></div></li><li class="li-itemize">To find <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>, given that <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub> = 2<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> + <span style="font-style:italic">n</span> 3<sup><span style="font-style:italic">n</span></sup> and <span style="font-style:italic">u</span><sub>0</sub>=3:
+Input:
+<div class="center">
+<span style="font-family:monospace">rsolve(u(n+1) = 2*u(n) + n*3^n,u(n), u(0)=3)
+</span></div>
+Output:
+<div class="center">
+<span style="font-family:monospace">[n*3^n+6*2^n-3*3^n]
+</span></div></li><li class="li-itemize">To find <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub>, given that <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub> = (<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> − 1)/(<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> −2) and <span style="font-style:italic">u</span><sub>0</sub> =
+4:<br>
+Input:
+<div class="center">
+<span style="font-family:monospace">rsolve(u(n+1) = (u(n)-1)/(u(n)-2),u(n), u(0)=4)
+</span></div>
+Output:
+<div class="center">
+<span style="font-family:monospace">[((10*sqrt(5)+30)*((sqrt(5)-3)/2)^n+30*sqrt(5)-70)/(20*((sqrt(5)-3)/2)^n+10*sqrt(5)-30)]
+</span></div></li><li class="li-itemize">To find <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> given that <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub> = <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> + <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>−1</sub> with <span style="font-style:italic">u</span><sub>0</sub> = 0,
+<span style="font-style:italic">u</span><sub>1</sub>=1:<br>
+Input:
+<div class="center">
+<span style="font-family:monospace">rsolve(u(n+1) = u(n) + u(n-1), u(n), u(0) = 0, u(1) = 1)
+</span></div>
+Output:
+<div class="center">
+<span style="font-family:monospace">[(-sqrt(5)/5)*((-sqrt(5)+1)/2)^n+sqrt(5)/5*((sqrt(5)+1)/2)^n] 
+</span></div></li><li class="li-itemize">To find <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> and <span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>, given that <span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span>+1</sub>=<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> + <span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>, <span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span>+1</sub> =
+<span style="font-style:italic">u</span><sub><span style="font-style:italic">n</span></sub> − <span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub> with <span style="font-style:italic">u</span><sub>0</sub> = 0, <span style="font-style:italic">v</span><sub>0</sub> = 1:<br>
+Input:
+<div class="center">
+<span style="font-family:monospace">rsolve([u(n+1) = u(n) + v(n), v(n+1) = u(n) - v(n)], [u(n),v(n)], [u(0)=1, v(0)=1])
+</span></div>
+Output:
+<div class="center">
+<span style="font-family:monospace">[[(-sqrt(2)+1)/2*(-sqrt(2))^(n+1-1)+(sqrt(2)+1)/2*2^(1/2*(n+1-1)),<br>
+ 1/2*(-sqrt(2))^(n+1-1)+1/2*2^(1/2*(n+1-1))]]
+</span></div>
+</li></ul>
+<hr>
+<a href="cascmd_en205.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en207.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

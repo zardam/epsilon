@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Animation of a sequence of graphic objects : animation</title>
+</head>
+<body >
+<a href="cascmd_en681.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en683.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec836" class="subsection">7.21.3  Animation of a sequence of graphic objects : <span style="font-family:monospace">animation</span></h3>
+<p><a id="hevea_default1156"></a>
+<span style="font-family:monospace">animation</span> animates the representation of a
+sequence of graphic objects
+with a given display time. The sequence of objects depends most of
+the time on a parameter and is defined using the <span style="font-family:monospace">seq</span> command
+but it is not mandatory.<br>
+<span style="font-family:monospace">animation</span> takes as argument the sequence of graphic objects.<br>
+To define a sequence of graphic objects with <span style="font-family:monospace">seq</span>,
+enter the definition of the graphic object (depending on
+the parameter), the parameter name, its minimum value, its
+maximum value maximum and optionally a step value.<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotfunc(cos(a*x),x),a,0,10))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">The sequence of the curves defined by </span><span style="font-style:italic">y</span>=cos(<span style="font-style:italic">ax</span>)<span style="font-family:monospace">, for </span><span style="font-style:italic">a</span>=0,1,2..10</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">animation(seq(plotfunc(cos(a*x),x),a,0,10,0.5))</span>
+</div><p>
+or :
+</p><div class="center">
+<span style="font-family:monospace">animation(seq(plotfunc(cos(a*x),x),a=0..10,0.5))</span>
+</div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">The sequence of the curves defined by </span><span style="font-style:italic">y</span>=cos(<span style="font-style:italic">ax</span>)<span style="font-family:monospace">, for </span><span style="font-style:italic">a</span>=0,0.5,1,1.5..10<span style="font-family:monospace"> </span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotfunc([cos(a*x),sin(a*x)],x=0..2*pi/a), a,1,10))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">The sequence of two curves defined by </span><span style="font-style:italic">y</span>=cos(<span style="font-style:italic">ax</span>)<span style="font-family:monospace"> and </span><span style="font-style:italic">y</span>=sin(<span style="font-style:italic">ax</span>)<span style="font-family:monospace">, for </span><span style="font-style:italic">a</span>=1..10<span style="font-family:monospace"> and for </span><span style="font-style:italic">x</span>=0..2π/<span style="font-style:italic">a</span><span style="font-family:monospace"> </span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotparam([cos(a*t),sin(a*t)], t=0..2*pi),a,1,10))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">The sequence of the parametric curves defined by </span><span style="font-style:italic">x</span>=cos(<span style="font-style:italic">at</span>)<span style="font-family:monospace"> and </span><span style="font-style:italic">y</span>=sin(<span style="font-style:italic">at</span>)<span style="font-family:monospace">, for </span><span style="font-style:italic">a</span>=1..10<span style="font-family:monospace"> and for </span><span style="font-style:italic">t</span>=0..2π<span style="font-family:monospace"> </span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotparam([sin(t),sin(a*t)], t,0,2*pi,tstep=0.01),a,1,10))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">The sequence of the parametric curves defined by </span><span style="font-style:italic">x</span>=sin(<span style="font-style:italic">t</span>),<span style="font-style:italic">y</span>=sin(<span style="font-style:italic">at</span>)<span style="font-family:monospace">, for </span><span style="font-style:italic">a</span>=0..10<span style="font-family:monospace"> and </span><span style="font-style:italic">t</span>=0..2π</div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotpolar(1-a*0.01*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2, t,0,5*pi,tstep=0.01),a,1,10))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">The sequence of the polar curves defined by </span>ρ=1−<span style="font-style:italic">a</span>*0.01*<span style="font-style:italic">t</span><sup>2</sup><span style="font-family:monospace">, for </span><span style="font-style:italic">a</span>=0..10<span style="font-family:monospace"> and </span><span style="font-style:italic">t</span>=0..5π</div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">plotfield(sin(x*y),[x,y]); animation(seq(plotode(sin(x*y),[x,y],[0,a]),a,-4,4,0.5))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">The tangent field of y’=sin(xy) and the sequence of the integral curves crossing through the point </span>(0,<span style="font-style:italic">a</span>)<span style="font-family:monospace"> for </span><span style="font-style:italic">a</span><span style="font-family:monospace">=-4,-3.5...3.5,4</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">animation(seq(display(square(0,1+i*a),filled),a,-5,5))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">The sequence of the squares defined by the points 0 and 1+i*</span><span style="font-style:italic">a</span><span style="font-family:monospace"> for </span><span style="font-style:italic">a</span>=−5..5</div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">animation(seq(droite([0,0,0],[1,1,a]),a,-5,5))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">The sequence of the lines defined by the points [0,0,0] and [1,1,</span><span style="font-style:italic">a</span><span style="font-family:monospace">] for </span><span style="font-style:italic">a</span>=−5..5</div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotfunc(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">a,[x,y]),a=1..3))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">The sequence of the "3D" surface defined by </span><span style="font-style:italic">x</span><sup>2</sup>−<span style="font-style:italic">y</span><sup><span style="font-style:italic">a</span></sup><span style="font-family:monospace">, for </span><span style="font-style:italic">a</span>=1..3<span style="font-family:monospace"> with rainbow colors</span></div><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">animation(seq(plotfunc((x+i*y)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">a,[x,y], display=filled),a=1..10)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">The sequence of the "4D" surfaces defined by </span>(<span style="font-style:italic">x</span>+<span style="font-style:italic">i</span>*<span style="font-style:italic">y</span>)<sup><span style="font-style:italic">a</span></sup><span style="font-family:monospace">, for </span><span style="font-style:italic">a</span>=0..10<span style="font-family:monospace"> with rainbow colors</span></div><p><span style="font-weight:bold">Remark</span>
+We may also define the sequence with a program, 
+for example if we want to draw the
+segments of length 1,√<span style="text-decoration:overline">2</span>...√<span style="text-decoration:overline">2</span>0 constructed with a 
+right triangle of side 1 and the previous segment
+(note that there is a <span style="font-family:monospace">c:=evalf(..)</span> statement
+to force approx. evaluation otherwise the computing time 
+would be too long) :
+</p><pre class="verbatim">seg(n):={
+ local a,b,c,j,aa,bb,L;
+ a:=1;
+ b:=1;
+ L:=[point(1)];
+ for(j:=1;j&lt;=n;j++){
+  L:=append(L,point(a+i*b));
+  c:=evalf(sqrt(a^2+b^2));
+  aa:=a;
+  bb:=b;
+  a:=aa-bb/c;
+  b:=bb+aa/c;
+ }
+ L;
+}
+</pre><p>
+Then input : 
+</p><div class="center"><span style="font-family:monospace">animation(seg(20))</span></div><p>
+We see, each point, one to one with a display time that
+depends of the <span style="font-family:monospace">animate</span> value in <span style="font-family:monospace">cfg</span>.<br>
+or :
+</p><div class="center"><span style="font-family:monospace">L:=seg(20); s:=segment(0,L[k])$(k=0..20)</span></div><p>
+We see 21 segments. <br>
+Then, input :
+</p><div class="center"><span style="font-family:monospace">animation(s)</span></div><p>
+We see, each segment, one to one with a display time that
+depends of the <span style="font-family:monospace">animate</span> value in <span style="font-family:monospace">cfg</span>.</p>
+<hr>
+<a href="cascmd_en681.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en683.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

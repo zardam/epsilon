@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>kolmogorovt</title>
+</head>
+<body >
+<a href="cascmd_fr826.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr828.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1006" class="subsection">8.5.5  <span style="font-family:monospace">kolmogorovt</span></h3>
+<p><a id="hevea_default1476"></a>
+<span style="font-family:monospace">kolmogorovt</span> a pour arguments :
+</p><ul class="itemize"><li class="li-itemize">
+la liste des données d’un échantillon,
+</li><li class="li-itemize">une loi de distribution ou la liste des données d’un autre
+échantillon,
+</li><li class="li-itemize">les paramètres de cette loi de distribution.
+</li></ul><p>
+<span style="font-family:monospace">kolmogorovt</span> est le test de Kolmogorov-Smirnov d’adéquation à une loi 
+de distribution <span style="font-weight:bold">continue</span>, entre 2 échantillons l1 l2 (loi inconnue 
+supposée continue) ou entre 1 échantillon l1 et une loi continue.<br>
+<span style="font-family:monospace">kolmogorovt</span> renvoie 3 valeurs préfixées, <span style="font-style:italic">D</span> est la valeur brute de 
+la statistique, <span style="font-style:italic">K</span> vaut <span style="font-style:italic">D</span>√<span style="text-decoration:overline"><span style="font-style:italic">n</span></span> où <span style="font-style:italic">n</span> est la taille de l’échantillon
+(ou <span style="font-style:italic">D</span>√<span style="text-decoration:overline"><span style="font-style:italic">n</span></span><sub><span style="text-decoration:overline">1</span></sub><span style="text-decoration:overline"> </span><span style="text-decoration:overline"><span style="font-style:italic">n</span></span><sub><span style="text-decoration:overline">2</span></sub><span style="text-decoration:overline">/(</span><span style="text-decoration:overline"><span style="font-style:italic">n</span></span><sub><span style="text-decoration:overline">1</span></sub><span style="text-decoration:overline">+</span><span style="text-decoration:overline"><span style="font-style:italic">n</span></span><sub><span style="text-decoration:overline">2</span></sub><span style="text-decoration:overline">)</span> si on teste l’adéquation de 2 échantillons
+de tailles <span style="font-style:italic">n</span><sub>1</sub> et <span style="font-style:italic">n</span><sub>2</sub>), <span style="font-style:italic">K</span> tend vers
+la distribution de Kolmogorov-Smirnov <code>kolmogorovd</code>
+lorsque <span style="font-style:italic">n</span> tend vers l’infini, la 3ième valeur est 1-<code>kolmogorovd</code>(<span style="font-style:italic">K</span>)
+qui est d’autant plus proche de 1 que l’adéquation est bonne (on rejettera
+donc l’hypothèse nulle - qui est l’adéquation - lorsque cette dernière 
+valeur est proche de 0). Le menu
+Aide, Exemples, probas, kolmogorov donne une illustration de ce test :
+on teste l’adéquation d’un vecteur aléatoire tiré selon une loi
+avec cette même loi: on fait le calcul de la statistique <span style="font-style:italic">K</span> pour 200 tirages
+et on représente graphiquement le cumul de fréquences avec la distribution
+de KS sur le même graphique (cela marche bien pour les deux premières
+lois qui sont continues, mais pas pour la troisième loi qui est discrète)
+<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">kolmogorovt(randvector(100,normald,0,1),normald(0,1))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">["D=",0.104642990054,"K=",1.04642990054, "1-kolmogorovd(K)=",0.223512817343]</span></div><p>
+On ne peut pas rejeter l’adéquation car <span style="font-family:monospace">1-kolmogorovd(K)</span> est n’est pas
+proche de zéro.</p><p>On tape :
+</p><div class="center"><span style="font-family:monospace">kolmogorovt(randvector(100,normald,0,1),student(2))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">["D=",0.158026574028,"K=",1.58026574028, "1-kolmogorovd(K)=",0.0135504875564]</span></div><p>
+On rejette l’adéquation car <span style="font-family:monospace">1-kolmogorovd(K)</span> est proche de zéro.</p>
+<hr>
+<a href="cascmd_fr826.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr828.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

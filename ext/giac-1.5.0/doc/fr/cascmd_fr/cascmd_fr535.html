@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Compter les éléments d’une liste ou d’une matrice vérifiant une propriété : count</title>
+</head>
+<body >
+<a href="cascmd_fr534.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr536.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec662" class="subsection">6.42.30  Compter les éléments d’une liste ou d’une matrice vérifiant une propriété : <span style="font-family:monospace">count</span></h3>
+<p><a id="hevea_default955"></a><a id="hevea_default956"></a>
+<a id="hevea_default957"></a>
+<span style="font-family:monospace">count</span> a un, deux ou trois paramètres : 
+</p><ol class="enumerate" type=1><li class="li-enumerate">
+une liste d’entiers <span style="font-style:italic">L</span>
+</li><li class="li-enumerate"><ul class="itemize"><li class="li-itemize">
+une fonction réelle <span style="font-family:monospace">f</span>,
+</li><li class="li-itemize">liste <span style="font-family:monospace">L</span> de longueur <span style="font-family:monospace">n</span> ou une matrice <span style="font-family:monospace">A</span> de 
+dimension <span style="font-family:monospace">p*q</span>,
+</li><li class="li-itemize">un argument optionnel <span style="font-family:monospace">row</span> ou <span style="font-family:monospace">col</span>, dans le cas où le 
+deuxième paramètre est une matrice <span style="font-family:monospace">A</span>.
+</li></ul>
+</li></ol><p>
+Lorsque <span style="font-family:monospace">count</span> a :
+</p><ul class="itemize"><li class="li-itemize">
+un paramètre qui est une liste d’entiers <span style="font-style:italic">L</span>, <span style="font-family:monospace">count(L)</span> 
+compte le nombre d’occurrences en renvoyant une matrice de 1ière colonne les
+éléments de la liste <span style="font-style:italic">L</span> triée et de 2ième colonne l’effectif de cet 
+élément dans la liste.
+</li><li class="li-itemize">deux paramètres, 
+<span style="font-family:monospace">count</span> applique la fonction aux éléments de la liste (ou de la 
+matrice) et en renvoie la somme, c’est à dire,<br>
+<span style="font-family:monospace">count(f,L)</span> renvoie le nombre <span style="font-family:monospace">f(L[0])+f(L[1])+..f(L[n-1])</span> ou<br>
+<span style="font-family:monospace">count(f,A)</span> renvoie le nombre <span style="font-family:monospace">f(A[0,0])+....+f(A[p-1,q-1])</span>.<br>
+Si <span style="font-family:monospace">f</span> est une fonction boolénne <span style="font-family:monospace">count</span> renvoie le nombre 
+d’éléments de la liste (ou de la matrice) pour lesquels la fonction 
+boolénne est vraie.
+</li><li class="li-itemize">ou trois paramètres,
+<span style="font-family:monospace">count</span> applique la fonction aux éléments de chaque ligne 
+(resp colonne) de la matrice <span style="font-family:monospace">A</span> si l’argument optionnel est <span style="font-family:monospace">row</span> 
+(resp <span style="font-family:monospace">col</span>) et renvoie une liste de longueur <span style="font-style:italic">p</span> ayant comme <span style="font-style:italic">k</span>ième 
+élément : <br>
+<span style="font-family:monospace">f(A[k,0])+...f(A[k,q-1])</span> (resp une liste de longueur <span style="font-style:italic">q</span>
+ayant comme <span style="font-style:italic">k</span>ième élément : <span style="font-family:monospace">f(A[0,k])+..f(A[p-1,k])</span>).
+</li></ul><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">count([1,3,1,1,2,10,3])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1,3],[2,1],[3,2],[10,1]]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">count((x)-&gt;x,[2,12,45,3,7,78])</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">count((x)-&gt;x,[[2,12,45],[3,7,78]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">147</span></div><p>
+car on a : 2+12+45+3+7+78=147.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">count((x)-&gt;x,[[2,12,45],[3,7,78]],row)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[59,88]</span></div><p>
+car on a : 2+12+45=59 et 3+7+78=88.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">count((x)-&gt;x,[[2,12,45],[3,7,78]],col)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[5,19,123]</span></div><p>
+car on a : 2+3=5,12+7=10,45+78=123.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">count((x)-&gt;x&lt;12,[2,12,45,3,7,78])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">3</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">count((x)-&gt;x==12,[2,12,45,3,7,78])</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">count((x)-&gt;x==12,[[2,12,45],[3,7,78]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">1</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">count((x)-&gt;x&gt;12,[2,12,45,3,7,78])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">2</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">count(x-&gt;x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,[3,5,1])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">35</span></div><p>
+En effet on a : 3<sup>2</sup>+5<sup>2</sup>+1<sup>1</sup>=35.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">count(id,[3,5,1])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">9</span></div><p>
+En effet, <span style="font-family:monospace">id</span> est la fonction identité et on a : 3+5+1=9.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">count(1,[3,5,1])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">3</span></div><p>
+En effet, <span style="font-family:monospace">1</span> est la fonction constante égale à 1 et on a : 1+1+1=3.
+</p>
+<hr>
+<a href="cascmd_fr534.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr536.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

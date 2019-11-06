@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>Illusions d’optique</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascas016.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas018.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc272">Chapitre 17</A>  Illusions d’optique</H1><H2 CLASS="section"><A NAME="toc95"></A><A NAME="htoc273">17.1</A>  Illusion sur les longueurs</H2><P>
+On tape dans un éditeur de programmes :
+</P><PRE CLASS="verbatim">illusion11():={
+local L;
+L:=NULL;
+L:=L,segment(-2,-2+4*i);
+L:=L,segment(0,4*i);
+L:=L,segment(-2,-2-sqrt(3)/2-i/2);
+L:=L,segment(-2,-2+sqrt(3)/2-i/2);
+L:=L,segment(-2+4*i,-2-sqrt(3)/2+4*i+i/2);
+L:=L,segment(-2+4*i,-2+sqrt(3)/2+4*i+i/2);
+L:=L,segment(0,-sqrt(3)/2+i/2);
+L:=L,segment(0,sqrt(3)/2+i/2);
+retourne L;
+}:;
+illusion12():={
+local L;
+L:=NULL;
+L:=L,segment(4*i,-sqrt(3)/2+4*i-i/2);
+L:=L,segment(4*i,sqrt(3)/2+4*i-i/2);
+L:=L,segment(2,3+4*i);
+L:=L,segment(2.5+i,4.5+i);
+L:=L,segment(2.5+2*i,4.5+2*i);
+L:=L,segment(5,4+4*i);
+retourne L;
+}:;
+</PRE><P>Puis on compile avec <TT>OK</TT> ou avec <I>F</I>9.<BR>
+On tape dans un niveau de géométrie :<BR>
+<TT>illusion11();</TT><BR>
+<TT>illusion12();</TT><BR>
+On obtient (les longueurs des segments parallèles ne semblent pas égales) :<BR>
+<IMG SRC="cascas135.png">
+</P><H2 CLASS="section"><A NAME="toc96"></A><A NAME="htoc274">17.2</A>  Illusion sur les formes</H2><P>
+On tape dans un éditeur de programmes :
+</P><PRE CLASS="verbatim">illusion2():={
+local j,L;
+L:=NULL;
+pour j de 1 jusque 13 faire
+L:=L,cercle(0,2*j);
+fpour;
+L:=L,carre(-13*(1+i),13*(1-i));
+retourne L;
+}:;
+</PRE><P>Puis on compile avec <TT>OK</TT> ou avec <I>F</I>9.<BR>
+On tape dans un niveau de géométrie :<BR>
+<TT>illusion2();</TT><BR>
+On obtient un carré dont les côtés sembles incurvés :<BR>
+<IMG SRC="cascas136.png">
+</P><H2 CLASS="section"><A NAME="toc97"></A><A NAME="htoc275">17.3</A>  Illusion de cordes torsadées</H2><P>
+On tape dans un éditeur de programmes :
+</P><PRE CLASS="verbatim">raies():={
+local L,j,A,B,xa,ya;
+L:=NULL;
+xa:=-22;
+pour j de 1 jusque 6 faire
+A:=point(xa+i*22);
+B:=point(xa+4+i*22);
+L:=L,triangle(0,A,B,affichage=rempli);
+L:=L,triangle(0,-A,-B,affichage=rempli);
+xa:=xa+8;
+fpour;
+ya:=-18;
+pour j de 1 jusque 5 faire
+A:=point(-22+i*ya);
+B:=point(-22+i*(ya+4));
+L:=L,triangle(0,A,B,affichage=rempli);
+L:=L,triangle(0,-A,-B,affichage=rempli);
+ya:=ya+8;
+fpour;
+L:=L,affichage(carre(-2*(1+i),2*(1-i)),rempli);
+retourne L;
+}:;
+bande():={
+local L,j,xa,A,B,C,D;
+L:=NULL;
+xa:=-13;
+A:=point(xa+i*11);
+B:=point(xa+2+i*11);
+C:=point((xa+6)*12/11.+i*12);
+D:=point((xa+4)*12/11.+i*12);
+L:=L,polygone(A,B,C,D,affichage=7+rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=7+rempli);
+xa:=xa+2;
+pour j de 1 jusque 2 faire
+A:=point(xa+i*11);
+B:=point(xa+2+i*11);
+C:=point((xa+6)*12/11.+i*12);
+D:=point((xa+4)*12/11.+i*12);
+L:=L,polygone(A,B,C,D,affichage=rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=rempli);
+xa:=xa+2;
+A:=point(xa+i*11);
+B:=point(xa+2+i*11);
+C:=point((xa+6)*12/11.+i*12);
+D:=point((xa+4)*12/11.+i*12);
+L:=L,polygone(A,B,C,D,affichage=7+rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=7+rempli);
+xa:=xa+2;
+fpour;
+A:=point(xa+i*11);
+B:=point(xa+2+i*11);
+C:=point((xa+4)+i*11);
+D:=point((xa+6)+i*11);
+L:=L,polygone(A,B,i*11.25,C,D,i*11.75,affichage=rempli),
+polygone(-A,-B,-i*11.25,-C,-D,-i*11.75,affichage=rempli);
+xa:=3;
+pour j de 1 jusque 2 faire
+A:=point(xa+i*11);
+B:=point(xa+2+i*11);
+C:=point((xa-2)*12/11.+i*12);
+D:=point((xa-4)*12/11.+i*12);
+L:=L,polygone(A,B,C,D,affichage=7+rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=7+rempli);
+xa:=xa+2;
+A:=point(xa+i*11);
+B:=point(xa+2+i*11);
+C:=point((xa-2)*12/11.+i*12);
+D:=point((xa-4)*12/11.+i*12);
+L:=L,polygone(A,B,C,D,affichage=rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=rempli);
+xa:=xa+2;
+fpour;
+A:=point(xa+i*11);
+B:=point(xa+2+i*11);
+C:=point((xa-2)*12/11.+i*12);
+D:=point((xa-4)*12/11.+i*12);
+L:=L,polygone(A,B,C,D,affichage=7+rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=7+rempli);
+retourne L;
+}:;
+bande1():={
+local L,j,ya,A,B,C,D;
+L:=NULL;
+ya:=-9
+pour j de 1 jusque 2 faire
+A:=point(ya*i-11);
+B:=point((ya+2)*i-11);
+C:=point((ya-2)*i*12/11.-12);
+D:=point((ya-4)*12/11.*i-12);
+L:=L,polygone(A,B,C,D,affichage=rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=rempli);
+ya:=ya+2;
+A:=point(ya*i-11);
+B:=point((ya+2)*i-11);
+C:=point((ya-2)*12/11.*i-12);
+D:=point((ya-4)*12/11.*i-12);
+L:=L,polygone(A,B,C,D,affichage=7+rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=7+rempli);
+ya:=ya+2;
+fpour;
+A:=point(ya*i-11);
+B:=point((ya+2)*i-11);
+C:=point((ya-2)*i*12/11.-12);
+D:=point((ya-4)*12/11.*i+-12);
+L:=L,polygone(A,B,C,D,affichage=rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=rempli);
+ya:=ya+2;
+A:=point((ya+2)*i*12/11.-12);
+B:=point((ya)*i*12/11.-12);
+C:=point((ya-2)*i*12/11.-12);
+D:=point((ya-4)*i*12/11.-12);
+L:=L,polygone(A,B,-11.75,C,D,-11.25,affichage=7+rempli),
+polygone(-A,-B,11.75,-C,-D,11.25,affichage=7+rempli);
+ya:=1;
+pour j de 1 jusque 2 faire
+A:=point((ya-2)*i-11);
+B:=point((ya)*i-11);
+C:=point((ya+4)*12/11.*i-12);
+D:=point((ya+2)*12/11.*i-12);
+L:=L,polygone(A,B,C,D,affichage=rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=rempli);
+ya:=ya+2;
+A:=point((ya-2)*i-11);
+B:=point((ya)*i-11);
+C:=point((ya+4)*12/11.*i-12);
+D:=point((ya+2)*12/11.*i-12);
+L:=L,polygone(A,B,C,D,affichage=7+rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=7+rempli);
+ya:=ya+2;
+fpour;
+A:=point((ya-2)*i-11);
+B:=point(ya*i-11);
+C:=point((ya+4)*12/11.*i-12);
+D:=point((ya+2)*12/11.*i-12);
+L:=L,polygone(A,B,C,D,affichage=rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=rempli);
+retourne L;
+}:;
+bande2():={
+local L,j,ya,A,B,C,D;
+L:=NULL;
+ya:=-13;
+A:=point((ya+1)*i+11.6);
+B:=point((ya+2)*i+11);
+C:=point((ya+6)*12/11.*i+12);
+D:=point((ya+4)*12/11.*i+12);
+L:=L,polygone(A,B,C,D,affichage=rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=rempli);
+ya:=ya+2;
+pour j de 1 jusque 2 faire
+A:=point(ya*i+11);
+B:=point((ya+2)*i+11);
+C:=point((ya+6)*i*12/11.+12);
+D:=point((ya+4)*12/11.*i+12);
+L:=L,polygone(A,B,C,D,affichage=7+rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=7+rempli);
+ya:=ya+2;
+A:=point(ya*i+11);
+B:=point((ya+2)*i+11);
+C:=point((ya+6)*12/11.*i+12);
+D:=point((ya+4)*12/11.*i+12);
+L:=L,polygone(A,B,C,D,affichage=rempli);
+L:=L,polygone(-A,-B,-C,-D,affichage=rempli);
+ya:=ya+2;
+fpour;
+A:=point((ya)*i+11):;
+B:=point((ya+2)*i+11):;
+C:=point((ya+3)*i+11.75):;
+D:=point((ya+3)*i+11.25):;
+L:=L,polygone(B,A,C,D,affichage=7+rempli);
+L:=L,polygone(-B,-A,-C,-D,affichage=7+rempli);
+L:=L,polygone(D,11,B,affichage=rempli);
+L:=L,polygone(-D,-11,-B,affichage=rempli);
+retourne L,conj(L);
+}:;
+illusion31():={
+retourne raies(),bande(),bande1();
+}:;
+illusion32():={
+retourne raies(),bande(),bande2();
+}:;
+</PRE><P>Puis on compile avec <TT>OK</TT> ou avec <I>F</I>9.<BR>
+On tape dans un niveau de géométrie :<BR>
+<TT>illusion31();</TT><BR>
+On obtient un carré dont les côtés sembles incurvés :<BR>
+<IMG SRC="cascas137.png">
+On tape dans un niveau de géométrie :<BR>
+<TT>illusion32();</TT><BR>
+On obtient un carré dont les côtés sembles incurvés :<BR>
+<IMG SRC="cascas138.png">
+</P><H2 CLASS="section"><A NAME="toc98"></A><A NAME="htoc276">17.4</A>  Illustration</H2><PRE CLASS="verbatim">lx(z0,r):={ 
+  return(segment(z0+r*(-1-i),z0+r*(1+i)),
+         segment(z0+r*(1-i),z0+r*(-1+i)));  
+}:;
+lc(z0,r):={ 
+  return (cercle(z0,r,pi/4,7*pi/4));  
+}:;
+la(z0,r):={ 
+  return(segment(z0+r*(-1-i),z0+r*i),
+         segment(z0+r*(1-i),z0+r*i),
+         segment(z0+r*-0.5,z0+r*0.5));
+}:;
+ls(z0,r):={ 
+  return (segment(z0+r*(-1/2-i),z0-r*i),
+          segment(z0+r*(1/2+i),z0+r*i),
+          cercle(z0+r*i/2,r/2,pi/2,3*pi/2),
+          cercle(z0-r*i/2,r/2,-pi/2,pi/2));  
+}:;
+illusion32();
+affichage(lx(0,1),4+line_width_5);
+affichage(lc(3.4+0.6*i,0.5),4+line_width_5);
+affichage(la(6+1.1*i,0.9),4+line_width_5);
+affichage(ls(10+1.7*i,1.3),4+line_width_5);
+affichage(symetrie(droite(x=0),lc(3.4+0.6*i,0.5)),4+line_width_5);
+affichage(la(-6+1.1*i,0.9),4+line_width_5);
+affichage(conj(ls(-10-1.7*i,1.3)),4+line_width_5);
+</PRE><P>On obtient :<BR><BR>
+<IMG SRC="cascas139.png">
+</P><HR>
+<A HREF="cascas016.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas018.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

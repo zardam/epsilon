@@ -1,0 +1,1181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Les programmes récursifs</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casrouge018.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge020.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc432">Chapitre 19</A>  Les programmes récursifs</H1><P>
+Certains programmes se trouvent dans <TT>examples/recur</TT>.
+</P><H2 CLASS="section"><A NAME="toc121"></A><A NAME="htoc433">19.1</A>  Avec des chaines de caractères</H2><H3 CLASS="subsection"><A NAME="htoc434">19.1.1</A>  Une liste de mots</H3><P>
+On veut énumérer les éléments d’une liste.
+Pour cela on écrit le premier élément et on énumère la liste
+privée de son premier élément. On s’arrête quand la liste est vide.<BR>
+ On écrit :
+</P><PRE CLASS="verbatim">enumere(l):={
+if (l==[]) return 0;
+print(l[0]);
+enumere(tail(l));
+}
+</PRE><P>On tape :<BR>
+<TT>enumere(["jean","paul","pierre"])</TT><BR>
+On obtient, en écriture bleue, dans la zone des résultats 
+intermédiaires :<BR>
+<TT>"jean"<BR>
+"paul"<BR>
+"pierre"</TT> 
+</P><H3 CLASS="subsection"><A NAME="htoc435">19.1.2</A>  Les mots</H3><P>
+Étant donné un mot de <I>n</I> lettres, on veut écrire <I>n</I> lignes :<BR>
+la première ligne sera constituée par la première lettre du mot,<BR>
+la deuxième ligne sera constituée par les deux premières lettres...,<BR>
+la dernière ligne sera constituée par le mot tout entier.<BR>
+On écrira :
+<TT>mots(m)</TT> de façon récursive.
+On peut se servir de la fonction <TT>size(m)</TT> de 
+<TT>Xcas</TT> qui renvoie le nombre de lettres du mot <TT>m</TT>, et de la fonction
+<TT>suppress(m,k)</TT> de <TT>Xcas</TT> qui renvoie le mot <TT>m</TT> privé de sa
+<I>k</I>-ième lettre (<I>k</I><TT>=0.. size(m)-1</TT>).<BR>
+On tape : 
+</P><PRE CLASS="verbatim">saufdernier(m):={
+return suppress(m,size(m)-1);
+}
+</PRE><P>puis 
+</P><PRE CLASS="verbatim">mots(m):={
+if (size(m)==0) return 0;
+mots(saufdernier(m));
+print(m);
+}
+</PRE><P><B>Exercice</B><BR>
+Comment modifier le programme précédent pour avoir :<BR>
+Étant donné un mot de <I>n</I> lettres, on veut écrire <I>n</I> lignes :<BR>
+la première ligne sera constituée par le mot tout entier,<BR>
+la deuxième ligne sera constituée par le mot privé de sa 
+première lettre...,<BR>
+la dernière ligne sera constituée par la première lettre du mot.<BR>
+<B>Réponse</B><BR>
+On peut se servir de la fonction <TT>tail(m)</TT> de 
+<TT>Xcas</TT> qui renvoie l le mot <TT>m</TT> privé de sa première lettre. 
+</P><PRE CLASS="verbatim">motex(m):={
+if (size(m)==0) return 0;
+print(m);
+motex(tail(m));
+}
+</PRE><H2 CLASS="section"><A NAME="toc122"></A><A NAME="htoc436">19.2</A>  Les palindromes</H2><H3 CLASS="subsection"><A NAME="htoc437">19.2.1</A>  Les phrases palindromes</H3><P>
+Étant donné une phrase, on veut écrire cette phrase en l’écrivant de 
+droite à gauche.
+On écrira :<BR>
+<TT>palindrome(s)</TT> de façon récursive :<BR>
+il faut rajouter la première lettre de la phrase à la fin du 
+palindrome de la phrase privée de sa première lettre.<BR>
+On tape : 
+</P><PRE CLASS="verbatim">palindrome(ph):={
+local s;
+if (s==0) return ph;
+s:=size(ph)-1;
+return concat(palindrome(tail(ph)),ph[0]);
+}
+</PRE><P>ou encore :<BR>
+il faut rajouter la dernière lettre de la phrase devant le 
+palindrome de la phrase privée de sa dernière lettre.<BR>
+On tape : 
+</P><PRE CLASS="verbatim">saufdernier(m):={
+return suppress(m,size(m)-1);
+}
+</PRE><PRE CLASS="verbatim">palindrome(ph):={
+local s;
+if (s==0) return ph;
+s:=size(ph)-1;
+return concat(ph[s],palindrome(saufdernier(ph)));
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc438">19.2.2</A>  Nombre et valeur palindromique d’un entier</H3><P>
+Un entier <I>n</I> est un palindrome s’il est identique à son palindrome qui est 
+le nombre obtenu en écrivant <I>n</I> de droite à gauche.<BR>
+Par exemple 12321 est un palindrome.<BR>
+Pour tout entier <I>n</I> , on considère l’algorithme suivant :
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+si l’entier <I>n</I> est un palindrome on s’arrête,
+</LI><LI CLASS="li-enumerate">sinon on ajoute à l’entier son palindrome (l’entier écrit à l’envers) 
+et on retourne à l’étape 1.
+</LI></OL><P>
+Par exemple : 687,687+786=1473,1473+3741=5214,5214+4125=9339.<BR>
+On appelle nombre palindromique d’un entier <I>n</I> le nombre Npal(<I>n</I>) d’étapes 
+nécessaire pour obtenir unpalindrome.<BR>
+Par exemple : Npal(12321)=0, Npal(687)=3.<BR>
+On appelle valeur palindromique d’un entier <I>n</I> la valeur Vpal(n) du palindrome
+final.<BR>
+Par exemple : Vpal(12321)=12321, Vpal(687)=9339.<BR>
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+ Étant donné un entier <I>n</I>, écrire une fonction <TT>palind</TT> 
+qui renvoie le palindrome de <I>n</I>.
+</LI><LI CLASS="li-enumerate"> Étant donné un entier <I>n</I>, écrire une fonction <TT>vnpalind</TT> 
+qui renvoie la liste constituée de <I>n</I>, de sa valeur palindromique et de son 
+nombre palindromique.<BR>
+<B>Attention</B><BR>
+L’arrêt du processus est une conjecture. Prévoir un contrôle stoppant la 
+boucle au delà de <I>p</I> étapes et renvoyant alors la liste .
+</LI><LI CLASS="li-enumerate"> Explorer pour <I>p</I>=300 le cas des 100 premiers entiers (non nuls). 
+</LI><LI CLASS="li-enumerate"> Quels sont les entiers qui n’ont pas obtenu de nombre palindrome parmi les 1000 premiers entiers ?
+</LI></OL><UL CLASS="itemize"><LI CLASS="li-itemize">
+<I>a</I>)
+Soit <I>m</I> le palindrome de <I>n</I>.<BR>
+Le 1ier chiffre de <I>m</I> est le reste de la division de <I>n</I> par 10.<BR>
+Le 2nd chiffre de <I>m</I> est le reste de <TT>iquo(n,10)</TT> par 10.<BR>
+On utilise ici la commande <TT>iquorem</TT>.<BR>
+On tape :
+<PRE CLASS="verbatim">palind(n):={
+  local r,m;
+  m:=0;
+  tantque n&gt;=10 faire
+    n,r:=iquorem(n,10);
+    m:=10*m+r;
+  ftantque;
+  m:=10*m+n;
+  retourne m;
+  }:;
+</PRE>On tape :<BR>
+<TT>palind(89)</TT><BR>
+On obtient :<BR>
+<TT>98</TT><BR>
+On tape :<BR>
+<TT>palind(123456789)</TT><BR>
+On obtient :<BR>
+<TT>987654321</TT>
+</LI><LI CLASS="li-itemize"><I>b</I>)
+On tape :
+<PRE CLASS="verbatim">vnpalind(n,p):={
+  local j,m,n0;
+  m:=palind(n);
+  j:=0;
+  n0:=n;
+  tantque n!=m and j&lt;p faire
+    n:=n+m;
+    j:=j+1;
+    m:=palind(n);
+  ftantque;
+  si j==p and m!=palind(n+m) alors return [n0]; fsi;
+  return [n0,m,j];
+  }:;
+</PRE>On tape :<BR>
+<TT>vnpalind(86,50)</TT><BR>
+On obtient :<BR>
+<TT>[86,1111,3]</TT><BR>
+On tape :<BR>
+<TT>vnpalind(89,50)</TT><BR>
+On obtient :<BR>
+<TT>[89,8813200023188,24]</TT>
+</LI><LI CLASS="li-itemize"><I>c</I>)
+On tape :
+<PRE CLASS="verbatim">lvnpalind():={
+local L,n;
+L:=NULL;
+pour n de 1 jusque 100 faire
+L:=L,vnpalind(n,300);
+fpour;
+retourne L;
+}:;
+</PRE>On tape :<BR>
+<TT>lvnpalind()</TT><BR>
+On obtient :
+<PRE CLASS="verbatim">[1,1,0],[2,2,0],[3,3,0],[4,4,0],[5,5,0],[6,6,0],
+[7,7,0],[8,8,0],[9,9,0],[10,11,1],[11,11,0],
+[12,33,1],[13,44,1],[14,55,1],[15,66,1],[16,77,1],
+[17,88,1],[18,99,1],[19,121,2],[20,22,1],[21,33,1],
+[22,22,0],[23,55,1],[24,66,1],[25,77,1],[26,88,1],
+[27,99,1],[28,121,2],[29,121,1],[30,33,1],[31,44,1],
+[32,55,1],[33,33,0],[34,77,1],[35,88,1],[36,99,1],
+[37,121,2],[38,121,1],[39,363,2],[40,44,1],[41,55,1],
+[42,66,1],[43,77,1],[44,44,0],[45,99,1],[46,121,2],
+[47,121,1],[48,363,2],[49,484,2],[50,55,1],[51,66,1],
+[52,77,1],[53,88,1],[54,99,1],[55,55,0],[56,121,1],
+[57,363,2],[58,484,2],[59,1111,3],[60,66,1],[61,77,1],
+[62,88,1],[63,99,1],[64,121,2],[65,121,1],[66,66,0],
+[67,484,2],[68,1111,3],[69,4884,4],[70,77,1],[71,88,1],
+[72,99,1],[73,121,2],[74,121,1],[75,363,2],[76,484,2],
+[77,77,0],[78,4884,4],[79,44044,6],[80,88,1],[81,99,1],
+[82,121,2],[83,121,1],[84,363,2],[85,484,2],[86,1111,3],
+[87,4884,4],[88,88,0],[89,8813200023188,24],[90,99,1],
+[91,121,2],[92,121,1],[93,363,2],[94,484,2],[95,1111,3],
+[96,4884,4],[97,44044,6],[98,8813200023188,24],[99,99,0],
+[100,101,1]
+</PRE></LI><LI CLASS="li-itemize"><I>d</I>)
+On tape :
+<PRE CLASS="verbatim">pbvnpalind():={
+  local L,n;
+  L:=NULL;
+  pour n de 1 jusque 1000 faire
+    si vnpalind(n,300)==[n] alors L:=L,n fsi;  
+  fpour;
+  retourne L;
+}:;
+</PRE>On tape :<BR>
+<TT>pbvnpalind()</TT><BR>
+On obtient :<BR>
+<TT>196,295,394,493,592,689,691,788,790,879,887,978,986</TT><BR>
+On peut aussi écrire le programme qui donne la suite des transformés de 
+<I>n</I> par l’algorithme en au plus <I>p</I> étapes.<BR>
+On tape :
+<PRE CLASS="verbatim">tracevnpalind(n,p):={
+  local L,k,m;
+  L:=n;
+  m:=palind(n);
+  k:=0;
+  tantque n!=m and k&lt;p faire
+    n:=n+m;
+    k:=k+1;
+    L:=L,n
+    m:=palind(n);
+  ftantque;
+  return L;
+  }:;
+</PRE>On tape :<BR>
+<TT>tracevnpalind(196,25)</TT><BR>
+On obtient :<BR>
+<TT>196,887,1675,7436,13783,52514,94039,187088,1067869,<BR>
+10755470,18211171,35322452,60744805,111589511,<BR>
+227574622,454050344,897100798,1794102596,<BR>
+8746117567,16403234045,70446464506,130992928913,<BR>
+450822227944,900544455998,1800098901007,8801197801088</TT><BR>
+On tape :<BR>
+<TT>tracevnpalind(986,25)</TT><BR>
+On obtient :<BR>
+<TT>986,1675,7436,13783,52514,94039,187088,1067869,<BR>
+10755470,18211171,35322452,60744805,111589511,<BR>
+227574622,454050344,897100798,1794102596,8746117567,<BR>
+16403234045,70446464506,130992928913,450822227944,<BR>
+900544455998,1800098901007,8801197801088,17602285712176</TT><BR>
+On tape :<BR>
+<TT>tracevnpalind(1585,25)</TT><BR>
+On obtient :<BR>
+<TT>1585,7436,13783,52514,94039,187088,1067869,10755470,<BR>
+18211171,35322452,60744805,111589511,227574622,<BR>
+454050344,897100798,1794102596,8746117567,<BR>
+16403234045,70446464506,130992928913,450822227944,<BR>
+900544455998,1800098901007,8801197801088,<BR>
+17602285712176,84724043932847</TT><BR>
+On tape :<BR>
+<TT>tracevnpalind(1997,25)</TT><BR>
+On obtient :<BR>
+<TT>1997,9988,18887,97768,184547,930028,1750067,9350638,<BR>
+17711177,94822948,179745797,977293768,1844686547,<BR>
+9301551028,17503102067,93523232638,177146465177,<BR>
+948711106948,1798312224797,9772534363768,18446168716547,<BR>
+93007954881028,175026800851067,935184809471638,<BR>
+1771359717953177,9484956897484948</TT>
+</LI></UL><H2 CLASS="section"><A NAME="toc123"></A><A NAME="htoc439">19.3</A>  Les dessins récursifs</H2><H3 CLASS="subsection"><A NAME="htoc440">19.3.1</A>  Les segments</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Une spirale<BR>
+L’utilisateur choisit un réel <I>a</I> ∈ ]0;1[.
+Soit un point <I>M</I><SUB>0</SUB> d’affixe un réel <I>z</I><SUB>0</SUB>&gt;0 et les points <I>M</I><SUB><I>k</I></SUB> d’affixe
+<I>z</I><SUB><I>k</I></SUB>=<I>r</I><SUB><I>k</I></SUB>exp(<I>ik</I>π/3) avec <I>r</I><SUB><I>k</I></SUB>=<I>a</I>*<I>r</I><SUB><I>k</I>−1</SUB>.<BR>
+Écrire un programme qui réalise le dessin du point <I>M</I><SUB>0</SUB> et des <TT>p</TT> 
+segments <I>M</I><SUB><I>k</I></SUB><I>M</I><SUB><I>k</I>−1</SUB> pour <I>k</I>=1..<I>p</I>.<P>On a donc <I>z</I><SUB><I>k</I></SUB>==<I>a</I>*<I>r</I><SUB><I>k</I>−1</SUB>exp(<I>i</I>(<I>k</I>−1)π/3)exp(<I>i</I>π/3)==<I>a</I>exp(<I>i</I>π/3)<I>z</I><SUB><I>k</I>−1</SUB>
+On peut faire soit un programme itératif, soit un programme récursif.<BR>
+On tape pour le programme itératif :
+</P><PRE CLASS="verbatim">segmenti(a,z0,p):={
+local L,k;
+point(z0);
+L:=NULL;
+pour k de 1 jusque p faire 
+L:=L,segment(z0,a*z0*exp(i*pi/3));
+z0:=a*z0*exp(i*pi/3);
+fpour;
+retourne L;
+}
+:;
+</PRE><P>Pour le programme récursif :
+On peut décider d’avoir le dessin récursif seulement dans l’écran
+<TT>DispG</TT> : le programme est plus simple car toutes les instructions 
+graphiques sont exécutées dans cet écran. On renvoie <TT>1</TT> pour que
+l’on puisse vérifier que la procédure s’est bien exécutée.<BR>
+On tape :
+</P><PRE CLASS="verbatim">segmentg(a,z0,p):={
+  point(z0);
+  si p&gt;0 alors 
+    segment(z0,a*z0*exp(i*pi/3));
+    segmentg(a,a*z0*exp(i*pi/3),p-1);
+  fsi;
+  retourne 1;
+}
+:;
+</PRE><P>Ou bien on met les différentes instructions graphiques à réaliser dans 
+une liste <TT>L</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">segmentr(a,z0,p):={
+  local L;
+  si p==0 alors retourne point(z0); fsi;
+  L:=segment(z0,a*z0*exp(i*pi/3)),segmentr(a,a*z0*exp(i*pi/3),p-1);
+  retourne L;
+}
+:;
+</PRE><P>Puis on tape :<BR>
+<TT>segmenti(0.8, 20, 30)</TT> ou<BR>
+<TT>segmentg(0.8, 20, 30)</TT> ou<BR>
+<TT>segmentr(0.8, 20, 30)</TT></P></LI><LI CLASS="li-enumerate">Une autre spirale<BR>
+À partir d’un point <I>M</I><SUB>0</SUB> de coordonnées (<I>x</I><SUB>0</SUB>,0) et d’un 
+réel 0&lt;<I>k</I>&lt;1, on définit les points :
+<I>M</I><SUB>1</SUB> de coordonnées (0,<I>kx</I><SUB>0</SUB>)<BR>
+<I>M</I><SUB>2</SUB> de coordonnées (−<I>k</I><SUP>2</SUP><I>x</I><SUB>0</SUB>,0)<BR>
+<I>M</I><SUB>3</SUB> de coordonnées (0,−<I>k</I><SUP>3</SUP><I>x</I><SUB>0</SUB>)<BR>
+<I>M</I><SUB>4</SUB> de coordonnées (<I>k</I><SUP>4</SUP><I>x</I><SUB>0</SUB>,0)<BR>
+etc<BR>
+Écrire un programme qui dessine <I>n</I> segments <I>M</I><SUB><I>k</I></SUB><I>M</I><SUB><I>k</I>+1</SUB><BR>
+
+On peut remarquer que l’affixe de <I>M</I><SUB><I>k</I>+1</SUB> se déduit de celui de <I>M</I><SUB><I>k</I></SUB> par 
+une multiplication par <I>i</I>*<I>k</I>.<BR>
+On tape un programme itératif :
+<PRE CLASS="verbatim">spirali(x0,k,n):={
+local k,L;
+pour k de 1 jusque n faire 
+ L:=L,segment(x0,i*k*x0);
+ x0:=i*k*x0;
+}
+retourne L;
+}:;
+</PRE>On tape un programme récursif :
+<PRE CLASS="verbatim">spiralr(x0,k,n):={
+ si n&lt;=0 alors retourne point(x0); fsi;
+ retourne segment(x0,i*k*x0),spiralr(i*k*x0,k,n-1);
+}:;
+</PRE></LI><LI CLASS="li-enumerate">Une maison
+Soient <I>A</I>=(0,0) et <I>B</I>=(1,0). À partir du vecteur <I>AB</I>, on construit une 
+maison c’est à dire les murs sont un carré direct <I>ABEC</I> et le toit est un
+triangle isocèle <I>CED</I>.<BR>
+On trace les segments <I>AC</I> et <I>BE</I> et on recommence la même opération avec 
+les vecteurs <I>CD</I> et <I>DE</I> etc...On s’arrête en tracant le segment 
+correspondant à <I>AB</I><BR>
+Écrire un programme qui réalise ce dessin au bout de <I>n</I> fois.<BR>
+
+On tape un programme récursif (pour éviter des calculs trop long, on 
+travaille en mode approché en mettant <TT>A:=evalf(A); B:=evalf(B);</TT>) :
+<PRE CLASS="verbatim">maison(A,B,n):={
+ local C,D,E,L;
+ A:=evalf(A); B:=evalf(B);
+ si n&lt;=0 alors retourne segment(A,B); fsi;
+ C:=rotation(A,pi/2,B);
+ E:=rotation(B,-pi/2,A);
+ D:=similitude(C,sqrt(2)/2,pi/4,E);
+ L:=segment(A,C),segment(B,E);
+ L:=L,maison(C,D,n-1),maison(D,E,n-1);
+ retourne L;
+}:;
+</PRE>On peut transformer cet exercice en un exercice sur les complexes en demandant 
+de calculer les affixes de <I>C</I>,<I>D</I>,<I>E</I> en fonction des affixes de <I>A</I> et <I>B</I>.
+On tape un programme récursif :
+<PRE CLASS="verbatim">maisonee(A,B,n):={
+ local C,D,E,L,za,zb,zc,zd,ze;
+ si n&lt;=0 alors retourne segment(A,B); fsi;
+ za:=affixe(A);
+ zb:=affixe(B);
+ zc:=normal(za+i*(zb-za));
+ ze:=normal(zb+i*(zb-za));
+ zd:=normal(3*i*(zb-za)/2+(za+zb)/2);
+ C:=point(zc);
+ E:=point(ze);
+ D:=point(zd);
+ L:=segment(A,C),segment(B,E);
+ L:=L,maisonee(C,D,n-1),maisonee(D,E,n-1);
+ retourne L;
+}:;
+</PRE></LI></OL><H3 CLASS="subsection"><A NAME="htoc441">19.3.2</A>  Les carrés</H3><P>
+On veut réaliser le dessin récursif dont on a mis ci-dessous les 
+premières étapes (profondeur 0,1 et 2):</P><P><IMG SRC="casrouge014.png"></P><P>On peut décider d’avoir le dessin récursif seulement dans l’écran
+<TT>DispG</TT> : le programme est plus simple car toutes les instructions 
+graphiques sont exécutées dans cet écran.<BR>
+On appelle cette procédure <TT>carresg(a,d,f)</TT> où <TT>a</TT> est l’affixe
+du sommet en bas à gauche du grand carré, <TT>d</TT> est la longueur de 
+son côté et <TT>f</TT> donne la longueur du côté du plus petit carré.
+<TT>carresg(a,d,f)</TT> renvoie <TT>1</TT> pour que l’on puisse vérifier que la
+procédure s’est bien exécutée.<BR>
+On tape :
+</P><PRE CLASS="verbatim">carresg(a,d,f):={
+  si d&gt;=f alors 
+    carre(a,a+d);
+    carresg(a-d/2,d/2,f);
+    carresg(a+i*d,d/2,f);
+    carresg(a+d/2-i*d/2,d/2,f);
+    carresg(a+d+i*d/2,d/2,f);
+  fsi;
+  retourne 1;
+}:;
+</PRE><P>On tape :
+<TT>carresg(0,40,2)</TT><BR>
+ L’écran <TT>DispG</TT> s’ouvre et l’on voit le dessin se faire....</P><P>On met les différentes instructions graphiques à réaliser dans une liste
+<TT>L</TT>. On appelle cette procédure <TT>carres(a,d,f)</TT> où <TT>a</TT> est l’affixe
+du sommet en bas à gauche du grand carré, <TT>d</TT> est la longueur de 
+son côté et <TT>f</TT> donne la longueur du côté du plus petit carré.
+<TT>carresg(a,d,f)</TT> renvoie la liste <TT>L</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">carres(a,d,f):={
+  local L;
+  si d&lt;f alors retourne NULL fsi;
+  L:=carre(a,a+d),carres(a-d/2,d/2,f),carres(a+i*d,d/2,f),
+   carres(a+d/2-i*d/2,d/2,f),carres(a+d+i*d/2,d/2,f);
+  retourne L;
+}
+:;
+</PRE><P>On tape :
+<TT>carres(0,40,2)</TT> </P><P>On peut aussi choisir comme paramètre la profondeur <TT>n</TT> du dessin 
+récursif au lieu de <TT>f</TT>.
+On tape :
+</P><PRE CLASS="verbatim">carren(a,d,n):={
+local L;
+si n=&lt;0 alors retourne NULL fsi;
+L:=carre(a,a+d),carren(a-d/2,d/2,n-1),carren(a+i*d,d/2,n-1),
+   carren(a+d/2-i*d/2,d/2,n-1),carren(a+d+i*d/2,d/2,n-1);
+retourne L;
+}
+:;
+</PRE><P>On tape :
+<TT>carren(0,40,4)</TT> </P><H3 CLASS="subsection"><A NAME="htoc442">19.3.3</A>  Les triangles</H3><P>
+On veut réaliser le dessin récursif dont on a mis ci-dessous les 
+premières étapes (profondeur 0,1,2 et 3) :</P><P><IMG SRC="casrouge015.png"></P><P>On peut décider d’avoir le dessin récursif seulement dans l’écran
+<TT>DispG</TT> : le programme est plus simple car toutes les instructions 
+graphiques sont exécutées dans cet écran.<BR>
+On appelle cette procédure <TT>triang(a,d,f)</TT> où <TT>a</TT> est l’affixe
+du sommet en bas à gauche du grand triangle, <TT>d</TT> est la longueur de 
+son côté et <TT>f</TT> donne la longueur du côté du plus petit triangle.
+<TT>triang(a,d,f)</TT> renvoie <TT>1</TT> pour que l’on puisse vérifier que la
+procédure s’est bien exécutée.<BR>
+On tape :
+</P><PRE CLASS="verbatim">triang(a,d,f):={
+  si d&gt;=f alors 
+    triangle_equilateral(a,a+d);
+    triang(a,d/2,f);
+    triang(a+d/4+i*d*sqrt(3.)/4,d/2,f);
+    triang(a+d/2,d/2,f);
+  fsi;
+  retourne 1;
+}:;
+</PRE><P>On tape :
+<TT>triang(0,40,2)</TT><BR>
+ L’écran <TT>DispG</TT> s’ouvre et l’on voit le dessin se faire....On met les différentes instructions graphiques à réaliser dans une liste.
+On appelle cette procédure <TT>triangles(a,d,f)</TT> où <TT>a</TT> est l’affixe
+du sommet en bas à gauche du grand triangle, <TT>d</TT> est la longueur de 
+son côté et <TT>f</TT> donne la longueur du côté du plus petit triangle.<BR>
+On tape :
+</P><PRE CLASS="verbatim">triangles(a,d,f):={
+  local L;
+  si d&lt;f alors retourne NULL fsi;
+  L:=triangle_equilateral(a,a+d),triangles(a,d/2,f),
+     triangles(a+d/4+i*d*sqrt(3.)/4,d/2,f),triangles(a+d/2,d/2,f);
+  retourne L;
+}
+:;
+</PRE><P>On tape :
+<TT>triangles(0,40,2)</TT> </P><P>On peut aussi choisir comme paramètre la profondeur <TT>n</TT> du dessin 
+récursif au lieu de <TT>f</TT>.
+On tape :
+</P><PRE CLASS="verbatim">trianglen(a,d,n):={
+local L;
+si n&lt;0 alors retourne NULL fsi;
+L:=triangle_equilateral(a,a+d),trianglen(a,d/2,n-1),
+trianglen(a+d/4+i*d*sqrt(3.)/4,d/2,n-1),trianglen(a+d/2,d/2,n-1);
+retourne L;
+}
+:;
+</PRE><P>On tape :
+<TT>trianglen(0,40,4)</TT> 
+</P><H3 CLASS="subsection"><A NAME="htoc443">19.3.4</A>  Exercice</H3><P>
+Écrire un programme qui réalise le dessin récursif dont on a mis 
+ci-dessous les premières étapes (profondeur 0, 1 et 2) :</P><P><IMG SRC="casrouge016.png"></P><P>On tape :
+</P><PRE CLASS="verbatim">triequi(A,B,n):={
+local C,L,A1,B1,C1;
+L:=triangle_equilateral(A,B,C);
+si n&gt;0 alors 
+A1:=homothetie(C,-0.5,A);
+B1:=homothetie(A,-0.5,B);
+C1:=homothetie(B,-0.5,C);
+L:=L,triequi(A1,C,n-1);
+L:=L,triequi(B1,A,n-1);
+L:=L,triequi(C1,B,n-1);
+fsi;
+retourne L;
+}:;
+</PRE><P>On tape : <TT>triequi(0,1,5)</TT><BR>
+On obtient :</P><P><IMG SRC="casrouge017.png"></P><P>On tape : <TT>triequi(0,1+0.35*i,5)</TT><BR>
+On obtient :</P><P><IMG SRC="casrouge018.png">
+</P><H3 CLASS="subsection"><A NAME="htoc444">19.3.5</A>  Des triangles équilatéraux emboiés</H3><P>
+À partir d’un triangle équilatèral direct <I>ABC</I> on construit les points 
+<I>A</I><SUB>1</SUB>,<I>B</I><SUB>1</SUB>,<I>C</I><SUB>1</SUB> vérifiant :<BR>
+<I>AA</I><SUB>1</SUB>=4/3<I>AB</I><BR>
+<I>BB</I><SUB>1</SUB>=4/3<I>BC</I><BR>
+<I>CC</I><SUB>1</SUB>=4/3<I>CA</I><BR>
+Interprétez <I>A</I><SUB>1</SUB> comme le barycentre de <I>A</I>,<I>a</I> et <I>B</I>,<I>b</I>. 
+Montrer que le triangle <I>A</I><SUB>1</SUB><I>B</I><SUB>1</SUB><I>C</I><SUB>1</SUB> estéquilatèral.<BR>
+On recommence la même construction à partir de <I>A</I><SUB>1</SUB><I>B</I><SUB>1</SUB><I>C</I><SUB>1</SUB>.<BR>
+Écrire la procédure récursive qui réalise le dessin des <I>n</I> triangles
+obtenus par cette construction (en tout <I>n</I>+1 triangles <I>ABC</I> + les autres).<BR>
+On a :<BR>
+<I>AA</I><SUB>1</SUB>=4/3<I>AB</I>−1/3<I>AA</I><BR>
+Donc <I>A</I><SUB>1</SUB> est le barycentre de <I>A</I>,−1 et <I>B</I>,4.<BR>
+Donc <I>B</I><SUB>1</SUB> est le barycentre de <I>B</I>,−1 et <I>C</I>,4<BR>
+Donc <I>C</I><SUB>1</SUB> est le barycentre de <I>C</I>,−1 et <I>A</I>,4.<BR>
+La rotation <I>r</I> de centre <I>O</I>, le centre de <I>ABC</I>, et d’angle 2π/3 
+transforme <I>A</I> en <I>B</I>, <I>B</I> en <I>C</I> et <I>C</I> en <I>A</I> donc <I>r</I> transforme le 
+barycentre de <I>A</I>,−1 et <I>B</I>,4 en le barycentre de <I>B</I>,−1 et <I>C</I>,4 c’est à dire transforme <I>A</I><SUB>1</SUB> en <I>B</I><SUB>1</SUB> et <I>r</I> transforme le 
+barycentre de <I>B</I>,−1 et <I>C</I>,4 en le barycentre de <I>C</I>,−1 et <I>A</I>,4 c’est à dire transforme <I>B</I><SUB>1</SUB> en <I>C</I><SUB>1</SUB>.<BR>
+Donc le triangle <I>A</I><SUB>1</SUB><I>B</I><SUB>1</SUB><I>C</I><SUB>1</SUB> estéquilatèral.<BR>
+On tape dans l’éditeur de programmes :
+</P><PRE CLASS="verbatim">triangles(A,B,n):={
+  local L,C;
+  L:=triangle_equilateral(A,B,C);
+  si n&gt;0 alors 
+    A:=barycentre([A,B],[-1,4]);
+    B:=barycentre([B,C],[-1,4]);
+    L:=L,triangles(A,B,n-1);
+  fsi;
+  return L;
+}:;
+</PRE><P>puis on compile avec <TT>F9</TT> et dans une ligne de commande, on tape :<BR>
+<TT>triangles(point(0),point(1),5)</TT>
+On obtient :<BR>
+<IMG SRC="casrouge019.png">
+</P><H3 CLASS="subsection"><A NAME="htoc445">19.3.6</A>  Le problème des 3 insectes</H3><P>
+Trois insectes partent, des sommets d’un triangle 
+équilatéral <I>A</I>,<I>B</I>,<I>C</I> en direction de son voisin (<I>C</I> regarde <I>B</I>. <I>B</I> 
+regarde <I>C</I>. <I>A</I> regarde <I>C</I>). À chaque étape de leur 
+marche les 3 insectes forment un triangle équilatéral.<BR>
+Dessiner les trajectoires des 3 insectes en résolvant une équation 
+différentielle ou un système d’équations différentielles.<BR>
+On peut faire une simulation de la situation en supposant que chaque insecte :<BR>
+- regarde son voisin ce qui lui donne sa direction, puis,<BR>
+- avance dans cette direction d’une longueur proprortionnelle au côté du 
+triangle, puis ,
+- regarde son voisin ce qui lui donne sa nouvelle direction etc...<BR>
+Faire un programme qui dessine les triangles étapes de cete marche.<BR>
+Refaire le même exercice en remplaçant le triangle 
+équilatéral <I>A</I>,<I>B</I>,<I>C</I> par un triangle rectangle isocèle.<BR>
+
+<B>Résolution de 3 équations différentielles</B><BR>
+ Les trois insectes ont des trajectoires qui se déduisent l’une de l’autre 
+par une rotation de centre <I>G</I> le centre de gravité du triangle et d’angle 
+−2*π/3.<BR>
+Si <I>zA</I> est l’affixe du point <I>A</I> et <I>zB</I> celle du point <I>B</I>..., 
+on a :<BR>
+<I>zA</I>′=<I>zC</I>−<I>zA</I><BR>
+<I>zB</I>′=<I>zA</I>−<I>zB</I><BR>
+<I>zC</I>′=<I>zB</I>−<I>zC</I><BR>
+donc <I>zA</I>′+<I>zB</I>′+<I>zC</I>′=0 et donc<BR>
+<I>zA</I>+<I>zB</I>+<I>zC</I>=<I>cste</I>=1+1/2+<I>i</I>√<SPAN style="text-decoration:overline">3</SPAN> /2=3*<I>zG</I><BR>
+On a :<BR>
+<I>zC</I>−<I>zG</I>=exp(−2*π/3)(<I>zA</I>−<I>zG</I>)<BR>
+(<I>zA</I>−<I>zG</I>)′=<I>zC</I>−<I>zA</I>=(<I>zC</I>−<I>zG</I>)−(<I>zA</I>−<I>zG</I>)=(exp(−2*π/3)−1)(<I>zA</I>−<I>zG</I>).<BR>
+<I>zG</I>=−(3+<I>i</I> √<SPAN style="text-decoration:overline">3</SPAN>)/6<BR>
+au temps <I>t</I>=0 on a :
+<I>zA</I>=0, <I>zB</I>=1, <I>zC</I>=1/2+<I>i</I> √<SPAN style="text-decoration:overline">3</SPAN>/3<BR>
+On tape (on suppose que l’on a coché <TT>complexe</TT> dans la configuration du
+CAS) :<BR>
+<TT>triangle_equlateral(0,1)</TT><BR>
+<TT>zG:=(3+i*sqrt(3))/6</TT><BR>
+<TT>SA:=simplify(desolve([diff(z(t),t)=(exp(-2*i*pi/3)-1)*(z(t)-zG),<BR>
+         z(0)=0],[t,z]))</TT><BR>
+<TT>SB:=simplify(desolve([diff(z(t),t)=(exp(-2*i*pi/3)-1)*(z(t)-zG),<BR>
+         z(0)=1],[t,z]))</TT><BR>
+<TT>SC:=simplify(desolve([diff(z(t),t)=(exp(-2*i*pi/3)-1)*(z(t)-zG),<BR>
+         z(0)=1/2+i*sqrt(3)/2],[t,z]))</TT><BR>
+On obtient :<BR>
+<TT>plotparam(SA[0],t=0..4),plotparam(SB[0],t=0..4),<BR>
+plotparam(SC[0],t=0..4)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge020.png"></P><P><B>Résolution d’un système d’équations différentielles</B><BR>
+On peut aussi résoudre le système :<BR>
+<I>Z</I>′=<I>A</I>*<I>Z</I> et au temps <I>t</I>=0, <I>Z</I>(0)=[0,1,1/2+<I>i</I>*√<SPAN style="text-decoration:overline">3</SPAN> /2] avec 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>A</I>:=</TD><TD CLASS="dcell">⎡<BR>
+⎢<BR>
+⎢<BR>
+⎣</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>−1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>−1</TD><TD ALIGN=center NOWRAP>1 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>−1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">⎤<BR>
+⎥<BR>
+⎥<BR>
+⎦</TD></TR>
+</TABLE><P> 
+On tape (on suppose que <TT>Complexe</TT> est coché dans la configuration du CAS ):<BR>
+<TT>A:=[[-1,1,0],[0,-1,1],[1,0,-1]]</TT><BR>
+<TT>P,B:=jordan(A)</TT><BR>
+On obtient pour <I>P</I> :<BR>
+<TT>[[1,(-i)*sqrt(3)-1,(i)*sqrt(3)-1],[1,2,2],[1,(i)*sqrt(3)-1,
+(-i)*sqrt(3)-1]]</TT><BR>
+On obtient pour <I>B</I> :<BR>
+<TT>[[0,0,0],[0,((i)*sqrt(3)-3)/2,0],[0,0,((-i)*sqrt(3)-3)/2]]</TT><BR>
+On tape :<BR>
+<TT>V0:=simplify(inv(P)*[0,1,1/2+i*sqrt(3)/2])</TT><BR>
+On obtient :<BR>
+<TT>[((i)*sqrt(3)+3)/6,((-i)*sqrt(3)+3)/12,0]</TT><BR>
+On tape :<BR>
+<TT>V:=V0*exp(B*t)</TT><BR>
+On obtient :<BR>
+<TT>[1/6*((i)*sqrt(3)+3),1/12*exp(((i)*sqrt(3)*t-3*t)/2)*((-i)*sqrt(3)+3),0]</TT><BR>
+On tape :<BR>
+<TT>Z:=P*V</TT><BR>
+<TT>ZA:=simplify(Z[0]);ZB:=simplify(Z[1]);ZC:=simplify(Z[2]);</TT><BR>
+<TT>plotparam(ZA,t=0..4),plotparam(ZB,t=0..4),plotparam(ZC,t=0..4), 
+triangle_equilateral(0,1)</TT><BR>
+On obtient la figure précédente.
+</P><DIV CLASS="center"><IMG SRC="casrouge021.png"></DIV><P>
+Dans le cas du triangle <I>ABC</I> avec<BR>
+<TT>A:=point(0)</TT>;<TT>B:=point(10)</TT>;<TT>C:=point(i*10)</TT>, le système à 
+resoudre est le même c’est juste la condition initiale qui change 
+(<TT>V0:=inv(P)*[0,1,i]</TT>) et les 3 
+insectes convergent vers le centre de gravité <I>K</I> du triangle <I>ABC</I>.<BR>
+On tape (on suppose que <TT>Complexe</TT> est coché dans la configuration du CAS ):<BR>
+<TT>A:=[[-1,1,0],[0,-1,1],[1,0,-1]]</TT><BR>
+<TT>P,B:=jordan(A)</TT><BR>
+<TT>V0:=simplify(inv(P)*[0,1,i])</TT><BR>
+On obtient :<BR>
+<TT>[(1+i)/3,(sqrt(3)+2-i)/12,(-sqrt(3)+2-i)/12]</TT><BR>
+<TT>V:=V0*exp(B*t)</TT><BR>
+On obtient :<BR>
+<TT>[(1+i)/3,1/12*exp(((i)*sqrt(3)*t-3*t)/2)*(sqrt(3)+2-i), 1/12*exp(((-i)*sqrt(3)*t-3*t)/2)*(-sqrt(3)+2-i)]</TT><BR>
+On tape :<BR>
+<TT>Z:=P*V</TT><BR>
+<TT>ZA:=simplify(Z[0]);ZB:=simplify(Z[1]);ZC:=simplify(Z[2]);</TT><BR>
+<TT>plotparam(ZA,t=0..4),plotparam(ZB,t=0..4),plotparam(ZC,t=0..4), 
+triangle(0,1,i)</TT><BR>
+On obtient la figure :<BR>
+
+<IMG SRC="casrouge022.png"><BR>
+
+<B>Le dessin des triangles</B><BR>
+On dessine le triangle équilatéral <I>ABC</I> puis le triangle
+<I>A</I>1<I>B</I>1<I>C</I>1 avec :<BR>
+<I>A</I>1=<I>A</I>+evalf((<I>B</I>−<I>A</I>)/10),<BR>
+<I>B</I>1=<I>B</I>+evalf((<I>C</I>−<I>B</I>)/10) et<BR>
+<I>C</I>1=<I>C</I>+evalf((<I>A</I>−<I>C</I>)/10).<BR>
+puis on recommence le même processus avec <I>A</I>1<I>B</I>1<I>C</I>1...
+On tape :
+</P><PRE CLASS="verbatim">triop0(a,b):={
+local L,C,c;
+L:=triangle_equilateral(point(a),point(b),C);
+c:=evalf(affixe(C));
+si evalf(abs(b-a))&lt;1 alors return L; fsi;
+a:=a*0.9+b*0.1;
+b:=b*0.9+c*0.1;
+L:=L,triop0(a,b);
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>triop0(0,10)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge023.png"><BR>
+On peut tourner dans l’autre sens : on dessine le triangle équilatéral 
+<I>ABC</I> puis le triangle
+<I>A</I>1<I>B</I>1<I>C</I>1 avec :<BR>
+<I>A</I>1=<I>A</I>+evalf((<I>C</I>−<I>A</I>)/10),<BR>
+<I>B</I>1=<I>B</I>+evalf((<I>A</I>−<I>B</I>)/10) et<BR>
+<I>C</I>1=<I>C</I>+evalf((<I>B</I>−<I>C</I>)/10).<BR>
+puis on recommence le même processus avec <I>A</I>1<I>B</I>1<I>C</I>1...
+On tape :
+</P><PRE CLASS="verbatim">triop(a,b):={
+local L,C,c,a0;
+L:=triangle_equilateral(point(a),point(b),C);
+c:=evalf(affixe(C));
+si evalf(abs(b-a))&lt;1 alors return L; fsi;
+a0:=a;
+a:=a*0.9+c*0.1;
+b:=b*0.9+a0*0.1;
+L:=L,triop(a,b);
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>triop(0,10)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge024.png"><BR>
+
+On tape si on choisit un triangle <I>ABC</I> quelconque :
+</P><PRE CLASS="verbatim">triopa(a,b,c):={
+local L,a0,b0;
+L:=triangle(point(a),point(b),point(c));
+si (evalf(abs(b-a))&lt;1) alors return L; fsi;
+a0:=a;
+b0:=b;
+a:=a+evalf((c-a)/10);
+b:=b+evalf((a0-b)/10);
+c:=c+evalf((b0-c)/10);triopa(0,10,i*10);K:=point((10+10*i)/3)
+L:=L,triopa(a,b,c);
+return L;
+}
+:;
+</PRE><P>On tape :<BR>
+<TT>triopa(0,10,i*10);K:=point((10+10*i)/3)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge025.png"><BR>
+</P><P><B>On fait faire des rotations à ces triangles</B><BR>
+Dans triops on fait 6 rotations de <TT>triop</TT> alors que dans <TT>triops0</TT> on 
+fait 3 rotations du losange formé par <TT>triop0(a,b)</TT> et <TT>triop(b,a)</TT><BR>
+0n tape :
+</P><PRE CLASS="verbatim">triops(A,B):={
+local L,j,a,b;
+a:=affixe(A);
+b:=affixe(B);
+L:=triop0(a,b);
+pour j de 1 jusque 5 faire
+B:=rotation(A,pi/3,B);
+b:=affixe(B);
+L:=L,triop(a,b);
+fpour;
+return L;
+}:;
+triops0(A,B):={
+local L,j,a,b;
+a:=affixe(A);
+b:=affixe(B);
+L:=NULL;
+pour j de 1 jusque 3 faire
+L:=L,triop0(a,b),triop(b,a);
+B:=rotation(A,pi/3,B);
+b:=affixe(B);
+fpour;
+return L;
+}:;
+triops1(A,B):={
+local L,j,a,b,c,C;
+a:=affixe(A);
+b:=affixe(B);
+L:=NULL;
+pour j de 1 jusque 3 faire
+triangle_equilateral(B,A,C);
+c:=affixe(C);
+L:=L,triop0(a,b),triop(b,a),,triop0(a,c);
+B:=rotation(A,2*pi/3,B);
+b:=affixe(B);
+fpour;
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>triops(point(0),point(10))</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge026.png">
+On tape :<BR>
+<TT>triops0(point(0),point(10))</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge027.png"></P><P>On tape :<BR>
+<TT>triops1(point(0),point(10))</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge028.png"></P><P>0n tape :
+</P><PRE CLASS="verbatim">triopas(A,B,C):={
+local L,j,F,a,b,c;
+a:=affixe(A);
+b:=affixe(B);
+c:=affixe(C);
+L:=triopa(a,b,c);
+pour j de 1 jusque 7 faire
+A:=rotation(B,pi/4,A);
+C:=rotation(B,pi/4,C);
+a:=affixe(A);
+c:=affixe(C);
+L:=L,triopa(a,b,c);
+fpour;
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>triopas(point(0),point(10),point(10*i))</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge029.png"></P><P>Avec le triangle <TT>point(0),point(10),point(i*10*tan(2*pi/7))</TT>,
+on tape :<BR>
+</P><PRE CLASS="verbatim">triopas7(A,B,C):={
+local L,j,F,a,b,c;
+a:=affixe(A);
+b:=affixe(B);
+c:=affixe(C);
+L:=triopa(a,b,c);
+pour j de 1 jusque 6 faire
+A:=rotation(B,2*pi/7,A);
+C:=rotation(B,2*pi/7,C);
+a:=affixe(A);
+c:=affixe(C);
+L:=L,triopa(a,b,c);
+fpour;
+return L;
+}:;
+</PRE><P>Puis, on tape :<BR>
+<TT>triopas7(point(0),point(10),point(i*10*tan(2*pi/7)));</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge030.png">
+<B>On peut aussi faire la mêmes chose ave des losanges</B><BR>
+On tape :
+</P><PRE CLASS="verbatim">losop(a,b,c,d):={
+local L;
+L:=quadrilatere(point(a),point(b),point(c),point(d));
+si evalf(abs(b-a))&lt;1 alors return L; fsi;
+a:=a*0.9+b*0.1;
+b:=b*0.9+c*0.1;
+c:=c*0.9+d*0.1;
+d:=d*0.9+a*0.1;
+L:=L,losop(a,b,c,d);
+return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>losop(0,10,5+i*sqrt(3)*5,-5+i*sqrt(3)*5)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge031.png"></P><P>On tape :<BR>
+<TT>losop(10,0,-5+i*sqrt(3)*5,5+i*sqrt(3)*5),<BR>
+losop(10,0,-5-i*sqrt(3)*5,5-i*sqrt(3)*5),<BR>
+losop(-5+i*sqrt(3)*5,0,-5-i*sqrt(3)*5,-10)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge032.png">
+</P><H3 CLASS="subsection"><A NAME="htoc446">19.3.7</A>  Les cercles</H3><P>
+L’utilisateur choisit un entier <TT>n</TT>.
+Sur le cercle de de centre d’affixe <TT>a</TT> et de rayon <TT>r</TT> on dessine 
+le cercle et les <TT>n</TT> points d’affixe <TT>ak:=r*exp(2.*i*k*pi/n)</TT> pour 
+<TT>k=0..n-1</TT>.
+On recommence pour chaque <TT>k</TT> avec des cercles de de centre d’affixe 
+<TT>ak</TT> et de rayon <TT>r/2</TT>. Et ainsi de suite à partir des points obtenus
+en divisant à chaque étape le rayon par 2. Écrire un programme qui
+réalise <TT>p</TT> étapes de ce processus.
+On tape :
+</P><PRE CLASS="verbatim">cercles(a,r,n,p):={
+local P,L,k,j;
+P:=NULL;
+si p&lt;1 alors retourne NULL fsi;
+pour k de 0 jusque n-1 faire
+  P:=P,point(a+r*exp(2.*i*pi*k/n),affichage=p+epaisseur_point_2);
+fpour;
+L:=cercle(a,r),P;
+pour j de 0 jusque n-1 faire
+  L:=L,cercles(affixe(P[j]),r/2,n,p-1);
+fpour;
+retourne L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>cercles(0,20,5,4)</TT><BR>
+On obtient :<BR>
+
+<IMG SRC="casrouge033.png"></P><H2 CLASS="section"><A NAME="toc124"></A><A NAME="htoc447">19.4</A>  Les tours de Hanoï</H2><P>
+Une tour de Hanoï est composée de <I>p</I> disques de rayons différents que 
+l’on numérote de 1 à <I>p</I> selon l’ordre croissant des rayons (le plus petit 
+disque a le numéro 1 et le plus gros le numéro <I>p</I>).
+On dispose de 3 plots numérotés de 1 à 3.<BR>
+Au départ les disques sont empilés selon l’ordre croissant sur le plot 1.<BR>
+Le jeu consiste à reconstituer la tour sur le plot 2, en se servant du plot 3
+comme plot intermédiaire, en déplacant les disques un à un, et en posant
+toujours un disque sur un disque plus petit que lui.<BR>
+Par exemple, on peut mettre le dique 2 sur le disque 5, mais pas sur le disque 
+1.<BR>
+On veut écrire un programme qui imprime ce qu’il faut faire comme 
+manipulations : ce sera <TT>tour(a,b,c,p)</TT>, où <TT>p</TT> représente le
+nombre de disques, où <TT>a</TT> représente le plot 
+de départ, où <TT>b</TT> représente le plot d’arrivée, et où <TT>c</TT> 
+représente le plot intermédiaire.<BR>
+On tapera alors par exemple :<BR>
+<TT>tour(1,2,3,4)</TT><BR>
+ si on a une tour de 4 disques sur le plot 1, et qu’on veut la reconstituer 
+sur le plot 2 par l’intermédiaire du plot 3.<BR>
+Les manipulations à faire sont récursives, en voici les étapes :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+iL faut arriver à dégager le disque <I>p</I> pour qu’il soit seul sur le 
+plot 1 avec les <I>p</I>−1 disques sur le plot 3, le plot 2 étant vide et prêt 
+à recevoir le dique <I>p</I>. Dans cette situation, il y une tour de <I>p</I>−1 
+disques sur le plot 3. Cela veut dire que l’on est arrivé à reconstituer 
+la tour constituée des <I>p</I>−1 premiers disques sur le plot 3, en se servant du
+plot 2 comme plot intermédiaire.<BR>
+Avec les notations ci dessus c’est que l’on a effectué :<BR>
+<TT>tour(a,c,b,p-1)</TT><BR>
+c’est l’instruction qui permet de reconstituer une tour de <I>p</I>−1 disques sur 
+le plot 3 en partant du plot 1 et en se servant du plot 2 comme plot 
+intermédiaire.<BR>
+</LI><LI CLASS="li-itemize">on déplace ensuite le disque <I>p</I> du plot 1 sur le plot 2 :<BR>
+<TT>print("deplacer le disque ",p," de ", a , " vers", b)</TT>.<BR>
+- il reste à reconstituer la tour de <I>p</I>−1 disques sur le plot 2
+en partant du plot 3 et en se servant du plot 1 comme plot intermédiaire.<BR>
+Il faut donc effectuer :<BR>
+ <TT>tour(c,b,a,p-1)</TT><BR>
+</LI><LI CLASS="li-itemize">il reste à trouver le test d’arrêt qui est simplement <TT>(p==0)</TT> 
+c’est à dire : quand on a une tour de zéro disque on ne fait rien 
+(on renvoie 0).
+</LI></UL><P>
+On tape dans un niveau éditeur de programmes (que l’on ouvre avec 
+<TT>Alt+p</TT>), puis on le teste et on le valide avec <TT>OK</TT> :
+</P><PRE CLASS="verbatim">//tour(1,2,3,4) (tour de hanoi)
+//depacement des p disques (de numero 1..p du plus petit au plus grand) 
+//de a vers b en passant par c
+tour(a,b,c,p) :={
+  if (p==0) return 0;
+  tour(a,c,b,p-1);
+  print("deplacer le disque "+p+" de "+ a + " vers "+ b);
+  tour(c,b,a,p-1);
+  return 0;
+}:;
+</PRE><P>On tape :<BR>
+<TT>tour(1,2,3,4)</TT><BR>
+On obtient :
+</P><PRE CLASS="verbatim">deplacer le disque 1 de 1 vers 3
+deplacer le disque 2 de 1 vers 2
+deplacer le disque 1 de 3 vers 2
+deplacer le disque 3 de 1 vers 3
+deplacer le disque 1 de 2 vers 1
+deplacer le disque 2 de 2 vers 3
+deplacer le disque 1 de 1 vers 3
+deplacer le disque 4 de 1 vers 2
+deplacer le disque 1 de 3 vers 2
+deplacer le disque 2 de 3 vers 1
+deplacer le disque 1 de 2 vers 1
+deplacer le disque 3 de 3 vers 2
+deplacer le disque 1 de 1 vers 3
+deplacer le disque 2 de 1 vers 2
+deplacer le disque 1 de 3 vers 2
+</PRE><H2 CLASS="section"><A NAME="toc125"></A><A NAME="htoc448">19.5</A>  Les permutations</H2><H3 CLASS="subsection"><A NAME="htoc449">19.5.1</A>  Les permutations circulaires</H3><P>
+La liste <I>l</I> est une liste de nombres tous différents.<BR>
+On écrit la fonction <TT>circulaire(l)</TT> qui renvoie la liste obtenue
+à partir de <TT>l</TT> en renvoyant le début de la liste <TT>l</TT> à la 
+fin de <TT>l</TT>.
+</P><PRE CLASS="verbatim">//l:=[1,2,3]; circulaire(l) 
+//renvoie la liste l ou la tete est mise a la fin. 
+circulaire(l):={
+return concat(tail(l),l[0]);
+};
+</PRE><P>On écrit la fonction <TT>permcir(l)</TT> qui renvoie la liste des 
+permutations circulaires obtenues à partir de <TT>l</TT>. 
+On écrit cette fonction récursivement en renplacant <TT>l</TT> par
+<TT>circulaire(l)</TT>.
+Il faut un test d’arrêt pour ce parcours, pour cela on a besoin d’un 
+paramètre supplementaire qui sera <TT>ld</TT> : c’est une liste de 
+référence égale à <TT>l</TT> au départ et qui n’est pas modifiée. 
+On s’arrête quand <TT>circulaire(l)==ld</TT>, c’est à dire quand on retrouve la liste de départ. 
+On utilise une variable 
+locale <TT>lr</TT> égale à la liste à renvoyer.
+</P><PRE CLASS="verbatim">// utilise circulaire, l:=[1,2,3];permcir(l,l); 
+//renvoie les permutations circulares de l
+//variable locale lr la liste resultat
+// ld liste reference de depart
+permcir(l,ld):={
+local lr;
+if (circulaire(l)==ld) return [l];
+lr:=[l];
+lr:= append(lr,op(permcir(circulaire(l),ld)));
+return lr;
+};
+</PRE><P>On peut supprimer la variable locale <TT>lr</TT> et la fonction
+<TT>circulaire</TT>.<BR>
+On écrit alors la fonction <TT>permcc(l)</TT> qui renvoie la liste des 
+permutations circulaires obtenues à partir de <TT>l</TT>.<BR>
+Ici, on utilise un autre test d’arrêt, on a toujours besoin d’un 
+paramètre supplementaire qui sera <TT>ld</TT> : c’est une liste de 
+référence égale à <TT>l</TT> au départ et qui est modifiée, sa taille 
+diminue de 1 à chaque appel récursif. 
+On s’arrête quand <TT>ld==[]</TT>, c’est à dire quand on a fait autant 
+d’appels que la taille de <TT>l</TT>. 
+</P><PRE CLASS="verbatim">//l:=[1,2,3];permcc(l,l); 
+//renvoie les permutations circulares de l
+//sans variable locale, ld liste reference de depart
+permcc(l,ld):={
+if (ld==[]) return [];
+return [l,op(permcc(concat(tail(l),l[0]),tail(ld)))];
+};
+</PRE><P>Comme il faut 2 paramètres pour écrire la fonction récursive 
+<TT>permcc</TT>, on écrit la fonction finale <TT>permutation_circ</TT> qui 
+utilise <TT>permcc</TT> :
+</P><PRE CLASS="verbatim">//l:=[1,2,3];permutation_circ(l); 
+//renvoie les permutations circulares de l
+//utilise permcc
+permutation_circ(l):={
+return permcc(l,l);
+};
+</PRE><P>On tape :<BR>
+<TT>permutation_circ([1,2,3])</TT><BR>
+On obtient :<BR>
+<TT>[[1,2,3],[2,3,1],[3,1,2]]</TT></P><H3 CLASS="subsection"><A NAME="htoc450">19.5.2</A>  Programme donnant toutes les permutations d’une liste <I>l</I></H3><P>
+La liste <I>l</I> est une liste de nombres tous différents.<BR>
+1/ En faisant <I>n</I>=<TT>size(l)</TT> appels récursifs.<BR>
+Les fonctions que l’on va écrire vont utiliser la fonction <TT>echange</TT>.
+</P><PRE CLASS="verbatim">//echange ds l les elements d'indices j et k
+echange(l,j,k):={
+local a;
+a:=l[j];
+l[j]:=l[k];
+l[k]:=a;
+return l;
+}:;
+</PRE><P>On peut décrire l’arbre des permutations de la liste <I>l</I> :<BR>
+à partir de la racine on a <I>n</I>=<TT>size(l)</TT> branches. Chaque branche
+commence respectivement par chacun des éléments de la liste <I>l</I>.<BR>
+On va donc parcourir cet arbre de la racine (nœud de niveau 0) aux 
+différentes extrémités, en renvoyant la liste des branches parcourues 
+pour arriver à cette extrémité.<BR>
+On va parcourir cet arbre en parcourant les <I>n</I> branches. On numérote ces <I>n</I>
+branches par <I>p</I>=1..<I>n</I> et le niveau des nœuds <I>q</I>=0..<I>n</I>−1.<BR>
+On aura donc <I>n</I> appels récursifs.<BR>
+Chaque branche <I>p</I> (<I>p</I>=1..<I>n</I>) peut être considérée à leur tour comme un
+arbre ayant <I>n</I>−1 branches. La branche <I>p</I> aboutit aux permutations qui laissent
+invariant le <I>p</I>-ième élément de <I>l</I> (<I>l</I>[<I>p</I>−1]). 
+C’est cet élément que l’on va échanger avec <I>l</I>[0] pour que chaque 
+branche <I>p</I> laisse invariant l’ élément <I>l</I>[0].<BR>
+On sait que l’on est arrivé au bout de la branche, quand on se trouve au
+nœud de niveau <I>n</I>−1, dans ce cas la permutation chechée est <I>l</I> (c’est 
+la permutation obtenue à partir de <I>l</I> en laissant ces <I>n</I>−1 premiers 
+éléments invariants).<BR>
+On utilise une variable locale <TT>lr</TT>, égale à la liste à renvoyer et 
+un paramètre <TT>k</TT>, pour que <TT>permus(l,k)</TT> renvoie toutes les 
+permutations de <TT>l</TT> qui laissent invariant les k premiers éléments de 
+<TT>l</TT>. On tape :
+</P><PRE CLASS="verbatim">//utilise echange et la variable locale lr (liste resultat)
+//permus(l,k) laisse invariant les k premiers elements de l
+//permus([1,2,3,4],0); renvoie toutes les permutations de l 
+permus(l,k):={
+local lr,j;
+if (k==size(l)-1) return [l];
+lr:=[];
+for (j:=k;j&lt;size(l);j++){
+l:=echange(l,k,j);
+lr:=[op(lr),op(permus(l,k+1))];
+l:=echange(l,j,k);
+}
+return lr;
+}:;
+</PRE><P>On n’est pas obligé de remettre la suite <I>l</I> à sa valeur de départ
+pour recommencer l’itération puisque le premier échange dans l’itération 
+revient à transformer <I>l</I> en la liste où on a mis son <I>j</I>-ième 
+élément en tête (<I>j</I>=0..<I>n</I>−1). La liste résultat ne sera alors pas dans 
+le même ordre. Si on veut avoir la liste dans l’ordre lexicographique, il ne 
+faut pas mettre la deuxième instruction <TT>echange</TT>. En effet :<BR>
+ sans la deuxième instruction <TT>echange</TT>, on échange
+0 et 1 pour j=1 ([1,0,2..]) puis 0 et 2 pour j=2 ([2,0,1..]) etc
+sans la deuxième instruction <TT>echange</TT>, on échange
+0 et 1 ([1,0,2..]) puis, 1 et 0 ([0,1,2..]) pour j=1, puis
+0 et 2 ([2,1,0..]) puis, 2 et 0 ([0,1,2..]) pour j=2 etc
+</P><PRE CLASS="verbatim">//permuts([1,2,3,4],0) utilise echange 
+//la 2ieme instruction echange est inutile
+permuts(l,k):={
+local lr,j;
+if (k==size(l)-1) return [l];
+lr:=[];
+for (j:=k;j&lt;size(l);j++){
+l:=echange(l,k,j);
+lr:=[op(lr),op(permuts(l,k+1))];
+}
+return lr;
+}:;
+</PRE><P>Comme il faut 2 paramètres pour écrire la fonction récursive 
+<TT>permuts</TT>, on écrit la fonction <TT>permutation</TT> qui utilise 
+<TT>permuts</TT>:
+</P><PRE CLASS="verbatim">//l:=[1,2,3];permutation(l); 
+//renvoie toutes les permutations de l
+//utilise permuts
+permutation(l):={
+return permuts(l,0);
+};
+</PRE><P>On tape :<BR>
+<TT>permutation([1,2,3])</TT><BR>
+On obtient :<BR>
+<TT>[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]</TT><BR>
+On peut aussi écrire une autre fonction récursive ayant comme paramètre 
+<TT>ld</TT> et <TT>lf</TT>. <TT>ld</TT> contient les premières valeurs de <TT>l</TT> qui 
+seront inchangées dans la permutation et <TT>lf</TT> contient les valeurs
+restantes de <TT>l</TT>, celles qui restent à permuter. On remarquera que le 
+résultat mis dans <TT>res</TT> est ici une séquence. 
+</P><PRE CLASS="verbatim">//au debut ld=[] et lf=l,
+//groupe_s([],l) renvoie toutes les permutations de l
+groupe_s(ld,lf):={
+ local j,n,res;
+ n:=size(lf);
+ res:=NULL;
+ if (n==1)
+   return concat(ld,lf);
+ for (j:=0;j&lt;n;j++){
+   res:=res,groupe_s(append(ld,lf[0]),tail(lf));
+   // permutation circulaire
+   lf:=append(tail(lf),lf[0]);
+ }
+ return res;
+};
+</PRE><P>Et la fonction <TT>groupesym</TT> qui utilise la fonction récursive 
+<TT>groupe_s</TT> :
+</P><PRE CLASS="verbatim">//utilise groupe_s
+//groupesym(l) renvoie toutes les permutations de l
+groupesym(l):=return(groupe_s([],l));
+</PRE><P>2/ En faisant 2 appels récursifs.<BR>
+Cet algorithme est surtout fait pour des langages qui n’ont pas de boucle 
+<TT>for</TT>.<BR>
+Les fonctions vont utiliser la fonction <TT>circulaire</TT> (pour plus de 
+clareté), puis on remplacera <TT>circulaire(l)</TT> par 
+<TT>concat(tail(l),l[0])</TT>.
+</P><PRE CLASS="verbatim">//l:=[1,2,3]; circulaire(l) 
+//renvoie la liste l ou la tete est mise a la fin. 
+circulaire(l):={
+return concat(tail(l),l[0]);
+};
+</PRE><P>On peut décrire l’arbre des permutations de la liste <I>l</I> :<BR>
+à partir de la racine on a <I>n</I>=<TT>size(l)</TT> branches. Chaque branche
+commence par chacun des éléments de la liste <I>l</I>.<BR>
+On va parcourir cet arbre, en parcourant la premiére branche, puis en 
+considérant qu’il reste à parcourir un arbre de <I>n</I>−1 branches.<BR>
+On aura donc 2 appels récursifs.<BR>
+Pour le parcours de la première branche, il faut connaitre la liste des 
+éléments qui nous a permis d’arriver à un nœud donné, c’est cette 
+liste que l’on met dans <TT>ldl</TT>, <TT>l</TT> contenant les éléments qu’il 
+faut encore permuter. On s’arrête quand <TT>l=[]</TT>, et le résultat est 
+<TT>[ldl]</TT>.<BR>
+Pour le parcours des <I>n</I>−1 branches restantes, on change pour chaque branche
+la liste à permuter en <TT>circulaire(l)</TT>.<BR>
+Il faut un test d’arrêt pour ce parcours, pour cela on a besoin d’un 
+paramètre supplementaire qui sera <TT>ld</TT> (liste de référence égale 
+à <TT>l</TT> au départ) dans <TT>permss</TT> ou qui sera 
+<TT>n</TT> (longueur de <TT>l</TT> au départ) dans <TT>permss1</TT>.<BR>
+On écrit <TT>permss</TT> :
+</P><PRE CLASS="verbatim">// utilise circulaire, l:=[1,2];permss([],l,l);
+//ldl=debut de l, l=liste a permuter, 
+//ld=liste de reference (=l au debut)
+permss(ldl,l,ld):={
+if (l==[]) return [ldl];
+if (ld==[]) return ld;
+return [op(permss(concat(ldl,l[0]),tail(l),tail(l))),
+        op(permss(ldl,circulaire(l),tail(ld)))];
+};
+</PRE><P>On écrit <TT>permss1</TT> qui utilise comme paramètre <TT>n</TT> qui
+représente la longueur de la liste qui reste à permuter (<TT>n=size(l)</TT> au départ) :<BR>
+</P><PRE CLASS="verbatim">//utilise circulaire, l:=[1,2,3,4];permss1([],l,size(l)); 
+//ldl=debut de l, l=liste a permuter, n=size(l) au debut
+permss1(ldl,l,n):={
+if (l==[]) return [ldl];
+if (n==0) return [];
+return [op(permss1(concat(ldl,l[0]),tail(l),size(tail(l)))),
+        op(permss1(ldl,circulaire(l),n-1))];
+};
+</PRE><P>On a aussi écrit la fonction <TT>permss2</TT> contenant une variable locale
+<TT>lr</TT> qui est la liste à renvoyer et qui donne un algorithme plus lisible.
+</P><PRE CLASS="verbatim">//l:=[1,2];permss2([],l,l); 
+//ldl=debut de l, l=liste a permuter,
+//ld=liste de reference (=l au debut)
+// lr liste a renvoyer en variable locale
+permss2(ldl,l,ld):={
+local lr;
+if (l==[]) return [ldl];
+if (ld==[]) return [];
+lr:=permss2(concat(ldl,l[0]),tail(l),tail(l));
+lr:=append(lr,op(permss2(ldl,concat(tail(l),l[0]),tail(ld))));
+return lr
+};
+</PRE><P>puis la fonction <TT>permute</TT> qui utilise <TT>permss2</TT> :
+</P><PRE CLASS="verbatim">//utilise permss2, 
+//permute(l) renvoie toutes les permutations de l
+permute(l):={
+return permss2([],l,l);
+};
+</PRE><P>On tape :<BR>
+<TT>permute([1,2,3])</TT><BR>
+On obtient :<BR>
+<TT>[[1,2,3],[1,3,2],[2,3,1],[2,1,3],[3,1,2],[3,2,1]]</TT></P><HR>
+<A HREF="casrouge018.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge020.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Distribution fitting by maximum likelihood : fitdistr</title>
+</head>
+<body >
+<a href="cascmd_en736.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en738.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec948" class="subsection">8.4.23  Distribution fitting by maximum likelihood : <span style="font-family:monospace">fitdistr</span><a id="hevea_default1297"></a></h3>
+<p>
+<span style="font-family:monospace">fitdistr</span> takes two arguments, a list <span style="font-style:italic">L</span> of presumably independent and identically distributed samples and a distribution type, which may be normal, exponential, Poisson, geometric, gamma, beta, Cauchy or Weibull. The type is specified as <span style="font-family:monospace">normal</span> (<span style="font-family:monospace">normald</span>), <span style="font-family:monospace">exp</span> (<span style="font-family:monospace">exponential</span> or <span style="font-family:monospace">exponentiald</span>), <span style="font-family:monospace">poisson</span>, <span style="font-family:monospace">geometric</span>, <span style="font-family:monospace">gammad</span>, <span style="font-family:monospace">betad</span>, <span style="font-family:monospace">cauchy</span> (<span style="font-family:monospace">cauchyd</span>) or <span style="font-family:monospace">weibull</span> (<span style="font-family:monospace">weibulld</span>), respectively. The command returns the distribution of the specified type with parameters that fit the given samples most closely according to the method of maximum likelihood.</p><p>For example, input :
+</p><div class="center">
+<span style="font-family:monospace">S:=:; fitdistr(randvector(1000,weibulld,1/2,1),weibull)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">weibulld(0.498920254339,0.971148738409)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">X:=randvar(normal,stddev=9.5):; Y:=randvar(normal,stddev=1.5):; S:=sample(eval(X/Y,0),1000):; Z:=fitdistr(S,cauchy)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">cauchyd(-0.13160176167,6.2569300393)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">histogram(select(x-&gt;(x&gt;-100 and x&lt;100),S)); plot(Z(x),x=-100..100,display=red+line_width_2)
+</span></div><p>
+Output :
+</p><div class="center">
+<img src="cascmd_en057.png">
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">kolmogorovt(S,Z)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">["D=",0.0125864995943,"K=", 0.398020064869, "1-kolmogorovd(K)=",0.997387219452]
+</span></div><p>
+The Kolmogorov-Smirnov test indicates that the samples from <span style="font-style:italic">S</span> are drawn from <span style="font-style:italic">Z</span> with high probability.</p><p>Fitting a lognormal distribution to samples <span style="font-style:italic">x</span><sub>1</sub>,<span style="font-style:italic">x</span><sub>2</sub>,…,<span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub> can be done by fitting a normal distribution to the sample logarithms log<span style="font-style:italic">x</span><sub>1</sub>,log<span style="font-style:italic">x</span><sub>2</sub>,…,log<span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub> because log-likelihood functions are the same. For example, generate some samples according to the lognormal rule with parameters µ=5 and σ<sup>2</sup>=2 :
+</p><div class="center">
+<span style="font-family:monospace">X:=randvar(normal,mean=5,variance=2):; S:=sample(exp(X),1000):;
+</span></div><p>
+Now fit normal distribution to log<span style="font-style:italic">S</span> :
+</p><div class="center">
+<span style="font-family:monospace">Y:=fitdistr(log(S),normal)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">normald(5.04754808715,1.42751619912)
+</span></div><p>
+The mean of <span style="font-style:italic">Y</span> is about 5.05 and the variance is about 2.04. Now the variable <span style="font-style:italic">Z</span>=exp(<span style="font-style:italic">Y</span>) has the sought lognormal distribution.</p>
+<hr>
+<a href="cascmd_en736.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en738.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

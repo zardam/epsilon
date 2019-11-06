@@ -1,0 +1,1201 @@
+<HTML>
+<HEAD>
+  <TITLE>
+    Catalogue of GP/PARI Functions: Programming in GP: other specific functions
+  </TITLE>
+
+  <META NAME="author"       CONTENT="Nils-Peter Skoruppa">
+  <META NAME="created"      CONTENT="Sat Mar 22 18:13:28 2014">
+  <META NAME="author-email" CONTENT="skoruppa@math.uni-siegen.de">
+  <META NAME="keywords"     CONTENT="PARI, GP, DOC">
+  <link rel="stylesheet" href="/pari.css">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+
+<h3 align=center>Programming in GP: other specific functions</h3>
+
+<a name="Strprintf"></a>
+<h4>Strprintf(<em>fmt</em>,{x}*)</h4>
+<p></p>
+<p>Returns a string built from the remaining arguments according to the
+format fmt. The format consists of ordinary characters (not %), printed
+unchanged, and conversions specifications. See <code>printf</code>.</p>
+<p></p>
+
+<hr></hr>
+<a name="addhelp"></a>
+<h4>addhelp(<em>sym</em>,<em>str</em>)</h4>
+<p></p>
+<p>Changes the help message for the symbol <code>sym</code>. The string <em>str</em>
+is expanded on the spot and stored as the online help for <code>sym</code>. It is
+recommended to document global variables and user functions in this way,
+although <code>gp</code> will not protest if you don't.</p>
+<p>
+You can attach a help text to an alias, but it will never be
+shown: aliases are expanded by the <code>?</code> help operator and we get the help
+of the symbol the alias points to. Nothing prevents you from modifying the
+help of built-in PARI functions. But if you do, we would like to hear why you
+needed it!</p>
+<p>
+Without <code>addhelp</code>, the standard help for user functions consists of its
+name and definition.</p>
+<p>
+<pre class="code">  gp&#62; f(x) = x^2;
+  gp&#62; ?f
+  f =
+    (x)-&#62;x^2
+  
+</pre>
+Once addhelp is applied to f, the function code is no
+longer included. It can still be consulted by typing the function name:</p>
+<p>
+<pre class="code">  gp&#62; addhelp(f, "Square")
+  gp&#62; ?f
+  Square
+  
+  gp&#62; f
+  %2 = (x)-&#62;x^2
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>void <b>addhelp</b>(const char *sym, const char *str)</code>.</p>
+
+<hr></hr>
+<a name="alarm"></a>
+<h4>alarm({s = 0},{<em>code</em>})</h4>
+<p></p>
+<p>If <em>code</em> is omitted, trigger an <em>e_ALARM</em> exception after s
+seconds, cancelling any previously set alarm; stop a pending alarm if s = 
+0 or is omitted.</p>
+<p>
+Otherwise, if s is positive, the function evaluates <em>code</em>,
+aborting after s seconds. The return value is the value of <em>code</em> if
+it ran to completion before the alarm timeout, and a <code>t_ERROR</code> object
+otherwise.</p>
+<p>
+<pre class="code">    ? p = nextprime(10^25); q = nextprime(10^26); N = p*q;
+    ? E = alarm(1, factor(N));
+    ? type(E)
+    %3 = "t_ERROR"
+    ? print(E)
+    %4 = error("alarm interrupt after 964 ms.")
+    ? alarm(10, factor(N));   \\ enough time
+    %5 =
+    [ 10000000000000000000000013 1]
+  
+    [100000000000000000000000067 1]
+</pre>
+Here is a more involved example: the function
+<code>timefact(N,sec)</code> below tries to factor N and gives up after <em>sec</em>
+seconds, returning a partial factorisation.</p>
+<p>
+<pre class="code">  \\ Time-bounded partial factorization
+  default(factor_add_primes,1);
+  timefact(N,sec)=
+  {
+    F = alarm(sec, factor(N));
+    if (type(F) == "t_ERROR", factor(N, 2^24), F);
+  }
+</pre>
+We either return the factorization directly, or replace the
+<code>t_ERROR</code> result by a simple bounded factorization <code>factor(N, 2^24)</code>.
+Note the <code>factor_add_primes</code> trick: any prime larger than 2^{24}
+discovered while attempting the initial factorization is stored and
+remembered. When the alarm rings, the subsequent bounded factorization finds
+it right away.</p>
+<p>
+<b>Caveat.</b> It is not possible to set a new alarm <em>within</em>
+another <code>alarm</code> code: the new timer erases the parent one.</p>
+
+<hr></hr>
+<a name="alias"></a>
+<h4>alias(<em>newsym</em>,<em>sym</em>)</h4>
+<p></p>
+<p>Defines the symbol <em>newsym</em> as an alias for the the symbol <em>sym</em>:</p>
+<p>
+<pre class="code">  ? alias("det", "matdet");
+  ? det([1,2;3,4])
+  %1 = -2
+</pre></p>
+<p>
+You are not restricted to ordinary functions, as in the above example:
+to alias (from/to) member functions, prefix them with `<code>_.</code>';
+to alias operators, use their internal name, obtained by writing
+<code>_</code> in lieu of the operators argument: for instance, <code>_!</code> and
+<code>!_</code> are the internal names of the factorial and the
+logical negation, respectively.</p>
+<p>
+<pre class="code">  ? alias("mod", "_.mod");
+  ? alias("add", "_+_");
+  ? alias("_.sin", "sin");
+  ? mod(Mod(x,x^4+1))
+  %2 = x^4 + 1
+  ? add(4,6)
+  %3 = 10
+  ? Pi.sin
+  %4 = 0.E-37
+</pre></p>
+<p>
+Alias expansion is performed directly by the internal GP compiler.
+Note that since alias is performed at compilation-time, it does not
+require any run-time processing, however it only affects GP code
+compiled <em>after</em> the alias command is evaluated. A slower but more
+flexible alternative is to use variables. Compare</p>
+<p>
+<pre class="code">  ? fun = sin;
+  ? g(a,b) = intnum(t=a,b,fun(t));
+  ? g(0, Pi)
+  %3 = 2.0000000000000000000000000000000000000
+  ? fun = cos;
+  ? g(0, Pi)
+  %5 = 1.8830410776607851098 E-39
+</pre></p>
+<p>
+with</p>
+<p>
+<pre class="code">  ? alias(fun, sin);
+  ? g(a,b) = intnum(t=a,b,fun(t));
+  ? g(0,Pi)
+  %2 = 2.0000000000000000000000000000000000000
+  ? alias(fun, cos);  \\ Oops. Does not affect *previous* definition!
+  ? g(0,Pi)
+  %3 = 2.0000000000000000000000000000000000000
+  ? g(a,b) = intnum(t=a,b,fun(t)); \\ Redefine, taking new alias into account
+  ? g(0,Pi)
+  %5 = 1.8830410776607851098 E-39
+</pre></p>
+<p></p>
+<p>
+A sample alias file <code>misc/gpalias</code> is provided with
+the standard distribution.</p>
+<p>
+The library syntax is <code>void <b>alias0</b>(const char *newsym, const char *sym)</code>.</p>
+
+<hr></hr>
+<a name="allocatemem"></a>
+<h4>allocatemem({s = 0})</h4>
+<p></p>
+<p>This special operation changes the stack size <em>after</em>
+initialization. x must be a non-negative integer. If x &#62; 0, a new stack
+of at least x bytes is allocated. We may allocate more than x bytes if
+x is way too small, or for alignment reasons: the current formula is
+\max(16*ceil{x/16}, 500032) bytes.</p>
+<p>
+If x = 0, the size of the new stack is twice the size of the old one. The
+old stack is discarded.</p>
+<p>
+<b>Warning.</b> This function should be typed at the <code>gp</code> prompt in
+interactive usage, or left by itself at the start of batch files.
+It cannot be used meaningfully in loop-like constructs, or as part of a
+larger expression sequence, e.g</p>
+<p>
+<pre class="code">     allocatemem(); x = 1;   \\  This will not set <code>x</code>!
+</pre></p>
+<p>
+In fact, all loops are immediately exited, user functions terminated, and
+the rest of the sequence following <code>allocatemem()</code> is silently
+discarded, as well as all pending sequences of instructions. We just go on
+reading the next instruction sequence from the file we're in (or from the
+user). In particular, we have the following possibly unexpected behavior: in</p>
+<p>
+<pre class="code">     read("file.gp"); x = 1
+</pre>
+were <code>file.gp</code> contains an <code>allocatemem</code> statement,
+the <code>x = 1</code> is never executed, since all pending instructions in the
+current sequence are discarded.</p>
+<p>
+The technical reason is that this routine moves the stack, so temporary
+objects created during the current expression evaluation are not correct
+anymore. (In particular byte-compiled expressions, which are allocated on
+the stack.) To avoid accessing obsolete pointers to the old stack, this
+routine ends by a <code>longjmp</code>.</p>
+<p>
+<b>Remark.</b> If the operating system cannot allocate the desired
+x bytes, a loop halves the allocation size until it succeeds:</p>
+<p>
+<pre class="code">  ? allocatemem(5*10^10)
+   ***   Warning: not enough memory, new stack 50000000000.
+   ***   Warning: not enough memory, new stack 25000000000.
+   ***   Warning: not enough memory, new stack 12500000000.
+   ***   Warning: new stack size = 6250000000 (5960.464 Mbytes).
+</pre></p>
+<p></p>
+
+<hr></hr>
+<a name="apply"></a>
+<h4>apply(f, A)</h4>
+<p></p>
+<p>Apply the <code>t_CLOSURE</code> <code>f</code> to the entries of <code>A</code>. If <code>A</code>
+is a scalar, return <code>f(A)</code>. If <code>A</code> is a polynomial or power series,
+apply <code>f</code> on all coefficients. If <code>A</code> is a vector or list, return
+the elements f(x) where x runs through <code>A</code>. If <code>A</code> is a matrix,
+return the matrix whose entries are the f(<code>A[i,j]</code>).</p>
+<p>
+<pre class="code">  ? apply(x-&#62;x^2, [1,2,3,4])
+  %1 = [1, 4, 9, 16]
+  ? apply(x-&#62;x^2, [1,2;3,4])
+  %2 =
+  [1 4]
+  
+  [9 16]
+  ? apply(x-&#62;x^2, 4*x^2 + 3*x+ 2)
+  %3 = 16*x^2 + 9*x + 4
+</pre>
+Note that many functions already act componentwise on
+vectors or matrices, but they almost never act on lists; in this
+case, <code>apply</code> is a good solution:</p>
+<p>
+<pre class="code">  ? L = List([Mod(1,3), Mod(2,4)]);
+  ? lift(L)
+    ***   at top-level: lift(L)
+    ***                 ^-------
+    *** lift: incorrect type in lift.
+  ? apply(lift, L);
+  %2 = List([1, 2])
+</pre></p>
+<p>
+<b>Remark.</b> For v a <code>t_VEC</code>, <code>t_COL</code>, <code>t_LIST</code> or <code>t_MAT</code>,
+the alternative set-notations</p>
+<p>
+<pre class="code">  [g(x) | x &#60;- v, f(x)]
+  [x | x &#60;- v, f(x)]
+  [g(x) | x &#60;- v]
+</pre></p>
+<p>
+are available as shortcuts for</p>
+<p>
+<pre class="code">  apply(g, select(f, Vec(v)))
+  select(f, Vec(v))
+  apply(g, Vec(v))
+</pre>
+respectively:</p>
+<p>
+<pre class="code">  ? L = List([Mod(1,3), Mod(2,4)]);
+  ? [ lift(x) | x&#60;-L ]
+  %2 = [1, 2]
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code><b>genapply</b>(void *E, GEN (*fun)(void*,GEN), GEN a)</code>.</p>
+
+<hr></hr>
+<a name="default"></a>
+<h4>default({<em>key</em>},{<em>val</em>})</h4>
+<p></p>
+<p>Returns the default corresponding to keyword <em>key</em>. If <em>val</em> is
+present, sets the default to <em>val</em> first (which is subject to string
+expansion first). Typing <code>default()</code> (or <code>\d</code>) yields the complete
+default list as well as their current values. See Section [<b>Label: se:defaults</b>] for an
+introduction to GP defaults, Section [<b>Label: se:gp_defaults</b>] for a
+list of available defaults, and Section [<b>Label: se:meta</b>] for some shortcut
+alternatives. Note that the shortcuts are meant for interactive use and
+usually display more information than <code>default</code>.</p>
+<p>
+The library syntax is <code>GEN <b>default0</b>(const char *key = NULL, const char *val = NULL)</code>.</p>
+
+<hr></hr>
+<a name="errname"></a>
+<h4>errname(E)</h4>
+<p></p>
+<p>Returns the type of the error message <code>E</code> as a string.</p>
+<p>
+The library syntax is <code>GEN <b>errname</b>(GEN E)</code>.</p>
+
+<hr></hr>
+<a name="error"></a>
+<h4>error({<em>str</em>}*)</h4>
+<p></p>
+<p>Outputs its argument list (each of
+them interpreted as a string), then interrupts the running <code>gp</code> program,
+returning to the input prompt. For instance</p>
+<p>
+<pre class="code">  error("n = ", n, " is not squarefree!")
+</pre></p>
+<p></p>
+<p></p>
+
+<hr></hr>
+<a name="extern"></a>
+<h4>extern(<em>str</em>)</h4>
+<p></p>
+<p>The string <em>str</em> is the name of an external command (i.e.&nbsp;one you
+would type from your UNIX shell prompt). This command is immediately run and
+its output fed into <code>gp</code>, just as if read from a file.</p>
+
+<hr></hr>
+<a name="externstr"></a>
+<h4>externstr(<em>str</em>)</h4>
+<p></p>
+<p>The string <em>str</em> is the name of an external command (i.e.&nbsp;one you
+would type from your UNIX shell prompt). This command is immediately run and
+its output is returned as a vector of GP strings, one component per output
+line.</p>
+
+<hr></hr>
+<a name="getabstime"></a>
+<h4>getabstime()</h4>
+<p></p>
+<p>Returns the time (in milliseconds) elapsed since <code>gp</code> startup. This
+provides a reentrant version of <code>gettime</code>:</p>
+<p>
+<pre class="code">  my (t = getabstime());
+  ...
+  print("Time: ", getabstime() - t);
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>long <b>getabstime</b>()</code>.</p>
+
+<hr></hr>
+<a name="getenv"></a>
+<h4>getenv(s)</h4>
+<p></p>
+<p>Return the value of the environment variable <code>s</code> if it is defined, otherwise return 0.</p>
+<p>
+The library syntax is <code>GEN <b>gp_getenv</b>(const char *s)</code>.</p>
+
+<hr></hr>
+<a name="getheap"></a>
+<h4>getheap()</h4>
+<p></p>
+<p>Returns a two-component row vector giving the
+number of objects on the heap and the amount of memory they occupy in long
+words. Useful mainly for debugging purposes.</p>
+<p>
+The library syntax is <code>GEN <b>getheap</b>()</code>.</p>
+
+<hr></hr>
+<a name="getrand"></a>
+<h4>getrand()</h4>
+<p></p>
+<p>Returns the current value of the seed used by the
+pseudo-random number generator <code>random</code>. Useful mainly for debugging
+purposes, to reproduce a specific chain of computations. The returned value
+is technical (reproduces an internal state array), and can only be used as an
+argument to <code>setrand</code>.</p>
+<p>
+The library syntax is <code>GEN <b>getrand</b>()</code>.</p>
+
+<hr></hr>
+<a name="getstack"></a>
+<h4>getstack()</h4>
+<p></p>
+<p>Returns the current value of <code>top</code>-<code>avma</code>, i.e.&nbsp;the number of
+bytes used up to now on the stack. Useful mainly for debugging purposes.</p>
+<p>
+The library syntax is <code>long <b>getstack</b>()</code>.</p>
+
+<hr></hr>
+<a name="gettime"></a>
+<h4>gettime()</h4>
+<p></p>
+<p>Returns the time (in milliseconds) elapsed since either the last call to
+<code>gettime</code>, or to the beginning of the containing GP instruction (if
+inside <code>gp</code>), whichever came last.</p>
+<p>
+For a reentrant version, see <code>getabstime</code>.</p>
+<p>
+The library syntax is <code>long <b>gettime</b>()</code>.</p>
+
+<hr></hr>
+<a name="global"></a>
+<h4>global(<em>list</em> <em>of</em> <em>variables</em>)</h4>
+<p></p>
+<p>Obsolete. Scheduled for deletion.</p>
+<p></p>
+
+<hr></hr>
+<a name="inline"></a>
+<h4>inline(x,...,z)</h4>
+<p></p>
+<p>(Experimental) declare x,..., z as inline variables. Such variables
+behave like lexically scoped variable (see my()) but with unlimited scope.
+It is however possible to exit the scope by using <code>uninline()</code>.
+When used in a GP script, it is recommended to call <code>uninline()</code> before
+the script's end to avoid inline variables leaking outside the script.</p>
+
+<hr></hr>
+<a name="input"></a>
+<h4>input()</h4>
+<p></p>
+<p>Reads a string, interpreted as a GP expression,
+from the input file, usually standard input (i.e.&nbsp;the keyboard). If a
+sequence of expressions is given, the result is the result of the last
+expression of the sequence. When using this instruction, it is useful to
+prompt for the string by using the <code>print1</code> function. Note that in the
+present version 2.19 of <code>pari.el</code>, when using <code>gp</code> under GNU Emacs (see
+Section [<b>Label: se:emacs</b>]) one <em>must</em> prompt for the string, with a string
+which ends with the same prompt as any of the previous ones (a <code>"? "</code>
+will do for instance).</p>
+
+<hr></hr>
+<a name="install"></a>
+<h4>install(<em>name</em>,<em>code</em>,{<em>gpname</em>},{<em>lib</em>})</h4>
+<p></p>
+<p>Loads from dynamic library <em>lib</em> the function <em>name</em>. Assigns to it
+the name <em>gpname</em> in this <code>gp</code> session, with <em>prototype</em>
+<em>code</em> (see below). If <em>gpname</em> is omitted, uses <em>name</em>.
+If <em>lib</em> is omitted, all symbols known to <code>gp</code> are available: this
+includes the whole of <code>libpari.so</code> and possibly others (such as
+<code>libc.so</code>).</p>
+<p>
+Most importantly, <code>install</code> gives you access to all non-static functions
+defined in the PARI library. For instance, the function \kbd{GEN addii(GEN
+x, GEN y)} adds two PARI integers, and is not directly accessible under
+<code>gp</code> (it is eventually called by the <code>+</code> operator of course):</p>
+<p>
+<pre class="code">  ? install("addii", "GG")
+  ? addii(1, 2)
+  %1 = 3
+</pre></p>
+<p>
+It also allows to add external functions to the <code>gp</code> interpreter.
+For instance, it makes the function <code>system</code> obsolete:</p>
+<p>
+<pre class="code">  ? install(system, vs, sys,/*omitted*/)
+  ? sys("ls gp*")
+  gp.c            gp.h            gp_rl.c
+</pre>
+This works because <code>system</code> is part of <code>libc.so</code>,
+which is linked to <code>gp</code>. It is also possible to compile a shared library
+yourself and provide it to gp in this way: use <code>gp2c</code>, or do it manually
+(see the <code>modules_build</code> variable in <code>pari.cfg</code> for hints).</p>
+<p>
+Re-installing a function will print a warning and update the prototype code
+if needed. However, it will not reload a symbol from the library, even if the
+latter has been recompiled.</p>
+<p>
+<b>Prototype.</b> We only give a simplified description here, covering
+most functions, but there are many more possibilities. The full documentation
+is available in <code>libpari.dvi</code>, see</p>
+<p>
+<pre class="code">    ??prototype
+</pre></p>
+<p></p>
+<p>
+<b>*</b> First character <code>i</code>, <code>l</code>, <code>v</code> : return type int / long /
+void. (Default: <code>GEN</code>)</p>
+<p>
+<b>*</b> One letter for each mandatory argument, in the same order as they appear
+in the argument list: <code>G</code> (<code>GEN</code>), <code>&amp;</code>
+(<code>GEN*</code>), <code>L</code> (<code>long</code>), <code>s</code> (<code>char *</code>), <code>n</code>
+(variable).</p>
+<p>
+<b>*</b> <code>p</code> to supply <code>realprecision</code> (usually <code>long prec</code> in the
+ argument list), <code>P</code> to supply <code>seriesprecision</code> (usually \kbd{long
+ precdl}).</p>
+<p>
+We also have special constructs for optional arguments and default
+ values:</p>
+<p>
+<b>*</b> <code>DG</code> (optional <code>GEN</code>, <code>NULL</code> if omitted),</p>
+<p>
+<b>*</b> <code>D&amp;</code> (optional <code>GEN*</code>, <code>NULL</code> if omitted),</p>
+<p>
+<b>*</b> <code>Dn</code> (optional variable, -1 if omitted),</p>
+<p>
+For instance the prototype corresponding to</p>
+<p>
+<pre class="code">    long issquareall(GEN x, GEN *n = NULL)
+</pre>
+is <code>lGD&amp;</code>.</p>
+<p>
+<b>Caution.</b> This function may not work on all systems, especially
+when <code>gp</code> has been compiled statically. In that case, the first use of an
+installed function will provoke a Segmentation Fault (this should never
+happen with a dynamically linked executable). If you intend to use this
+function, please check first on some harmless example such as the one above
+that it works properly on your machine.</p>
+<p>
+The library syntax is <code>void <b>gpinstall</b>(const char *name, const char *code, const char *gpname, const char *lib)</code>.</p>
+
+<hr></hr>
+<a name="kill"></a>
+<h4>kill(<em>sym</em>)</h4>
+<p></p>
+<p>Restores the symbol <code>sym</code> to its "undefined" status, and deletes any
+help messages associated to <code>sym</code> using <code>addhelp</code>. Variable names
+remain known to the interpreter and keep their former priority: you cannot
+make a variable "less important" by killing it!</p>
+<p>
+<pre class="code">  ? z = y = 1; y
+  %1 = 1
+  ? kill(y)
+  ? y            \\ restored to ``undefined'' status
+  %2 = y
+  ? variable()
+  %3 = [x, y, z] \\ but the variable name y is still known, with y &#62; z !
+</pre></p>
+<p>
+For the same reason, killing a user function (which is an ordinary
+variable holding a <code>t_CLOSURE</code>) does not remove its name from the list of
+variable names.</p>
+<p>
+If the symbol is associated to a variable --- user functions being an
+important special case ---, one may use the quote operator
+<code>a = 'a</code> to reset variables to their starting values. However, this
+will not delete a help message associated to <code>a</code>, and is also slightly
+slower than <code>kill(a)</code>.</p>
+<p>
+<pre class="code">  ? x = 1; addhelp(x, "foo"); x
+  %1 = 1
+  ? x = 'x; x   \\ same as 'kill', except we don't delete help.
+  %2 = x
+  ? ?x
+  foo
+</pre></p>
+<p>
+On the other hand, <code>kill</code> is the only way to remove aliases and installed
+functions.</p>
+<p>
+<pre class="code">  ? alias(fun, sin);
+  ? kill(fun);
+  
+  ? install(addii, GG);
+  ? kill(addii);
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code>void <b>kill0</b>(const char *sym)</code>.</p>
+
+<hr></hr>
+<a name="print"></a>
+<h4>print({<em>str</em>}*)</h4>
+<p></p>
+<p>Outputs its (string) arguments in raw format, ending with a newline.</p>
+<p></p>
+
+<hr></hr>
+<a name="print1"></a>
+<h4>print1({<em>str</em>}*)</h4>
+<p></p>
+<p>Outputs its (string) arguments in raw
+format, without ending with a newline. Note that you can still embed newlines
+within your strings, using the <code>\n</code> notation&nbsp;!</p>
+<p></p>
+
+<hr></hr>
+<a name="printf"></a>
+<h4>printf(<em>fmt</em>,{x}*)</h4>
+<p></p>
+<p>This function is based on the C library command of the same name.
+It prints its arguments according to the format <em>fmt</em>, which specifies how
+subsequent arguments are converted for output. The format is a
+character string composed of zero or more directives:</p>
+<p>
+<b>*</b> ordinary characters (not <code>%</code>), printed unchanged,</p>
+<p>
+<b>*</b> conversions specifications (<code>%</code> followed by some characters)
+which fetch one argument from the list and prints it according to the
+specification.</p>
+<p>
+More precisely, a conversion specification consists in a <code>%</code>, one or more
+optional flags (among <code>#</code>, <code>0</code>, <code>-</code>, <code>+</code>, ` '), an optional
+decimal digit string specifying a minimal field width, an optional precision
+in the form of a period (`<code>.</code>') followed by a decimal digit string, and
+the conversion specifier (among <code>d</code>,<code>i</code>, <code>o</code>, <code>u</code>,
+<code>x</code>,<code>X</code>, <code>p</code>, <code>e</code>,<code>E</code>, <code>f</code>, <code>g</code>,<code>G</code>, <code>s</code>).</p>
+<p>
+<b>The flag characters.</b> The character <code>%</code> is followed by zero or
+more of the following flags:</p>
+<p>
+<b>*</b> <code>#</code>: The value is converted to an "alternate form". For
+<code>o</code> conversion (octal), a <code>0</code> is prefixed to the string. For <code>x</code>
+and <code>X</code> conversions (hexa), respectively <code>0x</code> and <code>0X</code> are
+prepended. For other conversions, the flag is ignored.</p>
+<p>
+<b>*</b> <code>0</code>: The value should be zero padded. For
+<code>d</code>,
+<code>i</code>,
+<code>o</code>,
+<code>u</code>,
+<code>x</code>,
+<code>X</code>
+<code>e</code>,
+<code>E</code>,
+<code>f</code>,
+<code>F</code>,
+<code>g</code>, and
+<code>G</code> conversions, the value is padded on the left with zeros rather than
+blanks. (If the <code>0</code> and <code>-</code> flags both appear, the <code>0</code> flag is
+ignored.)</p>
+<p>
+<b>*</b> <code>-</code>: The value is left adjusted on the field boundary. (The
+default is right justification.) The value is padded on the right with
+blanks, rather than on the left with blanks or zeros. A <code>-</code> overrides a
+<code>0</code> if both are given.</p>
+<p>
+<b>*</b> <code>` '</code> (a space): A blank is left before a positive number
+produced by a signed conversion.</p>
+<p>
+<b>*</b> <code>+</code>: A sign (+ or -) is placed before a number produced by a
+signed conversion. A <code>+</code> overrides a space if both are used.</p>
+<p>
+<b>The field width.</b> An optional decimal digit string (whose first
+digit is non-zero) specifying a <em>minimum</em> field width. If the value has
+fewer characters than the field width, it is padded with spaces on the left
+(or right, if the left-adjustment flag has been given). In no case does a
+small field width cause truncation of a field; if the value is wider than
+the field width, the field is expanded to contain the conversion result.
+Instead of a decimal digit string, one may write <code>*</code> to specify that the
+field width is given in the next argument.</p>
+<p>
+<b>The precision.</b> An optional precision in the form of a period
+(`<code>.</code>') followed by a decimal digit string. This gives
+the number of digits to appear after the radix character for <code>e</code>,
+<code>E</code>, <code>f</code>, and <code>F</code> conversions, the maximum number of significant
+digits for <code>g</code> and <code>G</code> conversions, and the maximum number of
+characters to be printed from an <code>s</code> conversion.
+Instead of a decimal digit string, one may write <code>*</code> to specify that the
+field width is given in the next argument.</p>
+<p>
+<b>The length modifier.</b> This is ignored under <code>gp</code>, but
+necessary for <code>libpari</code> programming. Description given here for
+completeness:</p>
+<p>
+<b>*</b> <code>l</code>: argument is a <code>long</code> integer.</p>
+<p>
+<b>*</b> <code>P</code>: argument is a <code>GEN</code>.</p>
+<p>
+<b>The conversion specifier.</b> A character that specifies the type of
+conversion to be applied.</p>
+<p>
+<b>*</b> <code>d</code>, <code>i</code>: A signed integer.</p>
+<p>
+<b>*</b> <code>o</code>, <code>u</code>, <code>x</code>, <code>X</code>: An unsigned integer, converted
+to unsigned octal (<code>o</code>), decimal (<code>u</code>) or hexadecimal (<code>x</code> or
+<code>X</code>) notation. The letters <code>abcdef</code> are used for <code>x</code>
+conversions;  the letters <code>ABCDEF</code> are used for <code>X</code> conversions.</p>
+<p>
+<b>*</b> <code>e</code>, <code>E</code>: The (real) argument is converted in the style
+<code>[ -]d.ddd e[ -]dd</code>, where there is one digit before the decimal point,
+and the number of digits after it is equal to the precision; if the
+precision is missing, use the current <code>realprecision</code> for the total
+number of printed digits. If the precision is explicitly 0, no decimal-point
+character appears. An <code>E</code> conversion uses the letter <code>E</code> rather
+than <code>e</code> to introduce the exponent.</p>
+<p>
+<b>*</b> <code>f</code>, <code>F</code>: The (real) argument is converted in the style
+<code>[ -]ddd.ddd</code>, where the number of digits after the decimal point
+is equal to the precision; if the precision is missing, use the current
+<code>realprecision</code> for the total number of printed digits. If the precision
+is explicitly 0, no decimal-point character appears. If a decimal point
+appears, at least one digit appears before it.</p>
+<p>
+<b>*</b> <code>g</code>, <code>G</code>: The (real) argument is converted in style
+<code>e</code> or <code>f</code> (or <code>E</code> or <code>F</code> for <code>G</code> conversions)
+<code>[ -]ddd.ddd</code>, where the total number of digits printed
+is equal to the precision; if the precision is missing, use the current
+<code>realprecision</code>. If the precision is explicitly 0, it is treated as 1.
+Style <code>e</code> is used when
+the decimal exponent is  &#60; -4, to print <code>0.</code>, or when the integer
+part cannot be decided given the known significant digits, and the <code>f</code>
+format otherwise.</p>
+<p>
+<b>*</b> <code>c</code>: The integer argument is converted to an unsigned char, and the
+resulting character is written.</p>
+<p>
+<b>*</b> <code>s</code>: Convert to a character string. If a precision is given, no
+more than the specified number of characters are written.</p>
+<p>
+<b>*</b> <code>p</code>: Print the address of the argument in hexadecimal (as if by
+<code>%#x</code>).</p>
+<p>
+<b>*</b> <code>%</code>: A <code>%</code> is written. No argument is converted. The complete
+conversion specification is <code>%%</code>.</p>
+<p>
+Examples:</p>
+<p></p>
+<p>
+<pre class="code">  ? printf("floor: %d, field width 3: %3d, with sign: %+3d\n", Pi, 1, 2);
+  floor: 3, field width 3:   1, with sign:  +2
+  
+  ? printf("%.5g %.5g %.5g\n",123,123/456,123456789);
+  123.00 0.26974 1.2346 e8
+  
+  ? printf("%-2.5s:%2.5s:%2.5s\n", "P", "PARI", "PARIGP");
+  P :PARI:PARIG
+  
+  \\ min field width and precision given by arguments
+  ? x = 23; y=-1/x; printf("x=%+06.2f y=%+0*.*f\n", x, 6, 2, y);
+  x=+23.00 y=-00.04
+  
+  \\ minimum fields width 5, pad left with zeroes
+  ? for (i = 2, 5, printf("%05d\n", 10^i))
+  00100
+  01000
+  10000
+  100000  \\  don't truncate fields whose length is larger than the minimum width
+  ? printf("%.2f  |%06.2f|", Pi,Pi)
+  3.14  |  3.14|
+</pre>
+All numerical conversions apply recursively to the entries
+of vectors and matrices:</p>
+<p>
+<pre class="code">  ? printf("%4d", [1,2,3]);
+  [   1,   2,   3]
+  ? printf("%5.2f", mathilbert(3));
+  [ 1.00  0.50  0.33]
+  
+  [ 0.50  0.33  0.25]
+  
+  [ 0.33  0.25  0.20]
+</pre></p>
+<p>
+<b>Technical note.</b> Our implementation of <code>printf</code>
+deviates from the C89 and C99 standards in a few places:</p>
+<p>
+<b>*</b> whenever a precision is missing, the current <code>realprecision</code> is
+used to determine the number of printed digits (C89: use 6 decimals after
+the radix character).</p>
+<p>
+<b>*</b> in conversion style <code>e</code>, we do not impose that the
+exponent has at least two digits; we never write a <code>+</code> sign in the
+exponent; 0 is printed in a special way, always as <code>0.E<em>exp</em></code>.</p>
+<p>
+<b>*</b> in conversion style <code>f</code>, we switch to style <code>e</code> if the
+exponent is greater or equal to the precision.</p>
+<p>
+<b>*</b> in conversion <code>g</code> and <code>G</code>, we do not remove trailing zeros
+ from the fractional part of the result; nor a trailing decimal point;
+ 0 is printed in a special way, always as <code>0.E<em>exp</em></code>.</p>
+<p></p>
+
+<hr></hr>
+<a name="printsep"></a>
+<h4>printsep(<em>sep</em>,{<em>str</em>}*)</h4>
+<p></p>
+<p>Outputs its (string) arguments in raw format, ending with a newline.
+Successive entries are separated by <em>sep</em>:</p>
+<p>
+<pre class="code">  ? printsep(":", 1,2,3,4)
+  1:2:3:4
+</pre></p>
+<p></p>
+<p></p>
+
+<hr></hr>
+<a name="printsep1"></a>
+<h4>printsep1(<em>sep</em>,{<em>str</em>}*)</h4>
+<p></p>
+<p>Outputs its (string) arguments in raw format, without ending with a
+newline.  Successive entries are separated by <em>sep</em>:</p>
+<p>
+<pre class="code">  ? printsep1(":", 1,2,3,4);print("|")
+  1:2:3:4
+</pre></p>
+<p></p>
+<p></p>
+
+<hr></hr>
+<a name="printtex"></a>
+<h4>printtex({<em>str</em>}*)</h4>
+<p></p>
+<p>Outputs its (string) arguments in TeX format. This output can then be
+used in a TeX manuscript.
+The printing is done on the standard output. If you want to print it to a
+file you should use <code>writetex</code> (see there).</p>
+<p>
+Another possibility is to enable the <code>log</code> default
+(see&nbsp;Section [<b>Label: se:defaults</b>]).
+You could for instance do:</p>
+<p></p>
+<p>
+<pre class="code">  default(logfile, "new.tex");
+  default(log, 1);
+  printtex(result);
+</pre></p>
+<p></p>
+<p></p>
+
+<hr></hr>
+<a name="quit"></a>
+<h4>quit({<em>status</em> = 0})</h4>
+<p></p>
+<p>Exits <code>gp</code> and return to the system with exit status
+<code>status</code>, a small integer. A non-zero exit status normally indicates
+abnormal termination. (Note: the system actually sees only
+<code>status</code> mod 256, see your man pages for <code>exit(3)</code> or <code>wait(2)</code>).</p>
+
+<hr></hr>
+<a name="read"></a>
+<h4>read({<em>filename</em>})</h4>
+<p></p>
+<p>Reads in the file
+<em>filename</em> (subject to string expansion). If <em>filename</em> is
+omitted, re-reads the last file that was fed into <code>gp</code>. The return
+value is the result of the last expression evaluated.</p>
+<p>
+If a GP <code>binary file</code> is read using this command (see
+Section [<b>Label: se:writebin</b>]), the file is loaded and the last object in the file
+is returned.</p>
+<p>
+In case the file you read in contains an <code>allocatemem</code> statement (to be
+generally avoided), you should leave <code>read</code> instructions by themselves,
+and not part of larger instruction sequences.</p>
+
+<hr></hr>
+<a name="readstr"></a>
+<h4>readstr({<em>filename</em>})</h4>
+<p></p>
+<p>Reads in the file <em>filename</em> and return a vector of GP strings,
+each component containing one line from the file. If <em>filename</em> is
+omitted, re-reads the last file that was fed into <code>gp</code>.</p>
+
+<hr></hr>
+<a name="readvec"></a>
+<h4>readvec({<em>filename</em>})</h4>
+<p></p>
+<p>Reads in the file
+<em>filename</em> (subject to string expansion). If <em>filename</em> is
+omitted, re-reads the last file that was fed into <code>gp</code>. The return
+value is a vector whose components are the evaluation of all sequences
+of instructions contained in the file. For instance, if <em>file</em> contains</p>
+<p>
+<pre class="code">  1
+  2
+  3
+</pre></p>
+<p>
+then we will get:</p>
+<p>
+<pre class="code">  ? \r a
+  %1 = 1
+  %2 = 2
+  %3 = 3
+  ? read(a)
+  %4 = 3
+  ? readvec(a)
+  %5 = [1, 2, 3]
+</pre></p>
+<p>
+In general a sequence is just a single line, but as usual braces and
+<code>\</code> may be used to enter multiline sequences.</p>
+<p>
+The library syntax is <code>GEN <b>gp_readvec_file</b>(const char *filename)</code>.
+The underlying library function
+<code>GEN <b>gp_readvec_stream</b>(FILE *f)</code> is usually more flexible.</p>
+
+<hr></hr>
+<a name="select"></a>
+<h4>select(f, A, {<em>flag</em> = 0})</h4>
+<p></p>
+<p>We first describe the default behaviour, when <em>flag</em> is 0 or omitted.
+Given a vector or list <code>A</code> and a <code>t_CLOSURE</code> <code>f</code>, <code>select</code>
+returns the elements x of <code>A</code> such that f(x) is non-zero. In other
+words, <code>f</code> is seen as a selection function returning a boolean value.</p>
+<p>
+<pre class="code">  ? select(x-&#62;isprime(x), vector(50,i,i^2+1))
+  %1 = [2, 5, 17, 37, 101, 197, 257, 401, 577, 677, 1297, 1601]
+  ? select(x-&#62;(x&#60;100), %)
+  %2 = [2, 5, 17, 37]
+</pre>
+returns the primes of the form i^2+1 for some i <code>&#60;=</code> 50,
+then the elements less than 100 in the preceding result. The <code>select</code>
+function also applies to a matrix <code>A</code>, seen as a vector of columns, i.e. it
+selects columns instead of entries, and returns the matrix whose columns are
+the selected ones.</p>
+<p>
+<b>Remark.</b> For v a <code>t_VEC</code>, <code>t_COL</code>, <code>t_LIST</code> or <code>t_MAT</code>,
+the alternative set-notations</p>
+<p>
+<pre class="code">  [g(x) | x &#60;- v, f(x)]
+  [x | x &#60;- v, f(x)]
+  [g(x) | x &#60;- v]
+</pre></p>
+<p>
+are available as shortcuts for</p>
+<p>
+<pre class="code">  apply(g, select(f, Vec(v)))
+  select(f, Vec(v))
+  apply(g, Vec(v))
+</pre>
+respectively:</p>
+<p>
+<pre class="code">  ? [ x | x &#60;- vector(50,i,i^2+1), isprime(x) ]
+  %1 = [2, 5, 17, 37, 101, 197, 257, 401, 577, 677, 1297, 1601]
+</pre></p>
+<p></p>
+<p>
+If <em>flag</em> = 1, this function returns instead the <em>indices</em> of
+the selected elements, and not the elements themselves (indirect selection):</p>
+<p>
+<pre class="code">  ? V = vector(50,i,i^2+1);
+  ? select(x-&#62;isprime(x), V, 1)
+  %2 = Vecsmall([1, 2, 4, 6, 10, 14, 16, 20, 24, 26, 36, 40])
+  ? vecextract(V, %)
+  %3 = [2, 5, 17, 37, 101, 197, 257, 401, 577, 677, 1297, 1601]
+</pre></p>
+<p>
+The following function lists the elements in (<b>Z</b>/N<b>Z</b>)^*:</p>
+<p>
+<pre class="code">  ? invertibles(N) = select(x-&#62;gcd(x,N) == 1, [1..N])
+</pre></p>
+<p></p>
+<p>
+Finally</p>
+<p>
+<pre class="code">  ? select(x-&#62;x, M)
+</pre>
+selects the non-0 entries in <code>M</code>. If the latter is a
+<code>t_MAT</code>, we extract the matrix of non-0 columns. Note that <em>removing</em>
+entries instead of selecting them just involves replacing the selection
+function <code>f</code> with its negation:</p>
+<p>
+<pre class="code">  ? select(x-&#62;!isprime(x), vector(50,i,i^2+1))
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code><b>genselect</b>(void *E, long (*fun)(void*,GEN), GEN a)</code>. Also available
+is <code>GEN <b>genindexselect</b>(void *E, long (*fun)(void*, GEN), GEN a)</code>,
+corresponding to <em>flag</em> = 1.</p>
+
+<hr></hr>
+<a name="setrand"></a>
+<h4>setrand(n)</h4>
+<p></p>
+<p>Reseeds the random number generator using the seed n. No value is
+returned. The seed is either a technical array output by <code>getrand</code>, or a
+small positive integer, used to generate deterministically a suitable state
+array. For instance, running a randomized computation starting by
+<code>setrand(1)</code> twice will generate the exact same output.</p>
+<p>
+The library syntax is <code>void <b>setrand</b>(GEN n)</code>.</p>
+
+<hr></hr>
+<a name="system"></a>
+<h4>system(<em>str</em>)</h4>
+<p></p>
+<p><em>str</em> is a string representing a system command. This command is
+executed, its output written to the standard output (this won't get into your
+logfile), and control returns to the PARI system. This simply calls the C
+<code>system</code> command.</p>
+
+<hr></hr>
+<a name="trap"></a>
+<h4>trap({e}, {<em>rec</em>}, <em>seq</em>)</h4>
+<p></p>
+<p>THIS FUNCTION IS OBSOLETE: use <code>iferr</code>, which has a nicer and much
+more powerful interface. For compatibility's sake we now describe the
+<em>obsolete</em> function <code>trap</code>.</p>
+<p>
+This function tries to
+evaluate <em>seq</em>, trapping runtime error e, that is effectively preventing
+it from aborting computations in the usual way; the recovery sequence
+<em>rec</em> is executed if the error occurs and the evaluation of <em>rec</em>
+becomes the result of the command. If e is omitted, all exceptions are
+trapped. See Section [<b>Label: se:errorrec</b>] for an introduction to error recovery
+under <code>gp</code>.</p>
+<p></p>
+<p>
+<pre class="code">  ? \\  trap division by 0
+  ? inv(x) = trap (e_INV, INFINITY, 1/x)
+  ? inv(2)
+  %1 = 1/2
+  ? inv(0)
+  %2 = INFINITY
+</pre></p>
+<p>
+Note that <em>seq</em> is effectively evaluated up to the point that produced
+the error, and the recovery sequence is evaluated starting from that same
+context, it does not "undo" whatever happened in the other branch (restore
+the evaluation context):</p>
+<p>
+<pre class="code">  ? x = 1; trap (, /* recover: */ x, /* try: */ x = 0; 1/x)
+  %1 = 0
+</pre></p>
+<p></p>
+<p>
+<b>Note.</b> The interface is currently not adequate for trapping
+individual exceptions. In the current version <b>2.7.0</b>, the following keywords
+are recognized, but the name list will be expanded and changed in the
+future (all library mode errors can be trapped: it's a matter of defining
+the keywords to <code>gp</code>):</p>
+<p>
+<code>e_ALARM</code>: alarm time-out</p>
+<p>
+<code>e_ARCH</code>: not available on this architecture or operating system</p>
+<p>
+<code>e_STACK</code>: the PARI stack overflows</p>
+<p>
+<code>e_INV</code>: impossible inverse</p>
+<p>
+<code>e_IMPL</code>: not yet implemented</p>
+<p>
+<code>e_OVERFLOW</code>: all forms of arithmetic overflow, including length
+or exponent overflow (when a larger value is supplied than the
+implementation can handle).</p>
+<p>
+<code>e_SYNTAX</code>: syntax error</p>
+<p>
+<code>e_MISC</code>: miscellaneous error</p>
+<p>
+<code>e_TYPE</code>: wrong type</p>
+<p>
+<code>e_USER</code>: user error (from the <code>error</code> function)</p>
+<p>
+The library syntax is <code>GEN <b>trap0</b>(const char *e = NULL, GEN rec = NULL, GEN seq = NULL)</code>.</p>
+
+<hr></hr>
+<a name="type"></a>
+<h4>type(x)</h4>
+<p></p>
+<p>This is useful only under <code>gp</code>. Returns the internal type name of
+the PARI object x as a  string. Check out existing type names with the
+metacommand <code>\t</code>. For example <code>type(1)</code> will return "<code>t_INT</code>".</p>
+<p>
+The library syntax is <code>GEN <b>type0</b>(GEN x)</code>.
+The macro <code>typ</code> is usually simpler to use since it returns a
+<code>long</code> that can easily be matched with the symbols <code>t_*</code>. The name
+<code>type</code> was avoided since it is a reserved identifier for some compilers.</p>
+
+<hr></hr>
+<a name="uninline"></a>
+<h4>uninline()</h4>
+<p></p>
+<p>(Experimental) Exit the scope of all current <code>inline</code> variables.</p>
+
+<hr></hr>
+<a name="version"></a>
+<h4>version()</h4>
+<p></p>
+<p>Returns the current version number as a <code>t_VEC</code> with three integer
+components (major version number, minor version number and patchlevel);
+if your sources were obtained through our version control system, this will
+be followed by further more precise arguments, including
+e.g.&nbsp;a&nbsp;<code>git</code> <em>commit hash</em>.</p>
+<p>
+This function is present in all versions of PARI following releases 2.3.4
+(stable) and 2.4.3 (testing).</p>
+<p>
+Unless you are working with multiple development versions, you probably only
+care about the 3 first numeric components. In any case, the <code>lex</code> function
+offers a clever way to check against a particular version number, since it will
+compare each successive vector entry, numerically or as strings, and will not
+mind if the vectors it compares have different lengths:</p>
+<p>
+<pre class="code">     if (lex(version(), [2,3,5]) &#62;= 0,
+       \\ code to be executed if we are running 2.3.5 or more recent.
+     ,
+       \\ compatibility code
+     );
+</pre>
+On a number of different machines, <code>version()</code> could return either of</p>
+<p>
+<pre class="code">   %1 = [2, 3, 4]    \\ released version, stable branch
+   %1 = [2, 4, 3]    \\ released version, testing branch
+   %1 = [2, 6, 1, 15174, ""505ab9b"] \\ development
+</pre></p>
+<p></p>
+<p>
+In particular, if you are only working with released versions, the first
+line of the gp introductory message can be emulated by</p>
+<p>
+<pre class="code">     [M,m,p] = version();
+     printf("GP/PARI CALCULATOR Version %s.%s.%s", M,m,p);
+</pre>
+If you <em>are</em> working with many development versions of
+ PARI/GP, the 4th and/or 5th components can be profitably included in the
+ name of your logfiles, for instance.</p>
+<p>
+<b>Technical note.</b> For development versions obtained via <code>git</code>,
+ the 4th and 5th components are liable to change eventually, but we document
+ their current meaning for completeness. The 4th component counts the number
+ of reachable commits in the branch (analogous to <code>svn</code>'s revision
+ number), and the 5th is the <code>git</code> commit hash. In particular, <code>lex</code>
+ comparison still orders correctly development versions with respect to each
+ others or to released versions (provided we stay within a given branch,
+ e.g. <code>master</code>)!</p>
+<p>
+The library syntax is <code>GEN <b>pari_version</b>()</code>.</p>
+
+<hr></hr>
+<a name="warning"></a>
+<h4>warning({<em>str</em>}*)</h4>
+<p></p>
+<p>Outputs the message "user warning"
+and the argument list (each of them interpreted as a string).
+If colors are enabled, this warning will be in a different color,
+making it easy to distinguish.</p>
+<p>
+<pre class="code">  warning(n, " is very large, this might take a while.")
+</pre></p>
+<p></p>
+<p></p>
+
+<hr></hr>
+<a name="whatnow"></a>
+<h4>whatnow(<em>key</em>)</h4>
+<p></p>
+<p>If keyword <em>key</em> is the name of a function that was present in GP
+version 1.39.15 or lower, outputs the new function name and syntax, if it
+changed at all (387 out of 560 did).</p>
+
+<hr></hr>
+<a name="write"></a>
+<h4>write(<em>filename</em>,{<em>str</em>}*)</h4>
+<p></p>
+<p>Writes (appends) to <em>filename</em> the remaining arguments, and appends a
+newline (same output as <code>print</code>).</p>
+<p></p>
+
+<hr></hr>
+<a name="write1"></a>
+<h4>write1(<em>filename</em>,{<em>str</em>}*)</h4>
+<p></p>
+<p>Writes (appends) to <em>filename</em> the remaining arguments without a
+trailing newline (same output as <code>print1</code>).</p>
+<p></p>
+
+<hr></hr>
+<a name="writebin"></a>
+<h4>writebin(<em>filename</em>,{x})</h4>
+<p></p>
+<p>Writes (appends) to
+<em>filename</em> the object x in binary format. This format is not human
+readable, but contains the exact internal structure of x, and is much
+faster to save/load than a string expression, as would be produced by
+<code>write</code>. The binary file format includes a magic number, so that such a
+file can be recognized and correctly input by the regular <code>read</code> or <code>\r</code>
+function. If saved objects refer to (polynomial) variables that are not
+defined in the new session, they will be displayed in a funny way (see
+Section [<b>Label: se:kill</b>]). Installed functions and history objects can not be saved
+via this function.</p>
+<p>
+If x is omitted, saves all user variables from the session, together with
+their names. Reading such a "named object" back in a <code>gp</code> session will set
+the corresponding user variable to the saved value. E.g after</p>
+<p>
+<pre class="code">  x = 1; writebin("log")
+</pre></p>
+<p>
+reading <code>log</code> into a clean session will set <code>x</code> to 1.
+The relative variables priorities (see Section [<b>Label: se:priority</b>]) of new variables
+set in this way remain the same (preset variables retain their former
+priority, but are set to the new value). In particular, reading such a
+session log into a clean session will restore all variables exactly as they
+were in the original one.</p>
+<p>
+Just as a regular input file, a binary file can be compressed
+using <code>gzip</code>, provided the file name has the standard <code>.gz</code>
+extension.</p>
+<p>
+In the present implementation, the binary files are architecture dependent
+and compatibility with future versions of <code>gp</code> is not guaranteed. Hence
+binary files should not be used for long term storage (also, they are
+larger and harder to compress than text files).</p>
+<p>
+The library syntax is <code>void <b>gpwritebin</b>(const char *filename, GEN x = NULL)</code>.</p>
+
+<hr></hr>
+<a name="writetex"></a>
+<h4>writetex(<em>filename</em>,{<em>str</em>}*)</h4>
+<p></p>
+<p>As <code>write</code>, in TeX format.</p>
+<p></p>
+<p></p>
+
+<hr></hr>
+
+</BODY>
+</HTML>

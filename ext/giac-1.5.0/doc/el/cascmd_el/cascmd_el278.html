@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Ανάπτυγμα σε σειρά :  series</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el277.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el279.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc312">1.33.3</A>  Ανάπτυγμα σε σειρά : <TT> series</TT></H3><P><A NAME="@default476"></A><A NAME="@default477"></A> 
+	
+<TT>series</TT> παίρνει από 1 μέχρι 4 ορίσματα :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+μια παράσταση που εξαρτάται από μια μεταβλητή (από προεπιλογή 	
+<TT>x</TT>),
+</LI><LI CLASS="li-itemize">μια ισότητα <TT>variable=value</TT> (π.χ. <I>x</I>=<I>a</I>) για τον υπολογισμό του αναπτύγματος σε σειρά, από προεπιλογή 	
+<TT>x=0</TT>, 
+</LI><LI CLASS="li-itemize">έναν ακέραιο <I>n</I>, την τάξη του αναπτύγματος σε σειρά,
+από προεπιλογή <TT>5</TT>,
+</LI><LI CLASS="li-itemize">μια κατεύθυνσση <TT>-1, 1</TT> (για ανάπτυγμα σε σειρά χωρίς κατεύθυνση)
+ή <TT>0</TT> (για ανάπτυγμα σε σειρά με 2 κατευθύνσεις) (από προεπιλογή 	
+<TT>0</TT>).
+</LI></UL><P>
+Σημειώσατε ότι η σύνταξη 	
+<TT>…,</TT><TT><I>x</I></TT><TT>,</TT><TT><I>n</I></TT><TT>,</TT><TT><I>a</I></TT><TT>,...</TT> 
+(αντί για 	
+<TT>…,</TT><TT><I>x</I>=<I>a</I></TT><TT>,</TT><TT><I>n</I></TT><TT>,...</TT>) είναι επίσης αποδεκτή.<BR>
+	
+<TT>series</TT> επιστρέφει το πολυώνυμο στο 	
+<TT>x-a</TT>, συν ένα υπόλοιπο της μορφής:
+</P><DIV CLASS="center">
+	
+<TT>(x-a)</TT><CODE><TT>^</TT></CODE><TT>n*order_size(x-a)</TT>
+</DIV><P>
+όπου 	
+<TT>order_size</TT> είναι μια συνάρτηση τέτοια ώστε,
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">∀ <I>r</I>&gt;0,    </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">lim</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I>→ 0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>x</I><SUP><I>r</I></SUP> 	
+<TT>order_size</TT>(<I>x</I>) = 0 </TD></TR>
+</TABLE><P>
+Η τάξη που επιστρέφεται από την 	
+<TT>series</TT> μπορεί να είναι μικρότερη από <I>n</I> εάν γίνονται απαλοιφές μεταξύ αριθμητών και παρονομαστών, για παράδειγμα</P><P>Παραδείγατα :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+ανάπτυγμα σε σειρά στην περιοχή του 	
+<TT>x=0</TT><BR>
+ Βρείτε το ανάπτυγμα σε σειρά της παράστασης
+<I>x</I><SUP>3</SUP>+sin(<I>x</I>)<SUP>3</SUP>/<I>x</I>−sin(<I>x</I>) 
+στην περιοχή του 	
+<TT> x=0</TT>.<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>series(x</TT><CODE><TT>^</TT></CODE><TT>3+sin(x)</TT><CODE><TT>^</TT></CODE><TT>3/(x-sin(x)))</TT></DIV>
+Έξοδος είναι ανάπτυγμα μόνο 2ης τάξης :
+<DIV CLASS="center">	
+<TT>6+-27/10*x</TT><CODE><TT>^2</TT></CODE><TT>+x</TT><CODE><TT>^</TT></CODE><TT>3*order_size(x)</TT></DIV>
+Έχουμε χάσει 3 τάξεις γιατί ο μικρότερος βαθμός του αριθμητή και του παρονομαστή
+είναι 3. Για να πάρουμε ανάπτυγμα 4ης τάξης, πρέπει να ζητήσουμε
+<I>n</I>=7, εισάγοντας:
+<DIV CLASS="center">	
+<TT>series(x</TT><CODE><TT>^</TT></CODE><TT>3+sin(x)</TT><CODE><TT>^</TT></CODE><TT>3/(x-sin(x)),x=0,7)</TT></DIV>
+ή:
+<DIV CLASS="center">	
+<TT>series(x</TT><CODE><TT>^</TT></CODE><TT>3+sin(x)</TT><CODE><TT>^</TT></CODE><TT>3/(x-sin(x)),x,0,7)</TT></DIV>
+Έξοδος είναι ανάπτυγμα 4ης τάξης :
+<DIV CLASS="center">	
+<TT>6+-27/10*x</TT><CODE><TT>^</TT></CODE><TT>2+x</TT><CODE><TT>^</TT></CODE><TT>3+711/1400*x</TT><CODE><TT>^</TT></CODE><TT>4+
+x</TT><CODE><TT>^</TT></CODE><TT>5*order_size(x)</TT></DIV>
+</LI><LI CLASS="li-itemize">ανάπτυγμα σε σειρά στην περιοχή του 	
+<TT>x=a</TT><BR>
+Βρείτε το ανάπτυγμα σε σειρά 4ης τάξης της cos(2<I>x</I>)<SUP>2</SUP> στην περιοχή του
+<I>x</I>=π/6.<BR>
+Είσοδος:
+<DIV CLASS="center">	
+<TT>series(cos(2*x)</TT><CODE><TT>^</TT></CODE><TT>2,x=pi/6, 4)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>1/4+(-(4*sqrt(3)))/4*(x-pi/6)+(4*3-4)/4*(x-pi/6)</TT><CODE><TT>^</TT></CODE><TT>2+ 32*sqrt(3)/3/4*(x-pi/6)</TT><CODE><TT>^</TT></CODE><TT>3+(-16*3+16)/3/4*(x-pi/6)</TT><CODE><TT>^</TT></CODE><TT>4+ (x-pi/6)</TT><CODE><TT>^</TT></CODE><TT>5*order_size(x-pi/6)</TT></DIV> 
+</LI><LI CLASS="li-itemize">ανάπτυγμα σε σειρά στην περιοχή του 	
+<TT>x=+</TT><TT>∞</TT> ή 	
+<TT>x=-</TT><TT>∞</TT>
+<OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Βρείτε το ανάπτυγμα σε σειρά 5ης τάξης της arctan(<I>x</I>) στην περιοχή του
+	
+<TT>x=+</TT><TT>∞</TT>.<BR>
+ Είσοδος :
+<DIV CLASS="center">	
+<TT>series(atan(x),x=+infinity,5)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>pi/2-1/x+1/3*(1/x)</TT><CODE><TT>^</TT></CODE><TT>3+1/-5*(1/x)</TT><CODE><TT>^</TT></CODE><TT>5+
+(1/x)</TT><CODE><TT>^</TT></CODE><TT>6*order_size(1/x)</TT></DIV>
+Σημειώστε ότι η μεταβλητή του αναπτύγματος και το όρισμα της συνάρτησης
+	
+<TT>order_size</TT> είναι
+ <I>h</I>=1/<I>x</I> →<SUB><I>x</I>→ + ∞</SUB> 0 .
+</LI><LI CLASS="li-enumerate">Βρείτε το ανάπτυγμα σε σειρά 2ης τάξης της παράστασης (2<I>x</I>−1)<I>e</I><SUP>1/<I>x</I>−1</SUP> στην περιοχή του
+	
+<TT>x=+</TT><TT>∞</TT>.<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>series((2*x-1)*exp(1/(x-1)),x=+infinity,3)</TT></DIV>
+Έξοδος είναι ανάπτυγμα 1ης τάξης:
+<DIV CLASS="center">	
+<TT>2*x+1+2/x+(1/x)</TT><CODE><TT>^</TT></CODE><TT>2*order_size(1/x)</TT></DIV>
+Για να πάρουμε ανάπτυγμα 2ης τάξης 1/<I>x</I>, εισάγουμε :
+<DIV CLASS="center">	
+<TT>series((2*x-1)*exp(1/(x-1)),x=+infinity,4)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>2*x+1+2/x+17/6*(1/x)</TT><CODE><TT>^</TT></CODE><TT>2+(1/x)</TT><CODE><TT>^</TT></CODE><TT>3*order_size(1/x)</TT></DIV>
+</LI><LI CLASS="li-enumerate">Βρείτε το ανάπτυγμα σε σειρά 2ης τάξης της παράστασης (2<I>x</I>−1)<I>e</I><SUP>1/<I>x</I>−1</SUP>) στην περιοχή του 	
+<TT>x=-</TT><TT>∞</TT>.<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>series((2*x-1)*exp(1/(x-1)),x=-infinity,4)</TT></DIV>
+Έξοδος:
+<DIV CLASS="center">	
+<TT>-2*(-x)+1-2*(-1/x)+17/6*(-1/x)</TT><CODE><TT>^</TT></CODE><TT>2+<BR>
+(-1/x)</TT><CODE><TT>^</TT></CODE><TT>3*order_size(-1/x)</TT></DIV>
+</LI></OL>
+</LI><LI CLASS="li-itemize">ανάπτυγμα σε σειρά με μονή κατεύθυνση<BR>
+Η τέταρτη παράμετρος υποδεικνύει την κατεύθυνση :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+<TT>1</TT> για ανάπτυγμα σε σειρά στην περιοχή του <I>x</I>=<I>a</I> με
+  <I>x</I>&gt;<I>a</I>,
+</LI><LI CLASS="li-itemize"><TT>-1</TT> για ανάπτυγμα σε σειρά στην περιοχή του <I>x</I>=<I>a</I> με 
+  <I>x</I>&lt;<I>a</I>,
+</LI><LI CLASS="li-itemize"><TT>0</TT> για ανάπτυγμα σε σειρά στην περιοχή του <I>x</I>=<I>a</I> με
+  <I>x</I> ≠ <I>a</I>.
+</LI></UL>
+Για παράδειγμα, 
+βρείτε το ανάπτυγμα σε σειρά 2ης τάξης της παράστασης  (1+<I>x</I>)<SUP>1/<I>x</I></SUP>/<I>x</I><SUP>3</SUP>  
+στην περιοχή του <I>x</I>=0<SUP>+</SUP>.<BR>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>series((1+x)</TT><CODE><TT>^</TT></CODE><TT>(1/x)/x</TT><CODE><TT>^</TT></CODE><TT>3,x=0,2,1)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>exp(1)/x</TT><CODE><TT>^</TT></CODE><TT>3+(-(exp(1)))/2/x</TT><CODE><TT>^</TT></CODE><TT>2+1/x*order_size(x)</TT></DIV>
+</LI></UL><HR>
+<A HREF="cascmd_el277.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el279.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

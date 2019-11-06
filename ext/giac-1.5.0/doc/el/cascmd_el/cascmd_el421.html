@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Παραγοντοποίηση LU :  lu</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el420.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el422.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc470">1.48.3</A>  Παραγοντοποίηση <TT>LU</TT> : <TT> lu</TT></H3><P><A NAME="@default699"></A>
+	
+<TT>lu</TT> παίρνει ως όρισμα έναν τετραγωνικό πίνακα <I>A</I> μεγέθους <I>n</I> (αριθμητικό ή
+συμβολικό).<BR>
+	
+<TT>lu</TT> επιστρέφει μια μετάθεση (διάταξη) <I>p</I> των στοιχείων 0..<I>n</I>−1, 
+έναν κάτω τριγωνικό πίνακα <I>L</I>, με 1 στη διαγώνιο, 
+και έναν άνω τριγωνικό πίνακα <I>U</I>, έτσι ώστε : 
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<I>P</I>*<I>A</I>=<I>L</I>*<I>U</I>, όπου <I>P</I> είναι ο πίνακας μεταθέσεων που
+παράγεται από την <I>p</I> (υπολογίζεται με 	
+<TT>P:=permu2mat(p)</TT>),
+</LI><LI CLASS="li-itemize">η εξίσωση <I>A</I>*<I>x</I>=<I>B</I> είναι ισοδύναμη με :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>L</I>*<I>U</I>*<I>x</I>=<I>P</I>*<I>B</I>=<I>p</I>(<I>B</I>)  όπου  <I>p</I>(<I>B</I>)=[<I>b</I><SUB><I>p</I>(0)</SUB>,<I>b</I><SUB><I>p</I>(1)</SUB>..<I>b</I><SUB><I>p</I>(<I>n</I>−1)</SUB>],
+    <I>B</I>=[<I>b</I><SUB>0</SUB>,<I>b</I><SUB>1</SUB>..<I>b</I><SUB><I>n</I>−1</SUB>] </TD></TR>
+</TABLE>
+</LI></UL><P>
+Ο πίνακας μεταθέσεων <I>P</I> ορίζεται από την <I>p</I> ως :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>[<I>i</I>, <I>p</I>(<I>i</I>)]=1,    <I>P</I>[<I>i</I>, <I>j</I>]=0  εάν  <I>j</I>  ≠ <I>p</I>(<I>i</I>) </TD></TR>
+</TABLE><P>
+Με άλλα λόγια, είναι ο ταυτοτικός πίνακας όπου οι γραμμές μετατίθενται 
+σύμφωνα με την μετάθεση <I>p</I>. 
+Η συνάρτηση 	
+<TT>permu2mat</TT><A NAME="@default700"></A> χρησιμοποιείται για τον υπολογισμό του <I>P</I>
+(	
+<TT>permu2mat(p)</TT> επιστρέφει τον πίνακα <I>P</I>).<BR>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>[p,L,U]:=lu([[3.,5.],[4.,5.]])</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[1,0],[[1,0],[0.75,1]],[[4.0,5.0],[0,1.25]]</TT></DIV><P>
+Εδώ <I>n</I>=2, και επομένως :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>[0,<I>p</I>(0)]=<I>P</I>[0,1]=1,     <I>P</I>[1,<I>p</I>(1)]=<I>P</I>[1,0]=1,   
+<I>P</I>=[[0,1],[1,0]] </TD></TR>
+</TABLE><P>
+Επαλήθευση :<BR>
+Είσοδος (όπου <TT><I>A</I>:=[[3.,5.],[4.,5.]]</TT>) :
+</P><DIV CLASS="center">	
+<TT>permu2mat(p)*A; L*U</TT></DIV><P>
+Έξοδος:
+</P><DIV CLASS="center">	
+<TT>[[4.0,5.0],[3.0,5.0]],[[4.0,5.0],[3.0,5.0]]</TT></DIV><P>
+Να σημειωθεί ότι η μετάθεση είναι διαφορετική για ακριβή είσοδο (ως 
+οδηγός επιλέγεται ο απλούστερος αντί για τον μεγαλύτερο σε απόλυτη τιμή).<BR>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>lu([[1,2],[3,4]])</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[1,0],[[1,0],[3,1]],[[1,2],[0,-2]]</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>lu([[1.0,2],[3,4]])</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>[1,0],[[1,0],[0.333333333333,1]],[[3,4], [0,0.666666666667]]</TT></DIV><HR>
+<A HREF="cascmd_el420.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el422.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

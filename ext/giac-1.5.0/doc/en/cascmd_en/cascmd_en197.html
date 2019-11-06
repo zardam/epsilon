@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Substitute a variable by a value : subst</title>
+</head>
+<body >
+<a href="cascmd_en196.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en198.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec237" class="subsection">5.13.20  Substitute a variable by a value : <span style="font-family:monospace">subst</span></h3>
+<p><a id="hevea_default304"></a><a id="sec:subst"></a>
+<span style="font-family:monospace">subst</span> takes two or three arguments : 
+</p><ul class="itemize"><li class="li-itemize">
+an expression depending on a variable,
+an equality (variable=value of substitution) or a list of equalities.
+</li><li class="li-itemize">an expression depending on a variable, a variable or a list
+of variables, a value or a list of values for substitution.
+</li></ul><p>
+<span style="font-family:monospace">subst</span> returns the expression with the substitution done.
+Note that <span style="font-family:monospace">subst</span> does not quote its argument, hence
+in a normal evaluation process, the substitution variable should
+be purged otherwise it will be replaced by its assigned value
+before substitution is done.<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">subst(a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1,a=2)</span></div><p> 
+or :
+</p><div class="center"><span style="font-family:monospace">subst(a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1,a,2)</span></div><p> 
+Output (if the variable <span style="font-family:monospace">a</span> is purged else first input <span style="font-family:monospace">purge(a)</span>) :
+</p><div class="center"><span style="font-family:monospace">5</span></div><p> 
+Input :
+</p><div class="center"><span style="font-family:monospace">subst(a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+b,[a,b],[2,1])</span></div><p> 
+or :
+</p><div class="center"><span style="font-family:monospace">subst(a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+b,[a=2,b=1])</span></div><p> 
+Output (if the variables <span style="font-family:monospace">a</span> and <span style="font-family:monospace">b</span> are purged else first input 
+<span style="font-family:monospace">purge(a,b)</span>) :
+</p><div class="center"><span style="font-family:monospace">5</span></div><p>
+<span style="font-family:monospace">subst</span> may also be used to make a change of variable in an integral. 
+In this case the <span style="font-family:monospace">integrate</span> command should be quoted 
+(otherwise, the integral would be computed before substitution) or
+the inert form <span style="font-family:monospace">Int</span> should be used.
+In both cases, the name of the integration variable must be given as
+argument of <span style="font-family:monospace">Int</span> or <span style="font-family:monospace">integrate</span> even you are integrating
+with respect to <span style="font-family:monospace">x</span>.<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">subst(’integrate(sin(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)*x,x,0,pi/2)’,x=sqrt(t))</span></div><p>
+or :
+</p><div class="center"><span style="font-family:monospace">subst(Int(sin(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)*x,x,0,pi/2),x=sqrt(t))</span></div><p>
+Output
+</p><div class="center"><span style="font-family:monospace">integrate(sin(t)*sqrt(t)*1/2*1/t*sqrt(t),t,0,(pi/2)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)</span></div><p> 
+Input :
+</p><div class="center"><span style="font-family:monospace">subst(’integrate(sin(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)*x,x)’,x=sqrt(t))</span></div><p>
+or :
+</p><div class="center"><span style="font-family:monospace">subst(Int(sin(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)*x,x),x=sqrt(t))</span></div><p>
+Output
+</p><div class="center"><span style="font-family:monospace">integrate(sin(t)*sqrt(t)*1/2*1/t*sqrt(t),t)</span></div>
+<hr>
+<a href="cascmd_en196.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en198.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

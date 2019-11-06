@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Global extrema: minimize maximize</title>
+</head>
+<body >
+<a href="cascmd_en580.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en582.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec695" class="subsection">5.53.1  Global extrema: <span style="font-family:monospace">minimize maximize</span></h3>
+<p><a id="hevea_default912"></a><a id="hevea_default913"></a></p><p>The function <span style="font-family:monospace">minimize</span> takes four arguments :
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">obj</span> : univariate or multivariate expression
+</li><li class="li-itemize"><span style="font-family:monospace">constr</span> (optional) : list of equality and inequality constraints
+</li><li class="li-itemize"><span style="font-family:monospace">vars</span> : list of variables
+</li><li class="li-itemize"><span style="font-family:monospace">location</span> (optional) : option keyword which may be <span style="font-family:monospace">coordinates</span>, <span style="font-family:monospace">locus</span> or <span style="font-family:monospace">point</span>
+</li></ul><p>
+The expression <span style="font-family:monospace">obj</span> is minimized on the domain specified by constraints and/or bounding variables, which can be done as specifying e.g. <span style="font-family:monospace">x=a..b</span> in <span style="font-family:monospace">vars</span>. The domain must be closed and bounded and <span style="font-family:monospace">obj</span> must be continuous in every point of it. Else, the final result may be incorrect or meaningless.</p><p>Constraints may be given as equalities or inequalities, but also as expressions which are assumed to be equal to zero. If there is only one constraint, the list delimiters may be dropped. The same applies to the specification of variables.</p><p><span style="font-family:monospace">minimize</span> returns the minimal value. If it could not be obtained, it returns <span style="font-family:monospace">undef</span>. If <span style="font-family:monospace">location</span> is specified, the list of points where the minimum is achieved is also returned as the second member in a list. Keywords <span style="font-family:monospace">locus</span>, <span style="font-family:monospace">coordinates</span> and <span style="font-family:monospace">point</span> all have the same effect.</p><p>The function <span style="font-family:monospace">maximize</span> takes the same parameters as <span style="font-family:monospace">minimize</span>. The difference is that it computes global maximum of <span style="font-family:monospace">obj</span> on the specified domain.</p>
+<h4 id="sec696" class="subsubsection">Examples</h4>
+<p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">minimize(sin(x),[x=0..4])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">sin(4)</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">minimize(asin(x),x=-1..1)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-pi/2</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">minimize(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x=-3..3,locus)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-1/4,[-sqrt(2)/2]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">minimize(x-abs(x),x=-1..1)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-2</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">minimize(when(x==0,0,exp(-1/x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)),x=-1..1)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">0</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">minimize(sin(x)+cos(x),x=0..20,coordinates)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-sqrt(2),[5*pi/4,13*pi/4,21*pi/4]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">minimize(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-3x+y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+3y+3,[x=2..4,y=-4..-2],point)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-1,[[2,-2]]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">obj:=sqrt(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)-z;</span><br>
+<span style="font-family:monospace">constr:=[x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2&lt;=16,x+y+z=10];</span><br>
+<span style="font-family:monospace">minimize(obj,constr,[x,y,z])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-4*sqrt(2)-6</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">minimize(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*(y+1)-2y,[y&lt;=2,sqrt(1+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)&lt;=y],[x,y])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-4</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">maximize(cos(x),x=1..3)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">cos(1)</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">obj:=piecewise(x&lt;=-2,x+6,x&lt;=1,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,3/2-x/2);</span>
+<span style="font-family:monospace">maximize(obj,x=-3..2)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">4</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">maximize(x*y*z,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+2*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+3*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2&lt;=1,[x,y,z])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">sqrt(2)/18</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">maximize(x*y,[x+y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2&lt;=2,x&gt;=0,y&gt;=0],[x,y],locus)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">4*sqrt(6)/9,[[4/3,sqrt(6)/3]]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">maximize(y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*y,y&lt;=x,[x=0..2,y=0..2])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">4/27</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">assume(a&gt;0);</span><br>
+<span style="font-family:monospace">maximize(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2=a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,[x,y,z])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">6/27</span>
+</div>
+<hr>
+<a href="cascmd_en580.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en582.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

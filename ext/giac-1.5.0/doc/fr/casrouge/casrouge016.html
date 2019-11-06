@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Exercice : Les courses poursuites</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casrouge015.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge017.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc421">Chapitre 16</A>  Exercice : Les courses poursuites</H1><H2 CLASS="section"><A NAME="toc113"></A><A NAME="htoc422">16.1</A>  Le chien qui va en direction de son maitre</H2><P>
+On chien se trouve en <I>C</I> de coordonnées (0,1) et son maitre se trouve en <I>M</I> de coordonnées (0,0).<BR>
+Le maitre se déplace sur l’axe des <I>x</I> et le chien se dirige à la même vitesse en direction de son maitre.<BR>
+On veut dessiner la trajectoire du chien.
+</P><PRE CLASS="verbatim">chien():={
+local X,Y,L,xk,yk,p,j,k,d,a,a1,b,b1;
+DispG;
+ClrGraph();
+p:=0.1;
+X:=0,0,3;
+Y:=1,0,0;
+L:=NULL;
+pour k de 0 jusque 1 faire
+L:=L,point(X[k]+i*Y[k],affichage=1+epaisseur_point_2+point_point);
+fpour;
+tantque abs(X[0]+i*Y[0]-X[1]-i*Y[1])&gt;0.1 faire
+pour k de 0 jusque 1 faire
+a:=X[k];a1:=X[k+1]-a;
+b:=Y[k];b1:=Y[k+1]-b;
+d:=sqrt(a1^2+b1^2);
+xk:=a+p*a1/d;
+yk:=b+p*b1/d;
+L:=L,segment(a+i*b,xk+i*yk,affichage=k);
+X[k]:=xk;
+Y[k]:=yk;
+fpour;
+ftantque;
+return L;
+}
+:;
+</PRE><H2 CLASS="section"><A NAME="toc114"></A><A NAME="htoc423">16.2</A>  Avec les sommets d’isopolygônes</H2><P>
+Des personnes <I>A</I>,<I>B</I>,<I>C</I>.. sont situées aux sommets <I>A</I>,<I>B</I>,<I>C</I>.. d’un isoploygone.<BR>
+Á l’instant <I>t</I>, <I>A</I> se dirige vers <I>B</I>, <I>B</I> se dirige vers <I>C</I>, <I>C</I> se 
+dirige vers <I>D</I>,...et le dernier sommet se dirige vers <I>A</I>.<BR>
+On veut dessiner les trajectoires de <I>A</I>,<I>B</I>,<I>C</I>....
+</P><PRE CLASS="verbatim">isopoly(n,m):={
+local X,Y,L,xk,yk,p,j,k,d,a,a1,b,b1,P,SP;
+p:=0.1;
+L:=NULL;
+P:=isopolygone(0,1,n);
+SP:=op(sommets(P));
+X:=evalf(abscisse(SP));
+Y:=evalf(ordonnee(SP));
+pour k de 0 jusque n-1 faire
+L:=L,point(X[k]+i*Y[k],affichage=1+epaisseur_point_2+point_point);
+fpour;
+pour j de 0 jusque m-1 faire
+X[n]:=X[0];
+Y[n]:=Y[0];
+pour k de 0 jusque n-1 faire
+a:=X[k];a1:=X[k+1]-a;
+b:=Y[k];b1:=Y[k+1]-b;
+d:=sqrt(a1^2+b1^2);
+xk:=a+p*a1/d;
+yk:=b+p*b1/d;
+L:=L,segment(a+i*b,xk+i*yk,affichage=k+89);
+X[k]:=xk;
+Y[k]:=yk;
+fpour;
+fpour;
+return L;
+}
+:;
+
+</PRE><H2 CLASS="section"><A NAME="toc115"></A><A NAME="htoc424">16.3</A>  Avec les sommets de polygônes quelconques</H2><P>
+Des personnes <I>A</I>,<I>B</I>,<I>C</I>... sont situées aux sommets d’un ploygone <I>A</I>,<I>B</I>,<I>C</I>... 
+dont les affixes sont les éléments de la liste <I>Z</I>.<BR>
+Á l’instant <I>t</I>, <I>A</I> se dirige vers <I>B</I>, <I>B</I> se dirige vers <I>C</I>, <I>C</I> se 
+dirige vers <I>D</I>,...et le dernier sommet se dirige vers <I>A</I>.<BR>
+On veut dessiner les trajectoires de <I>A</I>,<I>B</I>,<I>C</I>....
+</P><PRE CLASS="verbatim">poly(Z):={
+local X,Y,L,xk,yk,p,j,k,d,a,a1,b,b1,n,m;
+p:=0.1;
+L:=NULL;
+m:=100;
+n:=size(Z);
+X:=re(Z);
+Y:=im(Z);
+pour k de 0 jusque n-1 faire
+L:=L,point(X[k]+i*Y[k],affichage=1+epaisseur_point_2+point_point);
+fpour;
+pour j de 0 jusque m-1 faire
+X[n]:=X[0];
+Y[n]:=Y[0];
+pour k de 0 jusque n-1 faire
+a:=X[k];a1:=X[k+1]-a;
+b:=Y[k];b1:=Y[k+1]-b;
+d:=sqrt(a1^2+b1^2);
+xk:=a+p*a1/d;
+yk:=b+p*b1/d;
+L:=L,segment(a+i*b,xk+i*yk,affichage=k+89);
+X[k]:=xk;
+Y[k]:=yk;
+fpour;
+fpour;
+return L;
+}
+:;
+</PRE><H2 CLASS="section"><A NAME="toc116"></A><A NAME="htoc425">16.4</A>  Avec des points aléatoires</H2><P>
+Des souris <I>A</I>,<I>B</I>,<I>C</I>... sont situées aux points <I>A</I>,<I>B</I>,<I>C</I>... 
+dont les coordonnées sont les éléments des listes <I>X</I> et <I>Y</I> définies 
+aléatoirement entre -1 et 1.<BR>
+Á l’instant <I>t</I>, <I>A</I> se dirige vers <I>B</I>, <I>B</I> se dirige vers <I>C</I>, <I>C</I> se 
+dirige vers <I>D</I>,...et le dernier sommet se dirige vers <I>A</I>.<BR>
+On veut dessiner les trajectoires de <I>A</I>,<I>B</I>,<I>C</I>....
+</P><PRE CLASS="verbatim">courbot0():={
+local X,Y,L,xk,yk,p,m,n,j,k,d,a,a1,b,b1;
+DispG;
+ClrGraph();
+p:=0.1;
+m:=10;
+n:=50;
+X:=NULL;
+Y:=NULL;
+L:=NULL;
+pour k de 0 jusque n-1 faire
+xk:=2*alea(0,1)-1;
+yk:=2*alea(0,1)-1;
+X:=X,xk;
+Y:=Y,yk;
+L:=L,point(xk,yk,affichage=1+epaisseur_point_2+point_point);
+fpour;
+Pause 1;
+pour j de 0 jusque m-1 faire
+X[n]:=X[0];
+Y[n]:=Y[0];
+pour k de 0 jusque n-1 faire
+a:=X[k];a1:=X[k+1]-a;
+b:=Y[k];b1:=Y[k+1]-b;
+d:=sqrt(a1^2+b1^2);
+xk:=a+p*a1/d;
+yk:=b+p*b1/d;
+L:=L,segment(a+i*b,xk+i*yk,affichage=k+90);
+X[k]:=xk;
+Y[k]:=yk;
+fpour;
+Pause 1;
+fpour;
+return L;
+}
+:;
+courbot():={
+local xt,yt,X,Y,L,xk,yk,p,m,n,j,k,d,a,a1,b,b1;
+ClrGraph();
+p:=0.01;
+m:=100;
+n:=50;
+X:=NULL;
+Y:=NULL;
+L:=NULL;
+pour k de 0 jusque n-1 faire
+xk:=2*alea(0,1)-1;
+yk:=2*alea(0,1)-1;
+X:=X,xk;
+Y:=Y,yk;
+L:=L,point(xk,yk,affichage=1+epaisseur_point_2+point_point);
+fpour;
+pour j de 0 jusque m-1 faire
+X[n]:=X[0];
+Y[n]:=Y[0];
+pour k de 0 jusque n-1 faire
+a:=X[k];a1:=X[k+1]-a;
+b:=Y[k];b1:=Y[k+1]-b;
+d:=sqrt(a1^2+b1^2);
+xt:=a+p*a1/d ;
+yt:=b+p*b1/d;
+L:=L,segment(a+i*b,xt+i*yt,affichage=k+90);
+X[k]:=xt;
+Y[k]:=yt;
+fpour;
+fpour;
+return L;
+}:;
+</PRE><HR>
+<A HREF="casrouge015.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge017.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Ορισμός μιας συνάρτησης από το "ιστορικό" : 
+as_function_of</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el128.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el130.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc146">1.16.6</A>  Ορισμός μιας συνάρτησης από το <TT>"</TT>ιστορικό<TT>"</TT> :<BR>
+<TT>as_function_of</TT></H3><P><A NAME="@default249"></A>
+Εάν με μια εντολή ορίσαμε την μεταβλητή 	
+<TT>a</TT> και εάν σε μια επόμενη εντολή ορίσαμε την μεταβλητή 	
+<TT>b</TT> (που υποθέτουμε ότι εξαρτάται από την 	
+<TT>a</TT>), τότε η εντολή 	
+<TT>c:=as_function_of(b,a)</TT> θα ορίσει μια συνάρτηση 	
+<TT>c</TT> τέτοια ώστε 	
+<TT>c(a)=b</TT>.<BR>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>a:=sin(x)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>sin(x)</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>b:=sqrt(1+a</TT><CODE><TT>^</TT></CODE><TT>2)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>sqrt(1+sin(x)</TT><CODE><TT>^</TT></CODE><TT>2)</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>c:=as_function_of(b,a)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="flushleft">	
+<TT>(a)-&gt;<BR>
+{ local NULL;<BR>
+ return(sqrt(1+a</TT><CODE><TT>^</TT></CODE><TT>2));<BR>
+}</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>c(x)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>sqrt(1+x</TT><CODE><TT>^</TT></CODE><TT>2)</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>a:=2</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>2</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>b:=1+a</TT><CODE><TT>^</TT></CODE><TT>2</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>5</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>c:=as_function_of(b,a)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="flushleft">	
+<TT>(a)-&gt;<BR>
+{ local NULL;<BR>
+ return(1+a</TT><CODE><TT>^</TT></CODE><TT>2);<BR>
+}</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>c(x)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>1+x</TT><CODE><TT>^</TT></CODE><TT>2</TT></DIV><P><B>Προσοχή !!</B><BR>
+Εάν η μεταβλητή 	
+<TT>b</TT> έχει ανατεθεί πολλές φορές, τότε θα χρησιμοποιηθεί η πρώτη εντολή της 	
+<TT>b</TT> που ακολουθεί την τελευταία εντολή της 	
+<TT>a</TT>. 
+Επιπλέον, η διάταξη που χρησιμοποιείται είναι η σειρά με την οποία εκτελούνται οι εντολές, και η οποία μπορεί να μην φαίνεται στην διεπαφή του 	
+Xcas αν διάφορες εντολές έχουν εκτελεσθεί ξανά.<BR>
+Για παράδειγμα Είσοδος :<BR>
+	
+<TT>a:=2</TT> και μετά<BR>
+	
+<TT>b:=2*a+1</TT> και μετά<BR>
+	
+<TT>b:=3*a+2</TT> και μετά<BR>
+	
+<TT>c:=as_function_of(b,a)</TT><BR>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(a)-&gt; {local NULL; return(2*a+1);}</TT></DIV><P>
+δηλαδή 	
+<TT>c(x)</TT> ισούται με 	
+<TT>2*x+1</TT>.<BR>
+Αλλά, Είσοδος :<BR>
+	
+<TT>a:=2</TT> και μετά<BR>
+	
+<TT>b:=2*a+1</TT> και μετά<BR>
+	
+<TT>a:=2</TT> και μετά<BR>
+	
+<TT>b:=3*a+2</TT> και μετά<BR>
+	
+<TT>c:=as_function_of(b,a)</TT><BR>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(a)-&gt; {local NULL; return(3*a+2);}</TT></DIV><P>
+δηλαδή 	
+<TT>c(x)</TT> ισούται με 	
+<TT>3*x+2</TT>.<BR>
+</P><HR>
+<A HREF="cascmd_el128.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el130.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

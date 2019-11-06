@@ -1,0 +1,180 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others 
+  Translation to greek : George Nassopoulos-->
+<HTML>
+<HEAD>
+<TITLE>Αναγωγή πινάκων</TITLE>
+<META NAME="description" CONTENT="R&#233;duction des matrices">
+<META NAME="keywords" CONTENT="tutoriel">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutoriel.css">
+
+<LINK REL="previous" HREF="node25.html">
+<LINK REL="up" HREF="node20.html">
+<LINK REL="next" HREF="node27.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html431"
+  HREF="node27.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html425"
+  HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html421"
+  HREF="node25.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html427"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html429"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html432"
+  HREF="node27.html">Γραφικές παραστάσεις</A>
+<B> εμφάνιση:</B> <A NAME="tex2html426"
+  HREF="node20.html">Εργαλεία για την Άλγεβρα</A>
+<B> προηγούμενο:</B> <A NAME="tex2html422"
+  HREF="node25.html">Γραμμικά συστήματα</A>
+ &nbsp; <B>  <A NAME="tex2html428"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html430"
+  HREF="node47.html">Ευρετήριο</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00046000000000000000"></A>
+<A NAME="647"></A>
+<BR>
+Αναγωγή πινάκων
+</H2>
+<A NAME="1727"></A>
+Το όρισμα της συνάρτησης <code>jordan</code> είναι ένας πίνακας <I>A</I>. Μας
+ επιστρέφει 
+έναν πίνακα αλλαγής βάσης (ή πίνακα μετάβασης) <I>P</I> και έναν πίνακα <I>J</I> σε
+ ανηγμένη μορφή Jordan 
+ έτσι ώστε
+ <!-- MATH
+ $P^{-1}A P=J$
+ -->
+<I>P</I><SUP>-1</SUP><I>AP</I> = <I>J</I>. 
+
+Είτε ο <I>A</I> διαγωνοποιείται οπότε ο <I>J</I> 
+είναι διαγώνιος και περιέχει τις ιδιοτιμές του <I>A</I> στην διαγώνιο,
+είτε ο <I>A</I> δεν διαγωνοποιείται οπότε ο <I>J</I> έχει 0 και 1 πάνω από την 
+διαγώνιο.
+Για τους ακριβείς και συμβολικούς πίνακες, μπορούμε να υπολογίσουμε 
+τις ιδιοτιμές μόνο με την συνάρτηση <code>solve</code>.
+Για τους πίνακες με προσεγγιστικές τιμές, χρησιμοποιείται ένας αριθμητικός 
+αλγόριθμος,
+ο οποίος  μπορεί να αποτύχει σε περίπτωση πολλαπλών ή 
+πολύ κοντινών ιδιοτιμών.
+Ο πίνακας <I>A</I> του παραδείγματος που ακολουθεί έχει <I>διπλές</I>
+ ιδιοτιμές τους 
+αριθμούς 1 και 2.
+Διαγωνοποιείται για <I>a</I> = 0, και δεν διαγωνοποιείται για <I>a</I> <IMG
+ WIDTH="15" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img17.png"
+ ALT="$ \neq$"> 0.
+<PRE>
+A:=[[1,1,-1,0],[0,1,0,a],[0,-1,2,0],[1,0,1,2]
+factor(poly2symb(simplify(pcar(A))))
+jordan(A)
+eigenvals(A)
+eigenvects(A)
+jordan(subs(A,a=0))
+eigenvects(subs(A,a=1))
+jordan(evalf(subs(A,a=0)))
+jordan(evalf(subs(A,a=1)))
+</PRE>
+Ορισμένες συναρτήσεις, που ορίζονται από δυναμοσειρές, επεκτείνονται 
+και στους πίνακες εφόσον μπορούμε να υπολογίσουμε την μορφή  Jordan των πινάκων αυτών.
+Η πιό χρήσιμη συνάρτηση είναι η εκθετική. 
+<PRE>
+A:=[[0,1,0],[0,0,1],[-2,1,2]]
+jordan(A)
+exp(A)
+ln(A)
+sin(A)
+</PRE>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><B>Αναγωγή πινάκων</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>jordan</code></TD>
+<TD ALIGN="LEFT">διαγωνοποίηση ή αναγωγή Jordan</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>pcar</code></TD>
+<TD ALIGN="LEFT">συντελεστές του χαρακτηριστικού πολυωνύμου</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>pmin</code></TD>
+<TD ALIGN="LEFT">συντελεστές του ελαχίστου πολυωνύμου</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>eigenvals</code></TD>
+<TD ALIGN="LEFT">ιδιοτιμές</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>eigenvects</code></TD>
+<TD ALIGN="LEFT">ιδιοδιανύσματα</TD>
+</TR>
+</TABLE>
+</DIV>
+<A NAME="1728"></A>
+<A NAME="1729"></A>
+<A NAME="1730"></A>
+<A NAME="1731"></A>
+<A NAME="666"></A>
+<A NAME="667"></A>
+<A NAME="668"></A>
+<A NAME="669"></A>
+<A NAME="670"></A>
+<A NAME="671"></A>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html431"
+  HREF="node27.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html425"
+  HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html421"
+  HREF="node25.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html427"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html429"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html432"
+  HREF="node27.html">Γραφικές παραστάσεις</A>
+<B> εμφάνιση:</B> <A NAME="tex2html426"
+  HREF="node20.html">Εργαλεία για την Άλγεβρα</A>
+<B> προηγούμενο:</B> <A NAME="tex2html422"
+  HREF="node25.html">Γραμμικά συστήματα</A>
+ &nbsp; <B>  <A NAME="tex2html428"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html430"
+  HREF="node47.html">Ευρετήριο</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Βιβλιογραφία του <A HREF="http://www-fourier.ujf-grenoble.fr/~parisse/giac_fr.html">giac</A> από τους Renee De Graeve, Bernard Parisse και Bernard Ycart
+</ADDRESS>
+Μετάφραση στα Ελληνικά : Γιώργος Νασόπουλος. Διασκευή : Αλκιβιάδης Γ. Ακρίτας
+</BODY>
+</HTML>

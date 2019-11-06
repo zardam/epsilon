@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Premier cas : 3 arguments</title>
+</head>
+<body >
+<a href="cascmd_fr628.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr630.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec770" class="subsection">6.54.3  Premier cas : 3 arguments</h3>
+<p>
+Lorsqu’on lui passe 3 arguments <span style="font-style:italic">A</span>,<span style="font-style:italic">b</span>,<span style="font-style:italic">c</span>,
+la fonction <code>simplex_reduce</code> calcule le maximum (s’il existe)
+de <span style="font-style:italic">c</span>.<span style="font-style:italic">x</span> pour <span style="font-style:italic">c</span> vecteur fixé de ℝ<sup><span style="font-style:italic">n</span></sup> et <span style="font-style:italic">x</span> variable, 
+sous les conditions <span style="font-style:italic">x</span>≥ 0 et
+<span style="font-style:italic">A</span>.<span style="font-style:italic">x</span> ≤ <span style="font-style:italic">b</span> (avec <span style="font-style:italic">A</span> et <span style="font-style:italic">b</span>≥ 0 fixés). 
+Ce problème est appelé “forme canonique”.</p><p><span style="font-family:monospace">Xcas</span> ajoute <span style="font-style:italic">m</span> variables d’écart <span style="font-style:italic">y</span><sub>1</sub>,...,<span style="font-style:italic">y</span><sub><span style="font-style:italic">m</span></sub> (<span style="font-style:italic">m</span>=nombre de lignes
+de <span style="font-style:italic">A</span>) pour transformer les inégalités en égalités, puis
+choisit comme sommet de départ évident 
+toutes les variables de départ nulles et les variables d’écart
+valant <span style="font-style:italic">b</span>. Il construit donc la matrice 
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎛<br>
+⎜<br>
+⎝</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">A</span></td><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">I</span></td><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">b</span><sup><span style="font-style:italic">t</span></sup> </td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >−<span style="font-style:italic">c</span></td><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >0
+</td></tr>
+</table></td><td class="dcell"> </td><td class="dcell">⎞<br>
+⎟<br>
+⎠</td></tr>
+</table><p>
+Ensuite il se déplace en suivant des arêtes
+du simplexe défini par les conditions <span style="font-style:italic">Ax</span>+<span style="font-style:italic">y</span>=<span style="font-style:italic">b</span>, <span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>≥ 0 en augmentant
+le plus possible la valeur de <span style="font-style:italic">c</span>.<span style="font-style:italic">x</span>. Cela se fait en cherchant
+dans la dernière ligne un coefficient négatif strict (soit le plus
+négatif possible, soit le premier négatif), qui représentera
+une colonne entrant dans la sous-matrice identité (en rendant son
+coefficient non nul dans les composantes du sommet, on augmentera
+au sens large la valeur de <span style="font-style:italic">c</span>.<span style="font-style:italic">x</span>). S’il n’y a pas de coefficient
+négatif, on arrête l’algorithme (on verra que le maximum
+est le coefficient en bas à droite de la matrice). S’il existe,
+on sélectionne cette colonne comme colonne du pivot (colonne
+entrante dans la matrice identité), 
+il nous reste à déterminer la ligne
+du pivot utilisé (c’est la
+colonne sortant de la matrice identité) :
+</p><ul class="itemize"><li class="li-itemize"> 
+d’une part, le pivot utilisé doit être positif, en effet on va
+diviser la ligne du pivot par la valeur du pivot, et le coefficient
+constant de cette ligne (qui sera la valeur d’une coordonnée d’un sommet)
+doit rester positif.
+</li><li class="li-itemize">d’autre part les autres coefficients du sommet doivent aussi rester
+positifs. Pour réaliser cela, on calcule de la ligne 1 à <span style="font-style:italic">m</span>
+les rapport des coefficients de cette ligne dernière colonne avec
+le coefficient de cette ligne, colonne du pivot,
+en cherchant la ligne qui donne un rapport positif le plus petit
+possible.
+S’il n’existe pas de telle ligne, le maximum est alors
++∞ (car on peut indéfiniment augmenter la valeur de la
+composante ayant ce numéro de colonne en restant dans le domaine). 
+Si une telle ligne existe, on se sert du coefficient
+de cette ligne/colonne comme d’un pivot, et on crée un 1 à cette
+ligne et des 0 ailleurs dans
+cette colonne par combinaisons linéaires de lignes.
+</li></ul><p>
+Au cours de l’algorithme, les <span style="font-style:italic">m</span> premières lignes de la matrice contiennent
+toujours une sous-matrice identité <span style="font-style:italic">m</span>,<span style="font-style:italic">m</span> (puisqu’on fait du pivot de Gauss), 
+et les coefficients de la dernière
+ligne qui correspondent à cette sous-matrice identité sont nuls 
+(pour la même raison).
+On a donc une matrice de la forme
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎛<br>
+⎜<br>
+⎝</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">B</span><sup>−1</sup> <span style="font-style:italic">A</span></td><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">B</span><sup>−1</sup></td><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">B</span><sup>−1</sup> <span style="font-style:italic">b</span> </td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >−<span style="font-style:italic">c</span>+ <span style="font-style:italic">c</span><sub><span style="font-style:italic">B</span></sub> <span style="font-style:italic">B</span><sup>−1</sup> <span style="font-style:italic">A</span></td><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">c</span><sub><span style="font-style:italic">B</span></sub> <span style="font-style:italic">B</span><sup>−1</sup></td><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">c</span><sub><span style="font-style:italic">B</span></sub> <span style="font-style:italic">B</span><sup>−1</sup> <span style="font-style:italic">b</span>
+</td></tr>
+</table></td><td class="dcell"> </td><td class="dcell">⎞<br>
+⎟<br>
+⎠</td></tr>
+</table><p>
+où <span style="font-style:italic">B</span> est une sous-matrice extraite de <span style="font-style:italic">A</span>,<span style="font-style:italic">I</span> (correspondant à des
+colonnes de la dernière ligne ayant pour coefficients 0) et <span style="font-style:italic">c</span><sub><span style="font-style:italic">B</span></sub> est
+la liste des coefficients de <span style="font-style:italic">c</span> correspondant aux mêmes colonnes de
+<span style="font-style:italic">A</span>,<span style="font-style:italic">I</span> que <span style="font-style:italic">B</span>.
+Pour éviter de boucler indéfiniment si le coefficient en bas
+à droite est constant, on peut garder en
+mémoire dans une table
+les colonnes correspondant à l’identité et se refuser
+à revenir à une configuration précédente.</p><p>Si on ne quitte pas l’algorithme (maximum=+∞), à la fin,
+la dernière ligne ne contient que des coefficients positifs ou
+nuls. On a de plus l’identité fonction à optimiser + produit
+scalaire entre la dernière ligne et (<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>) est égal
+au coefficient en bas à droite (=<span style="font-style:italic">c</span><sub><span style="font-style:italic">B</span></sub> <span style="font-style:italic">B</span><sup>−1</sup> <span style="font-style:italic">b</span>). Comme les
+coefficients de la dernière ligne sont positifs ou nuls, de même
+que les composantes de <span style="font-style:italic">x</span> et <span style="font-style:italic">y</span>, on en déduit que la fonction
+à optimiser est inférieure au coefficient en bas à droite.
+D’autre part, cette valeur est atteinte au sommet correspondant.</p><p>Le résultat renvoyé par <span style="font-family:monospace">simplex_reduce</span>
+est une séquence composée de la valeur du maximum, d’une solution
+augmentée (les premières composantes sont celles de la solution,
+les composantes suivantes celles des variables ajoutées
+artificiellement pour transformer <span style="font-style:italic">Ax</span>≤ <span style="font-style:italic">b</span> en une égalité)
+et de la matrice de l’algorithme du simplexe après réduction.</p><p>Exemple : si on cherche le maximum de 3<span style="font-style:italic">x</span><sub>1</sub>+<span style="font-style:italic">x</span><sub>2</sub>+3<span style="font-style:italic">x</span><sub>3</sub> sous les
+conditions <span style="font-style:italic">x</span><sub>1</sub>,<span style="font-style:italic">x</span><sub>2</sub>,<span style="font-style:italic">x</span><sub>3</sub> ≥ 0 et
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" >2<span style="font-style:italic">x</span><sub>1</sub>+<span style="font-style:italic">x</span><sub>2</sub>+<span style="font-style:italic">x</span><sub>3</sub></td><td style="text-align:center;white-space:nowrap" >≤</td><td style="text-align:left;white-space:nowrap" >2</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">x</span><sub>1</sub>+2<span style="font-style:italic">x</span><sub>2</sub>+3<span style="font-style:italic">x</span><sub>3</sub></td><td style="text-align:center;white-space:nowrap" >≤</td><td style="text-align:left;white-space:nowrap" >5 </td></tr>
+<tr><td style="text-align:right;white-space:nowrap" >2<span style="font-style:italic">x</span><sub>1</sub>+2<span style="font-style:italic">x</span><sub>2</sub>+<span style="font-style:italic">x</span><sub>3</sub></td><td style="text-align:center;white-space:nowrap" >≤</td><td style="text-align:left;white-space:nowrap" >6
+</td></tr>
+</table></td><td class="dcell"> </td></tr>
+</table><p>
+on prend <code>A:=[[2,1,1],[1,2,3],[2,2,1]]</code>,
+<code>b:=[2,5,6]</code> et <code>c:=[3,1,3]</code>, donc on tape :
+</p><div class="center">
+<span style="font-family:monospace">simplex_reduce([[2,1,1],[1,2,3],[2,2,1]],[2,5,6],[3,1,3])</span>
+</div><p>
+et on obtient <code>27/5</code> comme maximum,
+<code>[1/5,0,8/5,0,0,4]</code> comme solution augmentée (donc
+<code>[1/5,0,8/5]</code> est solution), ainsi que la matrice réduite.</p>
+<hr>
+<a href="cascmd_fr628.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr630.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

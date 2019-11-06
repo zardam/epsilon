@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Derivative and partial derivative</title>
+</head>
+<body >
+<a href="cascmd_en225.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en227.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec278" class="subsection">5.19.5  Derivative and partial derivative</h3>
+<p><a id="hevea_default392"></a><a id="hevea_default393"></a><a id="hevea_default394"></a>
+<span style="font-family:monospace">diff</span> or <span style="font-family:monospace">derive</span> may have one or two arguments 
+to compute a first order derivative (or first order partial
+derivative) of an expression or of a list of expressions, 
+or several arguments to compute 
+the <span style="font-style:italic">n</span>-th partial derivative of an expression or list of expressions.</p>
+<h4 id="sec279" class="subsubsection">Derivative and first order partial derivative : <span style="font-family:monospace">diff derive deriver</span></h4>
+<p>
+<span style="font-family:monospace">diff</span> (or <span style="font-family:monospace">derive</span>) takes two arguments : an expression and a variable
+(resp. a vector of variable names) (see several variable functions in
+<a href="index.html#sec%3Aplusvar">5.59</a>). If only one argument is provided, the derivative
+is taken with respect to <span style="font-family:monospace">x</span><br>
+<span style="font-family:monospace">diff</span> (or <span style="font-family:monospace">derive</span>) returns the derivative (resp. a vector of 
+derivatives) of the expression with respect to the variable (resp. with respect 
+to each variable) given as second argument.<br>
+Examples :
+</p><ul class="itemize"><li class="li-itemize">
+Compute :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">∂ (<span style="font-style:italic">x</span> <span style="font-style:italic">y</span><sup>2</sup> <span style="font-style:italic">z</span><sup>3</sup>+<span style="font-style:italic">x</span> <span style="font-style:italic">y</span> <span style="font-style:italic">z</span>)</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">∂ <span style="font-style:italic">z</span></td></tr>
+</table></td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">diff(x*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+x*y*z,z)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">x*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*3*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+x*y</span></div>
+</li><li class="li-itemize">Compute the 3 first order partial derivatives of <span style="font-style:italic">x</span>*<span style="font-style:italic">y</span><sup>2</sup>*<span style="font-style:italic">z</span><sup>3</sup>+<span style="font-style:italic">x</span>*<span style="font-style:italic">y</span>*<span style="font-style:italic">z</span>.<br>
+Input :
+<div class="center"><span style="font-family:monospace">diff(x*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+x*y,[x,y,z])</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+y*z, x*2*y*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+x*z, x*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*3*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+x*y]</span></div>
+</li></ul>
+<h4 id="sec280" class="subsubsection">Derivative and <span style="font-style:italic">n</span>-th order
+partial derivative : <span style="font-family:monospace">diff derive deriver</span></h4>
+<p><a id="hevea_default395"></a>
+<span style="font-family:monospace">derive</span> (or <span style="font-family:monospace">diff</span>) may take more than two arguments : an
+expression and the names of the derivation variables (each variable
+may be followed by $<span style="font-style:italic">n</span> to indicate the number <span style="font-style:italic">n</span> of derivations).<br>
+<span style="font-family:monospace">diff</span> returns the partial derivative of the expression with respect to 
+the variables given after the first argument.</p><p>The notation $ is useful if you want to derive <span style="font-style:italic">k</span> times with
+respect to the same variable, instead of entering <span style="font-style:italic">k</span> times the
+same variable name, one enters the variable name followed by <span style="font-family:monospace">$k</span>,
+for example <span style="font-family:monospace">x$3</span> instead of <span style="font-family:monospace">(x,x,x)</span>. 
+Each variable may be followed by a $, for example 
+<span style="font-family:monospace">diff(exp(x*y),x$3,y$2,z)</span> is the same as 
+<span style="font-family:monospace">diff(exp(x*y),x,x,x,y,y,z)</span><br>
+<span style="font-weight:bold">Examples</span>
+</p><ul class="itemize"><li class="li-itemize">
+Compute :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">∂<sup>2</sup> (<span style="font-style:italic">x</span> <span style="font-style:italic">y</span><sup>2</sup> <span style="font-style:italic">z</span><sup>3</sup>+<span style="font-style:italic">x</span> <span style="font-style:italic">y</span> <span style="font-style:italic">z</span>)</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">∂ <span style="font-style:italic">x</span>∂ <span style="font-style:italic">z</span></td></tr>
+</table></td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">diff(x*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+x*y*z,x,z)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*3*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+y</span></div>
+</li><li class="li-itemize">Compute :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">∂<sup>3</sup> (<span style="font-style:italic">x</span> <span style="font-style:italic">y</span><sup>2</sup> <span style="font-style:italic">z</span><sup>3</sup>+<span style="font-style:italic">x</span> <span style="font-style:italic">y</span> <span style="font-style:italic">z</span>)</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">∂ <span style="font-style:italic">x</span>∂<sup>2</sup> <span style="font-style:italic">z</span></td></tr>
+</table></td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">diff(x*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+x*y*z,x,z,z)</span></div>
+or :
+<div class="center"><span style="font-family:monospace">diff(x*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+x*y*z,x,z$2)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*3*2*z</span></div>
+</li><li class="li-itemize">Compute the third derivative of :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span><sup>2</sup>+2</td></tr>
+</table></td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">normal(diff((1)/(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+2),x,x,x))</span></div>
+or :
+<div class="center"><span style="font-family:monospace">normal(diff((1)/(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+2),x$3))</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">(-24*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+48*x)/(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">8+8*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">6+24*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4+32*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+16)</span></div>
+</li></ul><p>
+<span style="font-weight:bold">Remark</span>
+</p><ul class="itemize"><li class="li-itemize">
+Note the difference between <span style="font-family:monospace">diff(f,x,y)</span> and <span style="font-family:monospace">diff(f,[x,y])</span> :<br>
+<span style="font-family:monospace">diff</span>(<span style="font-style:italic">f</span>,<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>) returns  ∂<sup>2</sup>(<span style="font-style:italic">f</span>)/∂ <span style="font-style:italic">x</span>∂ <span style="font-style:italic">y</span> and<br>
+<span style="font-family:monospace">diff</span>(<span style="font-style:italic">f</span>,[<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>]) returns
+[∂(<span style="font-style:italic">f</span>)/∂ <span style="font-style:italic">x</span>,∂
+(<span style="font-style:italic">f</span>)/∂ <span style="font-style:italic">y</span>] 
+</li><li class="li-itemize">Never define a derivative function with <span style="font-family:monospace">f1(x):=diff(f(x),x)</span>.
+Indeed, <span style="font-family:monospace">x</span> would mean two different things Xcas is unable to
+deal with: the variable name to
+define the <span style="font-style:italic">f</span><sub>1</sub> function and the differentiation variable.
+The right way to define a derivative is either with <span style="font-family:monospace">function_diff</span> or:
+<div class="center">
+<span style="font-family:monospace">f1:=unapply(diff(f(x),x),x)</span>
+</div>
+</li></ul>
+<hr>
+<a href="cascmd_en225.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en227.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Faire une hypothèse sur une variable : assume supposons</title>
+</head>
+<body >
+<a href="cascmd_fr069.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr071.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec96" class="subsection">2.5.7  Faire une hypothèse sur une variable : <span style="font-family:monospace">assume supposons</span></h3>
+<p><a id="hevea_default65"></a><a id="sec:assume"></a><a id="hevea_default66"></a><a id="hevea_default67"></a><a id="hevea_default68"></a><a id="hevea_default69"></a><a id="hevea_default70"></a><a id="hevea_default71"></a>
+<span style="font-family:monospace">assume</span> ou <span style="font-family:monospace">supposons</span> permet de faire des hypothèses sur 
+une variable.<br>
+<span style="font-family:monospace">assume</span> ou <span style="font-family:monospace">supposons</span> a comme argument un nom de variable suivi d’une
+égalité ou d’une inégalité représentant l’hypothèse faite ou bien
+un nom de variable suivi d’une virgule et de son type. 
+On peut mettre plusieurs hypothèses à condition de les relier par <span style="font-family:monospace">and</span>
+ou <span style="font-family:monospace">or</span> selon ce que l’on veut faire ! Toutefois, il faut utiliser 
+<span style="font-family:monospace">additionally</span> comme deuxième argument de <span style="font-family:monospace">assume</span> pour spécifier 
+le type de la variable et une plage de valeurs pour cette variable.<br>
+<span style="font-family:monospace">assume</span> renvoie le nom de la variable sur laquelle on a fait les 
+hypothèses ou le type de cette variable.<br>
+La commande <span style="font-family:monospace">about</span>, qui a comme argument un nom de variable, permet de 
+connaître les hypothèses faites sur cette variable.<br>
+<span style="font-weight:bold">Attention</span> Si on fait une autre hypothèse avec <span style="font-family:monospace">assume</span>, l’ancienne
+hypothèse est effacée : si vous voulez rajoutez une nouvelle hypothèse il
+faut utiliser la commande <span style="font-family:monospace">additionally</span> ou mettre <span style="font-family:monospace">additionally</span> 
+comme deuxième argument de <span style="font-family:monospace">assume</span>.<br>
+<span style="font-weight:bold">Remarques</span>
+Cela permet de faire de la géométrie interactive tout en faisant du calcul 
+formel. Par exemple, si on met en géométrie :<br>
+<span style="font-family:monospace">assume(a=2);assume(b=3); A:=point(a+i*b)</span>, la figure sera construite avec 
+les valeurs données aux variables mais les calculs seront faits avec les 
+variables symboliques <span style="font-family:monospace">a</span> et <span style="font-family:monospace">b</span> car pour toutes les sorties graphiques
+et seulement sur celles-ci la variable est évaluée.<br>
+On tape
+</p><div class="center"><span style="font-family:monospace">assume(a=2)</span></div><p>
+Ou on tape
+</p><div class="center"><span style="font-family:monospace">supposons(a=2)</span></div><p>
+Ou on tape
+</p><div class="center"><span style="font-family:monospace">assume(a=2)</span></div><p>
+Ou on tape
+</p><div class="center"><span style="font-family:monospace">supposons(a:=2)</span></div><p>
+Ou on tape directement :
+</p><div class="center"><span style="font-family:monospace">supposons(a=[2,-5,5,0.1])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">un curseur permettant de faire varier a</span></div><p>
+Lorsque l’on fait varier <span style="font-family:monospace">a</span>, la commande <span style="font-family:monospace">assume(a=2)</span> se transforme 
+en :<br>
+<span style="font-family:monospace">supposons(a=[2.1,-5.0,5.0,0.1])</span> et<br>
+ les niveaux qui suivent sont évalués. Si il n’y a rien sur le niveau 
+suivant on aura <span style="font-family:monospace">undef</span> en réponse.<br>
+Cela signifie que <span style="font-family:monospace">a</span> peut varier entre <span style="font-family:monospace">-5</span> et <span style="font-family:monospace">5</span> avec un pas 
+de <span style="font-family:monospace">0.1</span> et que <span style="font-family:monospace">a</span> vaut <span style="font-family:monospace">2.1</span>.
+Si sur les deux niveaux suivants on a <br>
+<span style="font-family:monospace">evalf(a+2)</span> et <span style="font-family:monospace">evalf(a+3)</span><br>
+les réponses évolueront selon la position du curseur (curseur en <span style="font-family:monospace">2.1</span>, 
+on aura <span style="font-family:monospace">4.1</span> et <span style="font-family:monospace">5.1</span> puis curseur en <span style="font-family:monospace">2.2</span>, on aura <span style="font-family:monospace">4.2</span> et 
+<span style="font-family:monospace">5.2</span>). Mais si sur les deux niveaux suivants on a <span style="font-family:monospace">a+2</span> et <span style="font-family:monospace">a+3</span>,
+les réponses seront toujours <span style="font-family:monospace">a+2</span> et <span style="font-family:monospace">a+3</span>.<br>
+On tape pour supposer que la variable formelle <span style="font-family:monospace">a </span> est positive :
+</p><div class="center"><span style="font-family:monospace">assume(a&gt;0)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">a</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">about(a)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">assume[[],[[0,+infinity]],[0]]</span></div><p>
+cela signifie que <span style="font-family:monospace">a</span> est une variable réelle appartenant à l’intervalle
+[0;+∞ et que 0 en est exclu (on a le domaine, l’intervalle et les 
+valeurs exclues).<br>
+On tape pour supposer que la variable formelle <span style="font-family:monospace">a</span> est dans
+[2;4[∪ ]6;∞[ :
+</p><div class="center"><span style="font-family:monospace">assume((a&gt;=2 and a&lt;4) or a&gt;6)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">a</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">about(a)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">assume[DOM_FLOAT,[[2,4],[6,+(infinity)]],[4,6]]</span></div><p>
+cela signifie que <span style="font-family:monospace">a</span> est une variable réelle appartenant à
+[2;4]∪ [6;∞[ et que 4 et 6 sont exclus (on a le domaine, l’intervalle
+et les valeurs exclues).<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">abs(1-a)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">-1+a</span></div><p>
+On tape pour dire que <span style="font-family:monospace">b</span> est un entier :
+</p><div class="center"><span style="font-family:monospace">assume(b,integer)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">DOM_INT</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">about(b)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[DOM_INT]</span></div><p>
+On tape pour dire que <span style="font-family:monospace">b</span> est un entier de l’intervalle ]−5,10[ :
+</p><div class="center"><span style="font-family:monospace">assume(b,integer);additionally(b&gt;-5 and b&lt;10)</span></div><p>
+ou on tape :<br>
+</p><div class="center"><span style="font-family:monospace">assume(b,integer);assume(b&gt;-5 and b&lt;10,additionally)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(integer,b)</span></div><p>
+puis on tape :
+</p><div class="center"><span style="font-family:monospace">about(b)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">assume[integer,[[-5,10]],[-5,10]]</span></div><p>
+ce qui signifie que <span style="font-family:monospace">b</span> est un entier de l’intervalle [-5,10] et que les 
+bornes -5,et 10 en sont exclues.<br>
+On tape pour dire que <span style="font-family:monospace">b</span> est un entier de l’intervalle ]−5,10] :
+</p><div class="center"><span style="font-family:monospace">assume(b,integer);additionally(b&gt;-5 and b&lt;=10)</span></div><p>
+ou on tape :<br>
+</p><div class="center"><span style="font-family:monospace">assume(b,integer);assume(b&gt;-5 and b&lt;=10,additionally)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(integer,b)</span></div><p>
+puis on tape :
+</p><div class="center"><span style="font-family:monospace">about(b)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">assume[integer,[[-5,10]],[-5]]</span></div><p>
+ce qui signifie que <span style="font-family:monospace">b</span> est un entier de l’intervalle [-5,10] et que la 
+borne -5 en est exclue.<br>
+<span style="font-weight:bold">Remarque</span><br>
+Lorsque <span style="font-family:monospace">assume</span> a comme argument une seule égalité et que la commande 
+est tapée dans une ligne d’entrée d’un écran de géométrie, cela met
+un petit curseur en haut et à droite de cet écran. Le nom du paramètre 
+est noté à droite du curseur. Ce curseur permet de changer la valeur du 
+paramètre et cette valeur sera notée à gauche du curseur.
+On tape par exemple :<br>
+<span style="font-family:monospace">assume(a=[2,-10,10,0.1])</span><br>
+Cela signifie que tous les calculs seront faits avec <span style="font-family:monospace">a</span> quelconque, à 
+condition que les points aient des coordonnèes exactes, mais que la figure 
+sera tracée avec <span style="font-family:monospace">a=2</span> et que l’on pourra faire varier cette figure avec 
+le petit curseur en fonction de <span style="font-family:monospace">a</span> de <span style="font-family:monospace">-10</span> à <span style="font-family:monospace">+10</span>, avec un pas
+de <span style="font-family:monospace">0.1</span>. Si on met <span style="font-family:monospace">assume(a=[2,-5,5)</span>, <span style="font-family:monospace">a</span> varie de <span style="font-family:monospace">-5</span> à 
+<span style="font-family:monospace">+5</span> avec un pas de <span style="font-family:monospace">(5-(-5))/100</span>), et si on met <span style="font-family:monospace">assume(a=2)</span>,
+<span style="font-family:monospace">a</span> varie de <span style="font-family:monospace">WX-</span> à <span style="font-family:monospace">WX+</span> et le pas est <span style="font-family:monospace">((WX+)-(WX-))/100</span>.</p><p><span style="font-weight:bold">Attention</span> En géométrie il faut donc travailler avec des coordonnèes
+exactes par exemple :<br>
+<span style="font-family:monospace">A:=point(i);assume(b:=2); B:=point(b);</span>
+puis on tape :<br>
+<span style="font-family:monospace">longueur(A,B);</span><br>
+On obtient :<br>
+<span style="font-family:monospace">sqrt((-b)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1)</span><br>
+Mais :<br>
+<span style="font-family:monospace">A:=point(0.0+i);assume(b:=2); B:=point(b);</span>
+puis on tape :<br>
+<span style="font-family:monospace">longueur(A,B);</span><br>
+On obtient la valeur approchée de √<span style="text-decoration:overline">(1+4)</span> :<br>
+<span style="font-family:monospace">2.2360679775</span><br>
+<span style="font-weight:bold">Attention</span> Un paramètre défini par <span style="font-family:monospace">assume</span> n’est évalué
+que pour les sorties graphiques, sinon il faut utiliser <span style="font-family:monospace">evalf</span>.<br>
+<span style="font-weight:bold">Exemple</span> : On tape :<br>
+<span style="font-family:monospace">dr(m):=ifte(m==2,droite(x=1),droite(x+(m-2)*y-1))</span><br>
+puis dans un niveau de géométrie, on tape :<br>
+<span style="font-family:monospace">supposons(a=[2.0,-5,5,0.1])</span><br>
+<span style="font-family:monospace">dr(evalf(a))</span><br>
+qui renvoie <span style="font-family:monospace">droite(x=2)</span> lorsque <span style="font-family:monospace">a:=2</span> et <span style="font-family:monospace">droite(y=(-5*x+5))</span>
+lorsque <span style="font-family:monospace">a:=2.2</span> alors que <br>
+<span style="font-family:monospace">dr(a)</span> renvoie <span style="font-family:monospace">droite(y=(-1/(a-2)*x+1/(a-2)))</span> quelque soit <span style="font-family:monospace">a</span> et
+il y aura donc une erreur pour <span style="font-family:monospace">a=2</span>....<br>
+
+<span style="font-weight:bold">Attention</span> à la différence entre <span style="font-family:monospace">assume</span> et <span style="font-family:monospace">element</span><br>
+Si <span style="font-family:monospace">b:=element(0..3,1,0.1)</span> est tapé dans une ligne d’entrée d’un 
+écran de géométrie, cela met aussi un petit curseur en haut et à droite
+de cet écran avec <span style="font-family:monospace">b=1</span> et on pourra faire
+varier <span style="font-family:monospace">b</span> avec le petit curseur de <span style="font-family:monospace">0</span> à <span style="font-family:monospace">3</span> avec un pas 
+de <span style="font-family:monospace">0.1</span>. Mais la variable <span style="font-family:monospace">b</span> n’est pas formelle ! <br>
+On tape
+</p><div class="center"><span style="font-family:monospace">a;b</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(a,1)</span></div>
+<hr>
+<a href="cascmd_fr069.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr071.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

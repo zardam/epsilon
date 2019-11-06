@@ -1,0 +1,775 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Vue d’ensemble de Xcas pour le programmeur</TITLE>
+</HEAD>
+<BODY >
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge002.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc1">Chapitre 1</A>  Vue d’ensemble de <TT>Xcas</TT> pour le programmeur</H1><H2 CLASS="section"><A NAME="toc1"></A><A NAME="htoc2">1.1</A>  Installation de <TT>Xcas</TT></H2><P>
+Le programme <CODE>Xcas</CODE> est un logiciel libre écrit en C++,
+(disponible sous licence GPL). La version à jour se récupère sur :<BR>
+<TT><I>http</I>://<I>www</I>-<I>fourier</I>.<I>ujf</I>-<I>grenoble</I>.<I>fr</I>/ <I>parisse</I>/<I>giac</I>_<I>fr</I>.<I>html</I></TT> ou<BR>
+ <TT>ftp://fourier.ujf-grenoble.fr/xcas</TT><BR>
+où l’on trouve le code source (<CODE>giac.tgz</CODE>) ou des versions 
+précompilées pour Linux (PC ou ARM), Windows, Mac OS.</P><H2 CLASS="section"><A NAME="toc2"></A><A NAME="htoc3">1.2</A>  Les différents modes</H2><P>
+<TT>Xcas</TT> propose un mode de compatibilité avec <TT>Maple</TT>, <TT>MuPAD</TT> et 
+la <TT>TI89/92</TT> :<BR>
+pour cela, il suffit de le spécifier dans <TT>Prog style</TT> du menu de 
+configuration du <TT>cas</TT> (bouton <TT>Config</TT> ou menu
+<TT>Cfg-&gt;Configuration du CAS</TT>) ou avec le menu 
+<TT>Cfg-&gt;Mode (syntax)</TT>. On peut choisir, en 
+cliquant sur la flèche située à coté de <TT>Prog style</TT> : <TT>Xcas</TT>
+ou <TT>Maple</TT> ou <TT>MuPAD</TT> ou <TT>TI89/92</TT>.<BR>
+On a aussi la possibilité d’importer une session <TT>Maple</TT>
+ou une archive <TT>TI89/92</TT> en choisissant 
+<TT>Importer</TT> du menu <TT>Fich</TT>, ou importer dans
+un niveau éditeur de programmes un fichier écrit
+en syntaxe <TT>Maple</TT>, <TT>Mupad</TT> ou <TT>TI89/92</TT>
+par le menu <TT>Prog-&gt;Inserer</TT>.</P><P>On présente ici le mode <TT>Xcas</TT> qui est proche de la syntaxe <TT>C</TT>.
+On a aussi la possibilité d’avoir toutes les instructions en français de
+façon à être proche du langage Algorithmique.</P><H2 CLASS="section"><A NAME="toc3"></A><A NAME="htoc4">1.3</A>  Éditer, sauver, exécuter un programme avec la syntaxe <TT>Xcas</TT></H2><P><A NAME="@default0"></A>
+On édite un programme ou un script (i.e. une suite de commandes séparées
+par des <TT>;</TT>) avec son éditeur préféré : on peut écrire, dans un 
+même fichier, la définition de plusieurs 
+fonctions séparées par des points virgules (<TT>;</TT>) (que l’on
+sauve par exemple sous le nom de <TT>bidon</TT>), puis dans <TT>Xcas</TT> 
+on tape :<TT>read("bidon");</TT> et
+cela a pour effet, de compiler les différentes fonctions de <TT>bidon</TT>, 
+de les mettre comme réponse (avec <TT>Success..</TT> dans la zone des 
+résultats intermédiaires pour indiquer les fonctions valides).<BR>
+En reéditant le programme, ou le script, avec son éditeur préféré, 
+on peut le corriger, le sauver sous un autre nom etc..., mais il est 
+préférable de le recopier dans un niveau éditeur de programmes (que l’on
+ouvre avec <TT>Alt+p</TT>) pour cela on peut :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize"> 
+soit écrire directement le programme (ou le script), dans un niveau 
+éditeur de programmes,
+</LI><LI CLASS="li-itemize">soit utiliser le menu <TT>Fich</TT> sous-menu <TT>Charger</TT> de l’éditeur 
+de programmes, si le programme est dans un fichier,
+</LI><LI CLASS="li-itemize">soit le recopier avec la souris, si le programme est dans la ligne de 
+commande (par exemple après avoir fait <TT>Charger</TT> du menu <TT>Fich</TT> de la
+session) ou si le programme est dans son éditeur préféré,
+</LI></UL><P>
+En effet, depuis un niveau éditeur de programmes, on peut :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+avoir de l’aide sur les commandes de <TT>Xcas</TT> : il suffit d’écrire la
+commande et d’appuyer sur la touche <SPAN CLASS="textboxed">F1</SPAN> de vôtre ordinateur,
+</LI><LI CLASS="li-itemize">indenter facilement : il suffit d’appuyer sur la touche de tabulation de 
+vôtre ordinateur,
+</LI><LI CLASS="li-itemize">tester facilement si le programme est syntaxiquement correct : il suffit 
+d’appuyer sur le bouton <TT>OK</TT> de la barre des menus
+ou sur la touche <SPAN CLASS="textboxed">F9</SPAN> de vôtre ordinateur: la 
+ligne où se trouve la faute de syntaxe est indiquée en bleu 
+dans la zone intermédiaire. 
+</LI></UL><P>
+On corrige les fautes si il y en a...<BR>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Quand le script est syntaxiquement correct, en appuyant sur le bouton 
+<TT>OK</TT> ou la touche <SPAN CLASS="textboxed">F9</SPAN> le script s’exécute et on obtient 
+le résultat de l’exécution si on n’a pas terminé son écriture par 
+<TT>:;</TT> ou <TT>Done</TT> si on a terminé l’écriture du programme par <TT>:;</TT><BR>
+<B>Exemple</B>
+On tape dans l’éditeur :<BR>
+<TT>S:=0;for (j:=1;j&lt;5;j++) {print(S);S:=S+1/j;}</TT>
+On obtient dans la zone intermédiaire :<BR>
+<TT>S:0<BR>
+S:1<BR>
+S:3/2<BR>
+S:11/6</TT><BR>
+et en réponse : <TT>(0,25/12)</TT>
+</LI><LI CLASS="li-itemize">Quand le programme est 
+syntaxiquement correct, en appuyant sur le bouton <TT>OK</TT> ou la touche 
+<SPAN CLASS="textboxed">F9</SPAN> il y a <TT>Success compilling ...</TT> dans la zone 
+intermédiaire et on a le programme en réponse ou <TT>Done</TT> si on a 
+terminé l’écriture du programme par <TT>:;</TT>. 
+On peut alors exécuter le programme dans une ligne de commande.<BR>
+</LI></UL><P>
+Vous sauvez le programme (ou le script) avec le bouton <TT>Save</TT> du niveau 
+éditeur de programmes sous le nom que vous voulez lui donner en le terminant 
+par le suffixe <TT>.cxx</TT> (ce nom s’inscrit alors à 
+côté du bouton <TT>Save</TT> du niveau éditeur de programmes). Si ensuite, 
+vous voulez lui donner un autre nom il faut le faire avec le menu <TT>Prog</TT> 
+sous-menu <TT>Sauver comme</TT> de l’éditeur de programmes.<BR>
+</P><H2 CLASS="section"><A NAME="toc4"></A><A NAME="htoc5">1.4</A>  Débugger un programme avec la syntaxe <TT>Xcas</TT></H2><P><A NAME="@default1"></A><A NAME="@default2"></A><A NAME="@default3"></A><A NAME="@default4"></A><A NAME="@default5"></A><A NAME="@default6"></A><A NAME="@default7"></A><A NAME="@default8"></A><A NAME="@default9"></A>
+Pour utiliser le débuggeur, il faut que ce programme soit syntaxiquement 
+correct : vous avez par exemple un programme syntaxiquement correct, mais qui 
+ne fait pas ce qu’il devrait faire, il faut donc le corriger.</P><P>Avec le débuggeur, on a la possibilité d’exécuter le programme au pas
+à pas (<TT>sst</TT>), ou d’aller directement (<TT>cont</TT>) à une ligne 
+précise marquée par un point d’arrêt (<TT>break</TT>), de voir 
+(<TT>voir</TT> ou <TT>watch</TT>) les variables que l’on désire surveiller, 
+d’exécuter au pas à pas les instructions d’une fonction utilisateur utilisée dans le programme (<TT>dans</TT> ou <TT>sst_in</TT>), 
+ou de sortir brutalement du débuggeur (<TT>tuer</TT> ou <TT>kill</TT>).<BR>
+On tape : <TT>debug(nom _du_programme(valeur_des_ arguments))</TT>.<BR>
+Il faut bien sûr que le programme soit validé :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+si le programme est dans un niveau éditeur de programme, on appuie sur 
+<TT>OK</TT> pour le compiler, on corrige les fautes de syntaxe éventuelles et
+on appuie sur <TT>OK</TT> jusqu’à obtenir <TT>Success compiling...</TT>
+</LI><LI CLASS="li-itemize">si le programme qui est syntaxiquement correct se trouve dans un fichier,
+on tape :
+<TT>read("toto")</TT> si <TT>toto</TT> est le nom du fichier où se trouve ce 
+programme. 
+</LI></UL><P>
+Par exemple, si <TT>pgcd</TT> a été validé, on tape :<BR>
+<TT>debug(pgcd(15,25))</TT><BR>
+L’écran du débugger s’ouvre : il est formé par trois écrans séparés
+par une ligne <TT>eval</TT> et une barre de boutons <TT>sst,dans,cont...</TT> :
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+dans l’écran du haut, le programme source est écrit et la ligne en 
+surbrillance sera exécutée grâce au bouton <TT>sst</TT>.<BR>
+</LI><LI CLASS="li-enumerate">dans la ligne <TT>eval</TT>, <TT>Xcas</TT> marque automatiquement l’action en
+cours par exemple <TT>sst</TT>. Cette ligne permet aussi de faire des calculs dans
+l’environnement du programme ou de modifier une variable, par exemple on peut y
+écrire <TT>a:=25</TT> pour modifier la valeur de <TT>a</TT> en cours de programme,
+</LI><LI CLASS="li-enumerate">dans l’écran du milieu,
+on trouve, le programme, les points d’arrêts, le numéro de la ligne du 
+curseur.
+</LI><LI CLASS="li-enumerate">une barre de boutons <TT>sst,dans,cont...</TT> 
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+<TT>sst</TT> exécute la ligne courante (celle qui est en surbrillance)
+sans entrer dans les fonctions et met en surbrillance l’instruction suivante,
+</LI><LI CLASS="li-itemize"><TT>dans</TT> ou <TT>sst_in</TT> exécute la ligne courante (celle qui est en
+surbrillance) en entrant dans les fonctions utilisées dans le programme et
+qui ont été définies précédemment par l’utilisateur, puis 
+met en surbrillance l’instruction suivante du programme en incluant les 
+instructions de la fonction. Cela permet ainsi d’exécuter pas à pas 
+les instructions de cette fonction.
+</LI><LI CLASS="li-itemize"><TT>cont</TT> exécute les instructions du programme situées entre la
+ligne courante et la ligne d’un point d’arrêt et met en 
+surbrillance cette ligne,
+</LI><LI CLASS="li-itemize"><TT>tuer</TT> ou <TT>kill</TT> ferme brutalement l’écran du débuggeur.<BR>
+<B>Attention</B> il faut fermer l’écran du débuggeur pour pouvoir utiliser 
+<TT>Xcas</TT>. </LI><LI CLASS="li-itemize"><TT>break</TT> ajoute un point d’arrêt. Les points d’arrêts permettent 
+d’aller directement à un point précis avec le bouton <TT>cont</TT>. On marque 
+les points d’arrêts grâce au bouton <TT>break</TT> ou à la commande 
+<TT>breakpoint</TT> d’arguments le nom 
+du programme et le numéro de la ligne où l’on veut un point d’arrêt : 
+par exemple <TT>breakpoint(pgcd,3)</TT>. Pour faciliter son utilisation, il 
+suffit de cliquer dans l’écran du haut sur la ligne où l’on veut le point 
+d’arrêt pour avoir :
+<TT>breakpoint</TT> dans la ligne <TT>eval</TT>, avec le nom du programme et 
+le bon numéro de ligne, puis de valider la commande. 
+Il suffit donc de cliquer et de valider !
+</LI><LI CLASS="li-itemize"><TT>rmbrk</TT> enlève un point d’arrêt. On doit, pour 
+réutiliser d’autres points d’arrêts,
+d’effacer les points d’arrêts utilisés précédemment avec la commande 
+<TT>rmbreakpoint</TT> qui a les mêmes arguments que <TT>breakpoint</TT>. Là 
+encore, pour faciliter son utilisation, il suffit de cliquer sur la ligne où 
+l’on veut enlever le point d’arrêt pour avoir :
+<TT>rmbreakpoint</TT> dans la ligne de commande, avec le nom du programme et 
+le bon numéro de ligne. <B>Attention</B> si il n’y a pas de point d’arrêt 
+à cet endroit <TT>Xcas</TT> en mettra un !
+</LI><LI CLASS="li-itemize"><TT>voir</TT> ou <TT>watch</TT> ajoute la variable que l’on veut voir 
+évoluer. Si on ne se sert pas de <TT>voir</TT> ou <TT>watch</TT> toutes les 
+variables locales et tous les arguments du programme sont 
+montrées. Si on se sert de <TT>voir</TT> ou <TT>watch</TT> seules les variables
+designées seront montrées : on appuie sur le bouton <TT>voir</TT> ou 
+<TT>watch</TT> et la commande <TT>watch</TT> s’écrit dans la ligne d’évaluation 
+<TT>eval</TT>. On tape alors, les arguments de <TT>watch</TT> qui sont les noms des 
+variables que l’on veut surveiller, par exemple : <TT>watch(b,r)</TT> et 
+on valide la commande.
+</LI><LI CLASS="li-itemize"><TT>rmwtch</TT> efface les variables désignées précédemment avec 
+<TT>watch</TT> et que l’on ne veut plus voir, par exemple : <TT>rmwatch(r)</TT>.
+</LI></UL>
+</LI><LI CLASS="li-enumerate">dans l’écran du bas, on voit 
+soit l’évolution de toutes les variables locales et de tous les arguments du
+programme, soit l’évolution des variables désignées par <TT>watch</TT>. 
+</LI></OL><H2 CLASS="section"><A NAME="toc5"></A><A NAME="htoc6">1.5</A>  Présentation générale des instructions avec la syntaxe <TT>Xcas</TT></H2><H3 CLASS="subsection"><A NAME="htoc7">1.5.1</A>  Les commentaires</H3><P>
+Les commentaires sont des chaînes de caractères, ils sont précédés
+de <CODE><TT>//</TT></CODE> ou sont
+parenthésés par <TT>/*</TT> <TT>*/</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc8">1.5.2</A>  Le bloc</H3><P>
+Une <TT>action</TT> ou <TT>bloc</TT> est une séquence d’une ou plusieurs 
+instructions.<BR>
+Quand il y a plusieurs instructions il faut les parenthéser avec <TT>{ }</TT> 
+et séparer les instructions par un point virgule (<TT>;</TT>)<BR>
+Un <TT>bloc</TT> est donc parenthésé par <TT>{</TT> <TT>}</TT> et commence 
+éventuellement par la déclaration des variables locales (<TT>local...</TT>).
+</P><H3 CLASS="subsection"><A NAME="htoc9">1.5.3</A>  Les variables globales et les variables locales</H3><P><A NAME="sec:var1"></A>
+Voir aussi <A HREF="casrouge002.html#sec:var2">2.2</A>
+Les variables sont les endroits où l’on peut stocker des valeurs, des 
+nombres, des expressions, des objets.<BR>
+Le nom des variables est formé par une suite de caractères et commence par 
+une lettre : attention on n’a pas droit aux
+mots réservés ...ne pas utiliser par exemple la variable <TT>i</TT> dans un
+<TT>for</TT> si vous avez coché <TT>pas de test de i</TT> dans la
+<TT>configuration generale</TT> car <TT>i</TT> représente le nombre complexe de 
+module 1 et d’argument π/2.<BR>
+L’affectation se fait avec <TT>:=</TT> (par exemple <TT>a:=2; b:=a;</TT>) ou avec 
+<TT>=&gt;</TT> (par exemple <TT>2=&gt;a; a=&gt;b;</TT>) . 
+</P><H4 CLASS="subsubsection">Les variables locales non symboliques</H4><P>
+Une variable utilisée uniquement à l’intérieur d’une fonction (resp d’un 
+bloc) pour contenir des résultats intermédiaires est une variable
+locale à la fonction (resp au bloc).
+Les variables locales doivent être déclarées au début
+de la fonction (resp au début d’un bloc) par le mot réservé <TT>local</TT> 
+puis on met les noms des variables séparés par des virgules (<TT>,</TT>).<BR>
+<B>Attention</B><BR>
+Cette déclaration n’initialise pas ces variables locales à <TT>0</TT>.</P><P>Les variables locales peuvent être initialisées lors de leur déclaration 
+à une valeur en mettant les affectations entre parenthèses et
+separées par des virgules. Mais attention l’initialisation
+des variables locales faites dans la ligne de <TT>local</TT> se fait en utilisant
+le contexte global d’évaluation , par exemple :
+</P><PRE CLASS="verbatim">n:=5;
+f():={
+  local (n:=1),(d:=n+1);
+  return d;
+}
+</PRE><P><TT>f()</TT> renvoie <TT>6</TT> et non <TT>2</TT> : c’est la valeur de <TT>n+1</TT> ou 
+<TT>n</TT> est global. 
+Il faut initialiser <TT>d</TT> après la déclaration locale 
+pour utiliser le contexte local en tapant :
+</P><PRE CLASS="verbatim">f():={
+  local (n:=1),d;
+  d:=n+1;
+  return d;
+}
+</PRE><P>et alors <TT>f()</TT> renvoie 2.</P><H4 CLASS="subsubsection">Les variables locales symboliques</H4><P>
+<B>Attention</B> Les variables locales ne sont pas affectèes lors de leur 
+déclaration MAIS ce ne sont pas des variables formelles : il faut les 
+obligatoirement les initialiser dans le corps du programme.<BR>
+Si on veut utiliser dans un programme des variables formelles, on a 2 
+solutions :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+On considère les variables formelles du programme comme globales, MAIS 
+alors il faut s’assurer que ces variables sont purgées avant l’exécution 
+du programme...ce qui contraignant !</LI><LI CLASS="li-itemize">On déclare les variables formelles du programme avec <TT>local</TT>
+(par exemple <TT>local x;</TT>), PUIS on utilise <TT>assume(x,symbol);</TT> pour 
+spécifier que la variable <TT>x</TT> devient symmbolique ou on utilise 
+<TT>purge(x)</TT> pour purger la variable <TT>x</TT> qui devient symmbolique. 
+Ainsi au cours du programme, <TT>x</TT> pourra devenir non symbolique si on 
+l’affecte, puis, redevenir symbolique après l’instruction 
+<TT>assume(x,symbol);</TT> ou l’instruction <TT>purge(x)</TT>.
+</LI></UL><P> 
+Il est donc préférable de définir la variable formelle <TT>var</TT>, avec 
+<TT>local var;</TT> suivi de <TT>assume(var,symbol);</TT> ou de <TT>purge(var)</TT>.<BR>
+<B>Exemple</B><BR>
+Voici le programme qui donne la valeur de la suite de Fibonnacci <I>u</I>
+définie par <I>u</I><SUB>0</SUB>=<I>u</I>0,<I>u</I><SUB>1</SUB>=<I>u</I>1,<I>u</I><SUB><I>n</I>+2</SUB>=<I>u</I><SUB><I>n</I>+1</SUB>+<I>u</I><SUB><I>n</I></SUB>.<BR>
+On sait que si <I>a</I> et <I>b</I> 
+sont les racines de <I>x</I><SUP>2</SUP>−<I>x</I>−1, les suites vérifiant la relation de 
+récurrence <I>u</I><SUB><I>n</I>+2</SUB>=<I>u</I><SUB><I>n</I>+1</SUB>+<I>u</I><SUB><I>n</I></SUB> sont des combinaisons linéaires des suites
+géométriques <I>a</I><SUP><I>n</I></SUP> et <I>b</I><SUP><I>n</I></SUP>, c’est-à-dire que l’on a :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>u</I><SUB><I>n</I></SUB>=<I>Aa</I><SUP><I>n</I></SUP>+<I>Bb</I><SUP><I>n</I></SUP></TD></TR>
+</TABLE><P>
+pour <I>A</I> et <I>B</I> solutions du système [<I>u</I><SUB>0</SUB>=<I>A</I>+<I>B</I>, <I>u</I><SUB>1</SUB>=<I>Aa</I>+<I>Bb</I>].</P><P>Voici les deux façons de faire :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+les variables formelles sont globales,<BR>
+Dans le programme qui suit,
+on utilise les variables formelles <TT>x,A,B</TT> qui doivent être purgées et 
+qui seront des variables globales.<BR>
+On tape :
+<PRE CLASS="verbatim">u(n,uo,u1):={
+local L,a,b;
+//verifier que A,B,x ne sont pas affect\'ees
+[a,b]:=solve(x^2-x-1,x);
+L:=linsolve([A+B=uo,A*a+B*b=u1],[A,B]);
+return normal(L[0]*a^n+L[1]*b^n);
+};
+</PRE>Lors de la compliation, <TT>Xcas</TT> dit :<BR>
+<TT>//Warning: x A B declared as global variable(s)<BR>
+compiling u</TT><BR>
+On tape :<BR>
+<TT>u(3,0,1)</TT><BR>
+On obtient :<BR>
+<TT>2</TT><BR>
+</LI><LI CLASS="li-itemize">les variables formelles sont declarées locales,<BR>
+Dans le programme qui suit,
+on utilise les variables formelles <TT>A,B,x</TT> qui seront symboliques ou 
+formelles grâce aux commandes :
+<PRE CLASS="verbatim">assume(A,symbol);
+assume(B,symbol);
+assume(x,symbol);
+</PRE>ou à la commande <TT>purge(A,B,x)</TT>.<P><B>Remarque</B> : pour retrouver des variables non formelles il suffira de les 
+affecter.<BR>
+On tape :
+</P><PRE CLASS="verbatim">u(n,uo,u1):={
+local L,a,b,A,B,x;
+assume(A,symbol);
+assume(B,symbol);
+assume(x,symbol);
+[a,b]:=solve(x^2-x-1,x);
+L:=linsolve([A+B=uo,A*a+B*b=u1],[A,B]);
+return normal(L[0]*a^n+L[1]*b^n);
+};
+</PRE><P>Ou on tape :
+</P><PRE CLASS="verbatim">u(n,uo,u1):={
+local L,a,b,A,B,x;
+purge(A,B,x);
+[a,b]:=solve(x^2-x-1,x);
+L:=linsolve([A+B=uo,A*a+B*b=u1],[A,B]);
+return normal(L[0]*a^n+L[1]*b^n);
+};
+</PRE><P>Lors de la compliation, <TT>Xcas</TT> dit :<BR>
+<TT>// Success compiling u</TT><BR>
+On tape :<BR>
+<TT>u(3,0,1)</TT><BR>
+On obtient :<BR>
+<TT>2</TT><BR>
+Pour bien comprendre ce qui se passe, on rajoute des <TT>print</TT> :
+</P><PRE CLASS="verbatim">u(n,uo,u1):={
+local L,a,b,A,B,x;
+print(A);
+assume(A,symbol);
+print(A);
+assume(B,symbol);
+assume(x,symbol);
+[a,b]:=solve(x^2-x-1,x);
+L:=linsolve([A+B=uo,A*a+B*b=u1],[A,B]);
+A:=5;
+print(A);
+return normal(L[0]*a^n+L[1]*b^n);
+};
+</PRE><P>On tape :<BR>
+<TT>A:=30</TT><BR>
+<TT>u(3,0,1)</TT><BR>
+On obtient écrit en bleu :<BR>
+<TT>A:0</TT> (<TT>A</TT> est locale et n’est pas symbolique et vaut <TT>0</TT>)<BR>
+<TT>A:A</TT> (<TT>A</TT> est locale et symbolique)<BR>
+<TT>A:5</TT> (<TT>A</TT> est locale etn’est pas symbolique et vaut <TT>5</TT>)<BR>
+puis la réponse :<BR>
+<TT>2</TT><BR>
+On tape :<BR>
+<TT>A</TT><BR>
+On obtient :<BR>
+<TT>30</TT> (la variable globale <TT>A</TT> n’est pas symbolique et vaut <TT>30</TT>)
+</P></LI></UL><H4 CLASS="subsubsection">Variables locales internes à un bloc</H4><P>
+Voici comme exemple le programme de la fonction qui donne le quotient et le 
+reste de la division euclidienne de 2 entiers (c’est la fonction <TT>iquorem</TT>
+de <TT>Xcas</TT>) : 
+</P><PRE CLASS="verbatim">  idiv2(a,b):={ 
+    local (q:=0),(r:=a);
+    if (b!=0) {
+      q:=iquo(a,b);
+      r:=irem(a,b);
+    }
+    return [q,r];
+  };
+</PRE><P>Voici le programme de la même fonction mais avec les variables locales 
+internes au bloc du <TT>if</TT> : 
+</P><PRE CLASS="verbatim">  idiv2(a,b):={ 
+    if (b==0) {return [b,a];}  
+    if (b!=0) {
+      local q,r;
+      q:=iquo(a,b);
+      r:=irem(a,b);
+      return [q,r];
+    }
+  };
+</PRE><P>ou encore avec les variables locales internes au bloc du <TT>else</TT> :
+</P><PRE CLASS="verbatim">  idiv2(a,b):={ 
+    if (b==0) {return [b,a];}  
+    else {
+      local q,r;
+      q:=iquo(a,b);
+      r:=irem(a,b);
+      return [q,r];
+    }
+  };
+</PRE><H3 CLASS="subsection"><A NAME="htoc10">1.5.4</A>  Les programmes et les fonctions</H3><P>
+Les paramètres sont mis après le nom du programme ou de la fonction entre 
+parenthèses (par exemple <TT>f(a,b):=...</TT>).<BR>
+Ces paramètres sont initialisés lors de l’appel du programme ou de la 
+fonction et se comportent comme des variables locales.</P><P>L’affectation se fait avec <TT>:=</TT> (par exemple <TT>a:=2; b:=a;</TT>) ou
+se fait avec <TT>=&gt;</TT> (par exemple <TT>2=&gt;a; a=&gt;b;</TT>).</P><P>Les entrées se font par passage de paramètres ou avec <TT>input</TT>.<BR>
+Les sorties se font en mettant le nom de la variable à afficher (ou la 
+séquence des variables à afficher ou entre crochets les variables à 
+afficher séparées par une virgule) précedé du mot réservé 
+<TT>print</TT>.<BR>
+Il n’y a pas de distinction entre programme et fonction : la valeur d’une 
+fonction est précedée du mot réservé <TT>return</TT>.<BR>
+<B>Remarque</B>
+<TT>return</TT> n’est pas obligatoire car <TT>Xcas</TT> renvoie toujours la valeur 
+de la dernière instruction, mais <TT>return</TT> est très utile car il fait 
+sortir de la fonction : les instructions situèes après <TT>return</TT> ne 
+sont jamais effectuées.
+</P><H3 CLASS="subsection"><A NAME="htoc11">1.5.5</A>  Les tests</H3><P>
+Avec le langage <TT>Xcas</TT> les tests ont soit une syntaxe similaire au langage 
+<TT>C++</TT> soit une version française proche du langage algorithmique.<BR>
+Pour les tests, les syntaxes admises sont :<BR>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<TT>if </TT><TT><EM>(condition)</EM></TT><TT> </TT><TT><EM>instruction</EM></TT><TT>;</TT><BR>
+on met {..} lorsqu’il faut faire plusieurs instructions :<BR>
+<TT>if </TT><TT><EM>(condition)</EM></TT><TT> {</TT><TT><EM>instructions</EM></TT><TT>}</TT><BR>
+ou<BR>
+<TT>si </TT><TT><EM>condition</EM></TT><TT> alors </TT><TT><EM>instructions</EM></TT><TT> fsi</TT><BR>
+on teste la condition : si elle est vraie, on fait les instructions et si elle 
+est fausse on ne fait rien c’est à dire on passe aux 
+instructions qui suivent le <TT>if</TT> ou le <TT>si</TT>.<BR>
+Par exemple :
+<PRE CLASS="verbatim">testif1(a,b):={
+if  (a&lt;b)
+    b:=b-a;
+return [a,b];
+};
+</PRE>ou
+<PRE CLASS="verbatim">testsi1(a,b):={
+si a&lt;b alors
+    b:=b-a;
+fsi;
+return [a,b];
+};
+</PRE>et on a :<BR>
+<TT>testif1(3,13)=testsi1(3,13)=[3,10]</TT><BR>
+<TT>testif1(13,3)=testsi1(13,3)=[13,3]</TT></LI><LI CLASS="li-itemize"><TT>if </TT><TT><EM>(condition)</EM></TT><TT> </TT><TT><EM>instruction1</EM></TT><TT>; else </TT><TT><EM>instruction2</EM></TT><TT>;</TT><BR>
+on met {..} lorsqu’il faut faire plusieurs instructions :<BR>
+<TT>if </TT><TT><EM>(condition)</EM></TT><TT> {</TT><TT><EM>instructions1</EM></TT><TT>} else {</TT><TT><EM>instructions2</EM></TT><TT>}</TT><BR>
+ou<BR>
+<TT>si </TT><TT><EM>condition</EM></TT><TT> alors </TT><TT><EM>instructions1</EM></TT><TT> sinon </TT><TT><EM>instructions2</EM></TT><TT> fsi</TT><BR>
+on teste la condition : si elle est vraie, on fait les instructions1 et si elle
+est fausse on fait les instructions2.<BR>
+Par exemple :
+<PRE CLASS="verbatim">testif(a,b):={
+if (a==10 or a&lt;b)
+    b:=b-a;
+else 
+    a:=a-b;
+return [a,b];
+};
+</PRE>ou
+<PRE CLASS="verbatim">testsi(a,b):={
+si a==10 or a&lt;b alors
+    b:=b-a;
+sinon 
+    a:=a-b;
+fsi;
+return [a,b];
+};
+</PRE>et on a :<BR>
+<TT>testif(3,13)=testsi(3,13)=[3,10]</TT><BR>
+<TT>testif(13,3)=testsi(13,3)=[10,3]</TT><BR>
+<TT>testif(10,3)=testsi(10,3)=[10,-7]</TT>
+</LI></UL><H3 CLASS="subsection"><A NAME="htoc12">1.5.6</A>  Les boucles</H3><P>
+Avec le langage <TT>Xcas</TT> les boucles ont soit une syntaxe similaire au 
+langage <TT>C++</TT> soit une version française proche du langage 
+algorithmique.<BR>
+La commande <TT>break</TT> <A NAME="@default10"></A> permet de sortir d’une boucle.<BR>
+Si vous avez fait une boucle infinie, il faut appuyer sur <TT>STOP</TT> pour
+arrêter votre programme (ou sur <TT>Shift+STOP</TT> si plusieurs sessions 
+travaillent en parallèle).<BR>
+Pour les boucles, les syntaxes admises sont :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+la boucle <TT>for</TT> ou <TT>pour</TT> qui permet de faire des instructions 
+un nombre de fois qui est connu :<BR>
+<TT>for (</TT><TT><EM>init;condition;increment</EM></TT><TT>) </TT><TT><EM>instruction</EM></TT><TT>;</TT><BR>
+on met {..} lorsqu’il faut faire plusieurs instructions :<BR>
+<TT>for (</TT><TT><EM>init;condition;increment</EM></TT><TT>) {</TT><TT><EM>instructions</EM></TT><TT>}</TT><BR>
+Le plus souvent (<EM>init;condition;increment</EM>) s’écrit en utilisant une 
+variable (par exemple <TT>j</TT> ou <TT>k</TT>...mais pas <TT>i</TT> qui désigne un 
+nombre complexe, si vous avez coché <TT>pas de test de i</TT> dans la 
+<TT>configuration generale</TT>). Cette variable sera initialisée dans 
+<EM>init</EM>, utilisée dans <EM>condition</EM> et 
+incrementée dans <EM>increment</EM>, on écrit par exemple :<BR>
+(<EM>j:=1;j&lt;=10;j++</EM>) (l’increment ou le pas est de 1) ou<BR>
+(<EM>j:=10;j&gt;=1;j–</EM>) (l’increment ou le pas est de -1) ou<BR>
+(<EM>j:=1;j&lt;=10;j:=j+2</EM>) (l’increment ou le pas est de 2)<BR>
+ou<BR>
+<TT>pour j de 1 jusque 10 faire </TT><TT><EM>instructions</EM></TT><TT> fpour;</TT><BR>
+ou<BR>
+<TT>pour j de 10 jusque 1 pas -1 faire </TT><TT><EM>instructions</EM></TT><TT> fpour;</TT><BR>
+ou<BR>
+<TT>pour j de 1 jusque 10 pas 2 faire </TT><TT><EM>instructions</EM></TT><TT> fpour;</TT><BR>
+On initialise <TT>j</TT> puis on teste la condition : 
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+si elle est vraie, on fait les instructions puis on incrémente <TT>j</TT>,
+puis, on teste la condition : si elle est vraie, on fait les 
+instructions etc...
+</LI><LI CLASS="li-itemize">si elle est fausse on ne fait rien c’est à dire on passe aux 
+instructions qui suivent le <TT>for</TT> ou le <TT>pour</TT>.
+</LI></UL>
+Par exemple :
+<PRE CLASS="verbatim">testfor1(a,b):={
+local j,s:=0;
+for (j:=a;j&lt;=b;j++)
+   s:=s+1/j^2;
+return s;
+};
+</PRE>ou 
+<PRE CLASS="verbatim">testpour1(a,b):={
+local j,s:=0;
+pour j de a jusque b faire
+   s:=s+1/j^2;
+fpour;
+return s;
+};
+</PRE>Si <TT>a&gt;b</TT>, l’instruction ou le bloc d’instructions du <TT>for</TT> ou du 
+<TT>pour</TT> ne se fera pas et la fonction retournera <TT>0</TT>,<BR>
+Si <TT>a&lt;=b</TT> la variable <TT>j</TT> va prendre successivement les valeurs 
+<TT>a, a+1,...b</TT> (on dit que le pas est de 1) et pour chacune
+de ces valeurs l’instruction ou le bloc d’instructions qui suit sera 
+exécuté. Par exemple <TT>testfor1(1,2)</TT> renverra <TT>1+1/4=5/4</TT>.
+<PRE CLASS="verbatim">testfor2(a,b):={
+local j,s:=0;
+for (j:=b;j&gt;=a;j--)
+    s:=s+1/j^2;
+return s;
+};
+</PRE>ou 
+<PRE CLASS="verbatim">testpour2(a,b):={
+local j,s:=0;
+pour j de b jusque a pas -1 faire
+   s:=s+1/j^2;
+fpour;
+return s;
+};
+</PRE>Dans ce cas, si <TT>a&lt;=b</TT> la variable <TT>j</TT> va prendre successivement les 
+valeurs <TT>b, b-1,...a</TT> (on dit que le pas est de -1) et pour chacune
+de ces valeurs l’instruction ou le bloc d’instructions qui suit sera 
+exécuté. Par exemple <TT>testfor2(1,2)</TT> renverra <TT>1/4+1=5/4</TT>.
+<PRE CLASS="verbatim">testfor3(a,b):={
+local j,s:=0;
+for (j:=a;j&lt;=b;j:=j+3)
+    s:=s+1/j^2;
+return s;
+};
+</PRE>ou 
+<PRE CLASS="verbatim">testpour3(a,b):={
+local j,s:=0;
+pour j de a jusque b pas 3 faire
+   s:=s+1/j^2;
+fpour;
+return s;
+};
+</PRE>Dans ce cas, si <TT>a&lt;=b</TT> la variable <TT>j</TT> va prendre successivement les 
+valeurs <TT>a, a+3,...a+3k</TT> avec <TT>k</TT> le quotient de <TT>b-a</TT> par <TT>3</TT>
+(<TT>3k&lt;=b-a&lt;3(k+1)</TT>) (on dit que le pas est de 3) et pour chacune
+de ces valeurs l’instruction ou le bloc d’instructions qui suit sera 
+exécuté. Par exemple <TT>testfor3(1,5)</TT> renverra <TT>1+1/16=17/16</TT>.<BR>
+<B>Attention</B><BR>
+Le pas doit être numérique et non une expression car il faut que le
+compilateur puisse transformer le <TT>pour</TT> en <TT>for</TT> avec le bon test.<BR>
+Par exemple:
+<PRE CLASS="verbatim">testpour4(a,b,p):={
+local j,s:=0;
+pour j de a jusque b pas p faire
+   afficher(j);
+   s:=s+j;
+fpour;
+return s;
+};
+</PRE>Selon le signe de <TT>p</TT> le <TT>pour</TT> peut se traduire :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+si <TT>p&gt;0 </TT> en
+<PRE CLASS="verbatim">testpour41(a,b,p):={
+local j,s:=0;
+for (j:=a;j&lt;=b;j:=j+p){ 
+   afficher(j);
+   s:=s+j;
+};
+return s;
+};
+</PRE></LI><LI CLASS="li-itemize">si <TT>p&lt;0 </TT> en
+<PRE CLASS="verbatim">testpour42(a,b,p):={
+local j,s:=0;
+for (j:=a;j&gt;=b;j:=j+p){ 
+   afficher(j);
+   s:=s+j;
+};
+return s;
+}; 
+</PRE></LI><LI CLASS="li-itemize">lorsque le compilateur ne connait pas le signe du pas, il suppose alors 
+le pas positif et il le remplace par sa valeur absolue.
+<PRE CLASS="verbatim">testpour43(a,b,p):={
+local j,s:=0;
+for (j:=a;j&lt;=b;j:=j+abs(p)){ 
+   afficher(j);
+   s:=s+j;
+};
+return s;
+}; 
+</PRE></LI></UL></LI><LI CLASS="li-itemize">la boucle <TT>while</TT> ou <TT>tantque</TT> permet de faire plusieurs fois
+des instructions avec une condition d’arrêt au début de la boucle :
+<TT>while (</TT><TT><EM>condition</EM></TT><TT>) </TT><TT><EM>instruction</EM></TT><TT>;</TT><BR>
+on met {..} lorsqu’il faut faire plusieurs instructions :<BR>
+<TT>while (</TT><TT><EM>condition</EM></TT><TT>) {</TT><TT><EM>instructions</EM></TT><TT>}</TT><BR>
+ou<BR>
+<TT>tantque </TT><TT><EM>condition</EM></TT><TT> faire </TT><TT><EM>instructions</EM></TT><TT> ftantque;</TT><BR>
+On teste la condition : 
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+si elle est vraie, on fait les instructions puis, on 
+teste la condition : si elle est vraie, on fait les instructions etc...
+</LI><LI CLASS="li-itemize">si elle est fausse on ne fait rien c’est à dire on passe aux 
+instructions qui suivent le <TT>while</TT> ou le <TT>tantque</TT>.
+</LI></UL>
+Par exemple :
+<PRE CLASS="verbatim">testwhile(a,b):={
+while (a==10 or a&lt;b)
+   b:=b-a;
+return [a,b];
+};
+</PRE>ou
+<PRE CLASS="verbatim">testtantque(a,b):={
+tantque a==10 or a&lt;b faire
+   b:=b-a;
+ftantque;
+return [a,b];
+};
+</PRE><P><B>Un exemple : le PGCD d’entiers</B><BR>
+- Version itérative
+</P><PRE CLASS="verbatim">pgcd(a,b):={
+ local r;
+ while (b!=0) {
+    r:=irem(a,b);
+    a:=b;
+    b:=r;
+ }
+ return a;
+};
+</PRE><P>ou
+</P><PRE CLASS="verbatim">pgcd(a,b):={
+ local r;
+ tantque b!=0 faire
+    r:=irem(a,b);
+    a:=b;
+    b:=r;
+ ftantque; 
+ return a;
+};
+</PRE><P>-Version récursive
+</P><PRE CLASS="verbatim">pgcdr(a,b):={
+ if (b==0) return a;
+ return pgcdr(b,irem(a,b));
+};
+</PRE><P>ou
+</P><PRE CLASS="verbatim">pgcdr(a,b):=if (b==0) 
+               return a;
+             else 
+               return pgcdr(b,irem(a,b));
+</PRE></LI><LI CLASS="li-itemize">La boucle <TT>repeat</TT> ou <TT>repeter</TT> permet de faire plusieurs fois
+des instructions avec une condition d’arrêt à la fin de la boucle :<BR>
+<TT>repeat </TT><TT><EM>instructions</EM></TT><TT> until </TT><TT><EM>condition</EM></TT><TT>;</TT><BR>
+ou<BR>
+<TT>repeter </TT><TT><EM>instructions</EM></TT><TT> jusqua </TT><TT><EM>condition</EM></TT><TT>;</TT><BR>
+ou<BR>
+<TT>repeter </TT><TT><EM>instructions</EM></TT><TT> jusqu_a </TT><TT><EM>condition</EM></TT><TT>;</TT><BR>
+On fait les instructions, puis on teste la condition : 
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+si elle est vraie, on fait les instructions puis, on 
+teste la condition etc...
+</LI><LI CLASS="li-itemize">si elle est fausse on passe aux 
+instructions qui suivent le <TT>repeat</TT> ou le <TT>repeter</TT>.
+</LI></UL>
+Par exemple :
+<PRE CLASS="verbatim">f():={
+  local a;
+  repeat 
+     saisir("entrez un reel entre 1 et 10",a);
+   until a&gt;=1 &amp;&amp; a&lt;=10;
+  return a;
+}:;
+</PRE>ou 
+<PRE CLASS="verbatim">f():={
+  local a;
+  repeter 
+    saisir("entrez un reel entre 1 et 10",a); 
+  jusqua a&gt;=1 et a&lt;=10;
+  return a;
+}:;
+</PRE>Voici la fonction qui renvoie un point fixe de <TT>f</TT> en utilisant 
+<TT>repeat</TT>. Cette fonction donne la solution à <TT>eps</TT> 
+près de <TT>f(x)=x</TT> en utilisant au plus <TT>n</TT> itérations et <TT>x0</TT> 
+comme début de l’itération donné par le théorème du point fixe.
+<PRE CLASS="verbatim">point_fixe(f,n,x0,eps):={
+ local j,x1,x00;
+ j:=0;
+ repeat
+   x1:=evalf(f(x0));
+   j:=j+1;
+   x00:=x0;
+   x0:=x1;
+ until (abs(x00-x0)&lt;eps) or (j&gt;=n);
+ return j,x0;
+}:;
+</PRE>ou
+<PRE CLASS="verbatim">point_fixe(f,n,x0,eps):={
+ local j,x1,x00;
+ j:=0;
+ repeter
+   x1:=evalf(f(x0));
+   j:=j+1;
+   x00:=x0;
+   x0:=x1;
+ jusqua (abs(x00-x0)&lt;eps) or (j&gt;=n);
+ return j,x0;
+}:;
+</PRE></LI><LI CLASS="li-itemize">La boucle <TT>do </TT><TT><EM>instructions</EM></TT><TT> od</TT> ou 
+<TT>faire </TT><TT><EM>instructions</EM></TT><TT> ffaire</TT> est une boucle infinie il faut donc
+mettre une condition d’arrêt avec un <TT>break</TT> ou un <TT>return</TT>
+dans le corps de la boucle.<BR>
+Par exemple la fonction précédente en utilisant <TT>do</TT> :
+<PRE CLASS="verbatim">point_fixe(f,n,x0,eps):={
+ local j,x1;
+ j:=0;
+ do
+   x1:=evalf(f(x0));
+   if (abs(x1-x0)&lt;eps) return x1;
+   x0:=x1;
+   j:=j+1;
+   if (j&gt;=n) break;
+ od;
+ return "non trouve au bout de ", n," iterations";
+}:;
+</PRE>ou en utilisant <TT>faire</TT>
+<PRE CLASS="verbatim">point_fixe(f,n,x0,eps):={
+ local j,x1;
+ j:=0;
+ faire
+   x1:=evalf(f(x0));
+   if (abs(x1-x0)&lt;eps) return x1;
+   x0:=x1;
+   j:=j+1;
+   if (j&gt;=n) break;
+ ffaire;
+ return "non trouve au bout de ", n," iterations";
+}:;
+</PRE>On peut aussi écrire cela avec un <TT>for</TT>
+<PRE CLASS="verbatim">point_fixe(f,n,x0,eps):={
+ local j,x1;
+ for (j:=0;j&lt;n;j++){
+   x1:=evalf(f(x0));
+   if (abs(x1-x0)&lt;eps) return x1;
+   x0:=x1;
+ }
+ return "non trouve au bout de ", n," iteration";
+}:;
+</PRE><TT>point_fixe(x-&gt;cos(x),100,1.0,1e-12)=0.739085133215</TT><BR>
+On vérifie : <TT>cos(0.739085133215)=0.739085133215</TT><BR>
+<B>Remarque</B><BR>
+Le <TT>for</TT> permet de faire tous les types de boucle à 
+condition de mettre, soit 
+<TT>for (</TT><TT><EM>;test_arrêt;</EM></TT><TT>)...</TT> soit et <TT>for (</TT><TT><EM>;;</EM></TT><TT>)...</TT> et
+une instruction <TT>break</TT> dans le corps du <TT>for</TT>, par exemple :
+<PRE CLASS="verbatim">pgcd(a,b):={
+local r;
+for (;b!=0;) {
+r:=irem(a,b);
+a:=b;
+b:=r;
+}
+return a;
+}
+:;
+</PRE>ou
+<PRE CLASS="verbatim">pgcd(a,b):={
+local r;
+for (;;) {
+if (b==0) break;
+r:=irem(a,b);
+a:=b;
+b:=r;
+}
+return a;
+}
+:;
+</PRE></LI></UL><HR>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge002.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

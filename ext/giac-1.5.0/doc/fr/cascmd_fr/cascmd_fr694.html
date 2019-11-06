@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Réduction de Gauss-Jordan : rref gaussjord</title>
+</head>
+<body >
+<a href="cascmd_fr693.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr695.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec849" class="subsection">6.63.3  Réduction de Gauss-Jordan : <span style="font-family:monospace">rref gaussjord</span></h3>
+<p><a id="hevea_default1264"></a><a id="hevea_default1265"></a><a id="sec:rrefp"></a><a id="hevea_default1266"></a><a id="hevea_default1267"></a>
+<span style="font-family:monospace">rref</span> permet de résoudre un système d’équations linéaires que l’on écrit sous forme matricielle (voir aussi <a href="cascmd_fr460.html#sec%3Arrefm">6.35.17</a>) :
+</p><div class="center"><span style="font-family:monospace">A*X=B</span></div><p>
+<span style="font-family:monospace">rref</span> a un ou deux paramètres.<br>
+</p><ul class="itemize"><li class="li-itemize">
+Si <span style="font-family:monospace">rref</span> n’a qu’un paramètre, ce paramètre est
+la "matrice augmentée" du système (celle 
+formée par la matrice <span style="font-family:monospace">A</span> du système et ayant comme dernier vecteur 
+colonne le second membre <span style="font-family:monospace">B</span>).<br>
+Le résultat est une matrice <span style="font-family:monospace">[A1,B1]</span> : <span style="font-family:monospace">[A1,B1]</span> a des zéros de 
+part et d’autre de sa diagonale et des 1 sur sa diagonale et les solutions de :
+<div class="center"><span style="font-family:monospace">A1*X=B1</span></div> 
+sont les mêmes que celles de : 
+<div class="center"><span style="font-family:monospace">A*X=B</span></div>
+<span style="font-family:monospace">rref</span> peut travailler dans ℤ/<span style="font-style:italic">p</span>ℤ.<br>
+Par exemple, soit à résoudre le système dans ℝ et dans ℤ/5ℤ:
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎨<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:left;white-space:nowrap" >3<span style="font-style:italic">x</span> + <span style="font-style:italic">y</span></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:right;white-space:nowrap" >−2 </td></tr>
+<tr><td style="text-align:left;white-space:nowrap" >3<span style="font-style:italic">x</span> +2<span style="font-style:italic">y</span></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:right;white-space:nowrap" >2 </td></tr>
+</table></td></tr>
+</table> 
+On tape pour résoudre le système dans ℝ:
+<div class="center"><span style="font-family:monospace">rref([[3,1,-2],[3,2,2]])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[1,0,-2],[0,1,4]]</span></div>
+cela signifie donc que :<br>
+<span style="font-style:italic">x</span>=−2 et <span style="font-style:italic">y</span>=4 sont solutions du système.<br>
+On tape pour résoudre le système dans ℤ/5ℤ:
+<div class="center"><span style="font-family:monospace">rref([[3,1,-2],[3,2,2]]%5)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[1 % 5,0,-2 % 5],[0,1 % 5,-1 % 5]]</span></div>
+cela signifie donc que :<br>
+<span style="font-style:italic">x</span>=−2%5 et <span style="font-style:italic">y</span>=−1%5 sont solutions du système.</li><li class="li-itemize">Si <span style="font-family:monospace">rref</span> a deux paramètres, le deuxième paramètre est un 
+entier <span style="font-style:italic">k</span> qui permet de ne faire Gauss-Jordan que sur les <span style="font-style:italic">k</span> premières 
+colonnes ou est l’option <span style="font-family:monospace">conserver_pivot</span> ou <span style="font-family:monospace">keep_pivot</span>.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">rref([[3,1,-2,1],[3,2,2,2]],1)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[3,1,-2,1],[0,1,4,1]]</span></div>
+L’option <span style="font-family:monospace">conserver_pivot</span> ou <span style="font-family:monospace">keep_pivot</span> permet de ne pas diviser 
+par les pivots, cela pour éviter de diviser par des pivots nuls.<br>
+par exemple, 
+pour résoudre le système dans ℝ et dans ℤ/2ℤ:
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" > <span style="font-style:italic">z</span><sub>1</sub> + <span style="font-style:italic">z</span><sub>2</sub></td><td style="text-align:left;white-space:nowrap" >= <span style="font-style:italic">a</span><sub>1</sub></td></tr>
+<tr><td style="text-align:right;white-space:nowrap" > <span style="font-style:italic">z</span><sub>2</sub> + <span style="font-style:italic">z</span><sub>3</sub></td><td style="text-align:left;white-space:nowrap" >= <span style="font-style:italic">a</span><sub>2</sub></td></tr>
+<tr><td style="text-align:right;white-space:nowrap" > <span style="font-style:italic">z</span><sub>3</sub> + <span style="font-style:italic">z</span><sub>4</sub></td><td style="text-align:left;white-space:nowrap" >= <span style="font-style:italic">a</span><sub>3</sub></td></tr>
+<tr><td style="text-align:right;white-space:nowrap" > <span style="font-style:italic">z</span><sub>4</sub> + <span style="font-style:italic">z</span><sub>1</sub></td><td style="text-align:left;white-space:nowrap" >= <span style="font-style:italic">a</span><sub>4</sub></td></tr>
+</table></td><td class="dcell">
+</td></tr>
+</table>
+On tape pour résoudre le système dans ℝ :
+<div class="center"><span style="font-family:monospace">A:=syst2mat([z1+z2=a1,z2+z3=a2,z3+z4=a3,z4+z1=a4],
+[z1,z2,z3,z4])</span></div>
+puis, 
+<div class="center"><span style="font-family:monospace">rref(A,keep_pivot)</span></div>
+ou bien, on tape directement :
+<div class="center"><span style="font-family:monospace">rref([[1,1,0,0,-a1],[0,1,1,0,-a2],[0,0,1,1,-a3],
+[1,0,0,1,-a4]],keep_pivot)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[a1-a2+a3-a4,0,0,a1-a2+a3-a4,0],
+[0,a1-a2+a3-a4,0,-a1+a2-a3+a4,0],
+[0,0,a1-a2+a3-a4,a1-a2+a3-a4,0],
+[0,0,0,0,a1-a2+a3-a4]]</span></div><p><span style="font-weight:bold">Remarque</span><br>
+Lorsque le nombre de colonnes est égal au nombre de lignes +1
+<span style="font-family:monospace">rref</span> ne divise pas par le pivot de la derniere colonne, par exemple, 
+pour résoudre le système :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" > <span style="font-style:italic">z</span><sub>1</sub> + <span style="font-style:italic">z</span><sub>2</sub></td><td style="text-align:left;white-space:nowrap" >= <span style="font-style:italic">a</span><sub>1</sub></td></tr>
+<tr><td style="text-align:right;white-space:nowrap" > <span style="font-style:italic">z</span><sub>2</sub> + <span style="font-style:italic">z</span><sub>3</sub></td><td style="text-align:left;white-space:nowrap" >= <span style="font-style:italic">a</span><sub>2</sub></td></tr>
+<tr><td style="text-align:right;white-space:nowrap" > <span style="font-style:italic">z</span><sub>3</sub> + <span style="font-style:italic">z</span><sub>4</sub></td><td style="text-align:left;white-space:nowrap" >= <span style="font-style:italic">a</span><sub>3</sub></td></tr>
+<tr><td style="text-align:right;white-space:nowrap" > <span style="font-style:italic">z</span><sub>4</sub> + <span style="font-style:italic">z</span><sub>1</sub></td><td style="text-align:left;white-space:nowrap" >= <span style="font-style:italic">a</span><sub>4</sub></td></tr>
+</table></td><td class="dcell">
+</td></tr>
+</table><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">A:=syst2mat([z1+z2=a1,z2+z3=a2,z3+z4=a3,z4+z1=a4],
+[z1,z2,z3,z4])</span></div><div class="center"><span style="font-family:monospace">rref([[1,1,0,0,-a1],[0,1,1,0,-a2],[0,0,1,1,-a3],
+[1,0,0,1,-a4]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1,0,0,1,0],[0,1,0,-1,0],[0,0,1,1,0],
+[0,0,0,0,a1-a2+a3-a4]]</span></div><p>
+Ainsi on peut savoir que si <span style="font-family:monospace">a1-a2+a3-a4</span> n’est pas nul, il n’y a pas de 
+solution. 
+Puis, on tape :
+</p><div class="center"><span style="font-family:monospace">rref([[1,1,0,0,-a1],[0,1,1,0,-a2],[0,0,1,1,-a3],
+[1,0,0,1,-a4]],3)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1,0,0,1,-a1+a2-a3],[0,1,0,-1,-a2+a3],[0,0,1,1,-a3],
+[0,0,0,0,1]]</span></div><p>
+ou encore si on remplace <span style="font-family:monospace">a4</span> par <span style="font-family:monospace">a1-a2+a3</span>, on tape :
+</p><div class="center"><span style="font-family:monospace">rref([[1,1,0,0,-a1],[0,1,1,0,-a2],[0,0,1,1,-a3],
+[1,0,0,1,-a1+a2-a3]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[1,0,0,1,-a1+a2-a3],[0,1,0,-1,-a2+a3],[0,0,1,1,-a3],
+[0,0,0,0,0]]</span></div><p>
+On peut aussi taper :
+</p><div class="center"><span style="font-family:monospace">rref([[1,1,0,0,-a1],[0,1,1,0,-a2],[0,0,1,1,-a3],
+[1,0,0,1,-a4]],3,keep_pivot)</span></div><p>
+On obtient tout de suite:
+</p><div class="center"><span style="font-family:monospace">[[1,0,0,1,-a1+a2-a3],[0,1,0,-1,-a2+a3],[0,0,1,1,-a3],
+[0,0,0,0,a1-a2+a3-a4]]</span></div><p>
+Donc, les solutions lorsque <span style="font-family:monospace">a1-a2+a3-a4=0</span> sont :<br>
+<span style="font-family:monospace">z1=a1-a2+a3-z4, z2=a2-a3+z4, z3=a3-z4, z4=z4</span>.<br>
+On tape pour résoudre le système dans ℤ/2ℤ : 
+</p><div class="center"><span style="font-family:monospace">rref([[1,1,0,0,-a1],[0,1,1,0,-a2],[0,0,1,1,-a3],
+[1,0,0,1,-a4]]%2,3,keep_pivot)</span></div><p>
+On obtient :<br>
+<span style="font-family:monospace">[[1 % 2,0,0,1 % 2,(1 % 2)*a1+(1 % 2)*a2+(1 % 2)*a3],</span><br>
+<span style="font-family:monospace">[0,1 % 2,0,1 % 2,(1 % 2)*a2+(1 % 2)*a3],[0,0,1 % 2,1 % 2,(1 % 2)*a3],</span><br>
+<span style="font-family:monospace">[0,0,0,0,(1 % 2)*a1+(1 % 2)*a2+(1 % 2)*a3+(1 % 2)*a4]]</span><br>
+Donc lorsque <span style="font-family:monospace">(a1+a2+a3+a4=0%2)</span>, les solutions dans ℤ/2ℤ sont :<br>
+<span style="font-family:monospace">z1=a1+a2+a3+z4%2, z2=a2+a3+z4%2, z3=a3+z4%2, z4=(1 % 2)*z4</span>.
+</p></li><li class="li-itemize"><span style="font-family:monospace">rref</span> permet aussi de résoudre plusieurs systèmes
+d’équations linéaires qui ne diffèrent que par leur second membre. 
+On écrit alors les second membres comme les colonnes d’une matrice.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">rref([[3,1,-2,1],[3,2,2,2]])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[1,0,-2,0],[0,1,4,1]]</span></div>
+cela signifie donc que :<br>
+<span style="font-style:italic">x</span>=−2 et <span style="font-style:italic">y</span>=4 sont solutions du système
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎨<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:left;white-space:nowrap" >3<span style="font-style:italic">x</span> + <span style="font-style:italic">y</span></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:right;white-space:nowrap" >−2 </td></tr>
+<tr><td style="text-align:left;white-space:nowrap" >3<span style="font-style:italic">x</span> +2<span style="font-style:italic">y</span></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:right;white-space:nowrap" >2 </td></tr>
+</table></td></tr>
+</table>
+et que <span style="font-style:italic">x</span>=0 et <span style="font-style:italic">y</span>=1 sont solutions du système
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎨<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:left;white-space:nowrap" >3<span style="font-style:italic">x</span> + <span style="font-style:italic">y</span></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:right;white-space:nowrap" >1 </td></tr>
+<tr><td style="text-align:left;white-space:nowrap" >3<span style="font-style:italic">x</span> +2<span style="font-style:italic">y</span></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:right;white-space:nowrap" >2 </td></tr>
+</table></td><td class="dcell">
+</td></tr>
+</table>
+</li></ul>
+<hr>
+<a href="cascmd_fr693.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr695.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

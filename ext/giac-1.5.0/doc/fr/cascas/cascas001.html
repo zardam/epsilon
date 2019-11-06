@@ -1,0 +1,1860 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>Pour s’amuser en arithmétique</TITLE>
+</HEAD>
+<BODY >
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas002.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc1">Chapitre 1</A>  Pour s’amuser en arithmétique</H1><H2 CLASS="section"><A NAME="toc1"></A><A NAME="htoc2">1.1</A>  Calcul de 55555556<SUP>2</SUP>−44444445<SUP>2</SUP></H2><P>
+Calculer 
+55555556<SUP>2</SUP>−44444445<SUP>2</SUP> et plus généralement calculer
+(5...56)<SUP>2</SUP>−(4...45)<SUP>2</SUP> pour des nombres ayant <I>p</I> chiffres.<BR>
+
+On calcule avec <TT>Xcas</TT> :<BR>
+6<SUP>2</SUP>−5<SUP>2</SUP>=11 (l’écriture décimale comporte 2 fois le chiffre un),<BR>
+56<SUP>2</SUP>−45<SUP>2</SUP>=1111 (l’écriture décimale comporte 4 fois le chiffre un),<BR>
+....<BR>
+55555556<SUP>2</SUP>−44444445<SUP>2</SUP>=1111111111111111 (l’écriture décimale comporte 16 
+fois le chiffre un).<BR>
+Il semble donc que l’on a à démontrer que :<BR>
+(5...56)<SUP>2</SUP>−(4...45)<SUP>2</SUP> pour des nombres ayant <I>p</I> chiffres vaut un nombre dont
+l’écriture décimale comporte 2<I>p</I> fois le chiffre un.<BR>
+Pour le démontrer, on va simplement d’utiliser l’identité remarquable :<BR>
+<I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP>=(<I>a</I>−<I>b</I>)(<I>a</I>+<I>b</I>)<BR>
+On a (<I>p</I>=8) :<BR>
+55555556<SUP>2</SUP>−44444445<SUP>2</SUP>=(55555556+44444445)(55555556−44444445)=100000001*11111111=1111111111111111.<BR>
+Plus généralement, si on pose <I>x</I><SUB><I>p</I></SUB> le nombre qui s’écrit avec <I>p</I> fois 
+le chiffre 1,
+on doit calculer :<BR>
+(5*<I>x</I><SUB><I>p</I></SUB>+1)<SUP>2</SUP>−(4*<I>x</I><SUB><I>p</I></SUB>+1)<SUP>2</SUP>=(9*<I>x</I><SUB><I>p</I></SUB>+2)(<I>x</I><SUB><I>p</I></SUB>).<BR>
+On a  <I>x</I><SUB><I>p</I></SUB>=11...1=10<SUP><I>p</I>−1</SUP>+...10+1=10<SUP><I>p</I></SUP>−1/9 donc :<BR>
+9<I>x</I><SUB><I>p</I></SUB>+2=10<SUP><I>p</I></SUP>+1 et<BR>
+ (9<I>x</I><SUB><I>p</I></SUB>+2)(<I>x</I><SUB><I>p</I></SUB>)=10<SUP><I>p</I></SUP><I>x</I><SUB><I>p</I></SUB>+<I>x</I><SUB><I>p</I></SUB>=10<SUP>2<I>p</I></SUP>−10<SUP><I>p</I></SUP>/9+10<SUP><I>p</I></SUP>−1/9=10<SUP>2<I>p</I></SUP>−1/9=<I>x</I><SUB>2<I>p</I></SUB><BR>
+Ou plus simplement :<BR>
+ 10<SUP><I>p</I></SUP><I>x</I><SUB><I>p</I></SUB> s’écrit avec <I>p</I> fois le chiffre 1 suivi de p fois le 
+chiffre 0, donc 10<SUP><I>p</I></SUP><I>x</I><SUB><I>p</I></SUB>+<I>x</I><SUB><I>p</I></SUB> s’écrit avec 2<I>p</I> fois le chiffre 1.
+</P><H3 CLASS="subsection"><A NAME="htoc3">1.1.1</A>  Trouver un exemple du même type</H3><P>
+On remarque que pour obtenir le même résultat il suffit que :<BR>
+<I>a</I>=<I>k</I>*<I>x</I><SUB><I>p</I></SUB>+1 et <I>b</I>=<I>h</I>*<I>x</I><SUB><I>p</I></SUB>+1 avec 0 ≤ <I>h</I>&lt;<I>k</I> ≤ 9.<BR>
+On a <I>a</I>−<I>b</I>=(<I>k</I>−<I>h</I>)<I>x</I><SUB><I>p</I></SUB>, il faut donc faire en sorte que
+<I>a</I>+<I>b</I>=10<SUP><I>p</I></SUP>+1<BR>
+On a <I>a</I>+<I>b</I>=(<I>h</I>+<I>k</I>)<I>x</I><SUB><I>p</I></SUB>+2 c’est à dire prendre <I>h</I>+<I>k</I>=9 avec <I>k</I>&gt;<I>h</I>.<BR>
+Si <I>k</I>=8 et <I>h</I>=1 on a 88888889<SUP>2</SUP>−11111112<SUP>2</SUP>=7777777777777777<BR>
+Si <I>k</I>=7 et <I>h</I>=2 on a 77777778<SUP>2</SUP>−22222223<SUP>2</SUP>=5555555555555555<BR>
+Si <I>k</I>=6 et <I>h</I>=3 on a 66666667<SUP>2</SUP>−33333334<SUP>2</SUP>=3333333333333333<BR>
+Si <I>k</I>=5 et <I>h</I>=4 on a l’exemple traité.
+</P><H2 CLASS="section"><A NAME="toc2"></A><A NAME="htoc4">1.2</A>  Si <I>b</I>=11115555 alors <I>b</I>+1 est un carré</H2><H3 CLASS="subsection"><A NAME="htoc5">1.2.1</A>  Vérification avec <TT>Xcas</TT></H3><P>
+On tape :<BR>
+<TT>sqrt(11115556)</TT><BR>
+On trouve :<BR>
+<TT>3334</TT><BR>
+On vérifie :<BR>
+<TT>3334</TT><SUP><TT>2</TT></SUP><TT>=11115556</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc6">1.2.2</A>  Généralisation</H3><P>
+On remarque que :<BR>
+<TT>15+1=4</TT><SUP><TT>2</TT></SUP><BR>
+<TT>1155+1=34</TT><SUP><TT>2</TT></SUP><BR>
+Soit <I>b</I>=11...155...5 dont l’écriture contient <I>p</I> fois le chiffre 1 et <I>p</I> 
+fois le chiffre 5. 
+On a donc :<BR>
+si <I>x</I> s’écrit avec <I>p</I> fois le chiffre 1, on a <I>x</I>=11...1=10<SUP><I>p</I>−1</SUP>+...10+1=10<SUP><I>p</I></SUP>−1/9,<BR>
+<I>b</I>=<I>x</I>*10<SUP><I>p</I></SUP>+5<I>x</I>=<I>x</I>(10<SUP><I>p</I></SUP>+5)=(10<SUP><I>p</I></SUP>−1)(10<SUP><I>p</I></SUP>+5)/9=(10<SUP>2<I>p</I></SUP>+4*10<SUP><I>p</I></SUP>−5)/9<BR>
+Remarque : Pour ne pas alourdir les notations on ne met pas d’indice à <I>x</I> ni à <I>b</I>.<BR>
+On en déduit que :<BR>
+ <I>b</I>+1=(10<SUP>2<I>p</I></SUP>+4*10<SUP><I>p</I></SUP>+4)/9=(10<SUP><I>p</I></SUP>+2/3)<SUP>2</SUP><BR>
+On a :<BR>
+10<SUP><I>p</I></SUP>+2/3=3(10<SUP><I>p</I></SUP>−1/9)+1=3<I>x</I>+1<BR>
+Ou encore :<BR>
+puisque 10<SUP><I>p</I></SUP>=9<I>x</I>+1, on a <I>b</I>+1= <I>x</I>*10<SUP><I>p</I></SUP>+5<I>x</I>+1=9<I>x</I><SUP>2</SUP>+<I>x</I>+5<I>x</I>+1=(3<I>x</I>+1)<SUP>2</SUP>
+Conclusion :<BR>
+<I>b</I>+1=11...155...5+1 est le carré de 33...3+1 dont l’écriture contient 
+<I>p</I> fois le chiffre 3.
+</P><H3 CLASS="subsection"><A NAME="htoc7">1.2.3</A>  Trouver un exemple du même type</H3><P>
+On peut faire des essais avec <I>b</I> ayant deux chiffres puis, avec <I>b</I> 
+ayant quatre chiffres : quand <I>b</I>+1 est-il un carré ?<BR>
+Ou bien :<BR>
+On suppose que <I>b</I>=<I>m</I>*<I>x</I>*10<SUP><I>p</I></SUP>+<I>n</I>*<I>x</I> (0&lt;<I>m</I>&lt;10 et 0 ≤ <I>n</I>&lt;10) et on cherche <I>m</I> et <I>n</I> pour que <I>b</I>+1
+soit un carré.<BR>
+On a 10<SUP><I>p</I></SUP>=9<I>x</I>+1 donc <I>b</I>+1=9<I>m</I>*<I>x</I><SUP>2</SUP>+<I>m</I>*<I>x</I>+<I>n</I>*<I>x</I>+1=(3*<I>k</I>*<I>x</I>+1)<SUP>2</SUP>
+On choisit pour <I>m</I> un carré (<I>m</I>=<I>k</I><SUP>2</SUP>) : <I>m</I>=1 ou <I>m</I>=4 ou <I>m</I>=9.<BR>
+Si <I>m</I>=1 on doit avoir (<I>m</I>+<I>n</I>=2*3*<I>k</I>) <I>m</I>+<I>n</I>=6 et on retrouve l’exemple traité.
+Si <I>m</I>=4 on doit avoir (<I>m</I>+<I>n</I>=2*3*<I>k</I>) <I>m</I>+<I>n</I>=12 et on trouve <I>n</I>=8, l’exemple 
+cherché est donc :
+44...488...8+1 est le carré de 66..6+1<BR>
+Si <I>m</I>=9 on doit avoir <I>m</I>+<I>n</I>=2*3*3=18 et on trouve <I>n</I>=9 l’exemple cherché 
+est donc :
+99...9 dont l’écriture contient 2<I>p</I> fois le chiffre 9 est un carré. Cela
+on le savait!!! puisque 99...9+1=10<SUP>2<I>p</I></SUP>=(10<SUP><I>p</I></SUP>)<SUP>2</SUP></P><H2 CLASS="section"><A NAME="toc3"></A><A NAME="htoc8">1.3</A>  495 et 6174</H2><P>
+Étant donné un nombre <I>n</I> de <I>s</I> chiffres au plus non tous égaux, on 
+définit le nombre <I>nA</I> obtenu en 
+rangeant les chiffres de <I>n</I> dans l’ordre croissant et le nombre <I>nD</I> obtenu en
+rangeant les <I>s</I> chiffres de <I>n</I> dans l’ordre décroissant en rajoutant des 
+zéros pour que <I>nD</I> ait <I>s</I> chiffres (si <I>n</I>=21, <I>nA</I>=12 et <I>nD</I>=2100).<BR>
+Soit <I>f</I> la fonction qui a <I>n</I> fait correspondre <I>nD</I>−<I>nA</I>.
+On veut étudier les points fixes de <I>f</I> pour <I>s</I>=3 et pour <I>s</I>=4.
+On va montrer que pour <I>s</I>=3, <I>f</I> a un point fixe qui est égal à 495 et 
+que pour tout <I>n</I>, <I>f</I>@6(<I>n</I>)=495 (<I>f</I>@@6(<I>n</I>) désigne <I>f</I>(<I>f</I>(<I>f</I>(<I>f</I>(<I>f</I>(<I>f</I>(<I>n</I>))))))).<BR>
+On va montrer que pour <I>s</I>=4, <I>f</I> a un point fixe qui est égal à 6174 et 
+que pour tout <I>n</I>, <I>f</I>@7(<I>n</I>)=6174 (<I>f</I>@@7(<I>n</I>) désigne <I>f</I>(<I>f</I>(<I>f</I>(<I>f</I>(<I>f</I>(<I>f</I>(<I>f</I>(<I>n</I>)))))))).<BR>
+On va montrer cela à l’aide d’un programme qui va tester tous les nombres 
+<I>n</I> de 3 (resp 4) chiffres au plus, non tous égaux :
+ce programme suppose que le résultat est vrai car sinon le programme ne 
+s’arrête pas!!!!<BR>
+On remarque que :<BR>
+<TT>f(495)=954-459=495</TT>
+<TT>f(6174)=7641-1467=6174</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc9">1.3.1</A>  Les chiffres d’un nombre</H3><P>
+La procédure <TT>chiffres0</TT> renvoie un couple composé de la liste des 
+chiffres du nombre et du nombre de chiffres.
+</P><PRE CLASS="verbatim">chiffres0(n):={
+local s,ch;
+ch:=string(n);
+s:=size(ch);
+return (asc(ch)-[seq(48,s)],s);
+}
+</PRE><P>On tape :
+<TT>chiffres0(6174)</TT>
+On obtient :
+<TT>[6,1,7,4],4</TT>
+On fait la procédure <TT>nombre</TT> qui reconstitue le nombre à partir de la
+liste de ces chiffres. Il ne faut pas que la chaine commence par zéro car 
+sinon <TT>expr</TT> considère que la chaine est une écriture en base 8 (par 
+exemple <TT>expr("016")=14</TT> car en base 8, 14 s’écrit "16").
+</P><PRE CLASS="verbatim">nombre(ch):={
+local s,j,chaine;
+s:=size(ch);
+chaine:=char(ch+[seq(48,s)]);
+tantque (chaine[j]==0)faire j:=j+1; ftantque;
+chaine:=mid(chaine,j);
+return expr(chaine);
+}
+</PRE><P>On peut aussi utiliser la commande <TT>horner</TT> de <TT>Xcas</TT> qui donne la 
+valeur en un point d’un polynôme définit par la liste de ses coefficients
+par puissances décroissantes.<BR>
+Ainsi <TT>horner([6,1,7,4],10)=6174</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc10">1.3.2</A>  La fonction <TT>f</TT></H3><P>
+On écrit la fonction <TT>etape0</TT> qui a 2 arguments le nombre <TT>n</TT> et le 
+nombre de chiffres autorisés <TT>s</TT> : ainsi <TT>f(n)=etape0(n,4)</TT> 
+</P><PRE CLASS="verbatim">etape0(n,s):={
+local ch,chA,chD,t,nA,nD;
+si (n==0) return n;fsi;
+ch,t:=chiffres0(n);
+chA:=SortA(ch);
+chD:=SortD(ch);
+nA:=nombre(chA);
+nD:=nombre(chD)*10^(s-t);
+return nD-nA;
+};
+</PRE><P>En utilisant la fonction <TT>horner</TT> de <TT>Xcas</TT> au lieu de <TT>nombre</TT>, 
+on écrit la fonction <TT>etape</TT> (<TT>f(n)=etape(n,4)</TT>) puis, on écrit la 
+fonction <TT>test</TT> pour tester un nombre quelconque en itérant la fonction 
+<TT>f</TT> :
+</P><PRE CLASS="verbatim">chiffres(n):={
+local ch,t;
+ch:=string(n);
+t:=size(ch);
+return (asc(ch)-[seq(48,t)],t);
+};
+etape(n,s):={
+local ch,chA,chD,t,nA,nD;
+(ch,t):=chiffres(n);
+chA:=SortA(ch);
+chD:=SortD(ch);
+nA:=horner(chA,10);
+nD:=horner(chD,10)*10^(s-t);
+return nD-nA;
+};
+test(n,s):={
+si (n==0) "0 non permis";fsi;
+si (n&gt;10^s) alors return s+" chiffres au plus";fsi;
+si (irem(n,horner([seq(1,s)],10))==0) alors 
+return s+" chiffres non identiques" 
+fsi;
+si (s==3) alors
+tantque (n!=495) faire print(n);n:=etape(n,s);ftantque;
+fsi;
+si (s==4) alors
+tantque (n!=6174) faire print(n);n:=etape(n,s);ftantque;
+fsi;
+return n;
+};
+</PRE><P>On écrit une première "démonstration" en testant tous les nombres en 
+ordonnant leur chiffres pour ne pas faire 10<SUP>3</SUP> (resp 10<SUP>4</SUP>) tests : c’est le
+fait que le programme s’arrête qui prouvera que 495 (resp 6174) est un point 
+fixe de <I>f</I>. 
+On compte le nombre <I>m</I> d’itérations que l’on doit faire avant d’obtenir 
+495 (resp 6174).<BR>
+Pour 495 :
+</P><PRE CLASS="verbatim">demo495():={
+local j,k,l,u,n,p,m,n0;
+p:=0
+for (j:=0;j&lt;10;j++){
+for (k:=j;k&lt;10;k++){
+for (l:=k;l&lt;10;l++){
+if (l!=j){
+n:=horner([j,k,l],10);
+p:=p+1;m:=0;n0:=n;
+tantque (n!=495) faire  m:=m+1;n:=etape(n,3);ftantque;
+print(n0,m);
+}
+}
+}
+}
+return p;
+}
+</PRE><P>Pour 6174
+</P><PRE CLASS="verbatim">demo6174():={
+local j,k,l,u,n,p,m,n0;
+p:=0
+for (j:=0;j&lt;10;j++){
+for (k:=j;k&lt;10;k++){
+for (l:=k;l&lt;10;l++){
+for (u:=l;u&lt;10;u++){
+if (u!=j){
+n:=horner([j,k,l,u],10);
+p:=p+1;m:=0;n0:=n;
+tantque (n!=6174) faire  m:=m+1;n:=etape(n,4);ftantque;
+print(n0,m);
+}
+}
+}
+}
+}
+return p;
+}
+</PRE><P>On trouve que pour <I>s</I>=3, on a tester <TT>p=210</TT> nombres et pour tous ces 
+nombres le nombre d’itérations est inférieur ou égal à 6.<BR>
+On trouve que pour <I>s</I>=4, on a tester <TT>p=705</TT> nombres et pour tous ces 
+nombres le nombre d’itérations est inférieur ou égal à 7.<BR>
+On peut par exemple retrouver le nombre <TT>p=705</TT> en comptant :<BR>
+Les nombres qui ont 4 chiffres différents :<BR>
+il y en a <TT>comb(10,4)=210</TT> (choix de 4 éléments parmi 10),<BR>
+Les nombres qui ont 2 chiffres égaux et 2 chiffres différents :<BR>
+il y en a <TT>comb(3,1)*comb(10,3)=360</TT> (choix de 3 éléments parmi 10 et 
+choix de 1 parmi 3 pour savoir le chiffre qui sera répété),<BR>
+Les nombres qui ont 2 fois 2 chiffres égaux :<BR>
+il y en a <TT>comb(10,2)=45</TT> (choix de 2 éléments parmi 10),<BR>
+Les nombres qui ont 3 chiffres égaux :<BR>
+il y en a <TT>comb(2,1)3*comb(10,2)=90</TT> (choix de 2 éléments parmi 10 et 
+choix de 1 parmi 2 pour savoir le chiffre qui sera répété),<BR>
+Donc en tout : <TT>210+360+45+90=705</TT>
+On remarque que :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+si <I>s</I>=3, <I>nD</I>=<I>a</I>*10<SUP>2</SUP>+<I>b</I>*10+<I>c</I> avec <I>a</I>≥ <I>b</I>≥ <I>c</I> et 
+<I>a</I>&gt;<I>c</I> on a <I>nA</I>=<I>c</I>*10<SUP>2</SUP>+<I>b</I>*10+<I>a</I> et
+<I>nD</I>−<I>nA</I>=(<I>a</I>−<I>c</I>)*(10<SUP>2</SUP>−1) ou encore
+<I>nD</I>−<I>nA</I>=9*(<I>a</I>−<I>c</I>)*11 avec 10&gt;<I>a</I>−<I>c</I>&gt;0<BR>
+On peut donc faire une démonstration plus rapide puisqu’il suffit de 
+regarder 9 nombres au lieu de 210. Les nombres de la forme <I>k</I>*(10<SUP>2</SUP>−1) 
+s’écrivent si <I>k</I>+<I>k</I>1=10, [<I>k</I>00]−[<I>k</I>]=[(<I>k</I>−1)9<I>k</I>1], il suffit donc de tester
+les 5 nombres :<BR>
+<TT>099,198,297,396,495</TT>.</LI><LI CLASS="li-itemize">si <I>s</I>=4, <I>nD</I>=<I>a</I>*10<SUP>3</SUP>+<I>b</I>*10<SUP>2</SUP>+<I>c</I>*10+<I>d</I> avec <I>a</I>≥ <I>b</I>≥ <I>c</I>≥ <I>d</I> et 
+<I>a</I>&gt;<I>d</I> on a <I>nA</I>=<I>d</I>*10<SUP>3</SUP>+<I>c</I>*10<SUP>2</SUP>+<I>b</I>*10+<I>a</I> et
+<I>nD</I>−<I>nA</I>=(<I>a</I>−<I>d</I>)*(10<SUP>3</SUP>−1)+(<I>b</I>−<I>c</I>)*10<SUP>2</SUP>−10 ou encore
+<I>nD</I>−<I>nA</I>=9*((<I>a</I>−<I>d</I>)*111+(<I>b</I>−<I>c</I>)*10) avec 10&gt;<I>a</I>−<I>d</I>&gt;0 et 10&gt;<I>b</I>−<I>c</I> ≥ 0.<BR>
+On peut donc faire une démonstration plus rapide puisqu’il suffit de 
+regarder 90 nombres au lieu de 705.<BR>
+On écrit :<BR>
+<PRE CLASS="verbatim">demorapide():={
+local j,k,n,p,m,n0;
+for (j:=1;j&lt;10;j++){
+for (k:=0;k&lt;10;k++){
+n:=9*(j*111+k*10)
+m:=0;n0:=n;
+tantque (n!=6174) faire  m:=m+1;n:=etape(n,4);ftantque;
+print(n0,m);
+}
+}
+return "fin";
+}
+
+</PRE>On cherche la liste des nombres à tester :
+<PRE CLASS="verbatim">atester():={
+local j,k,n,ch,nA,chA,l;
+l:=[];
+for (j:=1;j&lt;10;j++){
+for (k:=0;k&lt;10;k++){
+n:=9*(j*111+k*10);
+ch:=chiffres(n)[0];
+chA:=SortA(ch);
+nA:=horner(chA,10);
+if (member(nA,l)==0) {l:=append(l,nA);}
+}
+}
+return sort(l);
+}
+</PRE>On obtient une liste de 30 éléments :
+<PRE CLASS="verbatim">[189,288,378,468,558,999,1179,1269,1278,1359,1377,1449,
+1467,1557,1899,2268,2358,2367,2448,2466,2556,2799,3357,
+3447,3456,3555,3699,4446,4455,4599]
+</PRE>On teste les nombres de cette liste dans <TT>demorapide2</TT> :
+<PRE CLASS="verbatim">demorapide2():={
+local l,s,n,n0,m,j;
+l:=atester();
+s:=size(l);
+for (j:=0;j&lt;s;j++){
+n:=l[j];
+n0:=n;
+m:=0;
+tantque (n!=6174) faire  m:=m+1;n:=etape(n,4);ftantque;
+print(n0,m);
+}
+return "fin";
+}
+</PRE>On trouve par exemple que pour 9351=9*(9*111+4*10) il faut 6 itérations. 
+Mais comme f(9730)=9730-379=9351, pour 9730 il faut 7 itérations. 
+</LI></UL><H3 CLASS="subsection"><A NAME="htoc11">1.3.3</A>  Un peu de mathématiques</H3><P>
+Comment sécrivent, en base 10, les nombres de la forme <TT>9*(a*111+b*10)</TT> 
+où <TT>a</TT> et <TT>b</TT> sont des entiers entre 0 et 9 avec <TT>0&lt;a</TT>.
+On a (si on écrit le nombre 100*<I>a</I>+<I>b</I>*10+<I>c</I> de chiffres <I>a</I>,<I>b</I>,<I>c</I> 
+sous la forme [<I>abc</I>]) :<BR>
+<TT>9*(a*111+b*10)=(10-1)*(a*111+b*10)=</TT>
+<TT>[aaa0-(aa0+a)+b00-b0]=[ab00-ba]=</TT>
+si <TT>b&gt;0</TT> <TT>[a(b-1)b1a1]</TT> avec <TT>a+a1=10</TT> et <TT>b+b1=9</TT> (cela fait 
+25 nombres à traiter).<BR>
+si <TT>b=0</TT> <TT>[(a-1)99a1]</TT> avec <TT>a+a1=10</TT> (cela fait 5 nombres à 
+traiter).<BR>
+Les couples <TT>aa1</TT> et <TT>(b-1)b1</TT> sont donc :<BR>
+<TT>55 46 37 28 19</TT> et <TT>44 35 26 17 08</TT>
+Les nombres à traiter sont donc :<BR>
+<TT>5544 5535 5526 5517 5508 4644 4635 4626 4617 4608 3744 3735 3726</TT><BR>
+<TT>3717 3708 2844 2835 2826 2817 2808 1944 1935 1926 1917 1908</TT><BR>
+et<BR>
+<TT>999 1899 2799 3699 4599</TT><BR>
+On retrouve la liste obtenue précédemment :
+<TT>[189,288,378,468,558,999,1179,1269,1278,1359,1377,1449,</TT><BR>
+<TT>1467,1557,1899,2268,2358,2367,2448,2466,2556,2799,3357,</TT><BR>
+<TT>3447,3456,3555,3699,4446,4455,4599]</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc12">1.3.4</A>  Prolongements</H3><P>
+On peut regarder ce qui se passe pour <I>s</I>=2, <I>s</I>=5 etc ...
+Par exemple pour <I>s</I>=2 les itérés de <TT>12</TT> sont :<BR>
+<TT>9,81,63,27,45,9....</TT> il n’y a donc pas de point fixe.<BR>
+On trouve par exemple que les itérés de <TT>02345</TT> sont :<BR>
+<TT>51975</TT>,<TT>81972</TT>,<TT>85932</TT>,<TT>74943</TT> et <TT>74943</TT> est un point 
+fixe et<BR>
+que les itérés de <TT>12345</TT> sont <TT>41976...</TT> et <TT>41976</TT> est aussi un 
+point fixe.<BR>
+que les itérés <TT>31777</TT> sont <TT>63954...</TT> et on trouve un autre 
+point fixe <TT>63954</TT>
+Il y a donc plusieurs points fixes. Il faut trouver ces points fixes et aussi
+savoir si les itérés aboutissent toujours a un point fixe ou si il existe des cycles.<BR>
+Les points fixes trouvés s’écrivent [<I>ab</I>9(8−<I>b</I>)(10−<I>a</I>)], testons alors des 
+nombres de cette formes :<BR>
+<TT>31977</TT> : on trouve un autre point fixe <TT>83952</TT><BR>
+<TT>32967</TT> : on trouve un autre point fixe <TT>73953</TT><BR>
+<TT>12969</TT> : on trouve un autre point fixe <TT>86922</TT><BR>
+A vous de jouer !!!!</P><H2 CLASS="section"><A NAME="toc4"></A><A NAME="htoc13">1.4</A>  La suite 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5,....</H2><P>
+On considère la suite <I>u</I> définie par :<BR>
+<I>u</I><SUB>0</SUB>=1 (un 1), <I>u</I><SUB>1</SUB>=<I>u</I><SUB>2</SUB>=2 (deux 2), <I>u</I><SUB>3</SUB>=<I>u</I><SUB>4</SUB>=<I>u</I><SUB>5</SUB>=3 (trois 3) etc...<BR>
+Quel est la valeur de <I>u</I><SUB>2010</SUB> ?
+</P><H3 CLASS="subsection"><A NAME="htoc14">1.4.1</A>  La correction avec un programme <TT>Xcas</TT></H3><P>
+<B>Attention !!!</B> en <TT>Xcas</TT> les indices commencent à 0.<BR>
+On peut écrire un programme qui renvoie la liste des <I>p</I>+1 premiers termes de 
+cette suite et qui donne la valeur du dernier terme qui est d’indice <I>p</I>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">valeurL(p):={
+local j,n,L;
+j:=0;
+n:=1;
+L:=[1];
+tantque j&lt;p faire
+  n:=n+1;
+  j:=j+n;
+  L:=append(L,n$n);
+ftantque;
+L:=mid(L,0,p+1);
+retourne L,n;
+}
+:;
+</PRE><P>On tape :<BR>
+<TT>valeurL(2010)[1]</TT><BR>
+On obtient :<BR>
+<TT>63</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc15">1.4.2</A>  La correction mathématique avec <TT>Xcas</TT></H3><P>
+On a : 
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+1 a pour indice 0=1-1
+</LI><LI CLASS="li-itemize">2 a pour indice 1 et 2=1+1
+</LI><LI CLASS="li-itemize">3 a pour indice 3=1+2, 4 et 5=1+2+(3-1)
+</LI><LI CLASS="li-itemize">4 a pour indice 6=1+2+3, 7, 8 et 9=1+2+3+(4-1)
+</LI><LI CLASS="li-itemize">....
+</LI><LI CLASS="li-itemize"><I>p</I> a pour indice 1+2+...+<I>p</I>−1=<I>p</I>(<I>p</I>−1)/2,... <I>p</I>(<I>p</I>−1)/2+<I>p</I>−1=<I>p</I>(<I>p</I>+1)/2−1 ou
+encore si 1+2+...+<I>p</I>−1=<I>p</I>(<I>p</I>−1)/2 ≤ <I>k</I>&lt;<I>p</I>(<I>p</I>−1)/2+<I>p</I>−1=<I>p</I>(<I>p</I>+1)/2 alors <I>u</I><SUB><I>k</I></SUB>=<I>p</I>
+</LI></UL><P>
+On cherche <I>p</I>=<I>u</I><SUB>2010</SUB> c’est à dire on cherche <I>p</I> vérifiant :<BR>
+<I>p</I>(<I>p</I>−1)/2≤ 2010&lt; <I>p</I>(<I>p</I>+1)/2 ou encore<BR>
+<I>p</I>(<I>p</I>−1)≤ 4020&lt; <I>p</I>(<I>p</I>+1) ou encore<BR>
+<I>p</I><SUP>2</SUP>−<I>p</I>−4020 ≤ 0 et <I>p</I><SUP>2</SUP>+<I>p</I>−4020 &gt; 0 et <I>p</I>&gt;0<BR>
+Donc <I>p</I> est entre les racines de <I>x</I><SUP>2</SUP>−<I>x</I>−4020 est est supérieur à la plus 
+grande racine de <I>x</I><SUP>2</SUP>+<I>x</I>−4020 c’est à dire :<BR>
+−1/2+√<SPAN style="text-decoration:overline">1+4*4020</SPAN>/2&lt;<I>p</I> ≤ 1/2+√<SPAN style="text-decoration:overline">1+4*4020</SPAN>/2&lt;<I>p</I>+1 c’est à dire<BR>
+<I>p</I> est la partie entière de 1/2+√<SPAN style="text-decoration:overline">1+4*4020</SPAN>/2=1/2+√<SPAN style="text-decoration:overline">1/4+4020</SPAN>.<BR>
+On peut donc utiliser la fonction <TT>round</TT>, on a <TT>round(a)=floor(a+0.5)</TT>
+et donc <TT>k=round(sqrt(2*p+0.25))</TT>.<BR>
+On peut remarquer que :<BR>
+<I>k</I>(<I>k</I>−1)=(<I>k</I>−1/2)<SUP>2</SUP>−1/4<BR>
+<I>k</I>(<I>k</I>+1)=(<I>k</I>+1/2)<SUP>2</SUP>−1/4<BR>
+On cherche <I>k</I> tel que : <I>k</I>(<I>k</I>−1)=(<I>k</I>−1/2)<SUP>2</SUP>−1/4 ≤ 2<I>p</I>&lt;(<I>k</I>+1/2)<SUP>2</SUP>−1/4=<I>k</I>(<I>k</I>+1)
+c’est à dire (<I>k</I>−1/2)<SUP>2</SUP>≤ 2<I>p</I>+1/4&lt;(<I>k</I>+1/2)<SUP>2</SUP>
+donc <TT>k=round(sqrt(2*p+0.25))</TT>
+On tape : 
+</P><PRE CLASS="verbatim">valeur(p):={
+local k;
+k:=round(sqrt(2*p+0.25));
+retourne k;
+}
+:;
+</PRE><P>On tape :<BR>
+<TT>valeur(2010)</TT><BR>
+On obtient :<BR>
+<TT>63</TT><BR>
+On tape :
+<TT>valeur(63*31)</TT><BR>
+On obtient :
+<TT>63</TT><BR>
+On tape :
+<TT>valeur(63*32-1)</TT><BR>
+On obtient :
+<TT>63</TT><BR>
+On tape :
+<TT>valeur(63*32)</TT><BR>
+On obtient :
+<TT>64</TT><BR>
+car 63*62/2=63*31=1953&lt;2010&lt;63*32−1=2015=63*62/2+63−1.
+Les 63 termes d’indices 1953,1954,....2015 valent donc 63.</P><H2 CLASS="section"><A NAME="toc5"></A><A NAME="htoc16">1.5</A>  7 a un multiple qui ne s’écrit qu’avec des 1</H2><H3 CLASS="subsection"><A NAME="htoc17">1.5.1</A>  Essais avec <TT>Xcas</TT></H3><P>
+On tape :<BR>
+<TT>irem(1,7)</TT> réponse <TT>1</TT><BR>
+<TT>irem(11,7)</TT> réponse <TT>4</TT><BR>
+<TT>irem(111,7)</TT> réponse <TT>6</TT><BR>
+<TT>irem(1111,7)</TT> réponse <TT>5</TT><BR>
+<TT>irem(11111,7)</TT> réponse <TT>2</TT><BR>
+<TT>irem(111111,7)</TT> réponse <TT>0</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc18">1.5.2</A>  Observations</H3><P>
+1/ On n’a pas obtenu <TT>3</TT> comme reste car :<BR>
+<TT>irem(31,7)=3</TT> et donc<BR>
+<TT>irem(311...1,7)=3</TT><BR>
+2/ Pourquoi obtient-on <TT>0</TT> comme reste ?<BR>
+notons  <I>x</I><SUB><I>p</I></SUB>=11...1=10<SUP><I>p</I></SUP>−1/9 le nombre s’écrivant avec <I>p</I> fois le 
+chiffre 1. On veut montrer qu’il existe <I>p</I> tel que <I>x</I><SUB><I>p</I></SUB> est divisible par 7.
+La suite des restes est périodique car les restes sont en nombres finis 
+et supposons que :<BR>
+<TT><I>irem</I>(<I>x</I></TT><SUB><TT><I>p</I></TT></SUB><TT>,7)=<I>irem</I>(<I>x</I></TT><SUB><TT><I>q</I></TT></SUB><TT>,7)</TT> avec <I>p</I>&gt;<I>q</I>
+on a alors :<BR>
+<TT><I>irem</I>(<I>x</I></TT><SUB><TT><I>p</I></TT></SUB><TT>-<I>x</I></TT><SUB><TT><I>q</I></TT></SUB><TT>,7)=0</TT><BR>
+On a <I>x</I><SUB><I>p</I></SUB>−<I>x</I><SUB><I>q</I></SUB> est divisible par 7 et<BR>
+<I>x</I><SUB><I>p</I></SUB>−<I>x</I><SUB><I>q</I></SUB>=10<SUP><I>p</I></SUP>−10<SUP><I>q</I></SUP>/9=10<SUP><I>q</I></SUP>10<SUP><I>p</I>−<I>q</I></SUP>−1/9=10<SUP><I>q</I></SUP><I>x</I><SUB><I>p</I>−<I>q</I></SUB><BR>
+Donc 10<SUP><I>q</I></SUP><I>x</I><SUB><I>p</I>−<I>q</I></SUB> est divisible par 7, comme 10 et 7 sont premiers entre eux 
+on en déduit que <I>x</I><SUB><I>p</I>−<I>q</I></SUB> est divisible par 7. 
+</P><H3 CLASS="subsection"><A NAME="htoc19">1.5.3</A>  <I>x</I><SUB>2003</SUB> et <I>x</I><SUB>2004</SUB> sont-ils des multiples de 7 ?</H3><P>
+On a <I>x</I><SUB>6</SUB>=111111=7*15873 (iquo(111111,7)=15873 et irem(111111,7)=0)
+donc <I>x</I><SUB>12</SUB> est divisible par 7 ainsi que <I>x</I><SUB>6<I>k</I></SUB>.<BR>
+Comme 2004 est divisible par 6, <I>x</I><SUB>2004</SUB> est divisible par 7, par contre 
+2003=6k+5 donc le reste de la division de <I>x</I><SUB>2003</SUB> par 7 est le même que celui de la division de <I>x</I><SUB>5</SUB> par 7 c’est à dire ce reste est égal à 2.
+</P><H2 CLASS="section"><A NAME="toc6"></A><A NAME="htoc20">1.6</A>  Tout nombre a un multiple qui ne s’écrit qu’avec des 1 et des 0</H2><H3 CLASS="subsection"><A NAME="htoc21">1.6.1</A>  Tout nombre premier avec 10 a un multiple qui ne s’écrit qu’avec des 1</H3><P>
+Un nombre qui ne s’écrit qu’avec des 1, sera dit nombre en 1, si il s’écrit
+avec <I>p</I> uns, on le notera <I>x</I><SUB><I>p</I></SUB>.
+On va tout d’abord montrer que tout nombre <I>n</I> premier avec 10 a un multiple 
+<I>m</I> qui ne s’écrit qu’avec des 1 (il existe <I>k</I> telque <I>m</I>=<I>x</I><SUB><I>p</I></SUB>=1..1=<I>k</I>*<I>n</I>).<BR>
+Si <I>n</I> n’est pas premier avec 10, on écrit <I>n</I>=2<SUP><I>a</I></SUP>*5<SUP><I>b</I></SUP>*<I>q</I> 
+(avec pgcd(<I>q</I>,10)=1), on multiplie ce nombre <I>n</I> par 
+2<SUP><I>b</I>−<I>a</I></SUP> si <I>b</I>&gt;<I>a</I> ou par 5<SUP><I>a</I>−<I>b</I></SUP> si <I>b</I>&lt;<I>a</I> pour obtenir le nombre 
+<I>q</I>*10<SUP>|<I>a</I>−<I>b</I>|</SUP> et on applique le résultat précédent à <I>q</I> et obtenir 
+ainsi un multiple de <I>n</I> qui s’écrit avec des 1 suivi par |<I>a</I>−<I>b</I>| zéros.
+Exemple :<BR>
+si <I>n</I>=37 on a 37*3=111<BR>
+si <I>n</I>=74=2*37 on a 74*3*5=74*15=1110<BR>
+si <I>n</I>=185=5*37 on a 185*3*2=185*6=1110<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc22">1.6.2</A>  Des remarques</H3><P>
+Un nombre qui ne s’écrit qu’avec des 1 sera dit nombre en 1, si il 
+s’écrit avec <I>p</I> uns, on le notera <I>x</I><SUB><I>p</I></SUB> et on a donc :<BR>
+<I>x</I><SUB><I>p</I></SUB>=(10<SUP><I>p</I></SUP>−1)/9=<I>iquo</I>(10<SUP><I>p</I></SUP>−1),9).<BR>
+Si un nombre premier avec 10 est le diviseur d’un nombre en 1, il divise une 
+infinité de nombre en 1. En effet
+<I>x</I><SUB>2<I>p</I></SUB>.... <I>x</I><SUB><I>kp</I></SUB> sont des multiple de <I>x</I><SUB><I>p</I></SUB> car on a <I>x</I><SUB>2<I>p</I></SUB>=<I>x</I><SUB><I>p</I></SUB>*(10<SUP><I>p</I></SUP>+1)
+et <I>x</I><SUB><I>kp</I></SUB>=<I>x</I><SUB><I>p</I></SUB>*(10<SUP>(<I>k</I>−1)<I>p</I></SUP>+...+10<SUP><I>p</I></SUP>+1).<BR>
+On a <I>x</I><SUB>2</SUB>=11, <I>x</I><SUB>3</SUB>=111=3*37, <I>x</I><SUB>4</SUB>=11*101, <I>x</I><SUB>5</SUB>=11111=41*271....
+Existe-t-il des nombres en 1 qui soit premiers ?
+Oui! il y <I>x</I><SUB>19</SUB> et <I>x</I><SUB>23</SUB>.<BR>
+ On tape :<BR>
+<TT>isprime(iquo(10</TT><CODE><TT>^</TT></CODE><TT>19-1,9))</TT> et on obtient <TT>true</TT><BR>
+on tape :<BR>
+<TT>isprime(iquo(10</TT><CODE><TT>^</TT></CODE><TT>23-1,9))</TT> et on obtient <TT>true</TT><BR>
+Existe-t-il une infinité de nombres en 1 qui soit premiers ?
+On ne sait pas !
+Étant donné un nombre premier <I>a</I>, on va essayer, dans la suite, de trouver
+le plus petit <I>p</I> pour que <I>a</I> soit un diviseur de <I>x</I><SUB><I>p</I></SUB>.<BR>
+Si <I>a</I>=3, on a <I>p</I>=3<BR>
+Si <I>a</I>=37, on a <I>p</I>=3 et 3 est un diviseur de 37-1<BR>
+Si <I>a</I>=7, on a <I>p</I>=6 et 6 est un diviseur de 7-1<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc23">1.6.3</A>  La suite des restes de 111...1 par <I>n</I></H3><P>
+Pour avoir la suite des restes, on écrit, avec <TT>Xcas</TT>, le programme 
+suivant :
+</P><PRE CLASS="verbatim">resteun(n):={
+local r,q,a,b;
+a:=0;
+b:=0;
+while (irem(n,2)==0) {
+n:=iquo(n,2);
+a:=a+1;
+}
+while (irem(n,5)==0) {
+n:=iquo(n,5);
+b:=b+1;
+}
+r:=1;print(r);
+q:=0;
+while (r!=0){
+r:=10*r+1;
+q:=10*q+iquo(r,n);
+r:=irem(r,n);
+print(r);
+}
+if (a&gt;b) q:=q*5^(a-b); else q:=q*2^(b-a);
+return(q);
+};
+</PRE><P>Ce programme suppose que le résultat est vrai car sinon le programme ne 
+s’arrête pas!!!!<BR>
+Le fait de faire afficher les restes de la division de 
+1, 11, 111,... par <I>n</I> montre déjà que la suite des restes est 
+périodique puisque ces restes sont en nombre fini car ils 
+sont positifs ou nuls et inférieurs à <I>n</I>. Mais pourquoi la suite des
+restes contient-elle toujours 0 ?<BR>
+Supposons que (10<SUP><I>k</I></SUP>−1)/9 et (10<SUP><I>l</I></SUP>−1)/9 aient le même reste dans la 
+division par <I>n</I> (avec <I>pgcd</I>(<I>n</I>,10)=1 et <I>k</I>&gt;<I>l</I>). 
+Cela veut dire que (10<SUP><I>k</I></SUP>−10<SUP><I>l</I></SUP>)/9=10<SUP><I>l</I></SUP>*(10<SUP><I>k</I>−<I>l</I></SUP>−1)/9 est divisible par <I>n</I>
+donc que (10<SUP><I>k</I>−<I>l</I></SUP>−1)/9 est divisible par <I>n</I> (<I>n</I> divise 
+10<SUP><I>l</I></SUP>*(10<SUP><I>k</I>−<I>l</I></SUP>−1)/9 <I>n</I> est premier avec 10<SUP><I>l</I></SUP> donc <I>n</I> divise 
+(10<SUP><I>k</I>−<I>l</I></SUP>−1)/9, ce qui prouve bien que la suite des restes contient 0 (le nombre formé par <I>k</I>−<I>l</I> 1 est divisible par <I>n</I>).
+</P><H3 CLASS="subsection"><A NAME="htoc24">1.6.4</A>  Relation entre <I>n</I> et <I>p</I> le nombre de 1 de <I>x</I><SUB><I>p</I></SUB>=111...1 où 
+<I>x</I><SUB><I>p</I></SUB> est un multiple de <I>n</I></H3><P>
+On cherche la fonction <I>R</I> de <I>n</I> qui détermine <I>p</I>, où <I>p</I> est le plus 
+petit entier tel que <I>x</I><SUB><I>p</I></SUB>=11...1=10<SUP><I>p</I></SUP>−1/9 soit un multiple de <I>n</I>.
+Ce qui veut dire que 10<SUP><I>p</I></SUP>−1/9=0 mod <I>n</I>
+</P><H4 CLASS="subsubsection">Quelques essais</H4><P>
+Tout d’abord quelques essais :<BR>
+<I>x</I><SUB>2</SUB>=11 est divisible par 11 (<I>R</I>(11)=2)<BR>
+<I>x</I><SUB>22</SUB> est divisible par 11<SUP>2</SUP> (<I>R</I>(11<SUP>2</SUP>)=22=2*11)<BR>
+<I>x</I><SUB>3</SUB>=111 est divisible par 3 et par 37 (<I>R</I>(3)=3 et <I>R</I>(37)=3))<BR>
+<I>x</I><SUB>9</SUB>=111111111 est divisible par 9<BR>
+<I>x</I><SUB>27</SUB> est divisible par 27=3<SUP>3</SUP> (<I>R</I>(3<SUP>3</SUP>)=3<SUP>3</SUP> car <I>x</I><SUB>27</SUB>=111111111(10<SUP>1</SUP>8+10<SUP>9</SUP>+1) et 10<SUP>1</SUP>8+10<SUP>9</SUP>+1 est divisible par 3)<BR>
+<I>x</I><SUB>6</SUB> est divisible par 7 (<I>R</I>(7)=6)<BR>
+<I>x</I><SUB>42</SUB> est divisible par 49=7<SUP>2</SUP> (<I>R</I>(7<SUP>2</SUP>)=42=6*7)<BR>
+<I>x</I><SUB>6</SUB> est divisibble par 13 (<I>R</I>(13)=3 car <I>x</I><SUB>6</SUB>=3*7*11*13*37)<BR>
+<I>x</I><SUB>6</SUB> est divisible par 21=3*7 (<I>R</I>(3*7)=6)<BR>
+On va montrer que :<BR>
+0/ si <I>p</I>=<I>R</I>(<I>n</I>) (<I>x</I><SUB><I>p</I></SUB> est un multiple de <I>n</I> avec <I>p</I> le plus petit possible)
+alors quelque soit <I>k</I>,
+<I>x</I><SUB><I>k</I>*<I>p</I></SUB> est encore un multiple de <I>n</I>, et réciproquement si
+<I>x</I><SUB><I>c</I></SUB> est un multiple de <I>n</I>, il existe <I>k</I> tel que <I>c</I>=<I>k</I>*<I>p</I><BR>
+1/ si <I>n</I> est un multiple de 3 alors <I>x</I><SUB><I>n</I></SUB> est divisible par <I>n</I> (<I>p</I>=<I>n</I>)<BR>
+2/ si <I>n</I> est premier avec 30 alors <I>p</I> est un diviseur de <I>n</I>−1<BR>
+3/ si <I>n</I> est premier avec 10, si <I>n</I>=<I>n</I><SUB>1</SUB>*<I>n</I><SUB>2</SUB> avec <I>n</I><SUB>1</SUB> et <I>n</I><SUB>2</SUB> premiers (<I>n</I><SUB>1</SUB> ≠ <I>n</I><SUB>2</SUB>), et si <I>x</I><SUB><I>p</I><SUB>1</SUB></SUB> est divisible par 
+<I>n</I><SUB>1</SUB> et <I>x</I><SUB><I>p</I><SUB>2</SUB></SUB> est divisible par <I>n</I><SUB>2</SUB> alors si <I>p</I>= <I>ppcm</I>(<I>p</I><SUB>1</SUB>,<I>p</I><SUB>2</SUB>), 
+<I>x</I><SUB><I>p</I></SUB> est divisible par <I>n</I>.<BR>
+4/ si <I>n</I>=<I>n</I><SUB>1</SUB><SUP><I>k</I></SUP> alors si <I>x</I><SUB><I>p</I><SUB>1</SUB></SUB> est divisible par <I>n</I><SUB>1</SUB> et si 
+<I>p</I>=<I>p</I><SUB>1</SUB>*<I>n</I><SUB>1</SUB><SUP><I>k</I>−1</SUP> alors <I>x</I><SUB><I>p</I></SUB> est divisible par <I>n</I>.
+</P><H4 CLASS="subsubsection"><I>n</I> est une puissance de 3</H4><P>
+On suppose que <I>n</I>=3<SUP><I>k</I></SUP>, et on montre par récurrence sur <I>k</I> que 
+<I>R</I>(3<SUP><I>k</I></SUP>)=3<SUP><I>k</I></SUP> et que <I>R</I>(3<SUP><I>k</I></SUP>) n’est pas un multiple de 3<SUP><I>k</I>+1</SUP>.<BR>
+Pour <I>k</I>=1, on a <I>x</I><SUB>1</SUB>=1 et <I>x</I><SUB>2</SUB>=11 ne sont pas divisibles par 3 et <I>x</I><SUB>3</SUB>=111
+est divisible par 3 et <I>x</I><SUB>3</SUB> n’est pas divisible par 9.<BR>
+supposons la propriété vraie pour k-1, <I>R</I>(3<SUP><I>k</I>−1</SUP>)=3<SUP><I>k</I>−1</SUP>
+Posons <I>b</I>=<I>R</I>(3<I>k</I>−1)=3<SUP><I>k</I>−1</SUP> et <I>c</I>=<I>R</I>(3<SUP><I>k</I></SUP>).
+Par hypothèse de récurrence <I>x</I><SUB><I>b</I></SUB> est divisible par <I>b</I> et
+<I>x</I><SUB><I>c</I></SUB> est divisible par 3*<I>b</I> donc par <I>b</I>. Ainsi,
+d’après la réciproque de la propriété 0, <I>c</I> est un multiple de 
+<I>R</I>(<I>b</I>)=<I>b</I> : <I>c</I>=<I>q</I>*<I>b</I><BR>
+En mettant <I>x</I><SUB><I>b</I></SUB> en facteur dans <I>x</I><SUB><I>c</I></SUB>, on a :<BR>
+<I>x</I><SUB><I>c</I></SUB>=<I>x</I><SUB><I>b</I></SUB>(10<SUP>(<I>q</I>−1)<I>b</I></SUP>+...+10<SUP><I>b</I></SUP>+1)<BR>
+<I>x</I><SUB><I>b</I></SUB> est divisible par 3<SUP><I>k</I>−1</SUP> mais pas par 3<SUP><I>k</I></SUP><BR>
+<I>x</I><SUB><I>c</I></SUB> est divisible par 3<SUP><I>k</I></SUP> donc 10<SUP>(<I>q</I>−1)<I>b</I></SUP>+...++10<SUP><I>b</I></SUP>+1 est divisible par 
+3, donc comme 10<SUP><I>m</I></SUP>=1  mod 3, on en déduit que <I>q</I>=0  mod 3,
+et comme <I>c</I> est le plus petit possible <I>q</I>=3 et <I>c</I>=<I>q</I>*<I>b</I>=3*<I>b</I>.<BR>
+Donc <I>x</I><SUB><I>c</I></SUB>=<I>x</I><SUB><I>b</I></SUB>(10<SUP>2*<I>b</I></SUP>+10<SUP><I>b</I></SUP>+1) est divisible par 3<SUP><I>k</I></SUP> mais pas par 3<SUP><I>k</I>+1</SUP>
+car 10<SUP>2*<I>b</I></SUP>+10<SUP><I>b</I></SUP>+1 n’est pas divisible par 3 (10<SUP><I>m</I></SUP>=1  mod 9 donc
+10<SUP>2*<I>b</I></SUP>+10<SUP><I>b</I></SUP>+1=3  mod 9)<BR>
+</P><H4 CLASS="subsubsection"><I>n</I> est premier supérieur à 6</H4><P>
+On cherche donc <I>p</I> tel que 10<SUP><I>p</I></SUP>=1 mod <I>n</I>.
+La suite des restes possibles est <I>n</I> mais comme <I>n</I> et 9 sont premiers entre 
+eux, il existe <I>u</I> et <I>v</I> avec 0&lt;<I>v</I>&lt;<I>n</I> uniques (identité de Bézout)
+tels que :<BR>
+<I>u</I>*<I>n</I>−<I>v</I>*9=1 ou encore 10*<I>v</I>+1=<I>u</I>*<I>n</I>+<I>v</I> ce qui veut dire que le reste égal à 
+<I>v</I> n’est pas obtenu.<BR>
+Parmi les <I>n</I>−1 restes possibles de la division d’un <I>x</I><SUB><I>k</I></SUB> par <I>n</I>,
+considérons la relation déquivalence sur les <I>n</I> entiers 0,1,...,<I>n</I>-1:<BR>
+<I>r</I><SUB>1</SUB> ≃ <I>r</I><SUB>2</SUB> si il existe <I>k</I> tel que <I>r</I><SUB>1</SUB>*10<SUP><I>k</I></SUP> +<I>x</I><SUB><I>k</I></SUB>=<I>r</I><SUB>2</SUB>+<I>q</I>*<I>n</I>.<BR>
+On a alors puisque 9*<I>x</I><SUB><I>k</I></SUB>+1=10<SUP><I>k</I></SUP>, <I>r</I><SUB>1</SUB>−<I>r</I><SUB>2</SUB>+(9*<I>r</I><SUB>1</SUB>+1)*<I>x</I><SUB><I>k</I></SUB>=<I>q</I>*<I>n</I>.<BR>
+On a donc <I>p</I> éléments équivalents à 1,
+Cherchons la periodicité de la suite des restes de <I>r</I><SUB>1</SUB>*10<SUP><I>k</I></SUP> +<I>x</I><SUB><I>k</I></SUB> par <I>n</I>, 
+c’est à dire le nombre <I>l</I> d’éléments de la classe <I>r</I><SUB>1</SUB>.
+On a <I>r</I><SUB>1</SUB>−<I>r</I><SUB>1</SUB>+(9*<I>r</I><SUB>1</SUB>+1)*<I>x</I><SUB><I>l</I></SUB>=(9*<I>r</I><SUB>1</SUB>+1)*<I>x</I><SUB><I>l</I></SUB>=<I>q</I>*<I>n</I>, donc <I>n</I> divise 
+(9*<I>r</I><SUB>1</SUB>+1)*<I>x</I><SUB><I>l</I></SUB>, <I>n</I> est premier avec (9*<I>r</I><SUB>1</SUB>+1) donc <I>n</I> divise <I>x</I><SUB><I>l</I></SUB>
+donc <I>l</I>=<I>p</I>*<I>l</I><SUB>1</SUB>.<BR>
+Mais <I>r</I><SUB>1</SUB>*10<SUP><I>p</I></SUP>+<I>x</I><SUB><I>p</I></SUB>=<I>r</I><SUB>1</SUB>  mod  <I>n</I> donc <I>l</I>=<I>p</I>.<BR>
+Donc si il y a <I>c</I> classes, il y une classe ayant un seul élément et les 
+autres classes ont <I>p</I> éléments donc <I>n</I>=1+<I>p</I>*(<I>c</I>−1) c’est à dire <I>p</I> 
+divise <I>n</I>−1.
+</P><H3 CLASS="subsection"><A NAME="htoc25">1.6.5</A>  Les nombres premiers qui ne s’écrivent qu’avec des 1</H3><P>
+Comment sont-ils répartis ?<BR>
+Un premier test pour trouver le premier nombre premier après 11 qui ne 
+s’écrit qu’avec des 1.<BR>
+On tape :
+</P><PRE CLASS="verbatim">testun():={
+local j;
+j:=111;
+tantque !isprime(j) faire
+j:=10*j+1;
+ftantque;
+retourne j;
+};
+</PRE><P>On tape :<BR>
+<TT>testun()</TT><BR>
+On obtient le nombre qui s’écrit avec avec 19 fois le chiffre 1:<BR>
+<TT>1111111111111111111</TT><BR>
+Un deuxième test pour trouver le deuxième nombre premier après 11 qui ne 
+s’écrit qu’avec des 1.<BR>
+On tape :
+</P><PRE CLASS="verbatim">testdeux():={
+local j;
+j:=testun();
+j:=10*j+1;
+tantque !isprime(j) faire
+j:=10*j+1;
+ftantque;
+retourne j;
+}:;
+</PRE><P>On tape :<BR>
+<TT>testdeux()</TT><BR>
+On obtient le nombre qui s’écrit avec avec 23 fois le chiffre 1:<BR>
+<TT>11111111111111111111111</TT><BR>
+Pour avoir les <I>n</I> premiers, on tape :
+</P><PRE CLASS="verbatim">testn(n):={
+local j,k,L;
+j:=111;
+k:=1;
+L:=11;
+tantque k&lt;n faire
+si isprime(j) alors 
+L:=L,j;
+k:=k+1;
+fsi;
+j:=10*j+1;
+ftantque;
+retourne L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>testn(4)</TT><BR>
+On obtient une liste de 4 nombres et le dernier s’écrit avec avec 317 fois 
+le chiffre 1:<BR>
+<TT>11111111111111111111111111111111111111111111111111111111111111111111111
+11111111111111111111111111111111111111111111111111111111111111111111111
+11111111111111111111111111111111111111111111111111111111111111111111111
+11111111111111111111111111111111111111111111111111111111111111111111111
+111111111111111111111111111111111</TT><BR>
+puis <TT>testn(5)</TT> depasse les capacités de <TT>Xcas</TT>
+</P><H2 CLASS="section"><A NAME="toc7"></A><A NAME="htoc26">1.7</A>  Le réseau des entiers</H2><P>
+<B>Exercice</B>
+Soient 5 points distincts appartenant au réseau des entiers et les segments 
+définis par ces 5 points.<BR>
+Combien y-a-t-il de segments ?<BR>
+Montrer que le milieu d’au moins un segment appartient aussi au réseau.<BR>
+
+Il y a <TT>comb(5,2)=10</TT> segments.<BR>
+Les points ont des abscisses paires ou impaires et des ordonnées paires ou 
+impaires : cela fait 4 sortes de points. Comme on a 5 points, il y a toujours 
+deux points par exemple <I>A</I> et <I>B</I> qui sont de la même sorte.<BR>
+Si les deux points ont comme coordonnèes :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<I>A</I>=(2<I>n</I>,2<I>p</I>) et <I>B</I>=(2<I>m</I>,2<I>q</I>) le milieu <I>M</I> de <I>AB</I> a comme coordonnèes :<BR>
+<I>n</I>+<I>m</I>,<I>p</I>+<I>q</I>
+</LI><LI CLASS="li-itemize"><I>A</I>=(2<I>n</I>,2<I>p</I>+1) et <I>B</I>=(2<I>m</I>,2<I>q</I>+1) le milieu <I>M</I> de <I>AB</I> a comme 
+coordonnèes :<BR>
+<I>n</I>+<I>m</I>,<I>p</I>+<I>q</I>+1
+</LI><LI CLASS="li-itemize"><I>A</I>=(2<I>n</I>+1,2<I>p</I>) et <I>B</I>=(2<I>m</I>+1,2<I>q</I>) le milieu <I>M</I> de <I>AB</I> a comme 
+coordonnèes :<BR>
+<I>n</I>+<I>m</I>+1,<I>p</I>+<I>q</I>
+</LI><LI CLASS="li-itemize"><I>A</I>=(2<I>n</I>+1,2<I>p</I>+1) et <I>B</I>=(2<I>m</I>+1,2<I>q</I>+1) le milieu <I>M</I> de <I>AB</I> a comme 
+coordonnèes :<BR>
+<I>n</I>+<I>m</I>+1,<I>p</I>+<I>q</I>+1
+</LI></UL><P>
+Donc dans tous les cas <I>M</I> appartient au réseau.
+</P><H2 CLASS="section"><A NAME="toc8"></A><A NAME="htoc27">1.8</A>  Le quadrillage</H2><H3 CLASS="subsection"><A NAME="htoc28">1.8.1</A>  L’énoncé</H3><P>
+On considère un rectangle de dimension <I>p</I>,<I>q</I> avec <I>p</I> et <I>q</I> entiers.<BR>
+On munit ce rectangle d’un quadrillage à coordonnées entières.<BR>
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Écrire une fonction qui trace un rectangle de dimension <I>p</I>,<I>q</I>, son
+quadrillage et une de ses diagonales.
+</LI><LI CLASS="li-enumerate">On trace une diagonale de ce rectangle.<BR>
+Combien de de carreaux cette diagonale traverse-t-elle ?<BR>
+On traitera les exemples :
+<I>p</I>=3,<I>q</I>=5, <I>p</I>=3,<I>q</I>=6,<I>p</I>=6,<I>q</I>=9,<I>p</I>=6,<I>q</I>=10,,<I>p</I>=6,<I>q</I>=11....<BR>
+puis on traitera le cas général.<BR>
+</LI><LI CLASS="li-enumerate">Écrire une fonction <TT>nbcarreaux</TT> qui étant donné <I>p</I>,<I>q</I> renvoie 
+le nombre de carreaux traversés par cette diagonale.<BR>
+Tracer le nuage des points <TT>(x,y=nbcarreaux(240,x))</TT> pour 
+0≥ <I>x</I> ≥ 300. Tracer sur un autre graphique 
+la ligne polygonale reliant ces points.
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc29">1.8.2</A>  La solution</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+<PRE CLASS="verbatim">quadrillage(p,q):={
+ local k,j,L:=segment(0,p+i*q);
+pour j de 0 jusque p faire
+L:=L,segment(j,j+i*q);
+fpour; 
+pour k de 0 jusque q faire 
+L:=L,segment(i*k,p+i*k);
+fpour
+L;
+}:;
+</PRE>On tape :<BR>
+<TT>quadrillage(3,5)</TT><BR>
+On obtient :<BR>
+<SPAN CLASS="textboxed"><IMG SRC="cascas001.png"></SPAN>
+</LI><LI CLASS="li-enumerate">On remarque que la diagonale entre dans le premier carreau, puis elle entre 
+dans un nouveau carreau lorsqu’elle coupe 
+une ligne verticale ou une ligne horizontale ou à la fois une ligne verticale
+et une ligne vhorizontale.<BR>
+Puisqu’il y a <I>p</I>−1 verticales et <I>q</I>−1 horizontales à traverser, 
+si la diagonale ne coupe jamais à la fois une verticale et une horizontale 
+(c’est à dire si elle ne contient pas de points à coordonnées entières
+à part le point de départ et le point d’arrivèe) le 
+nommbre de carreaux traversés est 1+<I>p</I>−1+<I>q</I>−1=<I>p</I>+<I>q</I>−1.<BR>
+Si la diagonale coupe <I>r</I> fois, une verticale et une horizontale en même 
+temps, c’est à dire si elle contient <I>r</I>+2 points à coordonnées 
+entières (+2 en comptant le point de départ et le point d’arrivèe) le 
+nommbre de carreaux traversés est <I>p</I>+<I>q</I>−1−<I>r</I>.<BR>
+Que vaut <I>r</I> ?<BR>
+La diagonale a comme équation <I>y</I>=<I>q</I>*<I>x</I>/<I>p</I> =<I>q</I>1*<I>x</I>/<I>p</I>1 où <I>p</I>=<I>p</I>1*<I>d</I> et <I>q</I>=<I>q</I>1*<I>d</I> 
+avec <I>d</I>=pgcd(<I>p</I>,<I>q</I>) et elle aura des points à coordonnées entières 
+chaque fois que <I>x</I> est entier et que <I>p</I>1 divise <I>q</I>1*<I>x</I>. Puisque <I>p</I>1 et <I>q</I>1 
+sont premiers entre eux, <I>p</I>1 divise <I>q</I>1*<I>x</I> si <I>x</I> est un entier multiple de <I>p</I>1. Cela se produit lorsque 0≥ <I>x</I>≥ <I>p</I>,
+pour <I>x</I>=0,<I>x</I>=<I>p</I>1,<I>x</I>=2*<I>p</I>1...<I>x</I>=<I>d</I>*<I>p</I>1=<I>p</I>, soit <I>d</I>+1 fois.<BR>
+On a donc <I>r</I>+2=<I>d</I>+1 et le 
+nommbre de carreaux traversés est <I>p</I>+<I>q</I>−pgcd(<I>p</I>,<I>q</I>).<BR>
+ </LI><LI CLASS="li-enumerate">On tape la fonction <TT>nbcarreaux</TT> :
+<PRE CLASS="verbatim">nbcarreaux(p,q):={
+local d;
+d:=gcd(p,q);
+return p+q-d;
+}
+</PRE>On tape :<BR>
+<TT>nuage_points([x,nbcarreaux(240,x)]$(x=0..300))</TT><BR>
+On obtient :<BR>
+<SPAN CLASS="textboxed"><IMG SRC="cascas002.png"></SPAN>
+On tape :<BR>
+<TT>plotlist([x,nbcarreaux(240,x)]$(x=0..300))</TT><BR>
+On obtient :<BR>
+<SPAN CLASS="textboxed"><IMG SRC="cascas003.png"></SPAN>
+</LI></OL><H2 CLASS="section"><A NAME="toc9"></A><A NAME="htoc30">1.9</A>  Résolution dans ℕ<SUP>*</SUP> de <I>x</I><SUP>2</SUP>=<I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP></H2><P>
+On veut résoudre dans ℕ<SUP>*</SUP> : <I>x</I><SUP>2</SUP>=<I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP>.<BR>
+Par exemple on veut avoir toutes les solutions de <I>x</I><SUP>2</SUP>=<I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP>
+pour <I>x</I> ≤ 200 et (<I>x</I>,<I>y</I>,<I>z</I>)∈ ℕ<SUP>3</SUP>.<BR>
+On peut écrire un programme qui fait un balayage, mais cela n’est pas 
+efficace car beaucoup trop long !<BR>
+On tape :
+</P><PRE CLASS="verbatim">triplet0(n):={
+  local j,k,s,L;
+  L:=NULL;
+  pour j de 2 jusque n faire
+    pour k de 1 jusque j-1 faire
+      s:=sqrt(j^2-k^2);
+      si (type(s)==DOM_INT)alors
+        L:=L,[j,k,s],[j,s,k];
+      fsi; 
+    fpour;
+  fpour;
+  return L;
+}
+:;
+</PRE><P>Puis :<BR>
+<TT>A:=triplet0(200):;size(A)</TT><BR>
+On obtient (Evaluation time: 2.46) :<BR>
+<TT>Done, 254</TT><BR>
+Il faut donc améliorer le programme.<BR>
+ Cette amélioration donne lieu à l’exercice suivant :</P><P><B>Exercice : amélioration</B>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Montrer que si (<I>x</I>,<I>y</I>,<I>z</I>) est une solution tous les multiples de (<I>x</I>,<I>y</I>,<I>z</I>)
+sont aussi des solutions.<BR>
+ En effet :<BR>
+ (<I>kx</I>)<SUP>2</SUP>=<I>k</I><SUP>2</SUP><I>x</I><SUP>2</SUP>=<I>k</I><SUP>2</SUP><I>y</I><SUP>2</SUP>+<I>k</I><SUP>2</SUP><I>z</I><SUP>2</SUP>=(<I>ky</I>)<SUP>2</SUP>+(<I>kz</I>)<SUP>2</SUP> pour tout <I>k</I> ∈ ℕ<SUP>*</SUP>.<BR>
+On va donc d’abord chercher les solutions pour lesquelles (<I>x</I>,<I>y</I>,<I>z</I>) sont 
+premiers entre eux. 
+</LI><LI CLASS="li-itemize">Montrer que si (<I>x</I>,<I>y</I>,<I>z</I>) sont premiers entre eux dans leur ensemble et 
+vérifient <I>x</I><SUP>2</SUP>=<I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP> alors (<I>x</I>,<I>y</I>) (resp (<I>x</I>,<I>z</I>) ou (<I>y</I>,<I>z</I>)) sont 
+premiers entre eux.<BR>
+En effet :<BR>
+soit un diviseur premier <I>d</I> de 
+<I>x</I> et de <I>y</I> (resp de <I>x</I> et de <I>z</I> ou de <I>y</I> et de <I>z</I>) alors <I>d</I><SUP>2</SUP> divise 
+<I>x</I><SUP>2</SUP>−<I>y</I><SUP>2</SUP>=<I>z</I><SUP>2</SUP> (resp <I>x</I><SUP>2</SUP>−<I>z</I><SUP>2</SUP>=<I>y</I><SUP>2</SUP> ou <I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP>=<I>x</I><SUP>2</SUP>) donc <I>d</I> divise <I>z</I> (resp
+<I>d</I> divise <I>y</I> ou <I>d</I> divise <I>x</I>).
+</LI><LI CLASS="li-itemize">Montrer que <I>x</I> est impair et que <I>y</I> ou <I>z</I> est divisible par 4.<BR>
+En effet :<BR>
+si <I>x</I> est pair <I>x</I><SUP>2</SUP> est un multiple de 4 donc <I>x</I><SUP>2</SUP>=0 mod4 et<BR>
+si <I>x</I> est impair <I>x</I><SUP>2</SUP> est un multiple de 4 plus 1 donc <I>x</I><SUP>2</SUP>=1 mod4.<BR>
+Supposons que <I>y</I> et <I>z</I> soient impairs :<BR>
+on a <I>y</I><SUP>2</SUP>=1 mod4 et <I>z</I><SUP>2</SUP>=1 mod4 donc <I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP>=2 mod4
+donc <I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP> ne peut pas être un carré.<BR>
+Donc <I>y</I> ou <I>z</I> est pair.
+</LI><LI CLASS="li-itemize">Montrer que si <I>z</I> est pair alors <I>z</I> est un multiple de 4.<BR>
+En effet si <I>y</I> est impair et <I>z</I>=2 mod4 alors <I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP>=3 mod4 donc 
+<I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP> ne peut pas être un carré.
+</LI><LI CLASS="li-itemize">On pose pour <I>a</I> et <I>b</I> quelconques dans ℕ<SUP>*</SUP> (<I>a</I>&gt;<I>b</I>) :<BR>
+<I>x</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>,<BR>
+<I>y</I>=<I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP><BR>
+<I>z</I>=2<I>ab</I><BR>
+Montrer qu’alors on a <I>x</I><SUP>2</SUP>=<I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP>.<BR>
+En effet :<BR>
+<I>x</I><SUP>2</SUP>=<I>a</I><SUP>4</SUP>+2<I>a</I><SUP>2</SUP><I>b</I><SUP>2</SUP>+<I>b</I><SUP>4</SUP>=<I>a</I><SUP>4</SUP>−2<I>a</I><SUP>2</SUP><I>b</I><SUP>2</SUP>+<I>b</I><SUP>4</SUP>+4<I>a</I><SUP>2</SUP><I>b</I><SUP>2</SUP>=<I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP><BR>
+donc (<I>x</I>,<I>y</I>,<I>z</I>) est une solution dans ℕ<SUP>*</SUP> de <I>x</I><SUP>2</SUP>−<I>y</I><SUP>2</SUP>=<I>z</I><SUP>2</SUP> .
+</LI><LI CLASS="li-itemize">Montrer que toutes les solutions de <I>x</I><SUP>2</SUP>=<I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP> avec des nombres 
+entiers premiers entre eux dans leur ensemble sont de cette forme.<BR>
+Soit <I>x</I>,<I>y</I>,<I>z</I> une solution de <I>x</I><SUP>2</SUP>=<I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP> où <I>x</I>,<I>y</I>,<I>z</I> sont des 
+nombres entiers premiers entre eux dans leur ensemble. On a montrer que <I>y</I> ou 
+<I>z</I> était un multiple de 4. Supposons que ce soit <I>z</I>.<BR>
+On a :<BR>
+ (<I>z</I>/2)<SUP>2</SUP>=(<I>x</I>+<I>y</I>/2)(<I>x</I>−<I>y</I>/2) et<BR>
+puisque <I>x</I>,<I>y</I>,<I>z</I> sont des nombres entiers premiers entre eux dans leur ensemble 
+<I>x</I> et <I>y</I> sont impairs et premiers entre eux.<BR>
+Donc  <I>x</I>+<I>y</I>/2 et  <I>x</I>−<I>y</I>/2 sont des 
+nombres entiers qui sont premiers entre eux et comme leur produit est un 
+carré, ils sont eux aussi des carrés.<BR>
+On pose  <I>a</I><SUP>2</SUP>=<I>x</I>+<I>y</I>/2 et  <I>b</I><SUP>2</SUP>=<I>x</I>−<I>y</I>/2 
+et on a :<BR>
+<I>x</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP><BR>
+<I>y</I>=<I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP><BR>
+<I>z</I>=2*<I>a</I>*<I>b</I> 
+</LI></UL><P>
+On tape :
+</P><PRE CLASS="verbatim">triplet(n):={
+local a,b,a2,b2,m,q,p,k,L;
+L:=NULL;
+for (a:=2;a&lt;sqrt(n);a++) {
+  a2:=a^2;
+  for (b:=1;b&lt;=sqrt(n-a2) and b&lt;a ;b++) {
+    b2:=b^2;
+    m:=a2+b2;p:=a2-b2;q:=2*a*b;
+    if (gcd(m,p,q)==1){
+      for (k:=1;k&lt;=n/m;k++) {
+        L:=L,[k*m,k*p,q*k],[k*m,k*q,p*k];
+      }
+    }
+  } 
+}
+return L;
+}:;
+</PRE><P>Puis :<BR>
+<TT>A:=triplet(200):;size(A)</TT><BR>
+On obtient instantanément :<BR>
+<TT>Done, 254</TT><BR>
+Dans <TT>A</TT> on a a des triplets comme <TT>[143,55,132]</TT> et <TT>[143,132,55]</TT>
+qui sont en fait <TT>11*[13,5,12]</TT>, on peut donc refaire un pogramme qui 
+renverra les triplets <TT>[x,y,z]</TT> qui vérifient <I>x</I><SUP>2</SUP>=<I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP> avec <I>y</I>&gt;<I>z</I> et
+<TT>gcd(y,z)=1</TT>. 
+On tape pour avoir les triplets <I>x</I>,<I>y</I>,<I>z</I> vérifiant <I>x</I><SUP>2</SUP>=<I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP> avec 
+<I>x</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>&lt;<I>n</I> :
+</P><PRE CLASS="verbatim">triplets(n):={
+local a,b,a2,b2,m,q,p,k,L;
+L:=NULL;
+for (a:=2;a&lt;sqrt(n);a++) {
+  a2:=a^2;
+  for (b:=1;b&lt;=sqrt(n-a2) and b&lt;a ;b++) {
+    b2:=b^2;
+    m:=a2+b2;p:=a2-b2;q:=2*a*b;
+    if (gcd(m,p,q)==1){
+      L:=L,[m,max(p,q),min(p,q)];
+      }
+  } 
+}
+return L;
+}:;
+</PRE><P>On suppose que <TT>n</TT> est le nombre de triplets désirés.<A NAME="sec:tripless"></A>
+</P><PRE CLASS="verbatim">tripletss(n):={
+local a,b,a2,b2,m,q,p,k,L;
+L:=NULL;
+k:=0;
+a:=2;
+while (k&lt;n) {
+  a2:=a^2;
+  for (b:=1;b&lt;a and k&lt;n;b++) {
+    b2:=b^2;
+    m:=a2+b2;p:=a2-b2;q:=2*a*b;
+    if (gcd(m,p,q)==1){
+      L:=L,[m,max(p,q),min(p,q)];
+      k:=k+1;
+    }
+  } 
+a:=a+1;
+}
+return L;
+}:;
+</PRE><H3 CLASS="subsection"><A NAME="htoc31">1.9.1</A>  Exercice</H3><P>
+Trouver les solutions en nombres entiers de <I>x</I><SUP>2</SUP>=<I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP> avec <I>x</I>=<I>y</I>+1.
+</P><H2 CLASS="section"><A NAME="toc10"></A><A NAME="htoc32">1.10</A>  Les paires carrées</H2><H3 CLASS="subsection"><A NAME="htoc33">1.10.1</A>  L’énoncé</H3><P>
+<B>Définition</B><BR>
+On dit que les entiers <I>p</I> et <I>q</I> est une paire carrée si il existe deux 
+entiers <I>a</I> er <I>b</I> tels que <I>q</I>+<I>p</I>=<I>a</I><SUP>2</SUP> et <I>q</I>−<I>p</I>=<I>b</I><SUP>2</SUP>.<BR>
+Par exemple (6,10) est une paire carrée car 10−6=2<SUP>2</SUP> et 10+6=4<SUP>2</SUP>.</P><P><B>Remarque</B> si <I>p</I> et <I>q</I> est une paire carrée alors 2<I>q</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> et
+2<I>p</I>=<I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP> donc <I>a</I>−<I>b</I> est pair et
+(2<I>q</I>)<SUP>2</SUP>=(2<I>p</I>)<SUP>2</SUP>+(2<I>ab</I>)<SUP>2</SUP>=<I>a</I><SUP>4</SUP>+<I>b</I><SUP>4</SUP>−2<I>a</I><SUP>2</SUP><I>b</I><SUP>2</SUP>+4<I>a</I><SUP>2</SUP><I>b</I><SUP>2</SUP>.<BR>
+Donc <I>q</I><SUP>2</SUP>=<I>p</I><SUP>2</SUP>+(<I>ab</I>)<SUP>2</SUP>
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Écrire un programme qui en balayant tous les nombres de 0 à <I>n</I> 
+donne les paires carrées (<I>p</I>,<I>q</I>) avec 0 ≤ <I>p</I> ≤ <I>q</I> ≤ <I>n</I>,
+</LI><LI CLASS="li-enumerate">Montrer que si (<I>p</I>,<I>q</I>) est une paire carrée alors on a :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">2<I>q</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>  et  2<I>p</I>=<I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP></TD></TR>
+</TABLE>
+</LI><LI CLASS="li-enumerate">Montrer que quelque soit <I>n</I> ∈ ℕ on soit <I>n</I><SUP>2</SUP>=1 mod4, 
+soit <I>n</I><SUP>2</SUP>=0 mod4. En déduire alors que <I>p</I> est pair si (<I>p</I>,<I>q</I>) est une 
+paire carrée.<BR>
+Modifier votre programme pour tenir compte de cette information.
+</LI><LI CLASS="li-enumerate">Montrer que <I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP> est un multiple de 4. En déduire que
+<I>a</I> et <I>b</I> ont même parité et que <I>a</I>−<I>b</I> est pair.<BR>
+Écrire un programme qui à partir de <I>b</I> et de <I>a</I>=<I>b</I>+2<I>n</I> calcule les valeurs
+de <I>p</I> et <I>q</I> vérifiant <I>q</I>=(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)/2 et <I>p</I>=(<I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP>)/2 et 
+0 ≤ <I>p</I> ≤ <I>q</I> ≤ 1000.
+</LI><LI CLASS="li-enumerate">Afficher les points de coordonnées (<I>p</I>,<I>q</I>) 
+(0 ≤ <I>p</I> ≤ <I>q</I> ≤ 1000) où (<I>p</I>,<I>q</I>) est une paire carrée.
+</LI><LI CLASS="li-enumerate">Trouver les équations des droites et des courbes en forme de filets
+reliants certains de ces points.
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc34">1.10.2</A>  La solution</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+<PRE CLASS="verbatim">paire_carre0(n):={
+local a,b,q,p,L;
+L:=NULL;
+pour p de 0 jusque n faire
+pour q de p jusque n faire
+a:=sqrt(q+p);
+b:=sqrt(q-p);
+si (a==floor(a) et b==floor(b)) alors
+L:=L,[p,q];
+fsi
+fpour
+fpour
+return L
+}:;
+</PRE>ou on utilise <TT>type</TT> pour tester si <TT>a</TT> et <TT>b</TT> sont des carrés :
+<PRE CLASS="verbatim">paire_carre1(n):={
+local a,b,q,p,L;
+L:=NULL;
+pour p de 0 jusque n faire
+pour q de p jusque n faire
+a:=sqrt(q+p);
+b:=sqrt(q-p);
+si (type(a)==DOM_INT et type(b)==DOM_INT) alors
+L:=L,[p,q];
+fsi
+fpour
+fpour
+return L
+}:;
+</PRE>On tape :<BR>
+<TT>L1:=paire_carre1(100)</TT><BR>
+On obtient (Evaluation time: 2.26) :
+<PRE CLASS="verbatim">[0,0],[0,1],[0,4],[0,9],[0,16],[0,25],[0,36],[0,49],
+[0,64],[0,81],[0,100],[2,2],[4,5],[6,10],[8,8],[8,17],
+[10,26],[12,13],[12,37],[14,50],[16,20],[16,65],
+[18,18],[18,82],[20,29],[24,25],[24,40],[28,53],
+[30,34],[32,32],[32,68],[36,45],[36,85],[40,41],[42,58],
+[48,52],[48,73],[50,50],[54,90],[56,65],[60,61],[64,80],
+[70,74],[72,72],[72,97],[80,89],[84,85],[96,100],[98,98]
+</PRE>On tape : <TT>dim(L1)</TT><BR>
+On obtient; <TT>49</TT>
+</LI><LI CLASS="li-enumerate">Si (<I>p</I>,<I>q</I>) est une paire carrée, on a :<BR>
+<I>q</I>+<I>p</I>=<I>a</I><SUP>2</SUP> et <I>q</I>−<I>p</I>=<I>b</I><SUP>2</SUP><BR>
+donc <I>p</I>=(<I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP>)/2, donc <I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP> est pair c’est à dire 
+<I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP>=0 mod4, soit <I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP>=2 mod4. 
+</LI><LI CLASS="li-enumerate">Soit <I>n</I> ∈ ℕ ;<BR>
+si <I>n</I> est pair alors <I>n</I><SUP>2</SUP>=0 mod4, en effet, si <I>n</I>=2<I>k</I> on a 
+<I>n</I><SUP>2</SUP>=4<I>k</I><SUP>2</SUP> et<BR>
+si <I>n</I> est impair alors <I>n</I><SUP>2</SUP>=1 mod4 en effet :<BR>
+si <I>n</I>=2<I>k</I>+1 on a <I>n</I><SUP>2</SUP>=4<I>k</I><SUP>2</SUP>+4<I>k</I>+1.
+</LI><LI CLASS="li-enumerate">Donc on a :<BR>
+soit <I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP>=0 mod4,<BR>
+ soit <I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP>=1 mod4<BR>
+soit <I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP>=3 mod4.<BR>
+et puisque <I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP>=0  est pair, on en déduit qu <I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP>=0 mod4 
+on en déduit que <I>p</I> est pair.<BR>
+On tape :
+<PRE CLASS="verbatim">paire_carre2(n):={
+local a,b,q,p,L;
+L:=NULL;
+pour p de 0 jusque n pas 2 faire
+pour q de p jusque n faire
+a:=sqrt(q+p);
+b:=sqrt(q-p);
+si (a==floor(a) et b==floor(b)) alors
+L:=L,[p,q];
+fsi
+fpour
+fpour
+return L
+}:;
+</PRE>On tape :<BR>
+<TT>L2:=paire_carre2()</TT><BR>
+On obtient comme précédement (Evaluation time: 1.36) :
+<PRE CLASS="verbatim">[0,0],[0,1],[0,4],[0,9],[0,16],[0,25],[0,36],[0,49],
+[0,64],[0,81],[0,100],[2,2],[4,5],[6,10],[8,8],[8,17],
+[10,26],[12,13],[12,37],[14,50],[16,20],[16,65],
+[18,18],[18,82],[20,29],[24,25],[24,40],[28,53],
+[30,34],[32,32],[32,68],[36,45],[36,85],[40,41],[42,58],
+[48,52],[48,73],[50,50],[54,90],[56,65],[60,61],[64,80],
+[70,74],[72,72],[72,97],[80,89],[84,85],[96,100],[98,98]
+</PRE>On tape : <TT>dim(L2)</TT><BR>
+On obtient; <TT>49</TT>
+</LI><LI CLASS="li-enumerate">On a si (<I>p</I>,<I>q</I>) est une paire carrée :
+2<I>p</I>=<I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP> donc <I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP> est un multiple de 2 donc<BR>
+<I>a</I><SUP>2</SUP> et <I>b</I><SUP>2</SUP> ont même parité donc<BR>
+<I>a</I> et <I>b</I> ont même parité et donc <I>a</I>−<I>b</I> est un multiple de 2 c’est à 
+dire <I>a</I>−<I>b</I> est pair.<BR>
+On pose :<BR>
+<I>a</I>=<I>b</I>+2<I>r</I>
+donc <I>a</I><SUP>2</SUP>=<I>b</I><SUP>2</SUP>+4<I>rb</I>+4<I>r</I><SUP>2</SUP> et on a :<BR>
+<I>p</I>=(<I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP>)/2=2<I>rb</I>+2<I>r</I><SUP>2</SUP> et<BR>
+<I>q</I>=(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)/2=<I>b</I><SUP>2</SUP>+2<I>rb</I>+2<I>r</I><SUP>2</SUP>=<I>b</I><SUP>2</SUP>+<I>p</I>.<BR>
+On veut obtenir toutes les paires carrées (<I>p</I>,<I>q</I>) vérifiant 
+0 ≥ <I>p</I> ≥ <I>q</I> ≥ <I>n</I>, donc on doit avoir :<BR>
+0≥ <I>b</I><SUP>2</SUP> ≥ <I>n</I> i.e 0≥ <I>b</I> ≥ √<SPAN style="text-decoration:overline"><I>n</I></SPAN> et<BR>
+0≥ 2<I>rb</I>+2<I>r</I><SUP>2</SUP>≥ <I>n</I> et 0≥ <I>b</I><SUP>2</SUP>+2<I>rb</I>+2<I>r</I><SUP>2</SUP>≥ <I>n</I>.<BR>
+On tape :<BR>
+<TT>supposons(b&gt;=0 and b&lt;=31);</TT><BR>
+<TT>simplify(solve(b</TT><CODE><TT>^</TT></CODE><TT>2+2*r*b+2*r</TT><CODE><TT>^</TT></CODE><TT>2&lt;1000,r))</TT><BR>
+On obtient;:<BR>
+<TT>[((r&gt;((-b-sqrt(-b</TT><CODE><TT>^</TT></CODE><TT>2+2000))/2)) &amp;&amp; (((-b+sqrt(-b</TT><CODE><TT>^</TT></CODE><TT>2+2000))/2)&gt;r))]</TT><BR>
+On tape : 
+<PRE CLASS="verbatim">paire_carre(n):={
+local b,q,p,L,r,nmax;
+L:=NULL;
+pour b de 0 jusque sqrt(n) faire
+nmax:=(sqrt(-b^2+2*n))/2-b/2;
+pour r de 0 jusque nmax faire
+p:=2*r*b+2*r^2;
+q:=b^2+p;
+L:=L,[p,q];
+fpour
+fpour
+return L
+}:;
+</PRE>Puis, on tape :<BR>
+<TT>L:=paire_carre(100):;</TT><BR>
+Le calcul est tres rapide !!!!!<BR>
+On tape : <TT>dim(L)</TT><BR>
+On obtient instantanément : <TT>48</TT><BR>
+On tape :<BR>
+<TT>L3:=paire_carre(1000):;</TT><BR>
+Le calcul est tres rapide !!!!!<BR>
+On tape : <TT>dim(L3)</TT><BR>
+On obtient : <TT>421</TT>
+</LI><LI CLASS="li-enumerate">On tape : <TT>nuage_points(L3)</TT><BR>
+On obtient :<BR>
+<SPAN CLASS="textboxed"><IMG SRC="cascas004.png"></SPAN>
+</LI><LI CLASS="li-enumerate">On a <I>q</I>=<I>p</I>+<I>b</I><SUP>2</SUP> donc les points sont sur les droites d’équations <I>y</I>=<I>x</I>+<I>b</I><SUP>2</SUP> pour
+<I>b</I> fixé.<BR>
+0n a <I>p</I>=2<I>nb</I>+2<I>n</I><SUP>2</SUP> donc <I>b</I>=(<I>p</I>/(2<I>n</I>)−<I>n</I>) donc <I>q</I>=<I>p</I><SUP>2</SUP>/(4<I>n</I><SUP>2</SUP>)+<I>n</I><SUP>2</SUP>
+donc les points sont sur les courbes 
+d’équations <I>y</I>=<I>x</I><SUP>2</SUP>/(4<I>n</I><SUP>2</SUP>)+<I>n</I><SUP>2</SUP> pour <I>n</I> fixé.<BR>
+On tape et on obtient :<BR>
+<SPAN CLASS="textboxed"><IMG SRC="cascas005.png"></SPAN>
+</LI></OL><H2 CLASS="section"><A NAME="toc11"></A><A NAME="htoc35">1.11</A>  Les triangles rectangles presque isocèles</H2><P>
+<B>Définition</B><BR>
+Un triangle rectangle dont les 
+côtés sont :
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+les entiers <I>a</I>,<I>c</I>−1,<I>c</I> lorsque <I>c</I> est la longueur de 
+l’hypoténuse est un triangle rectangle presque isocèle de type 1.<BR>
+</LI><LI CLASS="li-enumerate">les entiers <I>a</I>,<I>a</I>+1,<I>c</I> lorsque <I>c</I> est la longueur de 
+l’hypoténuse est un triangle rectangle presque isocèle de type 2.<BR>
+</LI></OL><P>
+Pour trouver les triangles rectangles presque isocèles il faut et il suffit 
+de résoudre en nombre entiers les équations 
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+<I>a</I><SUP>2</SUP>+(<I>c</I>−1)<SUP>2</SUP>=<I>c</I><SUP>2</SUP>, c’est à dire :<BR>
+trouver les couples (<I>a</I>,<I>c</I>)∈ ℕ vérifiant <I>a</I><SUP>2</SUP>+<I>c</I><SUP>2</SUP>−2<I>c</I>+1=<I>c</I><SUP>2</SUP>.<BR>
+</LI><LI CLASS="li-enumerate"><I>a</I><SUP>2</SUP>+(<I>a</I>+1)<SUP>2</SUP>=<I>c</I><SUP>2</SUP>, 
+c’est à dire :<BR>
+trouver les couples (<I>a</I>,<I>c</I>)∈ ℕ vérifiant 2<I>a</I><SUP>2</SUP>+2<I>a</I>+1=<I>c</I><SUP>2</SUP>.<BR>
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc36">1.11.1</A>  L’énoncé 1</H3><P>
+On veut trouver les triangles rectangles presque isocèle de type 1.
+On cherche donc les couples (<I>a</I>,<I>c</I>)∈ ℕ vérifiant <I>a</I><SUP>2</SUP>+<I>c</I><SUP>2</SUP>−2<I>c</I>+1=<I>c</I><SUP>2</SUP> c’est 
+à dire :<BR>
+<I>a</I><SUP>2</SUP>=2<I>c</I>−1.<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc37">1.11.2</A>  La solution de l’énoncé 1</H3><P>
+<I>a</I> est donc impair i.e. <I>a</I>=2<I>k</I>+1 avec <I>k</I>∈ ℕ.<BR>
+On a donc 4<I>k</I><SUP>2</SUP>+4<I>k</I>=2(<I>c</I>−1) et donc <I>c</I>=2<I>k</I><SUP>2</SUP>+2<I>k</I>+1=<I>k</I><SUP>2</SUP>+(<I>k</I>+1)<SUP>2</SUP><BR>
+Les côtés du triangle rectangle presque isocèle de type 1 sont donc :<BR>
+[2<I>k</I>+1,<I>k</I><SUP>2</SUP>+(<I>k</I>+1)<SUP>2</SUP>−1,<I>k</I><SUP>2</SUP>+(<I>k</I>+1)<SUP>2</SUP>] ou encore [2<I>k</I>+1,2<I>k</I>(<I>k</I>+1),<I>k</I><SUP>2</SUP>+(<I>k</I>+1)<SUP>2</SUP>] 
+lorsque <I>k</I> ∈ ℕ.<BR>
+On tape :<BR>
+<TT>[2k+1,2k*(k+1),k</TT><CODE><TT>^</TT></CODE><TT>2+(k+1)</TT><CODE><TT>^</TT></CODE><TT>2]$(k=0..10)</TT>
+On obtient :<BR>
+<TT>[1,0,1],[3,4,5],[5,12,13],[7,24,25],[9,40,41],[11,60,61],</TT><BR>
+<TT>[13,84,85],[15,112,113],[17,144,145],[19,180,181],[21,220,221]</TT><BR>
+On peut trouver une relation de récurrence entre 2 tripletssuccessifs.
+On cherche <I>x</I>,<I>y</I>,<I>z</I> tels que pour tout <I>k</I>∈ ℕ on ait :<BR>
+<I>a</I><SUB><I>k</I></SUB>=<I>xa</I><SUB><I>k</I>−1</SUB>+<I>yb</I><SUB><I>k</I>−1</SUB>+<I>zc</I><SUB><I>k</I>−1</SUB>.<BR>
+2<I>k</I>+1=<I>x</I>*(2<I>k</I>−1)+<I>y</I>*2<I>k</I>*(<I>k</I>−1)+<I>z</I>*(<I>k</I><SUP>2</SUP>+(<I>k</I>−1)<SUP>2</SUP>=2<I>k</I><SUP>2</SUP>(<I>z</I>+<I>y</I>)+2<I>k</I>(<I>x</I>−<I>y</I>−<I>z</I>)+<I>z</I>−<I>x</I>
+Donc <I>y</I>=−<I>z</I> <I>x</I>−<I>y</I>−<I>z</I>=<I>x</I>=1 et <I>z</I>−<I>x</I>=1<BR>
+On trouve donc <I>x</I>=1,<I>y</I>=−2,<I>z</I>=2<BR>
+On cherche <I>x</I>,<I>y</I>,<I>z</I> tels que :<BR>
+<I>b</I><SUB><I>k</I></SUB>=<I>xa</I><SUB><I>k</I>−1</SUB>+<I>yb</I><SUB><I>k</I>−1</SUB>+<I>zc</I><SUB><I>k</I>−1</SUB>.<BR>
+On trouve <I>x</I>=2,<I>y</I>=−1, <I>z</I>=2<BR>
+On cherche <I>x</I>,<I>y</I>,<I>z</I> tels que :<BR>
+<I>c</I><SUB><I>k</I></SUB>=<I>xa</I><SUB><I>k</I>−1</SUB>+<I>yb</I><SUB><I>k</I>−1</SUB>+<I>zc</I><SUB><I>k</I>−1</SUB>.<BR>
+On trouve <I>x</I>=2,<I>y</I>=−2, <I>z</I>=3<BR>
+On a donc :<BR>
+<TT>A:=[[1,-2,2],[2,-1,2],[2,-2,3]]</TT><BR>
+Le <I>k</I>−ième triplet est égal à <I>A</I><SUP><I>k</I></SUP>*[1,0,1]<BR>
+On tape :<BR>
+<TT>(A</TT><CODE><TT>^</TT></CODE><TT>k*[1,0,1])$(k=1..6) </TT><BR>
+On obtient :<BR>
+<TT>[3,4,5],[5,12,13],[7,24,25],[9,40,41],[11,60,61],[13,84,85],</TT><BR>
+<TT>[15,112,113],[17,144,145],[19,180,181],[21,220,221]</TT><BR>
+<TT>P,B:=jordan(A)</TT><BR>
+On obtient :<BR>
+<TT>[[0,2,0],[4,2,0],[4,2,1]],[[1,1,0],[0,1,1],[0,0,1]]</TT>
+On a <I>A</I><SUP><I>k</I></SUP>=<I>PB</I><SUP><I>k</I></SUP><I>P</I><SUP>−1</SUP>
+On sait que <I>B</I><SUP><I>n</I></SUP>=[[1,<I>n</I>,<I>sum</I>(<I>k</I>,<I>k</I>=1..<I>n</I>−1)],[0,1,<I>n</I>],[0,0,1]] donc on tape :<BR>
+<TT>Bn:=unapply([[1,n,sum(k,k=1..n-1)],[0,1,n],[0,0,1]],n)</TT><BR>
+<TT>P*Bn(5)*inv(P)*[1,0,1]</TT>
+On obtient :<BR>
+<TT>[11,60,61]</TT><BR>
+On tape :<BR>
+<TT>subst([2k+1,2k*(k+1),k</TT><CODE><TT>^</TT></CODE><TT>2+(k+1)</TT><CODE><TT>^</TT></CODE><TT>2],k,5)</TT><BR>
+On obtient :<BR>
+<TT>[11,60,61]</TT></P><H3 CLASS="subsection"><A NAME="htoc38">1.11.3</A>  L’énoncé 2</H3><P>
+On veut trouver les triangles rectangles presque isocèle de type 2.
+On cherche donc les couples (<I>a</I>,<I>c</I>)∈ ℕ vérifiant 2<I>a</I><SUP>2</SUP>+2<I>a</I>+1=<I>c</I><SUP>2</SUP>.<BR>
+ </P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Écrire un programme qui donne, en balayant tous les entiers <I>a</I> de 0 
+à <I>n</I>, les triplets (<I>a</I>,<I>a</I>+1,<I>c</I>)∈ ℕ<SUP>3</SUP> vérifiant <I>a</I><SUP>2</SUP>+(<I>a</I>+1)<SUP>2</SUP>=<I>c</I><SUP>2</SUP>.
+Donner les solutions pour <I>n</I>=1000
+</LI><LI CLASS="li-enumerate">Écrire un programme qui donne les <I>n</I> premiers triplés en modifiant le programme <TT>tripless</TT> (cf <A HREF="#sec:tripless">1.9</A>)
+</LI><LI CLASS="li-enumerate">Montrer que si le triplet (<I>a</I>,<I>a</I>+1,<I>c</I>)∈ ℕ<SUP>3</SUP> vérifie <I>a</I><SUP>2</SUP>+(<I>a</I>+1)<SUP>2</SUP>=<I>c</I><SUP>2</SUP>
+alors <I>c</I> est impair et vérifie 2<I>c</I><SUP>2</SUP>−1=(2<I>a</I>+1)<SUP>2</SUP>.
+Écrire un programme qui donne les triplets (<I>a</I>,<I>a</I>+1,<I>c</I>)∈ ℕ<SUP>3</SUP> vérifiant <I>a</I><SUP>2</SUP>+(<I>a</I>+1)<SUP>2</SUP>=<I>c</I><SUP>2</SUP> et qui utilise cette proriété de <I>c</I>.
+</LI><LI CLASS="li-enumerate">On considère la suite récurrente :<BR>
+<I>a</I><SUB>0</SUB>=0, <I>a</I><SUB>1</SUB>=3, <I>a</I><SUB><I>n</I>+2</SUB>=6<I>a</I><SUB><I>n</I>+1</SUB>−<I>a</I><SUB><I>n</I></SUB>+2   (<I>n</I>≥ 0)<BR>
+Montrer par récurrence que pour tout <I>n</I>∈ ℕ on a :<BR>
+<I>a</I><SUB><I>n</I>+1</SUB><SUP>2</SUP>−6<I>a</I><SUB><I>n</I></SUB><I>a</I><SUB><I>n</I>+1</SUB>+<I>a</I><SUB><I>n</I></SUB><SUP>2</SUP>−2<I>a</I><SUB><I>n</I>+1</SUB>−2<I>a</I><SUB><I>n</I></SUB>=3
+</LI><LI CLASS="li-enumerate">On considère la suite récurrente :<BR>
+<I>c</I><SUB>0</SUB>=1, <I>c</I><SUB>1</SUB>=5, <I>c</I><SUB><I>n</I>+2</SUB>=6<I>c</I><SUB><I>n</I>+1</SUB>−<I>c</I><SUB><I>n</I></SUB>   (<I>n</I>≥ 0)<BR>
+Montrer par récurrence que pour tout <I>n</I>∈ ℕ on a :<BR>
+<I>c</I><SUB><I>n</I></SUB><SUP>2</SUP>=2<I>a</I><SUB><I>n</I></SUB><SUP>2</SUP>+2<I>a</I><SUB><I>n</I></SUB>+1
+En déduire que pour tout <I>n</I>∈ ℕ, les triplets (<I>a</I><SUB><I>n</I></SUB>,<I>a</I><SUB><I>n</I></SUB>+1,<I>c</I><SUB><I>n</I></SUB>) 
+donnent des solutions.<BR>
+On montrera dans la question 9 que l’on obtient ainsi toutes les solutions.
+</LI><LI CLASS="li-enumerate">Écrire un programme qui donne des triplets (<I>a</I>,<I>a</I>+1,<I>c</I>)∈ ℕ<SUP>3</SUP> 
+vérifiant <I>a</I><SUP>2</SUP>+(<I>a</I>+1)<SUP>2</SUP>=<I>c</I><SUP>2</SUP> et qui utilise pour <I>c</I> la relation de 
+récurrence :<BR>
+<I>c</I><SUB>0</SUB>=1, <I>c</I><SUB>1</SUB>=5, <I>c</I><SUB><I>n</I>+2</SUB>=6<I>c</I><SUB><I>n</I>+1</SUB>−<I>c</I><SUB><I>n</I></SUB>   (<I>n</I>≥ 0).
+</LI><LI CLASS="li-enumerate">On veut trouver <I>c</I><SUB><I>n</I></SUB> en fonction de <I>n</I>.<BR>
+Déterminer les progressions géométriques <I>v</I><SUB><I>n</I></SUB>=<I>v</I><SUB>0</SUB>*<I>r</I><SUP><I>n</I></SUP> qui vérifie la 
+relation de <I>v</I><SUB><I>n</I>+2</SUB>=6<I>v</I><SUB><I>n</I>+1</SUB>−<I>v</I><SUB><I>n</I></SUB>.<BR>
+Puis en déduire la valeur de <I>c</I><SUB><I>n</I></SUB> en fonction de <I>n</I>.
+</LI><LI CLASS="li-enumerate">On veut trouver <I>a</I><SUB><I>n</I></SUB> en fonction de <I>n</I>.<BR>
+Déterminer <I>p</I> pour que la suite <I>u</I><SUB><I>n</I></SUB>=<I>a</I><SUB><I>n</I></SUB>+<I>p</I> vérifient la 
+relation de récurrence <I>u</I><SUB><I>n</I>+2</SUB>=6<I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB>.<BR>
+Puis en déduire la valeur de <I>a</I><SUB><I>n</I></SUB> en fonction de <I>n</I>
+</LI><LI CLASS="li-enumerate">Montrer que l’on a :
+<I>c</I><SUB>0</SUB>=1,<I>a</I><SUB>0</SUB>=0 et<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=4<I>a</I><SUB><I>n</I></SUB>+3<I>c</I><SUB><I>n</I></SUB>+2<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=3<I>a</I><SUB><I>n</I></SUB>+2<I>c</I><SUB><I>n</I></SUB>+1<BR>
+et réciproquement si <I>c</I><SUB><I>n</I></SUB> et <I>a</I><SUB><I>n</I></SUB> vérifient :<BR>
+<I>c</I><SUB>0</SUB>=1, <I>a</I><SUB>0</SUB>=0, et<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=4<I>a</I><SUB><I>n</I></SUB>+3<I>c</I><SUB><I>n</I></SUB>+2<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=3<I>a</I><SUB><I>n</I></SUB>+2<I>c</I><SUB><I>n</I></SUB>+1<BR>
+alors<BR>
+<I>c</I><SUB>0</SUB>=1, <I>c</I><SUB>1</SUB>=5, <I>c</I><SUB><I>n</I>+2</SUB>=6<I>c</I><SUB><I>n</I>+1</SUB>−<I>c</I><SUB><I>n</I></SUB>   (<I>n</I>≥ 0) et<BR>
+<I>a</I><SUB>0</SUB>=0, <I>a</I><SUB>1</SUB>=3, <I>a</I><SUB><I>n</I>+2</SUB>=6<I>a</I><SUB><I>n</I>+1</SUB>−<I>a</I><SUB><I>n</I></SUB>+2   (<I>n</I>≥ 0)<BR>
+</LI><LI CLASS="li-enumerate">Montrer que l’on obtient toutes les solutions cherchèes
+</LI><LI CLASS="li-enumerate">Écrire la relation <I>c</I><SUB><I>n</I>+2</SUB>=6<I>c</I><SUB><I>n</I>+1</SUB>−<I>c</I><SUB><I>n</I></SUB> sous la forme :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><I>c</I><SUB><I>n</I>+2</SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>c</I><SUB><I>n</I>+1</SUB></TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎠</TD><TD CLASS="dcell">
+=<I>M</I>
+</TD><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><I>c</I><SUB><I>n</I>+1</SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>c</I><SUB><I>n</I></SUB></TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎠</TD></TR>
+</TABLE>
+et déterminer la matrice <I>M</I>
+</LI><LI CLASS="li-enumerate">Calculer par récurrence <I>M</I><SUP><I>n</I></SUP>, pour <I>n</I>∈ ℕ.
+</LI><LI CLASS="li-enumerate">On considère les suites <I>w</I> définies par
+<I>w</I><SUB>0</SUB>∈ ℕ, <I>w</I><SUB><I>n</I>+1</SUB>=floor((3+2√<SPAN style="text-decoration:overline">2</SPAN>)<I>w</I><SUB><I>n</I></SUB>) (floor désigne la 
+partie entière)<BR>
+Montrer qu’alors pour tout <I>n</I>∈ ℕ<SUP>*</SUP> on a :<BR>
+<I>w</I><SUB><I>n</I>+1</SUB>=6<I>w</I><SUB><I>n</I></SUB>−<I>w</I><SUB><I>n</I>−1</SUB><BR>
+En déduire que si on choisit <I>w</I><SUB>0</SUB>=1 la suite <I>w</I><SUB><I>n</I></SUB> est la suite 
+<I>c</I><SUB><I>n</I></SUB> qui donne la longueur des hypoténuse des triangles rectangles presque 
+isocèles.<BR>
+En déduire que si <I>w</I><SUB>0</SUB>=1 alors 2*<I>w</I><SUB><I>n</I></SUB><SUP>2</SUP>−1 est le carré de 
+2<I>a</I><SUB><I>n</I></SUB>+1.<BR>
+Écrire un programme qui donne les triplets (<I>a</I>,<I>a</I>+1,<I>c</I>)∈ ℕ<SUP>3</SUP> vérifiant 
+<I>a</I><SUP>2</SUP>+(<I>a</I>+1)<SUP>2</SUP>=<I>c</I><SUP>2</SUP> et qui utilise cette définition de <I>c</I>.
+</LI><LI CLASS="li-enumerate">Écrire les relations de récurrence :<BR>
+<I>c</I><SUB><I>n</I></SUB>=4<I>a</I><SUB><I>n</I>−1</SUB>+3<I>c</I><SUB><I>n</I>−1</SUB>+2 et <I>a</I><SUB><I>n</I></SUB>=3<I>a</I><SUB><I>n</I>−1</SUB>+2<I>c</I><SUB><I>n</I>−1</SUB>+1<BR>
+avec une matrice 3x3.
+</LI><LI CLASS="li-enumerate">On considère les suites <I>v</I> définies par
+<I>v</I><SUB>0</SUB>∈ ℕ, <I>v</I><SUB><I>n</I>+1</SUB>=3+floor((3+2√<SPAN style="text-decoration:overline">2</SPAN>)<I>v</I><SUB><I>n</I></SUB>) (floor désigne la 
+partie entière)<BR>
+Montrer qu’alors pour tout <I>n</I>∈ ℕ<SUP>*</SUP> on a :<BR>
+<I>v</I><SUB><I>n</I>+1</SUB>=6<I>v</I><SUB><I>n</I></SUB>−<I>v</I><SUB><I>n</I>−1</SUB>+2<BR>
+En déduire que si on choisit <I>v</I><SUB>0</SUB>=0 la suite <I>v</I><SUB><I>n</I></SUB> est la suite 
+<I>a</I><SUB><I>n</I></SUB> qui donne la longueur du plus petit coté des triangles rectangles 
+presque isocèles.<BR>
+En déduire que si <I>v</I><SUB>0</SUB>=0 et <I>w</I><SUB>0</SUB>=1 alors 2*<I>w</I><SUB><I>n</I></SUB><SUP>2</SUP>−1=(2<I>v</I><SUB><I>n</I></SUB>+1)<SUP>2</SUP>.<BR>
+Écrire un programme qui donne les triplets (<I>a</I>,<I>a</I>+1,<I>c</I>)∈ ℕ<SUP>3</SUP> vérifiant 
+<I>a</I><SUP>2</SUP>+(<I>a</I>+1)<SUP>2</SUP>=<I>c</I><SUP>2</SUP> et qui utilise cette définition de <I>a</I> et <I>c</I>.
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc39">1.11.4</A>  La solution de l’énoncé 2</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On tape :
+<PRE CLASS="verbatim">rectpiso1(n):={
+local a,c,d,L;
+L:=NULL;
+pour a de 0 jusque n faire 
+d:=2a^2+2a+1;
+c:=round(sqrt(d));
+si c^2==d alors L:=L,[a,a+1,c];fsi;
+fpour;
+retourne L;
+}:;
+</PRE>On tape :<BR>
+<TT>rectpiso1(10000)</TT><BR>
+On obtient (Evaluation time: 12.73):<BR>
+<TT>[0,1,1],[3,4,5],[20,21,29],[119,120,169],[696,697,985], [4059,4060,5741]</TT>
+</LI><LI CLASS="li-enumerate">On change le test <TT>if (gcd(m,p,q)==1)</TT> en :<BR>
+<TT>if (gcd(m,p,q)==1 and abs(p-q)==1)</TT> et on tape
+<PRE CLASS="verbatim">triplets2(n):={
+local a,b,a2,b2,m,q,p,k,L;
+L:=NULL;
+k:=0;
+a:=2;
+while (k&lt;n) {
+  a2:=a^2;
+  for (b:=1;b&lt;a and k&lt;n;b++) {
+    b2:=b^2;
+    m:=a2+b2;p:=a2-b2;q:=2*a*b;
+    if (gcd(m,p,q)==1 and abs(p-q)==1){
+      L:=L,[m,max(p,q),min(p,q)];
+      k:=k+1;
+    }
+  } 
+a:=a+1;
+}
+return L;
+}:;
+</PRE>On tape :<BR>
+<TT>triplets2(5)</TT><BR>
+On obtient :<BR>
+<TT>[5,4,3],[29,21,20],[169,120,119],[985,697,696],[5741,4060,4059]</TT>
+</LI><LI CLASS="li-enumerate">Puisque <I>c</I><SUP>2</SUP>=<I>a</I><SUP>2</SUP>+(<I>a</I>+1)<SUP>2</SUP>=2<I>a</I><SUP>2</SUP>+2<I>a</I>+1 on en déduit que <I>c</I><SUP>2</SUP> est un entier 
+impair donc <I>c</I> est un entier impair.<BR>
+On a aussi :
+2<I>c</I><SUP>2</SUP>−1=4<I>a</I><SUP>2</SUP>+4<I>a</I>+1=(2<I>a</I>+1)<SUP>2</SUP><BR>
+On tape :
+<PRE CLASS="verbatim">rectpiso2(n):={
+local a,c,d,L;
+L:=NULL;
+pour c de 1 jusque n pas 2 faire 
+d:=2c^2-1;
+a:=round(sqrt(d));
+si a^2==d alors a:=(a-1)/2; L:=L,[a,a+1,c];fsi;
+fpour;
+retourne L;
+}:;
+</PRE>On tape :<BR>
+<TT>rectpiso2(10000)</TT><BR>
+On obtient (Evaluation time: 5.9) :<BR>
+<TT>[0,1,1],[3,4,5],[20,21,29],[119,120,169],[696,697,985], [4059,4060,5741]</TT>
+</LI><LI CLASS="li-enumerate">Pour <I>n</I>=0 on a :<BR>
+<I>a</I><SUB><I>n</I>+1</SUB><SUP>2</SUP>−6<I>a</I><SUB><I>n</I></SUB><I>a</I><SUB><I>n</I>+1</SUB>+<I>a</I><SUB><I>n</I></SUB><SUP>2</SUP>−2<I>a</I><SUB><I>n</I>+1</SUB>−2<I>a</I><SUB><I>n</I></SUB>=3<SUP>2</SUP>−2*3=3<BR>
+Supposons que pour <I>n</I>∈ ℕ on a :<BR>
+<I>a</I><SUB><I>n</I>+1</SUB><SUP>2</SUP>−6<I>a</I><SUB><I>n</I></SUB><I>a</I><SUB><I>n</I>+1</SUB>+<I>a</I><SUB><I>n</I></SUB><SUP>2</SUP>−2<I>a</I><SUB><I>n</I>+1</SUB>−2<I>a</I><SUB><I>n</I></SUB>=3<BR>
+Calculons :<BR>
+<I>a</I><SUB><I>n</I>+2</SUB><SUP>2</SUP>−6<I>a</I><SUB><I>n</I>+1</SUB><I>a</I><SUB><I>n</I>+2</SUB>+<I>a</I><SUB><I>n</I>+1</SUB><SUP>2</SUP>−2<I>a</I><SUB><I>n</I>+2</SUB>−2<I>a</I><SUB><I>n</I>+1</SUB><BR>
+sachant que :<BR>
+<I>a</I><SUB><I>n</I>+2</SUB>=6<I>a</I><SUB><I>n</I>+1</SUB>−<I>a</I><SUB><I>n</I></SUB>+2<BR>
+Dans <TT>Xcas</TT>, <TT>a2</TT> désigne <I>a</I><SUB><I>n</I>+2</SUB>,<TT>a1</TT> désigne <I>a</I><SUB><I>n</I>+1</SUB> et 
+<TT>a0</TT> désigne <I>a</I><SUB><I>n</I></SUB>.<BR>
+On tape :<BR>
+<TT>a2:=6a1-a0+2</TT><BR>
+<TT>normal(a2</TT><CODE><TT>^</TT></CODE><TT>2-6a1*a2+a1</TT><CODE><TT>^</TT></CODE><TT>2-2a2-2a1)</TT><BR>
+On obtient :<BR>
+<TT>a0</TT><CODE><TT>^</TT></CODE><TT>2-6*a0*a1-2*a0+a1</TT><CODE><TT>^</TT></CODE><TT>2-2*a1</TT><BR>
+Donc :<BR>
+<I>a</I><SUB><I>n</I>+2</SUB><SUP>2</SUP>−6<I>a</I><SUB><I>n</I>+1</SUB><I>a</I><SUB><I>n</I>+2</SUB>+<I>a</I><SUB><I>n</I>+1</SUB><SUP>2</SUP>−2<I>a</I><SUB><I>n</I>+2</SUB>−2<I>a</I><SUB><I>n</I>+1</SUB>=<I>a</I><SUB><I>n</I>+1</SUB><SUP>2</SUP>−6<I>a</I><SUB><I>n</I></SUB><I>a</I><SUB><I>n</I>+1</SUB>+<I>a</I><SUB><I>n</I></SUB><SUP>2</SUP>−2<I>a</I><SUB><I>n</I>+1</SUB>−2<I>a</I><SUB><I>n</I></SUB>=<BR>
+Donc, d’après l’hypothèse de récurrence on a :<BR>
+<I>a</I><SUB><I>n</I>+2</SUB><SUP>2</SUP>−6<I>a</I><SUB><I>n</I>+1</SUB><I>a</I><SUB><I>n</I>+2</SUB>+<I>a</I><SUB><I>n</I>+1</SUB><SUP>2</SUP>−2<I>a</I><SUB><I>n</I>+2</SUB>−2<I>a</I><SUB><I>n</I>+1</SUB>=3<BR>
+Donc, pour tout <I>n</I>∈ℕ, on a :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I><SUB><I>n</I>+1</SUB><SUP>2</SUP>−6<I>a</I><SUB><I>n</I></SUB><I>a</I><SUB><I>n</I>+1</SUB>+<I>a</I><SUB><I>n</I></SUB><SUP>2</SUP>−2<I>a</I><SUB><I>n</I>+1</SUB>−2<I>a</I><SUB><I>n</I></SUB>=3</TD></TR>
+</TABLE>
+</LI><LI CLASS="li-enumerate">Pour <I>n</I>=0 on a :<BR>
+<I>c</I><SUB>0</SUB><SUP>2</SUP>=2<I>a</I><SUB>0</SUB><SUP>2</SUP>+2<I>a</I><SUB>0</SUB>+1=1 (puisque <I>a</I><SUB>0</SUB>=0)<BR>
+Pour <I>n</I>=1 on a :<BR>
+<I>c</I><SUB>1</SUB><SUP>2</SUP>=2<I>a</I><SUB>1</SUB><SUP>2</SUP>+2<I>a</I><SUB>1</SUB>+1=18+6+7=25 (puisque <I>a</I><SUB>1</SUB>=3)<BR>
+Supposons que pour <I>n</I>∈ ℕ on ait :<BR>
+<I>c</I><SUB><I>n</I></SUB><SUP>2</SUP>=2<I>a</I><SUB><I>n</I></SUB><SUP>+</SUP>2<I>a</I><SUB><I>n</I></SUB>+1<BR>
+<I>c</I><SUB><I>n</I>+1</SUB><SUP>2</SUP>=2<I>a</I><SUB><I>n</I>+1</SUB><SUP>2</SUP>+2<I>a</I><SUB><I>n</I>+1</SUB>+1<BR>
+Dans <TT>Xcas</TT>, <TT>c2</TT> désigne <I>c</I><SUB><I>n</I>+2</SUB>,<TT>c1</TT> désigne <I>c</I><SUB><I>n</I>+1</SUB> et 
+<TT>c0</TT> désigne <I>c</I><SUB><I>n</I></SUB>.<BR>
+On tape :<BR>
+<TT>c2:=6c1-c0</TT><BR>
+<TT>normal(c2</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient :<BR>
+<TT>c0</TT><CODE><TT>^</TT></CODE><TT>2-12*c0*c1+36*c1</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+On a d’après l’hypothèse de récurrence :
+<TT>c0</TT><CODE><TT>^</TT></CODE><TT>2=2a0</TT><CODE><TT>^</TT></CODE><TT>2+2a0+1</TT> et<BR>
+ <TT>c1</TT><CODE><TT>^</TT></CODE><TT>2=2a1</TT><CODE><TT>^</TT></CODE><TT>2+2a0+1</TT> :<BR>
+Donc si on pose <TT>C=c2</TT><CODE><TT>^</TT></CODE><TT>2</TT>, on a :<BR>
+<TT>C:=normal(2a0</TT><CODE><TT>^</TT></CODE><TT>2+2a0+1+36*(2a1</TT><CODE><TT>^</TT></CODE><TT>2+2a1+1)-12c0*c1)</TT><BR>
+On obtient :<BR>
+<TT>2*a0</TT><CODE><TT>^</TT></CODE><TT>2+2*a0+72*a1</TT><CODE><TT>^</TT></CODE><TT>2+72*a1-12*c0*c1+37</TT><BR>
+On tape :<BR>
+<TT>A:=normal(2a2</TT><CODE><TT>^</TT></CODE><TT>2+2a2+1)</TT><BR>
+On obtient :<BR>
+<TT>-a0</TT><CODE><TT>^</TT></CODE><TT>2+6*a0*a1+2*a0-a1</TT><CODE><TT>^</TT></CODE><TT>2+2*a1+3</TT><BR>
+On veut montrer que <TT>C=A</TT>.<BR>
+On tape :<BR>
+<TT>normal((C-A)/12)</TT><BR>
+On obtient :<BR>
+<TT>2*a0*a1+a0+a1-c0*c1+2</TT><BR>
+Il faut donc montrer que :<BR>
+<I>c</I>0*<I>c</I>1=2*<I>a</I>0*<I>a</I>1+<I>a</I>0+<I>a</I>1 ou encore que :<BR>
+<I>c</I>0<SUP>2</SUP>*<I>c</I>1<SUP>2</SUP>=(2*<I>a</I>0*<I>a</I>1+<I>a</I>0+<I>a</I>1+2)<SUP>2</SUP> ou encore que :<BR>
+(2<I>a</I>0<SUP>2</SUP>+2<I>a</I>0+1)*(2<I>a</I>1<SUP>2</SUP>+2<I>a</I>1+1)−(2*<I>a</I>0*<I>a</I>1+<I>a</I>0+<I>a</I>1+2)<SUP>2</SUP>=0<BR>
+On tape :<BR>
+<TT>normal((2a0</TT><CODE><TT>^</TT></CODE><TT>2+2a0+1)*(2a1</TT><CODE><TT>^</TT></CODE><TT>2+2a1+1)-(2*a0*a1+a0+a1+2)</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient :<BR>
+<TT>a0</TT><CODE><TT>^</TT></CODE><TT>2-6*a0*a1-2*a0+a1</TT><CODE><TT>^</TT></CODE><TT>2-2*a1-3</TT><BR>
+qui vaut bien 0 d’apres la question 2.<BR>
+Donc pour tout <I>n</I>∈ ℕ on a <I>c</I><SUB><I>n</I></SUB><SUP>2</SUP>=2<I>a</I><SUB><I>n</I></SUB><SUP>2</SUP>+2<I>a</I><SUB><I>n</I></SUB>+1=<I>a</I><SUB><I>n</I></SUB><SUP>2</SUP>+(<I>a</I><SUB><I>n</I></SUB>+1)<SUP>2</SUP>.<BR>
+Donc le triplet (<I>a</I><SUB><I>n</I></SUB>,<I>a</I><SUB><I>n</I></SUB>+1,<I>c</I><SUB><I>n</I></SUB>) est une solution pour tout <I>n</I>.<BR>
+On peut montrer que l’on obtient ainsi toutes les solutions (cf question9).
+</LI><LI CLASS="li-enumerate">On tape :
+<PRE CLASS="verbatim">rectpiso3(n):={
+local a,c,d,L,c0,c1;
+c0:=1;
+c1:=5;
+L:=[0,1,1];
+tantque c1&lt;n faire
+d:=2*c1^2-1;
+a:=(sqrt(d)-1)/2;
+L:=L,[a,a+1,c1];
+c:=c1;
+c1:=6*c1-c0;
+c0:=c;
+ftantque;
+retourne L;
+}:;
+</PRE>On tape :<BR>
+<TT>rectpiso3(10000)</TT><BR>
+On obtient (instantanément):<BR>
+<TT>[0,1,1],[3,4,5],[20,21,29],[119,120,169],[696,697,985], [4059,4060,5741]</TT>
+</LI><LI CLASS="li-enumerate">Si <I>v</I><SUB><I>n</I></SUB>=<I>v</I><SUB>0</SUB>*<I>r</I><SUP><I>n</I></SUP> vérifie <I>v</I><SUB><I>n</I>+2</SUB>=6<I>v</I><SUB><I>n</I>+1</SUB>−<I>v</I><SUB><I>n</I></SUB> c’est que <I>r</I> est solution de 
+<I>x</I><SUP>2</SUP>−6<I>x</I>+1=0.<BR>
+On tape :<BR>
+<TT>r1,r2:=solve(x</TT><CODE><TT>^</TT></CODE><TT>2-6x+1,x)</TT><BR>
+On obtient :<BR>
+<TT>[-2*sqrt(2)+3,2*sqrt(2)+3]</TT><BR>
+Donc il y a 2 progressions gépmétriques de raison <I>r</I>1=−2√<SPAN style="text-decoration:overline">2</SPAN>+3 et
+<I>r</I>2=2√<SPAN style="text-decoration:overline">2</SPAN>+3 qui verifient aussi cette relation de récurence.<BR>
+Une combinaison lineaire de suites verifiant 
+<I>v</I><SUB><I>n</I>+2</SUB>=6<I>v</I><SUB><I>n</I>+1</SUB>−<I>v</I><SUB><I>n</I></SUB> verifient aussi cette relation de récurence.<BR>
+Donc la suite :<BR>
+<I>w</I><SUB><I>n</I></SUB>=<I>x</I>*<I>r</I>1<SUP><I>n</I></SUP>+<I>y</I>*<I>r</I>2<SUP><I>n</I></SUP> vérifie <I>w</I><SUB><I>n</I>+2</SUB>=6<I>w</I><SUB><I>n</I>+1</SUB>−<I>w</I><SUB><I>n</I></SUB>  quelque soit <I>x</I> et <I>y</I>.<BR>
+Puisque la suite <I>c</I><SUB><I>n</I></SUB> est entièrement déterminée par <I>c</I><SUB>0</SUB>=1, <I>c</I><SUB>1</SUB>=5 et 
+par la relation de récurence <I>c</I><SUB><I>n</I>+2</SUB>=6<I>c</I><SUB><I>n</I>+1</SUB>−<I>c</I><SUB><I>n</I></SUB>, pour avoir <I>c</I><SUB><I>n</I></SUB>=<I>w</I><SUB><I>n</I></SUB> il 
+suffira d’avoir <I>c</I><SUB>0</SUB>=<I>w</I><SUB>0</SUB> et <I>c</I><SUB>1</SUB>=<I>w</I><SUB>1</SUB> c’est à dire :<BR>
+<I>x</I>+<I>y</I>=1 et <I>x</I>*<I>r</I>1+<I>y</I>*<I>r</I>2=5.<BR>
+On tape :<BR>
+<TT>linsolve([x+y=1,x*r1+y*r2=5],[x,y])</TT><BR>
+On obtient :<BR>
+<TT>[(-(sqrt(2))+2)/4,(sqrt(2)+2)/4]</TT><BR>
+Donc :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>c</I><SUB><I>n</I></SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">2−</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD CLASS="dcell">*(−2*</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+3)<SUP><I>n</I></SUP>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">2+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD CLASS="dcell">*(2*</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+3)<SUP><I>n</I></SUP></TD></TR>
+</TABLE>
+</LI><LI CLASS="li-enumerate">On cherche <I>p</I> pour que la suite <I>u</I><SUB><I>n</I></SUB>=<I>p</I>+<I>a</I><SUB><I>n</I></SUB> vérifient la 
+relation de <I>u</I><SUB><I>n</I>+2</SUB>=6<I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB>.
+On sait que <I>a</I><SUB><I>n</I></SUB> vérifie <I>a</I><SUB><I>n</I>+2</SUB>=6<I>a</I><SUB><I>n</I>+1</SUB>−<I>a</I><SUB><I>n</I></SUB>+2 donc <I>p</I> doit vérifier :<BR>
+<I>p</I>+<I>a</I><SUB><I>n</I>+2</SUB>=6<I>p</I>+6<I>a</I><SUB><I>n</I>+1</SUB>−<I>p</I>−<I>a</I><SUB><I>n</I></SUB> donc <I>p</I>+2=6<I>p</I>−<I>p</I>.<BR>
+On tape :<BR>
+<TT>solve(p+2=6p-p,p)</TT><BR>
+On obtient :<BR>
+<TT>[1/2]</TT><BR>
+Donc comme précédemment on va déterminer la suite <I>a</I><SUB><I>n</I></SUB>+1/2.<BR>
+Pour cela on cherche <I>x</I> et <I>y</I> tel que :<BR>
+<I>x</I>+<I>y</I>=<I>a</I><SUB>0</SUB>+1/2=1/2 et <I>x</I>*<I>r</I>1+<I>y</I>*<I>r</I>2=<I>a</I><SUB>1</SUB>=3+1/2=7/2<BR>
+On tape :<BR>
+<TT>normal(linsolve([x+y=1/2,x*r1+y*r2=7/2],[x,y]))</TT><BR>
+On obtient :<BR>
+<TT>[(-(sqrt(2))+1)/4,(sqrt(2)+1)/4]</TT><BR>
+On a donc :<BR>
+<I>u</I><SUB><I>n</I></SUB>=1−√<SPAN style="text-decoration:overline">2</SPAN>/4*(−2*√<SPAN style="text-decoration:overline">2</SPAN>+3)<SUP><I>n</I></SUP>+1+√<SPAN style="text-decoration:overline">2</SPAN>/4*(2*√<SPAN style="text-decoration:overline">2</SPAN>+3)<SUP><I>n</I></SUP><BR>
+Donc :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I><SUB><I>n</I></SUB>=−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1−</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD CLASS="dcell">*(−2*</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+3)<SUP><I>n</I></SUP>+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">1+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">4</TD></TR>
+</TABLE></TD><TD CLASS="dcell">*(2*</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+3)<SUP><I>n</I></SUP></TD></TR>
+</TABLE>
+On tape :<BR>
+<TT>c(n):=((-sqrt(2)+2)/4)*(-2*sqrt(2)+3)</TT><CODE><TT>^</TT></CODE><TT>n+<BR>
+((sqrt(2)+2)/4)*(2*sqrt(2)+3)</TT><CODE><TT>^</TT></CODE><TT>n</TT><BR>
+<TT>a(n):=((-sqrt(2)+1)/4)*(-2*sqrt(2)+3)</TT><CODE><TT>^</TT></CODE><TT>n+<BR>
+((sqrt(2)+1)/4)*(2*sqrt(2)+3)</TT><CODE><TT>^</TT></CODE><TT>n-1/2</TT><BR>
+<TT>normal(a(5),a(5)+1,c(5))</TT><BR>
+On obtient :<BR>
+<TT>4059,4060,5741</TT><BR>
+On tape :<BR>
+<TT>normal(a(6),a(6)+1,c(6))</TT><BR>
+On obtient :<BR>
+<TT>23660,23661,33461</TT><BR>
+On tape :<BR>
+<TT>normal(a(10),a(10)+1,c(10))</TT><BR>
+On obtient :<BR>
+<TT>27304196,27304197,38613965</TT>
+</LI><LI CLASS="li-enumerate">On suppose que pour tout <I>n</I> ∈ ℕ on a :<BR>
+<I>c</I><SUB>0</SUB>=1, <I>c</I><SUB>1</SUB>=5, <I>a</I><SUB>0</SUB>=0, <I>a</I><SUB>1</SUB>=3 et<BR>
+<I>c</I><SUB><I>n</I>+2</SUB>=6<I>c</I><SUB><I>n</I>+1</SUB>−<I>c</I><SUB><I>n</I></SUB> et<BR>
+<I>a</I><SUB><I>n</I>+2</SUB>=6<I>a</I><SUB><I>n</I>+1</SUB>−<I>a</I><SUB><I>n</I></SUB>+2<BR>
+Montrons par récurrence qu’alors pour tout <I>n</I> ∈ ℕ on a :<BR>
+<I>c</I><SUB>0</SUB>=1, <I>a</I><SUB>0</SUB>=0 et<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=4<I>a</I><SUB><I>n</I></SUB>+3<I>c</I><SUB><I>n</I></SUB>+2<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=3<I>a</I><SUB><I>n</I></SUB>+2<I>c</I><SUB><I>n</I></SUB>+1
+La relation est vrai pour <I>n</I>=0 et <I>n</I>=1 car :<BR>
+<I>c</I><SUB>1</SUB>=4*0+3*+2=5 et<BR>
+<I>a</I><SUB>1</SUB>=3*0+2*1+1=3<BR>
+Si la relation est vrai pour <I>n</I> on a :
+<I>c</I><SUB><I>n</I></SUB>=4<I>a</I><SUB><I>n</I>−1</SUB>+3<I>c</I><SUB><I>n</I>−1</SUB>+2<BR>
+<I>a</I><SUB><I>n</I></SUB>=3<I>a</I><SUB><I>n</I>−1</SUB>+2<I>c</I><SUB><I>n</I>−1</SUB>+1<BR>
+alors<BR>
+3<I>c</I><SUB><I>n</I></SUB>−<I>c</I><SUB><I>n</I>−1</SUB>=12<I>a</I><SUB><I>n</I>−1</SUB>+8<I>c</I><SUB><I>n</I>−1</SUB>+6=4<I>a</I><SUB><I>n</I></SUB>+2<BR>
+et<BR>
+3<I>a</I><SUB><I>n</I></SUB>−<I>a</I><SUB><I>n</I>−1</SUB>=8<I>a</I><SUB><I>n</I>−1</SUB>+6<I>c</I><SUB><I>n</I>−1</SUB>+3=2<I>c</I><SUB><I>n</I></SUB>−1<BR>
+donc<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=3<I>c</I><SUB><I>n</I></SUB>+3<I>c</I><SUB><I>n</I></SUB>−<I>c</I><SUB><I>n</I>−1</SUB>=3<I>c</I><SUB><I>n</I></SUB>+4<I>a</I><SUB><I>n</I></SUB>+2<BR>
+et<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=3<I>a</I><SUB><I>n</I></SUB>+3<I>a</I><SUB><I>n</I></SUB>−<I>a</I><SUB><I>n</I>−1</SUB>+2=3<I>a</I><SUB><I>n</I></SUB>+2<I>c</I><SUB><I>n</I></SUB>+1<BR>
+Réciproquement si pour tout <I>n</I> ∈ ℕ on a :<BR>
+<I>c</I><SUB>0</SUB>=1, <I>a</I><SUB>0</SUB>=0 et<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=4<I>a</I><SUB><I>n</I></SUB>+3<I>c</I><SUB><I>n</I></SUB>+2<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=3<I>a</I><SUB><I>n</I></SUB>+2<I>c</I><SUB><I>n</I></SUB>+1<BR>
+Alors :<BR>
+<I>c</I><SUB>0</SUB>=1, <I>a</I><SUB>0</SUB>=0 et <I>c</I><SUB>1</SUB>=4*0+3*1+2=5, <I>a</I><SUB>1</SUB>=3*0+2*1+1=3 et<BR>
+3<I>c</I><SUB><I>n</I>+1</SUB>−4<I>a</I><SUB><I>n</I>+1</SUB>=<I>c</I><SUB><I>n</I></SUB>+2<BR>
+2<I>c</I><SUB><I>n</I>+1</SUB>−3<I>a</I><SUB><I>n</I>+1</SUB>=−<I>a</I><SUB><I>n</I></SUB>+1<BR>
+soit<BR>
+4<I>a</I><SUB><I>n</I>+1</SUB>=3<I>c</I><SUB><I>n</I>+1</SUB>−<I>c</I><SUB><I>n</I></SUB>−2<BR>
+2<I>c</I><SUB><I>n</I>+1</SUB>=3<I>a</I><SUB><I>n</I>+1</SUB>−<I>a</I><SUB><I>n</I></SUB>+1<BR>
+et puisque :
+<I>c</I><SUB><I>n</I>+2</SUB>=4<I>a</I><SUB><I>n</I>+1</SUB>+3<I>c</I><SUB><I>n</I>+1</SUB>+2<BR>
+<I>a</I><SUB><I>n</I>+2</SUB>=3<I>a</I><SUB><I>n</I>+1</SUB>+2<I>c</I><SUB><I>n</I>+1</SUB>+1<BR>
+on en déduit que pour tout <I>n</I> ∈ ℕ:<BR>
+<I>c</I><SUB><I>n</I>+2</SUB>=6<I>c</I><SUB><I>n</I>+1</SUB>−<I>c</I><SUB><I>n</I></SUB><BR>
+<I>a</I><SUB><I>n</I>+2</SUB>=6<I>a</I><SUB><I>n</I>+1</SUB>−<I>a</I><SUB><I>n</I></SUB>+2</LI><LI CLASS="li-enumerate">Supposons que l’on ait (<I>a</I>+1)<SUP>2</SUP>+<I>a</I><SUP>2</SUP>=2<I>a</I><SUP>2</SUP>+2<I>a</I>+1=<I>c</I><SUP>2</SUP>.<BR>
+Alors <I>c</I> est impair et <I>a</I> et <I>c</I> sont premiers entre eux.<BR>
+On a aussi : 2<I>c</I><SUP>2</SUP>=(2<I>a</I>+1)<SUP>2</SUP>+1<BR>
+<B>Si </B><B><I>a</I></B><B> est pair</B><BR>
+0n a :<BR>
+(<I>a</I>+1)<SUP>2</SUP>=<I>c</I><SUP>2</SUP>−<I>a</I><SUP>2</SUP>=(<I>c</I>+<I>a</I>)(<I>c</I>−<I>a</I>)<BR>
+donc si <I>d</I> divise <I>a</I>+1, <I>d</I> divise soit <I>c</I>+<I>a</I>, soit <I>c</I>−<I>a</I> mais <I>d</I> ne divise 
+pas <I>c</I>+<I>a</I> et <I>c</I>−<I>a</I> car <I>a</I> et <I>c</I> sont premiers entre eux donc :<BR>
+il existe <I>p</I> et <I>q</I> tel que <I>c</I>+<I>a</I>=<I>p</I><SUP>2</SUP> et <I>c</I>−<I>a</I>=<I>p</I><SUP>2</SUP> et <I>pq</I>=<I>a</I>+1
+On a donc <I>p</I>≥ <I>q</I> avec <I>p</I> et <I>q</I> sont impairs et,<BR>
+2<I>a</I>=<I>p</I><SUP>2</SUP>−<I>q</I><SUP>2</SUP> et 2<I>c</I>=<I>p</I><SUP>2</SUP>+<I>q</I><SUP>2</SUP>.<BR>
+La relation 4<I>c</I><SUP>2</SUP>=8<I>a</I><SUP>2</SUP>+8<I>a</I>+4 donne comme relation entre <I>p</I> et <I>q</I> :<BR>
+(<I>p</I><SUP>2</SUP>+<I>q</I><SUP>2</SUP>)<SUP>2</SUP>=2(<I>p</I><SUP>2</SUP>−<I>q</I><SUP>2</SUP>)<SUP>2</SUP>+4(<I>p</I><SUP>2</SUP>−<I>q</I><SUP>2</SUP>)+4<BR>
+donc<BR>
+<I>p</I><SUP>4</SUP>+<I>q</I><SUP>4</SUP>−6<I>p</I><SUP>2</SUP><I>q</I><SUP>2</SUP>+4<I>p</I><SUP>2</SUP>−4<I>q</I><SUP>2</SUP>+4=0<BR>
+Posons<BR>
+<I>X</I>=<I>p</I><SUP>2</SUP><BR>
+<I>Y</I>=<I>q</I><SUP>2</SUP>
+<I>X</I> et <I>Y</I> sont des carrés d’entiers qui vérifient :<BR>
+<I>Y</I><SUP>2</SUP>−2<I>Y</I>(2+3<I>X</I>)+(<I>X</I>+2)<SUP>2</SUP><BR>
+Le discriminant de ce trinôme en <I>Y</I> est donc le carré d’un entier, c’est 
+à dire 2<I>X</I>+2 est le carré d’un entier puisque :<BR>
+(2+3<I>X</I>)<SUP>2</SUP>−(<I>X</I>+2)<SUP>2</SUP>=8<I>X</I><SUP>2</SUP>+8<I>X</I>=(2<I>p</I>)<SUP>2</SUP>(2<I>X</I>+2).<BR>
+En posant <I>p</I>=2*<I>p</I><SUB>1</SUB>+1 on en déduit que <I>X</I>=4<I>p</I><SUB>1</SUB><SUP>2</SUP>+4<I>p</I><SUB>1</SUB>+1 et que 
+2<I>X</I>+2=8<I>p</I><SUB>1</SUB><SUP>2</SUP>+8<I>p</I><SUB>1</SUB>+4=4(2<I>p</I><SUB>1</SUB><SUP>2</SUP>+2<I>p</I><SUB>1</SUB>+1) et donc qu’il existe 
+<I>k</I> ∈ ℕ tel que :<BR>
+2<I>p</I><SUB>1</SUB><SUP>2</SUP>+2<I>p</I><SUB>1</SUB>+1=<I>k</I><SUP>2</SUP><BR>
+et on a alors :<BR>
+<I>Y</I>=<I>q</I><SUP>2</SUP>=(2+3<I>p</I><SUP>2</SUP>)−4<I>kp</I> (avec le signe "-" car <I>q</I>&lt; <I>p</I>)<BR>
+donc si 2<I>a</I><SUP>2</SUP>+2<I>a</I>+1=<I>c</I><SUP>2</SUP> avec <I>a</I> est pair, il existe <I>p</I> avec <I>p</I>=2*<I>p</I><SUB>1</SUB>+1 et 
+<I>k</I> vérifiant 2<I>p</I><SUB>1</SUB><SUP>2</SUP>+2<I>p</I><SUB>1</SUB>+1=<I>k</I><SUP>2</SUP> (ou 2<I>k</I><SUP>2</SUP>=<I>p</I><SUP>2</SUP>+1) tel que :<BR>
+2<I>a</I>=<I>p</I><SUP>2</SUP>−<I>q</I><SUP>2</SUP>=<I>X</I>−<I>Y</I>=4<I>kp</I>−2−2<I>p</I><SUP>2</SUP>=4<I>kp</I>−4<I>k</I><SUP>2</SUP>=4<I>k</I>(<I>p</I>−<I>k</I>)<BR>
+2<I>c</I>=<I>p</I><SUP>2</SUP>+<I>q</I><SUP>2</SUP>=<I>X</I>+<I>Y</I>=4<I>p</I><SUP>2</SUP>+2−4<I>kp</I>=8<I>k</I><SUP>2</SUP>−4<I>kp</I>−2=2(4<I>k</I><SUP>2</SUP>−2<I>kp</I>−1)<BR>
+Réciproquent si on a 2<I>p</I><SUB>1</SUB><SUP>2</SUP>+2<I>p</I><SUB>1</SUB>+1=<I>k</I><SUP>2</SUP> pour <I>p</I><SUB>1</SUB> ∈ ℕ<SUP>*</SUP> et <I>k</I> ∈ ℕ
+alors si on pose <I>p</I>=2*<I>p</I><SUB>1</SUB>+1 on a 2<I>k</I><SUP>2</SUP>=(2<I>p</I><SUB>1</SUB>+1)<SUP>2</SUP>+1=<I>p</I><SUP>2</SUP>+1 et :<BR>
+<I>a</I>=2<I>kp</I>−1−<I>p</I><SUP>2</SUP>=2<I>k</I>(<I>p</I>−<I>k</I>)<BR>
+<I>c</I>=4<I>k</I><SUP>2</SUP>−2<I>kp</I>−1<BR>
+<I>a</I> est pair <I>a</I>&gt;<I>p</I><SUB>1</SUB>&gt;0, <I>c</I>&gt;<I>k</I> et on vérifie que 2<I>a</I><SUP>2</SUP>+2<I>a</I>+1=<I>c</I><SUP>2</SUP>, pour cela, 
+on tape :<BR>
+<TT>a:=2k*p-k</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+<TT>c:=4k</TT><CODE><TT>^</TT></CODE><TT>2-1-2k*p</TT><BR>
+<TT>factor(2a</TT><CODE><TT>^</TT></CODE><TT>2+2a+1-c</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient :<BR>
+<TT>2*p</TT><CODE><TT>^</TT></CODE><TT>2*(2*k</TT><CODE><TT>^</TT></CODE><TT>2-p</TT><CODE><TT>^</TT></CODE><TT>2-1)</TT><BR>
+Donc puisque 2<I>k</I><SUP>2</SUP>=<I>p</I><SUP>2</SUP>+1 on a 2<I>a</I><SUP>2</SUP>+2<I>a</I>+1=<I>c</I><SUP>2</SUP><BR>
+<B>Si </B><B><I>a</I></B><B> est impair alors </B><B><I>a</I>+1</B><B> est pair</B><BR>
+0n fait le même genre de raisonnement :<BR>
+<I>a</I><SUP>2</SUP>=<I>c</I><SUP>2</SUP>−(<I>a</I>+1)<SUP>2</SUP>=(<I>c</I>+<I>a</I>+1)(<I>c</I>−<I>a</I>−1)<BR>
+donc si <I>d</I> divise <I>a</I>, <I>d</I> divise soit <I>c</I>+<I>a</I>+1, soit <I>c</I>−<I>a</I>−1 mais <I>d</I> ne 
+divise pas <I>c</I>+<I>a</I>+1 et <I>c</I>−<I>a</I>−1 car <I>a</I> et <I>c</I> sont premiers entre eux donc :<BR>
+il existe <I>p</I> et <I>q</I> tel que <I>c</I>+<I>a</I>+1=<I>p</I><SUP>2</SUP> et <I>c</I>−<I>a</I>−1=<I>p</I><SUP>2</SUP> et <I>pq</I>=<I>a</I>.<BR>
+On a <I>p</I>≥ <I>q</I> et <I>p</I> et <I>q</I> sont impairs et,<BR>
+2<I>a</I>=<I>p</I><SUP>2</SUP>−<I>q</I><SUP>2</SUP>−2 et 2<I>c</I>=<I>p</I><SUP>2</SUP>+<I>q</I><SUP>2</SUP>.<BR>
+Posons<BR>
+<I>X</I>=<I>p</I><SUP>2</SUP><BR>
+<I>Y</I>=<I>q</I><SUP>2</SUP>
+<I>X</I> et <I>Y</I> sont des carrés d’entiers qui vérifient :<BR>
+<I>X</I><SUP>2</SUP>−2<I>X</I>(2+3<I>Y</I>)+(<I>Y</I>+2)<SUP>2</SUP><BR>
+(même équation en échangeant <I>Y</I> et <I>X</I>)<BR>
+2<I>Y</I>+2 est un carré en posant <I>q</I>=2<I>q</I><SUB>1</SUB>+1 cela veut dire qu’il existe 
+<I>r</I> ∈ ℕ tel que : 2<I>q</I><SUB>1</SUB><SUP>2</SUP>+2<I>q</I><SUB>1</SUB>+1=<I>r</I><SUP>2</SUP> ou encore 2<I>r</I><SUP>2</SUP>=<I>q</I><SUP>2</SUP>+1<BR>
+et alors <I>X</I>=3<I>Y</I>+2+4<I>qr</I>=3<I>q</I><SUP>2</SUP>+2+4<I>qr</I> (avec le signe "+" car <I>X</I>=<I>p</I><SUP>2</SUP>&gt;<I>q</I><SUP>2</SUP>)
+donc:<BR>
+2<I>a</I>=<I>p</I><SUP>2</SUP>−<I>q</I><SUP>2</SUP>−2=2<I>q</I><SUP>2</SUP>+4<I>qr</I>=2(<I>q</I><SUP>2</SUP>+1)−2+4<I>qr</I>=2(2<I>r</I><SUP>2</SUP>+2<I>qr</I>−1)<BR>
+2<I>c</I>=<I>p</I><SUP>2</SUP>+<I>q</I><SUP>2</SUP>=4<I>q</I><SUP>2</SUP>+4<I>qr</I>+2=4(<I>q</I><SUP>2</SUP>+1)−2+4<I>qr</I>=2(4<I>r</I><SUP>2</SUP>+2<I>qr</I>−1)<BR>
+Réciproquent si on a 2<I>q</I><SUB>1</SUB><SUP>2</SUP>+2<I>q</I><SUB>1</SUB>+1=<I>r</I><SUP>2</SUP> pour <I>q</I><SUB>1</SUB> ∈ ℕ et <I>r</I> ∈ ℕ
+alors si on pose <I>q</I>=2*<I>q</I><SUB>1</SUB>+1 on a 2<I>r</I><SUP>2</SUP>=(2<I>q</I><SUB>1</SUB>+1)<SUP>2</SUP>+1=<I>q</I><SUP>2</SUP>+1 et :<BR>
+<I>a</I>=2<I>r</I><SUP>2</SUP>+2<I>qr</I>−1<BR>
+<I>c</I>=4<I>r</I><SUP>2</SUP>+2<I>qr</I>−1<BR>
+<I>a</I> est impair et on tape :<BR>
+<TT>a:=2r</TT><CODE><TT>^</TT></CODE><TT>2+2q*r-1</TT><BR>
+<TT>c:=4r</TT><CODE><TT>^</TT></CODE><TT>2+2q*r-1</TT><BR>
+<TT>factor(2a</TT><CODE><TT>^</TT></CODE><TT>2+2a+1-c</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient :<BR>
+<TT>2*q</TT><CODE><TT>^</TT></CODE><TT>2*(2*r</TT><CODE><TT>^</TT></CODE><TT>2-q</TT><CODE><TT>^</TT></CODE><TT>2-1)</TT><BR>
+Donc puisque 2<I>r</I><SUP>2</SUP>=<I>q</I><SUP>2</SUP>+1 on a 2<I>a</I><SUP>2</SUP>+2<I>a</I>+1=<I>c</I><SUP>2</SUP>.<BR>
+<B>Conclusion</B>
+Si <I>a</I><SUB>1</SUB>,<I>c</I><SUB>1</SUB> est une solution de 2<I>a</I><SUP>2</SUP>+2<I>a</I>+1=<I>c</I><SUP>2</SUP> alors cette solution engendre
+2 nouvelles solutions qui sont :<BR>
+<I>a</I><SUB>2</SUB>=2<I>c</I><SUB>1</SUB>(2<I>a</I><SUB>1</SUB>−<I>c</I><SUB>1</SUB>+1) et <I>c</I><SUB>2</SUB>=(2<I>a</I><SUB>1</SUB>+1)<SUP>2</SUP>+2<I>c</I><SUB>1</SUB>(<I>c</I><SUB>1</SUB>−2<I>a</I><SUB>1</SUB>−1)<BR>
+<I>a</I><SUB>3</SUB>=(2<I>a</I><SUB>1</SUB>+1)<SUP>2</SUP>+2(2<I>a</I><SUB>1</SUB>+1)<I>c</I><SUB>1</SUB> et <I>c</I><SUB>3</SUB>=2(2<I>a</I><SUB>1</SUB>+1)<SUP>2</SUP>+2(2<I>a</I><SUB>1</SUB>+1)<I>c</I><SUB>1</SUB>+1<BR>
+puis la solution <I>a</I><SUB>2</SUB>,<I>c</I><SUB>2</SUB> engendre 2 nouvelles solutions qui sont :<BR>
+<I>a</I><SUB>4</SUB>=2<I>c</I><SUB>2</SUB>(2<I>a</I><SUB>2</SUB>+1−<I>c</I><SUB>2</SUB>) et <I>c</I><SUB>4</SUB>=(2<I>a</I><SUB>2</SUB>+1)<SUP>2</SUP>+2<I>c</I><SUB>2</SUB>(<I>c</I><SUB>2</SUB>−2<I>a</I><SUB>2</SUB>−1)<BR>
+<I>a</I><SUB>5</SUB>=(2<I>a</I><SUB>2</SUB>+1)<SUP>2</SUP>+2(2<I>a</I><SUB>2</SUB>+1)<I>c</I><SUB>2</SUB> et <I>c</I><SUB>5</SUB>=2(2<I>a</I><SUB>2</SUB>+1)<SUP>2</SUP>+2(2<I>a</I><SUB>2</SUB>+1)<I>c</I><SUB>2</SUB>+1<BR>
+On remarquera que la solution [0,1] engendre [0,1] et [3,5], que la 
+solution <I>s</I><SUB>1</SUB>=[3,5] engendre <I>s</I><SUB>2</SUB>=[20,29] et <I>s</I><SUB>3</SUB>=[119,169] etc...par ce 
+processus la solution <I>s</I><SUB><I>n</I></SUB> engendre les solutions <I>s</I><SUB>2<I>n</I></SUB> et <I>s</I><SUB>2<I>n</I>+1</SUB>, puis 
+la solution <I>s</I><SUB><I>n</I>+1</SUB> engendre les solutions <I>s</I><SUB>2<I>n</I>+2</SUB> et <I>s</I><SUB>2<I>n</I>+3</SUB> etc...<BR>
+Pour faire le lien avec les suites précédentes, il reste a montrer que la 
+suite [<I>a</I><SUB><I>n</I></SUB>,<I>c</I><SUB><I>n</I></SUB>] ainsi engendrée vérifie :<BR>
+<I>c</I><SUB><I>n</I></SUB>=4<I>a</I><SUB><I>n</I>−1</SUB>+3<I>c</I><SUB><I>n</I>−1</SUB>+2 et <I>a</I><SUB><I>n</I></SUB>=3<I>a</I><SUB><I>n</I>−1</SUB>+2<I>c</I><SUB><I>n</I>−1</SUB>+1<BR>
+On utilise <TT>Xcas</TT> pour faire les calculs.<BR>
+Si <I>s</I><SUB><I>n</I></SUB>=<TT>[a,c]</TT> et <I>s</I><SUB><I>n</I>+1</SUB>=<TT>a1,c1)</TT> sont des solutions successives, 
+on désigne <I>s</I><SUB>2<I>n</I></SUB> par <TT>[sa1(a,c),sc1(a,c)]</TT>, <I>s</I><SUB>2<I>n</I>+1</SUB> par <TT>[sa2(a,c),sc2(a,c)]</TT> et <I>s</I><SUB>2<I>n</I>+2</SUB> par <TT>[sa1(a1,c1),sc1(a1,c1)]</TT>.<BR>
+On désigne par <TT>rc(a,c)</TT> et par <TT>ra(a,c)</TT> les relations de 
+récurrence qui donne <I>c</I><SUB><I>n</I>+1</SUB> et <I>a</I><SUB><I>n</I>+1</SUB> en fonction de <I>a</I><SUB><I>n</I></SUB> et <I>c</I><SUB><I>n</I></SUB>.<BR>
+On suppose que les relations de récurrence sont vérifiées par <I>s</I><SUB><I>n</I></SUB> et 
+<I>s</I><SUB><I>n</I>+1</SUB> i.e. que <TT>a1=ra(a,c)</TT> et <TT>c1=rc(a,c)</TT>.<BR>
+On tape les définitions :<BR>
+<TT>sa1(a,c):=normal(4*c*a+2*c-2*c</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+<TT>sc1(a,c):=normal(4*c</TT><CODE><TT>^</TT></CODE><TT>2-4*c*a-2*c-1)</TT><BR>
+<TT>sa2(a,c):=normal(4*c*a+2*c-1+2*c</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+<TT>sc2(a,c):=normal(4*c</TT><CODE><TT>^</TT></CODE><TT>2+4*c*a+2*c-1)</TT><BR>
+<TT>rc(a,c):=4*a+3*c+2;</TT><BR>
+<TT>ra(a,c):=3*a+2*c+1</TT><BR>
+On tape :<BR>
+<TT>normal(rc(sa1(a,c),sc1(a,c))-sc2(a,c))</TT><BR>
+On obtient : <TT>0</TT><BR>
+On tape :<BR>
+<TT>normal(ra(sa1(a,c),sc1(a,c))-sa2(a,c))</TT><BR>
+On obtient : <TT>0</TT><BR>
+On tape :<BR>
+<TT>factor(ra(sa2(a,c),sc2(a,c))-sa1(ra(a,c),rc(a,c)))</TT><BR>
+On obtient : <TT>-8*(2*a</TT><CODE><TT>^</TT></CODE><TT>2+2*a-c</TT><CODE><TT>^</TT></CODE><TT>2+1)</TT><BR>
+On tape :<BR>
+<TT>factor(rc(sa2(a,c),sc2(a,c))-sc1(ra(a,c),rc(a,c)))</TT><BR>
+On obtient : <TT>-8*(2*a</TT><CODE><TT>^</TT></CODE><TT>2+2*a-c</TT><CODE><TT>^</TT></CODE><TT>2+1)</TT><BR>
+ce qui donne bien <TT>0</TT> puisque 2<I>a</I><SUP>2</SUP>+2<I>a</I>+1=<I>c</I><SUP>2</SUP> car <I>s</I><SUB><I>n</I></SUB>=<TT>[a,c]</TT> est 
+une solution de cette équation par hypothèse.<BR>
+
+On a ainsi montrer que si :<BR>
+<I>s</I><SUB><I>n</I></SUB>=<TT>[a,c]</TT> et <I>s</I><SUB><I>n</I>+1</SUB>=<TT>a1,c1)</TT> sont des solutions successives qui 
+vérifient les relations de récurrence alors <I>s</I><SUB>2<I>n</I></SUB>, <I>s</I><SUB>2<I>n</I>+1</SUB>, <I>s</I><SUB>2<I>n</I>+2</SUB> vérifient aussi les relations de récurrence.<BR>
+<I>s</I><SUB>1</SUB>=[3,5] engendre <I>s</I><SUB>2</SUB>=[20,29] et <I>s</I><SUB>3</SUB>.
+On peut vérifier par le programme de la question 1 que [3,5] et [20,29]
+sont 2 solutions successives qui vérifie la relation de récurrence 
+(29=4*3+3*5+2 et 20=3*3+2*5+1) donc on en déduit par récurrence que :
+si <I>s</I><SUB>2</SUB> engendre <I>s</I><SUB>4</SUB>et <I>s</I><SUB>5</SUB>, alors <I>s</I><SUB>2</SUB>,<I>s</I><SUB>3</SUB>,<I>s</I><SUB>4</SUB> sont des solutions 
+successives qui vérifient la relation de récurrence....
+On peut aussi faire le programme suivant qui renvoie la liste des solutions en 
+utilisant les fonctions <TT>sa1, sc1, sa2, sc2</TT> définies précédemment :
+<PRE CLASS="verbatim">sa1(a,c):=normal(4*c*a+2*c-2*c^2);
+sc1(a,c):=normal(4*c^2-4*c*a-2*c-1);
+sa2(a,c):=normal(4*c*a+2*c-1+2*c^2);
+sc2(a,c):=normal(4*c^2+4*c*a+2*c-1);
+tripisoc(n):={
+local a,a1,a2,c,c1,c2,L,k;
+L:=[0,1],[3,5];
+pour k de 1 jusque n faire 
+a,c:=L[k];
+L:=L,[sa1(a,c),sc1(a,c)],[sa2(a,c),sc2(a,c)];
+fpour;
+return L;
+}:;
+</PRE></LI><LI CLASS="li-enumerate">0n a :<BR>
+<I>c</I><SUB><I>n</I>+2</SUB>=6<I>c</I><SUB><I>n</I>+1</SUB>−<I>c</I><SUB><I>n</I></SUB> et<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=<I>c</I><SUB><I>n</I>+1</SUB><BR>
+donc<BR>
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>M</I>=</TD><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>−1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎠</TD></TR>
+</TABLE>
+</LI><LI CLASS="li-enumerate">Si
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>M</I><SUP><I>n</I></SUP>=</TD><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><I>p</I><SUB><I>n</I></SUB></TD><TD ALIGN=center NOWRAP><I>q</I><SUB><I>n</I></SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>s</I><SUB><I>n</I></SUB></TD><TD ALIGN=center NOWRAP><I>t</I><SUB><I>n</I></SUB></TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎠</TD></TR>
+</TABLE>
+On a :<BR>
+<I>p</I><SUB>0</SUB>=1, <I>q</I><SUB>0</SUB>=0, <I>s</I><SUB>0</SUB>=0, <I>t</I><SUB>0</SUB>=1,
+<I>p</I><SUB>1</SUB>=6, <I>q</I><SUB>1</SUB>=−1, <I>s</I><SUB>1</SUB>=1, <I>t</I><SUB>0</SUB>=0
+<I>M</I><SUP><I>n</I>+1</SUP>=<I>M</I>*<I>M</I><SUP><I>n</I></SUP> c’est à dire :<BR>
+<I>p</I><SUB><I>n</I>+1</SUB>=6<I>p</I><SUB><I>n</I></SUB>−<I>s</I><SUB><I>n</I></SUB>, <I>q</I><SUB><I>n</I>+1</SUB>=6<I>q</I><SUB><I>n</I></SUB>−<I>t</I><SUB><I>n</I></SUB>, <I>s</I><SUB><I>n</I>+1</SUB>=<I>p</I><SUB><I>n</I></SUB>, <I>t</I><SUB><I>n</I>+1</SUB>=<I>q</I><SUB><I>n</I></SUB><BR>
+donc
+<I>p</I><SUB><I>n</I>+1</SUB>=6<I>p</I><SUB><I>n</I></SUB>−<I>p</I><SUB><I>n</I>−1</SUB> avec <I>p</I><SUB>0</SUB>=1 et <I>p</I><SUB>1</SUB>=6<BR>
+<I>q</I><SUB><I>n</I>+1</SUB>=6<I>q</I><SUB><I>n</I></SUB>−<I>q</I><SUB><I>n</I>−1</SUB> avec <I>q</I><SUB>0</SUB>=0 et <I>q</I><SUB>1</SUB>=−1<BR>
+Les suites <I>p</I><SUB><I>n</I></SUB> et <I>q</I><SUB><I>n</I></SUB> vérifient la même relation de récurrence que 
+<I>c</I><SUB><I>n</I></SUB> donc :<BR>
+<I>p</I><SUB><I>n</I></SUB> et <I>q</I><SUB><I>n</I></SUB> sont des combinaisons linéaires des 2 progressions géométriques de raison <I>r</I>1=−2√<SPAN style="text-decoration:overline">2</SPAN>+3 et <I>r</I>2=2√<SPAN style="text-decoration:overline">2</SPAN>+3.<BR>
+Calcul de <I>p</I><SUB><I>n</I></SUB>=<I>x</I>(<I>r</I>1)<SUP><I>n</I></SUP>+<I>y</I>(<I>r</I>2)<SUP><I>n</I></SUP><BR>
+Pour trouver <I>p</I><SUB><I>n</I></SUB> en fonction de <I>n</I> il faut donc résoudre :<BR>
+[<I>x</I>+<I>y</I>=1=<I>p</I><SUB>0</SUB>,<I>x</I>*<I>r</I>1+<I>y</I>*<I>r</I>2=6=<I>p</I><SUB>1</SUB>]<BR>
+On tape :<BR>
+<TT>r1,r2:=solve(x</TT><CODE><TT>^</TT></CODE><TT>2-6x+1,x)</TT><BR>
+On obtient :<BR>
+<TT>[-2*sqrt(2)+3,2*sqrt(2)+3]</TT><BR>
+On tape :<BR>
+<TT>linsolve([x+y=1,x*r1+y*r2=6],[x,y])</TT><BR>
+On obtient :<BR>
+<TT>[(-3*sqrt(2)+4)/8,(3*sqrt(2)+4)/8]</TT><BR>
+Calcul de <I>q</I><SUB><I>n</I></SUB>=<I>x</I>(<I>r</I>1)<SUP><I>n</I></SUP>+<I>y</I>(<I>r</I>2)<SUP><I>n</I></SUP><BR>
+Pour trouver <I>q</I><SUB><I>n</I></SUB> en fonction de <I>n</I> il faut donc résoudre :<BR>
+[<I>x</I>+<I>y</I>=0=<I>q</I><SUB>0</SUB>,<I>x</I>*<I>r</I>1+<I>y</I>*<I>r</I>2=1=<I>q</I><SUB>1</SUB>]<BR>
+On tape :<BR>
+<TT>linsolve([x+y=0,x*r1+y*r2=1],[x,y])</TT><BR>
+On obtient :<BR>
+<TT>[(-(sqrt(2)))/8,(sqrt(2))/8]</TT><BR>
+Donc pour <I>n</I>∈ ℕ :<BR>
+<I>p</I><SUB><I>n</I></SUB>=(−3√<SPAN style="text-decoration:overline">2</SPAN>+4)(−2√<SPAN style="text-decoration:overline">2</SPAN>+3)<SUP><I>n</I></SUP>+(3√<SPAN style="text-decoration:overline">2</SPAN>+4)(2√<SPAN style="text-decoration:overline">2</SPAN>+3)<SUP><I>n</I></SUP><BR>
+<I>q</I><SUB><I>n</I></SUB>=−√<SPAN style="text-decoration:overline">2</SPAN>(−2√<SPAN style="text-decoration:overline">2</SPAN>+3)<SUP><I>n</I></SUP>+√<SPAN style="text-decoration:overline">2</SPAN>(2√<SPAN style="text-decoration:overline">2</SPAN>+3)<SUP><I>n</I></SUP></LI><LI CLASS="li-enumerate">On peut aussi écrire la relation de récurrence :<BR>
+<I>c</I><SUB><I>n</I></SUB>=4<I>a</I><SUB><I>n</I>−1</SUB>+3<I>c</I><SUB><I>n</I>−1</SUB>+2<BR>
+<I>a</I><SUB><I>n</I></SUB>=3<I>a</I><SUB><I>n</I>−1</SUB>+2<I>c</I><SUB><I>n</I>−1</SUB>+1<BR>
+en utilisant <I>A</I> une matrice 3x3 :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>A</I>=</TD><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>4</TD><TD ALIGN=center NOWRAP>2</TD></TR>
+<TR><TD ALIGN=center NOWRAP>2</TD><TD ALIGN=center NOWRAP>3</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎟<BR>
+⎠</TD></TR>
+</TABLE>
+et ainsi, on a :<BR>
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><I>c</I><SUB><I>n</I>+1</SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>a</I><SUB><I>n</I>+1</SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎟<BR>
+⎠</TD><TD CLASS="dcell">
+=<I>A</I>
+</TD><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><I>c</I><SUB><I>n</I></SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>a</I><SUB><I>n</I></SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎟<BR>
+⎠</TD></TR>
+</TABLE>
+On a donc :<BR>
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><I>c</I><SUB><I>n</I></SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>a</I><SUB><I>n</I></SUB></TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎟<BR>
+⎠</TD><TD CLASS="dcell">
+=<I>A</I><SUP><I>n</I></SUP>
+</TD><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎟<BR>
+⎠</TD></TR>
+</TABLE>
+On vérifie en tapant :<BR>
+<TT>normal(rsolve([a(n+1)=3*a(n)+2*c(n)+d(n),<BR>
+c(n+1)=4*a(n)+3*c(n)+2*d(n),<BR>
+d(n+1)=d(n)],[a(n),c(n),d(n)],[a(0)=0,c(0)=1,d(0)=1]))</TT>
+On obtient :<BR>
+<TT>[[(-(sqrt(2))+1)/4*(-2*sqrt(2)+3)</TT><CODE><TT>^</TT></CODE><TT>n+<BR>
+(sqrt(2)+1)/4*(2*sqrt(2)+3)</TT><CODE><TT>^</TT></CODE><TT>n+(-1)/2,<BR>
+(-(sqrt(2))+2)/4*(-2*sqrt(2)+3)</TT><CODE><TT>^</TT></CODE><TT>n+<BR>
+(sqrt(2)+2)/4*(2*sqrt(2)+3)</TT><CODE><TT>^</TT></CODE><TT>n,<BR>
+1]]</TT>
+</LI><LI CLASS="li-enumerate">On considère la suite :<BR>
+<I>w</I><SUB>0</SUB>∈ ℕ<SUP>*</SUP>, <I>w</I><SUB><I>n</I>+1</SUB>=floor(3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>w</I><SUB><I>n</I></SUB>) (floor désigne la partie 
+entière)<BR>
+On veut montrer que pour tout <I>n</I>∈ ℕ<SUP>*</SUP> on a <I>w</I><SUB><I>n</I>+1</SUB>+<I>w</I><SUB><I>n</I>−1</SUB>=6<I>w</I><SUB><I>n</I></SUB>.<BR>
+On a :<BR>
+<I>w</I><SUB><I>n</I>+1</SUB>≤ (3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>w</I><SUB><I>n</I></SUB>&lt;<I>w</I><SUB><I>n</I>+1</SUB>+1<BR>
+Donc :<BR>
+(3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>w</I><SUB><I>n</I></SUB>−1&lt;<I>w</I><SUB><I>n</I>+1</SUB>≤ (3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>w</I><SUB><I>n</I></SUB><BR>
+On a :<BR>
+<I>w</I><SUB><I>n</I></SUB>≤ (3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>w</I><SUB><I>n</I>−1</SUB>&lt;<I>w</I><SUB><I>n</I></SUB>+1<BR>
+Puisque  1/3+2*√<SPAN style="text-decoration:overline">2</SPAN>=3−2*√<SPAN style="text-decoration:overline">2</SPAN> on a :<BR>
+<I>w</I><SUB><I>n</I></SUB>*(3−2*√<SPAN style="text-decoration:overline">2</SPAN>)≤ <I>w</I><SUB><I>n</I>−1</SUB>)&lt;(<I>w</I><SUB><I>n</I></SUB>+1)*(3−2*√<SPAN style="text-decoration:overline">2</SPAN>)<BR>
+Donc :<BR>
+(3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>w</I><SUB><I>n</I></SUB>−1+<I>w</I><SUB><I>n</I></SUB>*(3−2*√<SPAN style="text-decoration:overline">2</SPAN>)&lt;<I>w</I><SUB><I>n</I>+1</SUB>+<I>w</I><SUB><I>n</I>−1</SUB>&lt;(3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>w</I><SUB><I>n</I></SUB>+(<I>w</I><SUB><I>n</I></SUB>+1)*(3−2*√<SPAN style="text-decoration:overline">2</SPAN>)<BR>
+Donc :<BR>
+6<I>w</I><SUB><I>n</I></SUB>−1&lt;<I>w</I><SUB><I>n</I>+1</SUB>+<I>w</I><SUB><I>n</I>−1</SUB>&lt;6<I>w</I><SUB><I>n</I></SUB>+(3−2*√<SPAN style="text-decoration:overline">2</SPAN>)&lt;6<I>w</I><SUB><I>n</I></SUB>+1.<BR>
+Comme <I>w</I><SUB><I>n</I>+1</SUB>+<I>w</I><SUB><I>n</I>−1</SUB> est un entier, on en déduit qwe :<BR>
+ <I>w</I><SUB><I>n</I>+1</SUB>+<I>w</I><SUB><I>n</I>−1</SUB>=6<I>w</I><SUB><I>n</I></SUB>.<BR>
+Pour montrer que <I>w</I><SUB><I>n</I></SUB> est la suite <I>c</I><SUB><I>n</I></SUB> il suffit de montrer que <I>w</I><SUB>1</SUB>=5
+lorsque <I>w</I><SUB>0</SUB>=1.<BR>
+On a bien <I>w</I><SUB>1</SUB>=<I>floor</I>(3+2*√<SPAN style="text-decoration:overline">2</SPAN>)=5, donc <I>w</I><SUB><I>n</I></SUB> et <I>c</I><SUB><I>n</I></SUB> coincident.<BR>
+On tape :
+<PRE CLASS="verbatim">rectpiso5(n):={
+local a,c,d,L;
+L:=NULL;
+c:=1;
+tantque c&lt;n faire
+d:=2*c^2-1;
+a:=(sqrt(d)-1)/2;
+L:=L,[a,a+1,c];
+c:=floor((3+2*sqrt(2))*c);
+ftantque;
+retourne L;
+}:;
+</PRE>On tape :<BR>
+<TT>rectpiso4(10000)</TT><BR>
+On obtient (instantanément) :<BR>
+<TT>[0,1,1],[3,4,5],[20,21,29],[119,120,169],[696,697,985], [4059,4060,5741]</TT>
+</LI><LI CLASS="li-enumerate">On considère la suite :<BR>
+<I>v</I><SUB>0</SUB>∈ ℕ<SUP>*</SUP>, <I>v</I><SUB><I>n</I>+1</SUB>=floor(3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>w</I><SUB><I>n</I></SUB>)+3 (floor désigne la partie 
+entière)<BR>
+On veut montrer que pour tout <I>n</I>∈ ℕ<SUP>*</SUP> on a <I>v</I><SUB><I>n</I>+1</SUB>+<I>v</I><SUB><I>n</I>−1</SUB>=6<I>w</I><SUB><I>n</I></SUB>+2.<BR>
+On a :<BR>
+<I>v</I><SUB><I>n</I>+1</SUB>≤ (3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>v</I><SUB><I>n</I></SUB>+3&lt;<I>v</I><SUB><I>n</I>+1</SUB>+1<BR>
+Donc :<BR>
+(3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>v</I><SUB><I>n</I></SUB>+2&lt;<I>v</I><SUB><I>n</I>+1</SUB>≤ (3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>v</I><SUB><I>n</I></SUB>+3<BR>
+On a :<BR>
+<I>v</I><SUB><I>n</I></SUB>≤ (3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>v</I><SUB><I>n</I>−1</SUB>+3&lt;<I>v</I><SUB><I>n</I></SUB>+1<BR>
+Puisque  1/3+2*√<SPAN style="text-decoration:overline">2</SPAN>=3−2*√<SPAN style="text-decoration:overline">2</SPAN> on a :<BR>
+(<I>v</I><SUB><I>n</I></SUB>−3)*(3−2*√<SPAN style="text-decoration:overline">2</SPAN>)≤ <I>v</I><SUB><I>n</I>−1</SUB>)&lt;(<I>v</I><SUB><I>n</I></SUB>−2)*(3−2*√<SPAN style="text-decoration:overline">2</SPAN>)<BR>
+Donc :<BR>
+(3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>v</I><SUB><I>n</I></SUB>+2+(<I>v</I><SUB><I>n</I></SUB>−3)*(3−2*√<SPAN style="text-decoration:overline">2</SPAN>)&lt;<I>v</I><SUB><I>n</I>+1</SUB>+<I>v</I><SUB><I>n</I>−1</SUB>&lt;(3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*<I>v</I><SUB><I>n</I></SUB>+3+(<I>v</I><SUB><I>n</I></SUB>−2)*(3−2*√<SPAN style="text-decoration:overline">2</SPAN>)<BR>
+Donc :<BR>
+6<I>v</I><SUB><I>n</I></SUB>+1&lt;6<I>v</I><SUB><I>n</I></SUB>+2−9+6*√<SPAN style="text-decoration:overline">2</SPAN>&lt;<I>v</I><SUB><I>n</I>+1</SUB>+<I>v</I><SUB><I>n</I>−1</SUB>&lt;6<I>w</I><SUB><I>n</I></SUB>+(3−6+4*√<SPAN style="text-decoration:overline">2</SPAN>)&lt;6<I>v</I><SUB><I>n</I></SUB>+3.<BR>
+Comme <I>v</I><SUB><I>n</I>+1</SUB>+<I>v</I><SUB><I>n</I>−1</SUB> est un entier, on en déduit qwe :<BR>
+ <I>v</I><SUB><I>n</I>+1</SUB>+<I>v</I><SUB><I>n</I>−1</SUB>=6<I>v</I><SUB><I>n</I></SUB>+2.<BR>
+Pour montrer que <I>v</I><SUB><I>n</I></SUB> est la suite <I>a</I><SUB><I>n</I></SUB> il suffit de montrer que <I>v</I><SUB>1</SUB>=3 
+lorsque <I>v</I><SUB>0</SUB>=0.<BR>
+On a bien <I>v</I><SUB>1</SUB>=<I>floor</I>((3+2*√<SPAN style="text-decoration:overline">2</SPAN>)*0)+3=3, donc <I>v</I><SUB><I>n</I></SUB> et <I>a</I><SUB><I>n</I></SUB> coincident.
+On tape :
+<PRE CLASS="verbatim">rectpiso5(n):={
+local a,c,d,L;
+L:=NULL;
+c:=1;
+a:=0;
+tantque c&lt;n faire
+L:=L,[a,a+1,c];
+c:=floor((3+2*sqrt(2))*c);
+a:=floor((3+2*sqrt(2))*a)+3;
+ftantque;
+retourne L;
+}:;
+</PRE>On tape :<BR>
+<TT>rectpiso5(10000)</TT><BR>
+On obtient (instantanément) :<BR>
+<TT>[0,1,1],[3,4,5],[20,21,29],[119,120,169],[696,697,985], [4059,4060,5741]</TT>
+</LI></OL><HR>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas002.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>chisquaret</title>
+</head>
+<body >
+<a href="cascmd_fr825.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr827.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1005" class="subsection">8.5.4  <span style="font-family:monospace">chisquaret</span></h3>
+<p><a id="hevea_default1475"></a>
+<span style="font-family:monospace">chisquaret</span> a pour arguments :
+</p><ul class="itemize"><li class="li-itemize">
+la liste des données d’un échantillon,
+</li><li class="li-itemize">une loi de distribution ou la liste des données d’un autre
+échantillon,
+</li><li class="li-itemize">les paramètres de cette loi de distribution ou les paramètres : 
+<span style="font-family:monospace">classes</span> suivi de <span style="font-family:monospace">class_min</span> et de <span style="font-family:monospace">class_dim</span>.
+</li></ul><p>
+<span style="font-family:monospace">chisquaret</span> est le test du Chi2 d’adéquation entre 2 (or n)
+échantillons ou entre un échantillon et une loi de distribution 
+(multinomiale ou donnée par une fonction).<br>
+<span style="font-family:monospace">chisquaret</span> renvoie la valeur <span style="font-style:italic">d</span><sup>2</sup> de la statistique <span style="font-style:italic">D</span><sup>2</sup> où :<br>
+ <span style="font-style:italic">D</span><sup>2</sup>=∑<sub><span style="font-style:italic">j</span>=1</sub><sup><span style="font-style:italic">k</span></sup>(<span style="font-style:italic">n</span><sub><span style="font-style:italic">j</span></sub>−<span style="font-style:italic">e</span><sub><span style="font-style:italic">j</span></sub>)<sup>2</sup>/<span style="font-style:italic">e</span><sub><span style="font-style:italic">j</span></sub> avec <br>
+<span style="font-style:italic">k</span> est le nombre de classes de l’échantillon, <span style="font-style:italic">n</span><sub>1</sub>...<span style="font-style:italic">n</span><sub><span style="font-style:italic">k</span></sub> les effectifs de
+chaque classe de l’échantillon et <span style="font-style:italic">e</span><sub>1</sub>,..,<span style="font-style:italic">e</span><sub><span style="font-style:italic">k</span></sub> sont les
+effectifs théoriques (si chaque valeur <span style="font-style:italic">x</span><sub><span style="font-style:italic">j</span></sub> est obtenue avec la 
+probabilité théorique <span style="font-style:italic">p</span><sub><span style="font-style:italic">j</span></sub> on a <span style="font-style:italic">e</span><sub><span style="font-style:italic">j</span></sub>=<span style="font-style:italic">np</span><sub><span style="font-style:italic">j</span></sub>)
+On tape :
+</p><div class="center"><span style="font-family:monospace">chisquaret([57,54])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">0.0810810810811</span></div><p>
+avec en vert le résumé du test :<br>
+On suppose que les données sont des effectifs de classes, adéquation à la
+distribution uniforme.<br>
+Adéquation d’un échantillon à une distribution discrète
+Résultat du test du Chi2 0.0810810810811.<br>
+On rejette l’adéquation si supérieur à <span style="font-family:monospace">chisquare_icdf(1,0.95)</span> qui
+vaut <span style="font-family:monospace">3.84145882069</span> or <span style="font-family:monospace">chisquare_icdf(1,1-alpha)</span> si alpha!=5%.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">chisquaret([1,1,1,1,1,0,0,1,0,0,1,1,1,0,1,1,0,1,1,0,0,0,0],[.4,.6])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">0.115942028986</span></div><p>
+avec en vert le résumé du test :<br>
+Adéquation d’un échantillon à une distribution discrète<br>
+Résultat du test du Chi2 0.115942028986,<br>
+On rejette l’adéquation si supérieur à <span style="font-family:monospace">chisquare_icdf(1,0.95)</span> qui
+vaut <span style="font-family:monospace">3.84145882069</span> or <span style="font-family:monospace">chisquare_icdf(1,1-alpha)</span> si alpha!=5%.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">chisquaret(ranv(1000,binomial,10,.5),binomial)</span></div><p>
+On obtient :<br>
+en commentaire (en vert) le résumé du test :<br>
+Loi binomiale: estimation de n et p par les donnees 10 0.4988
+Adéquation d’un echantillon a binomial(10,0.4988,.), resultat du test du Chi2 4.26407473988,
+On rejette l’adequation si superieur a chisquare_icdf(7,0.95)=14.0671404493 or chisquare_icdf(7,1-alpha) if alpha!=5%<br>
+</p><div class="center"><span style="font-family:monospace">4.26407473988</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">chisquaret(ranv(1000,binomial,10,.5),binomial,11,.5)</span></div><p>
+On obtient :<br>
+en commentaire (en vert) le résumé du test :<br>
+Adéquation d’un echantillon a binomial(11,0.5,.), resultat du test du Chi2 109.868860498,
+On rejette l’adequation si superieur a chisquare_icdf(9,0.95)=16.9189776046 or chisquare_icdf(9,1-alpha) if alpha!=5%
+</p><div class="center"><span style="font-family:monospace">109.868860498</span></div><p>
+On régle dans la configuration graphique les valeurs de <span style="font-family:monospace">class_min</span> et 
+de <span style="font-family:monospace">class_dim</span> à -2 et 0.25 et on tape :
+</p><div class="center"><span style="font-family:monospace">L:=ranv(1000,normald,0,.2)</span></div><div class="center"><span style="font-family:monospace">chisquaret(L,normald)</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">chisquaret(L,normald,classes,-2,.25)</span></div><p>
+On obtient par exemple :
+</p><div class="center"><span style="font-family:monospace">3.7961112714</span></div><p>
+avec en vert le résumé du test :<br>
+Densité normale, estimation de la moyenne et de l’ecart-type par les données0.00109620704977 0.201224413347<br>
+Adéquation d’un échantillon à <span style="font-family:monospace">normald_cdf(.00109620704977,0.201224413347)</span>, résultat du test du Chi2 3.7961112714,<br>
+On rejette l’adéquation si supérieur à <span style="font-family:monospace">chisquare_icdf(4,0.95)</span> qui
+vaut <span style="font-family:monospace">9.48772903678</span> ou <span style="font-family:monospace">chisquare_icdf(4,1-alpha)</span> si alpha!=5%.<br>
+Vérifions :<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">size(classes(L))</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">size(classes(L,-2,.25))</span></div><p>
+On obtient par exemple :
+</p><div class="center"><span style="font-family:monospace">6</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">C:=classes(L)</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">C:=classes(L,-2,.25)</span></div><p>
+On obtient par exemple :
+</p><div class="center"><span style="font-family:monospace">[[(-0.75) .. -0.5,3],[(-0.5) .. -0.25,113],[(-0.25) .. 0,382],[0 .. 0.25,393],[0.25 .. 0.5,102],[0.5 .. 0.75,7]]</span></div><p>
+On a bien : <span style="font-style:italic">n</span>=3+113+382+393+102+7=1000<br>
+On compare cette distribution empirique <span style="font-style:italic">L</span> à une distribution théorique
+d’effectifs <span style="font-style:italic">e</span><sub>1</sub>,..,<span style="font-style:italic">e</span><sub><span style="font-style:italic">k</span></sub> (si chaque valeur <span style="font-style:italic">x</span><sub><span style="font-style:italic">j</span></sub> est obtenue avec la 
+probabilité théorique <span style="font-style:italic">p</span><sub><span style="font-style:italic">j</span></sub> on a <span style="font-style:italic">e</span><sub><span style="font-style:italic">j</span></sub>=<span style="font-style:italic">np</span><sub><span style="font-style:italic">j</span></sub>).<br>
+Calculons la valeur <span style="font-style:italic">d</span><sup>2</sup> de la statistique :<br>
+ <span style="font-style:italic">D</span><sup>2</sup>=∑<sub><span style="font-style:italic">j</span>=1</sub><sup><span style="font-style:italic">k</span></sup>(<span style="font-style:italic">n</span><sub><span style="font-style:italic">j</span></sub>−<span style="font-style:italic">e</span><sub><span style="font-style:italic">j</span></sub>)<sup>2</sup>/<span style="font-style:italic">e</span><sub><span style="font-style:italic">j</span></sub><br>
+On estimer les paramètres µ et σ à partir de l’échantillon 
+(µ par la moyenne <span style="font-style:italic">m</span> de l’échantillon et σ par <span style="font-style:italic">s</span>√<span style="text-decoration:overline"><span style="font-style:italic">n</span></span><span style="text-decoration:overline">/</span><span style="text-decoration:overline"><span style="font-style:italic">n</span></span><span style="text-decoration:overline">−1</span> où <span style="font-style:italic">s</span> est l’écart-type de l’échantillon et <span style="font-style:italic">n</span> vaut ici 1000) :<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">mu:=mean(L);s:=stddev(L)</span></div><p>
+On obtient par exemple :
+</p><div class="center"><span style="font-family:monospace">0.00109620704977,0.201123775974</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">sigma:=s*sqrt(1000/999)</span></div><p>
+On obtient par exemple :
+</p><div class="center"><span style="font-family:monospace">0.201224413347</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">p1:=normal_cdf(mu,sigma,-0.75,-0.50)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">0.00628817561212</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">p2:=normal_cdf(mu,sigma,-0.5,-0.25)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">0.0996616023075</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">p3:=normal_cdf(mu,sigma,-0.25,0)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">0.391782175726</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">p4:=normal_cdf(mu,sigma,0,0.25)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">0.394119790487</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">p5:=normal_cdf(mu,sigma,0.25,0.5)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">0.101472226962</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">p6:=normal_cdf(mu,sigma,0.5,0.75)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">0.00648235374944</span></div><p>
+On calcule la valeur <span style="font-style:italic">d</span><sup>2</sup> de la statistique <span style="font-style:italic">D</span><sup>2</sup>, on tape :
+</p><div class="center"><span style="font-family:monospace">P:=[p1,p2,p3,p4,p5,p6]:;</span></div><div class="center"><span style="font-family:monospace">sum((C[k,1]-P[k]*1000)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/(P[k]*1000),k=0..5)</span></div><p>
+On obtient bien :
+</p><div class="center"><span style="font-family:monospace">3.79611127141</span></div>
+<hr>
+<a href="cascmd_fr825.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr827.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Polynôme caractéristique : pcar charpoly</title>
+</head>
+<body >
+<a href="cascmd_fr647.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr649.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec797" class="subsection">6.57.7  Polynôme caractéristique : <span style="font-family:monospace">pcar charpoly</span></h3>
+<p><a id="hevea_default1195"></a><a id="hevea_default1196"></a><a id="hevea_default1197"></a><a id="hevea_default1198"></a>
+<a id="hevea_default1199"></a><a id="hevea_default1200"></a>
+<span style="font-family:monospace">pcar</span> (ou <span style="font-family:monospace">charpoly</span>) a un (resp deux)
+argument(s).<br>
+<span style="font-family:monospace">pcar</span> (ou <span style="font-family:monospace">charpoly</span>) a comme argument une matrice <span style="font-style:italic">A</span> 
+d’ordre <span style="font-style:italic">n</span> (resp une matrice <span style="font-style:italic">A</span> d’ordre <span style="font-style:italic">n</span> et un nom de variable
+formelle).<br>
+<span style="font-family:monospace">pcar</span> (ou <span style="font-family:monospace">charpoly</span>) renvoie le polynôme caractéristique <span style="font-style:italic">P</span> de <span style="font-style:italic">A</span> écrit selon la 
+liste de ses coefficients (resp le polynôme caractéristique <span style="font-style:italic">P</span> de <span style="font-style:italic">A</span> 
+écrit sous forme symbolique en utilisant le nom de variable donnée en 
+argument).<br>
+Le polynôme caractéristique <span style="font-style:italic">P</span> de <span style="font-style:italic">A</span> est défini par
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">P</span>(<span style="font-style:italic">x</span>)=det(<span style="font-style:italic">x</span>.<span style="font-style:italic">I</span>−<span style="font-style:italic">A</span>)</td></tr>
+</table><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">pcar([[4,1,-2],[1,2,-1],[2,1,0]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[1,-6,12,-8]</span></div><p>
+Donc le polynôme caractéristique de [[4,1,-2],[1,2,-1],[2,1,0]]
+est 
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">x</span><sup>3</sup>−6<span style="font-style:italic">x</span><sup>2</sup>+12<span style="font-style:italic">x</span>−8 </td></tr>
+</table><p> 
+On peut aussi avoir la forme symbolique en tapant :<br>
+ <span style="font-family:monospace">normal(poly2symb([1,-6,12,-8]))</span>).<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">purge(X):;pcar([[4,1,-2],[1,2,-1],[2,1,0]],X)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">X</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-6*X</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+12*X-8</span></div><p>
+On peut spécifier par un argument optionnel l’algorithme utilisé
+pour faire ce calcul, parmi :
+</p><ul class="itemize"><li class="li-itemize">
+<code>lagrange</code> : calcul par interpolation de Lagrange, en
+donnant à <span style="font-style:italic">x</span> les valeurs comprises entre 0 et la dimension.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">pcar([[4,1,-2],[1,2,-1],[2,1,0]],lagrange)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">x*((x-1)*(-x+5)-7)+8</span></div>
+et après simplification :
+<div class="center"><span style="font-family:monospace">-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+6*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-12*x+8</span></div>
+</li><li class="li-itemize"><code>hessenberg</code> : calcul par réduction sous forme
+tri-diagonale puis formule de récurrence, efficace sur
+un corps fini.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">pcar([[4,1,-2],[1,2,-1],[2,1,0]],hessenberg)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[1,-6,12,-8]</span></div>
+</li><li class="li-itemize"><code>fadeev</code> : calcul simultané du polynôme
+caractéristique et de la comatrice de <span style="font-style:italic">xI</span>−<span style="font-style:italic">A</span>
+On tape :
+<div class="center"><span style="font-family:monospace">pcar([[4,1,-2],[1,2,-1],[2,1,0]],fadeev)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[1,-6,12,-8]</span></div>
+</li><li class="li-itemize"><code>pmin</code> : calcul du polynôme minimal relatif à un
+vecteur pris au hasard, c’est le polynôme caractéristique 
+s’il est de degré maximal.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">pcar([[4,1,-2],[1,2,-1],[2,1,0]],pmin)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[1,-6,12,-8]</span></div>
+</li></ul><p>
+Pour les matrices à coefficients entiers, l’algorithme utilisé par
+défaut est modulaire, on calcule le polynôme caractéristique
+modulo plusieurs nombres premiers, soit par le polynôme minimal,
+soit par Hessenberg, et on reconstruit par les restes chinois
+coefficient par coefficient. Le test d’arrêt est probabiliste,
+lorsque le polynôme reconstruit ne varie plus pour des nombres
+premiers dont le produit est supérieur à l’inverse de
+la valeur de <code>proba_epsilon</code> (que l’on peut modifier
+dans la configuration du cas). Si <code>proba_epsilon</code> est nul,
+le résultat est déterministe (une majoration à priori des
+coefficients est alors utilisée). Dans tous les cas, le temps
+de calcul est en <span style="font-style:italic">O</span>(<span style="font-style:italic">n</span>4ln(<span style="font-style:italic">n</span>)), mais il est plus rapide avec la méthode
+probabiliste.</p>
+<hr>
+<a href="cascmd_fr647.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr649.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

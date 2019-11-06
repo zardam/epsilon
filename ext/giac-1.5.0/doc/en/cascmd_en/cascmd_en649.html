@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Finding linear recurrences : reverse_rsolve</title>
+</head>
+<body >
+<a href="cascmd_en648.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en650.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec774" class="subsection">5.61.10  Finding linear recurrences : <span style="font-family:monospace">reverse_rsolve</span></h3>
+<p><a id="hevea_default1006"></a>
+<span style="font-family:monospace">reverse_rsolve</span> takes as argument a vector 
+<span style="font-style:italic">v</span>=[<span style="font-style:italic">v</span><sub>0</sub>...<span style="font-style:italic">v</span><sub>2<span style="font-style:italic">n</span>−1</sub>] made of the first 2<span style="font-style:italic">n</span> terms of a sequence (<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>)
+which is supposed to verify a linear recurrence relation of 
+degree smaller than <span style="font-style:italic">n</span>
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>*<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span>+<span style="font-style:italic">k</span></sub>+...+<span style="font-style:italic">x</span><sub>0</sub>*<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub>=0 </td></tr>
+</table><p>
+where the <span style="font-style:italic">x</span><sub><span style="font-style:italic">j</span></sub> are <span style="font-style:italic">n</span>+1 unknowns.<br>
+<span style="font-family:monospace">reverse_rsolve</span> returns the list <span style="font-style:italic">x</span>=[<span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>,...,<span style="font-style:italic">x</span><sub>0</sub>]
+of the <span style="font-style:italic">x</span><sub><span style="font-style:italic">j</span></sub> coefficients (if <span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>≠ 0 it is reduced to 1).</p><p>In other words <span style="font-family:monospace">reverse_rsolve</span> solves the linear system of 
+<span style="font-style:italic">n</span> equations :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>*<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>+...+<span style="font-style:italic">x</span><sub>0</sub>*<span style="font-style:italic">v</span><sub>0</sub></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" >0 </td></tr>
+<tr><td style="text-align:right;white-space:nowrap" >...</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>*<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span>+<span style="font-style:italic">k</span></sub>+...+<span style="font-style:italic">x</span><sub>0</sub>*<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" >0 </td></tr>
+<tr><td style="text-align:right;white-space:nowrap" >...</td></tr>
+<tr><td style="text-align:right;white-space:nowrap" ><span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>*<span style="font-style:italic">v</span><sub>2*<span style="font-style:italic">n</span>−1</sub>+...+<span style="font-style:italic">x</span><sub>0</sub>*<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span>−1</sub></td><td style="text-align:center;white-space:nowrap" >=</td><td style="text-align:left;white-space:nowrap" >0
+</td></tr>
+</table></td></tr>
+</table><p>
+The matrix <span style="font-style:italic">A</span> of the system has <span style="font-style:italic">n</span> rows and <span style="font-style:italic">n</span>+1 columns :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">A</span>=[[<span style="font-style:italic">v</span><sub>0</sub>,<span style="font-style:italic">v</span><sub>1</sub>...<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>],[<span style="font-style:italic">v</span><sub>1</sub>,<span style="font-style:italic">v</span><sub>2</sub>,...<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span>−1</sub>],...,[<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span>−1</sub>,<span style="font-style:italic">v</span><sub><span style="font-style:italic">n</span></sub>...<span style="font-style:italic">v</span><sub>2<span style="font-style:italic">n</span>−1</sub>]] </td></tr>
+</table><p>
+<span style="font-family:monospace">reverse_rsolve</span> returns the list <span style="font-style:italic">x</span>=[<span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>,...<span style="font-style:italic">x</span><sub>1</sub>,<span style="font-style:italic">x</span><sub>0</sub>] with <span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>=1
+and <span style="font-style:italic">x</span> is the solution of the system <span style="font-style:italic">A</span>*<span style="font-family:monospace"><span style="font-style:italic">revlist</span></span>(<span style="font-style:italic">x</span>).</p><p><span style="font-weight:bold">Examples</span>
+</p><ul class="itemize"><li class="li-itemize">
+Find a sequence satisfying a linear recurrence of degree at 
+most 2 whose first elements 1, -1, 3, 3.<br>
+Input :
+<div class="center"><span style="font-family:monospace">reverse_rsolve([1,-1,3,3])</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[1,-3,-6]</span></div> 
+Hence <span style="font-style:italic">x</span><sub>0</sub>=−6, <span style="font-style:italic">x</span><sub>1</sub>=−3, <span style="font-style:italic">x</span><sub>2</sub>=1 and the recurrence relation is
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span>+2</sub> −3<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span>+1</sub> −6 <span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub> =0</td></tr>
+</table>
+Without <span style="font-family:monospace">reverse_rsolve</span>, we would write the matrix of the system :<br>
+<span style="font-family:monospace">[[1,-1,3],[-1,3,3]]</span> and use the <span style="font-family:monospace">rref</span> command :<br>
+<span style="font-family:monospace">rref([[1,-1,3],[-1,3,3]])</span><br>
+Output is <span style="font-family:monospace">[[1,0,6],[0,1,3]]</span> hence <span style="font-style:italic">x</span><sub>0</sub>=−6 and <span style="font-style:italic">x</span><sub>1</sub>=−3 
+(because <span style="font-style:italic">x</span><sub>2</sub>=1).</li><li class="li-itemize">Find a sequence satisfying a linear recurrence of degree at 
+most 3 whose first elements are 1, -1, 3, 3,-1, 1.<br>
+Input :
+<div class="center"><span style="font-family:monospace">reverse_rsolve([1,-1,3,3,-1,1])</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[1,(-1)/2,1/2,-1]</span></div> 
+Hence so, <span style="font-style:italic">x</span><sub>0</sub>=−1, <span style="font-style:italic">x</span><sub>1</sub>=1/2, <span style="font-style:italic">x</span><sub>2</sub>=−1/2, <span style="font-style:italic">x</span><sub>3</sub>=1, the recurrence
+relation is
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span>+3</sub> −</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell"> <span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span>+2</sub> +</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell"> <span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span>+1</sub> −<span style="font-style:italic">v</span><sub><span style="font-style:italic">k</span></sub> =0 </td></tr>
+</table>
+Without <span style="font-family:monospace">reverse_rsolve</span>, we would write the matrix of the system :<br>
+<span style="font-family:monospace">[[1,-1,3,3],[-1,3,3,-1],[3,3,-1,1]]</span>.<br>
+Using <span style="font-family:monospace">rref</span> command, we would input :<br>
+<span style="font-family:monospace">rref([[1,-1,3,3],[-1,3,3,-1],[3,3,-1,1]])</span><br>
+Output is <span style="font-family:monospace">[1,0,0,1],[0,1,0,1/-2],[0,0,1,1/2]]</span>
+hence <span style="font-style:italic">x</span><sub>0</sub>=−1, <span style="font-style:italic">x</span><sub>1</sub>=1/2 and <span style="font-style:italic">x</span><sub>2</sub>=−1/2 because <span style="font-style:italic">x</span><sub>3</sub>=1),
+</li></ul>
+<hr>
+<a href="cascmd_en648.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en650.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

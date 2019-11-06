@@ -1,0 +1,555 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casexo.css">
+<TITLE>Exemples de courbes en paramétrique</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casexo016.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo018.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc226">Chapitre 17</A>  Exemples de courbes en paramétrique</H1><H2 CLASS="section"><A NAME="toc83"></A><A NAME="htoc227">17.1</A>  Les cycloïdes</H2><H3 CLASS="subsection"><A NAME="htoc228">17.1.1</A>  La cycloïde</H3><H4 CLASS="subsubsection">La courbe</H4><P>
+Une cycloïde est le lieu d’un point <I>M</I> situé sur un cercle qui roule sans 
+glisser sur une droite.<BR>
+Si au départ <I>M</I> est à l’origine <I>O</I>, si le cercle <I>C</I>, de centre <I>A</I> et 
+rayon <I>R</I>, roule sur l’axe des <I>x</I>, si <I>P</I> est le point de contact de <I>C</I> avec 
+<I>Ox</I> lorsque <I>C</I> 
+a tourné d’un angle <I>t</I>, on a :<BR>
+<I>OP</I>=<I>Rt</I>,<I>AP</I>=−<I>iR</I> et 
+<I>AM</I>=rotation(<I>A</I>,−<I>t</I>,<I>AP</I>)=−<I>Ri</I>(cos(−<I>t</I>)+<I>i</I>sin(−<I>t</I>))=−<I>R</I>sin(<I>t</I>)−<I>Ri</I>cos(<I>t</I>) donc<BR>
+<I>OM</I>=<I>OP</I>+<I>PA</I>+<I>AM</I>=<I>Rt</I>+<I>iR</I>−<I>R</I>sin(<I>t</I>)−<I>Ri</I>(cos(<I>t</I>))=<I>R</I>(<I>t</I>−sin(<I>t</I>)+<I>i</I>(1−cos(<I>t</I>)))<BR>
+L’équation paramétrique d’une cycloïde est donc :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I>=<I>R</I>(<I>t</I>−sin(<I>t</I>)); <I>y</I>=<I>R</I>(1−cos(<I>t</I>))</TD></TR>
+</TABLE><P>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+On tape :
+</P><PRE CLASS="verbatim">R:=element(0..5);
+plotparam(R*(t-sin(t)+i*(1-cos(t))),t,affichage=rouge);
+</PRE><P>On peut faire une animation pour voir le déplacement d’un point <TT>M</TT> 
+d’un cercle <TT>C</TT> de 
+rayon <TT>R</TT> lorsque <TT>C</TT> roule sur l’axe des <TT>x</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">R:=element(0..5);
+plotparam(R*(t-sin(t)+i*(1-cos(t))),t=-10..10,affichage=rouge);
+animation(seq('cercle(R*u+i*R,R)',u,-10,10,0.5));
+animation(seq('M:=point(R*(u-sin(u)+i*(1-cos(u))))',u,-10,10,0.5));
+animation(seq('segment(R*u+i*R,R*(u+i-i*exp(-i*u)))',u,-10,10,0.5));
+</PRE><P>On peut aussi faire une animation pour voir l’infuence du rayon <TT>R</TT>, mais 
+ici, cela n’a pas beaucoup d’interêt.<BR>
+On tape :
+</P><PRE CLASS="verbatim">animation(seq('plotparam(R*(t-sin(t)+i*(1-cos(t))),
+               t=-10..10,affichage=rouge)',R,0,3,0.1));
+</PRE><H4 CLASS="subsubsection">La longueur d’une arche de cycloïde</H4><P>
+On peut calculer la longueur d’une arche de cycloïde.<BR>
+On a :
+<I>ds</I><SUP>2</SUP>=<I>dx</I><SUP>2</SUP>+<I>dy</I><SUP>2</SUP>
+On tape :<BR>
+<TT>tlin(diff(R*(t-sin(t)),t)</TT><CODE><TT>^</TT></CODE><TT>2+diff(R*(1-cos(t)),t)</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient :
+<TT>2*R</TT><CODE><TT>^</TT></CODE><TT>2+(-2*R</TT><CODE><TT>^</TT></CODE><TT>2)*cos(t)</TT><BR>
+On tape :<BR>
+<TT>trigsin(halftan(2*R</TT><CODE><TT>^</TT></CODE><TT>2+(-2*R</TT><CODE><TT>^</TT></CODE><TT>2)*cos(t)))</TT>
+On obtient :
+<TT>4*R</TT><CODE><TT>^</TT></CODE><TT>2*sin(t/2)</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+Quand <I>t</I> varie de 0 à 2π, la longueur d’une arche de cycloïde est :<BR>
+<TT>normal(int(2*R*sin(t/2),t,0,2*pi))</TT><BR>
+On obtient :
+<TT>8*R</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc229">17.1.2</A>  La cycloïde raccourcie</H3><P>
+Une cycloïde raccourcie est le lieu d’un point <I>P</I> situé sur un rayon <I>AM</I> du
+cercle de centre <I>A</I> qui roule sans glisser sur une droite.<BR>
+Si <I>AP</I>=<I>k</I>*<I>AM</I>=<I>k</I>*<I>R</I> avec <I>k</I>&lt;1, l’équation paramétrique d’une cycloïde 
+raccourcie est donc :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I>=<I>R</I>(<I>t</I>−<I>k</I>*sin(<I>t</I>)); <I>y</I>=<I>R</I>(1−<I>k</I>*cos(<I>t</I>)) avec  <I>k</I>&lt;1</TD></TR>
+</TABLE><P>
+<B>Avec </B><B><TT>Xcas</TT></B>, on tape :
+</P><PRE CLASS="verbatim">R:=element(0..3);
+k:=element(0..1);
+plotparam(R*(t-k*sin(t)+i*(1-k*cos(t))),t,affichage=rouge);
+</PRE><H3 CLASS="subsection"><A NAME="htoc230">17.1.3</A>  La cycloïde allongée ou trochoïde</H3><P>
+Une cycloïde allongée ou trochoïde est le lieu d’un point <I>Q</I> situé sur le 
+prolongement du rayon <I>AM</I> du cercle de centre <I>A</I> qui roule sans glisser sur 
+une droite.<BR>
+Si <I>AQ</I>=<I>k</I>*<I>AM</I>=<I>k</I>*<I>R</I> avec <I>k</I>&gt;1, l’équation paramétrique d’une cycloïde 
+allongée donc :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I>=<I>R</I>(<I>t</I>−<I>k</I>*sin(<I>t</I>)); <I>y</I>=<I>R</I>(1−<I>k</I>*cos(<I>t</I>))  avec  <I>k</I>&gt;1</TD></TR>
+</TABLE><P>
+<B>Avec </B><B><TT>Xcas</TT></B>, on tape :
+</P><PRE CLASS="verbatim">R:=element(0..3);
+k:=element(1..5);
+plotparam(R*(t-k*sin(t)+i*(1-k*cos(t))),t,affichage=rouge);
+</PRE><H3 CLASS="subsection"><A NAME="htoc231">17.1.4</A>  Les cycloïdes</H3><P>
+On peut faire une animation pour voir le déplacement d’un point <TT>M</TT> d’un 
+cercle <TT>C</TT> de centre <TT>A</TT> et de rayon <TT>R</TT>, et d’un point 
+<TT>P</TT> du rayon <TT>AM</TT> lorsque <TT>C</TT> roule sur l’axe des <TT>x</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">R:=element(0..3);
+k:=element(0..5,0.84);
+plotparam(R*(t-sin(t)+i*(1-cos(t))),t=-8..8,affichage=rouge);
+plotparam(R*(t-k*sin(t)+i*(1-k*cos(t))),t=-8..8,affichage=vert);
+animation(seq('cercle(R*u+i*R,R)',u,-8,8,0.5));
+animation(seq('M:=point(R*(u-sin(u)+i*(1-cos(u))))',u,-8,8,0.5));
+animation(seq('P:=point(R*(u-k*sin(u)+i*(1-k*cos(u))))',u,-8,8,0.5));
+animation(seq('segment(R*u+i*R,R*(u+i-i*max(k,1)*exp(-i*u)))',u,-8,8,0.5));
+</PRE><P>On peut aussi faire une animation pour voir le déplacement d’un point <TT>M</TT>
+d’un cercle <TT>C</TT> de centre <TT>A</TT> et de rayon <TT>R</TT>, d’un point 
+<TT>P</TT> du rayon <TT>AM</TT> et d’un point <TT>Q</TT> sur le 
+prolongement du rayon <TT>AM</TT> lorsque <TT>C</TT> roule sur l’axe des <TT>x</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">R:=element(0..3);
+k:=element(0 .. 1,0.84);
+l:=element(1 .. 4,2);
+plotparam(R*(t-sin(t)+i*(1-cos(t))),t=-10..10,affichage=rouge);
+plotparam(R*(t-k*sin(t)+i*(1-k*cos(t))),t=-10..10,affichage=vert);
+plotparam(R*(t-l*sin(t)+i*(1-l*cos(t))),t=-10..10,affichage=bleu);
+animation(seq('cercle(R*u+i*R,R)',u,-10,10,0.5));
+animation(seq('M:=point(R*(u-sin(u)+i*(1-cos(u))))',u,-10,10,0.5));
+animation(seq('P:=point(R*(u-k*sin(u)+i*(1-k*cos(u))))',u,-10,10,0.5));
+animation(seq('Q:=point(R*(u-l*sin(u)+i*(1-l*cos(u))))',u,-10,10,0.5));
+animation(seq('segment( R*u+i*R, R*(u+i-i*l*exp(-i*u)))',u,-10,10,0.5));
+</PRE><H2 CLASS="section"><A NAME="toc84"></A><A NAME="htoc232">17.2</A>  Épicycloïde et hypocycloïde</H2><H3 CLASS="subsection"><A NAME="htoc233">17.2.1</A>  Épicycloïde</H3><P><A NAME="sec:epi"></A>
+Une épicycloïde est le lieu d’un point <I>M</I> situé sur un cercle <I>C</I>, de 
+centre <I>A</I> et de rayon <I>R</I>, qui 
+roule sans glisser sur un cercle <I>C</I><SUB>0</SUB>, de rayon
+<I>R</I><SUB>0</SUB>, lorsque <I>C</I> se trouve à l’extérieur de <I>C</I><SUB>0</SUB>.<BR>
+Si le cercle <I>C</I><SUB>0</SUB> est de centre <I>O</I>, si au départ <I>M</I> est en <I>I</I> sur <I>Ox</I>, 
+si <I>P</I> est le point de contact de <I>C</I> avec 
+<I>C</I><SUB>0</SUB> lorsque <I>C</I> a tourné d’un angle <I>u</I>, <I>P</I> a tourné d’un angle 
+<I>t</I> sur <I>C</I><SUB>0</SUB>, on a :<BR>
+<I>IP</I>=<I>R</I><SUB>0</SUB><I>t</I>=<I>Ru</I>,<BR>
+<I>OA</I>=(<I>R</I>+<I>R</I><SUB>0</SUB>)(cos(<I>t</I>)+<I>i</I>sin(<I>t</I>))=(<I>R</I>+<I>R</I><SUB>0</SUB>)exp(<I>it</I>),<BR>
+<I>PA</I>=<I>R</I>(cos(<I>t</I>)+<I>i</I>sin(<I>t</I>)),<BR>
+<I>AM</I>=rotation(<I>A</I>,<I>u</I>,<I>AP</I>)=−<I>R</I>(cos(<I>t</I>)+<I>i</I>sin(<I>t</I>))(cos(<I>u</I>)+<I>i</I>sin(<I>u</I>))=<BR>
+−<I>R</I>(cos(<I>u</I>+<I>t</I>)+<I>i</I>sin(<I>u</I>+<I>t</I>))=−<I>R</I>(cos((<I>R</I><SUB>0</SUB>/<I>R</I>+1)<I>t</I>)+<I>i</I>sin((<I>R</I><SUB>0</SUB>/<I>R</I>+1)<I>t</I>))<BR>
+On a :<BR>
+<I>OM</I>=<I>OA</I>+<I>AM</I>=
+(<I>R</I>+<I>R</I><SUB>0</SUB>)(exp(<I>it</I>))−<I>R</I>exp(<I>i</I>(<I>R</I><SUB>0</SUB>/<I>R</I>+1)<I>t</I>)<BR>
+On pose <I>R</I><SUB>0</SUB>/<I>R</I>+1=<I>m</I>, on a <I>R</I>+<I>R</I><SUB>0</SUB>=<I>Rm</I>.<BR>
+Donc l’équation paramétrique d’une épicycloïde est :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I>=<I>R</I>(<I>m</I>cos(<I>t</I>)−cos(<I>mt</I>));  <I>y</I>=<I>R</I>(<I>m</I>sin(<I>t</I>)−sin(<I>mt</I>))</TD></TR>
+</TABLE><P> 
+La courbe se referme si 2<I>k</I>π <I>R</I><SUB>0</SUB>=2<I>n</I>π <I>R</I> c’est à dire si le rapport 
+<I>R</I><SUB>0</SUB>/<I>R</I> est rationnel.</P><P><B>Cas particuliers</B><BR>
+<I>R</I>=<I>R</I><SUB>0</SUB> on a une cardioïde,<BR>
+<I>R</I>=<I>R</I><SUB>0</SUB>/2 on a une néphroïde de rebroussement,<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+On tape :
+</P><PRE CLASS="verbatim">C:=cercle(0,3);
+R:=element(0.1..4);
+m:=3/R+1;
+plotparam(R*m*cos(t)-R*cos(m*t)+i*(R*m*sin(t)-R*sin(m*t)),
+          t=-10..10,affichage=rouge);
+</PRE><P>On a choisit <I>R</I><SUB>0</SUB>=3. On peut ainsi faire varier <I>R</I> et voir les 4 cas :<BR>
+<I>R</I>=1, <I>R</I>=1.5, <I>R</I>=3, <I>R</I>=4.
+On peut faire une animation et voir le déplacement d’un point <TT>M</TT> d’un 
+cercle <TT>C</TT> de centre <TT>A</TT> et de rayon <TT>R</TT> lorsque ce cercle roule 
+à l’extérieur d’un cercle <TT>C0</TT> de centre <TT>0</TT> et de rayon <TT>3</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">C:=cercle(0,3);
+R:=element(0..5);
+m:=3/R+1;
+plotparam(R*m*cos(t)-R*cos(m*t)+i*(R*m*sin(t)-R*sin(m*t)),
+       t=-10..10,affichage=rouge);
+animation(seq('cercle((3+R)*exp(i*v),R)',v,-10,10,0.5));
+animation(seq('M:=point(R*m*cos(v)-R*cos(m*v)+
+       i*(R*m*sin(v)-R*sin(m*v)))',v,-10,10,0.5));
+</PRE><H3 CLASS="subsection"><A NAME="htoc234">17.2.2</A>  Hypocycloïde</H3><P>
+Une hypocycloïde est le lieu d’un point <I>M</I> situé sur un cercle <I>C</I>, de 
+centre <I>A</I> et de rayon <I>R</I>, qui roule sans glisser sur un cercle <I>C</I><SUB>0</SUB>, de 
+rayon <I>R</I><SUB>0</SUB>&gt;<I>R</I>, lorsque <I>C</I> se trouve à l’intérieur de <I>C</I><SUB>0</SUB>.<BR>
+On peut changer <I>R</I> en −<I>R</I> dans l’équation d’une épicycloïde ou refaire 
+les calculs...<BR>
+Si le cercle <I>C</I><SUB>0</SUB> est de centre <I>O</I>, si au départ <I>M</I> est en <I>I</I> sur <I>Ox</I>, 
+si <I>P</I> est le point de contact de <I>C</I> avec 
+<I>C</I><SUB>0</SUB> lorsque <I>C</I> a tourné d’un angle <I>u</I>, <I>P</I> a tourné d’un angle 
+<I>t</I> sur <I>C</I><SUB>0</SUB>, on a :<BR>
+<I>IP</I>=<I>R</I><SUB>0</SUB><I>t</I>=−<I>Ru</I> (car <I>u</I> est négatif et <I>R</I> positif),<BR>
+<I>OA</I>=(<I>R</I><SUB>0</SUB>−<I>R</I>)(cos(<I>t</I>)+<I>i</I>sin(<I>t</I>)),<BR>
+<I>PA</I>=−<I>R</I>(cos(<I>t</I>)+<I>i</I>sin(<I>t</I>)),<BR>
+<I>AM</I>=rotation(<I>A</I>,<I>u</I>,<I>AP</I>)=<I>R</I>(cos(<I>t</I>)+<I>i</I>sin(<I>t</I>))(cos(<I>u</I>)+<I>i</I>sin(<I>u</I>))=<I>R</I>(cos(<I>u</I>+<I>t</I>)+<I>i</I>sin(<I>u</I>+<I>t</I>))=−<I>R</I>(cos((<I>R</I><SUB>0</SUB>/<I>R</I>−1)<I>t</I>)+<I>i</I>sin((<I>R</I><SUB>0</SUB>/<I>R</I>−1)<I>t</I>))<BR>
+On a :<BR>
+<I>OM</I>=<I>OA</I>+<I>AM</I>=(<I>R</I><SUB>0</SUB>−<I>R</I>)(cos(<I>t</I>)+<I>i</I>sin(<I>t</I>))−<I>R</I>(cos((<I>R</I><SUB>0</SUB>/<I>R</I>−1)<I>t</I>)+<I>i</I>sin((<I>R</I><SUB>0</SUB>/<I>R</I>−1)<I>t</I>))<BR>
+Si on pose −<I>R</I><SUB>0</SUB>/<I>R</I>+1=<I>m</I>, l’équation paramétrique d’une hypocycloïde est 
+donc :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I>=−<I>R</I>(<I>m</I>cos(<I>t</I>)−cos(<I>mt</I>));  <I>y</I>=−<I>R</I>(<I>m</I>sin(<I>t</I>)−sin(<I>mt</I>))</TD></TR>
+</TABLE><P> 
+La courbe se referme si 2<I>k</I>π <I>R</I><SUB>0</SUB>=2<I>n</I>π <I>R</I> c’est à dire si le rapport 
+<I>R</I><SUB>0</SUB>/<I>R</I> est rationnel.</P><P><B>Cas particuliers</B><BR>
+<I>R</I>=2<I>R</I><SUB>0</SUB>/3 on a une hypocycloïde à 3 rebroussements,<BR>
+<I>R</I>=<I>R</I><SUB>0</SUB>/4 on a une astroïde.<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+On tape :
+</P><PRE CLASS="verbatim">C:=cercle(0,3);
+R:=element(0..2.9);
+m:=-3/R+1;
+plotparam(-R*m*cos(t)+R*cos(m*t)+i*(-R*m*sin(t)+R*sin(m*t)),
+           t,affichage=rouge)
+</PRE><P>On a choisit <I>R</I><SUB>0</SUB>=3. On peut ainsi faire varier <I>R</I> et voir les 3 cas :<BR>
+<I>R</I>=0.75, <I>R</I>=1.2, <I>R</I>=2.</P><P>On peut faire une animation et voir le déplacement d’un point <TT>M</TT>
+d’un cercle <TT>C</TT> de centre <TT>A</TT> et de rayon <TT>R</TT> lorsque ce cercle 
+roule à l’intérieur d’un cercle <TT>C0</TT> de centre <TT>0</TT> et de rayon 
+<TT>3</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">C:=cercle(0,3);
+R:=element(0..3);
+m:=3/R+1;
+plotparam(R*m*cos(t)-R*cos(m*t)+i*(R*m*sin(t)-R*sin(m*t)),
+       t,affichage=rouge);
+animation(seq('cercle((3-R)*exp(i*v),R)',v,-10,10,0.5));
+animation(seq('M:=point(-R*m*cos(v)+R*cos(m*v)+
+       i*(-R*m*sin(v)+R*sin(m*v)))',v,-10,10,0.5));
+</PRE><H3 CLASS="subsection"><A NAME="htoc235">17.2.3</A>  Epicycloïde et hypocycloïde</H3><P>
+On peut unifier les 2 cas en prenant <I>R</I> négatif pour les hypocycloïde.<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+On tape :<BR>
+</P><PRE CLASS="verbatim">C:=cercle(0,3);
+R:=element(-3..4);
+m:=3/R+1;
+plotparam(R*m*cos(t)-R*cos(m*t)+i*(R*m*sin(t)-R*sin(m*t)),
+          t=-10..10,affichage=rouge)
+</PRE><P>On a choisit <I>R</I><SUB>0</SUB>=3. On peut ainsi faire varier <I>R</I> et voir les différents 
+cas :<BR>
+ <I>R</I>=−1.2, <I>R</I>=−1, <I>R</I>=−0.75, <I>R</I>=1, <I>R</I>=1.5, <I>R</I>=3, <I>R</I>=4.
+On peut faire une animation et voir le déplacement d’un point <TT>M</TT>
+d’un cercle <TT>C</TT> de centre <TT>A</TT> et de rayon <TT>|R|</TT> lorsque ce cercle 
+roule (à l’intérieur si <TT>R&lt;0</TT> et à l’extérieur si <TT>R&gt;0</TT>)
+sur le cercle <TT>C0</TT> de centre <TT>0</TT> et de rayon <TT>3</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">C0:=cercle(0,3);
+R:=element(-3..4);
+m:=3/R+1;
+plotparam(R*m*cos(t)-R*cos(m*t)+i*(R*m*sin(t)-R*sin(m*t)),
+       t=-10..10,affichage=rouge);
+animation(seq('cercle((3+R)*exp(i*v),R)',v,-10,10,0.5));
+animation(seq('M:=point(R*m*cos(v)-R*cos(m*v)+
+       i*(R*m*sin(v)-R*sin(m*v)))',v,-10,10,0.5));
+animation(seq('segment((3+R)*exp(i*v),R*m*cos(v)-R*cos(m*v)+
+       i*(R*m*sin(v)-R*sin(m*v)))',v,-10,10,0.5));
+</PRE><H2 CLASS="section"><A NAME="toc85"></A><A NAME="htoc236">17.3</A>  L’astroïde</H2><P>
+On pourra se reporter à la session <TT>astroide.xws</TT>.<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc237">17.3.1</A>  La courbe</H3><P>
+<B>Définition</B> On déplace un segment <I>AB</I> de longueur constante <I>a</I> 
+de façon que <I>A</I> soit sur 0<I>x</I> et <I>B</I> sur <I>Oy</I>.<BR>
+L’astroïde est l’enveloppe de ce segment.<BR>
+L’astroïde est aussi le lieu de la 
+projection <I>M</I> de <I>C</I> sur <I>AB</I>, lorsque <I>OACB</I> est un rectangle.
+Si <I>OACB</I> est un rectangle et si <I>t</I> est l’angle 
+0<I>x</I>,0<I>C</I>, on a :<BR>
+<SPAN style="text-decoration:overline">0<I>A</I></SPAN>=<I>a</I>cos(<I>t</I>) et
+<SPAN style="text-decoration:overline">0<I>B</I></SPAN>=<I>a</I>sin(<I>t</I>)<BR>
+La droite <I>AB</I> a donc comme équation :<BR>
+<I>x</I>/(<I>a</I>cos(<I>t</I>))+<I>y</I>/(<I>a</I>sin(<I>t</I>))=1 ou encore<BR>
+<I>x</I>*<I>tan</I>(<I>t</I>)+<I>y</I>=<I>a</I>sin(<I>t</I>)<BR>
+L’enveloppe de la droite <I>AB</I> est le lieu des points d’intersection de :<BR>
+<I>x</I>*tan(<I>t</I>)+<I>y</I>=<I>a</I>sin(<I>t</I>) et de <I>x</I>/cos(<I>t</I>)<SUP>2</SUP>=<I>a</I>cos(<I>t</I>)<BR>
+donc <I>x</I>=<I>a</I>cos(<I>t</I>)<SUP>3</SUP> et <I>y</I>=<I>a</I>sin(<I>t</I>)−<I>a</I>sin(<I>t</I>)*cos(<I>t</I>)<SUP>2</SUP>=<I>a</I>sin(<I>t</I>)<SUP>3</SUP>.<BR>
+L’astroïde a donc comme équation paramètrique :
+<I>x</I>=<I>a</I>cos(<I>t</I>)<SUP>3</SUP>;<I>y</I>=<I>a</I>sin(<I>t</I>)<SUP>3</SUP>.<BR>
+On tape :<BR>
+<TT>plotparam(cos(t)</TT><CODE><TT>^</TT></CODE><TT>3+i*sin(t)</TT><CODE><TT>^</TT></CODE><TT>3,t)</TT></P><H3 CLASS="subsection"><A NAME="htoc238">17.3.2</A>  La longueur de cette courbe</H3><P>
+On peut calculer la longueur d’un quart d’astroïde.<BR>
+On a : <I>ds</I><SUP>2</SUP>=<I>dx</I><SUP>2</SUP>+<I>dy</I><SUP>2</SUP><BR>
+On tape :<BR>
+<TT>tlin(diff(a*cos(t)</TT><CODE><TT>^</TT></CODE><TT>3,t)</TT><CODE><TT>^</TT></CODE><TT>2+diff(a*sin(t)</TT><CODE><TT>^</TT></CODE><TT>3,t)</TT><CODE><TT>^</TT></CODE><TT>2)</TT><BR>
+On obtient :
+<TT>(9*a</TT><CODE><TT>^</TT></CODE><TT>2)/8+(-((9*a</TT><CODE><TT>^</TT></CODE><TT>2)/8))*cos(4*t)</TT><BR>
+On tape :<BR>
+<TT>trigsin(halftan((9*a</TT><CODE><TT>^</TT></CODE><TT>2)/8+(-((9*a</TT><CODE><TT>^</TT></CODE><TT>2)/8))*cos(4*t)))</TT><BR>
+On obtient :
+<TT>9/4*a</TT><CODE><TT>^</TT></CODE><TT>2*sin((4*t)/2)</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+Quand <I>t</I> varie de 0 à 2π, la longueur d’un quart d’astroïde est :<BR>
+<TT>normal(int( 3/2*a*sin(2*t),t,0,pi/2))</TT><BR>
+On obtient :
+<TT>3/2*a</TT><BR>
+On a la longueur de l’astroïde est donc :
+<TT>6*a</TT>
+</P><H2 CLASS="section"><A NAME="toc86"></A><A NAME="htoc239">17.4</A>  Le trifolium de paramètres <I>a</I> et <I>b</I></H2><H3 CLASS="subsection"><A NAME="htoc240">17.4.1</A>  Définition géométrique</H3><P>
+Soient un repère orthonormé <I>O</I>,<I>i</I>,<I>j</I>et 2 réels <I>a</I> et <I>b</I>.<BR>
+Soientt le cercle <I>C</I> de centre <I>J</I>=(<I>a</I>,<I>b</I>) et passant par <I>O</I> et une droite <I>d</I> 
+passant par <I>O</I>. <I>d</I> coupe <I>C</I> en <I>P</I>. Sur la parraléle à <I>Ox</I> menée par 
+<I>P</I>, on définit <I>M</I> et <I>N</I> par <I>OM</I>=<I>On</I>=<I>OP</I>.<BR>
+Le lieu de <I>M</I> et <I>N</I> est un trifolium de paramètres <I>a</I> et <I>b</I>.
+On tape :
+</P><PRE CLASS="verbatim">O:=point(0);
+supposons(a=[1.0,-5,5,0.1]);
+supposons(b=[0.5,-5,5,0.1]);
+C:=cercle(point(2a+i*2b),O);
+supposons(c=[1.53,(-pi)/2,pi/2,0.01]);
+P:=inter_unique(C,d,[O]);
+l:=simplify(tan2sincos(trigcos(trigtan(longueur(O,P)))));
+M:=P+l;
+N:=P-l;
+trace(M);
+trace(N);
+m:=simplify(trigcos(trigtan(affixe(M))));
+affichage(plotparam(m,c),1);
+</PRE><P>On obtient :<BR>
+ La valeur de <TT>affixe(P)</TT> apres simplification :<BR>
+<TT>2*(cos(c)+(i)*sin(c))*(a*cos(c)+b*sin(c))</TT><BR>
+La valeur de <I>l</I>=longueur(O,P) apres simplification :<BR>
+ <TT>2*a*cos(c)+2*b*sin(c)</TT><BR>
+La valeur <I>l</I> est périodique en <I>c</I> de période 2π et donc selon les 
+valeurs de <I>a</I>,<I>b</I>,<I>c</I>, <I>l</I> est soit positive soit négative.<BR>
+et la valeur de <I>m</I>=<TT>affixe(M)</TT>:<BR>
+<TT>2*a*cos(c)</TT><CODE><TT>^</TT></CODE><TT>2+2*a*cos(c)+2*b*cos(c)*sin(c)+2*b*sin(c)+<BR>
+(i)*(2*a*cos(c)*sin(c)-2*b*cos(c)</TT><CODE><TT>^</TT></CODE><TT>2+2*b)</TT><BR>
+<I>m</I> est donc l’affixe de <I>M</I> quand <I>l</I>&gt;0 et l’affixe de <I>N</I> quand <I>l</I>&lt;0.<BR>
+<IMG SRC="casexo072.png"><BR>
+L’équation paramétrique du trifolium de paramètres <I>a</I> et <I>b</I> est donc :<BR>
+<TT>2*(cos(c)+(i)*sin(c)+1)*(a*cos(c)+b*sin(c))</TT>, <I>c</I>∈ [−π;π].<BR>
+On a :<BR>
+<I>x</I>(<I>c</I>)=2(cos(<I>c</I>)+1)(<I>a</I>cos(<I>c</I>)+<I>b</I>sin(<I>c</I>))<BR>
+<I>y</I>(<I>c</I>)=2sin(<I>c</I>)(<I>a</I>cos(<I>c</I>)+<I>b</I>sin(<I>c</I>))<BR>
+<B>Cas particulier b=0</B><BR>
+L’équation paramétrique du trifolium de paramètres <I>a</I> et <I>b</I>=0 est donc :<BR>
+<I>x</I>(<I>c</I>)=2<I>a</I>(cos(<I>c</I>)+1)cos(<I>c</I>)=<I>a</I>(cos(2<I>c</I>)+2cos(<I>c</I>)+1)<BR>
+ <I>y</I>(<I>c</I>)=2<I>a</I>sin(<I>c</I>)cos(<I>c</I>)=<I>a</I>sin(2<I>c</I>)<BR>
+On le retrouve dans l’exercice suivant mais dans un repère d’origine différente.
+</P><H3 CLASS="subsection"><A NAME="htoc241">17.4.2</A>  Exercice : le trifolium (avec <I>b</I>=0)</H3><P>
+Le plan est muni d’un repère orthonormé <I>O</I>,<I>i</I>,<I>j</I>. Soit <I>C</I> le cercle de centre <I>O</I> et de rayon <I>r</I>.<BR>
+A tout point <I>M</I> de <I>C</I> on associe le point <I>N</I> de <I>C</I> tel que :<BR>
+(<I>i</I>,<I>ON</I>)=2(<I>i</I>,<I>OM</I>).<BR>
+Soit <I>P</I> le symétrique de <I>M</I> par rapport à l’axe des abscisses.<BR>
+Soit <I>G</I> le centre de gravité du triangle <I>MNP</I>.<BR>
+Le lieu de <I>G</I> décrit un trifolium qui est une courbe d’équation 
+paramétrique :<BR>
+<I>x</I>(<I>t</I>)= <I>a</I>/3(2cos(<I>t</I>)+cos(2<I>t</I>))<BR>
+<I>y</I>(<I>t</I>)= <I>a</I>/3sin(2<I>t</I>)
+On tape (prend <I>r</I>=4) :
+</P><PRE CLASS="verbatim">C:=cercle(0,4)
+supposons(a=[0.6,-5,5,0.1])
+M:=point(4*exp(i*a))
+N:=point(4*exp(2*i*a))
+P:=point(4*exp(-i*a))
+G:=isobarycentre(M,N,P)
+lieu(G,a)
+</PRE><P>On obtient :<BR>
+<IMG SRC="casexo073.png">
+On tape :<BR>
+<TT>trigcos(re(affixe(G))+i*im(affixe(G)))</TT><BR>
+On obtient :<BR>
+<TT>8/3*cos(a)+4/3*cos(a*2)+4*i/3*sin(a*2)</TT></P><H2 CLASS="section"><A NAME="toc87"></A><A NAME="htoc242">17.5</A>  Le folium de Descartes</H2><P>
+Le plan est muni d’un repère orthonormé <I>O</I>,<I>i</I>,<I>j</I>.<BR>
+Etant donné <I>p</I> un nombre réel, soient la parabole <I>P</I> d’équation 
+(<I>x</I>+<I>y</I>)<SUP>2</SUP>=2<I>b</I>(<I>x</I>−<I>y</I>) et la parabole <I>p</I> d’équation (<I>x</I>−<I>y</I>)<SUP>2</SUP>=2<I>b</I>(<I>x</I>+<I>y</I>).<BR>
+Pour chaque <I>u</I> réel, la droite <I>D</I> d’équation <I>y</I>=tan(<I>u</I>)<I>x</I> coupe <I>P</I> en A 
+et <I>p</I> en <I>B</I>. Soit <I>M</I> le conjugué harmonique de <I>O</I> par rapport à <I>A</I> et 
+<I>B</I>. Le lieu de <I>M</I> est un folium de Descartes de paramètre <I>a</I>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">supposons(b=[0.375,-5,5,0.005]);
+P:=parabole((x+y)^2-b*(x-y));
+p:=parabole((x-y)^2-b*(x+y));
+supposons(u=[0.2,-pi,pi,0.005]);
+D:=droite(y=tan(u)*x);
+A:=inter(D,P)[1];
+B:=inter(D,p)[1];
+M:=conj_harmonique(A,B,point(0));
+trace(M);
+L:=lieu(M,u):;affichage(L,1);
+</PRE><P>On obtient :<BR>
+<IMG SRC="casexo074.png"><BR>
+On tape :<BR>
+<TT>m:=affixe(M)</TT><BR>
+On obtient :<BR>
+<TT>((-i)*b*tan(u)</TT><CODE><TT>^</TT></CODE><TT>3-b*tan(u)</TT><CODE><TT>^</TT></CODE><TT>2+i*b*tan(u)+b)/(3*tan(u)</TT><CODE><TT>^</TT></CODE><TT>2+1)</TT>
+On tape :<BR>
+<TT>normal(abs(m))</TT><BR>
+On obtient :<BR>
+<TT>((-tan(u)</TT><CODE><TT>^</TT></CODE><TT>2+1)*sqrt(tan(u)</TT><CODE><TT>^</TT></CODE><TT>2+1)*b)/(3*tan(u)</TT><CODE><TT>^</TT></CODE><TT>2+1)</TT>
+Le folium de Descartes a donc comme équation polaire :<BR>
+<I>r</I>=<I>b</I>1−tan(<I>u</I>)<SUP>2</SUP>/cos(<I>u</I>)(1+3tan(<I>u</I>)<SUP>2</SUP>)<BR>
+<B>Remarque</B><BR>
+Le folium de Descartes se déduit de la trisectrice de Mac-Laurin (d’équation
+polaire <I>r</I>=<I>b</I>/3(4cos(<I>t</I>)−1/cos(<I>t</I>)) cf section suivante)
+par une affinité de direction <I>Oy</I> et de rapport 1/√<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+En effet considérons l’affinité de direction <I>Oy</I> et de rapport 
+√<SPAN style="text-decoration:overline">3</SPAN> qui transforme <I>P</I> en <I>M</I>.<BR>
+On a :<BR>
+ <IMG SRC="casexo075.png"><BR>
+<I>x</I><SUB><I>M</I></SUB>=<I>x</I><SUB><I>P</I></SUB> et <I>y</I><SUB><I>M</I></SUB>=<I>y</I><SUB><I>P</I></SUB>*√<SPAN style="text-decoration:overline">(</SPAN>3)<BR>
+Donc
+tan(<I>u</I>)=tan(<I>t</I>)/√<SPAN style="text-decoration:overline">(</SPAN>3) et <I>OM</I>=<I>x</I><SUB><I>M</I></SUB>/cos(<I>t</I>) et <I>OP</I>=<I>x</I><SUB><I>M</I></SUB>/cos(<I>u</I>)
+<I>OM</I>=<I>OP</I>cos(<I>u</I>)/cos(<I>t</I>)=<I>b</I>(1−tan(<I>u</I>)<SUP>2</SUP>)/(3*tan(<I>u</I>)<SUP>2</SUP>+1)/cos(<I>t</I>)
+On a 3tan<SUP>2</SUP>(<I>u</I>))=tan(<I>t</I>)<SUP>2</SUP> donc<BR>
+<I>OM</I>=<I>b</I>/3*(3−tan(<I>t</I>)<SUP>2</SUP>)/(tan(<I>t</I>)<SUP>2</SUP>+1)/cos(<I>t</I>)<BR>
+<I>OM</I>=<I>b</I>/3*(3−tan(<I>t</I>)<SUP>2</SUP>)*cos(<I>t</I>)=<I>b</I>/3*(3cos(<I>t</I>)−sin(<I>t</I>)<SUP>2</SUP>/cos(<I>t</I>))<BR>
+<I>OM</I>=<I>b</I>/3*(3cos(<I>t</I>)+cos(<I>t</I>)−1/cos(<I>t</I>))=<I>b</I>/3(4cos(<I>t</I>)−1/cos(<I>t</I>))<BR>
+On tape :<BR>
+<TT>affichage(plotpolar(0.6/3*(4*cos(t)-1/cos(t)),t),1)</TT><BR>
+<TT>plotpolar(0.6*(1-tan(u)</TT><CODE><TT>^</TT></CODE><TT>2)/cos(u)/(1+3*tan(u)</TT><CODE><TT>^</TT></CODE><TT>2),u)</TT><BR>
+On obtient en rouge la trisectrice de Mac-Laurin et en noir la folium de 
+Descartes. La courbe en rouge se déduit de la courbe en noir par une 
+affinité de direction <I>Oy</I> et de rapport √<SPAN style="text-decoration:overline">3</SPAN>.<BR>
+:<BR>
+<IMG SRC="casexo076.png">
+</P><H2 CLASS="section"><A NAME="toc88"></A><A NAME="htoc243">17.6</A>  La trisectrice de Mac-Laurin</H2><P>
+La trisectrice de Mac-Laurin de paramètre <I>a</I> est la courbe d’équation 
+paramétrique :<BR>
+<I>x</I>(<I>t</I>):=<I>a</I>3−<I>t</I><SUP>2</SUP>/<I>t</I><SUP>2</SUP>+1<BR>
+<I>y</I>(<I>t</I>):=<I>a</I><I>t</I>(3−<I>t</I><SUP>2</SUP>)/<I>t</I><SUP>2</SUP>+1<BR>
+Tracer sa représentation paramétrique et calculer l’aire de la boucle.
+Cette courbe a été étudié par Mac-Laurin vers 1742.<BR>
+C’est une cubique circulaire unicursale.
+La boucle est obtenue pour <I>t</I>∈ [−√<SPAN style="text-decoration:overline">3</SPAN>,√<SPAN style="text-decoration:overline">3</SPAN>].
+On tape dans un niveau de géométrie :<BR>
+<TT>supposons(a=[-1.0,-5,5,0.1])</TT><BR>
+<TT>plotparam((3-t</TT><CODE><TT>^</TT></CODE><TT>2)*(1+i*t)/(t</TT><CODE><TT>^</TT></CODE><TT>2+1))</TT><BR>
+On obtient pour <I>a</I>=−1 :<BR>
+<IMG SRC="casexo077.png"><BR>
+On tape :<BR>
+<TT>int(2*t*a*(3-t</TT><CODE><TT>^</TT></CODE><TT>2)/(t</TT><CODE><TT>^</TT></CODE><TT>2+1)diff(a*(3-t</TT><CODE><TT>^</TT></CODE><TT>2)/(t</TT><CODE><TT>^</TT></CODE><TT>2+1),t),t,sqrt(3),0)</TT>
+On obtient : <TT>3*sqrt(3)*a</TT><CODE><TT>^</TT></CODE><TT>2</TT></P><H3 CLASS="subsection"><A NAME="htoc244">17.6.1</A>  Construction géométrique</H3><P>
+On peur donner de cette courbe a plusieurs constructions géométriques.<BR>
+En voici :<BR>
+Soit <I>a</I> un nombre réel.<BR>
+Dans un repère orthonormé <I>O</I>,<I>i</I>,<I>j</I>, on 
+considère une droite <I>d</I> et les points :<BR>
+<I>A</I>(2<I>a</I>,0), <I>S</I>(3<I>a</I>,0).<BR>
+Soit <I>P</I> le point de <I>d</I> d’angle polaire <I>t</I> défini par <I>OP</I>=<I>PA</I> et soit <I>M</I> le point de <I>d</I> 
+défini par <I>AM</I>=<I>AP</I>.<BR>
+Quel est le lieu de <I>M</I> ?<BR>
+Dans un niveau de géométrie, on tape :<BR>
+</P><PRE CLASS="verbatim">supposons(a=[1.0,-5,5,0.1]);
+supposons(t=[0.5,-5,5,0.1]);
+A:=point(2a);
+S:=point(3a);
+P:=point(a+i*a*tan(t));
+O:=point(0);
+d:=droite(y=tan(t)*x):;d;
+M:=point(2a+a/cos(t)*exp(3*i*t));
+trace(M);
+triangle(A,P,M);
+angle(O,A,P,"t");
+</PRE><P>On obtient selon les valeurs de <I>t</I> et pour <I>a</I>=1 :<BR>
+<IMG SRC="casexo078.png"><BR>
+<IMG SRC="casexo079.png"><BR>
+Montrons que le lieu de <I>M</I> est la trisectrice de Mac-Laurin de 
+paramètre <I>a</I>.<BR>
+Les triangles <I>OAP</I> et <I>PAM</I> sont isocèles donc on a :<BR>
+(<I>OA</I>, <I>OP</I>)=<I>t</I>,  
+(<I>PA</I>,<I>PM</I>)=2<I>t</I>,  
+(<I>AS</I>,<I>AM</I>)=3<I>t</I>.<BR>
+Cette courbe à été utilisée pour avoir une solution graphique au 
+problème de la trisection de l’angle, d’où son nom de trisectrice.<BR>
+Calculons <I>OP</I>=<I>PA</I>=<I>AM</I> :<BR>
+On a : cos(<I>t</I>)=<I>a</I>/<I>OP</I> donc <I>AM</I>=<I>OP</I>=<I>a</I>/cos(<I>t</I>)<BR>
+Dans le repère orthonormé <I>A</I>,<I>i</I>,<I>j</I>, 
+l’équation polaire du lieu est donc 
+ <I>r</I>=<I>a</I>/cos(θ/3) (puisque 
+(<I>AS</I>,<I>AM</I>)=3<I>t</I>=θ)<BR>
+On retrouve alors l’aire de la boucle (<TT>(3*sqrt(3))/2*a</TT><CODE><TT>^</TT></CODE><TT>2</TT>)
+en tapant :<BR>
+<TT>int(int(r,r,0,a/cos(t/3)),t,0,pi)</TT><BR>
+Le point <I>M</I> a donc comme coordonnées :
+2<I>a</I>+<I>a</I>cos(3<I>t</I>)/cos(<I>t</I>),<I>a</I>sin(3<I>t</I>)/cos(<I>t</I>)<BR>
+Donc <I>OM</I><SUP>2</SUP>=4<I>a</I><SUP>2</SUP>+<I>a</I><SUP>2</SUP>/cos(<I>t</I>)<SUP>2</SUP>+4<I>a</I><SUP>2</SUP>cos(3<I>t</I>)/cos(<I>t</I>)
+Comme cos(3<I>t</I>)=cos(<I>t</I>)<SUP>3</SUP>−3cos(<I>t</I>)(1−cos(<I>t</I>)<SUP>2</SUP>)=4cos(<I>t</I>)<SUP>3</SUP>−3cos(<I>t</I>)<BR>
+On a <I>OM</I><SUP>2</SUP>=4<I>a</I><SUP>2</SUP>+<I>a</I><SUP>2</SUP>/cos(<I>t</I>)<SUP>2</SUP>+16<I>a</I><SUP>2</SUP>cos(<I>t</I>)<SUP>2</SUP>−12<I>a</I><SUP>2</SUP>=(4<I>a</I>cos(<I>t</I>)−<I>a</I>/cos(<I>t</I>))<SUP>2</SUP><BR>
+Dans le repère orthonormé <I>O</I>,<I>i</I>,<I>j</I>, 
+l’équation polaire du lieu est donc :<BR>
+<I>r</I>=<I>a</I>(4cos(<I>t</I>)−1/cos(<I>t</I>))<BR>
+
+Les coordonnées de <I>M</I> sont donc :
+<I>xM</I>+<I>iyM</I>=<I>r</I>*<I>exp</I>(<I>it</I>)<BR>
+On tape :<BR>
+<TT>z:=a*(4*cos(t)-1/cos(t))*exp(i*t)</TT><BR>
+<TT>xM:=re(z);yM:=im(z) </TT><BR>
+<TT>trigsin(xM*(xM</TT><CODE><TT>^</TT></CODE><TT>2+yM</TT><CODE><TT>^</TT></CODE><TT>2)-a*(3*xM</TT><CODE><TT>^</TT></CODE><TT>2-yM</TT><CODE><TT>^</TT></CODE><TT>2))</TT><BR>
+On obtient : <TT>0</TT><BR>
+L’équation cartésienne est donc :<BR>
+<I>x</I>(<I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP>)−<I>a</I>(3<I>x</I><SUP>2</SUP>−<I>y</I><SUP>2</SUP>)=0<BR>
+ou encore :
+<I>y</I><SUP>2</SUP>(<I>x</I>+<I>a</I>)=<I>x</I><SUP>2</SUP>(3<I>a</I>−<I>x</I>)<BR>
+Dans le repère orthonormé <I>O</I>,<I>i</I>,<I>j</I>, 
+l’équation paramétrique du lieu est donc en posant <I>y</I>=<I>tx</I> :<BR>
+<I>x</I>=<I>a</I>(3<I>a</I>−<I>t</I><SUP>2</SUP>)/(1+<I>t</I><SUP>2</SUP>),<I>y</I>=<I>t</I>*<I>x</I>=<I>at</I>(3<I>a</I>−<I>t</I><SUP>2</SUP>)/(1+<I>t</I><SUP>2</SUP>)<BR>
+On peut créer une animation qui montre que la trisectrice de Mac-laurin est 
+le lieu des points qui sont l’intersection de 2 droites qui tournent l’une 
+autour de <I>O</I> à la vitesse angulaire <I>t</I> et l’autre autour de <I>A</I> à la 
+vitesse angulaire 3<I>t</I>.<BR>
+On tape (pour <I>a</I>=1):<BR>
+<TT>d(t):=droite(y=tan(t)*x);D(t):=droite(y=tan(3*t)*(x-2));</TT><BR>
+<TT>M(t):=inter_unique(d(t),D(t),affichage=1+epaisseur_point_2)</TT><BR>
+puis sur un même niveau :<BR>
+<TT>plotpolar(4*cos(t)-1/cos(t),t,-pi,pi);A:=point(2);</TT><BR>
+<TT>animation(seq([d(t),D(t),M(t)],t,-3,3,0.05))</TT><BR>
+On obtient :<BR>
+<IMG SRC="casexo080.png"><BR>
+On peut aussi montrer que la trisectrice de Mac-laurin est 
+le lieu de la projection de <I>O</I> sur les tangentesà la parabole <I>p</I> 
+d’équation <I>y</I><SUP>2</SUP>=4<I>ax</I>−12<I>a</I><SUP>2</SUP> (c’est la podaire de <I>p</I> par rapport à <I>O</I>). <I>p</I> a comme foyer le point de coordonnées (4<I>a</I>,0) et comme directrice la droite d’équation <I>x</I>=2<I>a</I>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">supposons(a=[1.3,0,5,0.1]);
+p:=plotparam(3a+(t^2)/(4*a)+(i)*t,t=-10.0..10.0);
+supposons(t=[-9.0,-10,10,0.2]);
+T:=mediatrice(point(4a),point(2a+i*t));
+M:=projection(T,point(0));;
+trace(M);
+segment(0,M);
+O:=point(0);
+</PRE><P>On obtient :<BR>
+<IMG SRC="casexo081.png">
+Pour faire une animation, on tape dans un même niveau :<BR>
+<TT>p:=plotparam(3+(t</TT><CODE><TT>^</TT></CODE><TT>2)/(4)+(i)*t,t=-10.0..10.0);</TT><BR>
+<TT>plotpolar(4*cos(t)-1/cos(t),t,-pi,pi);O:=point(0);</TT><BR>
+<TT>animation(seq([mediatrice(point(4),point(2+i*t)),</TT><BR>
+<TT>segment(M:=projection(T,O),O),</TT><BR>
+<TT>affichage(M,1+epaisseur_point_2)],t,-10,10,0.1))</TT><BR>
+et on obtient l’animation souhaitée.
+<B>Autre définition</B>
+Soit le cercle <I>C</I> de centre (4<I>a</I>,0) et la droite <I>D</I> d’équation <I>x</I>=−2<I>a</I>.
+Un droite <I>d</I> pivote autour de <I>O</I> et coupe <I>C</I> en <I>P</I> et <I>D</I> en <I>Q</I>. Le milieu
+<I>M</I> de <I>PQ</I> décrit alors une trisectrice de Mac-Laurin de paramètre <I>a</I>, 
+de point double <I>O</I> et d’asymptote <I>x</I>=−<I>a</I>.<BR>
+On tape :<BR>
+</P><PRE CLASS="verbatim">supposons(a=[1.3,0,5,0.1]);
+p:=plotparam(3a+(t^2)/(4*a)+(i)*t,t=-10.0..10.0);
+cercle(4*a,4*a);
+D:=droite(x=-2a);
+supposons(t=[-9.0,-10,10,0.2]);
+d:=droite(y=tan(t)*x):;d
+P:=point(8a*cos(t)*exp(i*t));
+Q:=point(-2a*(1+i*tan(t)));
+M:=milieu(P,Q);
+trace(M);
+O:=point(0);
+</PRE><P>On obtient :<BR>
+<IMG SRC="casexo082.png"></P><H2 CLASS="section"><A NAME="toc89"></A><A NAME="htoc245">17.7</A>  Un exercice</H2><H3 CLASS="subsection"><A NAME="htoc246">17.7.1</A>  L’énoncé</H3><P>
+On considère la fonction <I>g</I>  ℝ−&gt;ℂ définie par :
+ <I>g</I>(<I>t</I>)=∑<SUB><I>n</I>=0</SUB><SUP>+∞</SUP><I>e</I><SUP><I>i</I>2<SUP><I>n</I></SUP><I>t</I></SUP>/2<SUP><I>n</I></SUP>
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Montrer que <I>g</I> est périodique.<BR>
+Calculer <I>g</I>(−<I>t</I>) et sup<SUB><I>t</I>∈ ℝ</SUB>|<I>g</I>(<I>t</I>)|.<BR>
+Majorer l’erreur commise lorsqu’on prend :
+∑<SUB><I>n</I>=0</SUB><SUP>20</SUP><I>e</I><SUP><I>i</I>2<SUP><I>n</I></SUP><I>t</I></SUP>/2<SUP><I>n</I></SUP> comme valeur approchée de <I>g</I>(<I>t</I>)
+</LI><LI CLASS="li-enumerate">En utilisant <TT>Xcas</TT> dessiner l’image de ℝ par cette approximation 
+de <I>g</I>.
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc247">17.7.2</A>  Le corrigé</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On a <I>g</I>(<I>t</I>+2π)=<I>g</I>(<I>t</I>) donc <I>g</I> est périodique de période 2π.<BR>
+On a <I>g</I>(−<I>t</I>)=<SPAN style="text-decoration:overline"><I>g</I>(<I>t</I>)</SPAN>.<BR>
+On a  |<I>e</I><SUP><I>i</I>2<SUP><I>n</I></SUP><I>t</I></SUP>/2<SUP><I>n</I></SUP>|&lt;1/2<SUP><I>n</I></SUP> donc 
+ sup<SUB><I>t</I>∈ ℝ</SUB>|<I>g</I>(<I>t</I>)|&lt;=∑<SUB><I>n</I>=0</SUB><SUP>+∞</SUP>1/2<SUP><I>n</I></SUP>=2.<BR>
+Si on prend :
+∑<SUB><I>n</I>=0</SUB><SUP>20</SUP><I>e</I><SUP><I>i</I>2<SUP><I>n</I></SUP><I>t</I></SUP>/2<SUP><I>n</I></SUP> comme valeur approchée de <I>g</I>(<I>t</I>)
+l’erreur commise est inférieure à :
+ ∑<SUB><I>n</I>=21</SUB><SUP>+∞</SUP>1/2<SUP><I>n</I></SUP>=1/2<SUP>20</SUP>&lt;1<I>e</I>−06
+</LI><LI CLASS="li-enumerate">On définit la fonction <I>g</I> et on tape :<BR>
+<TT>g(t):=sum(exp(i*2</TT><CODE><TT>^</TT></CODE><TT>n*t)/2</TT><CODE><TT>^</TT></CODE><TT>n,n=0..20)</TT><BR>
+L’image de ℝ par <I>g</I> est la courbe en paramétrique définie par <I>g</I>.
+On tape :<BR>
+<TT>plotparam(g(t),t=0..pi);plotparam(g(t),t=pi..2pi,affichage=1)</TT><BR>
+On visualise la symétrie de la courbe par rapport à l’axe des <I>x</I>, 
+symétrie due au fait que <I>g</I>(−<I>t</I>)=<SPAN style="text-decoration:overline"><I>g</I>(<I>t</I>)</SPAN> et on obtient :<BR>
+
+<IMG SRC="casexo083.png"> 
+</LI></OL>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casexo016.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo018.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

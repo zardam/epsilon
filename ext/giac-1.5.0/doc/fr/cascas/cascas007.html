@@ -1,0 +1,689 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>Pour s’amuser avec le graphique</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascas006.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas008.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc109">Chapitre 7</A>  Pour s’amuser avec le graphique</H1><H2 CLASS="section"><A NAME="toc39"></A><A NAME="htoc110">7.1</A>  Les polygones et les milieux de leurs côtés</H2><H3 CLASS="subsection"><A NAME="htoc111">7.1.1</A>  Le triangle et le quadrilatère</H3><H4 CLASS="subsubsection">Le triangle</H4><P>
+Étant donné 3 points <TT>A,B,C</TT>, construire un triangle 
+<TT>E,F,G</TT> tel que <TT>A</TT> soit le milieu de <TT>EF</TT>,
+<TT>B</TT> soit le milieu de <TT>FG</TT> et <TT>C</TT> soit le milieu de 
+<TT>GE</TT>.<BR>
+Avec <TT>Xcas</TT>, faisons des essais :
+On clique sur 4 points <TT>A,B,C,E</TT> puis on tape :
+</P><PRE CLASS="verbatim">F:=symetrie(A,E);
+G:=symetrie(B,F);
+H:=symetrie(C,G);
+polygone(A,B,C);
+polygone_ouvert(E,F,G,H);
+</PRE><P>On fait bouger ensuite le point <TT>E</TT> pour que <TT>E</TT> et <TT>H</TT> coincident.
+On analyse alors la figure :
+Lorsque <TT>E</TT> et <TT>H</TT> coincident <TT>EG</TT> est parallèle à <TT>AB</TT> et
+le vecteur <TT>CE</TT> est égal au vecteur <TT>BA</TT> (propriété des milieux 
+d’un triangle).<BR>
+On en déduit la construction avec <TT>Xcas</TT> :
+On clique sur 3 points <TT>A,B,C</TT> puis on tape :
+</P><PRE CLASS="verbatim">E:=translation(A-B,C);
+F:=symetrie(A,E);
+G:=symetrie(B,F);
+</PRE><H4 CLASS="subsubsection">Le quadrilatère</H4><P>
+Étant donné 4 points <TT>A,B,C,D</TT>, construire un quadrilatère
+<TT>E,F,G,H</TT> tel que <TT>A</TT> soit le milieu de <TT>EF</TT>,
+<TT>B</TT> soit le milieu de <TT>FG</TT>, <TT>C</TT> soit le milieu de <TT>GH</TT>,
+<TT>D</TT> soit le milieu de <TT>HE</TT>.<BR>
+Avec <TT>Xcas</TT>, faisons des essais :<BR>
+On clique sur 5 points <TT>A,B,C,D,E</TT> (il faut renommer les points car <TT>D</TT>
+n’est pas attribué automatiquement car en Maple <TT>D</TT> désigne la 
+dérivation). 
+</P><PRE CLASS="verbatim">F:=symetrie(A,E);
+G:=symetrie(B,F);
+H:=symetrie(C,G);
+I:=symetrie(D,H);
+polygone(A,B,C,D);
+polygone_ouvert(E,F,G,H,I);
+</PRE><P>On fait bouger ensuite le point <TT>E</TT> pour que <TT>E</TT> et <TT>I</TT> coincident.
+Mais, cette fois on n’y arrive pas ....On modifie le point
+<TT>A</TT> pour que <TT>E</TT> et <TT>I</TT> coincident. On analyse alors la figure :
+Lorsque <TT>E</TT> et <TT>I</TT> coincident <TT>ABCD</TT> est un parallèlogramme 
+(on a 2<I>AB</I>=<I>EG</I> et 2<I>DC</I>=<I>IG</I> donc si <TT>E</TT> et <TT>I</TT> coincident on a <I>AB</I>=<I>DC</I>).<BR>
+Lorsque <TT>ABCD</TT> est un parallèlogramme, on remarque alors que si on 
+fait bouger le point <TT>E</TT>, on a toujours <TT>E</TT> et <TT>I</TT> en coincidence.
+En effet on a :<BR>
+2<I>AB</I>=<I>EG</I> et 2<I>DC</I>=<I>IG</I> donc si <I>AB</I>=<I>DC</I>, on a
+<I>EG</I>=<I>IG</I> donc <TT>E</TT> et <TT>I</TT> coincident.
+</P><H4 CLASS="subsubsection">Analyse</H4><P>
+Dans le cas du triangle, lorsqu’on fait subir au point <TT>E</TT>, 3 symétries 
+centrales successives <I>S</I><SUB>1</SUB>,<I>S</I><SUB>2</SUB>,<I>S</I><SUB>3</SUB> on veut retrouver <TT>E</TT> : cela signifie 
+que <TT>E</TT> doit être un point fixe de <I>S</I><SUB>3</SUB> ∘ <I>S</I><SUB>2</SUB> ∘ <I>S</I><SUB>1</SUB>.</P><P>Dans le cas du quadrilatère, lorsqu’on fait subir au point <TT>E</TT>, 4 
+symétries centrales successives <I>S</I><SUB>1</SUB>,<I>S</I><SUB>2</SUB>,<I>S</I><SUB>3</SUB>,<I>S</I><SUB>4</SUB> on veut retrouver <TT>E</TT> :
+cela signifie que <TT>E</TT> doit être un point fixe de <I>S</I><SUB>4</SUB> ∘ <I>S</I><SUB>3</SUB> ∘ <I>S</I><SUB>2</SUB> ∘ <I>S</I><SUB>1</SUB>.
+On est donc amené à comprendre comment on compse des symétries centrales.
+</P><H3 CLASS="subsection"><A NAME="htoc112">7.1.2</A>  Translation et composition de symétries centrales</H3><P>
+On désigne par <FONT COLOR=red><I>S</I></FONT><SUB><I>O</I></SUB> la symétrie de centre <I>O</I> et par 
+<FONT COLOR=red><I>T</I></FONT><SUB><I>AB</I></SUB> la translation de vecteur <I>AB</I>.<BR>
+<B>Théorème</B>
+Soient deux points <I>O</I><SUB>1</SUB> et <I>O</I><SUB>2</SUB> et un vecteur <I>V</I>, on a :
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+<FONT COLOR=red><I>S</I></FONT><SUB><I>O</I><SUB>2</SUB></SUB> ∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>O</I><SUB>1</SUB></SUB>=<FONT COLOR=red><I>T</I></FONT><SUB>2<I>O</I><SUB>1</SUB><I>O</I><SUB>2</SUB></SUB>,
+</LI><LI CLASS="li-enumerate"><FONT COLOR=red><I>T</I></FONT><SUB><I>V</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>O</I><SUB>1</SUB></SUB>=<FONT COLOR=red><I>S</I></FONT><SUB><I>K</I></SUB> avec 
+<I>O</I><SUB>1</SUB><I>K</I>=<I>V</I>/2,
+</LI><LI CLASS="li-enumerate"><FONT COLOR=red><I>S</I></FONT><SUB><I>O</I><SUB>1</SUB></SUB>∘ <FONT COLOR=red><I>T</I></FONT><SUB><I>V</I></SUB>=<FONT COLOR=red><I>S</I></FONT><SUB><I>H</I></SUB> avec 
+<I>O</I><SUB>1</SUB><I>H</I>=−<I>V</I>/2.
+</LI></OL><P>
+En effet,
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Soit <I>A</I> un point. Posons <I>B</I>=<FONT COLOR=red><I>S</I></FONT><SUB><I>O</I><SUB>1</SUB></SUB>(<I>A</I>) et 
+<I>C</I>=<FONT COLOR=red><I>S</I></FONT><SUB><I>O</I><SUB>2</SUB></SUB>(<I>B</I>).<BR>
+On a :
+<I>AO</I><SUB>1</SUB>=<I>O</I><SUB>1</SUB><I>B</I> et,
+<I>O</I><SUB>2</SUB><I>C</I>=<I>BO</I><SUB>2</SUB> donc,
+<I>AC</I>=<I>AO</I><SUB>1</SUB>+<I>O</I><SUB>1</SUB><I>O</I><SUB>2</SUB>+
+<I>O</I><SUB>2</SUB><I>C</I>=<BR>
+<I>O</I><SUB>1</SUB><I>B</I>+<I>O</I><SUB>1</SUB><I>O</I><SUB>2</SUB>+<I>BO</I><SUB>2</SUB>=<BR>
+2<I>O</I><SUB>1</SUB><I>O</I><SUB>2</SUB><BR>
+Comme <I>A</I> est quelconque on en déduit que :<BR>
+<FONT COLOR=red><I>S</I></FONT><SUB><I>O</I><SUB>2</SUB></SUB> ∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>O</I><SUB>1</SUB></SUB>=<FONT COLOR=red><I>T</I></FONT><SUB>2<I>O</I><SUB>1</SUB><I>O</I><SUB>2</SUB></SUB></LI><LI CLASS="li-enumerate">Soit <I>A</I> un point, <I>V</I> un vecteur et <I>K</I> tel que 
+<I>O</I><SUB>1</SUB><I>K</I>=<I>V</I>/2.<BR>
+Posons <I>B</I>=<FONT COLOR=red><I>S</I></FONT><SUB><I>O</I><SUB>1</SUB></SUB>(<I>A</I>) et 
+<I>C</I>=<FONT COLOR=red><I>T</I></FONT><SUB><I>V</I></SUB>(<I>B</I>).<BR>
+On a :
+<I>AO</I><SUB>1</SUB>=<I>O</I><SUB>1</SUB><I>B</I>,<BR>
+<I>BC</I>=<I>V</I> et,<BR>
+<I>O</I><SUB>1</SUB><I>K</I>=<I>V</I>/2=<I>BC</I>/2.<BR>
+Donc<BR>
+<I>AK</I>=<I>AO</I><SUB>1</SUB>+<I>O</I><SUB>1</SUB><I>K</I>=<BR>
+<I>AO</I><SUB>1</SUB>+<I>BC</I>/2 et
+<I>AC</I>=<I>AB</I>+<I>BC</I>=<BR>
+2<I>AO</I><SUB>1</SUB>+<I>BC</I>=2<I>AK</I> soit<BR>
+<I>AC</I>=<I>AK</I>+<I>KC</I>=2<I>AK</I> c’est à dire<BR>
+<I>KC</I>=<I>AK</I><BR>
+donc <I>C</I>=<FONT COLOR=red><I>S</I></FONT><SUB><I>K</I></SUB>(<I>A</I>) 
+Comme <I>A</I> est quelconque on en déduit que :<BR>
+<FONT COLOR=red><I>T</I></FONT><SUB><I>V</I></SUB> ∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>O</I><SUB>1</SUB></SUB>=<FONT COLOR=red><I>S</I></FONT><SUB><I>K</I></SUB> avec 
+<I>O</I><SUB>1</SUB><I>K</I>=<I>V</I>/2
+</LI><LI CLASS="li-enumerate">Soit <I>A</I> un point, <I>V</I> un vecteur et <I>H</I> tel que 
+<I>O</I><SUB>1</SUB><I>H</I>=−<I>V</I>/2.<BR>
+Posons <I>B</I>=<FONT COLOR=red><I>T</I></FONT><SUB><I>V</I></SUB>(<I>A</I>) et <I>C</I>=<FONT COLOR=red><I>S</I></FONT><SUB><I>O</I><SUB>1</SUB></SUB>(<I>B</I>).<BR>
+On a :
+<I>O</I><SUB>1</SUB><I>H</I>=−<I>V</I>/2,
+<I>AB</I>=<I>V</I> et <I>BO</I><SUB>1</SUB>=<I>O</I><SUB>1</SUB><I>C</I><BR>
+Donc<BR>
+<I>AH</I>=<I>AB</I>+<I>BO</I><SUB>1</SUB>+<I>O</I><SUB>1</SUB><I>H</I>=<BR>
+<I>V</I>+<I>O</I><SUB>1</SUB><I>C</I>−<I>V</I>/2=<I>O</I><SUB>1</SUB><I>C</I>+<I>V</I>/2 et<BR>
+<I>AC</I>=<I>AB</I>+<I>BC</I>=<BR>
+<I>V</I>+<I>BC</I>=<I>V</I>+2<I>O</I><SUB>1</SUB><I>C</I> soit<BR>
+<I>AC</I>=<I>AH</I>+<I>HC</I>=2<I>AH</I> c’est à dire<BR>
+<I>HC</I>=<I>AH</I><BR>
+donc <I>C</I>=<FONT COLOR=red><I>S</I></FONT><SUB><I>H</I></SUB>(<I>A</I>) 
+Comme <I>A</I> est quelconque on en déduit que :<BR>
+<FONT COLOR=red><I>S</I></FONT><SUB><I>O</I><SUB>1</SUB></SUB> ∘ <FONT COLOR=red><I>T</I></FONT><SUB><I>V</I></SUB>=<FONT COLOR=red><I>S</I></FONT><SUB><I>H</I></SUB> avec
+<I>O</I><SUB>1</SUB><I>H</I>=−<I>V</I>/2
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc113">7.1.3</A>  Le pentagone</H3><P>
+Étant donné 5 points <TT>A,B,C,D,E</TT>, construire un pentagone 
+<TT>A1,A2,A3,A4,A5</TT> tel que <TT>A</TT> soit le milieu de <TT>A1A2</TT>,
+<TT>B</TT> soit le milieu de <TT>A2A3</TT>,....,<TT>E</TT> soit le milieu de 
+<TT>A5A1</TT>.<BR>
+La construction du pentagone revient à déterminer <I>A</I>1 tel que :<BR>
+<FONT COLOR=red><I>S</I></FONT><SUB><I>A</I><SUB>1</SUB></SUB>=<FONT COLOR=red><I>S</I></FONT><SUB><I>E</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>D</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>C</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>B</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>A</I></SUB>, puis à construire les points<BR>
+<I>A</I><SUB>2</SUB>=<FONT COLOR=red><I>S</I></FONT><SUB><I>A</I></SUB>(<I>A</I><SUB>1</SUB>), <I>A</I><SUB>3</SUB>=<FONT COLOR=red><I>S</I></FONT><SUB><I>B</I></SUB>(<I>A</I><SUB>2</SUB>)....<BR>
+On a d’après le théorème précédent :<BR>
+<FONT COLOR=red><I>S</I></FONT><SUB><I>B</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>A</I></SUB>=<FONT COLOR=red><I>T</I></FONT><SUB>2<I>AB</I></SUB>
+<FONT COLOR=red><I>S</I></FONT><SUB><I>D</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>C</I></SUB>=<FONT COLOR=red><I>T</I></FONT><SUB>2<I>CD</I></SUB>
+donc<BR>
+<FONT COLOR=red><I>S</I></FONT><SUB><I>D</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>C</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>B</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>A</I></SUB>=<FONT COLOR=red><I>T</I></FONT><SUB>2(<I>AB</I>+<I>CD</I>)</SUB> et<BR>
+<FONT COLOR=red><I>S</I></FONT><SUB><I>E</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>D</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>C</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>B</I></SUB>∘ <FONT COLOR=red><I>S</I></FONT><SUB><I>A</I></SUB>=<FONT COLOR=red><I>S</I></FONT><SUB><I>E</I></SUB>∘<FONT COLOR=red><I>T</I></FONT><SUB>2(<I>AB</I>+<I>CD</I>)</SUB>=
+<FONT COLOR=red><I>S</I></FONT><SUB><I>A</I><SUB>1</SUB></SUB> avec <I>EA</I><SUB>1</SUB>=<I>BA</I>+<I>DC</I><BR>
+La construction avec <TT>Xcas</TT> .<BR>
+On clique sur 5 points <TT>A,B,C,D,E</TT> (il faut renommer les points car <TT>D</TT>
+n’est pas attribué automatiquement car en Maple <TT>D</TT> désigne la 
+dérivation). 
+</P><PRE CLASS="verbatim">polygone(A,B,C,D,E);
+A1:=translation(A-B+C-D,E);
+A2:=symetrie(A,A1);
+A3:=symetrie(B,A2);
+A4:=symetrie(C,A3);
+A5:=symetrie(D,A4);
+F:=symetrie(E,A5):;
+polygone_ouvert(A1,A2,A3,A4,A5,F);
+A1==F;
+</PRE><P>La réponse de <TT>A1==F</TT> est <TT>1</TT> ce qui signifie que la construction est
+correcte.
+</P><H3 CLASS="subsection"><A NAME="htoc114">7.1.4</A>  Le polygône ayant un nombre impair de côtés</H3><P>
+La construction d’un polygône ayant un nombre impair de côtés à partir 
+des milieux de ses côtés est possible puisque le produit d’un nombre impair
+de symétries centrales est une symétrie centrale.</P><H2 CLASS="section"><A NAME="toc40"></A><A NAME="htoc115">7.2</A>  Le théorème de Johnson</H2><P>
+Soient 3 cercles <I>C</I><SUB><I>A</I></SUB>,<I>C</I><SUB><I>B</I></SUB>,<I>C</I><SUB><I>C</I></SUB> de centre <I>A</I>,<I>B</I>,<I>C</I> de même rayon <I>R</I> 
+et ayant un point commun <I>O</I> (on a donc les trois centres <I>A</I>,<I>B</I>,<I>C</I>
+sont sur un cercle de centre <I>O</I> et de rayon <I>R</I>).<BR>
+Soient :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<I>M</I> l’intersection autre que <I>O</I> de <I>C</I><SUB><I>A</I></SUB> et <I>C</I><SUB><I>B</I></SUB>,
+</LI><LI CLASS="li-itemize"><I>N</I> l’intersection autre que <I>O</I> de <I>C</I><SUB><I>A</I></SUB> et <I>C</I><SUB><I>C</I></SUB>, 
+</LI><LI CLASS="li-itemize"><I>P</I> l’intersection autre que <I>O</I> de <I>C</I><SUB><I>C</I></SUB> et <I>C</I><SUB><I>B</I></SUB> 
+</LI></UL><P>
+alors, les trois points 
+<I>M</I>,<I>N</I>,<I>P</I> sont sur un cercle de rayon <I>R</I>.<BR>
+</P><P><B>Lemme</B><BR>
+Si deux cercles de même rayon <I>R</I> et de centre <I>O</I><SUB>1</SUB> et <I>O</I><SUB>2</SUB> se coupent en 
+<I>A</I> e <I>B</I> alors le quadrilatère <I>O</I><SUB>1</SUB>,<I>A</I>,<I>O</I><SUB>2</SUB>,<I>B</I> est un losange.<BR>
+
+<IMG SRC="cascas016.png"><BR>
+En effet on a <I>O</I><SUB>1</SUB><I>A</I>=<I>O</I><SUB>1</SUB><I>B</I>=<I>O</I><SUB>2</SUB><I>A</I>=<I>O</I><SUB>2</SUB><I>B</I>=<I>R</I>.<BR>
+
+<B>Démonstration</B><BR>
+D’après le lemme les quadrilatères :<BR>
+<I>O</I>,<I>B</I>,<I>M</I>,<I>A</I>,<BR>
+ <I>O</I>,<I>A</I>,<I>N</I>,<I>C</I>, et<BR>
+<I>O</I>,<I>C</I>,<I>P</I>,<I>B</I><BR>
+sont des losanges.<BR>
+La translation de vecteur <I>OA</I> transforme 
+<I>BC</I> en <I>MN</I>.<BR>
+La translation de vecteur <I>OB</I> transforme 
+<I>AC</I> en <I>MP</I>.<BR>
+La translation de vecteur <I>OC</I> transforme 
+<I>AB</I> en <I>NP</I>.<BR>
+Les triangles <I>M</I>,<I>N</I>,<I>P</I> et <I>B</I>,<I>C</I>,<I>A</I> sont donc égaux.<BR>
+Donc le rayon <I>R</I> du cercle circonscrit à <I>B</I>,<I>C</I>,<I>A</I> est égal au rayon du 
+cercle circonscrit à <I>M</I>,<I>N</I>,<I>P</I>.<BR>
+On va aussi montrer que le centre <I>I</I> de ce cercle est tel que 
+<I>AI</I>= <I>OP</I> et que<BR>
+c’est aussi l’orthocentre du triangle <I>ABC</I>.<BR>
+<IMG SRC="cascas017.png">
+On a en effet :<BR>
+Soit <I>AI</I>= <I>OP</I><BR>
+ On a <I>PI</I>= <I>OA</I>= <I>CN</I> et
+<I>PC</I>=<I>CN</I> donc<BR>
+ <I>PINC</I> est un losange et donc <I>IC</I> est la médiatrice de <I>PN</I>.<BR>
+de même <I>PI</I>= <I>OA</I>= <I>BM</I> et
+<I>PB</I>=<I>BM</I> donc<BR>
+ <I>PIMB</I> est un losange et donc <I>IB</I> est la médiatrice de <I>PM</I>.<BR>
+Donc <I>I</I> est le point de concours des médiatrice de <I>MNP</I> c’est donc le 
+centre du cercle circonscrit à <I>MNP</I>.<BR>
+Puisque <I>OP</I> est la médiatrice de <I>BC</I> donc <I>AI</I> est la médiatrice de 
+<I>MN</I> (car la translation de vecteur 0<I>A</I> transforme <I>B</I> en <I>M</I>, <I>C</I> en <I>N</I> <I>P</I> en <I>I</I> et <I>O</I> en <I>A</I>).<BR>
+Donc la médiatrice de <I>MN</I> passe par <I>A</I> puisque <I>MA</I>=<I>AN</I> et elle est 
+perpendiculaire à <I>BC</I> puisque <I>BC</I> et <I>MN</I> sont parallèles. donc la 
+médiatrice de <I>MN</I> est la hauteur issue de <I>A</I> du triangle <I>ABC</I>.<BR>
+De même la médiatrice de <I>MP</I> passe par <I>B</I> puisque <I>MB</I>=<I>BP</I> et elle est 
+perpendiculaire à <I>AC</I> puisque <I>AC</I> et <I>MP</I> sont parallèles. donc la 
+médiatrice de <I>MP</I> est la hauteur issue de <I>B</I> du triangle <I>ABC</I>.<BR>
+donc le centre du cercle circonscrit à <I>MNP</I> est l’orthocenntre du triangle 
+<I>ABC</I>.<BR>
+
+<B>Démonstration avec </B><B><TT>Xcas</TT></B><BR>
+On tape :
+</P><PRE CLASS="verbatim">O:=point(0);
+U:=cercle(O,1):;U;
+supposons(a=[0.3,-5,5,0.1]);
+A:=point(cos(a)+(i)*sin(a));
+supposons(b=[2.4,-5,5,0.1]);
+B:=point(cos(b)+i*sin(b));
+C1:=cercle(A,1):;C1;
+C2:=cercle(B,1):;C2;
+M:=normal(symetrie(droite(A,B),O));
+supposons(c=[-1.6,-5,5,0.1]);
+C:=point(cos(c)+(i)*sin(c));
+C3:=cercle(C,1):;C3;
+N:=normal(symetrie(droite(A,C),O));
+P:=normal(symetrie(droite(B,C),O));
+U1:=circonscrit(M,N,P):;
+affichage(U1,1);
+affichage(circonscrit(A,B,C),2);
+I:=orthocentre(A,B,C);
+U2:=cercle(I,1):; affichage(U2,4);
+</PRE><P><TT>Xcas</TT> peut prouver que le cercle <TT>U1</TT> est le cercle <TT>U2</TT> de 
+centre <TT>I</TT> (orthocentre de <TT>ABC</TT> ou point vérifiant 
+<I>AI</I>= <I>OP</I>) et de rayon 1 car tous les calculs 
+sont faits en utilisant les paramètre formels <TT>a,b,c</TT>.<BR>
+On tape :<BR>
+<TT>tsimplify(centre(U1)-I)</TT><BR>
+On obtient :<BR>
+<TT>0</TT><BR>
+On tape :<BR>
+<TT>J:=translation(P-O,A)</TT><BR>
+<TT>tsimplify(centre(U1)-J)</TT><BR>
+On obtient :<BR>
+<TT>0</TT><BR>
+On tape :<BR>
+<TT>tsimplify(rayon(U1))</TT><BR>
+On obtient :<BR>
+<TT>1</TT>
+<B>Remarque</B><BR>
+On remarque que les calculs sont longs :<BR>
+pour le cercle <TT>U1:=circonscrit(M,N,P):;</TT> (Evaluation time: 2.74)<BR>
+pour <TT>tsimplify(centre(U1)-I)</TT> (Evaluation time: 0.54)<BR>
+pour <TT>ttsimplify(rayon(U1))</TT> (Evaluation time: 1.12)<BR>
+On peut amĺioer le temps de calcul !!!!
+En effet lorsque vous voulez faire faire une démonstration géométrique 
+par <TT>Xcas</TT>, il est important de réduire au maximum les paramètres 
+formels sans perte de généralités bien sûr !<BR>
+Par exemple, ici, on peut supposer que <TT>a</TT> vaut 1 et donc que <TT>A</TT> se 
+trouve sur <TT>U</TT> et sur l’axe des <I>x</I> (cette disposition n’est pas un cas 
+particulier car on a le choix du repère). 
+On tape :
+</P><PRE CLASS="verbatim">O:=point(0);
+U:=cercle(O,1):;U;
+A:=point(1);
+supposons(b=[2.4,-5,5,0.1]);
+B:=point(cos(b)+i*sin(b));
+C1:=cercle(A,1):;C1;
+C2:=cercle(B,1):;C2;
+M:=normal(symetrie(droite(A,B),O));
+supposons(c=[-1.6,-5,5,0.1]);
+C:=point(cos(c)+(i)*sin(c));
+C3:=cercle(C,1):;C3;
+N:=normal(symetrie(droite(A,C),O));
+P:=normal(symetrie(droite(B,C),O));
+U1:=circonscrit(M,N,P):;
+affichage(U1,1);
+affichage(circonscrit(A,B,C),2);
+I:=orthocentre(A,B,C);
+U2:=cercle(I,1):; affichage(U2,4);
+</PRE><P>On a alors :<BR>
+pour le cercle <TT>U1:=circonscrit(M,N,P):;</TT> (Evaluation time: 0.92)<BR>
+et ensuite <TT>tsimplify(centre(U1)-I)</TT> et <TT>ttsimplify(rayon(U1))</TT> sont
+instantanés.</P><H2 CLASS="section"><A NAME="toc41"></A><A NAME="htoc116">7.3</A>  Une suite de symétrie</H2><P>
+On se donne trois directions <I>d</I><SUB>1</SUB>,<I>d</I><SUB>2</SUB>,<I>d</I><SUB>3</SUB> et un cercle <I>C</I> de centre <I>O</I> et de 
+rayon <I>R</I> et un point <I>M</I><SUB>0</SUB> sur ce cercle.<BR>
+On consid‘ere la suite des points :
+<I>M</I><SUB>1</SUB> est le point de <I>C</I> tel que <I>M</I><SUB>0</SUB><I>M</I><SUB>1</SUB> a pour direction <I>d</I><SUB>1</SUB>,<BR>
+<I>M</I><SUB>2</SUB> est le point de <I>C</I> tel que <I>M</I><SUB>1</SUB><I>M</I><SUB>2</SUB> a pour direction <I>d</I><SUB>2</SUB>,<BR>
+<I>M</I><SUB>3</SUB> est le point de <I>C</I> tel que <I>M</I><SUB>2</SUB><I>M</I><SUB>3</SUB> a pour direction <I>d</I><SUB>3</SUB>,<BR>
+<I>M</I><SUB>4</SUB> est le point de <I>C</I> tel que <I>M</I><SUB>3</SUB><I>M</I><SUB>4</SUB> a pour direction <I>d</I><SUB>1</SUB>,<BR>
+<I>M</I><SUB>5</SUB> est le point de <I>C</I> tel que <I>M</I><SUB>4</SUB><I>M</I><SUB>5</SUB> a pour direction <I>d</I><SUB>2</SUB>,<BR>
+<I>M</I><SUB>6</SUB> est le point de <I>C</I> tel que <I>M</I><SUB>5</SUB><I>M</I><SUB>6</SUB> a pour direction <I>d</I><SUB>3</SUB>,<BR>
+Montrer que <I>M</I><SUB>6</SUB>=<I>M</I><SUB>0</SUB>.<BR>
+<IMG SRC="cascas018.png"><BR>
+<B>Démonstration</B><BR>
+Soient Δ<SUB>1</SUB>,Δ<SUB>2</SUB>,Δ<SUB>3</SUB> 3 droites passant par <I>O</I> et ayant comme 
+directions, les directions perpendiculaires à 
+<I>d</I><SUB>1</SUB>,<I>d</I><SUB>2</SUB>,<I>d</I><SUB>3</SUB>. Soient <I>S</I>−1,<I>S</I><SUB>2</SUB>,<I>S</I><SUB>3</SUB> les 3 symétries droites d’axe 
+Δ<SUB>1</SUB>,Δ<SUB>2</SUB>,Δ<SUB>3</SUB>.<BR>
+On a :<BR>
+<I>M</I><SUB>1</SUB>=<I>S</I><SUB>1</SUB>(<I>M</I><SUB>0</SUB>),<BR>
+<I>M</I><SUB>2</SUB>=<I>S</I><SUB>2</SUB>(<I>M</I><SUB>1</SUB>),<BR>
+<I>M</I><SUB>3</SUB>=<I>S</I><SUB>3</SUB>(<I>M</I><SUB>2</SUB>),<BR>
+<I>M</I><SUB>4</SUB>=<I>S</I><SUB>1</SUB>(<I>M</I><SUB>3</SUB>),<BR>
+<I>M</I><SUB>5</SUB>=<I>S</I><SUB>2</SUB>(<I>M</I><SUB>4</SUB>),<BR>
+<I>M</I><SUB>6</SUB>=<I>S</I><SUB>3</SUB>(<I>M</I><SUB>5</SUB>)=<I>S</I><SUB>3</SUB>∘ <I>S</I><SUB>2</SUB>∘ <I>S</I><SUB>1</SUB>∘ <I>S</I><SUB>3</SUB>∘ <I>S</I><SUB>2</SUB>∘ <I>S</I><SUB>1</SUB>(<I>M</I><SUB>0</SUB>)<BR>
+on sait que :<BR>
+le produit des 2 symétries <I>S</I><SUB>2</SUB>∘ <I>S</I><SUB>1</SUB> est une rotation de 
+centre 0 et d’angle 2(Δ<SUB>1</SUB>,Δ<SUB>2</SUB>).<BR>
+le produit des 2 symétries <I>S</I><SUB>1</SUB>∘ <I>S</I><SUB>3</SUB> est une rotation de 
+centre 0 et d’angle 2(Δ<SUB>3</SUB>,Δ<SUB>1</SUB>).<BR>
+le produit des 2 symétries <I>S</I><SUB>3</SUB>∘ <I>S</I><SUB>2</SUB> est une rotation de 
+centre 0 et d’angle 2(Δ<SUB>2</SUB>,Δ<SUB>3</SUB>).<BR>
+Donc <I>S</I><SUB>3</SUB>∘ <I>S</I><SUB>2</SUB>∘ <I>S</I><SUB>1</SUB>∘ <I>S</I><SUB>3</SUB>∘ <I>S</I><SUB>2</SUB>∘ <I>S</I><SUB>1</SUB> est une rotation de centre <I>O</I> et d’angle :<BR>
+2(Δ<SUB>1</SUB>,Δ<SUB>2</SUB>)+2(Δ<SUB>3</SUB>,Δ<SUB>1</SUB>)+2(Δ<SUB>2</SUB>,Δ<SUB>3</SUB>)=0 mod2π.<BR>
+Donc <I>S</I><SUB>3</SUB>∘ <I>S</I><SUB>2</SUB>∘ <I>S</I><SUB>1</SUB>∘ <I>S</I><SUB>3</SUB>∘ <I>S</I><SUB>2</SUB>∘ <I>S</I><SUB>1</SUB> est l’identité.<BR>
+
+<B>Démonstration avec </B><B><TT>Xcas</TT></B><BR>
+On tape :
+</P><PRE CLASS="verbatim">supposons(a=[0.6,-5,5,0.1]);
+supposons(b=[1.2,-5,5,0.1]);
+supposons(c=[2.0,-5,5,0.1]);
+d1:=droite(y=2+a*(x+2), affichage=1);
+d2:=droite(y=2+b*(x+2), affichage=2);
+d3:=droite(y=2+c*(x+2), affichage=4);
+C:=cercle(0,1):;C;
+supposons(d=[0.6,-5,5,0.1]);
+M0:=point(exp((i)*d));
+M1:=symetrie(droite(y=-x/a), M0);
+M2:=symetrie(droite(y=-x/b), M1);
+M3:=symetrie(droite(y=-x/c), M2);
+M4:=symetrie(droite(y=-x/a), M3);
+M5:=symetrie(droite(y=-x/b), M4);
+M6:=symetrie(droite(y=-x/c), M5);
+segment(M0,M1,affichage=1);
+segment(M2,M1,affichage=2);
+segment(M2,M3,affichage=4);
+segment(M3,M4,affichage=1);
+segment(M4,M5,affichage=2);
+segment(M5,M6,affichage=4);
+</PRE><P>On obtient :<BR>
+<IMG SRC="cascas019.png">
+On tape :<BR>
+<TT>affixe(M0)==normal(affixe(M6))</TT><BR>
+On obtient :<BR>
+<TT>1</TT></P><H2 CLASS="section"><A NAME="toc42"></A><A NAME="htoc117">7.4</A>  Une suite de projections</H2><P>
+On considère un triangle équilatèral <I>ABC</I> et un point <I>M</I><SUB>1</SUB> sur <I>AB</I>.<BR>
+<I>M</I><SUB>1</SUB> se projette orthogonalement en <I>H</I><SUB>1</SUB> sur <I>BC</I>,<BR>
+<I>H</I><SUB>1</SUB> se projette orthogonalement en <I>K</I><SUB>1</SUB> sur <I>AC</I> et<BR>
+<I>K</I><SUB>1</SUB> se projette orthogonalement en <I>M</I><SUB>2</SUB> sur <I>AB</I> etc....<BR>
+On obtient ainsi sur <I>AB</I> une suite de points <I>M</I><SUB><I>n</I></SUB>.<BR>
+On pose <I>AM</I><SUB><I>n</I></SUB>=<I>x</I><SUB><I>n</I></SUB><I>AB</I>.<BR>
+Calculer <I>x</I><SUB><I>n</I></SUB> et étudier la suite <I>x</I>.<BR>
+On commence par faire la figure.<BR>
+ On écrit pour cela la suite d’instructions dans un niveau de géométrie :
+</P><PRE CLASS="verbatim">A:=point(0);
+B:=point(1);
+C:=point(1/2+sqrt(3)*i/2);
+triangle(A,B,C);
+assume(a=[0.1,0,1]);
+M:=element(segment(A,B),a);
+L:=[normal(affixe(M))];
+for (k:=1;k&lt;=30;k:=k+3) {
+L:=append(L,normal(affixe(projection(segment(B,C),L[k-1]))));
+L:=append(L,normal(affixe(projection(segment(A,C),L[k]))));
+L:=append(L,normal(affixe(projection(segment(B,A),L[k+1]))));
+};
+polygone_ouvert(L);
+</PRE><P>On obtient la figure dans l’écran de géométrie.<BR>
+ On rappelle que :<BR>
+<TT>M:=element(segment(A,B),a)</TT> signifie que :<BR>
+<SPAN style="text-decoration:overline"><I>AM</I></SPAN>=<I>a</I><SPAN style="text-decoration:overline"><I>AB</I></SPAN> et 0 ≤ <I>b</I> ≤ 1.
+On rappelle aussi que :<BR>
+<TT>assume(a=[0.1,0,1])</TT> signifie que :<BR>
+la figure se fera avec <TT>a=0.1</TT> mais que les calculs se feront avec le 
+paramètre formel <TT>a</TT> compris entre 0 et 1.
+On régle la fenêtre graphique :<BR>
+<TT>xyztrange(-0.1,2.0,-0.1,1.0,-10.0,10.0,-1.0,6.0,-0.1,2.0,<BR>
+-0.146865136298,1.0,1,0.0,1.0) </TT><BR>
+On tape L dans une entrée de commande et on pbtient :<BR>
+<TT>[a,((-i)*sqrt(3)+1)/4*a+((i)*sqrt(3)+3)/4,<BR>
+((-i)*sqrt(3)-1)/8*a+((3*i)*sqrt(3)+3)/8,-a/8+3/8,....]</TT><BR>
+ce qui signifie que :<BR>
+<TT><I>x</I></TT><SUB><TT>1</TT></SUB><TT>=<I>a</I></TT> et <TT><I>x</I></TT><SUB><TT>2</TT></SUB><TT>=-<I>a</I>/8+3/8</TT><BR>
+Pour avoir la suite <I>x</I><SUB><I>n</I></SUB> on tape :<BR>
+<TT>Xn:=seq(L[k],k,0,30,3)</TT>
+On trouve : <I>x</I><SUB>11</SUB>=<I>a</I>/1073741824+357913941/1073741824<BR>
+On tape :<BR>
+<TT>evalf(357913941/1073741824)</TT><BR>
+On obtient:<BR>
+<TT>0.333333333023</TT><BR>
+Il semble donc que cette suite converge vers <I>N</I> tel que <I>AN</I>=<I>AB</I>/3.
+</P><H3 CLASS="subsection"><A NAME="htoc118">7.4.1</A>  La démonstration</H3><P>
+On calcule <I>x</I><SUB>2</SUB> en fonction de <I>x</I><SUB>1</SUB> :
+on a <I>AM</I><SUB>1</SUB>=<I>x</I><SUB>1</SUB><I>AB</I><BR>
+<I>BH</I><SUB>1</SUB>=(1−<I>x</I><SUB>1</SUB>)/2<I>BC</I> et <I>CK</I><SUB>1</SUB>=(1−(1−<I>x</I><SUB>1</SUB>)/2)/2<I>CA</I>=(1+<I>x</I><SUB>1</SUB>)/4<I>CA</I><BR>
+<I>AM</I><SUB>2</SUB>=(1−(1+<I>x</I><SUB>1</SUB>)/4)/2<I>AB</I>=(3−<I>x</I><SUB>1</SUB>)/8<I>AB</I><BR>
+La relation de récurrence est :<BR>
+<I>x</I><SUB><I>n</I>+1</SUB>=(3−<I>x</I><SUB><I>n</I></SUB>)/8
+On cherche la limite <I>l</I> possible :<BR>
+<I>l</I>=(3−<I>l</I>)/8 donc 8<I>l</I>=3−<I>l</I> soit <I>l</I>=3/9=1/3<BR>
+La suite <I>u</I><SUB><I>n</I></SUB>=<I>x</I><SUB><I>n</I></SUB>−1/3 est une suite géométrique de raison −1/8
+puisque <I>u</I><SUB><I>n</I>+1</SUB>=<I>x</I><SUB><I>n</I>+1</SUB>−1/3=(3−<I>x</I><SUB><I>n</I></SUB>)/8−(3−<I>l</I>)/8=−<I>u</I><SUB><I>n</I></SUB>/8.<BR>
+La suite <I>u</I><SUB><I>n</I></SUB>=<I>x</I><SUB><I>n</I></SUB>−1/3 converge vers 0 donc la suite <I>x</I><SUB><I>n</I></SUB> converge vers 1/3
+</P><H2 CLASS="section"><A NAME="toc43"></A><A NAME="htoc119">7.5</A>  Un tableau fait avec des sinusoides</H2><P>
+On veut dessiner sur un même graphique la fonction dérivable qui vaut pour
+<I>a</I>&lt;<I>b</I>&lt;<I>c</I>&lt;<I>d</I> :
+sin(<I>x</I>) sur [<I>a</I>,<I>b</I>],sin(2*<I>x</I>+α) sur [<I>b</I>,<I>c</I>] et sin(<I>x</I>)t sur [<I>c</I>,<I>d</I>] 
+en raccordant les graphes de sin(<I>x</I>) et de sin(2*<I>x</I>+α) en des
+points où ils ont une même tangente horizontale. Il faut donc choisir 
+correctement <I>b</I>,<I>c</I>,α.<BR>
+On tape par exemple :
+</P><PRE CLASS="verbatim">sinusoide0():={
+  local L1,L2,L3,R,k;
+  L1:=plotfunc(sin(x),x=-9*pi/2..-pi/2,affichage=epaisseur_ligne_3);
+  L2:=plotfunc(sin(2*x+pi/2),x=-pi/2..3*pi/2,affichage=epaisseur_ligne_3);
+  L3:=plotfunc(sin(x),x=3*pi/2..9*pi/2,affichage=epaisseur_ligne_3);
+  R:=L1,L2,L3;
+  retourne R;
+}:;
+</PRE><P>On tape : <TT>sinusoide0()</TT><BR>
+On obtient :<BR>
+<IMG SRC="cascas020.png">
+On veut tracer des translatés de ces graphes selon des vecteurs de direction
+<I>Oy</I>.<BR>
+On tape par exemple pour effectuer 7 translations sur la première sinusoide :
+</P><PRE CLASS="verbatim">sinusoide1():={
+  local L,R,k;
+  L:=plotfunc(sin(x),x=-9*pi/2..-pi/2,affichage=epaisseur_ligne_3);
+  R:=(L+k*i)$(k=-3..3);
+  retourne R;
+}:;
+</PRE><P>On tape : <TT>sinusoide1()</TT><BR>
+On obtient :<BR>
+<IMG SRC="cascas021.png">
+On tape par exemple pour effectuer 46 translations sur les 3 sinusoides:
+</P><PRE CLASS="verbatim">sinusoide():={
+  local L1,L2,L3,R,k;
+  L1:=plotfunc(sin(x),x=-9*pi/2..-pi/2,affichage=epaisseur_ligne_3);
+  L2:=plotfunc(sin(2*x+pi/2),x=-pi/2..3*pi/2,affichage=epaisseur_ligne_3);
+  L3:=plotfunc(sin(x),x=3*pi/2..9*pi/2,affichage=epaisseur_ligne_3);
+  R:=(L1+k/4*i)$(k=-20..25),(L2+k/4*i)$(k=-20..25),(L3+k/4*i)$(k=-20..25);
+  retourne R;
+}:;
+</PRE><P>On tape : <TT>sinusoide()</TT><BR>
+On obtient une sinusoide.</P><H2 CLASS="section"><A NAME="toc44"></A><A NAME="htoc120">7.6</A>  La suite de Syracuse</H2><P>
+Soit <I>a</I> un entier positif. On veut étudier avec des graphiques la suite de 
+Syracuse définie par :<BR>
+<I>u</I><SUB>0</SUB>=<I>a</I><BR>
+<I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>−1</SUB>/2 si <I>u</I><SUB><I>n</I>−1</SUB> est pair et<BR>
+<I>u</I><SUB><I>n</I></SUB>=3*<I>u</I><SUB><I>n</I>−1</SUB>+1 si <I>u</I><SUB><I>n</I>−1</SUB> est impair.<BR>
+Cette suite se termine toujours (?) par 1,4,2,1,4,2,1... mais on ne sait pas 
+le montrer.<BR>
+Pour étudier cette suite on peut :<BR>
+- utiliser le tableur en mettant dans <TT>A0</TT> la valeur <I>a</I> de départ et 
+dans <TT>A1</TT> la formule :<BR>
+<TT>=ifte(irem(A0,2)==0,iquo(A0,2),3*A0+1)</TT> ou encore<BR>
+<TT>=if ((irem(A0,2))==0) iquo(A0,2); else 1+3*A0;</TT><BR>
+- utiliser un programme <TT>syracuse</TT> qui renvoie le maximum de cette suite et
+le nombre d’éléments de cette suite et <TT>syracuse0</TT> qui écrit en 
+plus les termes de la suite ou encore <TT>syracuse100</TT>
+qui renvoie le maximum, le nombre de termes et la valeur de départ de la 
+plus longue suite démarrant par un nombre entre 2 et 100.
+</P><PRE CLASS="verbatim">  syracuse(a):={
+    local k,m;
+    k:=0;
+    m:=a;
+    while (a!=1) {
+      if (irem(a,2)==0) a:=iquo(a,2); 
+      else {
+ a:=a*3+1;
+ if (a&gt;m){m:=a};
+      }
+      k:=k+1;
+    }
+  retourne m,k;
+}:;
+  
+ syracuse0(a):={
+    local m,k;
+    m:=a;
+    k:=0;
+    print(a);
+    while (irem(a,2)==0){
+      a:=iquo(a,2);
+      k:=k+1;
+      print(a);
+    }
+    while(a!=1){
+      a:=3*a+1;
+      k:=k+1;
+      print(a);
+      if (m&lt;a) {m:=a;}
+      while (irem(a,2)==0){
+ a:=iquo(a,2);
+ k:=k+1;
+    print(a);
+      }
+    }
+    return(m,k);
+  };
+  
+  syracuse100():={
+    local k,kn,kt,l,lt,m,mt;
+    lt:=0;
+    for (k:=2;k&lt;101;k:=k+1){
+      kn:=k;
+      m:=k;
+      l:=0;
+      while (kn!=1) {
+ if (irem(kn,2)==0) kn:=iquo(kn,2); 
+ else {
+   kn:=kn*3+1;
+   if (m&lt;kn) {
+     m:=kn;
+   }
+ }
+ l:=l+1;
+      }
+      if (l&gt;lt) {
+ mt:=m;lt:=l;kt:=k;
+      }
+    }
+    return(mt,lt,kt);
+  };
+</PRE><P>On ouvre un éditeur de programme, on recopie la procédure, puis grâce au 
+bouton <TT>OK</TT> le programme est validé.<BR>
+On tape <TT>syracuse100()</TT>, on trouve :<BR>
+<TT>9232,118,97</TT> ce qui veut dire que c’est en démarrant avec 97 que la 
+suite a le plus de termes (ici 118 termes) et le maximum de cette suite est 
+9232.<BR>
+On peut bien sûr modifier les paramètres de la boucle <TT>for</TT> en mettant 
+par exemple :<BR>
+<TT>for (k:=101;k&lt;200;k:=k+1)</TT><BR>
+On tape <TT>syracuse100()</TT>, on trouve alors :<BR>
+<TT>250504,124,177</TT><BR>
+ou encore :<BR>
+<TT>for (k:=901;k&lt;1000;k:=k+1)</TT><BR>
+On tape <TT>syracuse100()</TT>, on trouve alors :<BR>
+<TT>250504,173,937</TT><BR>
+On peut encore modifier facilement pour savoir si un plus grand nombre de 
+terme donne la plus grande valeur atteinte (cela semble vrai!!!) en changeant 
+pour cela :<BR>
+<TT>if (l&gt;lt) {mt:=m;lt:=l;kt:=k;}</TT> en<BR>
+<TT>if (m&gt;mt) {mt:=m;lt:=l;kt:=k;}</TT> et rajouter au début <TT>kt:=2;</TT>.<BR>
+- utiliser un programme qui dessine les points (<I>n</I>,<I>u</I><SUB><I>n</I></SUB>) lorsqu’on donne en 
+entrée <I>u</I><SUB>0</SUB>=<I>a</I><BR>
+- lorsqu’on donne en entrée <I>u</I><SUB>0</SUB>=<I>a</I> et en notant <I>n</I> la première valeur de 
+<I>k</I> pour laquelle <I>u</I><SUB><I>k</I></SUB>=1 et <I>m</I> le maximum des <I>u</I><SUB><I>k</I></SUB> pour <I>k</I>≤ <I>n</I>, dessiner 
+les points <I>a</I>,<I>m</I> ou encore dessiner les points <I>a</I>,<I>u</I><SUB><I>k</I></SUB> pour <I>k</I>=0..<I>n</I>.<BR>
+On écrit la procédure <TT>syracuse1</TT> (resp <TT>syracuse2</TT>) qui dessine 
+les points (<I>k</I>,<I>u</I><SUB><I>k</I></SUB>) (resp les segments reliant les points (<I>k</I>,<I>u</I><SUB><I>k</I></SUB>)) dans 
+l’écran de géométrie et la procédure <TT>syracuse3</TT> qui
+dessine les points <I>a</I>,<I>u</I><SUB><I>k</I></SUB> pour <I>k</I> allant de 0 à <I>n</I> et cela pour <I>a</I> 
+allant de 2 à 100 :
+</P><PRE CLASS="verbatim">  syracuse1(a):={
+    local m,k;
+    m:=a;
+    k:=0;
+    point(0,a);
+    while (irem(a,2)==0){
+      a:=iquo(a,2);
+      k:=k+1;
+      point(k,a);
+    }
+    while(a!=1){
+      a:=3*a+1;
+      k:=k+1;
+      point(k,a);
+      if (m&lt;a) {m:=a;}
+      while (irem(a,2)==0){
+ a:=iquo(a,2);
+ k:=k+1;
+ point(k,a);
+      }
+    }
+    return(m,k);
+  };
+  
+  
+  syracuse2(a):={
+    local m,k,k0,a0;
+    m:=a;
+    k:=0;
+    point(k,a);
+    while (irem(a,2)==0){
+      k0:=k;
+      a0:=a;
+      a:=iquo(a,2); 
+      k:=k+1;
+      segment(k0+i*a0,k+i*a);
+    }
+    while(a!=1){
+      k0:=k;
+      a0:=a;
+      a:=3*a+1;
+      k:=k+1;
+      segment(k0+i*a0,k+i*a);
+      if (m&lt;a) {m:=a;}
+      while (irem(a,2)==0){
+ k0:=k;
+ a0:=a;
+ a:=iquo(a,2);
+ k:=k+1;
+ segment(k0+i*a0,k+i*a);
+      }
+    }
+    return(m,k);
+  };
+  
+  syracuse3():={
+    local k,kn;
+    for(k:=2;k&lt;101;k:=k+1){
+      point(k,k);
+      kn:=k;
+      while (kn!=1) {
+ if (irem(kn,2)==0) kn:=iquo(kn,2); else kn:=kn*3+1;
+ point(k,kn);
+      }
+    }
+  };
+</PRE><P>Ne pas oubler de régler la fenêtre graphique en mettant par exemple :
+<TT>X-=Y-=WX-=WY-=0</TT>, <TT>X+=WX+=100</TT> et <TT>Y+=WY+=1000</TT>.<BR>
+puis on tape par exemple <TT>syracuse1(123)</TT>.</P><H2 CLASS="section"><A NAME="toc45"></A><A NAME="htoc121">7.7</A>  La suite des tas</H2><P>
+On dispose <I>k</I> jetons en <I>p</I> tas.<BR>
+On construit la suite des tas de la façon suivante :<BR>
+on prend un jeton dans chaque tas et tous ces jetons forment un nouveau tas qui
+sera le dernier tas, et on recommence.<BR>
+Ce qui est sûr c’est que cette suite de tas est pérodique puisque il n’y a
+qu’un nombre fini de façons de disposer <I>k</I> jetons en tas.<BR>
+Il s’agit de voir comment se comporte cette suite.<BR>
+On peut montre que lorsque <I>k</I>=<I>n</I>*(<I>n</I>+1)/2 cette suite stationne en :<BR>
+1,2,3,...,<I>n</I>.<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc122">7.7.1</A>  Une remarque</H3><P>
+<B>Lemme</B> La suite débutant par 1,2,3,...,<I>n</I> non ordonnè stationne 
+vers 1,2,3,...,<I>n</I>.<BR>
+En effet, si on répartit les jetons en <I>n</I> tas 1,2,3,...,<I>n</I> de façon
+non ordonnée, on 
+aura la suite ordonnée 1,2,3,...,<I>n</I> au bout d’au plus <I>n</I>−1 manipulations.<BR>
+En effet à la première étape <I>n</I> se trouvera en dernier, à la 
+deuxième étape <I>n</I>−1,<I>n</I> se trouveront à la fin, et à la (<I>n</I>−1)-ième
+étape 2, ...<I>n</I>−1,<I>n</I> se trouvera en dernier et on aura donc obtenu 1,2...<I>n</I>
+puisque le nombre <I>k</I> de jetons vaut <I>n</I>(<I>n</I>−1)/2.<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc123">7.7.2</A>  Le programme de simulation</H3><PRE CLASS="verbatim">//programme de simulation tas.cxx
+tas(l):={
+local s,j,k,lr;
+lr:=[l];
+while (1) {
+s:=size(l);
+for (j:=0;j&lt;s;j++) {
+l[j]:=l[j]-1;
+}
+l:=concat(l,s);
+//on supprime les zeros de l
+k:=0;
+for (j:=0;j&lt;s+1;j++){
+if (l[j]!=0){
+l[k]:=l[j];
+k:=k+1;
+}
+}
+l:=mid(l,0,k);
+if (member(l,lr)) return lr;
+lr:=append(lr,l);
+}
+}
+
+</PRE><P>On tape :<BR>
+<TT>tas([10])</TT><BR>
+On obtient :<BR>
+<TT>[[10],[9,1],[8,2],[7,1,2],[6,1,3],[5,2,3],</TT><BR>
+<TT>[4,1,2,3],[3,1,2,4],[2,1,3,4],[1,2,3,4]]</TT>
+</P><HR>
+<A HREF="cascas006.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas008.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Le Laplacien : laplacian</title>
+</head>
+<body >
+<a href="cascmd_fr678.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr680.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec832" class="subsection">6.61.2  Le Laplacien : <span style="font-family:monospace">laplacian</span></h3>
+<p><a id="hevea_default1242"></a>
+<span style="font-family:monospace">laplacian</span> a un ou deux paramètres.
+</p><ul class="itemize"><li class="li-itemize">
+le paramètre est un entier ou un entier flottant <span style="font-style:italic">n</span>.<br>
+<span style="font-family:monospace">laplacian(n)</span> renvoie la matrice de taille n du laplacien discret en 
+dimension 1.<br>
+ Cette matrice est tridiagonale et a 2 sur la diagonale principale, 
+-1 sur la diagonale supérieure et -1 sur la diagonale inférieure.<br>
+En effet :<br>
+Soit <span style="font-style:italic">F</span> est définie en <span style="font-style:italic">x</span><sub>1</sub>,<span style="font-style:italic">x</span><sub>2</sub>,<span style="font-style:italic">x</span><sub>3</sub>,<span style="font-style:italic">x</span><sub>4</sub>,<span style="font-style:italic">x</span><sub>5</sub>,<span style="font-style:italic">x</span><sub>6</sub> (où <span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span>+1</sub>−<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>=<span style="font-style:italic">h</span>) par 
+<span style="font-style:italic">F</span>(<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>)=<span style="font-style:italic">y</span><sub><span style="font-style:italic">k</span></sub>) et on suppose que <span style="font-style:italic">F</span>(<span style="font-style:italic">x</span><sub>0</sub>)=<span style="font-style:italic">F</span>(<span style="font-style:italic">x</span><sub>1</sub>−<span style="font-style:italic">h</span>)=0=<span style="font-style:italic">y</span><sub>0</sub> et que 
+<span style="font-style:italic">F</span>(<span style="font-style:italic">x</span><sub>7</sub>)=<span style="font-style:italic">F</span>(<span style="font-style:italic">x</span><sub>6</sub>+<span style="font-style:italic">h</span>)=0=<span style="font-style:italic">y</span><sub>7</sub> (ici <span style="font-style:italic">n</span>=6).<br>
+Les valeurs approchées de la dérivée première en <span style="font-style:italic">x</span><sub>0</sub>,<span style="font-style:italic">x</span><sub>1</sub>..<span style="font-style:italic">x</span><sub>6</sub> sont :<br>
+(<span style="font-style:italic">y</span><sub>1</sub>−<span style="font-style:italic">y</span><sub>0</sub>)/<span style="font-style:italic">h</span>=<span style="font-style:italic">y</span><sub>1</sub>/<span style="font-style:italic">h</span>,(<span style="font-style:italic">y</span><sub>2</sub>−<span style="font-style:italic">y</span><sub>1</sub>)/<span style="font-style:italic">h</span>,(<span style="font-style:italic">y</span><sub>3</sub>−<span style="font-style:italic">y</span><sub>2</sub>)/<span style="font-style:italic">h</span>,...,(<span style="font-style:italic">y</span><sub>6</sub>−<span style="font-style:italic">y</span><sub>5</sub>)/<span style="font-style:italic">h</span>, (<span style="font-style:italic">y</span><sub>7</sub>−<span style="font-style:italic">y</span>6)/<span style="font-style:italic">h</span>.<br>
+Les valeurs approchées de la dérivée seconde en <span style="font-style:italic">x</span><sub>1</sub>..<span style="font-style:italic">x</span><sub>6</sub> sont :<br>
+((<span style="font-style:italic">y</span><sub>2</sub>−<span style="font-style:italic">y</span><sub>1</sub>)/<span style="font-style:italic">h</span>−<span style="font-style:italic">y</span><sub>1</sub>/<span style="font-style:italic">h</span>)/<span style="font-style:italic">h</span>=((<span style="font-style:italic">y</span><sub>2</sub>−2<span style="font-style:italic">y</span><sub>1</sub>)/<span style="font-style:italic">h</span><sup>2</sup><br>
+((<span style="font-style:italic">y</span><sub>3</sub>−<span style="font-style:italic">y</span><sub>2</sub>)/<span style="font-style:italic">h</span>−(<span style="font-style:italic">y</span><sub>2</sub>−<span style="font-style:italic">y</span><sub>1</sub>)/<span style="font-style:italic">h</span>)/<span style="font-style:italic">h</span>=(<span style="font-style:italic">y</span><sub>3</sub>−2<span style="font-style:italic">y</span><sub>2</sub>+<span style="font-style:italic">y</span><sub>1</sub>)/<span style="font-style:italic">h</span><sup>2</sup><br>
+((<span style="font-style:italic">y</span><sub>6</sub>−<span style="font-style:italic">y</span><sub>5</sub>)/<span style="font-style:italic">h</span>−(<span style="font-style:italic">y</span><sub>5</sub>−<span style="font-style:italic">y</span><sub>4</sub>)/<span style="font-style:italic">h</span>)/<span style="font-style:italic">h</span>=(<span style="font-style:italic">y</span><sub>6</sub>−2<span style="font-style:italic">y</span><sub>5</sub>+<span style="font-style:italic">y</span><sub>4</sub>)/<span style="font-style:italic">h</span><sup>2</sup><br>
+((<span style="font-style:italic">y</span><sub>7</sub>−<span style="font-style:italic">y</span><sub>6</sub>)/<span style="font-style:italic">h</span>−(<span style="font-style:italic">y</span><sub>6</sub>−<span style="font-style:italic">y</span><sub>5</sub>)/<span style="font-style:italic">h</span>)/<span style="font-style:italic">h</span>=(−2<span style="font-style:italic">y</span><sub>6</sub>+<span style="font-style:italic">y</span><sub>5</sub>)/<span style="font-style:italic">h</span><sup>2</sup> car <span style="font-style:italic">y</span><sub>7</sub>=0.<br>
+Donc les valeurs approchées de 
+−∂<sup>2</sup> <span style="font-style:italic">F</span>/∂ <span style="font-style:italic">x</span><sup>2</sup>(<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>) sont pour <span style="font-style:italic">h</span>=1 :<br>
+2*<span style="font-style:italic">y</span><sub>1</sub>−<span style="font-style:italic">y</span><sub>2</sub>, −<span style="font-style:italic">y</span><sub><span style="font-style:italic">k</span>−1</sub>+2*<span style="font-style:italic">y</span><sub><span style="font-style:italic">k</span></sub>−<span style="font-style:italic">y</span><sub><span style="font-style:italic">k</span>+1</sub> pour <span style="font-style:italic">k</span>=2..6−1, −<span style="font-style:italic">y</span><sub>5</sub>+2*<span style="font-style:italic">y</span><sub>6</sub>.<br>
+On peut aussi plus simplement utiliser la formule de Taylor à l’odre 2 :<br>
+<span style="font-style:italic">f</span>(<span style="font-style:italic">a</span>+<span style="font-style:italic">h</span>)−<span style="font-style:italic">f</span>(<span style="font-style:italic">a</span>)−<span style="font-style:italic">hf</span>′(<span style="font-style:italic">a</span>)≃ <span style="font-style:italic">h</span><sup>2</sup><span style="font-style:italic">f</span>″(<span style="font-style:italic">a</span>)/2 et<br>
+<span style="font-style:italic">f</span>(<span style="font-style:italic">a</span>−<span style="font-style:italic">h</span>)−<span style="font-style:italic">f</span>(<span style="font-style:italic">a</span>)+<span style="font-style:italic">hf</span>′(<span style="font-style:italic">a</span>)≃ <span style="font-style:italic">h</span><sup>2</sup><span style="font-style:italic">f</span>″(<span style="font-style:italic">a</span>)/2 <br>
+donc en ajoutant :<br>
+<span style="font-style:italic">f</span>″(<span style="font-style:italic">a</span>)≃ (<span style="font-style:italic">f</span>(<span style="font-style:italic">a</span>+<span style="font-style:italic">h</span>)+<span style="font-style:italic">f</span>(<span style="font-style:italic">a</span>−<span style="font-style:italic">h</span>)−2<span style="font-style:italic">f</span>(<span style="font-style:italic">a</span>))/<span style="font-style:italic">h</span><sup>2</sup><br>
+On retrouve :<br>
+<span style="font-style:italic">f</span>″(<span style="font-style:italic">x</span><sub>1</sub>)≃ (<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub>2</sub>)+<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub>0</sub>)−2<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub>1</sub>))/<span style="font-style:italic">h</span><sup>2</sup>=(<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub>2</sub>)−2<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub>1</sub>))/<span style="font-style:italic">h</span><sup>2</sup><br>
+<span style="font-style:italic">f</span>″(<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>)≃ (<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span>+1</sub>)+<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span>−1</sub>)−2<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub><span style="font-style:italic">k</span></sub>))/<span style="font-style:italic">h</span><sup>2</sup>, (<span style="font-style:italic">k</span>=2..<span style="font-style:italic">n</span>−1)<br>
+<span style="font-style:italic">f</span>″(<span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>)≃ (<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span>+1</sub>)+<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span>−1</sub>)−2<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>))/<span style="font-style:italic">h</span><sup>2</sup>=(<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span>−1</sub>)−2<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>))/<span style="font-style:italic">h</span><sup>2</sup><br>
+On tape :
+<div class="center"><span style="font-family:monospace">laplacian(3)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[2,-1,0],[-1,2,-1],[0,-1,2]]</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">laplacian(3.)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[2.0,-1.0,0.0],[-1.0,2.0,-1.0],[0.0,-1.0,2.0]]</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">laplacian(6)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">[[2,-1,0,0,0,0],[-1,2,-1,0,0,0],[0,-1,2,-1,0,0],</span></div>
+<div class="center"><span style="font-family:monospace">[0,0,-1,2,-1,0],[0,0,0,-1,2,-1],[0,0,0,0,-1,2]]</span></div>
+</li><li class="li-itemize">les 2 paramètres sont :<br>
+une expression <span style="font-style:italic">F</span> dependant de <span style="font-style:italic">n</span> variables rèelles et un vecteur de 
+dimension <span style="font-style:italic">n</span> indiquant le nom de ces variables.<br>
+<span style="font-family:monospace">laplacian</span> renvoie le laplacien de <span style="font-style:italic">F</span> :<br>
+(∇<sup>2</sup>(<span style="font-style:italic">F</span>)(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>)=∂<sup>2</sup> <span style="font-style:italic">F</span>/∂ <span style="font-style:italic">x</span><sup>2</sup>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>)+∂<sup>2</sup> <span style="font-style:italic">F</span>/∂ <span style="font-style:italic">y</span><sup>2</sup>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>)+∂<sup>2</sup> <span style="font-style:italic">F</span>/∂ <span style="font-style:italic">z</span><sup>2</sup>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>) si <span style="font-style:italic">n</span>=3).<br>
+On tape :
+<div class="center"><span style="font-family:monospace">laplacian(2*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*y*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,[x,y,z])</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">-2*y*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-6*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*y*z+24*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+12*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4*y</span></div>
+</li></ul><p>
+<span style="font-weight:bold">Exemples</span><br>
+Déterminer le laplacien de <span style="font-style:italic">F</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>)=2<span style="font-style:italic">x</span><sup>2</sup><span style="font-style:italic">y</span>−<span style="font-style:italic">xz</span><sup>3</sup>.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">laplacian(2*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*y-x*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,[x,y,z])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">4*y+-6*x*z</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">laplacian(4)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[2,-1,0,0],[-1,2,-1,0],[0,-1,2,-1],[0,0,-1,2]]</span></div>
+<hr>
+<a href="cascmd_fr678.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr680.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

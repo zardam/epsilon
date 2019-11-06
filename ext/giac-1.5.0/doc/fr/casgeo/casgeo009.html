@@ -1,0 +1,276 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casgeo.css">
+<TITLE>Un exemple traité avec un programme iteratif puis récursif</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casgeo008.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo010.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc153">Chapitre 9</A>  Un exemple traité avec un programme iteratif puis récursif</H1><H2 CLASS="section"><A NAME="toc50"></A><A NAME="htoc154">9.1</A>  La suite des triangles semblables à ABC</H2><H3 CLASS="subsection"><A NAME="htoc155">9.1.1</A>  Avec un programme iteratif</H3><P>
+À partir d’un triangle <TT>ABC</TT>, on trace le triangle <TT>ACC1</TT>
+semblable au triangle <TT>ABC</TT>. Puis, on recommence le même processus avec 
+le triangle <TT>ACC1</TT> on obtient le triangle <TT>AC1C2</TT> etc...
+Écrire un programme <TT>Xcas</TT> qui déssine la suite des <TT>n</TT> 
+triangles :<BR>
+<TT>ACC1</TT>, <TT>AC1C2</TT>,...<TT>AC(n-1)Cn</TT>.<BR>
+On dessine tout d’abord le triangle <TT>ABC</TT>, puis on utilise une boucle qui 
+calcule à chaque étape le nouveau point <TT>B</TT> (l’ancien point <TT>C</TT>) et
+le nouveau point <TT>C</TT> (celui obtenu dans la similitude de centre <TT>A</TT>
+de rapport <TT>k:=longueur(A,C)/longueur(A,B)</TT> et d’angle
+<TT>t:=angle(A,B,C)</TT>).<BR>
+<B>Attention</B><BR>
+On ne suppose rien sur le triangle <TT>ABC</TT> car <TT>t:=angle(A,B,C)</TT> renvoie 
+la mesure de l’angle oriené <TT>(→</TT><TT><I>AB</I></TT><TT>,→</TT><TT><I>AC</I></TT><TT>)</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">//a partir d'un triangle ABC on trace son semblable 
+//sur AC etc...
+//k=rapport et t=angle de la similitude
+//n=nombre de triangles a construire
+spirale(A,B,C,n):={
+local k,t,j,L;
+L:=triangle(A,B,C);
+k:=longueur(A,C)/longueur(A,B);
+t:=angle(A,B,C);
+for (j:=1;j&lt;=n;j++){
+ B:=C; 
+ C:=similitude(A,k,t,B);
+ L:=L,triangle(A,B,C);
+ }
+ retourne L;
+}:; 
+</PRE><P>On clique sur 3 points <TT>ABC</TT>, puis on tape :<BR>
+<TT>spirale(A,B,C,5)</TT><BR>
+On obtient la suite de 6 triangles :<BR>
+
+<IMG SRC="casgeo075.png"><BR>
+ 
+On peut écrire un programme légèrement diffèrent pour ne pas faire deux fois le même trait.<BR>
+On trace le triangle <TT>ABC</TT> puis on ne trace dans la boucle que les 2 
+segments qui vont définir le nouveau triangle : 
+</P><PRE CLASS="verbatim">//meme dessin que spirale(A,B,C,n) 
+//mais sans repasser sur le meme trait
+spirales(A,B,C,n):={
+local k,t,L;
+L:=triangle(A,B,C);
+k:=longueur(A,C)/longueur(A,B);
+t:=angle(A,B,C);
+for (j:=1;j&lt;=n;j++){
+ B:=C; 
+ C:=similitude(A,k,t,B);
+ L:=L,segment(B,C),segment(A,C);
+}
+retourne L;
+}:;
+</PRE><H3 CLASS="subsection"><A NAME="htoc156">9.1.2</A>  Avec un programme récursif</H3><P>
+On peut voir la récusivité de 2 façons :<BR>
+1/ la procédure récursive <TT>spiraler(A,B,C,n)</TT><BR>
+<TT>spiraler(A,B,C,0)</TT> est le triangle(A,B,C) et<BR>
+si n&gt;0, <TT>spiraler(A,B,C,n)</TT> est formé du triangle(A,B,C) et de<BR>
+<TT>spiraler(A,C,C1,n-1)</TT> avec <TT>C1=similitude(A,k,t,C)</TT>.<BR>
+On écrit donc :
+</P><PRE CLASS="verbatim">//Le dessin obtenu a partir d'un triangle ABC peut 
+//etre decrit de facon recursive si on a C=similitude(A,k,t,B), 
+//soit  C1=similitude(A,k,t,C) :
+//spiraler(A,B,C,0)=triangle(A,B,C) 
+// si n&gt;0, spiraler(A,B,C,n)=triangle(A,B,C) puis 
+//spiraler(A,C,C1,n-1)
+//n=nombre de triangles a construire=nombre d'appels recursifs
+spiraler(A,B,C,n):={
+local k,t,L;
+k:=longueur(A,C)/longueur(A,B);
+t:=angle(A,B,C);
+if (n&gt;0) {
+ L:=triangle(A,B,C);
+ B:=C;
+ C:=similitude(A,k,t,B);
+ L:=L,spiraler(A,B,C,n-1);
+   } else
+ L:=triangle(A,B,C);
+ retourne L;
+}:;
+</PRE><P>On peut écrire un programme légèrement diffèrent pour ne pas faire deux
+fois le même trait.<BR>
+<TT>spiralers(A,B,C,0)</TT> c’est le triangle(A,B,C) 
+si n&gt;0, <TT>spiralers(A,B,C,n)</TT> est formé du segment(A,B), du segment(B,C) 
+et de <TT>spiralers(A,C,C1,n-1)</TT> si <TT>C1=similitude(A,k,t,C)</TT>.<BR>
+On écrit donc :
+</P><PRE CLASS="verbatim">//meme dessin que spiraler(A,B,C,n) 
+//mais sans repasser sur le meme trait
+//si on a C=similitude(A,k,t,B), soit  C1=similitude(A,k,t,C) 
+//spiralers(A,B,C,0)=triangle(A,B,C) et si n&gt;0, 
+//spiralers(A,B,C,n)=segment AB et BC puis spiralers(A,C,C1,n-1)
+spiralers(A,B,C,n):={
+local k,t,L;
+k:=longueur(A,C)/longueur(A,B);
+t:=angle(A,B,C);
+if (n&gt;0) {
+ L:=segment(A,B),segment(B,C);
+ B:=C;
+ C:=similitude(A,k,t,B);
+ L:=L,spiralers(A,B,C,n-1);
+   } else
+ L:=L,triangle(A,B,C);
+ retourne L;
+}:;
+</PRE><P>2/ la procédure récursive <TT>spiraler1s(A,B,C,n)</TT> commence à dessiner 
+la spirale par la fin...<BR>
+<TT>spiraler1s(A,B,C,0)</TT> c’est le triangle(A,B,C) et<BR>
+si n&gt;0, <TT>spiraler1s(A,B,C,n)</TT> est formé du triangle(A,C(n-1),Cn) (ou des 
+segments C(n-1)Cn et ACn si on ne veut pas repasser sur le même trait) et<BR>
+de <TT>spiraler1s(A,B,C,n-1)</TT> si <TT>C(n-1)=similitude(A,k</TT><CODE><TT>^</TT></CODE><TT>n,n*t,B)</TT> 
+et <TT>Cn=similitude(A,k</TT><CODE><TT>^</TT></CODE><TT>n,n*t,C)=similitude(A,k,t,C(n-1))</TT>.<BR>
+</P><PRE CLASS="verbatim">//meme dessin que spiraler(A,B,C,n) mais autre facon de voir 
+//la recursivite spiraler1(A,B,C,0)=triangle(A,B,C) si n&gt;0,
+//spiraler1(A,B,C,n)=dernier triangle AMN et spiraler1(A,B,C,n-1)
+//sans repasser sur le meme trait :
+//spiraler1s(A,B,C,0)=triangle(A,B,C) et si n&gt;0, 
+//spiraler1s(A,B,C,n)=segments AN et MN et spiraler1s(A,B,C,n-1)
+spiraler1s(A,B,C,n):={
+local k,t,L;
+k:=longueur(A,C)/longueur(A,B);
+t:=angle(A,B,C);
+if (n&gt;0) {
+ M:=similitude(A,k^n,n*t,B);
+ N:=similitude(A,k,t,M);
+ L:=segment(M,N),segment(A,N);
+ L:=L,spiraler1s(A,B,C,n-1);
+   } else 
+ L:=triangle(A,B,C);
+}:;
+</PRE><H2 CLASS="section"><A NAME="toc51"></A><A NAME="htoc157">9.2</A>  La double suite des triangles semblables à ABC</H2><P>
+À partir d’un triangle <TT>ABC</TT>, on trace le triangle <TT>ACC1</TT>
+semblable au triangle <TT>ABC</TT>. Puis, on recommence le même processus avec 
+le triangle <TT>ACC1</TT> on obtient le triangle <TT>AC1C2</TT> etc...
+On trace aussi le triangle <TT>ABB1</TT>
+semblable au triangle <TT>ABC</TT>. Puis, on recommence le même processus avec 
+le triangle <TT>ABB1</TT> on obtient le triangle <TT>AB1B2</TT> etc..<BR>
+Écrire un programme <TT>Xcas</TT> qui déssine la suite des <TT>n</TT> 
+triangles :<BR>
+<TT>ACC1</TT>, <TT>AC1C2</TT>,...<TT>AC(n-1)Cn</TT>,<TT>ABB1</TT>, <TT>AB1B2</TT>,...<TT>AB(n-1)Bn</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc158">9.2.1</A>  Avec un programme iteratif</H3><PRE CLASS="verbatim">//a partir d'un triangle ABC on trace son semblable sur 
+//AC etc...n fois, on trace aussi le semblable du triangle ABC
+// sur AB etc...(aussi n fois).
+spirale2(A,B,C,n):={
+local k,t,B0,C0,L;
+L:=triangle(A,B,C);
+k:=longueur(A,C)/longueur(A,B);
+t:=angle(A,B,C);
+B0:=B;
+C0:=C;
+for (j:=1;j&lt;=n;j++){
+ B:=C; 
+ C:=similitude(A,k,t,B);
+ L:=L,triangle(A,B,C);
+};
+B:=B0;
+C:=C0;
+for (j:=1;j&lt;=n;j++){
+ C:=B; 
+ B:=similitude(A,1/k,-t,C);
+ L:=L,triangle(A,B,C);
+}
+retourne L;
+}:;
+</PRE><P>On clique sur 3 points <TT>ABC</TT> puis on tape :<BR>
+<TT>spirale2(A,B,C,5)</TT><BR>
+On obtient la suite de 11 triangles :<BR>
+
+<IMG SRC="casgeo076.png"><BR>
+pour faire le même dessin mais sans repasser sur le même trait, on tape :
+</P><PRE CLASS="verbatim">//meme dessin que spirale2(A,B,C,n) mais sans repasser sur le meme trait
+spirales2(A,B,C,n):={
+local k,t,B0,C0,L,j;
+L:=triangle(A,B,C);
+k:=longueur(A,C)/longueur(A,B);
+t:=angle(A,B,C);
+B0:=B;
+C0:=C;
+for (j:=1;j&lt;=n;j++){
+ B:=C; 
+ C:=similitude(A,k,t,B);
+ L:=L,segment(B,C),segment(A,C);
+ };
+B:=B0;
+C:=C0;
+for (j:=1;j&lt;=n;j++){
+ C:=B; 
+ B:=similitude(A,1/k,-t,C);
+ L:=L,segment(B,C),segment(A,B);
+ };
+ retourne L;
+}:;
+</PRE><H3 CLASS="subsection"><A NAME="htoc159">9.2.2</A>  Avec un programme récursif</H3><P>
+Cette fois on a une seule façon de voir le dessin récursif :
+<TT>spiralers2(A,B,C,0)</TT> c’est le triangle(A,B,C) 
+si n&gt;0, <TT>spiralers2(A,B,C,n)</TT> est formé des segments ACn et C(n-1)Cn, de 
+<TT>spiraler1s(A,B,C,n-1)</TT> puis dessegments ABn et B(n-1)Bn.<BR>
+On tape :
+</P><PRE CLASS="verbatim">//meme dessin que spirale2(A,B,C,n) mais en recursif 
+//cette fois on a une seule facon de voir le dessin 
+//(analogue a spiraler1s)
+//et sans repasser sur le meme trait 
+//spiralers2(A,B,C,0)=triangle(A,B,C) si n&gt;0,
+//spiralers2(A,B,C,n)=segments AN et MN et spiraler1s(A,B,C,n-1)
+//et segments AQ et PQ (M=C(n-1),N=Cn,P=B(n-1),Q=Bn)
+spiralers2(A,B,C,n):={
+local k,t,M,N,P,Q,L;
+k:=longueur(A,C)/longueur(A,B);
+t:=angle(A,B,C);
+if (n&gt;0) {
+ M:=similitude(A,k^n,n*t,B);
+ N:=similitude(A,k,t,M);
+ L:=segment(M,N),segment(A,N);
+ L:=L,spiralers2(A,B,C,n-1);
+ P:=similitude(A,1/k^n,-n*t,C);
+ Q:=similitude(A,1/k,-t,P);
+ L:=L,segment(P,Q),segment(A,Q);
+   } else 
+ L:=triangle(A,B,C);
+ retourne L;}
+:;
+</PRE><P><B>Remarques</B>
+Ainsi on a :<BR>
+<TT>spiralers2(A,B,C,5)= spiralers(A,B,C,5);spiralers(A,C,B,5);</TT><BR>
+
+On peut aussi rajouter un paramètre <TT>s</TT> supplémentaire qui donnera le 
+sens de la spirale par rapport au signe de <TT>t:=angle(A,B,C)</TT> : <TT>s=1</TT> si
+la spirale tourne dans le même sens que les points <TT>A,B,C</TT> et 
+<TT>s=-1</TT> sinon.<BR>
+On tape : 
+</P><PRE CLASS="verbatim">//spiraler2s(A,B,C,1,3);spiraler2s(A,B,C,-1,3)
+//equivalent a spiralers2(A,B,C,3)
+//s= sens de la spirale par rapport au signe
+// de l'angle oriente (AB,AC)
+spiraler2s(A,B,C,s,n):={
+ local k,t,L;
+ if (s==1) {
+  k:=longueur(A,C)/longueur(A,B);
+ } else{
+  k:=longueur(A,B)/longueur(A,C);
+ }
+ t:=angle(A,B,C);
+ if (n&gt;0) {
+   L:=triangle(A,B,C);
+   B:=similitude(A,k,s*t,B);
+   C:=similitude(A,k,s*t,C);
+   L:=L,spiraler2s(A,B,C,s,n-1);
+ } else {
+   L:=triangle(A,B,C);
+ }
+ retourne L;
+}:;
+</PRE><P>On clique sur 3 points <TT>ABC</TT> (triangle <TT>ABC</TT> direct) puis on tape :<BR>
+<TT>spiraler2s(A,B,C,1,5);spiraler2s(A,B,C,-1,5)</TT><BR>
+On obtient la suite de 11 triangles.</P>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casgeo008.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casgeo010.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

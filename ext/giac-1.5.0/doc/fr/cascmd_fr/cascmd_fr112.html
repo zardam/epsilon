@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Solution approchée du système v’=f(t,v) : 
+odesolve</title>
+</head>
+<body >
+<a href="cascmd_fr111.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr113.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec168" class="subsection">4.3.6  Solution approchée du système v’=f(t,v) : 
+<span style="font-family:monospace">odesolve</span></h3>
+<p><a id="hevea_default200"></a> <a id="sec:odesolve"></a>
+On cherche une valeur approchée du vecteur <span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)
+de ℝ<sup><span style="font-style:italic">n</span></sup> qui est la solution du système :
+<span style="font-style:italic">v</span>′(<span style="font-style:italic">t</span>)=<span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)).<br>
+L’expression <span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)) peut être donnée :<br>
+soit par un vecteur ayant comme coordonnées des
+expressions de <span style="font-style:italic">t</span> et des coordonnées <span style="font-style:italic">x</span><sub><span style="font-style:italic">i</span></sub> de <span style="font-style:italic">v</span>, <br>
+soit par une fonction <span style="font-style:italic">f</span> de ℝ × ℝ<sup><span style="font-style:italic">n</span></sup> dans ℝ<sup><span style="font-style:italic">n</span></sup>.
+</p><ul class="itemize"><li class="li-itemize">
+L’expression <span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)) est donnée par un vecteur d’expressions
+Si <span style="font-style:italic">v</span> est un vecteur de coordonnées [<span style="font-style:italic">x</span><sub>1</sub>,..,<span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>] dépendant de <span style="font-style:italic">t</span> 
+et si <span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)) est donné par un vecteur ayant comme coordonnées les 
+expressions dépendant de <span style="font-style:italic">t</span> et des <span style="font-style:italic">x</span><sub><span style="font-style:italic">i</span></sub> : [<span style="font-style:italic">Xpr</span><sub>1</sub>,...,<span style="font-style:italic">Xpr</span><sub><span style="font-style:italic">n</span></sub>],
+si la valeur initiale de <span style="font-style:italic">v</span> en <span style="font-style:italic">t</span>=<span style="font-style:italic">t</span><sub>0</sub>
+est le vecteur de coordonnées [<span style="font-style:italic">x</span>0<sub>1</sub>,...,<span style="font-style:italic">x</span>0<sub><span style="font-style:italic">n</span></sub>] alors l’instruction
+<div class="center">
+<span style="font-family:monospace">odesolve([</span><span style="font-style:italic">Xpr</span><sub>1</sub>,...,<span style="font-style:italic">Xpr</span><sub><span style="font-style:italic">n</span></sub>],<span style="font-style:italic">t</span>=<span style="font-style:italic">t</span><sub>0</sub>..<span style="font-style:italic">t</span><sub>1</sub>,[<span style="font-style:italic">x</span><sub>1</sub>,...,<span style="font-style:italic">x</span><sub><span style="font-style:italic">n</span></sub>],[<span style="font-style:italic">x</span>0<sub>1</sub>,...,<span style="font-style:italic">x</span>0<sub><span style="font-style:italic">n</span></sub>]<span style="font-family:monospace">)</span> 
+</div>
+renverra une valeur approchée de <span style="font-style:italic">v</span> au temps <span style="font-style:italic">t</span>=<span style="font-style:italic">t</span>1. Le paramètre
+optionnel <span style="font-family:monospace">curve</span> permet d’avoir les valeurs 
+intermédiaires sous forme d’une liste de couples [<span style="font-style:italic">t</span>,<span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)] calculés.<p>Pour résoudre le système :<br>
+<span style="font-style:italic">x</span>′(<span style="font-style:italic">t</span>)=−<span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)<br>
+<span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>)=<span style="font-style:italic">x</span>(<span style="font-style:italic">t</span>)<br>
+On tape :
+</p><div class="center">
+<span style="font-family:monospace">odesolve([-y,x],t=0..pi,[x,y],[0,1])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[-1.79045146764e-15,-1]</span></div></li><li class="li-itemize">L’expression <span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)) est donnée par <span style="font-style:italic">f</span> une fonction de 
+ℝ × ℝ<sup><span style="font-style:italic">n</span></sup> dans ℝ<sup><span style="font-style:italic">n</span></sup>.<br>
+<span style="font-family:monospace">odesolve(t0..t1,(t,v)-&gt;f(t,v),v0)</span> ou<br>
+<span style="font-family:monospace">odesolve(t0..t1,f,v0)</span><br>
+calcule de façon approchée la valeur de 
+<span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>1) lorsque le vecteur de coordonnées <span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)
+de ℝ<sup><span style="font-style:italic">n</span></sup> est la solution de
+<span style="font-style:italic">v</span>′(<span style="font-style:italic">t</span>)=<span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)) qui vérifie  <span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>0)=<span style="font-style:italic">v</span>0.<br>
+ Le paramètre optionnel <span style="font-family:monospace">curve</span> permet d’avoir les valeurs 
+intermédiaires sous forme d’une liste de couples [<span style="font-style:italic">t</span>,<span style="font-style:italic">v</span>(<span style="font-style:italic">t</span>)] calculés.<p>Pour résoudre le système :<br>
+<span style="font-style:italic">x</span>′(<span style="font-style:italic">t</span>)=−<span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)<br>
+<span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>)=<span style="font-style:italic">x</span>(<span style="font-style:italic">t</span>)<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">odesolve(0..pi,(t,v)-&gt;[-v[1],v[0]],[0,1])</span></div><p>
+Ou on définit la fonction :
+</p><div class="center"><span style="font-family:monospace">f(t,v):=[-v[1],v[0]]</span></div><p>
+puis on tape :
+</p><div class="center"><span style="font-family:monospace">odesolve(0..pi,f,[0,1])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[-1.79045146764e-15,-1]</span></div><p>
+On définit la fonction :
+</p><div class="center"><span style="font-family:monospace">f(t,v):=[-v[1],v[0]]</span></div><p>
+puis on tape :<br>
+</p><div class="center"><span style="font-family:monospace">odesolve(0..pi/4,f,[0,1],curve)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[0.1781,[-0.177159948386,0.984182072936]], [0.3781,[-0.369155338156,0.929367707805]], [0.5781,[-0.54643366953,0.837502384954]], [0.7781,[-0.701927414872,0.712248484906]]]</span></div></li></ul>
+<hr>
+<a href="cascmd_fr111.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr113.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

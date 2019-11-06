@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Assignments in a program</title>
+</head>
+<body >
+<a href="cascmd_en804.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en806.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1037" class="subsection">11.4.2  Assignments in a program</h3>
+<p>Recall that the <span style="font-family:monospace">=&lt;</span> operator will change the value of a single
+entry in a list or matrix by reference (see subsection <a href="cascmd_en051.html#subsec%3Arefassign">4.6.4</a>).
+This make it efficient when changing many values, one at a time, in a
+list, as might be done by a program. </p><p>Care must be taken, since your intent might be changed when a program
+is compiled. For example, if a program contains
+</p><pre class="verbatim">  local a;
+  a := [0,1,2,3,4];
+  ...
+  a[3] =&lt; 33;
+</pre><p>
+then in the compiled program, <span style="font-family:monospace">a := [0,1,2,3,4]</span> will be
+replaced by <span style="font-family:monospace">a := [0,1,2,33,4]</span>. To avoid this, you can assign
+a copy of the list to <span style="font-family:monospace">a</span>; you could write
+</p><pre class="verbatim">  local a;
+  a := copy([0,1,2,3,4]);
+  ...
+  a[3] =&lt; 33;
+</pre><p>
+Alternately, you could use a command which recreates a list every time
+the program is run, such as <span style="font-family:monospace">makelist</span><a id="hevea_default1429"></a> or
+<span style="font-family:monospace">$</span>, instead of copying a list; <span style="font-family:monospace">a :=
+makelist(n,n,0,4)</span> or <span style="font-family:monospace">a := [n$(n=0..4)]</span> can also be used in
+place of <span style="font-family:monospace">a := [0,1,2,3,4]</span>.</p>
+<hr>
+<a href="cascmd_en804.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en806.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

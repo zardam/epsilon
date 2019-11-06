@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>La droite et la droite orientée en géométrie plane : line droite</title>
+</head>
+<body >
+<a href="cascmd_fr915.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr917.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1119" class="subsection">10.9.1  La droite et la droite orientée en géométrie plane : <span style="font-family:monospace">line droite</span></h3>
+<p><a id="hevea_default1798"></a><a id="hevea_default1799"></a><a id="sec:droite2"></a><a id="hevea_default1800"></a><a id="hevea_default1801"></a>
+<span style="font-weight:bold">Voir aussi :</span> <a href="cascmd_fr090.html#sec%3Adroite">3.10.1</a> et<a href="cascmd_fr1027.html#sec%3Adroite3">11.5.1</a> pour la géométrie
+3-d et <a href="cascmd_fr977.html#sec%3Apente">10.16.12</a> pour avoir la valeur de la pente d’une droite.<br>
+<span style="font-family:monospace">droite</span>, en géométrie plane, a comme argument deux points (ou
+deux nombres complexes représentant l’affixe de ces points) ou une liste de 
+deux points (ou de deux complexes) ou a comme argument un point et 
+<span style="font-family:monospace">pente=m</span> ou a comme argument un point et son vecteur directeur
+<span style="font-family:monospace">[u1,u2]</span> ou encore une équation de droite de la forme a*x+by+c=0.<br>
+<span style="font-family:monospace">droite</span> renvoie et trace la droite définie par les deux arguments.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">droite(0,1+i)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La droite d’équation y=x est tracée</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">droite(1+i,pente=1)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La droite d’équation y=x est tracée</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">droite(1+i,[3,3])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La droite d’équation y=x est tracée</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">droite(y-x=0)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La droite d’équation y=x est tracée</span></div><p>
+<span style="font-weight:bold">Remarque : l’orientation de la droite</span><br>
+<a id="sec:axe2"></a>
+<span style="font-weight:bold">Voir aussi :</span> <a href="cascmd_fr1028.html#sec%3Aaxe3">11.5.2</a> pour la géométrie 3-d.<br>
+<span style="font-family:monospace">droite</span> définit une droite orientée :
+</p><ul class="itemize"><li class="li-itemize">
+Lorsque la droite est donnée par deux points, son orientation
+est définie par l’ordre des points donnés en argument.
+Par exemple <span style="font-family:monospace">droite(A,B)</span> définit une droite orientée par le vecteur 
+<span style="font-style:italic">AB</span>.<br>
+</li><li class="li-itemize">Lorsque c’est une équation qui définit la droite on écrit 
+l’équation sous la forme :"membre_de_gauche-membre_de_droite=0" pour 
+avoir une équation de la droite de la forme <span style="font-family:monospace">a*x+by+c=0</span> et alors le 
+vecteur orientant la droite est
+<span style="font-family:monospace">[b,-a]</span> ou encore son orientation
+est définie par le produit vectoriel 3-d de son vecteur normal (de cote 0) et 
+de [0,0,1]. Par exemple <span style="font-family:monospace">droite(y=2*x)</span> est orientée par <span style="font-family:monospace">[1,2]</span> car 
+son équation est <span style="font-family:monospace">-2*x+y=0</span> et
+<span style="font-family:monospace">cross([-2,1,0],[0,0,1])</span>=<span style="font-family:monospace">[1,2,0]</span>. 
+</li><li class="li-itemize">Lorsque la droite est donnée par un point <span style="font-style:italic">A</span> et sa pente <span style="font-style:italic">m</span>, son 
+orientation est définie par le vecteur <span style="font-style:italic">AB</span> avec <span style="font-style:italic">B</span>=<span style="font-style:italic">A</span>+1+<span style="font-style:italic">i</span>*<span style="font-style:italic">m</span>.
+</li><li class="li-itemize">Lorsque la droite est donnée par un point <span style="font-style:italic">A</span> et son vecteur directeur,
+son orientation est définie par le vecteur directeur.
+</li></ul><p>
+<span style="font-weight:bold">Attention</span><br>
+Si on veut tracer la droite en couleur en utilisant un argument 
+supplémentaire par exemple,
+<span style="font-family:monospace">couleur=1</span>, il faut impérativement que cet argument soit le 
+troisième argument : donc si la droite est définie par une liste il faut 
+transformer cette liste en une séquence avec <span style="font-family:monospace">op</span>, par exemple, on tape :
+</p><pre class="verbatim">A:=point(0,0);
+B:=point(2,1);
+C1:=cercle(A,B-A);
+C2:=cercle(B,A-B);
+droite(op(inter(C1,C2)),couleur=1)
+</pre><p>
+alors que <span style="font-family:monospace">droite(inter(C1,C2),’couleur’=1)</span> vous répondra 
+<span style="font-family:monospace">"Invalid dimension"</span>
+</p>
+<hr>
+<a href="cascmd_fr915.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr917.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

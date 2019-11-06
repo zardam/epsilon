@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Les coefficients binomiaux et valeur de Proba(X=k) quand X suit la loi B(n,p) : binomial</title>
+</head>
+<body >
+<a href="cascmd_fr193.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr195.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec267" class="subsection">6.8.3  Les coefficients binomiaux et valeur de Proba(<span style="font-style:italic">X</span>=<span style="font-style:italic">k</span>) quand <span style="font-style:italic">X</span> suit la loi <span style="font-style:italic">B</span>(<span style="font-style:italic">n</span>,<span style="font-style:italic">p</span>) : <span style="font-family:monospace">binomial</span></h3>
+<p><a id="hevea_default353"></a>
+On a <span style="font-family:monospace">binomial(n,k)=comb(n,k)</span> lorsque <span style="font-family:monospace">n</span> et <span style="font-family:monospace">k</span> sont deux 
+entiers positifs mais <span style="font-family:monospace">binomial</span> peut admettre un paramètre 
+supplémentaire <span style="font-family:monospace">p</span> compris entre 0 et 1 et dans ce cas 
+<span style="font-family:monospace">binomial(n,k,p)</span> ou
+<span style="font-family:monospace">binomial(n,p,k)</span> calcule :
+<span style="font-style:italic">C</span><sub><span style="font-style:italic">n</span></sub><sup><span style="font-style:italic">k</span></sup>*<span style="font-style:italic">p</span><sup><span style="font-style:italic">k</span></sup>*(1−<span style="font-style:italic">p</span>)<sup><span style="font-style:italic">n</span>−<span style="font-style:italic">k</span></sup> si 0≤ <span style="font-style:italic">p</span> ≤ 1.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">binomial(5,2,0.6)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">0.2304</span></div><p>
+Mais si on tape :
+</p><div class="center"><span style="font-family:monospace">comb(5,2,0.6)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">comb(5,2,0.6) Erreur: Type Argument Incorrect</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">assume(p&gt;=0 and p&lt;=1);</span></div><div class="center"><span style="font-family:monospace">binomial(5,2,p)</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">binomial(5,p,2)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">10*p</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*(1-p)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">assume(p&gt;=0 and p&lt;=1);</span></div><div class="center"><span style="font-family:monospace">binomial(n,k,p)</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">binomial(n,p,k)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">10*p</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*(1-p)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3</span></div><p>
+<span style="font-weight:bold">Remarque : relation avec </span><span style="font-weight:bold"><span style="font-family:monospace">binomial_cdf</span></span><br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">binomial(4,2,0.5)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">binomial(4,0.5,2)</span></div><p>
+On obtient, Proba(<span style="font-style:italic">X</span>=2) quand <span style="font-style:italic">X</span> suit la loi <span style="font-style:italic">B</span>(4,0.5) :
+</p><div class="center"><span style="font-family:monospace">0.375</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">binomial_cdf(4,0.5,2,2)</span></div><p>
+On obtient , Proba(2≤ <span style="font-style:italic">X</span>≤ 2) quand <span style="font-style:italic">X</span> suit la loi <span style="font-style:italic">B</span>(4,0.5) :
+</p><div class="center"><span style="font-family:monospace">0.375</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">binomial(4,2,0.5)+binomial(4,1,0.5)+binomial(4,0,0.5)</span></div><p>
+On obtient Proba(0≤ <span style="font-style:italic">X</span>≤ 2) quand <span style="font-style:italic">X</span> suit la loi <span style="font-style:italic">B</span>(4,0.5) :
+</p><div class="center"><span style="font-family:monospace">0.6875</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">binomial_cdf(4,0.5,2)</span></div><p>
+On obtient Proba(0≤ <span style="font-style:italic">X</span>≤ 2) quand <span style="font-style:italic">X</span> suit la loi <span style="font-style:italic">B</span>(4,0.5) :
+</p><div class="center"><span style="font-family:monospace">0.6875</span></div>
+<hr>
+<a href="cascmd_fr193.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr195.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

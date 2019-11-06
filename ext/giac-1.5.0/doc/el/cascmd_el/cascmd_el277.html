@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Ανάπτυγμα Taylor :  taylor</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el276.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el278.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc311">1.33.2</A>  Ανάπτυγμα <TT>Taylor</TT><TT> : </TT><TT> taylor</TT></H3><P><A NAME="@default474"></A><A NAME="@default475"></A> 
+	
+<TT>taylor</TT> παίρνει από 1 μέχρι 4 ορίσματα :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+μια παράσταση που εξαρτάται από μια μεταβλητή (από προεπιλογή 	
+<TT>x</TT>),
+</LI><LI CLASS="li-itemize">μια ισότητα <TT>variable=value</TT> (π.χ. <I>x</I>=<I>a</I>) για τον υπολογισμό
+του αναπτύγματος <TT>Taylor</TT>, από προεπιλογή 	
+<TT>x=0</TT>, 
+</LI><LI CLASS="li-itemize">έναν ακέραιο <I>n</I>, την τάξη του αναπτύγματος σε σειρά,
+από προεπιλογή <TT>5</TT>,
+</LI><LI CLASS="li-itemize">μια κατεύθυνση <TT>-1, 1</TT> (για ανάπτυγμα σε σειρά προς μία κατεύθυνση)
+ή <TT>0</TT> (για ανάπτυγμα σε σειρά σε δύο κατευθύνσεις) (από προεπιλογή <TT>0</TT>).
+</LI></UL><P>
+Σημειώσατε ότι η σύνταξη 	
+<TT>…,</TT><TT><I>x</I></TT><TT>,</TT><TT><I>n</I></TT><TT>,</TT><TT><I>a</I></TT><TT>,...</TT> 
+(αντί για 	
+<TT>…,</TT><TT><I>x</I>=<I>a</I></TT><TT>,</TT><TT><I>n</I></TT><TT>,...</TT>) είναι επίσης αποδεκτή.<BR>
+	
+<TT>taylor</TT> επιστρέφει ένα πολυώνυμο ως προς 	
+<TT>x-a</TT>, συν ένα υπόλοιπο
+της μορφής:<BR>
+ 	
+<TT>(x-a)</TT><CODE><TT>^</TT></CODE><TT>n*order_size(x-a)</TT><BR>
+όπου 	
+<TT>order_size</TT> είναι μια συνάρτηση τέτοια ώστε,
+	
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TT>∀ <I>r</I>&gt;0,    </TT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TT>&nbsp;</TT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TT>lim</TT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TT><TT><I>x</I>→ 0</TT></TT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TT> <I>x</I></TT><SUP><TT><I>r</I></TT></SUP><TT> </TT><TT>order_size</TT><TT>(<I>x</I>) = 0 </TT></TD></TR>
+</TABLE><P><BR>
+Για κανονικό ανάπτυγμα σε σειρά, η 	
+<TT>order_size</TT> είναι μια φραγμένη συνάρτηση,
+αλλά για μη κανονικό ανάπτυγμα σε σειρά, μπορεί να τείνει αργά στο
+άπειρο, για παράδειγμα σαν μια δύναμη του ln(<I>x</I>).<BR>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>taylor(sin(x),x=1,2)</TT></DIV><P>
+ή (προσέξτε την διάταξη των ορισμάτων !) :
+</P><DIV CLASS="center">	
+<TT>taylor(sin(x),x,2,1)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>sin(1)+cos(1)*(x-1)+(-(1/2*sin(1)))*(x-1)</TT><CODE><TT>^</TT></CODE><TT>2+ (x-1)</TT><CODE><TT>^</TT></CODE><TT>3*order_size(x-1)</TT></DIV><P>
+<B>Σχόλιο</B><BR>
+Η τάξη που επιστρέφεται από την 	
+<TT>taylor</TT> μπορεί να είναι μικρότερη από <I>n</I> εάν γίνονται απαλοιφές μεταξύ αριθμητών και παρονομαστών, για παράδειγμα
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">	
+taylor(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>x</I><SUP>3</SUP>+sin(<I>x</I>)<SUP>3</SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I>−sin(<I>x</I>)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">) </TD></TR>
+</TABLE><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>taylor(x</TT><CODE><TT>^</TT></CODE><TT>3+sin(x)</TT><CODE><TT>^</TT></CODE><TT>3/(x-sin(x)))</TT></DIV><P>
+Η έξοδος είναι ανάπτυγμα σε σειρά μόνο δεύτερης τάξης :
+</P><DIV CLASS="center">	
+<TT>6+-27/10*x</TT><CODE><TT>^2</TT></CODE><TT>+x</TT><CODE><TT>^</TT></CODE><TT>3*order_size(x)</TT></DIV><P>
+Πράγματι, ο μικρότερος βαθμός του αριθμητή και του παρονομαστή είναι 3, και γι’ αυτό χάνουμε 3
+τάξεις. Για να πάρουμε ανάπτυγμα σε σειρά 4ης τάξης, πρέπει να ζητήσουμε <I>n</I>=7, εισάγοντας :
+</P><DIV CLASS="center">	
+<TT>taylor(x</TT><CODE><TT>^</TT></CODE><TT>3+sin(x)</TT><CODE><TT>^</TT></CODE><TT>3/(x-sin(x)),x=0,7)</TT></DIV><P>
+Έξοδος είναι ανάπτυγμα σε σειρά 4ης τάξης :
+</P><DIV CLASS="center">	
+<TT>6+-27/10*x</TT><CODE><TT>^</TT></CODE><TT>2+x</TT><CODE><TT>^</TT></CODE><TT>3+711/1400*x</TT><CODE><TT>^</TT></CODE><TT>4+x</TT><CODE><TT>^</TT></CODE><TT>5*order_size(x)</TT></DIV><HR>
+<A HREF="cascmd_el276.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el278.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,1040 @@
+<HTML>
+<HEAD>
+  <TITLE>
+    Catalogue of GP/PARI Functions: Sums, products, integrals and similar functions
+  </TITLE>
+
+  <META NAME="author"       CONTENT="Nils-Peter Skoruppa">
+  <META NAME="created"      CONTENT="Sat Mar 22 18:13:28 2014">
+  <META NAME="author-email" CONTENT="skoruppa@math.uni-siegen.de">
+  <META NAME="keywords"     CONTENT="PARI, GP, DOC">
+  <link rel="stylesheet" href="/pari.css">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+
+<h3 align=center>Sums, products, integrals and similar functions</h3>
+
+<a name="derivnum"></a>
+<h4>derivnum(X = a,<em>expr</em>)</h4>
+<p></p>
+<p>Numerical derivation of <em>expr</em> with respect to X at X = a.</p>
+<p></p>
+<p>
+<pre class="code">  ? derivnum(x=0,sin(exp(x))) - cos(1)
+  %1 = -1.262177448 E-29
+</pre></p>
+<p>
+A clumsier approach, which would not work in library mode, is</p>
+<p>
+<pre class="code">  ? f(x) = sin(exp(x))
+  ? f'(0) - cos(1)
+  %1 = -1.262177448 E-29
+</pre></p>
+<p>
+When a is a power series, compute <code>derivnum(t = a,f)</code> as f'(a) = 
+(f(a))'/a'.</p>
+<p>
+The library syntax is <code><b>derivnum</b>(void *E, GEN (*eval)(void*,GEN), GEN a, long prec)</code>. Also
+available is <code>GEN <b>derivfun</b>(void *E, GEN (*eval)(void *, GEN), GEN a, long prec)</code>, which also allows power series for a.</p>
+
+<hr></hr>
+<a name="intcirc"></a>
+<h4>intcirc(X = a,R,<em>expr</em>,{<em>tab</em>})</h4>
+<p></p>
+<p>Numerical
+integration of (2i<font color=#FF0000>Pi</font>)^{-1}<em>expr</em> with respect to X on the circle
+|X-a |= R.
+In other words, when <em>expr</em> is a meromorphic
+function, sum of the residues in the corresponding disk. <em>tab</em> is as in
+<code>intnum</code>, except that if computed with <code>intnuminit</code> it should be with
+the endpoints <code>[-1, 1]</code>.</p>
+<p></p>
+<p>
+<pre class="code">  ? \p105
+  ? intcirc(s=1, 0.5, zeta(s)) - 1
+  %1 = -2.398082982 E-104 - 7.94487211 E-107*I
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code><b>intcirc</b>(void *E, GEN (*eval)(void*,GEN), GEN a,GEN R,GEN tab, long prec)</code>.</p>
+
+<hr></hr>
+<a name="intfouriercos"></a>
+<h4>intfouriercos(X = a,b,z,<em>expr</em>,{<em>tab</em>})</h4>
+<p></p>
+<p>Numerical
+integration of <em>expr</em>(X)cos(2<font color=#FF0000>Pi</font> zX) from a to b, in other words
+Fourier cosine transform (from a to b) of the function represented by
+<em>expr</em>. Endpoints a and b are coded as in <code>intnum</code>, and are not
+necessarily at infinity, but if they are, oscillations (i.e. [[&#177;1],<font color=#FF0000>alpha</font>
+I]) are forbidden.</p>
+<p>
+The library syntax is <code><b>intfouriercos</b>(void *E, GEN (*eval)(void*,GEN), GEN a, GEN b, GEN z, GEN tab, long prec)</code>.</p>
+
+<hr></hr>
+<a name="intfourierexp"></a>
+<h4>intfourierexp(X = a,b,z,<em>expr</em>,{<em>tab</em>})</h4>
+<p></p>
+<p>Numerical
+integration of <em>expr</em>(X)exp(-2i<font color=#FF0000>Pi</font> zX) from a to b, in other words
+Fourier transform (from a to b) of the function represented by
+<em>expr</em>. Note the minus sign. Endpoints a and b are coded as in
+<code>intnum</code>, and are not necessarily at infinity but if they are,
+oscillations (i.e. [[&#177;1],<font color=#FF0000>alpha</font> I]) are forbidden.</p>
+<p>
+The library syntax is <code><b>intfourierexp</b>(void *E, GEN (*eval)(void*,GEN), GEN a, GEN b, GEN z, GEN tab, long prec)</code>.</p>
+
+<hr></hr>
+<a name="intfouriersin"></a>
+<h4>intfouriersin(X = a,b,z,<em>expr</em>,{<em>tab</em>})</h4>
+<p></p>
+<p>Numerical
+integration of <em>expr</em>(X)sin(2<font color=#FF0000>Pi</font> zX) from a to b, in other words
+Fourier sine transform (from a to b) of the function represented by
+<em>expr</em>. Endpoints a and b are coded as in <code>intnum</code>, and are not
+necessarily at infinity but if they are, oscillations (i.e. [[&#177;1],<font color=#FF0000>alpha</font>
+I]) are forbidden.</p>
+<p>
+The library syntax is <code><b>intfouriersin</b>(void *E, GEN (*eval)(void*,GEN), GEN a, GEN b, GEN z, GEN tab, long prec)</code>.</p>
+
+<hr></hr>
+<a name="intfuncinit"></a>
+<h4>intfuncinit(X = a,b,<em>expr</em>,{<em>flag</em> = 0},{m = 0})</h4>
+<p></p>
+<p>Initialize tables for use with integral transforms such as <code>intmellininv</code>,
+etc., where a and b are coded as in <code>intnum</code>, <em>expr</em> is the
+function s(X) to which the integral transform is to be applied (which will
+multiply the weights of integration) and m is as in <code>intnuminit</code>. If
+<em>flag</em> is nonzero, assumes that s(-X) = \overline{s(X)}, which makes the
+computation twice as fast. See <code>intmellininvshort</code> for examples of the
+use of this function, which is particularly useful when the function s(X)
+is lengthy to compute, such as a gamma product.</p>
+<p>
+The library syntax is <code><b>intfuncinit</b>(void *E, GEN (*eval)(void*,GEN), GEN a,GEN b,long m, long flag, long prec)</code>. Note that the order of m and <em>flag</em> are reversed compared
+to the <code>GP</code> syntax.</p>
+
+<hr></hr>
+<a name="intlaplaceinv"></a>
+<h4>intlaplaceinv(X = <em>sig</em>,z,<em>expr</em>,{<em>tab</em>})</h4>
+<p></p>
+<p>Numerical integration of (2i<font color=#FF0000>Pi</font>)^{-1}<em>expr</em>(X)e^{Xz} with respect
+to X on the line Re(X) = sig. In other words, inverse Laplace transform
+of the function corresponding to <em>expr</em> at the value z.</p>
+<p>
+sig is coded as follows. Either it is a real number <font color=#FF0000>sigma</font>, equal to the
+abscissa of integration, and then the integrand is assumed to
+be slowly decreasing when the imaginary part of the variable tends to
+&#177; oo . Or it is a two component vector [<font color=#FF0000>sigma</font>,<font color=#FF0000>alpha</font>], where
+<font color=#FF0000>sigma</font> is as before, and either <font color=#FF0000>alpha</font> = 0 for slowly decreasing functions,
+or <font color=#FF0000>alpha</font> &#62; 0 for functions decreasing like exp(-<font color=#FF0000>alpha</font> t). Note that it
+is not necessary to choose the exact value of <font color=#FF0000>alpha</font>. <em>tab</em> is as in
+<code>intnum</code>.</p>
+<p>
+It is often a good idea to use this function with a value of m one or two
+higher than the one chosen by default (which can be viewed thanks to the
+function <code>intnumstep</code>), or to increase the abscissa of integration
+<font color=#FF0000>sigma</font>. For example:</p>
+<p></p>
+<p>
+<pre class="code">  ? \p 105
+  ? intlaplaceinv(x=2, 1, 1/x) - 1
+  time = 350 ms.
+  %1 = 7.37... E-55 + 1.72... E-54*I \\  not so good
+  ? m = intnumstep()
+  %2 = 7
+  ? intlaplaceinv(x=2, 1, 1/x, m+1) - 1
+  time = 700 ms.
+  %3 = 3.95... E-97 + 4.76... E-98*I \\  better
+  ? intlaplaceinv(x=2, 1, 1/x, m+2) - 1
+  time = 1400 ms.
+  %4 = 0.E-105 + 0.E-106*I \\  perfect but slow.
+  ? intlaplaceinv(x=5, 1, 1/x) - 1
+  time = 340 ms.
+  %5 = -5.98... E-85 + 8.08... E-85*I \\  better than %1
+  ? intlaplaceinv(x=5, 1, 1/x, m+1) - 1
+  time = 680 ms.
+  %6 = -1.09... E-106 + 0.E-104*I \\  perfect, fast.
+  ? intlaplaceinv(x=10, 1, 1/x) - 1
+  time = 340 ms.
+  %7 = -4.36... E-106 + 0.E-102*I \\  perfect, fastest, but why sig = 10?
+  ? intlaplaceinv(x=100, 1, 1/x) - 1
+  time = 330 ms.
+  %7 = 1.07... E-72 + 3.2... E-72*I \\  too far now...
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code><b>intlaplaceinv</b>(void *E, GEN (*eval)(void*,GEN), GEN sig,GEN z, GEN tab, long prec)</code>.</p>
+
+<hr></hr>
+<a name="intmellininv"></a>
+<h4>intmellininv(X = <em>sig</em>,z,<em>expr</em>,{<em>tab</em>})</h4>
+<p></p>
+<p>Numerical
+integration of (2i<font color=#FF0000>Pi</font>)^{-1}<em>expr</em>(X)z^{-X} with respect to X on the
+line Re(X) = sig,  in other words, inverse Mellin transform of
+the function corresponding to <em>expr</em> at the value z.</p>
+<p>
+sig is coded as follows. Either it is a real number <font color=#FF0000>sigma</font>, equal to the
+abscissa of integration, and then the integrated is assumed to decrease
+exponentially fast, of the order of exp(-t) when the imaginary part of the
+variable tends to &#177; oo . Or it is a two component vector
+[<font color=#FF0000>sigma</font>,<font color=#FF0000>alpha</font>], where <font color=#FF0000>sigma</font> is as before, and either <font color=#FF0000>alpha</font> = 0 for
+slowly decreasing functions, or <font color=#FF0000>alpha</font> &#62; 0 for functions decreasing like
+exp(-<font color=#FF0000>alpha</font> t), such as gamma products. Note that it is not necessary to
+choose the exact value of <font color=#FF0000>alpha</font>, and that <font color=#FF0000>alpha</font> = 1 (equivalent to sig
+alone) is usually sufficient. <em>tab</em> is as in <code>intnum</code>.</p>
+<p>
+As all similar functions, this function is provided for the convenience of
+the user, who could use <code>intnum</code> directly. However it is in general
+better to use <code>intmellininvshort</code>.</p>
+<p></p>
+<p>
+<pre class="code">  ? \p 105
+  ? intmellininv(s=2,4, gamma(s)^3);
+  time = 1,190 ms. \\  reasonable.
+  ? \p 308
+  ? intmellininv(s=2,4, gamma(s)^3);
+  time = 51,300 ms. \\  slow because of <font color=#FF0000>Gamma</font>(s)^3.
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code><b>intmellininv</b>(void *E, GEN (*eval)(void*,GEN), GEN sig, GEN z, GEN tab, long prec)</code>.</p>
+
+<hr></hr>
+<a name="intmellininvshort"></a>
+<h4>intmellininvshort(<em>sig</em>,z,<em>tab</em>)</h4>
+<p></p>
+<p>Numerical integration
+of (2i<font color=#FF0000>Pi</font>)^{-1}s(X)z^{-X} with respect to X on the line Re(X) = sig.
+In other words, inverse Mellin transform of s(X) at the value z.
+Here s(X) is implicitly contained in <em>tab</em> in <code>intfuncinit</code> format,
+typically</p>
+<p>
+<pre class="code">  tab = intfuncinit(T = [-1], [1], s(sig + I*T))
+</pre></p>
+<p>
+or similar commands. Take the example of the inverse Mellin transform of
+<font color=#FF0000>Gamma</font>(s)^3 given in <code>intmellininv</code>:</p>
+<p></p>
+<p>
+<pre class="code">  ? \p 105
+  ? oo = [1]; \\  for clarity
+  ? A = intmellininv(s=2,4, gamma(s)^3);
+  time = 2,500 ms. \\  not too fast because of <font color=#FF0000>Gamma</font>(s)^3.
+  \\   function of real type, decreasing as exp(-3<font color=#FF0000>Pi</font>/2.|t|)
+  ? tab = intfuncinit(t=[-oo, 3*Pi/2],[oo, 3*Pi/2], gamma(2+I*t)^3, 1);
+  time = 1,370 ms.
+  ? intmellininvshort(2,4, tab) - A
+  time = 50 ms.
+  %4 = -1.26... - 3.25...E-109*I \\  50 times faster than <code>A</code> and perfect.
+  ? tab2 = intfuncinit(t=-oo, oo, gamma(2+I*t)^3, 1);
+  ? intmellininvshort(2,4, tab2)
+  %6 = -1.2...E-42 - 3.2...E-109*I  \\  63 digits lost
+</pre></p>
+<p>
+In the computation of <em>tab</em>, it was not essential to include the
+<em>exact</em> exponential decrease of <font color=#FF0000>Gamma</font>(2+it)^3. But as the last
+example shows, a rough indication <em>must</em> be given, otherwise slow
+decrease is assumed, resulting in catastrophic loss of accuracy.</p>
+<p>
+The library syntax is <code>GEN <b>intmellininvshort</b>(GEN sig, GEN z, GEN tab, long prec)</code>.</p>
+
+<hr></hr>
+<a name="intnum"></a>
+<h4>intnum(X = a,b,<em>expr</em>,{<em>tab</em>})</h4>
+<p></p>
+<p>Numerical integration
+of <em>expr</em> on ]a,b[ with respect to X. The integrand may have values
+belonging to a vector space over the real numbers; in particular, it can be
+complex-valued or vector-valued. But it is assumed that the function is regular
+on ]a,b[. If the endpoints a and b are finite and the function is regular
+there, the situation is simple:</p>
+<p>
+<pre class="code">  ? intnum(x = 0,1, x^2)
+  %1 = 0.3333333333333333333333333333
+  ? intnum(x = 0,Pi/2, [cos(x), sin(x)])
+  %2 = [1.000000000000000000000000000, 1.000000000000000000000000000]
+</pre></p>
+<p>
+An endpoint equal to &#177; oo  is coded as the single-component vector
+[&#177;1]. You are welcome to set, e.g <code>oo = [1]</code> or <code>INFINITY = [1]</code>,
+then using <code>+oo</code>, <code>-oo</code>, <code>-INFINITY</code>, etc. will have the expected
+behavior.</p>
+<p>
+<pre class="code">  ? oo = [1];  \\  for clarity
+  ? intnum(x = 1,+oo, 1/x^2)
+  %2 = 1.000000000000000000000000000
+</pre></p>
+<p>
+In basic usage, it is assumed that the function does not decrease
+exponentially fast at infinity:</p>
+<p>
+<pre class="code">  ? intnum(x=0,+oo, exp(-x))
+    ***   at top-level: intnum(x=0,+oo,exp(-
+    ***                 ^--------------------
+    *** exp: exponent (expo) overflow
+</pre></p>
+<p>
+We shall see in a moment how to avoid the last problem, after describing
+the last argument <em>tab</em>, which is both optional and technical. The
+routine uses weights, which are mostly independent of the function being
+integrated, evaluated at many sampling points. If <em>tab</em> is</p>
+<p>
+<b>*</b> a positive integer m, we use 2^m sampling points, hopefully
+increasing accuracy. But note that the running time is roughly proportional
+to 2^m. One may try consecutive values of m until they give the same
+value up to an accepted error. If <em>tab</em> is omitted, the algorithm guesses
+a reasonable value for m depending on the current precision only, which
+should be sufficient for regular functions. That value may be obtained from
+<code>intnumstep</code>, and increased in case of difficulties.</p>
+<p>
+<b>*</b> a set of integration tables as output by <code>intnuminit</code>,
+they are used directly. This is useful if several integrations of the same
+type are performed (on the same kind of interval and functions, for a given
+accuracy), in particular for multivariate integrals, since we then skip
+expensive precomputations.</p>
+<p>
+<b>Specifying the behavior at endpoints.</b>
+This is done as follows. An endpoint a is either given as such (a scalar,
+real or complex, or [&#177;1] for &#177; oo ), or as a two component vector
+[a,<font color=#FF0000>alpha</font>], to indicate the behavior of the integrand in a neighborhood
+of a.</p>
+<p>
+If a is finite, the code [a,<font color=#FF0000>alpha</font>] means the function has a
+singularity of the form (x-a)^{<font color=#FF0000>alpha</font>}, up to logarithms. (If <font color=#FF0000>alpha</font> \ge
+0, we only assume the function is regular, which is the default assumption.)
+If a wrong singularity exponent is used, the result will lose a catastrophic
+number of decimals:</p>
+<p>
+<pre class="code">  ? intnum(x=0, 1, x^(-1/2))         \\  assume x^{-1/2} is regular at 0
+  %1 = 1.999999999999999999990291881
+  ? intnum(x=[0,-1/2], 1, x^(-1/2))  \\  no, it's not
+  %2 = 2.000000000000000000000000000
+  ? intnum(x=[0,-1/10], 1, x^(-1/2))
+  %3 = 1.999999999999999999999946438 \\  using a wrong exponent is bad
+</pre></p>
+<p></p>
+<p>
+If a is &#177; oo , which is coded as [&#177; 1], the situation is more
+complicated, and [[&#177;1],<font color=#FF0000>alpha</font>] means:</p>
+<p>
+<b>*</b> <font color=#FF0000>alpha</font> = 0 (or no <font color=#FF0000>alpha</font> at all, i.e. simply [&#177;1]) assumes that the
+integrand tends to zero, but not exponentially fast, and not
+oscillating such as sin(x)/x.</p>
+<p>
+<b>*</b> <font color=#FF0000>alpha</font> &#62; 0 assumes that the function tends to zero exponentially fast
+approximately as exp(-<font color=#FF0000>alpha</font> x). This includes oscillating but quickly
+decreasing functions such as exp(-x)sin(x).</p>
+<p>
+<pre class="code">  ? oo = [1];
+  ? intnum(x=0, +oo, exp(-2*x))
+    ***   at top-level: intnum(x=0,+oo,exp(-
+    ***                 ^--------------------
+    *** exp: exponent (expo) overflow
+  ? intnum(x=0, [+oo, 2], exp(-2*x))
+  %1 = 0.5000000000000000000000000000 \\  OK!
+  ? intnum(x=0, [+oo, 4], exp(-2*x))
+  %2 = 0.4999999999999999999961990984 \\  wrong exponent  ==&#62;  imprecise result
+  ? intnum(x=0, [+oo, 20], exp(-2*x))
+  %2 = 0.4999524997739071283804510227 \\  disaster
+</pre></p>
+<p></p>
+<p>
+<b>*</b> <font color=#FF0000>alpha</font> &#60; -1 assumes that the function tends to 0 slowly, like
+x^{<font color=#FF0000>alpha</font>}. Here it is essential to give the correct <font color=#FF0000>alpha</font>, if possible,
+but on the other hand <font color=#FF0000>alpha</font> <code>&#60;=</code> -2 is equivalent to <font color=#FF0000>alpha</font> = 0, in other
+words to no <font color=#FF0000>alpha</font> at all.</p>
+<p>
+The last two codes are reserved for oscillating functions.
+Let k &#62; 0 real, and g(x) a non-oscillating function tending slowly to 0
+(e.g. like a negative power of x), then</p>
+<p>
+<b>*</b> <font color=#FF0000>alpha</font> = k * I assumes that the function behaves like cos(kx)g(x).</p>
+<p>
+<b>*</b> <font color=#FF0000>alpha</font> = -k* I assumes that the function behaves like sin(kx)g(x).</p>
+<p>
+Here it is critical to give the exact value of k. If the
+oscillating part is not a pure sine or cosine, one must expand it into a
+Fourier series, use the above codings, and sum the resulting contributions.
+Otherwise you will get nonsense. Note that cos(kx), and similarly
+sin(kx), means that very function, and not a translated version such as
+cos(kx+a).</p>
+<p>
+<b>Note.</b> If f(x) = cos(kx)g(x) where g(x) tends to zero
+exponentially fast as exp(-<font color=#FF0000>alpha</font> x), it is up to the user to choose
+between [[&#177;1],<font color=#FF0000>alpha</font>] and [[&#177;1],k* I], but a good rule of thumb is that
+if the oscillations are much weaker than the exponential decrease, choose
+[[&#177;1],<font color=#FF0000>alpha</font>], otherwise choose [[&#177;1],k* I], although the latter can
+reasonably be used in all cases, while the former cannot. To take a specific
+example, in the inverse Mellin transform, the integrand is almost always a
+product of an exponentially decreasing and an oscillating factor. If we
+choose the oscillating type of integral we perhaps obtain the best results,
+at the expense of having to recompute our functions for a different value of
+the variable z giving the transform, preventing us to use a function such
+as <code>intmellininvshort</code>. On the other hand using the exponential type of
+integral, we obtain less accurate results, but we skip expensive
+recomputations. See <code>intmellininvshort</code> and <code>intfuncinit</code> for more
+explanations.</p>
+<p></p>
+<p></p>
+<p>
+We shall now see many examples to get a feeling for what the various
+parameters achieve. All examples below assume precision is set to 105
+decimal digits. We first type</p>
+<p>
+<pre class="code">  ? \p 105
+  ? oo = [1]  \\  for clarity
+</pre></p>
+<p></p>
+<p>
+<b>Apparent singularities.</b> Even if the function f(x) represented
+by <em>expr</em> has no singularities, it may be important to define the
+function differently near special points. For instance, if f(x) = 1
+/(exp(x)-1) - exp(-x)/x, then <font color=#FF0000>int</font>_0^ oo f(x)dx = <font color=#FF0000>gamma</font>, Euler's
+constant <code>Euler</code>. But</p>
+<p></p>
+<p>
+<pre class="code">  ? f(x) = 1/(exp(x)-1) - exp(-x)/x
+  ? intnum(x = 0, [oo,1],  f(x)) - Euler
+  %1 = 6.00... E-67
+</pre></p>
+<p>
+thus only correct to 67 decimal digits. This is because close to 0 the
+function f is computed with an enormous loss of accuracy.
+A better solution is</p>
+<p></p>
+<p>
+<pre class="code">  ? f(x) = 1/(exp(x)-1)-exp(-x)/x
+  ? F = truncate( f(t + O(t^7)) ); \\  expansion around t = 0
+  ? g(x) = if (x &#62; 1e-18, f(x), subst(F,t,x))  \\  note that 6.18 &#62; 105
+  ? intnum(x = 0, [oo,1],  g(x)) - Euler
+  %2 = 0.E-106 \\  perfect
+</pre></p>
+<p>
+It is up to the user to determine constants such as the 10^{-18} and 7
+used above.</p>
+<p>
+<b>True singularities.</b> With true singularities the result is worse.
+For instance</p>
+<p></p>
+<p>
+<pre class="code">  ? intnum(x = 0, 1,  1/sqrt(x)) - 2
+  %1 = -1.92... E-59 \\  only 59 correct decimals
+  
+  ? intnum(x = [0,-1/2], 1,  1/sqrt(x)) - 2
+  %2 = 0.E-105 \\  better
+</pre></p>
+<p></p>
+<p>
+<b>Oscillating functions.</b></p>
+<p></p>
+<p>
+<pre class="code">  ? intnum(x = 0, oo, sin(x) / x) - Pi/2
+  %1 = 20.78.. \\  nonsense
+  ? intnum(x = 0, [oo,1], sin(x)/x) - Pi/2
+  %2 = 0.004.. \\  bad
+  ? intnum(x = 0, [oo,-I], sin(x)/x) - Pi/2
+  %3 = 0.E-105 \\  perfect
+  ? intnum(x = 0, [oo,-I], sin(2*x)/x) - Pi/2  \\  oops, wrong k
+  %4 = 0.07...
+  ? intnum(x = 0, [oo,-2*I], sin(2*x)/x) - Pi/2
+  %5 = 0.E-105 \\  perfect
+  
+  ? intnum(x = 0, [oo,-I], sin(x)^3/x) - Pi/4
+  %6 = 0.0092... \\  bad
+  ? sin(x)^3 - (3*sin(x)-sin(3*x))/4
+  %7 = O(x^17)
+</pre></p>
+<p>
+We may use the above linearization and compute two oscillating integrals with
+"infinite endpoints" <code>[oo, -I]</code> and <code>[oo, -3*I]</code> respectively, or
+notice the obvious change of variable, and reduce to the single integral
+(1/2)<font color=#FF0000>int</font>_0^ oo sin(x)/xdx. We finish with some more complicated
+examples:</p>
+<p></p>
+<p>
+<pre class="code">  ? intnum(x = 0, [oo,-I], (1-cos(x))/x^2) - Pi/2
+  %1 = -0.0004... \\  bad
+  ? intnum(x = 0, 1, (1-cos(x))/x^2) \
+  + intnum(x = 1, oo, 1/x^2) - intnum(x = 1, [oo,I], cos(x)/x^2) - Pi/2
+  %2 = -2.18... E-106 \\  OK
+  
+  ? intnum(x = 0, [oo, 1], sin(x)^3*exp(-x)) - 0.3
+  %3 = 5.45... E-107 \\  OK
+  ? intnum(x = 0, [oo,-I], sin(x)^3*exp(-x)) - 0.3
+  %4 = -1.33... E-89 \\  lost 16 decimals. Try higher m:
+  ? m = intnumstep()
+  %5 = 7 \\  the value of m actually used above.
+  ? tab = intnuminit(0,[oo,-I], m+1); \\  try m one higher.
+  ? intnum(x = 0, oo, sin(x)^3*exp(-x), tab) - 0.3
+  %6 = 5.45... E-107 \\  OK this time.
+</pre></p>
+<p></p>
+<p>
+<b>Warning.</b> Like <code>sumalt</code>, <code>intnum</code> often assigns a
+reasonable value to diverging integrals. Use these values at your own risk!
+For example:</p>
+<p></p>
+<p>
+<pre class="code">  ? intnum(x = 0, [oo, -I], x^2*sin(x))
+  %1 = -2.0000000000...
+</pre></p>
+<p>
+Note the formula
+ <font color=#FF0000>int</font>_0^ oo sin(x)/x^sdx = cos(<font color=#FF0000>Pi</font> s/2) <font color=#FF0000>Gamma</font>(1-s) , 
+a priori valid only for 0 &#60; Re(s) &#60; 2, but the right hand side provides an
+analytic continuation which may be evaluated at s = -2...</p>
+<p>
+<b>Multivariate integration.</b>
+Using successive univariate integration with respect to different formal
+parameters, it is immediate to do naive multivariate integration. But it is
+important to use a suitable <code>intnuminit</code> to precompute data for the
+<em>internal</em> integrations at least!</p>
+<p>
+For example, to compute the double integral on the unit disc x^2+y^2 <code>&#60;=</code> 1
+of the function x^2+y^2, we can write</p>
+<p>
+<pre class="code">  ? tab = intnuminit(-1,1);
+  ? intnum(x=-1,1, intnum(y=-sqrt(1-x^2),sqrt(1-x^2), x^2+y^2, tab), tab)
+</pre></p>
+<p>
+The first <em>tab</em> is essential, the second optional. Compare:</p>
+<p></p>
+<p>
+<pre class="code">  ? tab = intnuminit(-1,1);
+  time = 30 ms.
+  ? intnum(x=-1,1, intnum(y=-sqrt(1-x^2),sqrt(1-x^2), x^2+y^2));
+  time = 54,410 ms. \\  slow
+  ? intnum(x=-1,1, intnum(y=-sqrt(1-x^2),sqrt(1-x^2), x^2+y^2, tab), tab);
+  time = 7,210 ms.  \\  faster
+</pre></p>
+<p>
+However, the <code>intnuminit</code> program is usually pessimistic when it comes to
+choosing the integration step 2^{-m}. It is often possible to improve the
+speed by trial and error. Continuing the above example:</p>
+<p>
+<pre class="code">  ? test(M) =
+  {
+  tab = intnuminit(-1,1, M);
+  intnum(x=-1,1, intnum(y=-sqrt(1-x^2),sqrt(1-x^2), x^2+y^2,tab), tab) - Pi/2
+  }
+  ? m = intnumstep() \\  what value of m did it take?
+  %1 = 7
+  ? test(m - 1)
+  time = 1,790 ms.
+  %2 = -2.05... E-104 \\  4 = 2^2 times faster and still OK.
+  ? test(m - 2)
+  time = 430 ms.
+  %3 = -1.11... E-104 \\  16 = 2^4 times faster and still OK.
+  ? test(m - 3)
+  time = 120 ms.
+  %3 = -7.23... E-60 \\  64 = 2^6 times faster, lost 45 decimals.
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code><b>intnum</b>(void *E, GEN (*eval)(void*,GEN), GEN a,GEN b,GEN tab, long prec)</code>,
+where an omitted <em>tab</em> is coded as <code>NULL</code>.</p>
+
+<hr></hr>
+<a name="intnuminit"></a>
+<h4>intnuminit(a,b,{m = 0})</h4>
+<p></p>
+<p>Initialize tables for integration from
+a to b, where a and b are coded as in <code>intnum</code>. Only the
+compactness, the possible existence of singularities, the speed of decrease
+or the oscillations at infinity are taken into account, and not the values.
+For instance intnuminit(-1,1) is equivalent to intnuminit(0,Pi),
+and intnuminit([0,-1/2],[1]) is equivalent to {\tt
+intnuminit([-1],[-1,-1/2])}. If m is not given, it is computed according to
+the current precision. Otherwise the integration step is 1/2^m. Reasonable
+values of m are m = 6 or m = 7 for 100 decimal digits, and m = 9 for
+1000 decimal digits.</p>
+<p>
+The result is technical, but in some cases it is useful to know the output.
+Let x = <font color=#FF0000>phi</font>(t) be the change of variable which is used. <em>tab</em>[1] contains
+the integer m as above, either given by the user or computed from the default
+precision, and can be recomputed directly using the function <code>intnumstep</code>.
+<em>tab</em>[2] and <em>tab</em>[3] contain respectively the abscissa and weight
+corresponding to t = 0 (<font color=#FF0000>phi</font>(0) and <font color=#FF0000>phi</font>'(0)). <em>tab</em>[4] and
+<em>tab</em>[5] contain the abscissas and weights corresponding to positive
+t = nh for 1 <code>&#60;=</code> n <code>&#60;=</code> N and h = 1/2^m (<font color=#FF0000>phi</font>(nh) and <font color=#FF0000>phi</font>'(nh)). Finally
+<em>tab</em>[6] and <em>tab</em>[7] contain either the abscissas and weights
+corresponding to negative t = nh for -N <code>&#60;=</code> n <code>&#60;=</code> -1, or may be empty (but
+not always) if <font color=#FF0000>phi</font>(t) is an odd function (implicitly we would have
+<em>tab</em>[6] = -<em>tab</em>[4] and <em>tab</em>[7] = <em>tab</em>[5]).</p>
+<p>
+The library syntax is <code>GEN <b>intnuminit</b>(GEN a, GEN b, long m, long prec)</code>.</p>
+
+<hr></hr>
+<a name="intnuminitgen"></a>
+<h4>intnuminitgen(t,a,b,<em>ph</em>,{m = 0},{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Initialize tables for integrations from a to b using abscissas
+ph(t) and weights ph'(t). Note that there is no equal sign after the
+variable name t since t always goes from - oo  to + oo , but it
+is ph(t) which goes from a to b, and this is not checked. If <em>flag</em> = 1
+or 2, multiply the reserved table length by 4^{<em>flag</em>}, to avoid corresponding
+error.</p>
+<p>
+The library syntax is <code><b>intnuminitgen</b>(void *E, GEN (*eval)(void*,GEN), GEN a, GEN b, long m, long flag, long prec)</code></p>
+
+<hr></hr>
+<a name="intnumromb"></a>
+<h4>intnumromb(X = a,b,<em>expr</em>,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Numerical integration of <em>expr</em> (smooth in ]a,b[), with respect to
+X. Suitable for low accuracy; if <em>expr</em> is very regular (e.g. analytic
+in a large region) and high accuracy is desired, try <code>intnum</code> first.</p>
+<p>
+Set <em>flag</em> = 0 (or omit it altogether) when a and b are not too large, the
+function is smooth, and can be evaluated exactly everywhere on the interval
+[a,b].</p>
+<p>
+If <em>flag</em> = 1, uses a general driver routine for doing numerical integration,
+making no particular assumption (slow).</p>
+<p>
+<em>flag</em> = 2 is tailored for being used when a or b are infinite. One
+<em>must</em> have ab &#62; 0, and in fact if for example b = + oo , then it is
+preferable to have a as large as possible, at least a <code>&#62;=</code> 1.</p>
+<p>
+If <em>flag</em> = 3, the function is allowed to be undefined (but continuous) at a
+or b, for example the function sin(x)/x at x = 0.</p>
+<p>
+The user should not require too much accuracy: 18 or 28 decimal digits is OK,
+but not much more. In addition, analytical cleanup of the integral must have
+been done: there must be no singularities in the interval or at the
+boundaries. In practice this can be accomplished with a simple change of
+variable. Furthermore, for improper integrals, where one or both of the
+limits of integration are plus or minus infinity, the function must decrease
+sufficiently rapidly at infinity. This can often be accomplished through
+integration by parts. Finally, the function to be integrated should not be
+very small (compared to the current precision) on the entire interval. This
+can of course be accomplished by just multiplying by an appropriate constant.</p>
+<p>
+Note that infinity can be represented with essentially no loss of
+accuracy by an appropriate huge number. However beware of real underflow
+when dealing with rapidly decreasing functions. For example, in order to
+compute the <font color=#FF0000>int</font>_0^ oo e^{-x^2}dx to 28 decimal digits, then one can
+set infinity equal to 10 for example, and certainly not to <code>1e1000</code>.</p>
+<p>
+The library syntax is <code><b>intnumromb</b>(void *E, GEN (*eval)(void*,GEN), GEN a, GEN b, long flag, long prec)</code>,
+where <code>eval</code>(x, E) returns the value of the function at x.
+You may store any additional information required by <code>eval</code> in E, or set
+it to <code>NULL</code>.</p>
+
+<hr></hr>
+<a name="intnumstep"></a>
+<h4>intnumstep()</h4>
+<p></p>
+<p>Give the value of m used in all the
+<code>intnum</code> and <code>sumnum</code> programs, hence such that the integration
+step is equal to 1/2^m.</p>
+<p>
+The library syntax is <code>long <b>intnumstep</b>(long prec)</code>.</p>
+
+<hr></hr>
+<a name="prod"></a>
+<h4>prod(X = a,b,<em>expr</em>,{x = 1})</h4>
+<p></p>
+<p>Product of expression
+<em>expr</em>, initialized at x, the formal parameter X going from a to
+b. As for <code>sum</code>, the main purpose of the initialization parameter x
+is to force the type of the operations being performed. For example if it is
+set equal to the integer 1, operations will start being done exactly. If it
+is set equal to the real 1., they will be done using real numbers having
+the default precision. If it is set equal to the power series 1+O(X^k) for
+a certain k, they will be done using power series of precision at most k.
+These are the three most common initializations.</p>
+<p>
+As an extreme example, compare</p>
+<p></p>
+<p>
+<pre class="code">  ? prod(i=1, 100, 1 - X^i);  \\  this has degree 5050 !!
+  time = 128 ms.
+  ? prod(i=1, 100, 1 - X^i, 1 + O(X^101))
+  time = 8 ms.
+  %2 = 1 - X - X^2 + X^5 + X^7 - X^12 - X^15 + X^22 + X^26 - X^35 - X^40 + \
+  X^51 + X^57 - X^70 - X^77 + X^92 + X^100 + O(X^101)
+</pre></p>
+<p>
+Of course, in  this specific case, it is faster to use <code>eta</code>,
+which is computed using Euler's formula.</p>
+<p>
+<pre class="code">  ? prod(i=1, 1000, 1 - X^i, 1 + O(X^1001));
+  time = 589 ms.
+  ? \ps1000
+  seriesprecision = 1000 significant terms
+  ? eta(X) - %
+  time = 8ms.
+  %4 = O(X^1001)
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code><b>produit</b>(GEN a, GEN b, char *expr, GEN x)</code>.</p>
+
+<hr></hr>
+<a name="prodeuler"></a>
+<h4>prodeuler(X = a,b,<em>expr</em>)</h4>
+<p></p>
+<p>Product of expression <em>expr</em>,
+initialized at 1. (i.e.&nbsp;to a <em>real</em> number equal to 1 to the current
+<code>realprecision</code>), the formal parameter X ranging over the prime numbers
+between a and b.</p>
+<p>
+The library syntax is <code><b>prodeuler</b>(void *E, GEN (*eval)(void*,GEN), GEN a,GEN b, long prec)</code>.</p>
+
+<hr></hr>
+<a name="prodinf"></a>
+<h4>prodinf(X = a,<em>expr</em>,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>infinite product of
+expression <em>expr</em>, the formal parameter X starting at a. The evaluation
+stops when the relative error of the expression minus 1 is less than the
+default precision. In particular, non-convergent products result in infinite
+loops. The expressions must always evaluate to an element of <b>C</b>.</p>
+<p>
+If <em>flag</em> = 1, do the product of the (1+<em>expr</em>) instead.</p>
+<p>
+The library syntax is <code><b>prodinf</b>(void *E, GEN (*eval)(void*,GEN), GEN a, long prec)</code>
+(<em>flag</em> = 0), or <code>prodinf1</code> with the same arguments (<em>flag</em> = 1).</p>
+
+<hr></hr>
+<a name="solve"></a>
+<h4>solve(X = a,b,<em>expr</em>)</h4>
+<p></p>
+<p>Find a real root of expression
+<em>expr</em> between a and b, under the condition
+<em>expr</em>(X = a) * <em>expr</em>(X = b) <code>&#60;=</code> 0. (You will get an error message
+<code>roots must be bracketed in solve</code> if this does not hold.)
+This routine uses Brent's method and can fail miserably if <em>expr</em> is
+not defined in the whole of [a,b] (try <code>solve(x = 1, 2, tan(x))</code>).</p>
+<p>
+The library syntax is <code><b>zbrent</b>(void *E,GEN (*eval)(void*,GEN),GEN a,GEN b,long prec)</code>.</p>
+
+<hr></hr>
+<a name="sum"></a>
+<h4>sum(X = a,b,<em>expr</em>,{x = 0})</h4>
+<p></p>
+<p>Sum of expression <em>expr</em>,
+initialized at x, the formal parameter going from a to b. As for
+<code>prod</code>, the initialization parameter x may be given to force the type
+of the operations being performed.</p>
+<p>
+As an extreme example, compare</p>
+<p></p>
+<p>
+<pre class="code">  ? sum(i=1, 10^4, 1/i); \\  rational number: denominator has 4345 digits.
+  time = 236 ms.
+  ? sum(i=1, 5000, 1/i, 0.)
+  time = 8 ms.
+  %2 = 9.787606036044382264178477904
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code><b>somme</b>(GEN a, GEN b, char *expr, GEN x)</code>.</p>
+
+<hr></hr>
+<a name="sumalt"></a>
+<h4>sumalt(X = a,<em>expr</em>,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Numerical summation of the series <em>expr</em>, which should be an
+alternating series, the formal variable X starting at a. Use an
+algorithm of Cohen, Villegas and Zagier (<em>Experiment. Math.</em> <b>9</b>
+(2000), no.&nbsp;1, 3--12).</p>
+<p>
+If <em>flag</em> = 1, use a variant with slightly different polynomials. Sometimes
+faster.</p>
+<p>
+The routine is heuristic and a rigorous proof assumes that the values of
+<em>expr</em> are the moments of a positive measure on [0,1]. Divergent
+alternating series can sometimes be summed by this method, as well as series
+which are not exactly alternating (see for example
+Section [<b>Label: se:user_defined</b>]). It should be used to try and guess the value of
+an infinite sum. (However, see the example at the end of
+Section [<b>Label: se:userfundef</b>].)</p>
+<p>
+If the series already converges geometrically,
+<code>suminf</code> is often a better choice:</p>
+<p>
+<pre class="code">  ? \p28
+  ? sumalt(i = 1, -(-1)^i / i)  - log(2)
+  time = 0 ms.
+  %1 = -2.524354897 E-29
+  ? suminf(i = 1, -(-1)^i / i)   \\  Had to hit &#60; C-C &#62; 
+    ***   at top-level: suminf(i=1,-(-1)^i/i)
+    ***                                ^------
+    *** suminf: user interrupt after 10min, 20,100 ms.
+  ? \p1000
+  ? sumalt(i = 1, -(-1)^i / i)  - log(2)
+  time = 90 ms.
+  %2 = 4.459597722 E-1002
+  
+  ? sumalt(i = 0, (-1)^i / i!) - exp(-1)
+  time = 670 ms.
+  %3 = -4.03698781490633483156497361352190615794353338591897830587 E-944
+  ? suminf(i = 0, (-1)^i / i!) - exp(-1)
+  time = 110 ms.
+  %4 = -8.39147638 E-1000   \\   faster and more accurate
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code><b>sumalt</b>(void *E, GEN (*eval)(void*,GEN),GEN a,long prec)</code>. Also
+available is <code>sumalt2</code> with the same arguments (<em>flag</em> = 1).</p>
+
+<hr></hr>
+<a name="sumdiv"></a>
+<h4>sumdiv(n,X,<em>expr</em>)</h4>
+<p></p>
+<p>Sum of expression <em>expr</em> over the positive divisors of n.
+This function is a trivial wrapper essentially equivalent to</p>
+<p>
+<pre class="code">    D = divisors(n);
+    for (i = 1, #D, X = D[i]; eval(expr))
+</pre>
+(except that <code>X</code> is lexically scoped to the <code>sumdiv</code>
+loop). If <em>expr</em> is a multiplicative function, use <code>sumdivmult</code>.</p>
+<p></p>
+
+<hr></hr>
+<a name="sumdivmult"></a>
+<h4>sumdivmult(n,d,<em>expr</em>)</h4>
+<p></p>
+<p>Sum of <em>multiplicative</em> expression <em>expr</em> over the positive
+divisors d of n. Assume that <em>expr</em> evaluates to f(d)
+where f is multiplicative: f(1) = 1 and f(ab) = f(a)f(b) for coprime
+a and b.</p>
+<p></p>
+
+<hr></hr>
+<a name="suminf"></a>
+<h4>suminf(X = a,<em>expr</em>)</h4>
+<p></p>
+<p>infinite sum of expression
+<em>expr</em>, the formal parameter X starting at a. The evaluation stops
+when the relative error of the expression is less than the default precision
+for 3 consecutive evaluations. The expressions must always evaluate to a
+complex number.</p>
+<p>
+If the series converges slowly, make sure <code>realprecision</code> is low (even 28
+digits may be too much). In this case, if the series is alternating or the
+terms have a constant sign, <code>sumalt</code> and <code>sumpos</code> should be used
+instead.</p>
+<p></p>
+<p>
+<pre class="code">  ? \p28
+  ? suminf(i = 1, -(-1)^i / i)   \\  Had to hit &#60; C-C &#62; 
+    ***   at top-level: suminf(i=1,-(-1)^i/i)
+    ***                                ^------
+    *** suminf: user interrupt after 10min, 20,100 ms.
+  ? sumalt(i = 1, -(-1)^i / i) - log(2)
+  time = 0 ms.
+  %1 = -2.524354897 E-29
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code><b>suminf</b>(void *E, GEN (*eval)(void*,GEN), GEN a, long prec)</code>.</p>
+
+<hr></hr>
+<a name="sumnum"></a>
+<h4>sumnum(X = a,<em>sig</em>,<em>expr</em>,{<em>tab</em>},{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Numerical summation of <em>expr</em>, the variable X taking integer values
+from ceiling of a to + oo , where <em>expr</em> is assumed to be a
+holomorphic function f(X) for Re(X) <code>&#62;=</code> <font color=#FF0000>sigma</font>.</p>
+<p>
+The parameter <font color=#FF0000>sigma</font> belongs to <b>R</b> is coded in the argument <code>sig</code> as follows: it
+is either</p>
+<p>
+<b>*</b> a real number <font color=#FF0000>sigma</font>. Then the function f is assumed to
+decrease at least as 1/X^2 at infinity, but not exponentially;</p>
+<p>
+<b>*</b> a two-component vector [<font color=#FF0000>sigma</font>,<font color=#FF0000>alpha</font>], where <font color=#FF0000>sigma</font> is as
+before, <font color=#FF0000>alpha</font> &#60; -1. The function f is assumed to decrease like
+X^{<font color=#FF0000>alpha</font>}. In particular, <font color=#FF0000>alpha</font> <code>&#60;=</code> -2 is equivalent to no <font color=#FF0000>alpha</font> at all.</p>
+<p>
+<b>*</b> a two-component vector [<font color=#FF0000>sigma</font>,<font color=#FF0000>alpha</font>], where <font color=#FF0000>sigma</font> is as
+before, <font color=#FF0000>alpha</font> &#62; 0. The function f is assumed to decrease like
+exp(-<font color=#FF0000>alpha</font> X). In this case it is essential that <font color=#FF0000>alpha</font> be exactly the
+rate of exponential decrease, and it is usually a good idea to increase
+the default value of m used for the integration step. In practice, if
+the function is exponentially decreasing <code>sumnum</code> is slower and less
+accurate than <code>sumpos</code> or <code>suminf</code>, so should not be used.</p>
+<p>
+The function uses the <code>intnum</code> routines and integration on the line
+Re(s) = <font color=#FF0000>sigma</font>. The optional argument <em>tab</em> is as in intnum, except it
+must be initialized with <code>sumnuminit</code> instead of <code>intnuminit</code>.</p>
+<p>
+When <em>tab</em> is not precomputed, <code>sumnum</code> can be slower than
+<code>sumpos</code>, when the latter is applicable. It is in general faster for
+slowly decreasing functions.</p>
+<p>
+Finally, if <em>flag</em> is nonzero, we assume that the function f to be summed is
+of real type, i.e. satisfies \overline{f(z)} = f(\overline{z}), which
+speeds up the computation.</p>
+<p></p>
+<p>
+<pre class="code">  ? \p 308
+  ? a = sumpos(n=1, 1/(n^3+n+1));
+  time = 1,410 ms.
+  ? tab = sumnuminit(2);
+  time = 1,620 ms. \\  slower but done once and for all.
+  ? b = sumnum(n=1, 2, 1/(n^3+n+1), tab);
+  time = 460 ms. \\  3 times as fast as <code>sumpos</code>
+  ? a - b
+  %4 = -1.0... E-306 + 0.E-320*I \\  perfect.
+  ? sumnum(n=1, 2, 1/(n^3+n+1), tab, 1) - a; \\  function of real type
+  time = 240 ms.
+  %2 = -1.0... E-306 \\  twice as fast, no imaginary part.
+  ? c = sumnum(n=1, 2, 1/(n^2+1), tab, 1);
+  time = 170 ms. \\  fast
+  ? d = sumpos(n=1, 1 / (n^2+1));
+  time = 2,700 ms. \\  slow.
+  ? d - c
+  time = 0 ms.
+  %5 = 1.97... E-306 \\  perfect.
+</pre></p>
+<p></p>
+<p>
+For slowly decreasing function, we must indicate singularities:</p>
+<p>
+<pre class="code">  ? \p 308
+  ? a = sumnum(n=1, 2, n^(-4/3));
+  time = 9,930 ms. \\  slow because of the computation of n^{-4/3}.
+  ? a - zeta(4/3)
+  time = 110 ms.
+  %1 = -2.42... E-107 \\  lost 200 decimals because of singularity at  oo 
+  ? b = sumnum(n=1, [2,-4/3], n^(-4/3), /*omitted*/, 1); \\  of real type
+  time = 12,210 ms.
+  ? b - zeta(4/3)
+  %3 = 1.05... E-300 \\  better
+</pre></p>
+<p></p>
+<p>
+Since the <em>complex</em> values of the function are used, beware of
+determination problems. For instance:</p>
+<p>
+<pre class="code">  ? \p 308
+  ? tab = sumnuminit([2,-3/2]);
+  time = 1,870 ms.
+  ? sumnum(n=1,[2,-3/2], 1/(n*sqrt(n)), tab,1) - zeta(3/2)
+  time = 690 ms.
+  %1 = -1.19... E-305 \\  fast and correct
+  ? sumnum(n=1,[2,-3/2], 1/sqrt(n^3), tab,1) - zeta(3/2)
+  time = 730 ms.
+  %2 = -1.55... \\  nonsense. However
+  ? sumnum(n=1,[2,-3/2], 1/n^(3/2), tab,1) - zeta(3/2)
+  time = 8,990 ms.
+  %3 = -1.19... E-305 \\  perfect, as 1/(n*sqrt{n}) above but much slower
+</pre></p>
+<p></p>
+<p>
+For exponentially decreasing functions, <code>sumnum</code> is given for
+completeness, but one of <code>suminf</code> or <code>sumpos</code> should always be
+preferred. If you experiment with such functions and <code>sumnum</code> anyway,
+indicate the exact rate of decrease and increase m by 1 or 2:</p>
+<p></p>
+<p>
+<pre class="code">  ? suminf(n=1, 2^(-n)) - 1
+  time = 10 ms.
+  %1 = -1.11... E-308 \\  fast and perfect
+  ? sumpos(n=1, 2^(-n)) - 1
+  time = 10 ms.
+  %2 = -2.78... E-308 \\  also fast and perfect
+  ? sumnum(n=1,2, 2^(-n)) - 1
+  %3 = -1.321115060 E320 + 0.E311*I \\  nonsense
+  ? sumnum(n=1, [2,log(2)], 2^(-n), /*omitted*/, 1) - 1 \\  of real type
+  time = 5,860 ms.
+  %4 = -1.5... E-236 \\  slow and lost 70 decimals
+  ? m = intnumstep()
+  %5 = 9
+  ? sumnum(n=1,[2,log(2)], 2^(-n), m+1, 1) - 1
+  time = 11,770 ms.
+  %6 = -1.9... E-305 \\  now perfect, but slow.
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code><b>sumnum</b>(void *E, GEN (*eval)(void*,GEN), GEN a,GEN sig,GEN tab,long flag, long prec)</code>.</p>
+
+<hr></hr>
+<a name="sumnumalt"></a>
+<h4>sumnumalt(X = a,<em>sig</em>,<em>expr</em>,{<em>tab</em>},{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Numerical
+summation of (-1)^X<em>expr</em>(X), the variable X taking integer values from
+ceiling of a to + oo , where <em>expr</em> is assumed to be a holomorphic
+function for Re(X) <code>&#62;=</code> sig (or sig[1]).</p>
+<p>
+<b>Warning.</b> This function uses the <code>intnum</code> routines and is
+orders of magnitude slower than <code>sumalt</code>. It is only given for
+completeness and should not be used in practice.</p>
+<p>
+<b>Warning 2.</b> The expression <em>expr</em> must <em>not</em> include the
+(-1)^X coefficient. Thus <code>sumalt</code>(n = a,(-1)^nf(n)) is (approximately)
+equal to <code>sumnumalt</code>(n = a,sig,f(n)).</p>
+<p>
+sig is coded as in <code>sumnum</code>. However for slowly decreasing functions
+(where sig is coded as [<font color=#FF0000>sigma</font>,<font color=#FF0000>alpha</font>] with <font color=#FF0000>alpha</font> &#60; -1), it is not
+really important to indicate <font color=#FF0000>alpha</font>. In fact, as for <code>sumalt</code>, the
+program will often give meaningful results (usually analytic continuations)
+even for divergent series. On the other hand the exponential decrease must be
+indicated.</p>
+<p>
+<em>tab</em> is as in <code>intnum</code>, but if used must be initialized with
+<code>sumnuminit</code>. If <em>flag</em> is nonzero, assumes that the function f to be
+summed is of real type, i.e. satisfies \overline{f(z)} = f(\overline{z}), and
+then twice faster when <em>tab</em> is precomputed.</p>
+<p></p>
+<p>
+<pre class="code">  ? \p 308
+  ? tab = sumnuminit(2, /*omitted*/, -1); \\  abscissa <font color=#FF0000>sigma</font> = 2, alternating sums.
+  time = 1,620 ms. \\  slow, but done once and for all.
+  ? a = sumnumalt(n=1, 2, 1/(n^3+n+1), tab, 1);
+  time = 230 ms. \\  similar speed to <code>sumnum</code>
+  ? b = sumalt(n=1, (-1)^n/(n^3+n+1));
+  time = 0 ms. \\  infinitely faster!
+  ? a - b
+  time = 0 ms.
+  %1 = -1.66... E-308 \\  perfect
+</pre></p>
+<p></p>
+<p>
+The library syntax is <code><b>sumnumalt</b>(void *E, GEN (*eval)(void*,GEN), GEN a, GEN sig, GEN tab, long flag, long prec)</code>.</p>
+
+<hr></hr>
+<a name="sumnuminit"></a>
+<h4>sumnuminit(<em>sig</em>, {m = 0}, {<em>sgn</em> = 1})</h4>
+<p></p>
+<p>Initialize tables for numerical summation using <code>sumnum</code> (with
+<em>sgn</em> = 1) or <code>sumnumalt</code> (with <em>sgn</em> = -1), sig is the
+abscissa of integration coded as in <code>sumnum</code>, and m is as in
+<code>intnuminit</code>.</p>
+<p>
+The library syntax is <code>GEN <b>sumnuminit</b>(GEN sig, long m, long sgn, long prec)</code>.</p>
+
+<hr></hr>
+<a name="sumpos"></a>
+<h4>sumpos(X = a,<em>expr</em>,{<em>flag</em> = 0})</h4>
+<p></p>
+<p>Numerical summation of the series <em>expr</em>, which must be a series of
+terms having the same sign, the formal variable X starting at a. The
+algorithm used is Van Wijngaarden's trick for converting such a series into
+an alternating one, then we use <code>sumalt</code>. For regular functions, the
+function <code>sumnum</code> is in general much faster once the initializations
+have been made using <code>sumnuminit</code>.</p>
+<p>
+The routine is heuristic and assumes that <em>expr</em> is more or less a
+decreasing function of X. In particular, the result will be completely
+wrong if <em>expr</em> is 0 too often. We do not check either that all terms
+have the same sign. As <code>sumalt</code>, this function should be used to
+try and guess the value of an infinite sum.</p>
+<p>
+If <em>flag</em> = 1, use slightly different polynomials. Sometimes faster.</p>
+<p>
+The library syntax is <code><b>sumpos</b>(void *E, GEN (*eval)(void*,GEN),GEN a,long prec)</code>. Also
+available is <code>sumpos2</code> with the same arguments (<em>flag</em> = 1).</p>
+<p></p>
+
+<hr></hr>
+
+</BODY>
+</HTML>

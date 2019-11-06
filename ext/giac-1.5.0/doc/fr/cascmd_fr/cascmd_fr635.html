@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Local extrema: extrema</title>
+</head>
+<body >
+<a href="cascmd_fr634.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr636.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec781" class="subsection">6.55.2  Local extrema: <span style="font-family:monospace">extrema</span></h3>
+<p><a id="hevea_default1169"></a></p><p>Local extrema of a univariate or multivariate differentiable function under equality constraints can be obtained by using function <span style="font-family:monospace">extrema</span> which takes four arguments :
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">expr</span> : differentiable expression
+</li><li class="li-itemize"><span style="font-family:monospace">constr</span> (optional) : list of equality constraints
+</li><li class="li-itemize"><span style="font-family:monospace">vars</span> : list of variables
+</li><li class="li-itemize"><span style="font-family:monospace">order_size=&lt;positive integer&gt;</span> (optional) : upper bound for the order of derivatives examined in the process (defaults to 12)
+</li></ul><p>
+Function returns sequence of two lists of points: local minima and maxima, respectively. Saddle and unclassified points are reported in the message area. Also, information about possible (non)strict extrema is printed out.</p><p>Number of constraints must be strictly less than number of variables. A single constraint/variable can be specified without list delimiters. A constraint may be specified as an equality or expression which is assumed to be equal to zero.</p><p>Variables may be specified with bounds, e.g. <span style="font-family:monospace">x=a..b</span>. That is interpreted as  <span style="font-style:italic">x</span>∈(<span style="font-style:italic">a</span>,<span style="font-style:italic">b</span>) . For semi-bounded variables use <span style="font-family:monospace">-infinity</span> for  <span style="font-style:italic">a</span>  or <span style="font-family:monospace">+infinity</span> for  <span style="font-style:italic">b</span> . Also, to use numeric method to find critical point one may specify <span style="font-family:monospace">vars</span> as <span style="font-family:monospace">[x1=a1,x2=a2,...,xn=an]</span>, where  (<span style="font-style:italic">a</span><sub>1</sub>,<span style="font-style:italic">a</span><sub>2</sub>,…,<span style="font-style:italic">a</span><sub><span style="font-style:italic">n</span></sub>)  is an initial point for the algorithm.</p><p>If <span style="font-family:monospace">order_size=&lt;n&gt;</span> is specified as the fourth argument, derivatives up to order  <span style="font-style:italic">n</span>  are inspected to find critical points and classify them. For <span style="font-family:monospace">order_size=1</span> the function returns a single list containing all critical points found. The default is  <span style="font-style:italic">n</span>=12 .</p>
+<h4 id="sec782" class="subsubsection">Examples</h4>
+<p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">extrema(-2*cos(x)-cos(x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[0],[pi]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">extrema(x/2-2*sin(x/2),x=-12..12)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[2*pi/3,-10*pi/3],[10*pi/3,-2*pi/3]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">assume(a&gt;=0);extrema(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+a*x,x)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[-a/2],[]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">extrema(exp(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2x)*ln(x)*ln(1-x),x=0.5)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[],[0.277769149124]</span>
+</div><div class="center">
+<span style="font-family:monospace">extrema(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-2x*y+3y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4,[x,y])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[[12</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(1/5)/3,(12</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(1/5))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/6]],[]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">assume(a&gt;0);extrema(x/a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+a*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x+y=a,[x,y])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[[(2*a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4-1)/(2*a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3),1/(2*a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3)]],[]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">extrema(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x*y=1,[x=0..inf,y=0..inf])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[[1,1]],[]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">extrema(x2</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4-x1</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4-x2</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">8+x1</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">10,[x1,x2])</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[[6250</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(1/6)/5,0],[-6250</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(1/6)/5,0]],[]</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">extrema(x*y*z,x+y+z=1,[x,y,z],order_size=1)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[[1,0,0],[0,1,0],[0,0,1],[1/3,1/3,1/3]]</span>
+</div>
+<hr>
+<a href="cascmd_fr634.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr636.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

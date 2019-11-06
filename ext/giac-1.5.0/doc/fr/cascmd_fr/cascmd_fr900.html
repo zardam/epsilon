@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Les commandes d’affichage : display color affichage couleur</title>
+</head>
+<body >
+<a href="cascmd_fr899.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr901.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1091" class="subsection">10.3.5  Les commandes d’affichage : <span style="font-family:monospace">display color affichage couleur</span></h3>
+<p><a id="hevea_default1696"></a><a id="hevea_default1697"></a><a id="hevea_default1698"></a><a id="hevea_default1699"></a>
+<span style="font-family:monospace">affichage couleur</span> peut avoir comme paramètre différentes valeurs, 
+reliées par <span style="font-family:monospace">+</span>, permettant de gérer les attributs des graphiques à 
+venir d’une ligne de commandes normale (la commande est alors globale) ou de 
+gérer les attributs d’un objet graphique ou d’une légende (la commande est 
+alors locale).<br>
+<span style="font-weight:bold">Attention</span><br>
+<span style="font-family:monospace">affichage(0)</span> remet l’affichage par défaut : couleur noire, figure non 
+pleine, les points ont des légendes...</p>
+<h4 id="sec1092" class="subsubsection">Pour ne pas afficher le nom de l’objet</h4>
+<p><a id="hevea_default1700"></a>
+<span style="font-family:monospace">hidden_name</span> est une valeur de paramètre de la commande <span style="font-family:monospace">affichage</span>
+qui permet de ne pas afficher le nom de l’objet.
+On tape (ici la commande <span style="font-family:monospace">affichage</span> est locale au point <span style="font-family:monospace">A</span>) :
+</p><div class="center"><span style="font-family:monospace">affichage(A:=point(1+i),hidden_name);B:=point(-1); D:=droite(A,B)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">A est dessiné sans son nom et B et la droite A,B sont dessinés avec leur nom</span></div><p>
+On tape (ici la commande <span style="font-family:monospace">affichage</span> est locale):
+</p><div class="center"><span style="font-family:monospace">A:=point(1+i);B:=point(-1);affichage(D:=droite(A,B),hidden_name)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">Les points A et B et leurs noms et la droite A,B dessinée sans son nom</span></div><p>
+<span style="font-weight:bold">Attention</span> NE PAS mettre <span style="font-family:monospace">affichage(hidden_name)</span> comme commande 
+globale car après, aucun nom sera visible, et seule la commande 
+<span style="font-family:monospace">affichage(0)</span> remettra l’affichage par défaut.</p>
+<h4 id="sec1093" class="subsubsection">Mettre de la couleur</h4>
+<p><a id="hevea_default1701"></a><a id="hevea_default1702"></a><a id="hevea_default1703"></a><a id="hevea_default1704"></a><a id="hevea_default1705"></a><a id="hevea_default1706"></a><a id="hevea_default1707"></a><a id="hevea_default1708"></a>
+<a id="hevea_default1709"></a><a id="hevea_default1710"></a><a id="hevea_default1711"></a><a id="hevea_default1712"></a><a id="hevea_default1713"></a><a id="hevea_default1714"></a>
+Un entier entre 0 et 255 (ou un nom de couleur) représente une 
+couleur de la palette des couleurs que l’on peut voir avec le bouton des 
+couleurs de l’écran de géométrie et, un entier entre 256 et 381 
+représente les couleurs de l’arc en ciel. Pour voir les 
+couleurs de l’arc en ciel il suffit d’exécuter le programme suivant :
+</p><pre class="verbatim">arcenciel():={
+local j,C;
+C:=[];
+for (j:=256;j&lt;382;j++){
+C:=append(C,carre(j,j+1,couleur=j+rempli));
+}
+C;
+}
+</pre><p>
+Pour voir l’arc en ciel, on tape <span style="font-family:monospace">a:=arcenciel():;</span>, puis <span style="font-family:monospace">a</span>
+pour voir toutes les couleurs (le numéro d’une couleur
+est alors égal à son abscisse) ou par exemple <span style="font-family:monospace">a[300-256]</span>
+pour voir la couleur de numéro 300. </p><p>Autre méthode, on tape : <br>
+<span style="font-family:monospace">ciel():={ local j; <br>
+for (j:=0;j&lt;126;j++)<br>
+ carre(j,(j+1),affichage=rempli+256+j);}</span>
+puis,<br>
+<span style="font-family:monospace">ClrGraph;ciel()</span> et on ouvre la fenêtre <span style="font-family:monospace">DispG</span> avec le menu 
+<span style="font-family:monospace">Cfg</span> sous menu <span style="font-family:monospace">Montrer</span> puis <span style="font-family:monospace">DispG</span>.
+On regle <span style="font-family:monospace">cfg</span> de cette fenêtre en prenant <span style="font-family:monospace">WX-=-1</span>, <span style="font-family:monospace">WX+=127</span>,
+<span style="font-family:monospace">WY-=0</span> et <span style="font-family:monospace">WY+=1</span> et on voit ainsi les 126 couleurs 
+de l’arc en ciel !</p><p>La commande <span style="font-family:monospace">couleur</span> ou <span style="font-family:monospace">affichage</span> avec comme 
+paramètre un entier entre 0 et 381 (ou un nom de couleur) permet de 
+tracer un objet géométrique avec la couleur spécifiée.<br>
+<span style="font-family:monospace">couleur</span> ou <span style="font-family:monospace">affichage</span> a un argument (resp deux arguments) : le nom 
+de la couleur ou l’entier désignant cette couleur (noir=0, rouge=1, vert=2, 
+jaune=3, bleu=4) (resp l’objet géométrique ou une légende et le nom de la couleur ou le numéro de la couleur).<br>
+<span style="font-weight:bold">Attention</span><a id="hevea_default1715"></a><a id="hevea_default1716"></a><a id="hevea_default1717"></a><a id="hevea_default1718"></a><br>
+Le nom <span style="font-family:monospace">couleur</span> ou <span style="font-family:monospace">affichage</span> ou display ou <span style="font-family:monospace">color</span> peut 
+aussi servir de paramètre optionnel 
+d’une commande graphique. Dans ce cas, le nom du paramètre optionnel (ici
+<span style="font-family:monospace">couleur</span> ou <span style="font-family:monospace">affichage</span> ou <span style="font-family:monospace">color</span>) est suivi de <span style="font-family:monospace">=</span> puis de
+la valeur de l’entier désignant la couleur, est 
+le paramètre que l’on passe comme argument supplémentaire
+dans les commandes graphiques.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">couleur(segment(0,1+i),rouge)</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">segment(0,1+i,couleur=rouge)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">Le segment(0,1+i) est dessiné en rouge</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">couleur(point(1+i),2)</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">point(1+i, couleur=2)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">Le point 1+i apparait avec une croix (x) verte</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">affichage(rouge)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">après cette instruction, les dessins resultant de commandes graphiques se feront en rouge</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">couleur(legende(1+i,"AA"),rouge)</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">legende(1+i,"AA",couleur=rouge)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">Le point(1+i) dessiné en rouge a comme légende rouge AA</span></div>
+<h4 id="sec1094" class="subsubsection">Pour dessiner une figure pleine</h4>
+<p><a id="hevea_default1719"></a><a id="hevea_default1720"></a>
+<span style="font-family:monospace">rempli</span> ou <span style="font-family:monospace">filled</span> est une valeur de paramètre de la commande 
+<span style="font-family:monospace">affichage</span> qui permet d e dessiner une figure pleine.
+On tape (ici la commande <span style="font-family:monospace">affichage</span> est globale) :
+</p><div class="center"><span style="font-family:monospace">affichage(rempli);carre(0,1+i);triangle(-1,0,-i);</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">le carre(0,1+i) plein et le triangle(-1,0,-i) plein</span></div>
+<h4 id="sec1095" class="subsubsection">Les différents affichages de points</h4>
+<p>
+<a id="hevea_default1721"></a><a id="hevea_default1722"></a>
+<a id="hevea_default1723"></a><a id="hevea_default1724"></a>
+<a id="hevea_default1725"></a><a id="hevea_default1726"></a>
+<a id="hevea_default1727"></a><a id="hevea_default1728"></a>
+<a id="hevea_default1729"></a><a id="hevea_default1730"></a>
+<a id="hevea_default1731"></a><a id="hevea_default1732"></a>
+<a id="hevea_default1733"></a>
+<a id="hevea_default1734"></a><a id="hevea_default1735"></a>
+<a id="hevea_default1736"></a>
+<a id="hevea_default1737"></a>
+<a id="hevea_default1738"></a>
+<a id="hevea_default1739"></a>
+<a id="hevea_default1740"></a>
+<a id="hevea_default1741"></a>
+<span style="font-family:monospace">couleur</span> ou <span style="font-family:monospace">affichage</span> peut avoir comme argument la forme de la 
+représentation des points 2-d à l’affichage. Ces formes peuvent avoir des 
+traits plus ou moins épais selon la valeur de <span style="font-family:monospace">n</span> de 
+<span style="font-family:monospace">point_width_n</span>.<br>
+La représentation des points 3-d a comme forme un carré (c’est 
+<span style="font-family:monospace">point_carre</span>) plus ou moins 
+gros selon la valeur de <span style="font-family:monospace">n</span> de <span style="font-family:monospace">point_width_n</span>.<br>
+Les différentes options sont :
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">point_losange</span> ou <span style="font-family:monospace">rhombus_point</span> pour représenter un point par un petit losange
+(◇),
+</li><li class="li-itemize"><span style="font-family:monospace">point_carre</span> ou <span style="font-family:monospace">square_point</span> pour représenter un point par un petit carré 
+(□),
+</li><li class="li-itemize"><span style="font-family:monospace">point_croix</span> ou <span style="font-family:monospace">cross_point</span> pour représenter un point par 
+une croix (×) c’est la représentation par défaut,
+</li><li class="li-itemize"><span style="font-family:monospace">point_etoile</span> ou <span style="font-family:monospace">star_point</span> pour représenter un point par 
+une étoile (*),
+</li><li class="li-itemize"><span style="font-family:monospace">point_plus</span> ou <span style="font-family:monospace">plus_point</span> pour représenter un point par le
+signe plus (+),
+</li><li class="li-itemize"><span style="font-family:monospace">point_point</span> pour représenter un point par un point (·).
+</li><li class="li-itemize"><span style="font-family:monospace">point_triangle</span> ou <span style="font-family:monospace">triangle_point</span> pour représenter un 
+point par un triangle (△),
+</li><li class="li-itemize"><span style="font-family:monospace">point_invisible</span> ou <span style="font-family:monospace">invisible_point</span> pour ne pas 
+représenter un point.
+</li></ul><p>
+Les différentes épaisseurs sont : <br>
+<span style="font-family:monospace">point_width_1</span> ou <span style="font-family:monospace">epaisseur_point_1</span>,<span style="font-family:monospace">point_width_2</span> ou 
+<span style="font-family:monospace">epaisseur_point_2</span>...<span style="font-family:monospace">point_width_8</span> ou 
+<span style="font-family:monospace">epaisseur_point_8</span><br>
+<span style="font-weight:bold">Attention</span><br>
+<a id="hevea_default1742"></a><a id="hevea_default1743"></a><a id="hevea_default1744"></a>
+Le nom <span style="font-family:monospace">couleur</span> ou <span style="font-family:monospace">color</span> ou <span style="font-family:monospace">affichage</span> est aussi le nom d’un 
+paramètre que
+l’on passe comme argument supplémentaire dans les commandes géométriques 
+lorsqu’il est suivi de <span style="font-family:monospace">=</span>, puis de la valeur d’un attribut puis de 
+<span style="font-family:monospace">+</span>, puis de la valeur d’un autre attribut etc...<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">couleur(point(1+i),rouge+point_carre+point_width_3)</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">point(1+i,affichage=rouge+point_carre+point_width_3)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">Le point (1+i) est dessiné en rouge à l’aide d’un petit carré</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">affichage(point_carre)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">après cette instruction, les points seront dessinés à l’aide d’un petit carré</span></div>
+<h4 id="sec1096" class="subsubsection">Les différents formes d’affichage des lignes</h4>
+<p>
+<a id="hevea_default1745"></a>
+<a id="hevea_default1746"></a>
+<a id="hevea_default1747"></a>
+<a id="hevea_default1748"></a>
+<a id="hevea_default1749"></a>
+<a id="hevea_default1750"></a>
+<a id="hevea_default1751"></a>
+<a id="hevea_default1752"></a>
+<a id="hevea_default1753"></a>
+<a id="hevea_default1754"></a>
+<a id="hevea_default1755"></a>
+<a id="hevea_default1756"></a>
+<a id="hevea_default1757"></a>
+<a id="hevea_default1758"></a>
+<span style="font-family:monospace">couleur</span> ou <span style="font-family:monospace">affichage</span> peut avoir comme argument la forme de la 
+représentation des lignes à l’affichage.<br>
+Les différentes options sont :
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">solid_line</span> ou <span style="font-family:monospace">ligne_trait_plein</span> est un argument de 
+<span style="font-family:monospace">couleur</span> et permet de 
+dessiner une ligne en trait plein (c’est la représentation par défaut),
+</li><li class="li-itemize"><span style="font-family:monospace">dash_line</span> ou <span style="font-family:monospace">ligne_tiret</span> est un argument de <span style="font-family:monospace">couleur</span> 
+et permet de dessiner
+une ligne en pointillé.
+</li><li class="li-itemize"><span style="font-family:monospace">dashdot_line</span> ou <span style="font-family:monospace">ligne_tiret_point</span> est un argument de 
+<span style="font-family:monospace">couleur</span> et permet de 
+dessiner une ligne avec un tiret et un point,
+</li><li class="li-itemize"><span style="font-family:monospace">dashdotdot_line</span> ou <span style="font-family:monospace">ligne_tiret_pointpoint</span> est un argument 
+de <span style="font-family:monospace">couleur</span> et permet de dessiner une ligne avec un tiret et deux points,
+</li><li class="li-itemize"><span style="font-family:monospace">cap_flat_line</span> ou <span style="font-family:monospace">ligne_chapeau_plat</span> est un argument de 
+<span style="font-family:monospace">couleur</span> et permet de dessiner une ligne plate,
+</li><li class="li-itemize"><span style="font-family:monospace">cap_round_line</span> ou <span style="font-family:monospace">ligne_chapeau_rond</span> est un argument de 
+<span style="font-family:monospace">couleur</span> et permet de dessiner une ligne tubulaire,
+</li><li class="li-itemize"><span style="font-family:monospace">cap_square_line</span> ou <span style="font-family:monospace">ligne_chapeau_carre</span> est un argument de
+<span style="font-family:monospace">couleur</span> et permet de dessiner une ligne à section carr’ee.
+</li></ul><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">couleur(segment(0,1+i),rouge+dash_line)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">Le segment (0,1+i) est dessiné en rouge en pointillé</span></div>
+<h4 id="sec1097" class="subsubsection">Les différentes épaisseurs d’affichage des lignes</h4>
+<p><a id="hevea_default1759"></a><a id="hevea_default1760"></a><a id="hevea_default1761"></a>
+<a id="hevea_default1762"></a>
+<a id="hevea_default1763"></a>
+<a id="hevea_default1764"></a></p><p><span style="font-family:monospace">couleur</span> ou <span style="font-family:monospace">affichage</span> peut avoir comme argument 
+l’épaisseur de la représentation des lignes à l’affichage.<br>
+Les différentes options d’épaisseurs sont :<br>
+<span style="font-family:monospace">line_width_1</span>, <span style="font-family:monospace">line_wdith_2</span>,...<span style="font-family:monospace">line_width_8</span> ou<br>
+<span style="font-family:monospace">epaisseur_ligne_1</span>, <span style="font-family:monospace">epaisseur_ligne_2</span>,...<span style="font-family:monospace">epaisseur_ligne_8</span>.<br>
+<span style="font-family:monospace">line_width_n</span> est un argument de <span style="font-family:monospace">couleur</span> ou <span style="font-family:monospace">affichage</span> et 
+permet de dessiner une ligne plus ou moins epaisse.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">couleur(droite(y=1),rouge+line_width_1)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La droite (y=1) est dessinée en rouge et en trait fin</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">couleur(droite(y=2),rouge+line_width_7)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">La droite (y=2) est dessinée en rouge et en trait très épais</span></div>
+<hr>
+<a href="cascmd_fr899.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr901.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

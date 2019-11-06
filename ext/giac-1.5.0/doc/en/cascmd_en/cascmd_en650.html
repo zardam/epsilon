@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Solving differential equations : desolve deSolve 
+dsolve</title>
+</head>
+<body >
+<a href="cascmd_en649.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en651.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec776" class="subsection">5.62.1  Solving differential equations : <span style="font-family:monospace">desolve deSolve 
+dsolve</span></h3>
+<p><a id="hevea_default1007"></a><a id="hevea_default1008"></a><a id="hevea_default1009"></a>
+<span style="font-family:monospace">desolve</span> (or <span style="font-family:monospace">deSolve</span>) can solve :
+</p><ul class="itemize"><li class="li-itemize">
+linear differential equations with constant coefficients,
+</li><li class="li-itemize">first order linear differential equations,
+</li><li class="li-itemize">first order differential equations without <span style="font-style:italic">y</span>,
+</li><li class="li-itemize">first order differential equations without <span style="font-style:italic">x</span>,
+</li><li class="li-itemize">first order differential equations with separable variables,
+</li><li class="li-itemize">first order homogeneous differential equations (<span style="font-style:italic">y</span>′=<span style="font-style:italic">F</span>(<span style="font-style:italic">y</span>/<span style="font-style:italic">x</span>)),
+</li><li class="li-itemize">first order differential equations with integrating factor,
+</li><li class="li-itemize">first order Bernoulli differential equations (<span style="font-style:italic">a</span>(<span style="font-style:italic">x</span>)<span style="font-style:italic">y</span>′+<span style="font-style:italic">b</span>(<span style="font-style:italic">x</span>)<span style="font-style:italic">y</span>=<span style="font-style:italic">c</span>(<span style="font-style:italic">x</span>)<span style="font-style:italic">y</span><sup><span style="font-style:italic">n</span></sup>),
+</li><li class="li-itemize">first order Clairaut differential equations (<span style="font-style:italic">y</span>=<span style="font-style:italic">x</span>*<span style="font-style:italic">y</span>′+<span style="font-style:italic">f</span>(<span style="font-style:italic">y</span>′)).
+</li></ul><p>
+<span style="font-family:monospace">desolve</span> takes as arguments : 
+</p><ul class="itemize"><li class="li-itemize">
+if the independent variable is the current variable (here supposed
+to be <span style="font-style:italic">x</span>), 
+<ul class="itemize"><li class="li-itemize">
+the differential equation (or the list of
+the differential equation and of the initial conditions) 
+</li><li class="li-itemize">the unknown (usually <span style="font-family:monospace">y</span>).
+</li></ul>
+In the differential equation, the function <span style="font-style:italic">y</span> is denoted by <span style="font-style:italic">y</span>, 
+its first derivative <span style="font-style:italic">y</span> ′ is denoted by 
+<span style="font-family:monospace"><span style="font-style:italic">y</span></span><span style="font-family:monospace">′</span>, and its second derivative <span style="font-style:italic">y</span>′′ is written 
+<span style="font-family:monospace"><span style="font-style:italic">y</span></span><span style="font-family:monospace">″</span>.<br>
+For example <span style="font-family:monospace">desolve(y’’+2*y’+y,y)</span> or <br>
+<span style="font-family:monospace">desolve([y’’+2*y’+y,y(0)=1,y’(0)=0],y)</span>.
+</li><li class="li-itemize">if the independent variable is not the current variable, 
+for example <span style="font-style:italic">t</span> instead of <span style="font-style:italic">x</span>, 
+<ul class="itemize"><li class="li-itemize">
+the differential equation (or the list of
+the differential equation and of the initial conditions), 
+</li><li class="li-itemize">the variable, e.g. <span style="font-family:monospace">t</span> 
+</li><li class="li-itemize">the unknown as a variable <span style="font-family:monospace">y</span> or as a function <span style="font-family:monospace">y(t)</span>.
+</li></ul>
+In the differential equation, the function <span style="font-style:italic">y</span> is denoted by <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>),
+its derivative <span style="font-style:italic">y</span> ′ is denoted by
+<span style="font-family:monospace">diff(y(t),t)</span>, and its second derivative
+<span style="font-style:italic">y</span>′′ is denoted by <span style="font-family:monospace">diff(y(t),t$2)</span>.<br>
+For example : <br>
+<span style="font-family:monospace">desolve(diff(y(t),t$2)+2*diff(y(t),t)+y(t),y(t))</span>; or<br>
+<span style="font-family:monospace">desolve(diff(y(t),t$2)+2*diff(y(t),t)+y(t),t,y)</span>;
+and <br>
+<pre class="verbatim">desolve([diff(y(t),t$2)+2*diff(y(t),t)+y(t),
+         y(0)=1,y'(0)=0],y(t)); or
+desolve([diff(y(t),t$2)+2*diff(y(t),t)+y(t), 
+         y(0)=1,y'(0)=0],t,y);
+</pre>
+</li></ul><p>
+If there is no initial conditions (or one initial condition for a second
+order equation),
+<span style="font-family:monospace">desolve</span> returns the general solution in terms of 
+constants of integration 
+<span style="font-family:monospace">c_0, c_1</span>, where <span style="font-family:monospace">y(0)=c_0</span> and <span style="font-family:monospace">y’(0)=c_1</span>,
+or a list of solutions.<br>
+<span style="font-weight:bold">Examples</span>
+</p><ul class="itemize"><li class="li-itemize">
+Examples of second linear differential equations with constant 
+coefficients.
+<ol class="enumerate" type=1><li class="li-enumerate">
+Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>″+<span style="font-style:italic">y</span>=cos(<span style="font-style:italic">x</span>) </td></tr>
+</table>
+Input (typing twice prime for <span style="font-family:monospace">y’’</span>): 
+<div class="center"><span style="font-family:monospace">desolve(y’’+y=cos(x),y)</span></div>
+or input :
+<div class="center"><span style="font-family:monospace">desolve((diff(diff(y))+y)=(cos(x)),y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">c_0*cos(x)+(x+2*c_1)*sin(x)/2</span></div>
+<span style="font-family:monospace">c_0, c_1</span> are the constants of integration : <span style="font-family:monospace">y(0)=c_0</span> and 
+<span style="font-family:monospace">y’(0)=c_1</span>.<br>
+If the variable is not <span style="font-family:monospace">x</span> but <span style="font-family:monospace">t</span>, input : 
+<div class="center">
+<span style="font-family:monospace">desolve(derive(derive(y(t),t),t)+y(t)=cos(t),t,y)</span>
+</div>
+Output :
+<div class="center"><span style="font-family:monospace">c_0*cos(t)+(t+2*c_1)/2*sin(t)</span></div>
+<span style="font-family:monospace">c_0, c_1</span> are the constants of integration : <span style="font-family:monospace">y(0)=c_0</span> and
+<span style="font-family:monospace">y’(0)=c_1</span>.
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>″+<span style="font-style:italic">y</span>=cos(<span style="font-style:italic">x</span>),     <span style="font-style:italic">y</span>(0)=1 </td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve([y’’+y=cos(x),y(0)=1],y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[cos(x)+(x+2*c_1)/2*sin(x)]</span></div>
+the components of this vector are solutions (here there is just one component, 
+so we have just one solution depending of the constant <span style="font-family:monospace">c_1</span>).
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>″+<span style="font-style:italic">y</span>=cos(<span style="font-style:italic">x</span>)     (<span style="font-style:italic">y</span>(0))<sup>2</sup>=1 </td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve([y’’+y=cos(x),y(0)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2=1],y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[-cos(x)+(x+2*c_1)/2*sin(x),cos(x)+(x+2*c_1)/2*sin(x)]</span></div>
+each component of this list is a solution, 
+we have two solutions depending
+on the constant <span style="font-family:monospace">c_1</span> (<span style="font-style:italic">y</span>′(0)=<span style="font-style:italic">c</span><sub>1</sub>)
+and corresponding to <span style="font-style:italic">y</span>(0)=1 and to <span style="font-style:italic">y</span>(0)=−1.
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>″+<span style="font-style:italic">y</span>=cos(<span style="font-style:italic">x</span>),     (<span style="font-style:italic">y</span>(0))<sup>2</sup>=1     <span style="font-style:italic">y</span>′(0)=1</td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve([y’’+y=cos(x),y(0)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2=1,y’(0)=1],y)</span>
+</div>
+Output :
+<div class="center"><span style="font-family:monospace">[-cos(x)+(x+2)/2*sin(x),cos(x)+(x+2)/2*sin(x)]</span></div>
+each component of this list is a solution (we have two solutions).
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>″+2<span style="font-style:italic">y</span>′+<span style="font-style:italic">y</span>=0</td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(y’’+2*y’+y=0,y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">(x*c_0+x*c_1+c_0)*exp(-x)</span></div>
+the solution depends of 2 constants of integration : 
+<span style="font-family:monospace">c_0, c_1</span> (<span style="font-family:monospace">y(0)=c_0</span> and <span style="font-family:monospace">y’(0)=c_1</span>).
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>″−6<span style="font-style:italic">y</span>′+9<span style="font-style:italic">y</span>=<span style="font-style:italic">xe</span><sup>3<span style="font-style:italic">x</span></sup></td></tr>
+</table>
+Input:
+<div class="center"><span style="font-family:monospace">desolve(y’’-6*y’+9*y=(x*exp(3*x),y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+(-(18*x))*c_0+6*x*c_1+6*c_0)*1/6*exp(3*x)</span></div>
+the solution depends on 2 constants of integration : 
+<span style="font-family:monospace">c_0, c_1</span> (<span style="font-family:monospace">y(0)=c_0</span> and <span style="font-family:monospace">y’(0)=c_1</span>).
+</li></ol>
+</li><li class="li-itemize">Examples of first order linear differential equations.
+<ol class="enumerate" type=1><li class="li-enumerate">
+Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">xy</span>′+<span style="font-style:italic">y</span>−3<span style="font-style:italic">x</span><sup>2</sup>=0</td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(x*y’+y-3*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">(3*1/3*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+c_0)/x </span></div>
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>′+<span style="font-style:italic">x</span>*<span style="font-style:italic">y</span>=0, <span style="font-style:italic">y</span>(0)=1</td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve([y’+x*y=0, y(0)=1]),y)</span></div>
+or :
+<div class="center"><span style="font-family:monospace">desolve((y’+x*y=0) &amp;&amp; (y(0)=1),y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[1/(exp(1/2*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2))]</span></div> 
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">x</span>(<span style="font-style:italic">x</span><sup>2</sup>−1)<span style="font-style:italic">y</span>′+2<span style="font-style:italic">y</span>=0</td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(x*(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)*y’+2*y=0,y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">(c_0)/((x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)/(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2))</span></div>
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">x</span>(<span style="font-style:italic">x</span><sup>2</sup>−1)<span style="font-style:italic">y</span>′+2<span style="font-style:italic">y</span>=<span style="font-style:italic">x</span><sup>2</sup></td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(x*(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)*y’+2*y=x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">(ln(x)+c_0)/((x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)/(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2))</span></div>
+</li><li class="li-enumerate">If the variable is <span style="font-style:italic">t</span> instead of <span style="font-style:italic">x</span>, for example :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">t</span>(<span style="font-style:italic">t</span><sup>2</sup>−1)<span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>)+2<span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)=<span style="font-style:italic">t</span><sup>2</sup></td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(t*(t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)*diff(y(t),t)+2*y(t)=(t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),y(t))</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">(ln(t)+c_0)/((t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)/(t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2))</span></div>
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">x</span>(<span style="font-style:italic">x</span><sup>2</sup>−1)<span style="font-style:italic">y</span>′+2<span style="font-style:italic">y</span>=<span style="font-style:italic">x</span><sup>2</sup>,<span style="font-style:italic">y</span>(2)=0</td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve([x*(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)*y’+2*y=x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,y(0)=1],y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[(ln(x)-ln(2))*1/(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2]</span></div>
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >1+<span style="font-style:italic">x</span><sup>2</sup></td></tr>
+</table></td><td class="dcell"><span style="font-style:italic">y</span>′−<span style="font-style:italic">x</span>−<span style="font-style:italic">y</span>=</td><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >1+<span style="font-style:italic">x</span><sup>2</sup></td></tr>
+</table></td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(y’*sqrt(1+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)-x-y-sqrt(1+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">(-c_0+ln(sqrt(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1)-x))/(x-sqrt(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1))</span></div>
+</li></ol></li><li class="li-itemize">Examples of first differential equations with separable variables.
+<ol class="enumerate" type=1><li class="li-enumerate">
+Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>′=2</td><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">y</span></td></tr>
+</table></td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(y’=2*sqrt(y),y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+-2*x*c_0+c_0</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2]</span></div>
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">xy</span>′ln(<span style="font-style:italic">x</span>)−<span style="font-style:italic">y</span>(3ln(<span style="font-style:italic">x</span>)+1)=0</td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(x*y’*ln(x)-(3*ln(x)+1)*y,y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">c_0*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*ln(x)</span></div>
+</li></ol></li><li class="li-itemize">Examples of Bernoulli differential equations 
+<span style="font-style:italic">a</span>(<span style="font-style:italic">x</span>)<span style="font-style:italic">y</span>′+<span style="font-style:italic">b</span>(<span style="font-style:italic">x</span>)<span style="font-style:italic">y</span>=<span style="font-style:italic">c</span>(<span style="font-style:italic">x</span>)<span style="font-style:italic">y</span><sup><span style="font-style:italic">n</span></sup> where <span style="font-style:italic">n</span> is a real constant.<br>
+The method used is to divide the equation by <span style="font-style:italic">y</span><sup><span style="font-style:italic">n</span></sup>, 
+so that it becomes a first order linear differential equation 
+in <span style="font-style:italic">u</span>=1/<span style="font-style:italic">y</span><sup><span style="font-style:italic">n</span>−1</sup>.
+<ol class="enumerate" type=1><li class="li-enumerate">
+Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">xy</span>′+2<span style="font-style:italic">y</span>+<span style="font-style:italic">xy</span><sup>2</sup>=0</td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(x*y’+2*y+x*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[1/(exp(2*ln(x))*(-1/x+c_0))]</span></div>
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">xy</span>′−2<span style="font-style:italic">y</span>=<span style="font-style:italic">xy</span><sup>3</sup></td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(x*y’-2*y-x*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[((-2*1/5*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">5+c_0)*exp(-(4*log(x))))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(1/-2),</span></div>
+<div class="center"><span style="font-family:monospace">-((-2*1/5*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">5+c_0)*exp(-(4*log(x))))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(1/-2)]</span></div>
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">x</span><sup>2</sup><span style="font-style:italic">y</span>′−2<span style="font-style:italic">y</span>=<span style="font-style:italic">xe</span><sup>(4/<span style="font-style:italic">x</span>)</sup><span style="font-style:italic">y</span><sup>3</sup></td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(x*y’-2*y-x*exp(4/x)*y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3,y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[((-2*ln(x)+c_0)*exp(-(4*(-(1/x)))))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(1/-2),</span></div>
+<div class="center"><span style="font-family:monospace">-(((-2*ln(x)+c_0)*exp(-(4*(-(1/x)))))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">(1/-2))]</span></div>
+</li></ol></li><li class="li-itemize">Examples of first order homogeneous differential equations (<span style="font-style:italic">y</span>′=<span style="font-style:italic">F</span>(<span style="font-style:italic">y</span>/<span style="font-style:italic">x</span>),
+the method of integration is to search <span style="font-style:italic">t</span>=<span style="font-style:italic">y</span>/<span style="font-style:italic">x</span> instead of <span style="font-style:italic">y</span>).
+<ol class="enumerate" type=1><li class="li-enumerate">
+Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">3<span style="font-style:italic">x</span><sup>3</sup><span style="font-style:italic">y</span>′=<span style="font-style:italic">y</span>(3<span style="font-style:italic">x</span><sup>2</sup>−<span style="font-style:italic">y</span><sup>2</sup>)</td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(3*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3*diff(y)=((3*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)*y),y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[0,pnt[c_0*exp((3*1/2)/(‘ t‘</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)),‘ t‘*c_0*exp((3*1/2)/(‘ t‘</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2))]]</span></div>
+hence the solutions are <span style="font-style:italic">y</span>=0 and the familiy of curves of parametric
+equation <span style="font-style:italic">x</span>=<span style="font-style:italic">c</span><sub>0</sub>exp(3/(2<span style="font-style:italic">t</span><sup>2</sup>)), <span style="font-style:italic">y</span>=<span style="font-style:italic">t</span>*<span style="font-style:italic">c</span><sub>0</sub>exp(3/(2<span style="font-style:italic">t</span><sup>2</sup>)) 
+(the parameter is denoted by <span style="font-family:monospace">‘ t‘</span> in the answer).
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">xy</span>′=<span style="font-style:italic">y</span>+</td><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">x</span><sup>2</sup>+<span style="font-style:italic">y</span><sup>2</sup></td></tr>
+</table></td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(x*y’=y+sqrt(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[(-i)*x,(i)*x,pnt[c_0/(sqrt(‘ t‘</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1)-‘ t‘),(‘ t‘*c_0)/(sqrt(‘ t‘</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1)-‘ t‘)]]</span></div>
+hence the solutions are :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>=<span style="font-style:italic">ix</span>,<span style="font-style:italic">y</span>=−<span style="font-style:italic">ix</span></td></tr>
+</table>
+and the family of curves of parametric equations
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">x</span>=<span style="font-style:italic">c</span><sub>0</sub>/(</td><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">t</span><sup>2</sup>+1</td></tr>
+</table></td><td class="dcell">−<span style="font-style:italic">t</span>), <span style="font-style:italic">y</span>=<span style="font-style:italic">t</span>*<span style="font-style:italic">c</span><sub>0</sub>/(</td><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">t</span><sup>2</sup>+1</td></tr>
+</table></td><td class="dcell">−<span style="font-style:italic">t</span>)</td></tr>
+</table> 
+(the parameter is denoted by <span style="font-family:monospace">‘ t‘</span> in the answer).
+</li></ol></li><li class="li-itemize">Examples of first order differential equations with an 
+integrating factor. By multiplying the equation by a function of <span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,
+it becomes a closed differential form.
+<ol class="enumerate" type=1><li class="li-enumerate">
+Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">yy</span>′+<span style="font-style:italic">x</span></td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(y*y’+x,y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[sqrt(-2*c_0-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),-(sqrt(-2*c_0-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2))]</span></div>
+In this example, <span style="font-style:italic">xdx</span>+<span style="font-style:italic">ydy</span> is closed, the integrating factor was 1.
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">2<span style="font-style:italic">xyy</span>′+<span style="font-style:italic">x</span><sup>2</sup>−<span style="font-style:italic">y</span><sup>2</sup>+<span style="font-style:italic">a</span><sup>2</sup>=0</td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(2*x*y*y’+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">[sqrt(a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-c_1*x),-(sqrt(a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-c_1*x))]</span></div>
+In this example, the integrating factor was 1/<span style="font-style:italic">x</span><sup>2</sup>.
+</li></ol></li><li class="li-itemize">Example of first order differential equations without <span style="font-style:italic">x</span>.<br>
+Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">(<span style="font-style:italic">y</span>+<span style="font-style:italic">y</span>′)<sup>4</sup>+<span style="font-style:italic">y</span>′+3<span style="font-style:italic">y</span>=0</td></tr>
+</table>
+This kind of equation cannot be solved directly by <span style="font-family:monospace">Xcas</span>, we explain
+how to solve them with its help. 
+The idea is to find a parametric representation of 
+<span style="font-style:italic">F</span>(<span style="font-style:italic">u</span>,<span style="font-style:italic">v</span>)=0 where the equation is <span style="font-style:italic">F</span>(<span style="font-style:italic">y</span>,<span style="font-style:italic">y</span>′)=0, 
+Let <span style="font-style:italic">u</span>=<span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>),<span style="font-style:italic">v</span>=<span style="font-style:italic">g</span>(<span style="font-style:italic">t</span>) be such a parametrization of <span style="font-style:italic">F</span>=0, then 
+<span style="font-style:italic">y</span>=<span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>) and <span style="font-style:italic">dy</span>/<span style="font-style:italic">dx</span>=<span style="font-style:italic">y</span>′=<span style="font-style:italic">g</span>(<span style="font-style:italic">t</span>). Hence
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">dy</span>/<span style="font-style:italic">dt</span>=<span style="font-style:italic">f</span>′(<span style="font-style:italic">t</span>)=<span style="font-style:italic">y</span>′*<span style="font-style:italic">dx</span>/<span style="font-style:italic">dt</span>=<span style="font-style:italic">g</span>(<span style="font-style:italic">t</span>)*<span style="font-style:italic">dx</span>/<span style="font-style:italic">dt</span> </td></tr>
+</table>
+The solution is the curve of parametric equations
+<span style="font-style:italic">x</span>(<span style="font-style:italic">t</span>), <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)=<span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>), where <span style="font-style:italic">x</span>(<span style="font-style:italic">t</span>) is solution of the differential equation 
+<span style="font-style:italic">g</span>(<span style="font-style:italic">t</span>)<span style="font-style:italic">dx</span>=<span style="font-style:italic">f</span>′(<span style="font-style:italic">t</span>)<span style="font-style:italic">dt</span>.<br>
+Back to the example, we put <span style="font-style:italic">y</span>+<span style="font-style:italic">y</span>′=<span style="font-style:italic">t</span>, hence:
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>=−<span style="font-style:italic">t</span>−8*<span style="font-style:italic">t</span><sup>4</sup>,    <span style="font-style:italic">y</span>′=<span style="font-style:italic">dy</span>/<span style="font-style:italic">dx</span>=3*<span style="font-style:italic">t</span>+8*<span style="font-style:italic">t</span><sup>4</sup>    <span style="font-style:italic">dy</span>/<span style="font-style:italic">dt</span>=−1−32*<span style="font-style:italic">t</span><sup>3</sup>
+</td></tr>
+</table> 
+therefore
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">(3*<span style="font-style:italic">t</span>+8*<span style="font-style:italic">t</span><sup>4</sup>)*<span style="font-style:italic">dx</span>=(−1−32*<span style="font-style:italic">t</span><sup>3</sup>)<span style="font-style:italic">dt</span> </td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve((3*t+8*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4)*diff(x(t),t)=(-1-32*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3),x(t))</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">-11*1/9*ln(8*t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+3)+1/-9*ln(t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3)+c_0</span></div>
+eventually the solution is the curve of parametric equation :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">x</span>(<span style="font-style:italic">t</span>)=−11*1/9*ln(8*<span style="font-style:italic">t</span><sup>3</sup>+3)+1/−9*ln(<span style="font-style:italic">t</span><sup>3</sup>)+<span style="font-style:italic">c</span><sub>0</sub>,
+   <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)=−<span style="font-style:italic">t</span>−8*<span style="font-style:italic">t</span><sup>4</sup> </td></tr>
+</table></li><li class="li-itemize">Examples of first order 
+Clairaut differential equations (<span style="font-style:italic">y</span>=<span style="font-style:italic">x</span>*<span style="font-style:italic">y</span>′+<span style="font-style:italic">f</span>(<span style="font-style:italic">y</span>′)).<br>
+The solutions are the lines <span style="font-style:italic">D</span><sub><span style="font-style:italic">m</span></sub> of equation <span style="font-style:italic">y</span>=<span style="font-style:italic">mx</span>+<span style="font-style:italic">f</span>(<span style="font-style:italic">m</span>) where
+<span style="font-style:italic">m</span> is a real constant.
+<ol class="enumerate" type=1><li class="li-enumerate">
+Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">xy</span>′+<span style="font-style:italic">y</span>′<sup>3</sup>−<span style="font-style:italic">y</span>=0</td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve(x*y’+y’</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-y),y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">c_0*x+c_0</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3</span></div>
+</li><li class="li-enumerate">Solve :
+<table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>−<span style="font-style:italic">xy</span>′ − </td><td class="dcell"><span style="font-size:x-large">√</span></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><span style="font-style:italic">a</span><sup>2</sup>+<span style="font-style:italic">b</span><sup>2</sup>*<span style="font-style:italic">y</span>′<sup>2</sup></td></tr>
+</table></td><td class="dcell">=0</td></tr>
+</table>
+Input :
+<div class="center"><span style="font-family:monospace">desolve((y-x*y’-sqrt(a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+b</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*y’</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),y)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">c_0*x+sqrt(a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+b</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2*c_0</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)</span></div>
+</li></ol>
+</li></ul>
+<hr>
+<a href="cascmd_en649.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en651.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

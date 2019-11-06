@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Continuous Fourier Transform : fourier, ifourier</title>
+</head>
+<body >
+<a href="cascmd_en270.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en272.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec337" class="subsection">5.25.2  Continuous Fourier Transform : <span style="font-family:monospace">fourier</span><a id="hevea_default486"></a>, <span style="font-family:monospace">ifourier</span><a id="hevea_default487"></a></h3>
+<p>
+The command <span style="font-family:monospace">fourier</span> takes one to three arguments: an expression  <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)  and (optionally) identifiers  <span style="font-style:italic">x</span>  and  <span style="font-style:italic">s</span> . It returns the Fourier transform  <span style="font-style:italic">F</span>  of  <span style="font-style:italic">f</span>  defined by
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><a id="eq:fourier-def"></a>
+<span style="font-style:italic">F</span>(<span style="font-style:italic">s</span>)=</td><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left">+∞</td></tr>
+<tr><td class="dcell" style="text-align:left"><br>
+<br>
+</td></tr>
+<tr><td class="dcell" style="text-align:left">−∞</td></tr>
+</table></td><td class="dcell"><span style="font-style:italic">e</span><sup>−<span style="font-style:italic">i</span> <span style="font-style:italic">s</span> <span style="font-style:italic">x</span></sup> <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>) <span style="font-style:italic">d</span><span style="font-style:italic">x</span>,   <span style="font-style:italic">s</span>∈ℝ.
+    (5)</td></tr>
+</table><p>
+If  <span style="font-style:italic">s</span>  is not given,  <span style="font-style:italic">F</span>  is returned as a function of  <span style="font-style:italic">x</span> .</p><p>The command <span style="font-family:monospace">ifourier</span> works the other way round: it takes arguments  <span style="font-style:italic">F</span>(<span style="font-style:italic">s</span>)  and (optionally)  <span style="font-style:italic">s</span>  and  <span style="font-style:italic">x</span> , and returns the expression  <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)  using the formula
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2 π</td></tr>
+</table></td><td class="dcell"> </td><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left">+∞</td></tr>
+<tr><td class="dcell" style="text-align:left"><br>
+<br>
+</td></tr>
+<tr><td class="dcell" style="text-align:left">−∞</td></tr>
+</table></td><td class="dcell"><span style="font-style:italic">e</span><sup><span style="font-style:italic">i</span> <span style="font-style:italic">s</span> <span style="font-style:italic">x</span></sup> <span style="font-style:italic">F</span>(<span style="font-style:italic">s</span>) <span style="font-style:italic">d</span><span style="font-style:italic">s</span>. </td></tr>
+</table><p>
+To compute the above integral, <span style="font-family:monospace">fourier</span> is called with input parameters  <span style="font-style:italic">F</span>(<span style="font-style:italic">s</span>)/2 π ,  <span style="font-style:italic">s</span>  and  <span style="font-style:italic">x</span> , replacing  <span style="font-style:italic">x</span>  with  −<span style="font-style:italic">x</span>  in the result.</p><p>Arbitrary rational functions can be transformed. For example, to find the Fourier transform of  <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)=<span style="font-style:italic">x</span>/<span style="font-style:italic">x</span><sup>3</sup>−19 <span style="font-style:italic">x</span>+30 , input :
+</p><div class="center">
+<span style="font-family:monospace">F:=fourier(x/(x^3-19x+30),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">pi*(5*i*exp(5*i*s)+(-21*i)*exp((-3*i)*s)+16*i*exp((-2*i)*s))*sign(s)/56
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">ifourier(F,s,x)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">x/(x^3-19*x+30)
+</span></div><p>
+Similarly, to find the transform of  <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)=<span style="font-style:italic">x</span><sup>2</sup>+1/<span style="font-style:italic">x</span><sup>2</sup>−1 , input :
+</p><div class="center">
+<span style="font-family:monospace">F:=fourier((x^2+1)/(x^2-1),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2*pi*(Dirac(s)-sign(s)*sin(s))
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">ifourier(F,s,x)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">(x^2+1)/(x^2-1)
+</span></div><p>
+A range of other (generalized) functions and distributions can be transformed, as demonstrated in the following examples. If <span style="font-family:monospace">fourier</span> does not know how to transform a function, say  <span style="font-style:italic">f</span> , it returns the unevaluated integral (<a href="#eq%3Afourier-def">5</a>). In these cases one may try to evaluate the result using <span style="font-family:monospace">eval</span>.<br>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">fourier(3x^2+2x+1,x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2*pi*(Dirac(s)+2*i*Dirac(s,1)-3*Dirac(s,2))
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">fourier(Dirac(x-1)+Dirac(x+1),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2*cos(s)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">fourier(exp(-2*abs(x-1)),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">4*exp(-i*s)/(s^2+4)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">fourier(atan(1/(2x^2)),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2*pi*sin(s/2)*exp(-abs(s)/2)/s
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">fourier(BesselJ(3,x),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-s*(4*s^2-3)*(-i*sign(s+1)+i*sign(s-1))/sqrt(-s^2+1)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">F:=fourier(sin(x)*sign(x),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-2/(s^2-1)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">ifourier(F,s,x)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">sign(x)*sin(x)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">fourier(log(abs(x)),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">-pi*(2*euler_gamma*Dirac(s)*abs(s)+1)/abs(s)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">fourier(rect(x),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2*sin(s/2)/s
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">fourier(exp(-abs(x))*sinc(x),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">atan(s+1)-atan(s-1)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">fourier(1/sqrt(abs(x)),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">sqrt(2)*sqrt(pi)/sqrt(abs(s))
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">F:=fourier(1/cosh(2x),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">pi/(exp(pi*s/4)+exp(-pi*s/4))
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">ifourier(F,s,x)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2/(exp(2*x)+exp(-2*x))
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">fourier(Airy_Ai(x/2),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2*exp(8*i*s^3/3)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">F:=fourier(Gamma(1+i*x/3),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">6*pi*exp(-exp(-3*s)-3*s)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">ifourier(F,s,x)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">Gamma(i*x/3+1)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">F:=fourier(atan(x/4)/x,x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">pi*ugamma(0,4*abs(s))
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">ifourier(F,s,x)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">atan(x/4)/x
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">assume(a&gt;0):; fourier(exp(-a*x^2+b),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">sqrt(a)*sqrt(pi)*exp(-s^2/(4*a)+b)/a
+</span></div><p>
+In the following example we compute the convolution of  <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)=<span style="font-style:italic">e</span><sup>−|<span style="font-style:italic">x</span>|</sup>  with itself using the convolution theorem. Input :
+</p><div class="center">
+<span style="font-family:monospace">F:=fourier(exp(-abs(x)),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2/(s^2+1)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">ifourier(F^2,s,x)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">x*Heaviside(x)*exp(-x)-x*Heaviside(-x)*exp(x)+exp(-abs(x))
+</span></div><p>
+The above result is the desired convolution  <span style="font-style:italic">f</span>∗ <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)=∫<sub>−∞</sub><sup>+∞</sup><span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>) <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>−<span style="font-style:italic">t</span>) <span style="font-style:italic">d</span><span style="font-style:italic">t</span> .</p><p>Piecewise functions can be transformed if defined as
+</p><div class="center">
+<span style="font-family:monospace">piecewise(x&lt;a1,f1,x&lt;a2,f2,...,x&lt;an,fn,f0)
+</span></div><p>
+where  <span style="font-style:italic">a</span><sub>1</sub>,<span style="font-style:italic">a</span><sub>2</sub>,…,<span style="font-style:italic">a</span><sub><span style="font-style:italic">n</span></sub>  are real numbers such that  <span style="font-style:italic">a</span><sub>1</sub>&lt;<span style="font-style:italic">a</span><sub>2</sub>&lt;⋯&lt;<span style="font-style:italic">a</span><sub><span style="font-style:italic">n</span></sub> . Inequalities may be strict or non-strict.<br>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">f:=piecewise(x&lt;=-1,exp(x+1),x&lt;=1,1,exp(2-2x)):; F:=fourier(f,x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">(-i*s*sin(s)+3*s*cos(s)+4*sin(s))/(s*(s-2*i)*(s+i))
+</span></div><p>
+The original function  <span style="font-style:italic">f</span>  is obtained from the above result by applying <span style="font-family:monospace">ifourier</span>. Input :
+</p><div class="center">
+<span style="font-family:monospace">ifourier(F,s,x)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">Heaviside(x+1)-Heaviside(x-1)+Heaviside(x-1)*exp(-2*x+2)+ Heaviside(-x-1)*exp(x+1)
+</span></div><p>
+One may verify that the above expression is equal to  <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)  by plotting.</p><p>To transform unknown functions, one can use the command <span style="font-family:monospace">addtable</span><a id="hevea_default488"></a> which takes five arguments: <span style="font-family:monospace">fourier</span> or <span style="font-family:monospace">laplace</span> (to indicate the desired transform definition),  <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>) ,  <span style="font-style:italic">F</span>(<span style="font-style:italic">s</span>) ,  <span style="font-style:italic">x</span>  and  <span style="font-style:italic">s</span> , where  <span style="font-style:italic">f</span> ,  <span style="font-style:italic">F</span> ,  <span style="font-style:italic">x</span>  and  <span style="font-style:italic">s</span>  are identifiers. If the first argument is <span style="font-family:monospace">fourier</span>, this means that  <span style="color:red"><span style="font-style:italic">F</span></span>{<span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)}(<span style="font-style:italic">s</span>)=<span style="font-style:italic">F</span>(<span style="font-style:italic">s</span>)  i.e. that the command
+</p><div class="center">
+<span style="font-family:monospace">fourier(f(x),x,s)
+</span></div><p>
+would return <span style="font-family:monospace">F(s)</span>. The return value of <span style="font-family:monospace">addtable</span> is 1 on success and 0 on failure. The second and the third argument can also be expressions depending on several variables.<br>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">addtable(fourier,y(x),Y(s),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">1
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">fourier(y(a*x+b),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">Y(s/a)*exp(i*s*b/a)/abs(a)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">fourier(Y(x),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2*pi*y(-s)
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">addtable(fourier,g(x,t),G(s,t),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">1
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">fourier(g(x/2,3*t),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">2*G(2*s,3*t)
+</span></div><p>Fourier transform can be used for solving linear differential equations with constant coefficients. For example, we obtain a particular solution to the equation
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>)+4 <span style="font-style:italic">y</span><sup>(4)</sup>(<span style="font-style:italic">x</span>)=δ(<span style="font-style:italic">x</span>), </td></tr>
+</table><p>
+where  δ  is the Dirac delta function. First we transform both sides of the above equation. Input :
+</p><div class="center">
+<span style="font-family:monospace">L:=fourier(y(x)+4*diff(y(x),x,4),x,s); R:=fourier(Dirac(x),x,s)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">Y(s)-4*s^4*Y(s), 1
+</span></div><p>
+Then we solve the equation  <span style="font-style:italic">L</span>=<span style="font-style:italic">R</span>  for  <span style="font-style:italic">Y</span>(<span style="font-style:italic">s</span>) . Generally, one should apply <span style="font-family:monospace">csolve</span> instead of <span style="font-family:monospace">solve</span>. Input :
+</p><div class="center">
+<span style="font-family:monospace">sol:=csolve(L=R,Y(s))[0]
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">1/(4*s^4+1)
+</span></div><p>
+Finally, we apply <span style="font-family:monospace">ifourier</span> to obtain  <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span>) . Input :
+</p><div class="center">
+<span style="font-family:monospace">ifourier(sol,s,x)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">(sin(abs(x)/2)+cos(abs(x)/2))*exp(-abs(x)/2)/4
+</span></div><p>
+The above solution can be combined with solutions of the corresponding homogeneous equation to obtain the general solution.</p>
+<hr>
+<a href="cascmd_en270.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en272.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

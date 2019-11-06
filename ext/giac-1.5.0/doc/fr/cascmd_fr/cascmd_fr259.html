@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Pour évaluer une expression : eval</title>
+</head>
+<body >
+<a href="cascmd_fr258.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr260.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec338" class="subsection">6.14.2  Pour évaluer une expression : <span style="font-family:monospace">eval</span></h3>
+<p><a id="hevea_default435"></a><a id="sec:evalgeo"></a>
+<span style="font-family:monospace">eval</span> sert à évaluer une expression.<br>
+ <span style="font-family:monospace">eval</span> a un ou deux argument(s) : une expression et éventuellement le 
+niveau souhaité de l’évaluation.<br>
+Il faut savoir que <span style="font-family:monospace">Xcas</span> évalue toujours les expressions, sans avoir 
+besoin de la commande <span style="font-family:monospace">eval</span> : le niveau d’évaluation est indiqué dans 
+la case <span style="font-family:monospace">eval</span> de la <span style="font-family:monospace">Configuration du CAS</span> du menu <span style="font-family:monospace">Cfg</span> et vaut 
+par défaut vaut 25.<br>
+La commande <span style="font-family:monospace">eval</span> est surtout utile lorsqu’on veut évaluer une 
+sous-expression dans l’éditeur d’expressions.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">a:=2</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">2</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">eval(2+3*a)</span></div><p>
+ou
+</p><div class="center"><span style="font-family:monospace">2+3*a</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">8</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">purge(r);purge(p);a:=1+i*r</span></div><div class="center"><span style="font-family:monospace">r:=p+1;p:=-4;</span></div><p>
+on peut alors avoir différentes évaluation de <span style="font-family:monospace">a</span> selon le niveau
+dévaluation demandé :
+</p><ul class="itemize"><li class="li-itemize"> 
+on tape :
+<div class="center"><span style="font-family:monospace">a</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">1-3*i</span></div>
+</li><li class="li-itemize">on tape :
+<div class="center"><span style="font-family:monospace">eval(a,1)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">1+(i)*r</span></div>
+</li><li class="li-itemize">on tape :
+<div class="center"><span style="font-family:monospace">eval(a,2)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">1+(i)*(p+1)</span></div>
+</li><li class="li-itemize">on tape :
+<div class="center"><span style="font-family:monospace">eval(a,3)</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">1-3*i</span></div>
+</li></ul><p> 
+<span style="font-weight:bold">Remarque</span><br>
+Pour les objets géométriques, en plus de l’évaluation exacte (au niveau 
+25 par dévaut), <span style="font-family:monospace">Xcas</span> 
+rajoute une évaluation numérique (au niveau 1) au moment de l’affichage 
+pour pouvoir représenter les objets géométriques dependant de 
+paramètres définis par <span style="font-family:monospace">assume</span> ou par une affectation numérique. </p><p>Voici différents exemples :
+</p><ul class="itemize"><li class="li-itemize">
+On tape :
+<pre class="verbatim">purge(r);
+R:=point(1+i*r);
+r:=-3;
+</pre>
+Le niveau correspondant à <span style="font-family:monospace">R:=point(1+i*r);</span> affichera dans tous les cas
+le point et sa légende car l’évaluation numérique pour l’affichage de ce 
+niveau est faite au moment de l’affichage donc après que <span style="font-family:monospace">r</span> ait
+été défini.
+</li><li class="li-itemize">On tape :
+<pre class="verbatim">purge(r);
+purge(p);
+R:=point(1+i*r);
+r:=p+1;
+p:=-4;
+</pre>
+Le point <span style="font-family:monospace">R</span> n’apparait pas car l’évaluation numérique au moment de 
+l’affichage n’est faite qu’au niveau 1. Ainsi <span style="font-family:monospace">r</span> est remplacé par 
+<span style="font-family:monospace">p</span> mais <span style="font-family:monospace">p</span> n’est pas remplacé donc la commande 
+<span style="font-family:monospace">R:=point(1+i*r);</span> n’affiche rien.</li><li class="li-itemize">On tape
+<pre class="verbatim">purge(r);
+R:=point(1+i*r):;
+r:=-3;
+eval(R,1);
+</pre>
+La commande <span style="font-family:monospace">eval(R,1)</span> renvoie <span style="font-family:monospace">point(1+(i)*r)</span> et dessine le point 
+<span style="font-family:monospace">R</span> et sa légende. En effet la réponse est évaluée formellement
+au niveau 1 ce qui donne la réponse <span style="font-family:monospace">point(1+i*r)</span> puis pour la 
+représentation graphique, <span style="font-family:monospace">point(1+i*r)</span> est évalué numériquement 
+(sans toucher aux légendes) ce qui permet d’afficher le point.
+La légende n’ apparait pas, lorsqu’on évalue un objet géométrique, mais ici, lorsqu’on fait <span style="font-family:monospace">eval(R,1)</span>, <span style="font-family:monospace">R</span> est évalué en un objet 
+géométrique, mais l’objet géométrique lui-même n’est pas évalué.
+Donc <span style="font-family:monospace">eval(R,1)</span> dessine le point <span style="font-family:monospace">R</span> et sa légende.
+</li><li class="li-itemize">On tape
+<pre class="verbatim">purge(r);
+purge(p);
+R:=point(1+i*r):;
+r:=p+1;
+p:=-4;
+eval(R,1);
+</pre>
+La commande <span style="font-family:monospace">eval(R,1)</span> renvoie <span style="font-family:monospace">point(1+(i)*r)</span>, mais ne dessine pas 
+le point <span style="font-family:monospace">R</span>. En effet la réponse est évaluée formellement au 
+niveau 1 ce qui donne la réponse <span style="font-family:monospace">point(1+i*r)</span> puis pour la 
+représentation graphique, <span style="font-family:monospace">point(1+i*r)</span> est évalué numériquement 
+au niveau 1 ce qui ne permet pas d’afficher le point.</li><li class="li-itemize">On tape :
+<pre class="verbatim">purge(r);
+R:=point(1+i*r):;
+r:=-3;
+eval(R,2);
+</pre>
+La commande <span style="font-family:monospace">eval(R,2)</span> renvoie <span style="font-family:monospace">point(1,-3)</span> et le dessin du point 
+<span style="font-family:monospace">R</span> sans sa légende. En effet, quand on fait <span style="font-family:monospace">eval(R,2)</span>, alors 
+<span style="font-family:monospace">R</span> est évalué en un objet géométrique, et cet l’objet 
+géométrique est lui-même évalué et donc la légende disparait.
+</li><li class="li-itemize">On tape :
+<pre class="verbatim">purge(r);
+purge(p);
+R:=point(1+i*r):;
+r:=p+1;
+p:=-4;
+eval(R,2);
+</pre>
+La commande <span style="font-family:monospace">eval(R,2)</span> renvoie <span style="font-family:monospace">point(1,p+1)</span> et le dessin du point 
+<span style="font-family:monospace">R</span> sans sa légende. En effet, quand on fait <span style="font-family:monospace">eval(R,2)</span>, alors 
+<span style="font-family:monospace">R</span> est évalué en un objet géométrique, et cet l’objet 
+géométrique est lui-même évalué et donc la légende disparait.
+</li></ul>
+<hr>
+<a href="cascmd_fr258.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr260.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

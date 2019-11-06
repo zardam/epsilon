@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Using strings as commands: expr</title>
+</head>
+<body >
+<a href="cascmd_en808.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en810.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1041" class="subsection">11.4.6  Using strings as commands: <span style="font-family:monospace">expr</span></h3>
+<p>
+<a id="hevea_default1436"></a></p><p>The <span style="font-family:monospace">expr</span> command will let you use a string as a
+command. Given a string that expresses a valid command, <span style="font-family:monospace">expr</span>
+will convert the string to the command and evaluate it. 
+For example, if you enter
+</p><div class="center">
+<span style="font-family:monospace">expr("c := 1")</span>
+</div><p>
+then the variable <span style="font-family:monospace">c</span> will be set to 1. 
+Similarly, if you enter
+</p><div class="center">
+<span style="font-family:monospace">a := "ifactor(54)"</span>
+</div><p>
+then
+</p><div class="center">
+<span style="font-family:monospace">expr(a)</span>
+</div><p>
+will return
+</p><div class="center">
+<span style="font-family:monospace">2 * 3^3</span>
+</div><p>
+which is the same thing as entering <span style="font-family:monospace">ifactor(54)</span> directly.</p><p>You can also use <span style="font-family:monospace">expr</span> to convert a string to a number.
+If a string is simply a number enclosed by quotation marks, then
+<span style="font-family:monospace">expr</span> will return the number. For example,
+</p><div class="center">
+<span style="font-family:monospace">expr("123")</span>
+</div><p>
+will return 
+</p><div class="center">
+<span style="font-family:monospace">123</span>
+</div><p>
+In particular, the following strings will be converted to the
+appropriate number.
+</p><ul class="itemize"><li class="li-itemize">
+A string consisting of the digits 0 through 9 which doesn’t start
+with 0 will be converted to an integer. For example,
+<div class="center">
+<span style="font-family:monospace">expr("2133")</span>
+</div>
+will return
+<div class="center">
+<span style="font-family:monospace">2133</span>
+</div></li><li class="li-itemize">A string consisting of the digits 0 through 9 which contains a
+single decimal point will be converted to a decimal.
+For example,
+<div class="center">
+<span style="font-family:monospace">expr("123.4")</span>
+</div>
+will return
+<div class="center">
+<span style="font-family:monospace">123.4</span>
+</div></li><li class="li-itemize">A string consisting of the digits 0 through 9, possibly containing a
+single decimal point, followed by <span style="font-family:monospace">e</span> and then more digits 0
+through 9, will be read as a decimal in exponential notation.
+For example,
+<div class="center">
+<span style="font-family:monospace">expr("1.23e4")</span>
+</div>
+will return
+<div class="center">
+<span style="font-family:monospace">12300.0</span>
+</div></li><li class="li-itemize">A string consisting of the digits 0 through 7 which starts
+with 0 will be read as an integer base 8. For example,
+<div class="center">
+<span style="font-family:monospace">expr("0176")</span>
+</div>
+will return
+<div class="center">
+<span style="font-family:monospace">126</span>
+</div>
+since 176 base 8 equals 126 base 10.</li><li class="li-itemize">A string starting with <span style="font-family:monospace">0x</span> followed by digits 0 through 9
+and letters <span style="font-family:monospace">a</span> through <span style="font-family:monospace">f</span> will be read as an integer
+base 16. For example,
+<div class="center">
+<span style="font-family:monospace">expr("0x2a3f")</span>
+</div>
+will return
+<div class="center">
+<span style="font-family:monospace">10815</span>
+</div>
+since <span style="font-family:monospace">2a3f</span> base 16 equals 10815 base 10.</li><li class="li-itemize">A string starting with <span style="font-family:monospace">0b</span> followed by digits 0 and 1 will
+be read as a binary integer. For example,
+<div class="center">
+<span style="font-family:monospace">expr("0b1101")</span>
+</div>
+will return
+<div class="center">
+<span style="font-family:monospace">13</span>
+</div>
+since 1101 base 2 equals 13 base 10.
+</li></ul>
+<hr>
+<a href="cascmd_en808.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en810.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

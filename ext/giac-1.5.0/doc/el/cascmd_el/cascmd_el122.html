@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Μετασχηματισμός μιας παράστασης σε συνάρτηση : 
+unapply</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el121.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el123.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc138">1.15.2</A>  Μετασχηματισμός μιας παράστασης σε συνάρτηση :<BR>
+<TT>unapply</TT></H3><P><A NAME="@default197"></A>
+	
+<TT>unapply</TT> χρησιμοποιείεται για να μετασχηματισμό μιας παράστασης σε συνάρτηση.<BR>
+	
+<TT>unapply</TT> παίρνει δύο ορίσματα : μία παράσταση και το όνομα μιας μεταβλητής.<BR>
+	
+<TT>unapply</TT> επιστρέφει τη συνάρτηση που ορίζεται από αυτή την παράσταση και αυτή την μεταβλητή.</P><P><B>Προσοχή</B> όταν ορίζεται μια συνάρτηση, το δεξί μέλος της εντολής δεν αποτιμάται, γι’ αυτό τον λόγο 	
+<CODE>g:=sin(x+1); f(x):=g</CODE> δεν ορίζει την συνάρτηση <I>f</I>: <I>x</I> → <I>sin</I>(<I>x</I>+1) αλλα την συνάρτηση <I>f</I>: <I>x</I> → <I>g</I>. Για να ορίσετε την πρώτη συνάρτηση, θα πρέπει να χρησιμοποιειθεί το 	
+<TT>unapply</TT> , όπως στο ακόλουθο παράδειγμα:<BR>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>g:= sin(x+1); f:=unapply(g,x)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(sin(x+1), (x)-&gt;sin(x+1))</TT></DIV><P> 
+Επομένως, η μεταβλητή 	
+<TT>g</TT> ανατίθεται σε μια συμβολική παράσταση και η μεταβλητή 	
+<TT>f</TT> ανατίθεται σε μια συνάρτηση.<BR>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>unapply(exp(x+2),x)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(x)-&gt;exp(x+2)</TT></DIV><P> 
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>f:=unapply(lagrange([1,2,3],[4,8,12]),x)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(x)-&gt;4+4*(x-1)</TT></DIV><P> 
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>f:=unapply(integrate(log(t),t,1,x),x)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(x)-&gt;x*log(x)-x+1</TT></DIV><P> 
+Είσοδος:
+</P><DIV CLASS="center">	
+<TT>f:=unapply(integrate(log(t),t,1,x),x)</TT></DIV><DIV CLASS="center">	
+<TT>f(x)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>x*log(x)-x+1</TT></DIV><P>
+<B>Σχόλιο</B>
+Ας υποθέσουμε πως η <I>f</I> είναι μια συνάρτηση δύο μεταβλητών <I>f</I>:(<I>x</I>,<I>w</I>)→ <I>f</I>(<I>x</I>,<I>w</I>), 
+και ότι η <I>g</I> είναι η συνάρτηση που ορίζεται από <I>g</I>: <I>w</I> → <I>h</I><SUB><I>w</I></SUB> όπου η <I>h</I><SUB><I>w</I></SUB> είναι η συνάρτηση που ορίζεται από 
+<I>h</I><SUB><I>w</I></SUB>(<I>x</I>)=<I>f</I>(<I>x</I>,<I>w</I>).<BR>
+	
+<TT>unapply</TT> χρησιμοποιείται επίσης για να ορίσουμε την <I>g</I> με το 	
+<TT>Xcas</TT>.<BR>
+Είσοδος : 
+</P><DIV CLASS="center">	
+<TT>f(x,w):=2*x+w</TT></DIV><DIV CLASS="center">	
+<TT>g(w):=unapply(f(x,w),x)</TT></DIV><DIV CLASS="center">	
+<TT>g(3)</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>x-&gt;2</TT><TT>·</TT><TT> x+3</TT></DIV><HR>
+<A HREF="cascmd_el121.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el123.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

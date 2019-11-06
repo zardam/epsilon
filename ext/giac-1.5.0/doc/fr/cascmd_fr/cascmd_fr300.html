@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Definir une fonction avec l’historique : as_function_of</title>
+</head>
+<body >
+<a href="cascmd_fr299.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr301.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec390" class="subsection">6.18.6  Definir une fonction avec l’historique : <span style="font-family:monospace">as_function_of</span></h3>
+<p><a id="hevea_default562"></a>
+Si on a affecté une valeur à la variable <span style="font-family:monospace">a</span> et si on 
+définit ensuite, dans une autre ligne d’entrée, la variable <span style="font-family:monospace">b</span>, 
+à partir de <span style="font-family:monospace">a</span>, on utilise <span style="font-family:monospace">c:=as_function_of(b,a)</span> pour définir
+une fonction <span style="font-family:monospace">c</span> vérifiant : <span style="font-family:monospace">c(a)=b</span>.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">a:=sin(x)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">sin(x)</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">b:=sqrt(1+a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">b:=sqrt(1+sin(x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">c:=as_function_of(b,a)</span></div><div class="center"><span style="font-family:monospace">c(x)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">sqrt(1+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">a:=2</span></div><div class="center"><span style="font-family:monospace">b:=1+a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">b:=5</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">c:=as_function_of(b,a)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(a)-&gt; <br>
+{ local NULL;<br>
+ return(sqrt(1+a</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2));<br>
+}</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">c(x)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">1+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2</span></div><p>
+<span style="font-weight:bold">Attention</span><br>
+ Si la variable <span style="font-family:monospace">b</span> a été affectée 
+plusieurs fois c’est la première affectation de <span style="font-family:monospace">b</span> après la 
+dernière affectation de <span style="font-family:monospace">a</span> qui compte.<br>
+On tape par exemple :<br>
+<span style="font-family:monospace">a:=2</span> puis<br>
+<span style="font-family:monospace">b:=2*a+1</span> puis<br>
+<span style="font-family:monospace">b:=3*a+2</span> puis<br>
+<span style="font-family:monospace">c:=as_function_of(b,a)</span><br>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(a)-&gt; {local NULL; return(2*a+1);}</span></div><p>
+c’est à dire que <span style="font-family:monospace">c(x)</span> vaut <span style="font-family:monospace">2*x+1</span>. <br>
+Mais si on tape par exemple :<br>
+<span style="font-family:monospace">a:=2</span> puis<br>
+<span style="font-family:monospace">b:=2*a+1</span> puis<br>
+<span style="font-family:monospace">a:=2</span> puis<br>
+<span style="font-family:monospace">b:=3*a+2</span> puis<br>
+<span style="font-family:monospace">c:=as_function_of(b,a)</span><br>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">(a)-&gt; {local NULL; return(3*a+2);}</span></div><p>
+c’est à dire que <span style="font-family:monospace">c(x)</span> vaut <span style="font-family:monospace">3*x+2</span>. <br>
+Il est donc préférable de valider la ligne ou se trouve <span style="font-family:monospace">a</span> avant de 
+définir le <span style="font-family:monospace">b</span> qui convient. </p>
+<hr>
+<a href="cascmd_fr299.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr301.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

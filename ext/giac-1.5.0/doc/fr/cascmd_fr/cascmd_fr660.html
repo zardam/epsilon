@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Décomposition QR : qr</title>
+</head>
+<body >
+<a href="cascmd_fr659.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr661.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec811" class="subsection">6.59.2  Décomposition QR : <span style="font-family:monospace">qr</span></h3>
+<p><a id="hevea_default1213"></a>
+<span style="font-family:monospace">qr</span> a comme argument une matrice carrée numérique <span style="font-style:italic">A</span>
+d’ordre <span style="font-style:italic">n</span>.<br>
+<span style="font-family:monospace">qr</span> factorise numériquement cette matrice sous la forme <span style="font-style:italic">Q</span>*<span style="font-style:italic">R</span> où
+<span style="font-style:italic">Q</span> est une matrice orthogonale (<sup><span style="font-style:italic">t</span></sup><span style="font-style:italic">Q</span>*<span style="font-style:italic">Q</span>=<span style="font-style:italic">I</span>) et <span style="font-style:italic">R</span> est une matrice 
+triangulaire supérieure.<br>
+<span style="font-family:monospace">qr(A)</span> renvoie <span style="font-family:monospace">Q,R</span> et on a <span style="font-family:monospace">Q=A*inv(R)</span>.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">qr([[3,5],[4,5]])</span></div><p>
+On obtient les matrices <span style="font-family:monospace">Q, R</span> :
+</p><div class="center"><span style="font-family:monospace">[[3/5,4/5],[4/5,-3/5]],[[5,7],[0,1]]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">qr([[1,2],[3,4]])</span></div><p>
+On obtient les matrices <span style="font-family:monospace">Q, R</span> :
+</p><div class="center"><span style="font-family:monospace">[[1/(sqrt(10)),3/((sqrt(10))/5*5)],[3/(sqrt(10)),-1/((sqrt(10))/5*5)]], [[sqrt(10),7*sqrt(10)/5],[0,(sqrt(10))/5]]</span></div><p>
+Lorsque la matrice est à coefficients réels,
+on peut ajouter un deuxième argument optionnel
+-1, -2 ou -3 ou -4 à <span style="font-family:monospace">qr</span> pour forcer l’algorithme
+de Householder ou Givens (coefficients approchés),
+ou Gram-Schmidt (coefficients exacts)
+</p><ul class="itemize"><li class="li-itemize">
+-1 : renvoie une 3ème matrice identité (compatibilité
+avec certaines implémentations)
+</li><li class="li-itemize">-3 : renvoie seulement <span style="font-style:italic">Q</span> et <span style="font-style:italic">R</span>
+</li><li class="li-itemize">-2 et -4 : si Gram-Schmidt est utilisé, les colonnes de <span style="font-style:italic">Q</span>
+ne sont pas de norme 1, elles sont simplement orthogonales entre
+elles (ceci évite d’avoir des racines carrées).
+</li></ul><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">Q1,R1,Id1:=qr([[3,5],[4,5]],-1)</span></div><p>
+On obtient les matrices <span style="font-family:monospace">Q1, R1, Id</span> :
+</p><div class="center"><span style="font-family:monospace">[[3/5,4/5],[4/5,-3/5]],[[5,7],[0,1]],[[1,0],[0,1]]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">Q2,R2,Id2:=qr([[3,5],[4,5]],-2)</span></div><p>
+On obtient la matrice <span style="font-family:monospace">Q2, R2, Id</span> :
+</p><div class="center"><span style="font-family:monospace">[[3,4/5],[4,-3/5]],[[1,7/5],[0,1]],[[1,0],[0,1]]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">Q3,R3:=qr([[3,5],[4,5]],-3)</span></div><p>
+On obtient la matrice <span style="font-family:monospace">Q3, R3</span> :
+</p><div class="center"><span style="font-family:monospace">[[3/5,4/5],[4/5,-3/5]],[[5,7],[0,1]]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">Q4,R4:=qr([[3,5],[4,5]],-4)</span></div><p>
+On obtient la matrice <span style="font-family:monospace">Q4, R4</span> :
+</p><div class="center"><span style="font-family:monospace">[[3,4/5],[4,-3/5]],[[1,7/5],[0,1]]</span></div><p>
+Si on pose : <span style="font-family:monospace">A:=[[3,5],[4,5]]</span> on a bien :<br>
+<span style="font-family:monospace">A*inv(R1)=Q1, A*inv(R2)=Q2, A*inv(R3)=Q3, A*inv(R4)=Q4</span></p>
+<hr>
+<a href="cascmd_fr659.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr661.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

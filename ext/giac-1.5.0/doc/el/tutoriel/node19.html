@@ -1,0 +1,178 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others 
+  Translation to greek : George Nassopoulos-->
+<HTML>
+<HEAD>
+<TITLE>Διαφορικές εξισώσεις</TITLE>
+<META NAME="description" CONTENT="Equations diff&#233;rentielles">
+<META NAME="keywords" CONTENT="tutoriel">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutoriel.css">
+
+<LINK REL="previous" HREF="node18.html">
+<LINK REL="up" HREF="node14.html">
+<LINK REL="next" HREF="node20.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html329"
+  HREF="node20.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html323"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html319"
+  HREF="node18.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html325"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html327"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html330"
+  HREF="node20.html">Εργαλεία για την Άλγεβρα</A>
+<B> εμφάνιση:</B> <A NAME="tex2html324"
+  HREF="node14.html">Εργαλεία για την Ανάλυση</A>
+<B> προηγούμενο:</B> <A NAME="tex2html320"
+  HREF="node18.html">Επίλυση εξισώσεων</A>
+ &nbsp; <B>  <A NAME="tex2html326"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html328"
+  HREF="node47.html">Ευρετήριο</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00035000000000000000"></A>
+<A NAME="442"></A>
+<BR>
+Διαφορικές εξισώσεις
+</H2>
+Όπως και στις δύο προηγούμενες ενότητες, διακρίνουμε και εδώ 
+την ακριβή επίλυση, 
+που δεν πάντα δυνατή, και την προσεγγιστική επίλυση.
+Η ακριβής επίλυση πραγματοποιείται με την συνάρτηση <code>desolve</code>. 
+Οι παράγωγοι της άγνωστης συνάρτησης  <I>y</I> μπορεί να γραφτούν ως  <I>y'</I>, 
+<I>y''</I>, που μεταφράζονται σε <code>diff(y)</code>, 
+<code>diff(diff(y))</code>.
+Εάν δεν προσδιορίσουμε αρχικές συνθήκες, το αποτέλεσμα δίνεται 
+συναρτήσει αυθαίρετων σταθερών.
+<PRE>
+desolve(y'=y,y)
+desolve(y''+2*y'+y=0,y)
+desolve((x^2-1)*y'+2*y=0,y)
+</PRE>
+Οι αρχικές καταστάσεις θεωρούνται ως επιπρόσθετες εξισώσεις, 
+που αποτελούν μία λίστα με την διαφορική εξίσωση.
+<PRE>
+desolve([y'=y,y(0)=1],y)
+desolve([y''+2*y'+y=0,y(0)=1],y)
+desolve([y''+2*y'+y=0,y(0)=1,y'(0)=1],y)
+desolve([y''+2*y'+y=0,y(0)=1,y(1)=0],y)
+desolve([(x^2-1)*y'+2*y=0,y(0)=1],y)
+desolve((t^2-1)*diff(y(t),t)+2*y(t)=0,y(t))
+</PRE>
+<A NAME="1654"></A>
+<A NAME="1655"></A>
+
+<P>
+Η συνάρτηση <code>odesolve</code> μας επιτρέπει να επιλύουμε με 
+αριθμητικές μεθόδους μία διαφορική εξίσωση <I>y'</I> = <I>f</I> (<I>x</I>, 
+<I>y</I>) 
+που περνάει από ένα σημείο (<I>x</I><SUB>0</SUB>, <I>y</I><SUB>0</SUB>).
+Παραδείγματος χάρη,
+<PRE>
+odesolve(sin(x*y),[x,y],[0,1],2)
+</PRE>
+μας επιτρέπει να υπολογίσουμε την τιμή <I>y</I>(2), όπου  <I>y</I>(<I>x</I>) 
+είναι 
+η λύση της  <!-- MATH
+ $y'(x)=\sin(xy)$
+ -->
+<I>y'</I>(<I>x</I>) = sin(<I>xy</I>),
+έτσι ώστε <I>y</I>(0) = 1.
+Η συνάρτηση <code>plotode</code> παρουσιάζει γραφικά την επίλυση μίας διαφορικής 
+εξίσωσης, ενώ
+η συνάρτηση <code>plotfield</code> παρουσιάζει το πεδίο των εφαπτομένων.
+Η συνάρτηση <code>interactive_odeplot</code> παρουσιάζει το πεδίο των 
+εφαπτομένων και μας επιτρέπει να επιλέγουμε σημεία στο γράφημα 
+(κάνοντας κλικ επάνω τους) για να δούμε τις λύσεις που περνάνε από 
+τα επιλεγμένα (κλικαρισμένα) σημεία.
+<PRE>
+plotode(sin(x*y),[x,y],[0,1])
+plotfield(sin(x*y),[x,y])
+erase()
+interactive_plotode(sin(x*y),[x,y])
+</PRE>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><B>Διαφορικές εξισώσεις</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>desolve</code></TD>
+<TD ALIGN="LEFT">ακριβής επίλυση</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>odesolve</code></TD>
+<TD ALIGN="LEFT">προσεγγιστική επίλυση</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>plotode</code></TD>
+<TD ALIGN="LEFT">σχεδιασμός της τροχιάς</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>plotfield</code></TD>
+<TD ALIGN="LEFT">σχεδιασμός διανυσματικού πεδίου </TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>interactive_plotode</code></TD>
+<TD ALIGN="LEFT">διαδραστική διεπαφή (όπου κάνουμε κλικ)</TD>
+</TR>
+</TABLE>
+</DIV>
+<A NAME="1656"></A>
+<A NAME="1657"></A>
+<A NAME="1658"></A>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html329"
+  HREF="node20.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html323"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html319"
+  HREF="node18.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html325"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html327"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html330"
+  HREF="node20.html">Εργαλεία για την Άλγεβρα</A>
+<B> εμφάνιση:</B> <A NAME="tex2html324"
+  HREF="node14.html">Εργαλεία για την Ανάλυση</A>
+<B> προηγούμενο:</B> <A NAME="tex2html320"
+  HREF="node18.html">Επίλυση εξισώσεων</A>
+ &nbsp; <B>  <A NAME="tex2html326"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html328"
+  HREF="node47.html">Ευρετήριο</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+Βιβλιογραφία του <A HREF="http://www-fourier.ujf-grenoble.fr/~parisse/giac_fr.html">giac</A> από τους Renee De Graeve, Bernard Parisse και Bernard Ycart
+</ADDRESS>
+Μετάφραση στα Ελληνικά : Γιώργος Νασόπουλος. Διασκευή : Αλκιβιάδης Γ. Ακρίτας
+</BODY>
+</HTML>

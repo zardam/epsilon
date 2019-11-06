@@ -1,0 +1,1655 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cassim.css">
+<TITLE>Probabilités et simulation</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cassim005.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cassim007.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc164">Chapitre 6</A>  Probabilités et simulation</H1><H2 CLASS="section"><A NAME="toc46"></A><A NAME="htoc165">6.1</A>  Rappels : les fonctions aléatoires de <TT>Xcas</TT></H2><P><A NAME="@default44"></A><A NAME="@default45"></A>
+</P><H3 CLASS="subsection"><A NAME="htoc166">6.1.1</A>  Pour initialiser les nombres aléatoires : <TT>srand randseed RandSeed</TT></H3><P><A NAME="@default46"></A><A NAME="@default47"></A><A NAME="@default48"></A>
+<TT>srand()</TT> (ou <TT>randseed</TT> ou <TT>RandSeed</TT>) sert à 
+initialiser la suite des nommbres aléatoires que l’on obtient avec 
+<TT>rand()</TT> ou avec <TT>randnorm()</TT>.<BR>
+<TT>RandSeed</TT> a toujours un argument entier, alors que <TT>randseed</TT> ou 
+<TT>srand</TT> peut ne pas avoir d’arguments (dans ce cas le générateur 
+aléatoire est intialisé avec l’horloge du système).<BR>
+On tape :
+</P><DIV CLASS="center"><TT>srand()</TT></DIV><P>
+On obtient par exemple :
+</P><DIV CLASS="center"><TT>1054990506</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>srand</TT></DIV><P>
+On obtient par exemple :
+</P><DIV CLASS="center"><TT>1054990506</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>RandSeed(10549905061234)</TT></DIV><P>
+On obtient par exemple :
+</P><DIV CLASS="center"><TT>10549905061234</TT></DIV><H3 CLASS="subsection"><A NAME="htoc167">6.1.2</A>  Tirage équiréparti <TT>rand alea hasard</TT></H3><P><A NAME="@default49"></A><A NAME="@default50"></A><A NAME="@default51"></A>
+</P><H4 CLASS="subsubsection">Tirage équiréparti sur [0,1,..,2<SUP>32</SUP>[ : <TT>rand() alea() hasard()</TT></H4><P>
+<TT>rand()</TT> renvoie au hasard, de façon équiprobable, un nombre 
+entier de [0,2<SUP>32</SUP>[ (2<SUP>32</SUP>=4294967296).<BR>
+On tape :
+</P><DIV CLASS="center"><TT>rand()</TT></DIV><P>
+ou on tape
+</P><DIV CLASS="center"><TT>hasard()</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>1804289383</TT></DIV><P>
+Pour avoir, au hasard, de façon équiprobable, un nombre de [0;1[, on 
+peut donc utiliser :
+</P><DIV CLASS="center"><TT>evalf(rand()/2</TT><CODE><TT>^</TT></CODE><TT>32)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>0.391549611697</TT></DIV><P>
+Mais il est plus simple de taper : <TT>rand(0,1)</TT> (voir le paragraphe 
+suivant).</P><H4 CLASS="subsubsection">Tirage aléatoire équiréparti sur l’intervalle [a;b[ : <TT>rand(a,b) hasard(a,b) rand(a..b)() hasard(a..b)()</TT></H4><P>
+Si <TT>a</TT> et <TT>b</TT> sont des réels <TT>rand(a,b)</TT> désigne un nombre décimal
+aléatoire compris dans l’intervalle [<I>a</I>;<I>b</I>[.<BR>
+Donc, <TT>rand(a,b)</TT> ou (<TT>hasard(a,b)</TT>) renvoie au hasard, et de façon 
+équiprobable, un nombre décimal de [<I>a</I>;<I>b</I>[.<BR>
+Pour avoir, au hasard et de façon équiprobable, un nombre décimal de [0;1[, 
+on tape :
+</P><DIV CLASS="center"><TT>rand(0,1)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>0.391549611697</TT></DIV><P>
+Pour avoir, au hasard et de façon équiprobable, un nombre décimal de [0;0.5[, 
+on tape :
+</P><DIV CLASS="center"><TT>rand(0,0.5)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>0.303484437987</TT></DIV><P>
+Pour avoir, au hasard et de façon équiprobable, un nombre décimal de ]−0.5;0], 
+on tape :
+</P><DIV CLASS="center"><TT>rand(0,-0.5)</TT></DIV><P>
+ou on tape :
+</P><DIV CLASS="center"><TT>rand(-0.5,0)</TT></DIV><P>
+On obtient par exemple :
+</P><DIV CLASS="center"><TT>-0.20047219703</TT></DIV><P>Si <TT>a</TT> et <TT>b</TT> sont des réels <TT>rand(a..b)</TT> ou <TT>alea(a..b)</TT> ou 
+<TT>hasard(a..b)</TT> désigne une fonction qui est un générateur de nombres aléatoires 
+compris dans l’intervalle [<I>a</I>;<I>b</I>[.<BR>
+Donc, <TT>rand(a..b)()</TT> renvoie au hasard, et de façon équiprobable, un
+nombre décimal de [<I>a</I>;<I>b</I>[.<BR>
+Pour avoir, au hasard et de façon équiprobable, un nombre décimal de [0;1[, 
+on tape :
+</P><DIV CLASS="center"><TT>rand(0..1)()</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>0.391549611697</TT></DIV><P>
+Pour avoir, au hasard et de façon équiprobable, plusieurs nombres 
+aléatoires décimaux compris dans l’intervalle [1;2[, 
+on tape :
+</P><DIV CLASS="center"><TT>r:=rand(1..2)</TT></DIV><P>
+puis il suffit de taper <TT>r()</TT>.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>r()</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>1.14160255529</TT></DIV><H4 CLASS="subsubsection">Tirage aléatoire d’entiers équirépartis sur [0,..,n[ : <TT>rand(n) alea(n) hasard(n)</TT></H4><P><A NAME="@default52"></A><A NAME="@default53"></A><A NAME="@default54"></A>
+Si <TT>n</TT> est un entier relatif <TT>rand(n)</TT> ou <TT>hasard(n)</TT> renvoie au 
+hasard, et de façon équiprobable, un entier de [0,1,..,<I>n</I>[ 
+(ou de ]<I>n</I>,..1,0] si <I>n</I> est negatif).<BR>
+On tape :
+</P><DIV CLASS="center"><TT>rand(2)</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>hasard(2)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>1</TT></DIV><P>
+ou on obtient :
+</P><DIV CLASS="center"><TT>0</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>rand(-2)</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>hasard(-2)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>-1</TT></DIV><P>
+ou on obtient :
+</P><DIV CLASS="center"><TT>0</TT></DIV><P>
+On tape pour avoir un entier aléatoire entre 6 et 10, bornes comprises :
+</P><DIV CLASS="center"><TT>6+rand(11-6)</TT></DIV><P>
+Ou on tape :
+</P><DIV CLASS="center"><TT>6+hasard(11-6)</TT></DIV><P>
+On obtient par exemple :
+</P><DIV CLASS="center"><TT>8</TT></DIV><H3 CLASS="subsection"><A NAME="htoc168">6.1.3</A>  Tirage aléatoire sans remise de p objets parmi n : <TT>rand alea hasard</TT></H3><P><A NAME="@default55"></A><A NAME="@default56"></A><A NAME="@default57"></A>
+<TT>rand</TT> a dans ce cas, soit 2, soit 3 arguments.<BR>
+ Si <TT>rand</TT> a 2 arguments : les arguments sont un entier <I>p</I> et une liste 
+<I>L</I> alors <TT>rand(p,L)</TT> renvoie, au hasard, <TT>p</TT> éléments de la liste 
+<TT>L</TT>.<BR>
+ Si <TT>rand</TT> a 3 arguments : les arguments sont trois entiers 
+<TT>p,min,max</TT> alors
+<TT>rand(p,min,max)</TT> renvoie, au hasard, <TT>p</TT> entiers de 
+<TT>[min,..,max]</TT> 
+On tape :
+</P><DIV CLASS="center"><TT>rand(3,["r","r","r","r","v","v","v"])</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>["r","r","v"]</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>rand(2,1,10)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>[3,7]</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>rand(2,4,10)</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>[5,7]</TT></DIV><H3 CLASS="subsection"><A NAME="htoc169">6.1.4</A>  Tirage aléatoire selon la loi binomiale négative</H3><H3 CLASS="subsection"><A NAME="htoc170">6.1.5</A>  Tirage aléatoire avec remise de n objets parmi k</H3><P>
+Choisir au hasard <I>n</I> nombres selon la loi multinomiale de probabilité <I>P</I>.
+Cela veut dire qu’on effectue un tirage avec remise de <TT>n</TT> objets 
+parmi <TT>k=size(P)</TT> objets. Pour <TT>j=0..k-1</TT>, l’objet <TT>j</TT> a la 
+probabilité <TT>P[j]</TT> dêtre tiré (on doit avoir pour <TT>sum(P)=1</TT>).
+On tape :
+</P><PRE CLASS="verbatim">randmult(n,P):={
+  local k,j,l,r,X,L;
+  k:=size(P);
+  X:=cumsum(P);
+  si X[k-1]!=1 alors return "erreur"; fsi;
+    L:=[0$(j=1..k)];
+  pour j de 1 jusque n faire 
+    r:=alea(0,1);
+    //afficher(r);
+    l:=0;
+    tantque r&gt;X[l] faire
+      l:=l+1;
+    ftantque;
+  L[l]:=L[l]+1  
+  fpour;
+  return L;
+}:;
+</PRE><P>On tape :<BR>
+<TT>randmult(5,[1/2,1/3,1/6])</TT><BR>
+On obtient par exemple :<BR>
+<TT>[3,1,0]</TT><BR>
+ou bien, on utilise la commande <TT>Xcas</TT> : <TT>randvector</TT> avec 
+<TT>multinomial</TT> comme paramètre
+On tape :<BR>
+<TT>randvector(5,multinomial,[1/2,1/3,1/6])</TT><BR>
+On obtient par exemple :<BR>
+<TT>[3,1,1]</TT><BR>
+Si on effectue un tirage avec remise de <TT>n</TT> objets de la liste 
+<TT>C</TT>. Si <TT>k=size(C)</TT>, l’objet <TT>C[j]</TT> a la probabilité <TT>P[j]</TT> 
+dêtre tiré pour (<TT>j=0..k-1</TT>). On doit avoir 
+<TT>k=size(C)=size(P)</TT> et <TT>sum(P)=1</TT>.<BR>
+Si <TT>n==1</TT>, on renvoie l’objet qui a été tiré.<BR>
+Si <TT>n!=1</TT>, on renvoie la séquence de <TT>k</TT> listes constituées du nom
+des objets et de leur nombre d’apparition.<BR>
+On tape :<BR>
+</P><PRE CLASS="verbatim">randmultinom(n,P,C):={
+  local k,j,l,r,X,L;
+  k:=size(P);
+  si size(C)!=k alors retourne "erreur"; fsi;
+  X:=cumsum(P);
+  si X[k-1]!=1 alors return "erreur"; fsi;  
+    L:=[C[j],0]$(j=0..k-1);
+  pour j de 1 jusque n faire 
+    r:=alea(0,1);
+    l:=0;
+    tantque r&gt;X[l] faire
+      l:=l+1;
+    ftantque;
+  L[l,1]:=L[l,1]+1  
+  fpour;
+  si n==1 alors return L[l,0];fsi;
+ return L; 
+}:;
+</PRE><P>On tape :<BR>
+<TT>randmultinom(5,[1/2,1/3,1/6],["R","V","B"])</TT><BR>
+On obtient par exemple :<BR>
+<TT>[["R",2],["V",2],["B",1]]</TT><BR>
+ou bien, on utilise la commande <TT>Xcas</TT> : <TT>randvector</TT> avec 
+<TT>multinomial</TT> comme paramètre
+On tape :<BR>
+<TT>randvector(5,multinomial,[1/2,1/3,1/6],["R","V","B"])</TT><BR>
+On obtient dans ce cas la liste des 5 tirages, par exemple :<BR>
+<TT>["R","B","R","R","V"]</TT><BR>
+On simule le tirage de 1 objet parmi 3 objets de probabilité respective :<BR>
+<I>P</I>=[1/2,1/3,1/6] en faisant 6000 tirages.<BR>
+On tape :<BR>
+<TT>randmult(6000,[1/2,1/3,1/6])</TT><BR>
+On obtient par exemple :<BR>
+<TT>[3026,2009,965]</TT><BR>
+ou bien, on utilise la commande <TT>Xcas</TT> : <TT>randvector</TT> avec 
+<TT>multinomial</TT> comme paramètre
+On tape :<BR>
+<TT>randvector(6000,multinomial,[1/2,1/3,1/6])</TT><BR>
+On obtient, par exemple :<BR>
+<TT>[2947,2040,1013]</TT><BR>
+On écrit le programme qui simule <TT>m</TT> fois le choix au hasard de <TT>n</TT>
+nombres selon la loi multinomiale de probabilité <TT>P</TT> et qui compte le 
+nombre <TT>r</TT> de fois que l’on a obtenu le tirage <TT>K</TT> (<TT>sum(K)=n</TT>) et
+qui renvoie <TT>r/m</TT> c’est à dire une estimation de la probabilité 
+d’obtenir <TT>K</TT>. <TT>probmult(m,n,P,K)</TT> renvoie donc ne estimation de 
+<TT>multinomiale(n,P,K)</TT>.
+On tape :
+</P><PRE CLASS="verbatim">probmult(m,n,P,K):={
+  local l,T,r;
+  r:=0;
+  pour l de 1 jusque m faire
+    T:=randmult(n,P);
+    si T==K alors r:=r+1; fsi;
+  fpour;
+return r/m;
+}:;
+</PRE><P><B>Exercice</B> Soit une urne ayant 3 boules noires, 2 boules rouges et 1 boule 
+verte. On tire 
+avec remise 2 boules de cette urne.<BR>
+Quelle est la probabilité de tirer une boule rouge et une boule verte ?<BR>
+ On peut simuler le tirage avec remise 2 boules de cette urne avec :<BR>
+<TT>randmult(2,[1/2,1/3,1/6])</TT><BR>
+qui renvoie par exemple :<BR>
+<TT>[1,0,1]</TT><BR>
+<TT>randmultinom(2,["N","R","V"],[1/2,1/3,1/6])</TT><BR>
+qui renvoie par exemple :<BR>
+<TT>[["N",1],["R",0],["V",1]]</TT><BR>
+On simule 6000 fois ce tirage et on tape :<BR>
+<TT>probmult(6000,2,[1/2,1/3,1/6],[0,1,1])</TT><BR>
+On obtient par exemple :<BR>
+<TT>671/6000</TT><BR>
+ 671/6000. ≃ 0.111833333333
+On utilise la commande <TT>multinomial</TT> de <TT>Xcas</TT>é et on tape :
+<TT>multinomial(2,[1/2,1/3,1/6],[0,1,1])</TT><BR>
+On obtient :<BR>
+<TT>1/9</TT><BR>
+1/9. ≃ 0.111111111111<BR>
+<B>Exercice</B>
+Une urne contient 12 boules rouges et 3 boules vertes.
+On se propose de simuler le tirage d’une boule de l’urne puis d’observer la 
+fluctuation d’échantillonnage sur des échantillons de taille 225.
+D’après le contenu de l’urne, la probabilité de tirer une boule verte 
+est de 1/5=0.2.<BR>
+Notre simulation est-elle convenable ?
+On tape :<BR>
+<TT>L:=[randmultinomial([4/5,1/5],["R","V"])$(j=1..225)]:;</TT><BR>
+On obtient :<BR>
+<TT>Done</TT><BR>
+On tape :<BR>
+<TT>count_eq("V",L)</TT><BR>
+On obtient par exemple :<BR>
+<TT>45</TT><BR>
+On analyse tout d’abord 50 échantillons de taille 225 pour voir la fluctuation.<BR>
+On note <TT>N</TT> le nombre de fois que l’on fait une simulation (une simulation
+c’est 225 tirages).<BR>
+<TT>n</TT> le nombre de fois que l’on a obtenu une boule verte,<BR>
+<TT>p</TT> le pourcentage de boules vertes obtenues par cette simulation,<BR>
+<TT>Lp</TT> la séquence des pourcentages obtenues.<BR>
+On tape :<BR>
+</P><PRE CLASS="verbatim">test0(N):={
+  local L,p,n,k,Lp;
+  Lp:=NULL;
+pour k de 1 jusque N faire
+  L:=[randmultinomial([4/5,1/5],["R","V"])$(j=1..225)];
+  n:=count_eq("V",L)
+  p:=n/225.;
+  Lp:=Lp,p;
+fpour;
+ retourne Lp;
+  }:;
+</PRE><P>Puis :<BR>
+<TT>plotlist(test0(50)),droite(y=2/15),droite(y=4/15)</TT><BR>
+On obtient :<BR>
+<IMG SRC="cassim010.png">
+On analyse successivement <I>t</I> échantillons de taille <I>n</I>=225 pour, 
+<I>t</I>∈ 10, 20, 50, 100, 200, 500.
+Pour notre problème, l’intervalle de fluctuation au seuil de 95% est :
+<I>p</I>−1/√<SPAN style="text-decoration:overline"><I>n</I></SPAN> <I>p</I>+1/√<SPAN style="text-decoration:overline"><I>n</I></SPAN> avec <I>p</I>=1/5 et <I>n</I>=225 
+c’est à dire 2/15,4/15<BR>
+Pour savoir si la simulation est corecte on fait un programme pour savoir si
+on a bien dans 95% des cas <I>p</I> dans l’intervalle 2/15,4/15<BR>
+On note <TT>N</TT> le nombre de fois que l’on fait une simulation (une simulation
+c’est 225 tirages).<BR>
+Pour la <TT>k</TT> ième simulation, (<TT>k=1..N</TT>) on note :<BR>
+<TT>L</TT> la liste des 225 tirages obtenus,<BR>
+<TT>n</TT> le nombre de fois que l’on a obtenu une boule verte,<BR>
+<TT>p</TT> le pourcentage de boules vertes obtenues par cette simulation,<BR>
+l
+<TT>s</TT> le nombre de tirages tels que <TT>2/15&lt;p&lt;4/15</TT> lorsqu’on a fait 
+<TT>k</TT> simulations,<BR>
+<TT>sn</TT> le nombre de fois que l’on a obtenu une boule verte lorsqu’on a fait 
+<TT>k</TT> simulations.<BR>
+<TT>pcn</TT> le pourcentage de boules vertes obtenues par ces <TT>N*225</TT>
+tirages est donc <TT>sn/(225*N)</TT> 
+Le nombre de fois où on a <TT>2/15&lt;p&lt;4/15</TT> est <TT>s</TT>. En pourcentage 
+cela fait donc <TT>pc=s/N</TT>.<BR>
+On vérifie alors si <TT>pc&gt;0.95</TT></P><PRE CLASS="verbatim">test0(N):={
+  local s,L,p,n,pc,sn,pcn,k,Le;
+  s:=0;sn:=0;
+Le:=NULL;
+pour k de 1 jusque N faire
+  L:=[randmultinomial([4/5,1/5],["R","V"])$(j=1..225)];
+  n:=count_eq("V",L)
+  p:=n/225;
+  Le:=Le,p;
+fpour;
+ retourne Le;
+  }:;
+test(N):={
+  local s,L,p,n,pc,sn,pcn,k,Le;
+  s:=0;sn:=0;
+Le:=NULL;
+pour k de 1 jusque N faire
+  L:=[randmultinomial([4/5,1/5],["R","V"])$(j=1..225)];
+  n:=count_eq("V",L)
+  p:=n/225;
+  Le:=Le,p;
+  si p&gt;2/15 and p&lt;4/15 alors s:=s+1; fsi;
+  sn:=sn+n;
+fpour;
+  pc:=evalf(s/N);
+  pcn:=evalf(sn/N/225);
+  si pc&gt;0.95 alors retourne pcn,pc,"correcte"; sinon retourne pcn,pc,"pas correcte"; fsi;
+  }:;
+</PRE><P>On tape :<BR>
+<TT>test(10)</TT><BR>
+On obtient :<BR>
+<TT>0.203111111111,1.0,"correcte"</TT><BR>
+On tape :<BR>
+<TT>test(20)</TT><BR>
+On obtient :<BR>
+<TT>0.194888888889,0.95,"pas correcte"</TT><BR>
+On tape :<BR>
+<TT>test(50)</TT><BR>
+On obtient :<BR>
+<TT>0.194311111111,0.98,"correcte"</TT><BR>
+On tape :<BR>
+<TT>test(100)</TT><BR>
+On obtient :<BR>
+<TT>0.198888888889,0.97,"correcte"</TT><BR>
+On tape :<BR>
+<TT>test(200)</TT><BR>
+On obtient :<BR>
+<TT>0.193777777778,0.99,"correcte"</TT><BR>
+<TT>test(500)</TT><BR>
+On obtient :<BR>
+<TT>0.19984,0.984,"correcte"</TT><BR>
+On tape :<BR>
+<TT>plotlist([10,20,50,100,200,500],[0.203,0.195,0.194,0.199,0.1940.1999] ),
+droite(y=0.2)</TT><BR>
+On obtient :<BR>
+<IMG SRC="cassim011.png">
+</P><H3 CLASS="subsection"><A NAME="htoc171">6.1.6</A>  Tirage selon une loi normale : <TT>randnorm randNorm</TT></H3><P><A NAME="@default58"></A><A NAME="@default59"></A>
+<TT>randnorm(m,sigma)</TT> ou <TT>randNorm(m,sigma)</TT> renvoie au hasard 
+des nombres répartis selon la loi normale de moyenne <TT>m</TT> et d’écart 
+type <TT>sigma</TT>.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>randnorm(0,1)</TT></DIV><P>
+On obtient par exemple :
+</P><DIV CLASS="center"><TT>0.549605372982</TT></DIV><P>
+ou on obtient par exemple :
+</P><DIV CLASS="center"><TT>-0.58946494465</TT></DIV><P>
+On tape :
+</P><DIV CLASS="center"><TT>randnorm(2,1)</TT></DIV><P>
+On obtient par exemple :
+</P><DIV CLASS="center"><TT>2.54178274488</TT></DIV><H3 CLASS="subsection"><A NAME="htoc172">6.1.7</A>  Tirage selon une loi exponentielle : <TT>randexp</TT></H3><P><A NAME="@default60"></A>
+<TT>randexp(a)</TT> renvoie au hasard 
+des nombres répartis selon la loi exponentielle de paramètre <TT>a</TT>
+positif.<BR>
+La densité de probabilité est proportionnelle à exp(−<I>a</I>*<I>t</I>) et on a :<BR>
+Proba(<I>X</I>≤ <I>t</I>)=<I>a</I>∫<SUB>0</SUB><SUP><I>t</I></SUP>exp(−<I>a</I>*<I>u</I>)<I>du</I>.<BR>
+On tape :
+</P><DIV CLASS="center"><TT>randexp(1)</TT></DIV><P>
+On obtient par exemple :
+</P><DIV CLASS="center"><TT>0.310153677284</TT></DIV><P>
+ou on obtient par exemple :
+</P><DIV CLASS="center"><TT>0.776007926195</TT></DIV><H3 CLASS="subsection"><A NAME="htoc173">6.1.8</A>  Matrice aléatoire : <TT>ranm randmatrix randMat</TT></H3><P><A NAME="@default61"></A><A NAME="@default62"></A><A NAME="@default63"></A>
+<TT>ranm</TT> (ou <TT>randmatrix</TT> ou <TT>randMat</TT>) peut avoir comme 1,2 ou 3 
+arguments :<BR>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+avec un entier <TT>s</TT> comme argument, <TT>ranm</TT> renvoie 
+une liste de longueur <TT>s</TT> dont les éléments sont des entiers pris au 
+hasard de façon équiprobable dans :<BR>
+ <TT>[-99,-98,...,98,99]</TT>.<BR>
+On tape :
+<DIV CLASS="center"><TT>ranm(5)</TT></DIV>
+On obtient par exemple :
+<DIV CLASS="center"><TT>[-40,27,4,-1,94]</TT></DIV></LI><LI CLASS="li-itemize">avec deux entiers <TT>n,p</TT> comme argument, <TT>ranm</TT> renvoie une 
+matrice de <TT>n</TT> lignes et <TT>p</TT> colonnes dont les éléments sont des 
+entiers pris au hasard de façon équiprobable dans :<BR>
+ <TT>[-99,-98,...,98,99]</TT>.<BR>
+On tape :
+<DIV CLASS="center"><TT>ranm(2,3)</TT></DIV>
+On obtient par exemple :
+<DIV CLASS="center"><TT>[[-32,53,-44],[10,-4,25]]</TT></DIV></LI><LI CLASS="li-itemize">avec deux entiers <TT>n,p</TT> et un entier relatif <TT>a</TT> comme argument, 
+<TT>ranm</TT> renvoie une matrice de <TT>n</TT> lignes et <TT>p</TT> colonnes dont 
+les éléments sont des entiers pris au hasard de façon équiprobable 
+dans <TT>[0;a[</TT> (ou <TT>]a;0]</TT> si <TT>a</TT> est négatif)<BR>
+On tape :
+<DIV CLASS="center"><TT>ranm(2,3,10)</TT></DIV>
+On obtient par exemple :
+<DIV CLASS="center"><TT>[[8,3,7],[7,9,1]]</TT></DIV>
+</LI><LI CLASS="li-itemize">avec deux entiers <TT>n,p</TT> et un intervalle <TT>a..b</TT> comme argument, 
+<TT>ranm</TT> renvoie une matrice de <TT>n</TT> lignes et <TT>p</TT> colonnes dont les 
+éléments sont des réels pris au hasard de façon équiprobable dans 
+<TT>[a;b[</TT>.<BR>
+On tape :
+<DIV CLASS="center"><TT>ranm(2,3,0..1)</TT></DIV>
+On obtient par exemple :
+<DIV CLASS="center"><TT>[[0.840187716763,0.394382926635,0.783099223394],</TT></DIV>
+<DIV CLASS="center"><TT>[0.798440033104,0.911647357512,0.197551369201]] </TT></DIV>
+</LI><LI CLASS="li-itemize">deux entiers <TT>n,p</TT> et une fonction aléatoire de <TT>Xcas</TT> qu’il 
+faut quoter, dans ce cas 
+<TT>ranm</TT> renvoie une matrice de <TT>n</TT> lignes et <TT>p</TT> colonnes dont 
+les éléments sont pris au hasard selon la fonction donnée en 
+troisième argument.<BR>
+On tape :
+<DIV CLASS="center"><TT>ranm(3,2,’rand(3)’)</TT></DIV>
+ou
+<DIV CLASS="center"><TT>ranm(3,2,3)</TT></DIV>
+On obtient par exemple :
+<DIV CLASS="center"><TT>[[2,1],[0,0],[1,0]]</TT></DIV>
+On tape :
+<DIV CLASS="center"><TT>ranm(1,2,’randnorm(0,1)’)</TT></DIV>
+On obtient par exemple :
+<DIV CLASS="center"><TT>[[1.37439065645,-1.33195982697]]</TT></DIV>
+</LI></UL><H2 CLASS="section"><A NAME="toc47"></A><A NAME="htoc174">6.2</A>  Déplacement aléatoire</H2><H3 CLASS="subsection"><A NAME="htoc175">6.2.1</A>  Déplacement sur un axe</H3><P>
+Une tortue se déplace sur un axe gradué.<BR>
+Au début de chaque parcours la tortue se trouve à l’origine.<BR>
+On choisit de la faire avancer en jouant à pile ou face :
+pile la tortue reste sur place,
+face elle avance d’une unité.<BR>
+Un parcours aléatoire de la tortue est constitué par 5 tirages aléatoires.<BR>
+On veut simuler 30 parcours aléatoires et trouver la 
+probabilité de l’événement : la tortue est arrivée au point d’abscisse
+<I>x</I><SUB><I>i</I></SUB> pour <I>x</I><SUB><I>i</I></SUB>  ∈ ℕ.
+</P><H4 CLASS="subsubsection">Simulation d’un parcours</H4><P><A NAME="sec:deplaxe"></A>
+On note <TT>T</TT> l’abscisse du point d’arrivée de la tortue.<BR>
+On écrit le programme <TT>parcours</TT>, en utilisant <TT>rand(2)</TT> qui renvoie 
+de façon équiprobable 0 ou 1.<BR>
+On considère que 0 correspond à pile et correspond 1 à face.
+</P><PRE CLASS="verbatim">parcours() :={
+  local T,r;
+  T:=0;
+  // on fait 5 tirages
+  for (k:=1;k&lt;6;k++){ 
+    r:=rand(2);
+    // la tortue avance si r==1 (tirage = face)
+    if (r==1){
+       T:=T+1;
+    }
+  }
+  return(T);
+}; 
+</PRE><P>Voici les résultats obtenus lorsque l’on fait 10 fois 
+<TT>parcours()</TT> ,on tape:<BR>
+<TT>for (k:=1;k&lt;11;k++)</TT><TT> parcours()</TT><BR>
+On obtient par exemple :<BR>
+<TT>4,2,4,1,1,4,3,2,2,1</TT></P><H4 CLASS="subsubsection">Simulation de n parcours</H4><P>
+On note <TT>T</TT> l’abscisse du point d’arrivée de la tortue et 
+<TT>TA</TT> le tableau des résultats : <TT>TA[0]</TT> represente le nombre de fois 
+que la tortue est au point <TT>0</TT> à l’arrivée.<BR>
+On écrit le programme suivant dans l’éditeur de programmes de <TT>Xcas</TT> 
+(raccourci <TT>Alt+p</TT>)
+et on sauve ce programme dans le fichier <TT>parsim</TT>.
+</P><PRE CLASS="verbatim">parcoursim(n) :={
+  local T,r,TA,R,j,k;
+  ClrGraph();
+  TA:=[0,0,0,0,0,0];
+  for (j:=1;j&lt;n+1;j++){
+    T:=0;
+    for (k:=1;k&lt;6;k++){ 
+      r:=rand(2);
+      if (r==1){
+        T:=T+1;
+      }
+    }
+  TA[T]:=TA[T]+1;
+  };
+  orint(TA);
+  switch_axes(NULL);
+  xyztrange(-0.5,5.2,-0.1,16.0,-10.0,10.0,-10.0,-10.0,
+            -0.5,5.2,-0.1,16.0,1);
+  R:=segment(0,i*TA[0]); 
+  R:=R,segment(1,1+i*TA[1]);
+  R:=R,segment(2,2+i*TA[2]);
+  R:=R,segment(3,3+i*TA[3]);
+  R:=R,segment(4,4+i*TA[4]);
+  R:=R,segment(5,5+i*TA[5]);
+  return R;
+}; 
+</PRE><P><B>Attention</B>
+Ici <TT>parcoursim</TT> renvoie une liste de segments et écrit en bleu la valeur de <TT>TA</TT>.
+Le programme se trouve dans un éditeur <TT>prg</TT> de <TT>Xcas</TT>, on le teste
+avec le bouton <TT>OK</TT>, puis si on a obtenu <TT>//Success compilling</TT>, 
+le programme est validé.<BR>
+On tape dans la ligne de commande :<BR>
+<TT>parcoursim(30)</TT><BR>
+On obtient en bleu :<BR>
+<TT>TA:[0,4,14,6,6,0]</TT><BR>
+et le graphique :<BR>
+
+<IMG SRC="cassim012.png"></P><P>Voici des résultats obtenus pour la liste des abscisses des points 
+d’arrivée :<BR>
+pour <TT>parcoursim(30)</TT> on a trouvé <TT>[0,2,7,13,7,1]</TT><BR>
+pour <TT>parcoursim(300)</TT> on a trouvé <TT>[7,41,94,102,47,9]</TT><BR>
+pour <TT>parcoursim(1000)</TT> on a trouvé <TT>[36,172,310,306,148,28]</TT><BR>
+pour <TT>parcoursim(10000)</TT> on a trouvé <TT>[287,1575,3184,3136,1517,301]</TT>
+</P><H4 CLASS="subsubsection">Analyse des résultats</H4><P>
+Soit l’univers Ω formé par les 5 tirages successifs possibles (chacun 
+étant équiprobable) :<BR>
+Ω={{<I>p</I>,<I>p</I>,<I>p</I>,<I>p</I>,<I>p</I>},{<I>p</I>,<I>p</I>,<I>p</I>,<I>p</I>,<I>f</I>},{<I>p</I>,<I>p</I>,<I>p</I>,<I>f</I>,<I>p</I>},...,{<I>f</I>,<I>f</I>,<I>f</I>,<I>f</I>,<I>f</I>,}}.<BR>
+Ω a 2<SUP>5</SUP>=32 éléments.<BR>
+Soit <TT>A</TT> la variable aléatoire égale à l’abscisse du point d’arrivée.<BR>
+On a :<BR>
+ <TT><I>P</I>(<I>A</I>=0)=</TT><TT>1/2</TT><SUP><TT>5</TT></SUP><TT>=0.03125</TT> car cela correspond à 5 fois "pile",<BR>
+ <TT><I>P</I>(<I>A</I>=1)=</TT><TT>5/2</TT><SUP><TT>5</TT></SUP><TT>=0.15625</TT> car cela correspond à 4 fois "pile" et 1 
+fois "face" ce qui peut se produire de 5 façons,<BR>
+ <TT><I>P</I>(<I>A</I>=2)=</TT><TT>10/2</TT><SUP><TT>5</TT></SUP><TT>= 0.3125</TT> car cela correspond à 3 fois "pile" et 2 
+fois "face" ce qui peut se produire de <I>C</I><SUB>5</SUB><SUP>2</SUP>= 10 façons,<BR>
+ <TT><I>P</I>(<I>A</I>=3)=</TT><TT>10/2</TT><SUP><TT>5</TT></SUP><TT>= 0.3125</TT> car cela correspond à 2 fois "pile" et 3 
+fois "face" ce qui peut se produire de <I>C</I><SUB>5</SUB><SUP>3</SUP>= 10 façons,<BR>
+ <TT><I>P</I>(<I>A</I>=4)=</TT><TT>5/2</TT><SUP><TT>5</TT></SUP><TT>=0.15625</TT> car cela correspond à 1 fois "pile" et 4
+fois "face" ce qui peut se produire de 5 façons,<BR>
+ <TT><I>P</I>(<I>A</I>=5)=</TT><TT>1/2</TT><SUP><TT>5</TT></SUP><TT>=0.03125</TT> car cela correspond à 5 fois "face".
+</P><H3 CLASS="subsection"><A NAME="htoc176">6.2.2</A>  Déplacement dans deux directions</H3><P>
+Au début de chaque parcours la tortue se trouve à l’origine.<BR>
+On choisit de la faire avancer en jouant à pile ou face :<BR>
+- pile, la tortue avance d’une unité selon un axe vertical,<BR>
+- face, elle avance d’une unité selon un axe horizontal.<BR>
+Un parcours aléatoire de la tortue est constitué par 5 tirages aléatoires.<BR>
+On veut simuler <TT>n</TT> parcours aléatoires et trouver la 
+probabilité de l’évènement : le parcours aléatoire de la tortue se termine au point de coordonnées [<I>x</I>,<I>y</I>] pour (<I>x</I>,<I>y</I>)  ∈ <I>N</I> × <I>N</I>
+</P><H4 CLASS="subsubsection">Simulation d’un parcours</H4><P>
+On note <TT>X,Y</TT> les coordonnées du point d’arrivée de la tortue.<BR>
+On écrit :
+</P><PRE CLASS="verbatim">parcours2() :={
+  local X,Y,r;
+  X:=0;
+  Y:=0;
+  for (k:=1;k&lt;6;k++){
+    r:=rand(2);
+    if (r==1){
+       X:=X+1;
+    } else {
+       Y:=Y+1;
+    }
+  }
+  return([X,Y]);
+}; 
+</PRE><P>Voici les résultats obtenus lorsque l’on fait 10 fois <TT>parcours2()</TT> :<BR>
+<TT>[2,3],[1,4],[3,2],[4,1],[3,2],[2,3],[1,4],</TT><BR>
+<TT>[1,4],[3,2],[2,3]</TT><BR>
+On remarque qu’à chaque tirage soit <TT>X</TT>, soit <TT>Y</TT> est augmenté 
+d’une unité donc à chaque tirage <TT>X+Y</TT> aygmente de 1. Au début 
+<TT>X+Y=0</TT>, donc, 
+au bout de 5 tirages c’est à dire à la dernière étape <TT>X+Y=5</TT>.<BR>
+Il suffit donc de connaitre l’abscisse d’arrivée <TT>X</TT> pour connaitre le 
+point d’arrivée (<TT>point(X,5-X))</TT>). Ce problème est donc le même que 
+le précédent.
+</P><H4 CLASS="subsubsection">Simulation de n parcours</H4><P>
+On note <TT>XA</TT> le tableau des résultats selon les abscisses.<BR>
+On remarquera qu’ici <TT>Y</TT> ne sert à rien puisqu’on peut repérer le 
+point d’arrivée seulement à l’aide de son abscisse, elle permet juste de 
+visualiser le point d’arrivée.<BR>
+On écrit :
+</P><PRE CLASS="verbatim">parcoursim2(n) :={
+  local X,Y,r,j,k,XA;
+  XA:=[0,0,0,0,0,0];
+  for (j:=1;j&lt;n+1;j++){
+    r:=rand(2);
+    X:=0;
+    Y:=0;
+    for (k:=1;k&lt;6;k++){
+      if (r==1){
+        X:=X+1;
+      } else {
+        Y:=Y+1;
+      }
+    r:=rand(2);
+    }
+  XA[X]:=XA[X]+1;
+  }
+  switch_axes(NULL);
+  ClrGraph();
+  xyztrange(-0.5,5.2,-0.1,16.0,-10.0,10.0,-10.0,-10.0,
+            -0.5,5.2,-0.1,16.0,1);
+ 
+  return([XA,segment(0,i*XA[0]),segment(1,1+i*XA[1]),
+     segment(2,2+i*XA[2]),segment(3,3+i*XA[3]),
+     segment(4,4+i*XA[4]),segment(5,5+i*XA[5])]);
+}; 
+</PRE><P>Voici les résultats obtenus :<BR>
+pour <TT>parcoursim2(30)</TT> on a trouvé :<BR>
+<TT>XA=[0,4,9,9,7,1]</TT><BR>
+pour <TT>parcoursim2(300)</TT> on a trouvé :<BR>
+<TT>XA=[6,48,91,99,46,10]</TT><BR>
+pour <TT>parcoursim2(1000)</TT> on a trouvé :<BR>
+<TT>XA=[26,170,313,320,148,23]</TT><BR>
+pour <TT>parcoursim2(10000)</TT> on a trouvé :<BR>
+<TT>XA=[290,1498,3207,3128,1572,305]</TT><BR>
+<B>Attention</B>
+Ici <TT>parcoursim2</TT> renvoie une liste de segments : ces segments seront 
+donc dessinés dans un écran de géométrie et dans l’écran <TT>DispG</TT>.
+Il faut donc écrire <TT>ClrGraph()</TT> en début de 
+programme si on veut effacer l’écran de géométrie <TT>DispG</TT>.
+</P><H4 CLASS="subsubsection">Analyse des résultats</H4><P>
+On a donc la même analyse que dans le parcours linéaire.<BR>
+Soit <TT>A</TT> la variable aléatoire égale aux coordonnées du point d’arrivée.<BR>
+ <TT><I>P</I>(<I>A</I>=[0,5])=</TT><TT>1/2</TT><SUP><TT>5</TT></SUP><TT>= 0.03125</TT> car cela correspond à 5 fois "pile",<BR>
+ <TT><I>P</I>(<I>A</I>=[1,4])=</TT><TT>5/2</TT><SUP><TT>5</TT></SUP><TT>=0.15625</TT> car cela correspond à 4 fois "pile" et 1 
+fois "face" ce qui peut se produire de 5 façons,<BR>
+ <TT><I>P</I>(<I>A</I>=[2,3])=</TT><TT>10/2</TT><SUP><TT>5</TT></SUP><TT>=0.3125</TT> car cela correspond à 3 fois "pile" et 2 
+fois "face" ce qui peut se produire de <I>C</I><SUB>5</SUB><SUP>2</SUP>= 10 façons,<BR>
+ <TT><I>P</I>(<I>A</I>=[3,2])=</TT><TT>10/2</TT><SUP><TT>5</TT></SUP><TT>= 0.3125</TT> car cela correspond à 2 fois "pile" et 3 
+fois "face" ce qui peut se produire de <I>C</I><SUB>5</SUB><SUP>3</SUP>= 10 façons,<BR>
+ <TT><I>P</I>(<I>A</I>=[4,1])=</TT><TT>5/2</TT><SUP><TT>5</TT></SUP><TT>=0.15625</TT> car cela correspond à 1 fois "pile" et 4
+fois "face" ce qui peut se produire de 5 façons,<BR>
+ <TT><I>P</I>(<I>A</I>=[5,0])=</TT><TT>1/2</TT><SUP><TT>5</TT></SUP><TT>= 0.03125</TT> car cela correspond à 5 fois "face".
+</P><H2 CLASS="section"><A NAME="toc48"></A><A NAME="htoc177">6.3</A>  Les trois cartes bicolores</H2><P>
+On met dans un chapeau trois cartes : une des cartes a deux côtés rouges,
+une autre a un côté rouge et un côté blanc et la troisième a deux
+côtés blancs.<BR>
+On tire une carte : le côté que nous voyons est rouge.<BR>
+Quelle est la probabilité pour que l’autre côté soit blanc ? 
+</P><H3 CLASS="subsection"><A NAME="htoc178">6.3.1</A>  Simulation de n tirages</H3><P>
+Pour écrire le programme de simulation,
+on numérote les cartes par 0,1 et 2 et on numérote les faces de chaque 
+carte par 0 et 1 : par exemple la carte blanche a le numéro <TT>0</TT>,
+la carte bicolore a le numéro <TT>1</TT>, la carte rouge a le numéro <TT>2</TT>
+et la face blanche de la carte bicolore a le numéro <TT>0</TT>.<BR>
+Puis, on représente donc une carte par un vecteur qui est la couleur de ses 
+faces :<BR>
+ par exemple la carte bicolore sera représentée par <TT>[B,R]</TT>.<BR>
+On peut aussi représenter le blanc par 0 et le rouge par 1 :<BR>
+par exemple la carte bicolore sera représentée par <TT>[0,1]</TT>.<BR>
+On représente ainsi les cartes par un vecteur de deux composantes 0 ou 1 
+(0 et 1 désigne la couleur).<BR>
+La variable <TT>C:=[[0,0],[0,1],[1,1]]</TT> représente donc les trois cartes :<BR>
+<TT>[0,0]</TT> est la carte avec 2 faces blanches, <TT>[1,1]</TT> est la carte 
+avec 2 faces rouges et <TT>[0,1]</TT> est la carte bicolore (on a supposé que 
+la face blanche a le numéro 0 et la rouge le numéro 1).<BR>
+<TT>C</TT> est donc une matrice et la valeur de <TT>C[a,b]</TT> (pour <TT>a=0,1,2</TT> 
+et <TT>b=0,1)</TT> représente la couleur de la face <TT>b</TT> de la carte <TT>a</TT>.<BR>
+On tire une des cartes (<TT>a:=rand(3);</TT>),<BR>
+ puis on tire la face visible (<TT>b:=rand(2);</TT>).<BR>
+ Si <TT>b</TT> est la face visible, <TT>irem(b+1,2)</TT> c’est
+à dire <TT>b+1 mod 2</TT> est la face cachée.<BR>
+On simule <I>n</I> tirages qui donne comme coté visible une face rouge et on 
+compte le nombre de cartes bicolores.<BR>
+On écrit pour cela le programme <TT>cartebicolor</TT> :
+</P><PRE CLASS="verbatim">cartebicolor(n):={
+local C,a,b,nbi;
+C:=[[0,0],[0,1],[1,1]];
+//nbi est le nbre de cartes bicolores obtenus 
+//qd la face visible est blanche
+nbi:=0
+for (k:=0;k&lt;n;k++){
+//on tire une carte
+a:=rand(3);
+// on tire une face (la face visible)
+b:=rand(2);
+// on refait le tirage si la face visible est blanche
+while (C[a,b]==0) {
+a:=rand(3);
+b:=rand(2);
+}
+//la face visible est rouge, si la face cachee est blanche,
+// nbi augmente de 1
+if (C[a,irem(b+1, 2)]]==0) {
+nbi:=nbi+1;
+}
+}
+return(evalf(nbi/n));
+};
+</PRE><P>On a obtenu :<BR>
+<TT>cartebicolor(300)=0.34</TT><BR>
+<TT>cartebicolor(3000)=0.343666666667</TT><BR>
+<TT>cartebicolor(30000)=0.331533333333</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc179">6.3.2</A>  Analyse du résultat</H3><P>
+Etant donné qu’il y a autant de côtés rouges que de côtés blancs, 
+le problème suivant a la même réponse :<BR>
+On tire une carte : le côté que nous voyons est blanc.<BR>
+Quelle est la probabilité pour que l’autre côté soit rouge ?<BR>
+ou encore :<BR>
+On tire une carte : nous voyons un côté de cette carte.<BR>
+Quelle est la probabilité pour que l’autre côté ne soit pas de la 
+même couleur?<BR>
+Cela revient à demander quelle est la probabilité pour que l’on ait tiré
+la carte bicolore. Comme il y a trois cartes dont une seule est bicolore,
+la probabilité cherchée est égale à 1/3.<BR>
+On peut aussi traiter ce problème avec les probabilités conditionnelles :<BR>
+soit Ω l’ensemble des faces visibles. On repére la face visible par
+2 nombres le numéro de sa carte et son numéro de face (par exemple [1,0] 
+désigne la face 0 de la carte 1 alors que [0,1] 
+désigne la face 1 de la carte 0) on a<BR>
+ Ω={[0,0],[0,1],[1,0],[1,1],[2,0],[2,1]}.<BR>
+Les trois premiers éléments de Ω ont comme face visible une face
+blanche, les trois derniers éléments de Ω sont comme face visible 
+une face rouge.<BR>
+Soit A l’évènement "le coté visible est rouge",<BR>
+soit B l’évènement "le coté non visible est blanc",<BR>
+soit C l’évènement "le coté visible est rouge et le coté non visible 
+est blanc" ou "le coté visible est blanc et le coté non visible est rouge"
+(ie la carte tirée est bicolore).<BR>
+P(A)= 1/2<BR>
+P(B)= 1/2<BR>
+P(C)= 1/3<BR>
+P(A et B)= 1/6<BR>
+P(C)=P(A et B)+P(nonA et nonB)= 1/3<BR>
+P(B/A)=P(A et B)/P(A)= 1/6/ 1/2=
+ 1/3<BR>
+On peut aussi numéroter les faces rouges et les faces blanches et dire qu’un 
+couple represente une carte et le premier élément du couple est la face 
+visible.<BR>
+Par exemple, (<I>R</I><SUB>3</SUB>,<I>B</I><SUB>3</SUB>) représente la carte bicolore ayant comme face
+visible la face rouge.<BR>
+Ω={(<I>R</I><SUB>1</SUB>,<I>R</I><SUB>2</SUB>),(<I>R</I><SUB>2</SUB>,<I>R</I><SUB>1</SUB>),(<I>R</I><SUB>3</SUB>,<I>B</I><SUB>3</SUB>),(<I>B</I><SUB>3</SUB>,<I>R</I><SUB>3</SUB>),(<I>B</I><SUB>1</SUB>,<I>B</I><SUB>2</SUB>),(<I>B</I><SUB>2</SUB>,<I>B</I><SUB>1</SUB>)}.<BR>
+Soit A l’évènement "le coté visible est rouge" :<BR>
+A={(<I>R</I><SUB>1</SUB>,<I>R</I><SUB>2</SUB>),(<I>R</I><SUB>2</SUB>,<I>R</I><SUB>1</SUB>),(<I>R</I><SUB>3</SUB>,<I>B</I><SUB>3</SUB>)}<BR>
+Donc :<BR>
+P(A)= 1/2<BR>
+soit B l’évènement "le coté non visible est blanc" :<BR>
+A et B={(<I>R</I><SUB>3</SUB>,<I>B</I><SUB>3</SUB>)}<BR>
+Donc :<BR>
+P(A et B)= 1/6<BR>
+Donc :<BR>
+P(B/A)=P(A et B)/P(A)= 1/6/ 1/2=
+ 1/3<BR>
+</P><H2 CLASS="section"><A NAME="toc49"></A><A NAME="htoc180">6.4</A>  Les quatre cartes bicolores</H2><P>
+On met dans un chapeau quatre cartes : une des cartes a deux côtés blancs,
+une autre a un côté rouge et un côté blanc et les deux restantes ont
+deux côtés rouges.<BR>
+On tire une carte : le côté que nous voyons est rouge.<BR>
+Quelle est la probabilité pour que l’autre côté soit blanc ? 
+</P><H3 CLASS="subsection"><A NAME="htoc181">6.4.1</A>  Simulation</H3><PRE CLASS="verbatim">cartebic4(n):={
+  local C,a,b,nbi;
+  C:=[[0,0],[0,1],[1,1],[1,1]];
+  nbi:=0
+  for (k:=0;k&lt;n;k++){
+    a:=rand(4);
+    b:=rand(2);
+    while (C[a,b]==0) {
+      a:=rand(4);
+      b:=rand(2);
+    }
+    if (C[a,irem(b+1, 2)]==0) {
+      nbi:=nbi+1;
+    }
+  }
+  return(evalf(nbi/n));
+};
+</PRE><P>On a obtenu :<BR>
+<TT>cartebic4(300)= 0.18</TT><BR>
+<TT>cartebic4(3000)= 0.203666666667</TT><BR>
+<TT>cartebic4(30000)=0.2019</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc182">6.4.2</A>  Analyse du résultat</H3><P>
+On va traiter ce problème avec les probabilités conditionnelles :<BR>
+soit Ω l’ensemble des faces visibles.<BR>
+On repére la face visible par 
+2 nombres le numéro de sa carte et son numéro de face (par exemple [1,0] 
+désigne la face 0 de la carte 1 alors que 
+[0,1] désigne la face 1 de la carte 0) on a<BR>
+ Ω={[0,0],[0,1],[1,0],[1,1],[2,0],[2,1],[3,0],,[3,1]}.<BR>
+Onsuppose que la carte 0 a 2 faces blanches,que la face 0 de la carte 1 est
+blanche et que sa face 1 est rouge et que les cartes 2 et 3 ont 2 faces rouges.
+Donc les trois premiers éléments de Ω sont des faces blanches, les 
+cinq derniers éléments de Ω sont des faces rouges.<BR>
+Soit A l’évènement "le coté visible est rouge",<BR>
+soit B l’évènement "le coté non visible est blanc",<BR>
+soit C l’évènement la carte tirée est bicolore.<BR>
+P(A)= 5/8<BR>
+P(B)= 3/8<BR>
+P(A et B)= 1/8<BR>
+P(C)=P(A et B)+P(nonA et nonB)= 1/4<BR>
+P(B/A)=P(A et B)/P(A)= 1/8/ 5/8= 1/5.<BR>
+Donc la probabilité que la face cachée soit blanche sachant que la face 
+visible est rouge est :
+1/5<BR>
+Etant donné qu’il n’y a pas autant de côtés rouges que de côtés 
+blancs, le problème posé n’est pas le même que :<BR>
+On tire une carte : le côté que nous voyons est blanc.<BR>
+Quelle est la probabilité pour que l’autre côté soit rouge ?<BR>
+On a :<BR>
+P(nonA)= 3/8<BR>
+P(nonB)= 5/8<BR>
+P(nonA et nonB)= 1/8<BR>
+P(nonB/nonA)=P(nonA et nonB)/P(nonA)= 1/8/3/8=  1/3.<BR>
+On retrouve la même probabilité que dans le cas des trois cartes 
+bicolores car la probabilité demandée ne tient compte que de l’ensemble 
+des cartes qui ont un côté 
+blanc et dans les deux problèmes cet ensemble est le même.<BR>
+ce n’est pas non plus le même problème que :<BR>
+On tire une carte : nous voyons un côté de cette carte.<BR>
+Quelle est la probabilité pour que l’autre côté ne soit pas de la 
+même couleur?<BR>
+On demande ici la probabilité de tirer la carte bicolore c’est à dire :
+P(C)= 1/4<BR>
+<B>Remarque</B><BR>
+P(C)=P(A)*P(B/A)+P(nonA)*P(nonB/nonA)=<BR>
+P(A et B)+P(nonA et nonB)=
+ 1/4=3/8*1/3+5/8*1/5
+</P><H2 CLASS="section"><A NAME="toc50"></A><A NAME="htoc183">6.5</A>  La voiture et les deux chèvres</H2><P>
+Un candidat à un jeu doit choisir entre trois portes et gagne ce qui se trouve derrière la porte choisie. Il y a une voiture derrière une porte et une chèvre derrière chacune des deux autres portes.
+Le candidat choisit une porte et le présentateur qui connait la porte
+gagnante, ouvre une des deux portes restantes derrière laquelle se trouve
+une chèvre, et demande au candidat si il veut changer son choix.
+A votre avis le candidat a-t-il plus de chances de gagner la voiture en 
+changeant systématiquement son choix ?<BR>
+Pour répondre à cette question, commençons par une simulation.
+</P><H3 CLASS="subsection"><A NAME="htoc184">6.5.1</A>  Simulation</H3><P>
+Le paramètre <TT>n</TT> représente le nombre de jeux.<BR>
+<TT>ng1</TT> est le nombre de fois où le candidat gagne quand il ne change 
+jamais de choix (situation1) et<BR>
+<TT>ng2</TT> est le nombre de fois où le candidat gagne quand il change 
+systématiquement de choix (situation2).<BR>
+La porte où l’on met la voiture est tirée au hasard 
+(<TT>v:=rand(3);P[v]:=1</TT>).<BR>
+Le candidat choisit une porte au hasard (<TT>a:=rand(3)</TT>).<BR>
+Si <TT>(a==v)</TT> il gagne dans la situation1 (<TT>ng1:=ng1+1</TT>) et perd dans la 
+situation2 (<TT>ng2</TT> reste inchangé).<BR>
+Si <TT>(a!=v)</TT> il gagne dans la situation2 (<TT>ng2:=ng2+1</TT>) et perd dans la 
+situation1 (<TT>ng1</TT> reste inchangé).<BR>
+Dans ce qui suit la variable <TT>P</TT> ne sert à rien et permet juste de 
+visualiser les 3 portes (si <TT>P[n]==0</TT>, derrière la porte de numéro 
+<TT>n</TT> il y a une chèvre, et si <TT>P[n]==1</TT>, derrière la porte de 
+numéro <TT>n</TT> il y a une voiture).<BR>
+On écrit le programme <TT>chevre</TT> qui compte le nombre de gains dans
+<TT>ng1</TT> quand on ne change pas son choix et 
+qui compte le nombre de gains dans
+<TT>ng2</TT> quand on change systématiquement son choix.
+</P><PRE CLASS="verbatim">chevre(n):={
+local a,v,ng1,ng2;
+ng1:=0;
+ng2:=0
+for (k:=0;k&lt;n;k++){
+\\on choisit la porte v o\`u l'on met la voiture
+v:=rand(3);
+P:=[0,0,0];
+P[v]:=1;
+//le candidat choisit une porte a
+a:=rand(3);
+if (a==v){ng1:=ng1+1;}
+else {ng2:=ng2+1;}
+}
+return ([evalf(ng1/n),evalf(ng2/n)]);
+};
+</PRE><P>On a obtenu :
+<TT>chevre(10000)= [0.3303,0.6697]</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc185">6.5.2</A>  Analyse du résultat</H3><P>
+La voiture est derrière la porte <TT>v</TT>.<BR>
+Le candidat choisit une porte <TT>a</TT> au hasard.<BR>
+Si <TT>(a==v)</TT> il gagne dans la situation1 et perd dans la situation2 et,<BR>
+si <TT>(a!=v)</TT> il gagne dans la situation2 et perd dans la situation1.<BR>
+On a donc :<BR>
+P(a=v)= 1/3<BR>
+et donc P(a!=v)=1-P(a=v)= 2/3<BR>
+Le candidat a donc deux fois plus de chances de gagner s’il change son choix 
+systématiquement !<BR>
+<B>Remarque</B><BR>
+Pourtant malgré la simplicité de la situation, notre intuition semble en 
+défaut ...<BR>
+Si ce qui précéde ne vous a pas convaincu faites le même problème avec
+100 portes (1 voiture et 99 chèvres) et le présentateur ouvre 98 portes 
+derrière lesquelles il y a des chèvres : on comprend bien qu’en désignant
+une porte, la voiture a plus de chances (99 chances sur 100)
+d’être derrière les portes restantes, et en ouvrant les 98 portes le 
+présentateur élimine 98 chèvres et donc derrière la porte restante il 
+y a 99 chances sur 100 pour qu’il y ait la voiture.
+</P><H2 CLASS="section"><A NAME="toc51"></A><A NAME="htoc186">6.6</A>  Comment couper des spaghettis en trois ?</H2><P>
+Voici l’énoncé d’un problème :<BR>
+On coupe de façon aléatoire un spaghetti en trois morceaux. Quelle est
+la probabilité pour qu’avec les trois morceaux obtenus on puisse former un triangle ?
+Comment peut-on simuler cette situation ou autrement dit que veut dire "on coupe de façon aléatoire un spaghetti en trois morceaux" ?<BR>
+On suppose dans ce qui suit le spaghetti de longueur 1.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Première méthode : on choisit au hasard deux points <I>x</I> et <I>y</I> de 
+[0,1].
+</LI><LI CLASS="li-itemize">Deuxième méthode : on choisit au hasard un point <I>x</I> de [0,1], puis 
+on choisit au hasard le point <I>y</I> dans [0,<I>x</I>].
+</LI><LI CLASS="li-itemize">Troisième méthode : on choisit au hasard un point <I>x</I> de [0,1], puis 
+on choisit au hasard l’un des segments [0,<I>x</I>] ou [<I>x</I>,1], puis on choisit 
+au hasard le point <I>y</I> dans le segment choisi.
+</LI><LI CLASS="li-itemize">Quatrième méthode : on choisit au hasard un point <I>x</I> de [0,1], puis 
+on choisit le plus grand des segments [0,<I>x</I>] ou [<I>x</I>,1], puis on choisit 
+au hasard le point <I>y</I> dans le segment choisi.
+</LI></UL><P>
+Ces différentes méthodes conduisent-elles au même résultat ?<BR>
+Quelle est la méthode qui donne la plus forte probabilité ?<BR>
+Pour répondre à ces questions commençons par des simulations.<BR>
+Pour cela, il faut savoir répondre à la question : à quelles conditions 
+trois segments de longueurs <I>a</I>, <I>b</I> et <I>c</I>=1−<I>a</I>−<I>b</I> forment-ils un triangle ?<BR>
+Une condition necessaire et suffisante est que :<BR>
+ <I>a</I>&lt;<I>b</I>+<I>c</I> et <I>b</I>−<I>c</I>&lt;<I>a</I> et <I>c</I>−<I>b</I>&lt;<I>a</I> ou encore que :<BR>
+<I>a</I>&lt;1−<I>a</I> et <I>a</I>+2<I>b</I>−1&lt;<I>a</I> et 1−<I>a</I>−2<I>b</I>&lt;<I>a</I> ou encore que :<BR>
+<I>a</I>&lt;0.5 et <I>b</I>&lt;0.5 et 0.5&lt;<I>a</I>+<I>b</I>
+</P><H3 CLASS="subsection"><A NAME="htoc187">6.6.1</A>  Simulation première méthode</H3><P>
+On choisit au hasard deux points d’abscisses <I>x</I> et <I>y</I> de l’intervalle [0;1].<BR>
+On note :<BR>
+<TT>x</TT> et <TT>y</TT> les abscisses des points de coupures.<BR>
+<TT>a</TT> et <TT>b</TT> la longueur du premier et du deuxième morceau 
+de spaghetti.<BR>
+<TT>t</TT> le nombre de triangles obtenus au bout de <TT>n</TT> essais.
+</P><PRE CLASS="verbatim">spag1(n):={
+  local x,y,a,b,t;
+  t:=0;
+  for (k:=1;k&lt;=n;k++){
+     x:=evalf(rand(2^30)/2^30);
+     y:=evalf(rand(2^30)/2^30);
+     if (x&lt;y) {
+        a:=x;
+        b:=y-x;
+     } else {
+        a:=y;
+        b:=x-y;
+     }
+     if ((a&lt;0.5) and (b&lt;0.5) and (a+b&gt;0.5)) {
+        t:=t+1;
+     }
+  }
+  return(evalf(t/n));
+}; 
+</PRE><P>On a trouvé pour n=30000 :
+<TT>0.2506</TT><BR>
+On a trouvé pour n=300000 :
+<TT>0.24965</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc188">6.6.2</A>  Simulation deuxième méthode</H3><P>
+On choisit au hasard un point d’abscisse <I>x</I> de l’intervalle [0;1], puis
+on choisit au hasard un point d’abscisse <I>y</I> de l’intervalle [0;<I>x</I>].<BR>
+On note :<BR>
+<TT>x</TT> et <TT>y</TT> les abscisses des points de coupures.<BR>
+<TT>a</TT> et <TT>b</TT> la longueur du premier et du deuxième morceau 
+de spaghetti.<BR>
+<TT>t</TT> le nombre de triangles obtenus au bout de <TT>n</TT> essais.
+</P><PRE CLASS="verbatim">spag2(n):={
+  local x,y,a,b,t;
+  t:=0;
+  for (k:=1;k&lt;=n;k++){
+     x:=evalf(rand(2^30)/2^30);
+     y:=evalf(rand(2^30)/2^30)*x;
+     a:=y;
+     b:=x-y;
+     if ((a&lt;0.5) and (b&lt;0.5) and (a+b&gt;0.5)) {
+        t:=t+1;
+     }
+  }
+  return(evalf(t/n));
+}; 
+</PRE><P>On a trouvé pour n=30000 :
+<TT>0.193266666667</TT><BR>
+On a trouvé pour n=300000 :
+<TT>0.191666666667</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc189">6.6.3</A>  Simulation troisième méthode</H3><P>
+On choisit au hasard un point d’abscisse <I>x</I> de l’intervalle [0;1], puis
+on choisit au hasard l’intervalle [0;<I>x</I>] ou [<I>x</I>;1] 
+puis, on choisit au hasard un point d’abscisse <I>y</I> dans l’intervalle choisi.<BR>
+On note :<BR>
+<TT>x</TT> et <TT>y</TT> les abscisses des points de coupures.<BR>
+<TT>a</TT> et <TT>b</TT> la longueur du premier et du deuxième morceau 
+de spaghetti.<BR>
+<TT>t</TT> le nombre de triangles obtenus au bout de <TT>n</TT> essais.
+</P><PRE CLASS="verbatim">spag3(n):={
+  local x,y,a,b,t;
+  t:=0;
+  for (k:=1;k&lt;=n;k++){
+     x:=evalf(rand(2^30)/2^30);
+     if (rand(2)==0){
+       y:=evalf(rand(2^30)/2^30)*x;
+       a:=y;
+       b:=x-y;
+     } else {
+       y:=evalf(rand(2^30)/2^30)*(1-x)+x;
+       a:=x;
+       b:=y-x;
+     }
+     if ((a&lt;0.5) and (b&lt;0.5) and (a+b&gt;0.5)) {
+       t:=t+1;
+     }
+  }
+  return(evalf(t/n));
+}; 
+</PRE><P>On a trouvé pour n=30000 :
+<TT>0.195533333333</TT><BR>
+On a trouvé pour n=300000 :
+<TT>0.194083333333</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc190">6.6.4</A>  Simulation quatrième méthode</H3><P>
+On choisit au hasard un point d’abscisse <I>x</I> de l’intervalle [0;1], puis
+on choisit le plus grand des deux intervalles [0;<I>x</I>] ou [<I>x</I>;1] 
+puis, on choisit au hasard un point d’abscisse <I>y</I> dans l’intervalle choisi.<BR>
+On note :<BR>
+<TT>x</TT> et <TT>y</TT> les abscisses des points de coupures.<BR>
+<TT>a</TT> et <TT>b</TT> la longueur du premier et du deuxième morceau 
+de spaghetti.<BR>
+<TT>t</TT> le nombre de triangles obtenus au bout de <TT>n</TT> essais.
+</P><PRE CLASS="verbatim">spag4(n):={
+  local x,y,a,b,t;
+  t:=0;
+  for (k:=1;k&lt;=n;k++){
+     x:=evalf(rand(2^30)/2^30);
+     if (x&gt;0.5){
+       y:=evalf(rand(2^30)/2^30)*x;
+       a:=y;
+       b:=x-y;
+     } else {
+       y:=evalf(rand(2^30)/2^30)*(1-x)+x;
+       a:=x;
+       b:=y-x;
+     }
+     if ((a&lt;0.5) and (b&lt;0.5) and (a+b&gt;0.5)) {
+       t:=t+1;
+     }
+  }
+  return(evalf(t/n));
+}; 
+</PRE><P>On a trouvé pour n=30000 :
+<TT>0.388366666667</TT><BR>
+On a trouvé pour n=300000 :
+<TT>0.385946666667</TT><BR>
+
+On remarque que :<BR>
+0.194083333333*2 = 0.388166666666<BR>
+ 0.191666666667*2 = 0.383333333334<BR>
+ln(2)-0.5= 0.19314718056<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc191">6.6.5</A>  Analyse des résultats</H3><H4 CLASS="subsubsection">Première méthode</H4><P>
+Première méthode : on choisit au hasard deux points <I>x</I> et <I>y</I> de [0,1].<BR>
+On sait que si l’on obtient <I>x</I>&lt;0.5, pour obtenir un triangle dans ce cas, 
+il faut choisir <I>y</I> dans l’intervalle 
+[1/2,<I>x</I>+1/2] qui est un intervalle de longueur <I>x</I>. La probabilité d’obtenir
+un <I>y</I> qui convient est donc alors égale à <I>x</I>.<BR>
+On sait que si l’on obtient <I>x</I>&gt;0.5, pour obtenir un triangle dans ce cas, 
+il faut choisir <I>y</I> dans l’intervalle 
+[<I>x</I>−1/2,1/2] qui est un intervalle de longueur 1−<I>x</I>. La probabilité 
+d’obtenir un <I>y</I> qui convient est donc alors égale à 1−<I>x</I>.<BR>
+Donc la probabilité d’obtenir un triangle est :<BR>
+ ∫<SUB>0</SUB><SUP>1/2</SUP><I>xdx</I>+∫<SUB>1/2</SUB><SUP>1</SUP>(1−<I>x</I>)<I>dx</I>=1/8+1/8=1/4
+</P><H4 CLASS="subsubsection">Deuxième méthode</H4><P>
+Deuxième méthode : on choisit au hasard un point <I>x</I> de [0,1], puis 
+on choisit au hasard le point <I>y</I> dans [0,<I>x</I>].<BR>
+On sait que si l’on obtient <I>x</I>&lt;0.5,
+on a une probabilité nulle d’obtenir un triangle puisque ensuite on choisit 
+<I>y</I> vérifiant <I>y</I>&lt;<I>x</I>.
+On sait que si l’on obtient <I>x</I>&gt;0.5, pour obtenir un triangle dans ce cas, il
+faut choisir <I>y</I> dans l’intervalle 
+[<I>x</I>−1/2,1/2] qui est un intervalle de longueur 1−<I>x</I>. La probabilité 
+d’obtenir un <I>y</I> qui convient est donc égale à 1−<I>x</I>/<I>x</I>.<BR>
+Donc la probabilité d’obtenir un triangle est :<BR>
+ ∫<SUB>1/2</SUB><SUP>1</SUP>1−<I>x</I>/<I>x</I><I>dx</I>=ln(2)−1/2
+</P><H4 CLASS="subsubsection">Troisième méthode</H4><P>
+Troisième méthode : on choisit au hasard un point <I>x</I> de [0,1], puis 
+on choisit au hasard l’un des segments [0,<I>x</I>] ou [<I>x</I>,1], puis on choisit 
+au hasard le point <I>y</I> dans le segment choisi.<BR>
+Si on choisit avec une probabilité 0.5 l’un des deux segments [0,<I>x</I>[ ou
+[<I>x</I>,1[, si <I>x</I>&lt;0.5 pour obtenir un <I>y</I> qui convient il faut choisir (
+avec une probabilité de 0.5) 
+l’intervalle [<I>x</I>,1[ (qui est un intervalle de longueur 1−<I>x</I>), puis choisir <I>y</I> dans l’intervalle 
+[1/2,<I>x</I>+1/2] qui est un intervalle de longueur <I>x</I> et la probabilité 
+d’obtenir un <I>y</I> qui convient est donc égale à  1/2*<I>x</I>/1−<I>x</I>.<BR>
+Si <I>x</I>&gt;0.5 pour obtenir un <I>y</I> qui convient il faut choisir (
+avec une probabilité de 0.5) l’intervalle
+[0,<I>x</I>[ (de longueur <I>x</I>), puis choisir <I>y</I> dans l’intervalle 
+ [<I>x</I>−1/2,1/2] qui est un intervalle de longueur 1−<I>x</I> et la probabilité 
+d’obtenir un <I>y</I> qui convient est donc égale à 1/2*1−<I>x</I>/<I>x</I>.<BR>
+Donc la probabilité d’obtenir un triangle est :<BR>
+ 1/2∫<SUB>0</SUB><SUP>1/2</SUP><I>x</I>/1−<I>x</I><I>dx</I>+1/2∫<SUB>1/2</SUB><SUP>1</SUP>1−<I>x</I>/<I>x</I><I>dx</I>=1/2(ln(2)−1/2)+1/2(ln(2)−1/2)=ln(2)−1/2
+</P><H4 CLASS="subsubsection">Quatrième méthode</H4><P>
+Quatrième méthode : on choisit au hasard un point <I>x</I> de [0,1], puis 
+on choisit le plus grand des segments [0,<I>x</I>] ou [<I>x</I>,1], puis on choisit 
+au hasard le point <I>y</I> dans le segment choisi.<BR>
+ Si <I>x</I>&lt;0.5, on choisit <I>y</I> dans 
+[<I>x</I>,1[ (de longueur 1−<I>x</I>), puis pour obtenir un <I>y</I> qui convient il faut 
+le choisir dans l’intervalle 
+[1/2,<I>x</I>+1/2] qui est un intervalle de longueur <I>x</I> et la probabilité 
+d’obtenir un <I>y</I> qui convient est donc égale à  <I>x</I>/1−<I>x</I>.<BR>
+Si <I>x</I>&gt;0.5, on choisit <I>y</I> dans [0,<I>x</I>[ (de longueur <I>x</I>), puis pour obtenir un <I>y</I> qui convient il faut le choisir dans l’intervalle 
+[<I>x</I>−1/2,1/2] qui est un intervalle de longueur 1−<I>x</I> et la probabilité 
+d’obtenir un <I>y</I> qui convient est donc égale à  1−<I>x</I>/<I>x</I>.<BR>
+Donc la probabilité d’obtenir un triangle est :<BR>
+ ∫<SUB>0</SUB><SUP>1/2</SUP><I>x</I>/1−<I>x</I><I>dx</I>+∫<SUB>1/2</SUB><SUP>1</SUP>1−<I>x</I>/<I>x</I><I>dx</I>=ln(2)−1/2+ln(2)−1/2=2*ln(2)−1
+</P><H4 CLASS="subsubsection">Quelques questions</H4><P>
+Lorsque <I>x</I> a été choisi, on choisit de placer <I>y</I> soit sur [0,<I>x</I>[ soit
+sur [<I>x</I>,1[ 
+avec quelle probabilité doit-on faire ce choix pour avoir les cotés d’un 
+triangle avec une probabilité de 0.25 ?<BR>
+Il faut choisir le segment [0,<I>x</I>[ avec une probabilité de <I>x</I> et donc 
+choisir le segment [<I>x</I>,1[ avec une probabilité de 1−<I>x</I>.<BR>
+En effet la probabilité d’obtenir les 3 côtés d’un triangle est alors :<BR>
+ ∫<SUB>0</SUB><SUP>1/2</SUP>(1−<I>x</I>)*<I>x</I>/1−<I>x</I><I>dx</I>+∫<SUB>1/2</SUB><SUP>1</SUP><I>x</I>*1−<I>x</I>/<I>x</I><I>dx</I>=
+∫<SUB>0</SUB><SUP>1/2</SUP><I>xdx</I>+∫<SUB>1/2</SUB><SUP>1</SUP>(1−<I>x</I>)<I>dx</I>=1/8+1/8=1/4.<BR>
+Voici la simulation :
+</P><PRE CLASS="verbatim">spag5(n):={
+  local x,y,a,b,t;
+  t:=0;
+  for (k:=1;k&lt;=n;k++){
+     x:=evalf(rand(2^30)/2^30);
+     if (evalf(rand(2^30)/2^30)&lt;x){
+       y:=evalf(rand(2^30)/2^30)*x;
+       a:=y;
+       b:=x-y;
+     } else {
+       y:=evalf(rand(2^30)/2^30)*(1-x)+x;
+       a:=x;
+       b:=y-x;
+     }
+     if ((a&lt;0.5) and (b&lt;0.5) and (a+b&gt;0.5)) {
+       t:=t+1;
+     }
+  }
+  return(evalf(t/n));
+}; 
+</PRE><P>On a trouvé pour n=30000 :
+<TT>0.2502</TT><BR>
+On a trouvé pour n=300000 :
+<TT>0.251556666667</TT><BR>
+
+Que se passe-t-il si on choisit le segment [0,<I>x</I>[ avec une probabilité de 
+1−<I>x</I> et le segment [<I>x</I>,1[ avec une probabilité de <I>x</I> ?<BR>
+Voici la simulation :
+</P><PRE CLASS="verbatim">spag6(n):={
+  local x,y,a,b,t;
+  t:=0;
+  for (k:=1;k&lt;=n;k++){
+     x:=evalf(rand(2^30)/2^30);
+     if (evalf(rand(2^30)/2^30)&lt;1-x){
+       y:=evalf(rand(2^30)/2^30)*x;
+       a:=y;
+       b:=x-y;
+     } else {
+       y:=evalf(rand(2^30)/2^30)*(1-x)+x;
+       a:=x;
+       b:=y-x;
+     }
+     if ((a&lt;0.5) and (b&lt;0.5) and (a+b&gt;0.5)) {
+       t:=t+1;
+     }
+  }
+  return(evalf(t/n));
+}; 
+</PRE><P>On a trouvé pour n=30000 :
+<TT>0.138533333333</TT><BR>
+On a trouvé pour n=300000 :
+<TT>0.136773333333</TT><BR>
+<B>Exercice</B> : Montrer que de façon théorique, on trouve :
+<TT>2*ln(2)-5/4</TT><BR>
+On vérifie :
+<TT>evalf(2*log(2)-5/4)=0.13629436112</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc192">6.6.6</A>  Comment simuler l’expérimentation ?</H3><H4 CLASS="subsubsection">première façon</H4><P>
+Supposons que l’on fasse faire à un groupe de personnes l’expérimentation 
+de la quatrième méthode (on recoupe le plus grand morceau). 
+Lorsqu’une personne efféctue l’expérience la
+première cassure (celle qui détermine <I>x</I>) se fera en général entre 
+<I>h</I> et 1−<I>h</I> : <I>h</I> étant l’emplacement des doigts. On suppose ensuite que
+l’emplacement des doigts nécessaire pour faire la cassure est proportionnel
+à la longueur donc si <I>y</I> se trouve sur [0,<I>x</I>[ la cassure se fera sur
+[<I>hx</I>,<I>x</I>−<I>xh</I>[.<BR>
+On écrit donc la fonction suivant dépendant de <I>n</I> nombre 
+d’expériences et <I>h</I> l’emplacement des doigts.
+</P><PRE CLASS="verbatim">spagex(n,h):={
+local x,y,a,b,t;
+t:=0;
+for (k:=1;k&lt;=n;k++){
+  x:=evalf(rand(2^30)/2^30);
+  x:=h+x*(1-2*h);
+  if (x&gt;0.5){
+    y:=h*x+evalf(rand(2^30)/2^30)*x*(1-2*h);
+    a:=y;
+    b:=x-y;
+  } else {
+    y:=(1-x)*h+evalf(rand(2^30)/2^30)*(1-x)*(1-2*h)+x;
+    a:=x;
+    b:=y-x;
+  }
+  if ((a&lt;0.5) and (b&lt;0.5) and (a+b&gt;0.5)) {
+    t:=t+1;
+  }
+}
+return(evalf(t/n));
+};
+</PRE><P>On trouve pour <I>n</I>=30 et <I>h</I>=0.08 :
+<TT>0.6</TT><BR>
+On trouve pour <I>n</I>=3000 et <I>h</I>=0.08 :
+<TT>0.626666666667</TT><BR>
+On trouve pour <I>n</I>=3000 et <I>h</I>=0.1 :
+<TT>0.561</TT><BR>
+On trouve pour <I>n</I>=300 et <I>h</I>=0.1 :
+<TT>0.535666666667</TT><BR>
+On trouvera dans le répertoire <TT>simulation</TT>, les valeurs du couple 
+[<I>x</I>,<I>y</I>] trouvées lors de l’exécution de spag4(100) dans le fichier 
+<TT>Asim</TT> et, les valeurs du couple [<I>x</I>,<I>y</I>] trouvées lors de l’exécution 
+de spagex(100,0.1) dans le fichier <TT>Aex</TT>. Bien sûr, on doit rajouter
+dans ces deux programmes une variable globale dans laquelle on engrange les 
+valeurs de [<I>x</I>,<I>y</I>].<BR>
+Le calcul théorique de la probabilité d’obtenir un triangle est alors :<BR>
+ 1/1−2<I>h</I> (∫<SUB><I>h</I></SUB><SUP>1/2</SUP> <I>x</I>/(1−<I>x</I>)*(1−2<I>h</I>)<I>dx</I>+∫<SUB>1/2</SUB><SUP>1/2−2<I>h</I></SUP> <I>dx</I>+∫<SUB>1/2−2<I>h</I></SUB><SUP>1−<I>h</I></SUP>1−<I>x</I>/<I>x</I>(1−2<I>h</I>)<I>dx</I>)<BR>
+ce qui donne la formule :<BR>
+ 1/(1−2<I>h</I>)<SUP>2</SUP>(ln(2(1−<I>h</I>)<SUP>2</SUP>)+−6<I>h</I><SUP>2</SUP>+9<I>h</I>−2/2(1−<I>h</I>)(1−2<I>h</I>)<SUP>2</SUP>.<BR>
+En effet,<BR>
+- quand  <I>h</I>&lt;<I>x</I>&lt;1/2, on choisit <I>y</I> dans 
+]<I>x</I>+(1−<I>x</I>)*<I>h</I>;1−(1−<I>x</I>)*<I>h</I>[ (segment de longueur (1−<I>x</I>)*(1−2*<I>h</I>)) on aura un triangle si 1/2&lt;<I>y</I>&lt;<I>x</I>+1/2 (segment de longueur <I>x</I>),<BR>
+- quand  1/2&lt;<I>x</I>&lt;1/2−2<I>h</I>, on choisit <I>y</I> dans ]<I>h</I>.<I>x</I>;<I>x</I>−<I>h</I>.<I>x</I>[ on est sûr d’avoir un triangle car <I>y</I>&lt;<I>x</I>−<I>h</I>*<I>x</I>&lt;1/2,<BR>
+- quand  1/2−2<I>h</I>&lt;<I>x</I>&lt;1−<I>h</I>, on choisit <I>y</I> dans ]<I>h</I>.<I>x</I>;<I>x</I>−<I>h</I>.<I>x</I>[ (intervalle de longueur <I>x</I>(1−2<I>h</I>)) on aura un
+triangle si  1/2−<I>x</I>&lt;<I>y</I>&lt;1/2 (intervalle de longueur 1−<I>x</I>).<BR>
+d’ou les trois intégrales qu’il faut diviser par 1−2<I>h</I> car on choisit <I>x</I>
+dans ]<I>h</I>;1−<I>h</I>[ (intervalle de longueur 1−2<I>h</I>) 
+</P><H4 CLASS="subsubsection">Une autre façon de simuler l’expérimentation</H4><P>
+On peut aussi, par exemple, supposer que l’on coupe le spaghetti en suivant 
+une loi de probabilité de densité <I>f</I>(<I>x</I>), avec comme graphe de <I>f</I> une 
+parabole, par exemple, pour un spaghetti de longueur 1, on peut choisir :<BR>
+<I>f</I>(<I>x</I>)=<I>kx</I>(1−<I>x</I>) pour <I>x</I> ∈ [0,1].<BR>
+On doit donc avoir ∫<SUB>0</SUB><SUP>1</SUP><I>f</I>(<I>t</I>)<I>dt</I>=<I>k</I>/6=1 donc <I>k</I>=6.<BR>
+On suppose donc que <I>f</I>(<I>x</I>)=6<I>x</I>(1−<I>x</I>) pour <I>x</I> ∈ [0,1]<BR>
+On suppose que l’on recoupe le morceau le plus grand.<BR>
+On a alors :<BR>
+Soit <I>F</I>(<I>x</I>)=∫<SUB>0</SUB><SUP><I>x</I></SUP><I>f</I>(<I>t</I>)<I>dt</I>=3<I>x</I><SUP>2</SUP>−2<I>x</I><SUP>3</SUP>.<BR>
+Si <I>U</I> est une variable aléatoire uniforme (donné par exemple par la 
+fonction <TT>rand()</TT> de <TT>Xcas</TT>) on a :<BR>
+<I>X</I>=<I>F</I><SUP>−1</SUP>(<I>U</I>) et,<BR>
+<I>Proba</I>(<I>U</I>&lt;<I>F</I>(<I>x</I>))=<I>Proba</I>(<I>F</I><SUP>−1</SUP>(<I>U</I>)&lt;<I>x</I>)=<I>Proba</I>(<I>X</I>&lt;<I>x</I>)=<I>F</I>(<I>x</I>).<BR>
+Pour déterminer <TT><I>X</I></TT> selon cette loi, on cherche <TT>x</TT> vérifiant 
+<TT><I>x</I>=<I>F</I></TT><SUP><TT>-1</TT></SUP><TT>(<I>u</I>)</TT>.<BR>
+ Dans le programme ci-dessous on note <I>g</I> la fonction <I>F</I> et on écrit :
+</P><PRE CLASS="verbatim">g(v):=3*v^2-2*v^3;
+u:=evalf(rand(2^30)/2^30);
+j:=0.1;
+while (x&gt; g(j)){j:=j+0.1;}
+x:=j-0.05;
+</PRE><P>on peut aussi écrire :
+</P><PRE CLASS="verbatim">g(v):=3*v^2-2*v^3;
+u:=evalf(rand(2^30)/2^30);
+solve(g(x)=u,x)
+</PRE><P>Ainsi, si <TT><I>F</I>(<I>J</I>-0.1)&lt;<I>U</I>&lt;<I>F</I>(<I>J</I>)</TT> on a <TT><I>J</I>-0.1&lt;<I>F</I></TT><SUP><TT>-1</TT></SUP><TT>(<I>U</I>)=<I>X</I>&lt;<I>J</I></TT>.<BR>
+Pour choisir <TT>y</TT> dans l’intervalle <TT>[0;a]</TT> selon cette loi, la 
+densité de probabilité correspondante est <I>f</I><SUB><I>a</I></SUB>(<I>t</I>)=6<I>t</I>(<I>a</I>−<I>t</I>)/<I>a</I><SUP>3</SUP> et 
+<I>F</I><SUB><I>a</I></SUB>(<I>t</I>)=<I>F</I>(<I>t</I>/<I>a</I>).<BR>
+Pour déterminer la loi de <TT><I>Y</I></TT>, lorsqu’on coupe un spaghetti de
+longueur <TT>x</TT>, selon cette loi, on écrit :
+</P><PRE CLASS="verbatim">y:=evalf(rand(2^30)/2^30);
+j:=0.1;
+while (y&gt; g(j)){j:=j+0.1;}
+y:=(j-0.05)*x;
+</PRE><P>Si <I>x</I>∈ [1/2;1], et <I>y</I>∈[0;<I>x</I>], la probabilité d’avoir un triangle 
+est que :<BR>
+<I>y</I>∈[<I>x</I>−1/2;1/2].<BR>
+ Cherchons la probabilité d’avoir :<BR>
+<I>y</I>∈[<I>x</I>−1/2;1/2], sachant que <I>x</I>∈ [1/2;1], et <I>y</I>∈[0;<I>x</I>].<BR>
+On a :<BR>
+<I>Proba</I>(<I>y</I>∈[<I>x</I>−1/2;1/2])=<I>F</I><SUB><I>x</I></SUB>(1/2)−<I>F</I><SUB><I>x</I></SUB>(<I>x</I>−1/2)=<I>F</I>(1/2<I>x</I>)−<I>F</I>((2<I>x</I>−1)/2<I>x</I>)=−2<I>x</I><SUP>3</SUP>+3<I>x</I>−1/2<I>x</I><SUP>3</SUP><BR>
+Pour le calcul théorique de la probabilité d’avoir un triangle, on utilise 
+la symétrie : en effet, on a soit <I>x</I>∈ [1/2;1] et 
+<I>y</I>∈[0;<I>x</I>] soit, <I>x</I>∈ [0;1/2] et <I>y</I>∈[<I>x</I>;1] (donc on fait le calcul de 
+cette probabilité lorsque <I>x</I>∈ [1/2;1] et on multiplie par 2 cette 
+probabilité pour avoir le résultat).<BR>
+Donc la probabilité d’avoir un triangle, avec ce choix de découpage est :<BR>
+  2∫<SUB>1/2</SUB><SUP>1</SUP> <I>f</I>(<I>x</I>)(<I>F</I>(1/2<I>x</I>)−<I>F</I>((2<I>x</I>−1)/2<I>x</I>))<I>dx</I><BR>
+Puisque  <I>F</I>(1/2<I>x</I>)−<I>F</I>((2<I>x</I>−1)/2<I>x</I>)=−2<I>x</I><SUP>3</SUP>+3<I>x</I>−1/2<I>x</I><SUP>3</SUP>, et que
+<I>f</I>(<I>x</I>)=6<I>x</I>(1−<I>x</I>), on tape :<BR>
+<TT>normal(6*int((1-x)*(-2*x</TT><CODE><TT>^</TT></CODE><TT>3+3*x-1)/(x</TT><CODE><TT>^</TT></CODE><TT>2),x,1/2,1))</TT><BR>
+On obtient :<BR>
+<TT>-24*log(1/2)-16</TT><BR>
+et avec la commande <TT>evalf</TT> on obtient :<BR>
+<TT>0.635532333439</TT><BR>
+C’est à dire :<BR>
+ 6∫<SUB>1/2</SUB><SUP>1</SUP>(1−<I>x</I>)(−2<I>x</I><SUP>3</SUP>+3<I>x</I>−1)/<I>x</I><SUP>2</SUP> <I>dx</I>=(−24ln(1/2)−16)
+≃ 0.635532333439<BR>
+Voici le programme de simulation avec <TT>Xcas</TT></P><PRE CLASS="verbatim">spagb(n):={
+//integrate(6*x*(1-x)*(g(0.5/x)-g(1-0.5/x)),x,0.5,1) 
+local x,y,a,b,t;
+t:=0;
+g(u):=3*u^2-2*u^3;
+//Ab:=[];
+for (k:=1;k&lt;=n;k++){
+x:=evalf(rand(2^30)/2^30);
+
+j:=0.1;while (x&gt; g(j)){j:=j+0.1;}
+x:=j-0.05;
+y:=evalf(rand(2^30)/2^30);
+j:=0.1;while (y&gt; g(j)){j:=j+0.1;}
+if (x&gt;0.5){
+y:=(j-0.05)*x;
+a:=y;
+b:=x-y;
+} else {
+y:=(j-0.05)*(1-x)+x;
+a:=x;
+b:=y-x;
+}
+//Ab:=append(Ab,[x,y]);
+if ((a&lt;0.5) and (b&lt;0.5) and (a+b&gt;0.5)) {
+t:=t+1;
+}
+}
+return(evalf(t/n));
+};
+</PRE><H2 CLASS="section"><A NAME="toc52"></A><A NAME="htoc193">6.7</A>  La ration de pain</H2><P>
+En un pays lointain, le pain était limité à 200 grammes par personne et 
+par jour. Le boulanger ne fabriquait donc que des pains de 200 grammes pour 
+ses 1000 clients. Chaque matin, un vieux professeur allait chez le boulanger 
+chercher sa ration quotidienne. Un jour il dit au boulanger :<BR>
+- "Vous volez vos clients, les pains 
+que vous vendez sont 1 pour cent plus petits qu’ils ne devraient l’être et 
+vous devez donc donner à tous vos clients un pain gratuit tous les 
+100 jours".<BR>
+- "Mais Monsieur, dit le boulanger tous les pains ne peuvent pas tous avoir le 
+même poids ! Certains sont quelquefois, quelques pour cent plus lourds et
+d’autres quelques pour cent plus légers !"<BR>
+- "Depuis 100 jours, je pèse mon pain et j’ai obtenu une courbe de Gauss de
+moyenne un poids de 198.04 
+grammes, et c’est inadmissible ! Si vous ne modifiez pas le poids de vos pains, 
+je le signalerai à la répression des fraudes"<BR>
+- "Je vous promets de faire le nécessaire dès demain"<BR>
+Le Boulanger ne voulait pas changer sa manière de faire et chaque matin, 
+avant le passage du professeur, il choisissait un pain et
+le pesait : s’il pesait au moins 200 grammes il le mettait de côté pour 
+le professeur, sinon il en choisissait un autre jusqu’à obtenir un pain d’au moins 200 grammes qu’il mettait de côté pour le professeur.
+Cent jours plus tard, le professeur dit :<BR>
+- "Vous n’avez rien changé ! vous continuez à voler vos clients"<BR>
+"Mais Monsieur, vous ne pouvez rien prouver car tous les pains que je vous ai 
+donnés ces derniers mois pesaient tous au moins 200 grammes"<BR>
+- "Justement si !"<BR>
+Pouvez-vous trouver l’argument du professeur ? 
+</P><H3 CLASS="subsection"><A NAME="htoc194">6.7.1</A>  Simulation avec une loi binomiale</H3><H4 CLASS="subsubsection">Simulation de la fabrication des pains</H4><P>
+Voici un programme qui fabrique <TT>n</TT> pains dont le poids en grammes est 
+dans l’intervalle [192,204] et suit une loi binomiale de moyenne 198.<BR>
+On utilise pour cela la loi binomiale : on peut se servir de la simulation du 
+parcours sur un axe 
+(cf <A HREF="#sec:deplaxe">6.2.1</A>) : pour fabriquer un pain on ajoute à 192 le nombre de 
+faces obtenu quand on lance 12 fois de suite une pièce.<BR>
+Contrairement, au parcours on ne classe pas les pains par leur poids, on met 
+les poids des <TT>n</TT> pains fabriqués dans une liste <TT>A</TT>. 
+</P><PRE CLASS="verbatim">pain(n) :={
+  local T,r,A,j,k;
+  A:=makelist(x-&gt;192,1,n,1);
+  for (j:=0;j&lt;n;j++){
+    r:=rand(2); 
+    T:=0;
+    for (k:=0;k&lt;12;k++){
+      if (r==1){
+        T:=T+1;
+      }
+    r:=rand(2);
+    }
+  A[j]:=A[j]+T;
+  }
+return(A);
+}; 
+</PRE><P>Un exemple de fournée de 100 pains:<BR>
+<TT>pain(100) = [197,199,199,198,197,199,196,199,199,<BR>
+ 196,199,198,195,196,197,198,199,198,197,198,197,201,202,196,200,<BR>
+ 201,197,195,200,200,197,198,196,199,197,196,197,201,198,198,199,<BR>
+ 201,202,201,199,201,197,200,197,199,196,201,201,197,199,199,195,<BR>
+ 198,199,199,198,198,200,195,198,197,199,200,200,196,195,199,197,<BR>
+ 200,200,201,200,199,198,198,200,199,199,198,197,197,200,199,198,<BR>
+ 195,199,198,198,198,197,200,195,198,200,196]</TT><BR>
+En théorie on aurait du avoir :<BR>
+0 pains de poids 193 g et 0 de poids 203 g<BR>
+2 pains de poids 194 g et 2 de poids 202 g<BR>
+5.5 pains de poids 195 g et 5.5 de poids 201 g<BR>
+12 pains de poids 196 g et 12 de poids 200 g<BR>
+19 pains de poids 197 g et 19 de poids 199 g<BR>
+23 pains de poids 198 g<BR>
+</P><H4 CLASS="subsubsection">Simulation de la pesée du professeur</H4><P>
+<B>Remarque</B><BR>
+Pour la simulation, on ne refait pas le pain tous les jours !<BR>
+<TT>A:=pain(n);</TT><BR>
+est mis au début, et non dans la boucle (là où il est commenté),
+car sinon le programme est trop long à l’exécution.<BR>
+<TT>p</TT> représente le nombre de jours pendant lesquels on effectue la pesée
+et <TT>pj</TT> représente le poids obtenu chaque jour.<BR>
+On classe ces poids dans <TT>P</TT> : <TT>P[0]</TT> est égal au nombre de pains
+de poids 192 grammes, <TT>P[1]</TT> est égal au nombre de pains de poids
+193 grammes...
+<TT>m</TT> est alors la moyenne des poids obtenus. 
+</P><PRE CLASS="verbatim">client(p,n):={
+local pj,A,P,D,j,k,m;
+P:=makelist(x-&gt;0,0,12,1);
+A:=pain(n);
+S:=0;
+for (k:=0;k&lt;p;k++){
+    //A:=pain(n);
+    j:=rand(n); 
+    pj:=A[j];
+    S:=S+pj;
+    pj:=pj-192;
+    P[pj]:=P[pj]+1;
+};
+m:=evalf(S/p);
+print(P);
+print(m);
+xyztrange(-0.2,12.2,-1,36,-10,10,-10,-10,-0.2,12.2,
+          -1,36,1);
+return segment(0,i*P[0]),segment(1,1+i*P[1]),
+ segment(2,2+i*P[2]),segment(3,3+i*P[3]),
+ segment(4,4+i*P[4]),segment(5,5+i*P[5]),
+ segment(6,6+i*P[6]),segment(7,7+i*P[7]),
+ segment(8,8+i*P[8]),segment(9,9+i*P[9]),
+ segment(10,10+i*P[10]),segment(11,11+i*P[11]),
+ segment(12,12+i*P[12]);
+}; 
+</PRE><P>On tape :<BR>
+<TT>client(100,1000)</TT><BR>
+On obtient écrit en bleu :<BR>
+<TT>P:[0,0,6,7,10,22,15,20,11,8,1,0,0]</TT><BR>
+<TT>m=197.83</TT><BR>
+En théorie on doit avoir :<BR>
+3 pains de poids 193 g et 3 de poids 203 g<BR>
+16 pains de poids 194 g et 16 de poids 202 g<BR>
+54 pains de poids 195 g et 54 de poids 201 g<BR>
+121 pains de poids 196 g et 121 de poids 200 g<BR>
+193 pains de poids 197 g et 193 de poids 199 g<BR>
+225 pains de poids 198 g<BR>
+Voici le "diagramme en bâtons" de la distribution des pains 
+que le professeur a obtenu :<BR>
+
+<IMG SRC="cassim013.png"></P><P>Il suffit de rajouter la ligne dans le programme précédent 
+(au bon enfroit!) :<BR>
+<TT>while (pj&lt;200) {j:=rand(n); pj:=A[j];}</TT><BR>
+qui permet de choisir un pain de poids supérieur ou égal à 200 grammes.
+</P><PRE CLASS="verbatim">chouchou(p,n):={
+  local pj,A,P,S,j,k,m;
+  P:=makelist(x-&gt;0,0,12,1);
+  A:=pain(n);
+  S:=0;
+  for (k:=0;k&lt;p;k++){
+    //A:=pain(n);
+    j:=rand(n); 
+    pj:=A[j];
+    //si le poids pj&lt;200g on prend un autre pain
+    while (pj&lt;200) {j:=rand(n); pj:=A[j];}
+    S:=S+pj;
+    pj:=pj-192;
+    P[pj]:=P[pj]+1;
+  };
+  m:=evalf(S/p);
+  print(P);
+  print(m);
+  xyztrange(-0.2,12.2,-1,62.5,-10,10,-10,-10,-0.2,
+            12.2,-1,60,1);
+  return segment(0,i*P[0]),segment(1,1+i*P[1]),
+    segment(2,2+i*P[2]),segment(3,3+i*P[3]),
+    segment(4,4+i*P[4]),segment(5,5+i*P[5]),
+    segment(6,6+i*P[6]),segment(7,7+i*P[7]),
+    segment(8,8+i*P[8]),segment(9,9+i*P[9]),
+    segment(10,10+i*P[10]),segment(11,11+i*P[11]),
+    segment(12,12+i*P[12]);
+};   
+</PRE><P>On tape : <TT>chouchou(100,1000)</TT><BR>
+On obtient écrit en bleu :<BR>
+<TT>P=[0,0,0,0,0,0,0,0,61,29,6,4,0]</TT><BR>
+<TT>m=200.53</TT><BR>
+et le "diagramme en bâtons" de la distribution des pains 
+que le professeur a obtenu a été le suivant :<BR>
+
+<IMG SRC="cassim014.png">
+</P><H3 CLASS="subsection"><A NAME="htoc195">6.7.2</A>  Analyse du résultat</H3><H3 CLASS="subsection"><A NAME="htoc196">6.7.3</A>  Simulation avec une loi gaussienne</H3><P>
+On considère que le poids des pains du boulanger suit une loi gaussienne 
+de moyenne 198 grammes et d’écart type σ grammes.
+</P><H4 CLASS="subsubsection">Simulation avec rand()</H4><P>
+Le nombre de pains de poids <I>x</I> est donc approximativement de :<BR>
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>(<I>x</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">σ </TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>2π</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>e</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>x</I>−198</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">σ</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)<SUP>2</SUP></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="dcell">&nbsp;</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P> 
+Pour σ=2 on a :<BR>
+<I>f</I>(192)=<I>f</I>(204)=0.002 
+<I>f</I>(193)=<I>f</I>(203)=0.009 
+<I>f</I>(194)=<I>f</I>(202)=0.027 
+<I>f</I>(195)=<I>f</I>(201)=0.065 
+<I>f</I>(196)=<I>f</I>(200)=0.121 
+<I>f</I>(197)=<I>f</I>(199)=0.176 
+<I>f</I>(198)=0.200 </P><P>et on a bien <I>f</I>(192)+<I>f</I>(193)+...+<I>f</I>(204)=1<BR>
+Voici une fournée de 1000 pains selon cette répartition représentée par
+la liste <TT>G</TT> des poids de ces 1000 pains.
+</P><PRE CLASS="verbatim">//f(x):=0.5/sqrt(2*pi)*exp(-0.125*(x-198)^2)
+G:=[192,204,192,204];
+for(j:=0;j&lt;9;j++){
+G:=concat(G,[193,203]);
+};
+for(j:=0;j&lt;27;j++){
+G:=concat(G,[194,202]);
+};
+for(j:=0;j&lt;65;j++){
+G:=concat(G,[195,201]);
+};
+for(j:=0;j&lt;121;j++){
+G:=concat(G,[196,200]);
+};
+for(j:=0;j&lt;176;j++){
+G:=concat(G,[197,199]);
+};
+for(j:=0;j&lt;200;j++){
+G:=concat(G,[198]);
+};
+</PRE><P>La fournée <TT>G</TT> de 10000 pains se trouve dans le 
+fichier <TT>painG</TT>.<BR>
+Le professeur achéte <I>p</I> pains (par exemple <I>p</I>=100).
+</P><PRE CLASS="verbatim">prof(p):={
+local pj,A,P,j,m,S,k;
+P:=makelist(0,0,12,1);
+A:=G;
+S:=0;
+for (k:=0;k&lt;p;k++){
+    j:=rand(1000); 
+    pj:=A[j];
+    S:=S+pj;
+    pj:=pj-192;
+    P[pj]:=P[pj]+1;
+};
+m:=evalf(S/p);
+print(P);
+print(m);
+return segment(0,i*P[0]),segment(1,1+i*P[1]),
+ segment(2,2+i*P[2]),segment(3,3+i*P[3]),
+ segment(4,4+i*P[4]),segment(5,5+i*P[5]),
+ segment(6,6+i*P[6]),segment(7,7+i*P[7]),
+ segment(8,8+i*P[8]),segment(9,9+i*P[9]),
+ segment(10,10+i*P[10]),segment(11,11+i*P[11]),
+ segment(12,12+i*P[12]);
+};  
+</PRE><P>Le pain du professeur a un poids (en grammes) toujours supérieur ou
+égal à 200.
+</P><PRE CLASS="verbatim">profchou(p):={
+local pj,A,P,j,m,S,k;
+P:=makelist(0,0,12,1);
+A:=G;
+S:=0;
+for (k:=0;k&lt;p;k++){
+    j:=rand(1000); 
+    pj:=A[j];
+    while (pj&lt;200) {j:=rand(n); pj:=A[j];}
+    S:=S+pj;
+    pj:=pj-192;
+    P[pj]:=P[pj]+1;
+};
+m:=evalf(S/p);
+print(P);
+print(m);
+return segment(0,i*P[0]),segment(1,1+i*P[1]),
+ segment(2,2+i*P[2]), segment(3,3+i*P[3]),
+ segment(4,4+i*P[4]),segment(5,5+i*P[5]), 
+ segment(6,6+i*P[6]),segment(7,7+i*P[7]),
+ segment(8,8+i*P[8]), segment(9,9+i*P[9]),
+ segment(10,10+i*P[10]),segment(11,11+i*P[11]),
+ segment(12,12+i*P[12]);
+};  
+</PRE><H4 CLASS="subsubsection">Simulation avec <TT>randnorm()</TT></H4><P><A NAME="@default64"></A>
+Pour simuler une fournée du boulanger, on va utiliser <TT>randnorm(198,2)</TT>
+Le professeur achéte <I>p</I> pains (par exemple <I>p</I>=100)
+</P><PRE CLASS="verbatim">profnorm(p):={
+local pj,P,j,m,S,k;
+P:=makelist(0,0,12,1);
+S:=0;
+for (k:=0;k&lt;p;k++){
+    pj:=floor(randnorm(198,2)); 
+    S:=S+pj;
+    pj:=pj-192;
+    if (pj&lt;0) {P[0]:=P[0]+1;} 
+          else
+          {if (pj&gt;12) {P[12]:=P[12]+1;}
+               else
+               {P[pj]:=P[pj]+1;}
+           }
+};
+m:=evalf(S/p);
+return([P,m,segment(0,i*P[0]),segment(1,1+i*P[1]),
+ segment(2,2+i*P[2]),segment(3,3+i*P[3]),
+ segment(4,4+i*P[4]),segment(5,5+i*P[5]),
+ segment(6,6+i*P[6]),segment(7,7+i*P[7]),
+ segment(8,8+i*P[8]),segment(9,9+i*P[9]),
+ segment(10,10+i*P[10]),segment(11,11+i*P[11]),
+ segment(12,12+i*P[12])]);
+};  
+</PRE><P>Puis on tape par exemple :<BR>
+<TT>profnorm(100)</TT>
+écrit en bleu :<BR>
+<TT>P=[0,0,0,0,0,0,0,0,61,29,6,4,0]</TT><BR>
+<TT>m=200.53</TT><BR>
+et le "diagramme en bâtons" de la distribution des pains 
+On obtient écrit en bleu :<BR>
+<TT>P:[0,2,5,7,13,25,14,16,8,6,3,0,1]</TT><BR>
+<TT>m:197.66</TT><BR>
+et le "diagramme en bâtons" de la distribution des pains selon la loi 
+normale de moyenne 198 et d’écart-type 2 :<BR>
+
+<IMG SRC="cassim015.png"></P><P>On écrit ensuite le programme <TT>profchounorm</TT> pour simuler
+le poids du pain du professeur lorsque ce pain a toujours un poids 
+(en grammes) supérieur ou égal à 200.
+</P><PRE CLASS="verbatim">profchounorm(p):={
+  local pj,P,j,m,S,k;
+  P:=makelist(0,0,12,1);
+  S:=0;
+  for (k:=0;k&lt;p;k++){
+    pj:=floor(randnorm(198,2)); 
+    while (pj&lt;200) {pj:=floor(randnorm(198,2));}
+    S:=S+pj;
+    pj:=pj-192;
+    if (pj&lt;0) 
+     {P[0]:=P[0]+1;} 
+    else
+     {if (pj&gt;12) {P[12]:=P[12]+1;}
+      else
+       {P[pj]:=P[pj]+1;}
+     };
+  };
+  m:=evalf(S/p);
+  print(P);
+  print(m);
+  return segment(0,i*P[0]),segment(1,1+i*P[1]),
+  segment(2,2+i*P[2]),segment(3,3+i*P[3]),
+  segment(4,4+i*P[4]),segment(5,5+i*P[5]),
+  segment(6,6+i*P[6]),segment(7,7+i*P[7]),
+  segment(8,8+i*P[8]),segment(9,9+i*P[9]),
+  segment(10,10+i*P[10]),segment(11,11+i*P[11]),
+  segment(12,12+i*P[12]);
+};  
+</PRE><P>On valide ce programme, puis on tape par exemple :<BR>
+<TT>profchounorm(100)</TT><BR>
+On obtient écrit en bleu :<BR>
+<TT>P=[0,0,0,0,0,0,0,0,60,27,8,4,1]</TT><BR>
+<TT>m=200.59</TT><BR>
+et le "diagramme en bâtons" de la distribution des pains selon la loi normale
+de moyenne 198 et d’écart-type 2, pour des poids <I>p</I>&gt;=200.<BR>
+
+<IMG SRC="cassim016.png"></P><HR>
+<A HREF="cassim005.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cassim007.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

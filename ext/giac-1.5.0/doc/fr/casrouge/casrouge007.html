@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Des programmes tres simples pour les Statistiques</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casrouge006.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge008.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc154">Chapitre 7</A>  Des programmes tres simples pour les Statistiques</H1><H2 CLASS="section"><A NAME="toc40"></A><A NAME="htoc155">7.1</A>  Simulation du lancer d’une pièce</H2><P>
+On veut tirer au hasard 0 ou 1 (par exemple 0=pile et 1=face).<BR>
+On utilise la fonction <TT>rand(n)</TT> qui renvoie un entier aléatoire 
+uniformément distribué dans <TT>0.. n-1</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">tirage_piece():=rand(2);
+</PRE><H2 CLASS="section"><A NAME="toc41"></A><A NAME="htoc156">7.2</A>  Simulation d’un dé</H2><P>
+On veut tirer au hasard un nombre entier dans [1.. 6].<BR>
+On utilise la fonction <TT>rand(n)</TT> qui renvoie un entier aléatoire 
+uniformément distribué dans <TT>0.. n-1</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">tirage_de():=1+rand(6);
+</PRE><H2 CLASS="section"><A NAME="toc42"></A><A NAME="htoc157">7.3</A>  Simulation d’une variable aléatoire</H2><P>
+On tire au hasard un nombre entier <I>n</I> de [0,1,2,3].<BR>
+On tire au hasard un nombre réel <I>m</I> de [0,1[.<BR>
+On veut simuler une variable aléatoire <I>X</I> qui vaut 
+la partie entière de <I>m</I>*<I>n</I>.<BR>
+On utilise la fonction <TT>rand(p,n)</TT> qui renvoie un réel aléatoire 
+uniformément distribué dans <TT>[p.. n[</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">X():={
+local n;
+n:=rand(4);
+return floor(n*rand(0,1));
+}
+</PRE><P>Quelle est la fonction de répartition de <I>X</I> ?
+<I>X</I> vaut :<BR>
+0 si ((<I>n</I>=0 ou <I>n</I>=1) et <I>m</I> ∈ [0,1[) ou (<I>n</I>=2 et <I>m</I> ∈ [0,0.5[) ou 
+(<I>n</I>=3 et <I>m</I> ∈ [0,1/3[)<BR>
+1 si (<I>n</I>=2 et <I>m</I> ∈ [0.5,1[) ou (<I>n</I>=3 et <I>m</I> ∈ [1/3,2/3[)<BR>
+2 si <I>n</I>=3 et <I>m</I> ∈ [2/3,1[<BR>
+On a donc :<BR>
+Proba(<I>X</I>=0)=1/4+1/4+1/4*1/2+1/4*1/3=17/24<BR>
+Proba(<I>X</I>=1)=1/4*1/2+1/4*1/3=5/24<BR>
+Proba(<I>X</I>=2)=1/4*1/3=1/12<BR>
+On vérifie que l’on a : 17/24+5/24+1/12=1
+</P><H2 CLASS="section"><A NAME="toc43"></A><A NAME="htoc158">7.4</A>  Simulation d’une variable aléatoire</H2><P>
+On tire au hasard un nombre entier <I>n</I> de [1,2,3].<BR>
+On veut simuler une variable aléatoire <I>Y</I> qui vaut ∑<SUB><I>j</I>=1</SUB><SUP><I>n</I></SUP><I>j</I>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">Y():={
+local n,j,x;
+n:=1+rand(3);
+x:=0;
+pour j de 1 jusque n faire
+x:=x+j;
+fpour;
+return x;
+}:;
+</PRE><P>Quelle est la fonction de répartition de <I>Y</I> ?
+<I>Y</I> vaut :<BR>
+1 si <I>n</I>=1<BR>
+3 si <I>n</I>=2<BR>
+6 si <I>n</I>=3<BR>
+On a donc :<BR>
+Proba(<I>X</I>=1))=1/3<BR>
+Proba(<I>X</I>=3))=1/3<BR>
+Proba(<I>X</I>=6))=1/3<BR>
+On aurait pu aussi simuler cette loi en tapant :
+</P><PRE CLASS="verbatim">Z():={
+local n;
+n:=rand(3);
+si n==0 alors return 1 fsi;
+return 3*n;
+}:;
+</PRE><H2 CLASS="section"><A NAME="toc44"></A><A NAME="htoc159">7.5</A>  Comment simplifier √<SPAN style="text-decoration:overline"><I>a</I>+√</SPAN><SPAN style="text-decoration:overline"><I>b</I></SPAN>  lorsque (<I>a</I>,<I>b</I>)∈ ℕ<SUP>2</SUP></H2><P>
+On veut écrire √<SPAN style="text-decoration:overline"><I>a</I>+√</SPAN><SPAN style="text-decoration:overline"><I>b</I></SPAN> sous la forme √<SPAN style="text-decoration:overline"><I>x</I>/2</SPAN>+√<SPAN style="text-decoration:overline"><I>y</I>/2</SPAN> bien 
+sur quand cela est possible.<BR>
+Si √<SPAN style="text-decoration:overline"><I>x</I>/2</SPAN>+√<SPAN style="text-decoration:overline"><I>y</I>/2</SPAN>=√<SPAN style="text-decoration:overline"><I>a</I>+√</SPAN><SPAN style="text-decoration:overline"><I>b</I></SPAN> on a :<BR>
+(√<SPAN style="text-decoration:overline"><I>x</I>/2</SPAN>+√<SPAN style="text-decoration:overline"><I>y</I>/2</SPAN>)<SUP>2</SUP>=<I>a</I>+√<SPAN style="text-decoration:overline"><I>b</I></SPAN>=(<I>x</I>+<I>y</I>)/2+√<SPAN style="text-decoration:overline"><I>xy</I></SPAN><BR>
+d’où <I>x</I>+<I>y</I>=2<I>a</I> et <I>xy</I>=<I>b</I><BR>
+donc <I>x</I> et <I>y</I> sont solutions de l’équation <I>X</I><SUP>−</SUP>2<I>aX</I>+<I>b</I>=0<BR>
+donc si <I>a</I><SUP>2</SUP>−<I>b</I> est un carré parfait i.e. <I>a</I><SUP>2</SUP>−<I>b</I>=<I>c</I><SUP>2</SUP> avec <I>c</I> entier on a :<BR>
+<I>x</I>=<I>a</I>+<I>c</I> et <I>y</I>=<I>a</I>−<I>c</I><BR>
+Donc si <I>a</I><SUP>2</SUP>−<I>b</I> est un carré parfait on a si <I>a</I><SUP>2</SUP>−<I>b</I>=<I>c</I><SUP>2</SUP> :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CELLSPACING=0 CELLPADDING=0><TR><TD ALIGN="right"><DIV CLASS="vbar" STYLE="height:0em;"></DIV></TD></TR>
+<TR><TD><FONT SIZE=7>√</FONT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I>+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=0 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>b</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CELLSPACING=0 CELLPADDING=0><TR><TD ALIGN="right"><DIV CLASS="vbar" STYLE="height:2em;"></DIV></TD></TR>
+<TR><TD><FONT SIZE=7>√</FONT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>a</I>+<I>c</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CELLSPACING=0 CELLPADDING=0><TR><TD ALIGN="right"><DIV CLASS="vbar" STYLE="height:2em;"></DIV></TD></TR>
+<TR><TD><FONT SIZE=7>√</FONT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>a</I>−<I>c</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>2(<I>a</I>+<I>c</I>)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>2(<I>a</I>−<I>c</I>)</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On tape la fonction <TT>simply</TT> qui doit avoir <TT>r=sqrt(a+sqrt(b))</TT> comme 
+paramètre où <TT>b</TT> est sans facteur carré :
+</P><PRE CLASS="verbatim">simply(r):={
+local f,a,b,c,d;
+si sommet(r)=='^' alors
+  f:=feuille(r);
+  a,d:=feuille(f[0]);
+  si type(a)==integer alors
+  b:=feuille(d)[0];
+  c:=sqrt(a^2-b);
+  si (round(c))^2==a^2-b alors 
+    retourne sqrt((a+c)/2)+sqrt((a-c)/2) 
+  fsi;
+  sinon 
+  d,a:=feuille(f[0]);
+  b:=feuille(d)[0];
+  c:=sqrt(a^2-b);
+  si (round(c))^2==a^2-b alors 
+    retourne sqrt((a+c)/2)+sqrt((a-c)/2) 
+  fsi;
+  fsi;
+fsi;
+retourne r;
+}:;
+</PRE><P>On tape :<BR>
+<TT>simply(sqrt(9+sqrt(17)))</TT><BR>
+ou<BR>
+<TT>simply(sqrt(sqrt(17)+9))</TT><BR>
+On obtient :<BR>
+<TT>(sqrt(34))/2+(sqrt(2))/2</TT>
+on tape la fonction <TT>simplyf</TT> qui doit avoir comme paramètre
+<TT>r</TT> de la forme <TT>sqrt(a+s*sqrt(b))</TT> ou <TT>sqrt(a+sqrt(b))</TT>:
+</P><PRE CLASS="verbatim">simplyf(r):={
+local f,a,b,c,d,s,sb;
+si sommet(r)=='^' alors
+  f:=feuille(r);
+  a,d:=feuille(f[0]);
+  si type(a)==integer alors
+     f:=feuille(d);
+    si f[1]==1/2 alors 
+      s:=1;
+      b:=f[0];
+    sinon
+      s,sb:=f;
+      si type(s)==integer alors
+        b:=feuille(sb)[0];
+      sinon
+       sb,s:=f;
+       b:=feuille(sb)[0];
+      fsi;
+    fsi;
+    c:=sqrt(a^2-s^2*b);
+    si (round(c))^2==a^2-s^2*b alors 
+      retourne sqrt((a+c)/2)+sqrt((a-c)/2); 
+    fsi;
+  sinon
+    d,a:=feuille(f[0]);
+    f:=feuille(d);
+    si f[1]==1/2 alors 
+      b:=f[0];
+      s:=1;
+    sinon
+      s,sb:=f;
+      si type(s)==integer alors
+        b:=feuille(sb)[0];
+      sinon
+       sb,s:=f;
+       b:=feuille(sb)[0];
+      fsi;
+    fsi;
+    c:=sqrt(a^2-s^2*b);
+    si (round(c))^2==a^2-s^2*b alors 
+      retourne sqrt((a+c)/2)+sqrt((a-c)/2); 
+    fsi;
+  fsi;
+fsi;
+retourne r;
+}:;
+</PRE><P>On tape (car <TT>Xcas</TT> remplace <TT>sqrt(128)</TT> par <TT>8*sqrt(2)</TT> :<BR>
+<TT>simplyf(sqrt(18+sqrt(128)))</TT><BR>
+ou<BR>
+<TT>simplyf(sqrt(sqrt(128)+18))</TT><BR>
+ou<BR>
+<TT>simplyf(sqrt(8*sqrt(2)+18))</TT><BR>
+ou<BR>
+<TT>simplyf(sqrt(18+8*sqrt(2)))</TT><BR>
+ou<BR>
+<TT>simplyf(sqrt(sqrt(2)*8+18))</TT><BR>
+ou<BR>
+<TT>simplyf(sqrt(18+sqrt(2)*8))</TT><BR>
+On obtient :<BR>
+<TT>4+sqrt(2)</TT>
+On tape :<BR>
+<TT>simplyf(sqrt(194320499737857776523212040+19713979797994*sqrt(97160249868928888261606031)))</TT><BR>
+On obtient :<BR>
+<TT>sqrt(97160249868928888261606031)+9856989898997</TT></P><HR>
+<A HREF="casrouge006.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge008.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

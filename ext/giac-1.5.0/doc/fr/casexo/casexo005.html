@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casexo.css">
+<TITLE>Matrices en terminale scientifique</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casexo004.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo006.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc51">Chapitre 5</A>  Matrices en terminale scientifique</H1><H2 CLASS="section"><A NAME="toc15"></A><A NAME="htoc52">5.1</A>  Les matrices de rotation</H2><P>
+Étant donné <I>t</I>∈ ℝ on considère :<BR>
+<I>A</I>(<I>t</I>)=(
+</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>  cos(<I>t</I>)</TD><TD ALIGN=center NOWRAP>−sin(<I>t</I>)</TD></TR>
+<TR><TD ALIGN=center NOWRAP>  sin(<I>t</I>)</TD><TD ALIGN=center NOWRAP>cos(<I>t</I>)</TD></TR>
+</TABLE><P>
+)<BR>
+Calculer <I>A</I>(<I>t</I>)<SUP><I>n</I></SUP> pour <I>n</I>∈ ℕ.<BR>
+Calculer <I>A</I>(<I>t</I>)<SUP>2</SUP>−2cos(<I>t</I>)<I>A</I>(<I>t</I>)+<I>I</I> où <I>I</I> est la matrice identité d’odre 2.<BR>
+En déduire que <I>A</I>(<I>t</I>) est inversible et que <I>A</I>(<I>t</I>)<SUP>−1</SUP>=<I>A</I>(−<I>t</I>).<BR>
+Calculer <I>A</I>(<I>t</I>)<SUP><I>n</I></SUP> pour <I>n</I>∈ ℤ.<BR>
+Montrer que dans un repère orthonormé (<I>O</I>;<I>i</I>,<I>j</I>), la matrice <I>A</I>(<I>t</I>) est la matrice de la rotation de centre <I>O</I> et d’angle <I>t</I>.<BR>
+On tape :<BR>
+<TT>A(t):=[[cos(t),-sin(t)],[sin(t),cos(t)]]</TT><BR>
+<TT>tlin(A(t)*A(t))</TT><BR>
+On obtient :<BR>
+<TT>[[cos(2*t),-sin(2*t)],[sin(2*t),cos(2*t)]]</TT><BR>
+On tape :<BR>
+<TT>assume(n,integer)</TT><BR>
+<TT>An(t):=[[cos(n*t),-sin(n*t)],[sin(n*t),cos(n*t)]]</TT><BR>
+<TT>tlin(An(t)*A(t))</TT><BR>
+On obtient :<BR>
+<TT>[[cos(n*t+t),-sin(n*t+t)],[sin(n*t+t),cos(n*t+t)]]</TT><BR>
+Donc on a montré par récurrence que :<BR>
+<I>A</I>(<I>t</I>)<SUP><I>n</I></SUP>=<I>A</I>(<I>nt</I>).<BR>
+On tape :<BR>
+<TT>tlin(A(t)</TT><CODE><TT>^</TT></CODE><TT>2-2*cos(t)*A(t)+idn(2))</TT><BR>
+On obtient :<BR>
+<TT>[[0,0],[0,0]]</TT><BR>
+On en déduit que :<BR>
+<I>A</I>(2cos(<I>t</I>)*<I>I</I>−<I>A</I>)=<I>I</I>
+On tape :<BR>
+<TT>B(t):=normal(2*cos(t)*idn(2)-A(t))</TT><BR>
+<TT>B(t)</TT><BR>
+On obtient :<BR>
+<TT>[[cos(t),sin(t)],[-sin(t),cos(t)]]</TT><BR>
+On tape :<BR>
+<TT>B(t)-A(-t)</TT><BR>
+On obtient :<BR>
+<TT>[[0,0],[0,0]]</TT><BR>
+Donc pour tout <I>n</I>∈ ℕ, on a <I>A</I>(<I>t</I>)<SUP>−1</SUP>=<I>A</I>(−<I>t</I>) et <I>A</I>(<I>t</I>)<SUP>−<I>n</I></SUP>=<I>A</I>(−<I>t</I>)<SUP><I>n</I></SUP>=<I>A</I>(−<I>nt</I>).<BR>
+Donc pour tout <I>n</I>∈ ℤ, on a <I>A</I>(<I>t</I>)<SUP><I>n</I></SUP>=<I>A</I>(<I>nt</I>).<BR>
+Dans la rotation <I>r</I> de centre <I>O</I> et d’angle <I>t</I> :<BR>
+le vecteur <I>i</I> se transforme en le vecteur :
+<I>r</I>(<I>i</I>)=cos(<I>t</I>)<I>i</I>+sin(<I>t</I>)<I>j</I><BR>
+le vecteur <I>j</I> se transforme en le vecteur :
+<I>r</I>(<I>j</I>)=−<I>sin</I>(<I>t</I>)<I>i</I>+cos(<I>t</I>)<I>j</I><BR>
+Donc :<BR>
+<I>r</I>(<I>x</I><I>i</I>+<I>y</I><I>j</I>)=<I>xr</I>(<I>i</I>)+<I>yr</I>(<I>j</I>)=(<I>x</I>cos(<I>t</I>)−<I>y</I>sin(<I>t</I>))<I>i</I>+(<I>x</I>sin(<I>t</I>)+<I>y</I>cos(<I>t</I>))<I>j</I><BR>
+c’est à dire :<BR>
+<I>r</I>(</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>  <I>x</I></TD></TR>
+<TR><TD ALIGN=center NOWRAP>  <I>y</I></TD></TR>
+</TABLE><P>)=(
+</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>  cos(<I>t</I>)</TD><TD ALIGN=center NOWRAP>−sin(<I>t</I>)</TD></TR>
+<TR><TD ALIGN=center NOWRAP>  sin(<I>t</I>)</TD><TD ALIGN=center NOWRAP>cos(<I>t</I>)</TD></TR>
+</TABLE><P>
+)(</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>  <I>x</I></TD></TR>
+<TR><TD ALIGN=center NOWRAP>  <I>y</I></TD></TR>
+</TABLE><P>)=
+<I>A</I>(<I>t</I>)(</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>  <I>x</I></TD></TR>
+<TR><TD ALIGN=center NOWRAP>  <I>y</I></TD></TR>
+</TABLE><P>)<BR>
+On tape :<BR>
+<TT>coordonnees(rotation(0,t,x+i*y))</TT><BR>
+On obtient :<BR>
+<TT>[cos(t)*x-sin(t)*y,cos(t)*y+x*sin(t)]</TT>
+</P><H2 CLASS="section"><A NAME="toc16"></A><A NAME="htoc53">5.2</A>  Les matrices magiques d’odre 3</H2><H3 CLASS="subsection"><A NAME="htoc54">5.2.1</A>  Résultat préliminaire</H3><P>
+Soit <I>A</I> la matrice :<BR>
+<I>A</I>=[[<I>a</I><SUB>00</SUB>,<I>a</I><SUB>01</SUB>,<I>a</I><SUB>02</SUB>],[<I>a</I><SUB>10</SUB>,<I>a</I><SUB>11</SUB>,<I>a</I><SUB>12</SUB>],[<I>a</I><SUB>20</SUB>,<I>a</I><SUB>21</SUB>,<I>a</I><SUB>22</SUB>]]
+Montrer que :<BR>
+<I>B</I>=1/2*(<I>A</I>+tran(<I>A</I>)) est une matrice symértrique et<BR>
+<I>C</I>=1/2*(<I>A</I>−tran(<I>A</I>)) est une matrice antisymértrique.<BR>
+En déduire que toute matrice se décompose de façon unique en la somme 
+d’une matrice symétrique et d’une matrice antisymétrique.<BR>
+On tape :<BR>
+<TT>A:=[[a00,a01,a02],[a10,a11,a12],[a20,a21,a22]]</TT><BR>
+<TT>B:=1/2*(A+tran(A));C:=1/2*(A-tran(A))</TT><BR>
+<TT>normal(B-tran(B)),normal(C+tran(C))</TT><BR>
+On obtient :<BR>
+<TT>[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]</TT><BR>
+Si <I>A</I>=<I>M</I>+<I>N</I> avec tran(<I>M</I>)=<I>M</I> et tran(<I>N</I>)=−<I>N</I> alors tran(<I>A</I>)=<I>M</I>−<I>N</I> donc<BR>
+<I>M</I>=1/2*(<I>A</I>+tran(<I>A</I>))=<I>B</I> et <I>N</I>=1/2*(<I>A</I>−tran(<I>A</I>))=<I>C</I> d’où l’unicité.
+</P><H3 CLASS="subsection"><A NAME="htoc55">5.2.2</A>  Les matrices magiques d’odre 3</H3><P>
+Une matrice <I>A</I>=(<I>a</I><SUB><I>j</I>,<I>k</I></SUB>) d’ordre 3 est une matrice magique de somme <I>s</I> lorsque
+les 8 sommes :<BR>
+∑<SUB><I>j</I>=0</SUB><SUP>2</SUP><I>a</I><SUB><I>j</I>,<I>k</I></SUB>=<I>s</I> pour <I>k</I>=0,1,2 (somme de chaque colonne)<BR>
+∑<SUB><I>k</I>=0</SUB><SUP>2</SUP><I>a</I><SUB><I>j</I>,<I>k</I></SUB>=<I>s</I> pour <I>j</I>=0,1,2 (somme de chaque ligne)<BR>
+∑<SUB><I>j</I>=0</SUB><SUP>2</SUP><I>a</I><SUB><I>j</I>,<I>j</I></SUB>=<I>a</I><SUB>1,3</SUB>+<I>a</I><SUB>2,2</SUB>+<I>a</I><SUB>3,1</SUB>=<I>s</I> (somme de chaque diagonale).<BR>
+Déterminer les matrices magiques d’ordre 3 qui sont antisymétriques.<BR>
+Déterminer les matrices magiques d’ordre 3 qui sont symétriques de somme 
+<I>s</I>=0.<BR>
+Déterminer une matrice magique d’ordre 3, symétrique, de somme <I>s</I> et la plus simple possible.<BR>
+Montrer que la différence de 2 matrices symétriques magiques de somme <I>s</I> est une matrices symétriques magiques de somme <I>s</I>=0.<BR>
+En déduire toutes les matrices magiques d’ordre 3, symétriques de somme <I>s</I>.<BR>
+Trouver toutes les matrices magiques d’ordre 3 de somme <I>s</I>=3.<BR>
+Trouver toutes les matrices magiques d’ordre 3 de somme <I>s</I>=9.<BR>
+Les matrices magiques d’ordre 3 qui sont antisymétriques sont de somme <I>s</I>=0 
+car la diagonale principale ne contient que des 0.<BR>
+Soit <I>A</I> une matrice antisymétrique d’ordre 3 et magique de somme <I>s</I>=0.<BR>
+On tape :<BR>
+<TT>A:=[[0,a,b],[-a,0,c],[-b,-c,0]]</TT><BR>
+<TT>linsolve([a+b=0,-a+c=0,b+c=0],[a,b,c])</TT><BR>
+On obtient :<BR>
+<TT>[c,-c,c]</TT><BR>
+Donc les matrices magiques <I>A</I> d’ordre 3 qui sont antisymétriques sont :<BR>
+<I>A</I>=(
+</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>  0</TD><TD ALIGN=center NOWRAP><I>c</I></TD><TD ALIGN=center NOWRAP>−<I>c</I></TD></TR>
+<TR><TD ALIGN=center NOWRAP>  −<I>c</I></TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP><I>c</I></TD></TR>
+<TR><TD ALIGN=center NOWRAP>  <I>c</I></TD><TD ALIGN=center NOWRAP>−<I>c</I></TD><TD ALIGN=center NOWRAP>0</TD></TR>
+</TABLE><P>
+)=<I>c</I>(
+</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>  0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>−1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>  −1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>  1</TD><TD ALIGN=center NOWRAP>−1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+</TABLE><P>
+)<BR>
+On tape :<BR>
+<TT>A:=c*[[0,1,-1],[-1,0,1],[1,-1,0]]</TT><BR>
+Soit <I>S</I> une matrice symétrique d’ordre 3 et magique de somme <I>s</I>=0.<BR>
+On tape :<BR>
+<TT>S:=[[a,b,c],[b,d,e],[c,e,f]]</TT><BR>
+<TT>linsolve([a+b+c,a+d+f,b+d+e,c+e+f,2c+d],[a,b,c,d,e,f])</TT><BR>
+On obtient :<BR>
+<TT>[-f,f,0,0,-f,f]</TT><BR>
+Donc les matrices magiques <I>S</I> d’ordre 3 qui sont symétriques de somme <I>s</I>=0 
+sont :<BR>
+<I>S</I>=(
+</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>  −<I>f</I></TD><TD ALIGN=center NOWRAP><I>f</I></TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>  <I>f</I></TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>−<I>f</I></TD></TR>
+<TR><TD ALIGN=center NOWRAP>  0</TD><TD ALIGN=center NOWRAP>−<I>f</I></TD><TD ALIGN=center NOWRAP><I>f</I></TD></TR>
+</TABLE><P>
+)=<I>f</I>(
+</P><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>  −1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+<TR><TD ALIGN=center NOWRAP>  1</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>−1</TD></TR>
+<TR><TD ALIGN=center NOWRAP>  0</TD><TD ALIGN=center NOWRAP>−1</TD><TD ALIGN=center NOWRAP>1</TD></TR>
+</TABLE><P>
+)<BR>
+Soit <I>S</I><SUB>0</SUB> une matrice symétrique d’ordre 3 et magique de somme <I>s</I> la plus simple possible.<BR>
+On tape :<BR>
+<TT>S0:=s/3*[[1,1,1],[1,1,1],[1,1,1]]</TT><BR>
+Donc les matrices magiques <I>S</I> d’ordre 3 qui sont symétriques de somme <I>s</I> 
+sont <I>B</I>:=<I>S</I>+<I>S</I><SUB>0</SUB>:<BR>
+On tape :<BR>
+<TT>B:=f*[[-1,1,0],[1,0,-1],[0,-1,1]]+<BR>
+s/3*[[1,1,1],[1,1,1],[1,1,1]]</TT><BR>
+
+Donc les matrices magiques <I>M</I> d’ordre 3 qui sont de somme <I>s</I>=3 (resp <I>s</I>=12)
+sont <I>M</I>:=<I>A</I>+<I>S</I>+<I>S</I><SUB>0</SUB> et elles dépendent de 2 paramètres <I>c</I> et <I>f</I>.<BR>
+On tape :<BR>
+<TT>M:=c*[[0,1,-1],[-1,0,1],[1,-1,0]]+<BR>
+ f*[[-1,1,0],[1,0,-1],[0,-1,1]]+[[1,1,1],[1,1,1],[1,1,1]]</TT><BR>
+On obtient :<BR>
+<TT>[[-f+1,c+f+1,-c+1],[-c+f+1,1,c-f+1],[c+1,-c-f+1,f+1]]</TT>
+Par exemple <I>f</I>=1,<I>c</I>=0, on obtient 
+<TT>[[0,2,1],[2,1,0],[1,0,2]]</TT>.<BR>
+On tape :<BR>
+<TT>M:=c*[[0,1,-1],[-1,0,1],[1,-1,0]]+<BR>
+ f*[[-1,1,0],[1,0,-1],[0,-1,1]]+4*[[1,1,1],[1,1,1],[1,1,1]]</TT><BR>
+On obtient :<BR>
+<TT>[[-f+4,c+f+4,-c+4],[-c+f+4,4,c-f+4],[c+4,-c-f+4,f+4]]</TT><BR>
+Par exemple <I>f</I>=1,<I>c</I>=3, on obtient 
+<TT>[[3,8,1],[2,4,6],[7,0,5]]</TT>
+</P>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casexo004.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo006.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

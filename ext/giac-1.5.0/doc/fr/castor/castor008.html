@@ -1,0 +1,958 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="castor.css">
+<TITLE>La recursivité sur des exemples</TITLE>
+</HEAD>
+<BODY >
+<A HREF="castor007.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="castor009.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc119">Chapitre 7</A>  La recursivité sur des exemples</H1><H2 CLASS="section"><A NAME="toc49"></A><A NAME="htoc120">7.1</A>  Des spirales</H2><H3 CLASS="subsection"><A NAME="htoc121">7.1.1</A>  Une spirale</H3><P>
+Voici le début du dessin d’une spirale(90) :<BR>
+<IMG SRC="castor040.png"><BR>
+On tape dans un éditeur de programmes :
+</P><PRE CLASS="verbatim">spirale(l):={
+si (l&gt;10) alors 
+avance(l);
+tourne_gauche 90;
+avance(l);
+tourne_gauche 90;
+spirale(l-10);
+fsi;
+}
+</PRE><P>On tape dans une ligne de commande :<BR>
+<TT>efface;spirale(100)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor041.png">
+</P><H3 CLASS="subsection"><A NAME="htoc122">7.1.2</A>  Une spirale plus générale</H3><P>
+On tape dans un éditeur de programmes :
+</P><PRE CLASS="verbatim">//chaque segment de la spirale est obtenu par similitude de rapport k 
+//k=rapport et t=angle de rotation (externe)
+//n=nombre de segments a construire
+spirales(l,k,t,n):={
+pour j de 1 jusque n faire
+avance(l);
+tourne_gauche(t);
+l:=k*l;
+fpour;
+};
+</PRE><P>ou encore avec la recursivité
+</P><PRE CLASS="verbatim">//n=nombre de segments a construire=nombre d'appels recursifs
+spiraler(l,k,t,n):={
+si n&gt;0 alors
+ avance(l);
+ tourne_gauche(t);
+ spiraler(l*k,k,t,n-1);
+fsi;
+}:;
+</PRE><P>On tape par exemple dans une ligne de commande :<BR>
+<TT>spirales(90,0.8,60,20)</TT><BR>
+ou<BR>
+<TT>efface;spiraler(90,0.8,60,20)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor042.png">
+</P><H2 CLASS="section"><A NAME="toc50"></A><A NAME="htoc123">7.2</A>  Des arbres</H2><H3 CLASS="subsection"><A NAME="htoc124">7.2.1</A>  Un arbre a deux branches</H3><P>
+Un arbre est composé d’un tronc de hauteur <I>h</I> et de deux branches 
+symétriques faisant 45 degrés avec le tronc et que l’on définit comme 
+étant chacune un arbre de tronc <I>h</I>/2.<BR>
+Pour le réaliser, on tape dans un éditeur de programmes : 
+</P><PRE CLASS="verbatim">//tourne_gauche;arbre1(60)
+arbre1(h):={
+si (h&lt;5) alors
+avance(h);
+recule(h);
+sinon
+avance(h);
+tourne_droite(45);
+arbre1(h/2);
+tourne_gauche(90);
+arbre1(h/2):
+tourne_droite(45);
+recule(h);
+fsi;
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+<TT>efface;tourne_gauche;arbre1(60)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor043.png"><BR>
+Ou bien, on rajoute un paramètre <I>n</I> (la profondeur) pour faire le test 
+d’arrêt, on tape on tape dans un éditeur de programmes : 
+</P><PRE CLASS="verbatim">//tourne_gauche;arbre2(60,3)
+arbre2(h,n):={
+si (n==0) alors
+avance(h);
+recule(h);
+sinon
+avance(h);
+tourne_droite(45);
+arbre2(h/2,n-1);
+tourne_gauche(90);
+arbre2(h/2,n-1):
+tourne_droite(45);
+recule(h);
+fsi;
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+<TT>efface;tourne_gauche;arbre2(60,5)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor044.png"><BR>
+</P><H3 CLASS="subsection"><A NAME="htoc125">7.2.2</A>  Un arbre a <I>p</I> branches</H3><P>
+Un arbre est composé d’un tronc de hauteur <I>h</I> et de <I>p</I> branches 
+également réparties et que l’on définit comme 
+étant chacune un arbre de tronc <I>h</I>/2.<BR>
+On tape dans un éditeur de programmes :
+</P><PRE CLASS="verbatim">//tourne_gauche;arbre3(80,4)
+arbre3(h,p):={
+si (h&lt;5) alors
+avance(h);
+recule(h);
+sinon
+avance(h);
+tourne_droite(90*(p-1)/p);
+repete(p,arbre3(h/2,p),tourne_gauche(180/p));
+tourne_droite(90*(p+1)/p);
+recule(h);
+fsi;
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+<TT>efface;tourne_gauche;arbre3(80,4)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor045.png"><BR>
+Ou bien, on rajoute un paramètre <I>n</I> (la profondeur) pour faire le test 
+d’arrêt, on tape dans un éditeur de programmes :
+</P><PRE CLASS="verbatim">//tourne_gauche;arbre4(60,5,3)
+arbre4(h,p,n):={
+si (n==0) alors
+avance(h);
+recule(h);
+sinon
+avance(h);
+tourne_droite(90*(p-1)/p);
+repete(p,arbre4(h/2,p,n-1),tourne_gauche(180/p));
+tourne_droite(90*(p+1)/p);
+recule(h);
+fsi;
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+<TT>efface;tourne_gauche;arbre4(80,5,4)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor046.png"><BR>
+</P><P>Et maintenant, un arbre aléatoire :<BR>
+à chaque nœud on choisit, de façon aléatoire le rapport <I>k</I> de 
+réduction, qui fera les <I>p</I> branches comme un arbre réduit avec le 
+coefficient <I>k</I>.<BR>
+On tape dans un éditeur de programmes :
+</P><PRE CLASS="verbatim">//tourne_gauche ;saute(-80);arbre5(60,4,3);
+arbre5(h,p,n):={
+local k;
+si (n==0) alors
+avance(h);
+recule(h);
+sinon
+avance(h);
+tourne_droite(90*(p-1)/p);
+k:=hasard(0,1);
+repete(p,arbre5(h*k,p,n-1),tourne_gauche(180/p));
+tourne_droite(90*(p+1)/p);
+recule(h);
+fsi;
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+<TT>efface;tourne_gauche;arbre5(60,5,4)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor047.png"><BR>
+</P><P>Et enfin, un arbre encore plus aléatoire :<BR>
+pour chaque branche on choisit, de façon aléatoire le rapport 
+<TT>hasard(0,1)</TT> de réduction, qui fera cette branche comme un arbre 
+réduit avec ce coefficient.<BR>
+On tape dans un éditeur de programmes :
+</P><PRE CLASS="verbatim">//tourne_gauche ;saute(-80);arbre6(60,4,3);
+arbre6(h,p,n):={
+si (n==0) alors
+avance(h);
+recule(h);
+sinon
+avance(h);
+tourne_droite(90*(p-1)/p);
+repete(p,arbre6(h*hasard(0,1),p,n-1),tourne_gauche(180/p));
+tourne_droite(90*(p+1)/p);
+recule(h);
+fsi;
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+<TT>efface;tourne_gauche;arbre6(60,5,4)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor048.png"><BR>
+</P><H3 CLASS="subsection"><A NAME="htoc126">7.2.3</A>  Un arbre ramifié</H3><P>
+Ici on suppose que, du tronc de longueur <I>h</I>,
+il part <I>p</I> branches de longueur <I>h</I>/2.
+Ces branches donnent naissance à <I>p</I>−1 branches de longueur <I>h</I>/4 etc...
+jusqu’à <I>p</I>=2.
+On tape dans un éditeur de programmes :
+</P><PRE CLASS="verbatim">//tourne_gauche;saute(-80);arbre7(60,5)
+arbre7(h,p):={
+avance(h);
+si (p&gt;=2) alors
+tourne_droite(90*(p-1)/p);
+repete(p,arbre7(h/2,p-1),tourne_gauche(180/p));
+tourne_droite(90*(p+1)/p);
+fsi;
+recule(h);
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+<TT>efface;tourne_gauche;arbre7(80,5)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor049.png"><BR>
+
+</P><P>En utilisant aussi la profondeur dans le test d’arrêt on tape dans un 
+éditeur de programmes :
+</P><PRE CLASS="verbatim">//tourne_gauche;saute(-80);arbre8(90,5,3)
+arbre8(h,p,n):={
+avance(h);
+si (p&gt;=2 et n&gt;=1) alors
+tourne_droite(90*(p-1)/p);
+repete(p,arbre8(h/2,p-1,n-1),tourne_gauche(180/p));
+tourne_droite(90*(p+1)/p);
+fsi;
+recule(h);
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+<TT>efface;tourne_gauche;arbre8(80,6,5)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor050.png"><BR>
+
+<B>Exercice</B>
+Refaire les exemples précédents mais en ne dessinant que la frondaison de 
+l’arbre, c’est à dire l’arbre sans son tronc.<BR>
+<B>Une réponse</B>
+Voici la réponse correspondant à <TT>arbre7</TT> et à <TT>arbre8</TT>. Bien 
+sûr, pour avoir la frondaison de <TT>arbre7(60,5)</TT> il faut taper 
+<TT>arbre9(30,5)</TT> et pour avoir la frondaison de <TT>arbre8(60,5,3)</TT> il faut 
+taper <TT>arbre10(30,5,3)</TT>.
+</P><PRE CLASS="verbatim">//tourne_gauche;saute(-80);arbre9(90,5,3)
+arbre9(h,p):={
+si (p&gt;=2) alors
+tourne_droite(90*(p-1)/p);
+repete(p,avance(h),arbre9(h/2,p-1),recule(h),tourne_gauche(180/p));
+tourne_droite(90*(p+1)/p);
+fsi;
+}
+</PRE><PRE CLASS="verbatim">//tourne_gauche;saute(-80);arbre10(90,5,3)
+arbre10(h,p,n):={
+si (n&gt;=1 et p&gt;=2) alors
+tourne_droite(90*(p-1)/p);
+repete(p,avance(h),arbre10(h/2,p-1,n-1),recule(h),tourne_gauche(180/p));
+tourne_droite(90*(p+1)/p);
+fsi;
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc127">7.2.4</A>  Un sapin</H3><P>
+Pour décrire un sapin, il faut choisir un paramètre par exemple sa hauteur 
+<I>h</I> du sapin.<BR>
+On dit alors qu’un sapin de hauteur <I>h</I> est composé de :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+deux branches basses latérales symétriques de longueur <I>h</I>/2 et 
+faisant un angle de 60 degrés avec le tronc,
+</LI><LI CLASS="li-itemize">d’un bout de tronc de hauteur <I>h</I>/4,
+</LI><LI CLASS="li-itemize">d’une tête de hauteur 3<I>h</I>/4<I>h</I> .
+</LI></UL><P>
+Cette définition sera récursive si on dit que les deux branches basses 
+latérales sont des sapins plus petits (de hauteur égale à la moitié de
+la hauteur du sapin) et que la tête est aussi un sapin plus petit 
+(de hauteur égale au trois-quart de la hauteur du sapin). Le tronc a donc 
+pour hauteur le quart de la hauteur du 
+sapin. Il nous faut alors définir ce que l’on considére 
+comme sapin "initial" : c’est le sapin formé d’un tronc unique.<BR>
+Voici la croissance de ces sapins :<BR>
+
+<IMG SRC="castor051.png"><BR>
+
+On tape dans un éditeur de programme :
+</P><PRE CLASS="verbatim">//tourne_gauche;sapin1(90)
+sapin1(h):={
+si (h&lt;5) alors
+avance(h);
+recule(h);
+sinon
+tourne_droite(60);
+sapin1(h/2);
+tourne_gauche(120);
+sapin1(h/2):
+tourne_droite(60);
+avance(h/4);
+sapin1(3*h/4);
+recule(h/4);
+fsi;
+}:;
+</PRE><P>Ou on tape en utilisant pour faire le test d’arrêt la profondeur <I>n</I> :
+</P><PRE CLASS="verbatim">//tourne_gauche;sapin2(90,4)
+sapin2(h,n):={
+si (n==0) alors
+avance(h);
+recule(h);
+sinon
+tourne_droite(60);
+sapin2(h/2,n-1);
+tourne_gauche(120);
+sapin2(h/2,n-1):
+tourne_droite(60);
+avance(h/4);
+sapin2(3*h/4,n-1);
+recule(h/4);
+fsi;
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+<TT>efface;tourne_gauche;sapin2(100,7)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor052.png"><BR>
+Les différentes étapes ont été obtenus en exécutant :<BR>
+<TT>tourne_gauche; sapin2(90,0)</TT> puis<BR>
+<TT>tourne_gauche; sapin2(90,1)</TT> puis<BR>
+<TT>tourne_gauche; sapin2(90,2)</TT> puis<BR>
+<TT>tourne_gauche; sapin2(90,3)</TT>. 
+</P><H2 CLASS="section"><A NAME="toc51"></A><A NAME="htoc128">7.3</A>  Les flocons de Koch</H2><P>
+Voici les étapes de construction d’une courbe 
+découverte par Koch :</P><P><IMG SRC="castor053.png"><BR>
+On voit l’étape 0 : un segment de longueur <I>l</I>.<BR>
+Pour obtenir l’étape 1, on divise ce segment de longueur <I>l</I> en trois et on 
+réalise la deuxième figure qui est composée de quatre segments de 
+longueur <I>l</I>/3 (le deuxiéme et troisiéme segments sont les côtés d’un 
+triangle équilatéral),
+puis on recommence en transformant chacun de ces 4 segments en 4 segments....<BR>
+et cela tant que <I>l</I> ≥ 10.
+On tape dans un éditeur de programme :
+</P><PRE CLASS="verbatim">//koch1(90)
+koch1(l):={
+si (l&lt;10) alors
+avance(l);
+sinon
+koch1(l/3);tourne_gauche(60);
+koch1(l/3);tourne_droite(120);
+koch1(l/3);tourne_gauche(60);
+koch1(l/3);
+fsi;
+}:;
+</PRE><P>Ou on tape en utilisant un paramètre <I>n</I> représentant la profondeur (i.e. 
+le nombre d’appels récursifs) :
+</P><PRE CLASS="verbatim">//koch2(90,3)
+koch2(l,n):={
+si (n==0) alors
+avance(l);
+sinon
+koch2(l/3,n-1);tourne_gauche(60);
+koch2(l/3,n-1);tourne_droite(120);
+koch2(l/3,n-1);tourne_gauche(60);
+koch2(l/3,n-1);
+fsi;
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+<TT>efface;koch2(270,7)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor054.png"><BR>
+Les dessins des différentes étapes ont été obtenus en tapant :<BR>
+<TT>koch2(90,0)</TT> puis,<BR>
+<TT>koch2(90,1)</TT> puis,<BR>
+<TT>koch2(90,2)</TT><BR>
+</P><H2 CLASS="section"><A NAME="toc52"></A><A NAME="htoc129">7.4</A>  Les courbes de Péano</H2><P>
+Parmi les nombreuses courbes inventées par Péano, prouvant l’existence de 
+courbes remplissant un carré, on n’en retiendra que trois, celles décrites 
+dans les paragraphes suivants.
+</P><H3 CLASS="subsection"><A NAME="htoc130">7.4.1</A>  La courbe <FONT COLOR=red><I>C</I></FONT><SUP>0</SUP> de Péano</H3><P>
+Soit un carré de diagonale <I>l</I> :<BR>
+au jour 0, on trace une diagonale,<BR>
+au jour 1, on divise ce carré en 9 carrés et on trace les diagonales de ces
+carrés, de façon à avoir un trait continu en parcourant la première 
+ligne, puis la deuxième, et enfin la troisième, comme ci-dessous :<BR>
+<IMG SRC="castor055.png"><BR>
+
+puis on recommence le même processus.<BR>
+On tape dans un éditeur de programme :
+</P><PRE CLASS="verbatim">//peano(90)
+peano(l):={
+  si (l&lt;10) alors avance(l);
+  sinon
+  peano(l/3);
+  tourne_droite;peano(l/3);
+  tourne_gauche;peano(l/3);
+  tourne_gauche;peano(l/3);
+  tourne_gauche;peano(l/3);
+  tourne_droite;peano(l/3);
+  tourne_droite;peano(l/3);
+  tourne_droite;peano(l/3);
+  tourne_gauche;peano(l/3);
+  fsi
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+<TT>efface;tourne_gauche 45;peano(200)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor056.png">
+</P><H3 CLASS="subsection"><A NAME="htoc131">7.4.2</A>  La courbe de Péano binaire</H3><P>
+Soit un carré de coté <I>l</I> :<BR>
+au jour 0, on trace un segment de longueur <I>l</I> i.e. un coté du carré,<BR>
+au jour 1, on remplace ce segment, en traçant 4 segments de longueur <I>l</I>/2 
+qui sont disposés selon les trois cotés d’un rectangle situé à gauche 
+de la position de la tortue, de largeur <I>l</I>/2 et de longueur <I>l</I>,<BR>
+au jour 2, on remplace chaque segment de longueur <I>k</I> par 4 segments de 
+longueur <I>k</I>/2 en tracant les trois 
+coés d’un rectangle de largeur <I>k</I>/2 et de longueur <I>k</I> et situé soit 
+à droite soit à gauche de la position de la tortue comme cela :<BR>
+<IMG SRC="castor057.png"><BR>
+ puis on recommence le même processus.<BR>
+On remarque que l’on remplace un segment en tracant un rectangle situé soit 
+à droite soit à gauche de la position de la tortue : on introduit donc un 
+paramètre <I>s</I> qui vaut 1 si ce rectangle se situe à droite et qui vaut -1 
+si ce rectangle se situe à gauche.<BR>
+On tape :
+</P><PRE CLASS="verbatim">//peanob(90,1)
+peanob(l,s):={
+  si (l&lt;10) alors avance(l);
+  sinon
+  tourne_gauche(-90*s);peanob(l/2,-s);
+  tourne_droite(-90*s);peanob(l/2,s);
+  peanob(l/2,s);tourne_droite(-90*s);
+  peanob(l/2,-s);tourne_gauche(-90*s);
+  fsi
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+<TT>efface;peanob(200,-1)</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor058.png"></P><H3 CLASS="subsection"><A NAME="htoc132">7.4.3</A>  La courbe de Péano ternaire</H3><P>
+Au jour 1, on trace la première courbe <TT>peano1(l,0)</TT> dans le carré de 
+coté <I>l</I>,<BR>
+Au jour 2, on trace la deuxème courbe dans le carré de coté <I>l</I>
+obtenue en partageant le carré en 9 carrés et en traçant dans le premier carré <TT>peano1(l,0)</TT>, et dans les autres soit 
+<TT>peano1(l,1)</TT>, soit <TT>peano1(l,-1)</TT>, de façon à ce que les 
+courbes se raccordent entre elles.<BR>
+Voici les dessins, où la position de départ et d’arrivée de la tortue est
+choisie comme indiquée sur la première figure :<BR>
+<IMG SRC="castor059.png"><BR>
+ <TT>peano1(60,0)</TT> <TT>peano1(60,1)</TT> <TT>peano1(60,-1)</TT>
+On décide alors de prendre comme départ de la tortue le 
+sommet inférieur gauche du carré. On définit <TT>car(l)</TT> qui dessine un 
+carré de côté <TT>l</TT>, on tape :
+</P><PRE CLASS="verbatim">//carre de cote l
+car(l):={
+repete(4,avance(l),tourne_gauche 90);
+}:;
+//peano1(30,0) ou peano1(30,1) ou peano1(30,-1)
+peano1(l,s):={
+si (s==-1) alors 
+  tourne_droite(45);saute(-l*sqrt(2)/6);rond(round(l*sqrt(2)/6.),90);
+sinon 
+  si (s==1) alors
+   tourne_gauche(135);saute(-l*sqrt(2)/6);rond(round(-l*sqrt(2)/6.),90);
+  sinon
+   tourne_gauche(45);
+   saute(l*sqrt(2)/6);
+  fsi;
+fsi;
+rond(round(l*sqrt(2)/6.),90);
+rond(round(-l*sqrt(2)/6.),270);
+rond(round(l*sqrt(2)/6.),270);
+rond(round(-l*sqrt(2)/6.),90);
+saute(l*sqrt(2)/6);
+tourne_droite(45);
+}:;
+//peanot(90,0)
+peanot(l,s):={
+  si (l&lt;31) alors 
+    peano1(l,s);
+  sinon
+    peanot(l/3,s);
+    tourne_droite;peanot(l/3,1);
+    tourne_gauche;peanot(l/3,-1);
+    tourne_gauche;peanot(l/3,-1);
+    tourne_gauche;peanot(l/3,-1);
+    tourne_droite;peanot(l/3,1);
+    tourne_droite;peanot(l/3,1);
+    tourne_droite;peanot(l/3,1);
+    tourne_gauche;peanot(l/3,-1);
+  fsi;
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+</P><PRE CLASS="verbatim">dessine_tortue;
+crayon jaune;
+car(90);
+crayon noir;
+peanot(90,0);
+</PRE><P>On obtient :<BR>
+<IMG SRC="castor060.png"><BR>
+</P><P>Mais, on voit qu’à cause des erreurs d’arrondis, la courbe n’est pas centrée
+dans le carré. En particuler, <TT>peanot(120,0), peanot(110,0),peanot(100,0)</TT>
+donne le même dessin !!!</P><P>On décide alors de prendre comme départ de la tortue le 
+centre du carré.
+</P><PRE CLASS="verbatim">carc(l):={
+pas_de_cote -l/2;
+repete(4,avance l/2,tourne_gauche ,avance l/2);
+pas_de_cote l/2;
+}:;
+pean1(l,s):={
+tourne_gauche 45;
+rond(round(l*sqrt(2)/6.),270);
+rond(round(-l*sqrt(2)/6.),90);
+si (s==-1) alors 
+  rond(round(-l*sqrt(2)/6.),90);
+  tourne_droite 180;
+  rond(round(l*sqrt(2)/6.),90);
+sinon 
+  si (s==1) alors
+   rond(round(l*sqrt(2)/6.),90); 
+   tourne_droite 180;
+   rond(round(-l*sqrt(2)/6.),90);
+   sinon tourne_droite 180;
+  fsi;
+fsi;
+rond(round(l*sqrt(2)/6.),90);
+rond(round(-l*sqrt(2)/6.),270);
+tourne_droite 225;
+}:;
+pean2(l,s):={
+tourne_droite 135;
+rond(round(l*sqrt(2)/6.),270);
+rond(round(-l*sqrt(2)/6.),90);
+tourne_droite 180;
+rond(round(l*sqrt(2)/6.),90);
+rond(round(-l*sqrt(2)/6.),270);
+tourne_gauche -45;
+}:;
+pean(l,s):={
+pean2(l,s);
+pean1(l,s)
+}:;
+peant(l,s):={
+  si (l&lt;31) alors 
+    pean(l,s);
+  sinon
+  pas_de_cote -l/3;
+  saute -l/3;
+  peant(l/3,s);
+  saute l/3;tourne_droite;peant(l/3,1);
+  pas_de_cote l/3;tourne_gauche;peant(l/3,-1);
+  pas_de_cote l/3;tourne_gauche;peant(l/3,-1);
+  pas_de_cote l/3;tourne_gauche;peant(l/3,-1);
+  saute l/3;tourne_droite;peant(l/3,1);
+  saute l/3;tourne_droite;peant(l/3,1);
+  saute l/3;tourne_droite;peant(l/3,1);
+  pas_de_cote l/3;tourne_gauche;peant(l/3,-1);
+  pas_de_cote -l/3;saute -l/3;
+fsi;
+}:;
+</PRE><P>On valide avec <TT>OK</TT> ou avec <TT>F9</TT>.<BR>
+On tape par exemple dans une ligne de commande :<BR>
+</P><PRE CLASS="verbatim">dessine_tortue;
+peant(180,0);
+crayon jaune;
+carc(180);
+</PRE><P>On obtient :<BR>
+<IMG SRC="castor061.png"><BR>
+Mais ce n’est pas encore parfait, la courbe est bien centrée dans le carré
+mais les raccords entres les différents morceaux ne se fait pas bien : c’est 
+toujours à cause des erreus d’arrondis !</P><P>On peut aussi supprimer les <TT>saute</TT>, les <TT>tourne</TT> et les √<SPAN style="text-decoration:overline">2</SPAN>, 
+c’est à dire en prenant comme départ et d’arrivée de la tortue les 
+tangentes aux arcs et comme paramètre <I>l</I> la diagonale du carré et en rajoutant le paramètre <I>n</I> pour la profondeur.<BR>
+On tape :
+</P><PRE CLASS="verbatim">//fait le dessin de la tortue
+des_tor():={
+cache_tortue;
+tourne_gauche;
+avance 5;
+tourne_droite(180-180/pi*atan(3.4));
+avance(sqrt(25+17^2));
+tourne_droite(180-2*180/pi*atan(1/3.4));
+avance(sqrt(25+17^2));
+tourne_droite(180-180/pi*atan(3.4));
+avance 5;tourne_droite;
+montre_tortue;
+}:;
+//carre de cote l
+card(d):={
+repete(4,avance(d/sqrt(2)),tourne_gauche 90);
+}:;
+//peano2(30,0) ou peano2(30,-1) ou peano2(30,1)
+peano2(l,s):={
+  si (s==-1) alors 
+   rond(round(l/6),90);
+  sinon 
+    si (s==1) alors
+    rond(round(-l/6),90);
+    fsi;
+  fsi;
+  rond(round(l/6),90);
+  rond(round(-l/6),270);
+  rond(round(l/6),270);
+  rond(round(-l/6),90);
+}:;
+
+//tourne_gauche 45;peanot2(90,0,2)
+peanot2(l,s,n):={
+  si (n==1) alors 
+    peano2(l,s);
+  sinon
+    peanot2(l/3,s,n-1);
+    peanot2(l/3,1,n-1);
+    peanot2(l/3,-1,n-1);
+    peanot2(l/3,-1,n-1);
+    peanot2(l/3,-1,n-1);
+    peanot2(l/3,1,n-1);
+    peanot2(l/3,1,n-1);
+    peanot2(l/3,1,n-1);
+    peanot2(l/3,-1,n-1);
+ fsi;
+}:;
+</PRE><P>On remarquera que <TT>peanot2</TT> commence à un sommet du carré et se termine
+en un point proche du sommet opposé : le point d’arrivée est ici fonction 
+de la valeur du paramètre <TT>n</TT> et est a une distance de <I>l</I>/3<SUP><I>n</I></SUP>/2 du 
+sommet opposé au carré.<BR>
+Puis on tape par exemple :<BR>
+</P><PRE CLASS="verbatim">efface ;
+tourne_gauche 45;
+crayon jaune;
+dessine_tortue;
+crayon noir;
+peanot2(180,0,2);
+des_tor();
+saute 180/3^2/2;
+tourne_droite 135;
+crayon jaune;
+card(180);
+cache_tortue;
+</PRE><P>On obtient :<BR>
+<IMG SRC="castor062.png"><BR>
+Puis on tape par exemple :<BR>
+</P><PRE CLASS="verbatim">efface ;
+tourne_gauche 45;
+crayon jaune;
+dessine_tortue;
+crayon noir;
+peanot2(162,0,4);
+des_tor();
+saute 162/3^4/2;
+tourne_droite 135;
+crayon jaune;
+card(162);
+cache_tortue;
+</PRE><P>On obtient :<BR>
+<IMG SRC="castor063.png"><BR>
+
+Si on définit :<BR>
+</P><PRE CLASS="verbatim">//peanot1(90,0,2)
+peanot1(l,s,n):={
+tourne_gauche 45;
+saute(l/2/3^n);
+peanot2(l,s,n);
+saute(l/2/3^n);
+tourne_droite 45;
+}:;
+</PRE><P>On a :<BR>
+<TT>peanot1(l/sqrt(2),s,n)</TT> ressemble à <TT>peanot(l,s)</TT>....mais ce n’est 
+pas parfait à cause des erreurs d’arrondis.
+</P><H2 CLASS="section"><A NAME="toc53"></A><A NAME="htoc133">7.5</A>  La courbe de Hilbert</H2><P>
+C’est une courbe remplissant un carré qui a été 
+découverte par Hilbert :
+cette courbe se fait a partir de quatre procédures récursives qui 
+s’appellent les unes les autres et que j’ai 
+appelé <TT>hilbg</TT>, <TT>hilbd</TT>, <TT>bertg</TT>, <TT>bertd</TT>.<BR>
+Voici les étapes de construction :
+- au jour 0 on trace un segment,<BR>
+- au jour 1 on trace les dessins où on a dessiné les positions de départ 
+et d’arrivée de la tortue (la forme pleine représente la tortue au départ
+et la forme vide celle d’arrivée).<BR>
+<IMG SRC="castor064.png"><BR>
+ <TT>hilbg</TT>    <TT>hilbd</TT>    <TT>bertg</TT>    <TT>bertd</TT><BR>
+
+<TT>hilbg</TT> est composée de 4 segments qui sont le dessin obtenu au jour 0
+par <TT>hilbd</TT> <TT>hilbg</TT> <TT>bertg</TT> <TT>bertd</TT><BR>
+<TT>hilbd</TT> est composée de 4 segments qui sont le dessin obtenu au jour 0
+par <TT>hilbg</TT> <TT>hilbd</TT> <TT>bertd</TT> <TT>bertg</TT><BR>
+<TT>bertg</TT> est composée de 4 segments qui sont le dessin obtenu au jour 0
+par <TT>hilbd</TT> <TT>hilbg</TT> <TT>bertg</TT> <TT>hilbd</TT><BR>
+<TT>bertd</TT> est composée de 4 segments qui sont le dessin obtenu au jour 0
+par <TT>hilbg</TT> <TT>hilbd</TT> <TT>bertd</TT> <TT>hilbg</TT><BR>
+ On écrit : 
+</P><PRE CLASS="verbatim">//hilbg(200)
+hilbg(l):={
+si (l&lt;=10) alors
+avance(l);
+sinon
+tourne_gauche(90);hilbd(l/2);
+tourne_droite(90);hilbg(l/2);
+tourne_droite(90);bertg(l/2);
+tourne_gauche(90);bertd(l/2);
+fsi;
+}:;
+hilbd(l):={
+si (l&lt;=10) alors
+avance(l);
+sinon
+tourne_droite(90);;hilbg(l/2);
+tourne_gauche(90);;hilbd(l/2);
+tourne_gauche(90);bertd(l/2);
+tourne_droite(90);bertg(l/2);
+fsi;
+}:;
+bertg(l):={
+si (l&lt;=10) alors
+avance(l);
+sinon
+tourne_droite(180);hilbd(l/2);
+tourne_droite(90);hilbg(l/2);
+tourne_droite(90);bertg(l/2);
+hilbd(l/2);
+fsi;
+}:;
+bertd(l):={
+si (l&lt;=10) alors
+avance(l);
+sinon
+tourne_droite(180);hilbg(l/2);
+tourne_gauche(90);hilbd(l/2);
+tourne_gauche(90);bertd(l/2);
+hilbg(l/2);
+fsi;
+}:;
+</PRE><P>On tape par exemple :
+</P><PRE CLASS="verbatim">efface ;
+crayon jaune;
+dessine_tortue;
+crayon noir;
+hilbg(200);
+</PRE><P>On obtient :<BR>
+<IMG SRC="castor065.png">
+</P><H2 CLASS="section"><A NAME="toc54"></A><A NAME="htoc134">7.6</A>  Le dragon</H2><P>
+0/ Prener une longue bande de papier <I>AB</I> de longueur <I>l</I> : c’est le dragon au 
+jour 0.<BR>
+1/ Plier cette bande de papier en deux, en amenant <I>B</I>
+en coincidence avec <I>A</I> par une rotation d’angle +2 et de centre <I>C</I>,
+milieu de <I>AB</I> : en dépliant à angle droit, on a le dragon au jour 1.<BR>
+2/ Replier comme précédemment, puis plier à nouveau en deux, en amenant 
+<I>C</I> en coincidence avec <I>A</I> par une rotation d’angle +2 : en dépliant 
+à angle droit chaque pliure, on a le dragon au jour 2.<BR>
+3/ Recommencer tant que la longueur à plier n’est pas trop petite (pour la 
+tortue on s’arrête de plier si <I>l</I>&lt;10).<BR>
+Voici les 5 premières étapes :<BR>
+<IMG SRC="castor066.png"><BR>
+
+On remarque que le segment <I>AC</I> et le segment <I>CB</I> donne naissance à deux 
+dragons symétriques : on appelle <TT>dragong</TT> le dragon obtenu par des 
+pliages fait avec une rotation d’angle +2 et <TT>dragond</TT> le dragon 
+obtenu par des pliages fait avec une rotation d’angle −2.<BR>
+On tape : 
+</P><PRE CLASS="verbatim">//dragong(1800)
+dragong(l):={
+si (l&lt;10) alors
+avance(l);
+sinon
+dragong(l/2);
+tourne_gauche(90);
+dragond(l/2);
+fsi;
+}:;
+dragond(l):={
+si (l&lt;10) alors
+avance(l);
+sinon
+dragong(l/2);
+tourne_droite(90);
+dragond(l/2);
+fsi;
+}:;
+</PRE><P>Ou encore en utilisant une seule procédure <TT>dragon2</TT> mais avec un 
+paramètre supplémentaire <TT>s</TT> (si <TT>s=1</TT> on a un dragon gauche et 
+si <TT>s=-1</TT> on a un dragon droit).<BR>
+On tape :
+</P><PRE CLASS="verbatim">//dragon2(1800,1)
+dragon2(l,s):={
+si (l&lt;10) alors
+avance(l);
+sinon
+dragon2(l/2,1);
+tourne_gauche(90*s);
+dragon2(l/2,-1);
+fsi;
+}
+</PRE><P>On tape par exemple :<BR>
+</P><PRE CLASS="verbatim">efface;
+rayon jaune;
+dessine_tortue;
+crayon noir;
+dragon2(2880,1)}
+</PRE><P><IMG SRC="castor067.png"><BR>
+ 
+Ou encore on écrit <TT>dragon3</TT> en utilisant le paramètre <I>n</I> profondeur 
+pour faire le test d’arrêt :
+</P><PRE CLASS="verbatim">//dragon3(1800,1,3)
+dragon3(l,s,n):={
+si (n==0) alors
+avance(l);
+sinon
+dragon3(l/2,1,n-1);
+tourne_gauche(90*s);
+dragon3(l/2,-1,n-1);
+fsi;
+}:;
+</PRE><P>Les dessins des 5 premières étapes ont été réalisés 
+en exécutant :
+</P><PRE CLASS="verbatim">efface ;
+crayon jaune;
+dessine_tortue;
+crayon noir;
+dragon3(60,1,0);
+des_tor();
+saute 20;
+crayon jaune;
+dessine_tortue;
+crayon noir;
+dragon3(60,1,1);
+des_tor();
+pas_de_cote -20;
+saute -30;
+tourne_droite ;
+crayon jaune;
+dessine_tortue;
+crayon noir;
+dragon3(60,1,2);
+des_tor();
+pas_de_cote -40;
+saute -30;
+tourne_droite ;
+crayon jaune;
+dessine_tortue;
+crayon noir;
+dragon3(60,1,3);des_tor();
+pas_de_cote -60;
+saute -15;
+tourne_droite ;
+crayon jaune;
+dessine_tortue;
+crayon noir;
+dragon3(60,1,4);
+</PRE><H3 CLASS="subsection"><A NAME="htoc135">7.6.1</A>  La courbe de Gosper</H3><P>
+Voici <TT>gosperg(40,1);</TT> et <TT>gosperd(40,1);</TT> qui forment la courbe de 
+Gosper et l’étape 2 (<TT>gosperg(40,2)</TT>) :<BR>
+<IMG SRC="castor068.png">
+On remarque que les 7 segments de la première courbe donne naissance soit 
+à la première courbe, soit à la courbe obtenue en faisant le
+trajet en sens inverse. On va donc définir deux procédures :<BR>
+<TT>gosperg</TT> et <TT>gosperd</TT> qui réalisent les dessins suivants (avec comme
+position de départ de la tortue, le triangle plein et comme position 
+d’arrivée, le triangle vide) :<BR>
+</P><P>On déduit l’écriture de <TT>gosperd</TT> de celle de <TT>gosperg</TT> en mettant 
+les instructions de <TT>gosperg</TT> de la dernière à la première en 
+changeant <TT>gauche</TT> en <TT>droite</TT> et réciproqement.
+</P><PRE CLASS="verbatim">//gosperg(80,3)
+gosperg(l,n):={
+  si (n==0) alors avance(l);
+sinon
+  gosperg(l/2,n-1);
+  tourne_gauche(60);
+  gosperd(l/2,n-1);
+  tourne_gauche(120);
+  gosperd(l/2,n-1);
+  tourne_droite(60);
+  gosperg(l/2,n-1);
+  tourne_droite(120);
+  gosperg(l/2,n-1);
+  gosperg(l/2,n-1);
+  tourne_droite(60);
+  gosperd(l/2,n-1);
+  tourne_gauche(60);
+fsi;
+};
+gosperd(l,n):={
+  si (n==0) alors avance(l);
+sinon
+  tourne_droite(60);
+  gosperg(l/2,n-1);
+  tourne_gauche(60);
+  gosperd(l/2,n-1);
+  gosperd(l/2,n-1);
+  tourne_gauche(120);
+  gosperd(l/2,n-1);
+  tourne_gauche(60);
+  gosperg(l/2,n-1);
+  tourne_droite(120);
+  gosperg(l/2,n-1);
+  tourne_droite(60);
+  gosperd(l/2,n-1);
+fsi;
+};
+</PRE><P>On tape :
+<TT>gosperg(80,3)</TT><BR>
+On obtient :<BR>
+<TT>la courbe de gosper à la troisième génération</TT><BR>
+ <IMG SRC="castor069.png"><BR>
+Autre écriture on choisit les flèches départ et d’arrivée comme 
+ci-dessous mais alors la tortue a changé de direction il faut donc aussi la 
+faire changer de la même direction dans le test d’arrêt. L’écriture de 
+<TT>gosperd</TT> se fait encore à partir de celle de <TT>gosperg</TT>, en mettant 
+les instructions de <TT>gosperg</TT> de la dernière à la première en 
+changeant <TT>gauche</TT> en <TT>droite</TT> et réciproqement, et cela même dans 
+le test d’arrêt!!!</P><P><IMG SRC="castor070.png">
+</P><PRE CLASS="verbatim">//gosperg2(80,3)
+gosperg2(l,n):={
+ si (n==0) alors 
+   avance(l);tourne_droite(60);
+ sinon
+  gosperg2(l/2,n-1);
+  tourne_gauche(60);
+  gosperd2(l/2,n-1);
+  tourne_gauche(60);
+  gosperd2(l/2,n-1);
+  tourne_droite(60);
+  gosperg2(l/2,n-1);
+  tourne_droite(60);
+  gosperg2(l/2,n-1);
+  tourne_gauche(60);
+  gosperg2(l/2,n-1);
+  tourne_droite(60);
+  gosperd2(l/2,n-1);
+ fsi;
+}:;
+gosperd2(l,n):={
+ si (n==0) alors 
+  tourne_gauche(60);avance(l);
+ sinon
+  gosperg2(l/2,n-1);
+  tourne_gauche(60);
+  gosperd2(l/2,n-1);
+  tourne_droite(60);
+  gosperd2(l/2,n-1);
+  tourne_gauche(60);
+  gosperd2(l/2,n-1);
+  tourne_gauche(60);
+  gosperg2(l/2,n-1);
+  tourne_droite(60);
+  gosperg2(l/2,n-1);
+  tourne_droite(60);
+  gosperd2(l/2,n-1);
+ fsi;
+}:;
+</PRE><P>On tape :<BR>
+<TT>gosperg2(80,3)</TT><BR>
+On obtient :<BR>
+<TT>la courbe de gosper à la troisième génération</TT><BR>
+<IMG SRC="castor071.png"> 
+</P><HR>
+<A HREF="castor007.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="castor009.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

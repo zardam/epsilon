@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="castor.css">
+<TITLE>Pour avoir un fond quadrillé ou triangulé</TITLE>
+</HEAD>
+<BODY >
+<A HREF="castor006.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="castor008.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc112">Chapitre 6</A>  Pour avoir un fond quadrillé ou triangulé</H1><H2 CLASS="section"><A NAME="toc47"></A><A NAME="htoc113">6.1</A>  Fond quadrillé</H2><P>
+On fait une procédure <TT>maillage1(a,k)</TT> qui trace avec la couleur <TT>k</TT>
+un écran remplit de carés de côtés <TT>a</TT>.
+</P><H3 CLASS="subsection"><A NAME="htoc114">6.1.1</A>  Le programme</H3><PRE CLASS="verbatim">//a represente la longueur du carreau et k la couleur du maillage
+maillage1(a,k):={
+local p,c,cc;
+p:= position;
+c:=cap;
+cc:=crayon;
+leve_crayon;position([0,0]);cap 0;baisse_crayon;crayon k;
+repete(ceil(260/a),avance(ceil(400/a)*a),pas_de_cote(a),
+tourne_droite 180, avance(ceil(400/a)*a),pas_de_cote(-a),
+tourne_droite 180);
+leve_crayon;position([0,0]);cap 0;baisse_crayon;
+tourne_gauche; 
+repete(ceil(200/a),avance(ceil(520/a)*a),pas_de_cote(-a),
+tourne_droite 180, avance(ceil(520/a)*a),pas_de_cote(a),
+tourne_droite 180);
+crayon(cc);
+leve_crayon;position(p);
+cap(c);baisse_crayon;
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc115">6.1.2</A>  Utilisation</H3><P>
+On tape :<BR>
+<TT>maillage1(30,22)</TT><BR>
+On obtient un fond quadrillé avec des carrés de côtés 30 de couleur 
+gris pâle de code 22.</P><H2 CLASS="section"><A NAME="toc48"></A><A NAME="htoc116">6.2</A>  Fond triangulé</H2><P>
+On fait une procédure <TT>maillage2(a,k)</TT> qui trace avec la couleur <TT>k</TT>
+un écran formé d’un maillage dont les mailles sont des triangles 
+équilatéraux de côtés <TT>a</TT>.
+</P><H3 CLASS="subsection"><A NAME="htoc117">6.2.1</A>  Le programme</H3><PRE CLASS="verbatim">//a represente la longueur du triangle et k la couleur du maillage
+//tricot fait un zig-zag a droite ou a gauche selon que s=-1 ou 1
+tricot(a,s):={
+repete(ceil(400/a),avance a,tourne_gauche s*120,avance a,
+tourne_droite s*120)
+};
+maillage2(a,k):={
+local p,c,cc;
+p:= position;
+c:=cap;
+cc:=crayon;
+leve_crayon;position([0,0]);cap 0;baisse_crayon;crayon k;
+repete(ceil(200/a),avance(ceil(400/a)*a),tourne_gauche 120,
+tricot(a,1),avance a,tourne_droite 120,avance(ceil(400/a)*a),
+tourne_droite 120,avance -a,tricot(a,-1),tourne_gauche 120);
+crayon(cc);
+leve_crayon;position(p);
+cap(c);baisse_crayon;
+}
+</PRE><H3 CLASS="subsection"><A NAME="htoc118">6.2.2</A>  Utilisation</H3><P>
+On tape :<BR>
+<TT>maillage2(30,22)</TT><BR>
+On obtient un fond triangulé avec des triangles équilatéraux de côtés
+30 et de couleur gris pâle de code 22.</P><HR>
+<A HREF="castor006.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="castor008.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

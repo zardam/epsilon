@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Modifier un élément ou une ligne d’une matrice contenue dans une variable : := et =&lt;</title>
+</head>
+<body >
+<a href="cascmd_fr571.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr573.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec706" class="subsection">6.47.5  Modifier un élément ou une ligne d’une matrice contenue dans une variable : <span style="font-family:monospace">:=</span> et <span style="font-family:monospace">=&lt;</span></h3>
+<p><a id="hevea_default1059"></a><a id="hevea_default1060"></a>
+Si la matrice a un nom, on peut assigner un élément d’une matrice en 
+utilisant son indice entouré de crochets si les indices commencent à 0 et 
+entouré de doubles crochets ou des parenthèses si les indices commencent 
+à 1.<br>
+<span style="font-weight:bold">Attention</span><br>
+On ne peut pas utiliser les parenthèses avec une matrice formelle car pour
+<span style="font-family:monospace">Xcas</span> cette notation sera la définition d’une fonction !<br>
+Si on veut que les indices commencent à 1 il faut utiliser les doubles 
+crochets. Par exemple :
+</p><pre class="verbatim">A:=idn(3);
+pour j de 1 jusque 3 faire
+  pour k de 1 jusque 3 faire
+    A(j,k):=j*k;
+  fpour;
+fpour;
+B:=idn(3);
+pour j de 1 jusque 3 faire
+  pour k de 1 jusque 3 faire
+    B[[j,k]]:=j*k;
+  fpour;
+fpour;
+</pre><p>
+On a alors <br>
+<span style="font-family:monospace">A</span> renvoie la fonction <span style="font-family:monospace">(j,k)-&gt;j*k</span><br>
+<span style="font-family:monospace">B</span> renvoie la matrice <span style="font-family:monospace">[[1,2,3],[2,4,6],[3,6,9]]</span><br>
+Si on assigne avec <span style="font-family:monospace">:=</span>, une nouvelle copie de la matrice est créée
+et l’élément est modifié, et si on assigne avec <span style="font-family:monospace">=&lt;</span> la matrice est
+modifiée sans faire de copie ce qui est plus rapide lorque la matrice est de 
+grande taille.<br>
+Par exemple :<br>
+Si <span style="font-family:monospace">A:=[[4,5],[2,6]]</span>, pour modifier <span style="font-family:monospace">A</span> en la matrice 
+<span style="font-family:monospace">[[4,5],[3,6]]</span> on peut taper :<br>
+<span style="font-family:monospace">A[1,0]:=3</span> ou<br>
+<span style="font-family:monospace">A[1,0]=&lt;3</span> ou<br>
+<span style="font-family:monospace">A[[2,1]]:=3</span> ou<br>
+<span style="font-family:monospace">A(2,1):=3</span> ou<br>
+<span style="font-family:monospace">A[[2,1]]=&lt;3</span> <br>
+Puis on tape :<br>
+<span style="font-family:monospace">A</span><br>
+On obtient la nouvelle valeur de <span style="font-family:monospace">A</span> :<br>
+<span style="font-family:monospace">[[4,5],[3,6]]</span><br>
+On peut aussi modifier une ligne, par exemple, si <span style="font-family:monospace">A:=[[4,5],[2,6]]</span> pour 
+modifier en <span style="font-family:monospace">A</span> la matrice <span style="font-family:monospace">[[4,5],[3,7]]</span>, on peut taper :<br>
+<span style="font-family:monospace">A:=[[4,5],[2,6]]</span>
+<span style="font-family:monospace">A[1]:=[3,7]</span> ou<br>
+<span style="font-family:monospace">A[1]=&lt;[3,7]</span> ou<br>
+<span style="font-family:monospace">A[[2]]:=[3,7]</span> ou<br>
+<span style="font-family:monospace">A(2):=[3,7]</span> ou<br>
+<span style="font-family:monospace">A[[2]]=&lt;[3,7]</span> ou<br>
+<span style="font-family:monospace">A(2)=&lt;[3,7]</span> <br>
+Puis on tape :<br>
+<span style="font-family:monospace">A</span><br>
+On obtient la nouvelle valeur de <span style="font-family:monospace">A</span> :<br>
+<span style="font-family:monospace">[[4,5],[3,7]]</span>.<br>
+<span style="font-weight:bold">Remarque</span><br>
+Il faut utiliser <span style="font-family:monospace">=&lt;</span> avec précautions car tous les objets pointant sur 
+cette matrice seront modifiés. Dans un programme il faudra utiliser
+<span style="font-family:monospace">A:=copy(B)</span> lors de l’initialisation pour que les modifications faites avec
+<span style="font-family:monospace">=&lt;</span> sur <span style="font-family:monospace">B</span> ne se fassent pas sur la copie <span style="font-family:monospace">A</span> ou que les 
+modifications faites avec <span style="font-family:monospace">=&lt;</span> sur la copie <span style="font-family:monospace">A</span> ne se fassent pas sur <span style="font-family:monospace">B</span> (cf <a href="cascmd_fr849.html#sec%3Acopie">9.4.16</a>).<br>
+Par exemple :<br>
+On tape :<br>
+<span style="font-family:monospace">B:=[[4,5],[2,6]]</span><br>
+<span style="font-family:monospace">A=&lt;B</span> ou <span style="font-family:monospace">A:=B</span><br>
+<span style="font-family:monospace">A,B</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[4,5],[2,6]],[[4,5],[2,6]]</span><br>
+On tape :<br>
+<span style="font-family:monospace">B[1]=&lt;[3,7]</span> ou <span style="font-family:monospace">A[1]=&lt;[3,7]</span><br>
+
+<span style="font-family:monospace">A,B</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[4,5],[3,7]],[[4,5],[3,7]]</span><br>
+Mais si on tape :<br>
+<span style="font-family:monospace">B:=[[4,5],[2,6]]</span><br>
+<span style="font-family:monospace">A:=copy(B)</span><br>
+<span style="font-family:monospace">A,B</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[4,5],[2,6]],[[4,5],[2,6]]</span><br>
+On tape :<br>
+<span style="font-family:monospace">B[1]=&lt;[3,7]</span><br>
+<span style="font-family:monospace">A,B</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[4,5],[2,6]],[[4,5],[3,7]]</span><br>
+Ou si on tape :<br>
+<span style="font-family:monospace">B:=[[4,5],[2,6]]</span><br>
+<span style="font-family:monospace">A:=copy(B)</span><br>
+<span style="font-family:monospace">A,B</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[4,5],[2,6]],[[4,5],[2,6]]</span><br>
+On tape :<br>
+<span style="font-family:monospace">A[1]=&lt;[3,7]</span><br>
+<span style="font-family:monospace">A,B</span><br>
+On obtient :<br>
+<span style="font-family:monospace">[[4,5],[3,7]],[[4,5],[2,6]]</span></p>
+<hr>
+<a href="cascmd_fr571.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr573.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

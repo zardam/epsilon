@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Creating audio clips : createwav</title>
+</head>
+<body >
+<a href="cascmd_en275.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en277.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec345" class="subsection">5.26.1  Creating audio clips : <span style="font-family:monospace">createwav</span><a id="hevea_default491"></a></h3>
+<p>
+<span style="font-family:monospace">createwav</span> takes the following arguments (all optional), in no particular order:
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">size=n</span> resp. <span style="font-family:monospace">duration=T</span>, where <span style="font-style:italic">n</span> resp. <span style="font-style:italic">T</span> is the total number of samples resp. the length in seconds,
+</li><li class="li-itemize"><span style="font-family:monospace">bit_depth=b</span>, where <span style="font-style:italic">b</span> is the number of bits reserved for each sample value and may be 8 or 16 (by default 16),
+</li><li class="li-itemize"><span style="font-family:monospace">samplerate=r</span>, where <span style="font-style:italic">r</span> is the number of samples per second (by default 44100),
+</li><li class="li-itemize"><span style="font-family:monospace">channels=c</span> where <span style="font-style:italic">c</span> is the number of channels (by default 1),
+</li><li class="li-itemize"><span style="font-family:monospace">D</span> or <span style="font-family:monospace">channel_data=D</span>, where <span style="font-family:monospace">D</span> is a list or a matrix,
+</li><li class="li-itemize"><span style="font-family:monospace">normalize=db</span>, where <span style="font-family:monospace">db</span>≤ 0 is a real number representing the amplitude peak level in dB FS (decibel "full scale") units.
+</li></ul><p>
+Additionally, passing the desired number of samples <span style="font-style:italic">n</span> as a single argument produces a single-channel clip on 16 bits/44100 Hz containing <span style="font-style:italic">n</span> samples initialized to zero.</p><p>Data matrix should contain the <span style="font-style:italic">k</span>-th sample in the <span style="font-style:italic">j</span>-th channel at position (<span style="font-style:italic">j</span>,<span style="font-style:italic">k</span>). The value of each sample must be a real number in range [−1.0,1.0]. Any value outside this interval is clamped to it (the resulting effect is called <em>clipping</em>). If the data is provided as a single list, it is copied across channels. If the number of samples or seconds is provided alongside the data list/matrix, the rows are truncated or padded with zeros to match the desired length.</p><p>If the option <span style="font-family:monospace">normalize</span> is given, audio data is normalized to the specified level prior to conversion. This can be used to avoid clipping.</p><p>For example, input :
+</p><div class="center">
+<span style="font-family:monospace">s:=createwav(duration=3.5):; playsnd(s)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">three and a half seconds of silence at rate 44100</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">wave:=sin(2*pi*440*soundsec(2)):;<br>
+s:=createwav(channel_data=wave,samplerate=48000):;<br>
+playsnd(s)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">two seconds of the 440 Hz sine wave at rate 48000</span>
+</div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">t:=soundsec(3):;<br>
+L,R:=sin(2*pi*440*t),sin(2*pi*445*t):;<br>
+s:=createwav([L,R]):; playsnd(s)</span>
+</div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">3 secs of a vibrato effect on a sine wave (stereo)</span>
+</div>
+<hr>
+<a href="cascmd_en275.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en277.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

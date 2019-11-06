@@ -1,0 +1,367 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casexo.css">
+<TITLE>La géométrie dans l’espace</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casexo019.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo021.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc298">Chapitre 20</A>  La géométrie dans l’espace</H1><H2 CLASS="section"><A NAME="toc108"></A><A NAME="htoc299">20.1</A>  Le plan</H2><P>
+L’équation cartésienne d’un plan quelconque est :<BR>
+<I>ax</I>+<I>by</I>+<I>cz</I>+<I>d</I>=0 : son vecteur normal est [<I>a</I>,<I>b</I>,<I>c</I>] et il passe par le point 
+[−<I>d</I>/<I>a</I>,0,0] si <I>a</I>≠ 0 ou par le point [0,−<I>d</I>/<I>b</I>,0] si <I>b</I>≠ 0 ou par le 
+point [0,0,−<I>d</I>/<I>c</I>] si <I>c</I>≠ 0 (on suppose <I>a</I>*<I>b</I>*<I>c</I> ≠ 0).<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+On tape pour dessiner le plan d’équation 2<I>x</I>+<I>y</I>−2<I>z</I>−1=0 :<BR>
+<TT>plan(2*x+y-2*z-1=0)</TT></P><P>L’équation cartésienne d’un plan passant par les points <I>A</I>=[<I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>z</I><SUB>0</SUB>],
+<I>B</I>=[<I>x</I><SUB>1</SUB>,<I>y</I><SUB>1</SUB>,<I>z</I><SUB>1</SUB>], <I>C</I>=[<I>x</I><SUB>2</SUB>,<I>y</I><SUB>2</SUB>,<I>z</I><SUB>2</SUB>] est :<BR>
+<TT>det([</TT><TT>[<I>x</I></TT><SUB><TT>0</TT></SUB><TT>,<I>y</I></TT><SUB><TT>0</TT></SUB><TT>,<I>z</I></TT><SUB><TT>0</TT></SUB><TT>,1],[<I>x</I></TT><SUB><TT>1</TT></SUB><TT>,<I>y</I></TT><SUB><TT>1</TT></SUB><TT>,<I>z</I></TT><SUB><TT>1</TT></SUB><TT>,1],[<I>x</I></TT><SUB><TT>2</TT></SUB><TT>,<I>y</I></TT><SUB><TT>2</TT></SUB><TT>,<I>z</I></TT><SUB><TT>2</TT></SUB><TT>,1],[<I>x</I>,<I>y</I>,<I>z</I>,1]</TT><TT>])=0</TT>.<BR>
+Par exemple le plan d’équation <I>x</I>/<I>a</I>+<I>y</I>/<I>b</I>+<I>z</I>/<I>c</I>=1 passe par les points :<BR>
+<I>A</I>=[<I>a</I>,0,0],<I>B</I>=[0,<I>b</I>,0] et <I>C</I>=[0,0,<I>c</I>] (on suppose <I>a</I> ≠ 0 <I>b</I> ≠ 0 et
+<I>c</I> ≠ 0).<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+On définit 3 points <TT>A</TT>,<TT>B</TT>,<TT>C</TT>.<BR>
+On tape pour dessiner la plan passant par ces 3 points :<BR>
+<TT>plan(A,B,C)</TT><BR>
+On tape pour avoir son équation cartésienne :<BR>
+<TT>equation(plan(A,B,C))</TT></P><P>L’équation cartésienne d’un plan passant par le point <I>A</I>=[<I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>z</I><SUB>0</SUB>] et
+parallèle aux vecteurs <I>U</I>=[<I>a</I>,<I>b</I>,<I>c</I>] et <I>V</I>=[<I>d</I>,<I>e</I>,<I>f</I>] est :<BR>
+<I>h</I>*(<I>x</I>−<I>x</I><SUB>0</SUB>)+<I>k</I>*(<I>y</I>−<I>y</I><SUB>0</SUB>)+<I>l</I>*(<I>z</I>−<I>z</I><SUB>0</SUB>)=0 avec [<I>h</I>,<I>k</I>,<I>l</I>]=<I>W</I>=<I>U</I>∧ <I>V</I>=<TT>cross(U,V)</TT>.</P><P>L’équation paramétrique d’un plan passant par le point <I>A</I>=[<I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>z</I><SUB>0</SUB>] et
+parallèle aux vecteurs <I>U</I>=[<I>a</I>,<I>b</I>,<I>c</I>] et <I>V</I>=[<I>d</I>,<I>e</I>,<I>f</I>] est :<BR>
+<I>x</I>(<I>t</I>)=<I>x</I><SUB>0</SUB>+<I>a</I>+<I>d</I>,<BR>
+<I>y</I>(<I>t</I>)=<I>y</I><SUB>0</SUB>+<I>b</I>+<I>e</I>,<BR>
+<I>y</I>(<I>t</I>)=<I>y</I><SUB>0</SUB>+<I>c</I>+<I>f</I>,<BR>
+(on suppose <I>a</I>*<I>b</I>*<I>c</I> ≠ 0 et <I>d</I>*<I>e</I>*<I>f</I> ≠ 0).<BR>
+
+</P><H2 CLASS="section"><A NAME="toc109"></A><A NAME="htoc300">20.2</A>  La sphère</H2><P>
+La sphère de centre <I>A</I>=[<I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>z</I><SUB>0</SUB>] et de rayon <I>R</I> a pour équation 
+cartésienne :<BR>
+(<I>x</I>−<I>x</I><SUB>0</SUB>)<SUP>2</SUP>+(<I>y</I>−<I>y</I><SUB>0</SUB>)<SUP>2</SUP>+(<I>z</I>−<I>z</I><SUB>0</SUB>)<SUP>2</SUP>=<I>R</I><SUP>2</SUP>.<BR>
+De façon générale, une sphère de centre <I>A</I>=[<I>a</I>,<I>b</I>,<I>c</I>]
+est l’ensemble des points <I>M</I>=[<I>x</I>,<I>y</I>,<I>z</I>]
+qui vérifient une équation de la forme :<BR>
+<I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP>+<I>z</I><SUP>2</SUP>−2<I>ax</I>−2<I>by</I>−2<I>cz</I>+<I>d</I>=0<BR>
+L’équation paramétrique d’une sphère de centre <I>A</I>=[<I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>z</I><SUB>0</SUB>] et de 
+rayon <I>R</I> est :<BR>
+<I>x</I>=<I>x</I><SUB>0</SUB>+<I>R</I>cos(θ)cos(λ),<BR>
+ <I>y</I>=<I>y</I><SUB>0</SUB>+<I>R</I>sin(θ)cos(λ),<BR>
+<I>z</I>=<I>z</I><SUB>0</SUB>+<I>R</I>sin(λ)<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+On tape dans un écran de géométrie 3D:<BR>
+<TT>A:=point(1,0,1)</TT><BR>
+<TT>S:=sphere(A,2)</TT><BR>
+<TT>equation(S)</TT><BR>
+Ou on tape :<BR>
+<TT>sphere(x</TT><CODE><TT>^</TT></CODE><TT>2+y</TT><CODE><TT>^</TT></CODE><TT>2+z</TT><CODE><TT>^</TT></CODE><TT>2-2*x-2*z-2=0)</TT><BR>
+</P><H2 CLASS="section"><A NAME="toc110"></A><A NAME="htoc301">20.3</A>  L’ellipsoïde</H2><P>
+L’équation cartésienne d’un ellipsoïde centrée en 
+<I>A</I>=[<I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>z</I><SUB>0</SUB>] 
+et de demi-axes de longueur |<I>a</I>|, |<I>b</I>| et |<I>c</I>| est :<BR>
+ (<I>x</I>−<I>x</I><SUB>0</SUB>)<SUP>2</SUP>/<I>a</I><SUP>2</SUP>+(<I>y</I>−<I>y</I><SUB>0</SUB>)<SUP>2</SUP>/<I>b</I><SUP>2</SUP>+(<I>z</I>−<I>z</I><SUB>0</SUB>)<SUP>2</SUP>/<I>c</I><SUP>2</SUP>=1<BR>
+
+</P><H2 CLASS="section"><A NAME="toc111"></A><A NAME="htoc302">20.4</A>  L’hyperboloïde</H2><H3 CLASS="subsection"><A NAME="htoc303">20.4.1</A>  L’hyperboloïde à une nappe</H3><P>
+L’équation cartésienne d’une hyperboloïde centrée en 
+<I>A</I>=[<I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>z</I><SUB>0</SUB>]
+et de demi-axes de longueur |<I>a</I>|,|<I>b</I>| et |<I>c</I>| est :<BR>
+ (<I>x</I>−<I>x</I><SUB>0</SUB>)<SUP>2</SUP>/<I>a</I><SUP>2</SUP>+(<I>y</I>−<I>y</I><SUB>0</SUB>)<SUP>2</SUP>/<I>b</I><SUP>2</SUP>−(<I>z</I>−<I>z</I><SUB>0</SUB>)<SUP>2</SUP>/<I>c</I><SUP>2</SUP>=1 
+</P><H3 CLASS="subsection"><A NAME="htoc304">20.4.2</A>  L’hyperboloïde à deux nappes</H3><P>
+L’équation cartésienne d’une hyperboloïde centrée en 
+<I>A</I>=[<I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>z</I><SUB>0</SUB>]
+et de demi-axes de longueur |<I>a</I>|,|<I>b</I>| et |<I>c</I>| est :<BR>
+ (<I>x</I>−<I>x</I><SUB>0</SUB>)<SUP>2</SUP>/<I>a</I><SUP>2</SUP>+(<I>y</I>−<I>y</I><SUB>0</SUB>)<SUP>2</SUP>/<I>b</I><SUP>2</SUP>−(<I>z</I>−<I>z</I><SUB>0</SUB>)<SUP>2</SUP>/<I>c</I><SUP>2</SUP>=−1 </P><H2 CLASS="section"><A NAME="toc112"></A><A NAME="htoc305">20.5</A>  Le paraboloïde</H2><H3 CLASS="subsection"><A NAME="htoc306">20.5.1</A>  Le paraboloïde elliptique</H3><P>
+L’équation cartésienne d’un paraboloïde elliptique
+centrée en 
+<I>A</I>=[<I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>z</I><SUB>0</SUB>] 
+et de demi-axes de longueur |<I>a</I>|, |<I>b</I>| et |<I>c</I>| est :<BR>
+ (<I>x</I>−<I>x</I><SUB>0</SUB>)<SUP>2</SUP>/<I>a</I><SUP>2</SUP>+(<I>y</I>−<I>y</I><SUB>0</SUB>)<SUP>2</SUP>/<I>b</I><SUP>2</SUP>−(<I>z</I>−<I>z</I><SUB>0</SUB>)/<I>c</I>=0 </P><H3 CLASS="subsection"><A NAME="htoc307">20.5.2</A>  Le paraboloïde hyperbolique</H3><P>
+L’équation cartésienne d’un paraboloïde hyperbolique
+centrée en 
+<I>A</I>=[<I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>z</I><SUB>0</SUB>] 
+et de demi-axes de longueur |<I>a</I>|, |<I>b</I>| et |<I>c</I>| est :<BR>
+
+(<I>x</I>−<I>x</I><SUB>0</SUB>)<SUP>2</SUP>/<I>a</I><SUP>2</SUP>−(<I>y</I>−<I>y</I><SUB>0</SUB>)<SUP>2</SUP>/<I>b</I><SUP>2</SUP>−(<I>z</I>−<I>z</I><SUB>0</SUB>)/<I>c</I>=0 
+</P><H2 CLASS="section"><A NAME="toc113"></A><A NAME="htoc308">20.6</A>  Le ruban de Mœbius</H2><P><A NAME="@default3"></A>
+On cherche tout d’abord l’équation paramétrique du ruban de Mœbius<BR>
+<SPAN CLASS="textboxed"><IMG SRC="casexo103.png"></SPAN></P><P>Pour cela on considère :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+un repère orthonormé <I>Oxy</I>, avec <I>i</I> (resp 
+<I>j</I>, <I>k</I>) le vecteur unitaire de <I>Ox</I> (resp 
+<I>Oy</I>,<I>Oz</I>), 
+</LI><LI CLASS="li-itemize">le cercle de centre <I>O</I> et de rayon <I>R</I> dans le plan <I>Oxy</I>,
+</LI><LI CLASS="li-itemize">un point <I>M</I> sur ce cercle tel que l’angle
+(<I>i</I>,<I>OM</I>)=<I>u</I>, 
+</LI><LI CLASS="li-itemize">dans le plan normal au cercle (contenant <I>O</I><I>k</I>), un
+segment <I>BA</I> de milieu <I>M</I>, de longueur 2<I>l</I>, tel que l’angle 
+(<I>M</I><I>k</I>,<I>MA</I>)=<I>u</I>/2 (on oriente le plan normal 
+avec la tangente au cercle).
+</LI></UL><P>
+Lorsque <I>u</I> varie de 0 à 2π le segment <I>BA</I> engendre le ruban de Moebius 
+(ou la bande de Moebius) car le point <I>M</I> revient à son point de départ, le
+point <I>A</I> se trouve en <I>B</I> et le point <I>B</I> se trouve en <I>A</I>.<BR>
+On a :<BR>
+<I>OM</I>=[<I>R</I>cos(<I>u</I>),<I>R</I>sin(<I>u</I>),0]<BR>
+<I>n</I>=cos(<I>u</I>),sin(<I>u</I>),0] est le vecteur normal au cercle<BR>
+<I>MA</I>=<I>l</I> cos(<I>u</I>/2+π/2)<I>n</I>+<I>l</I>sin(<I>u</I>/2+π/2)<I>k</I>=−<I>l</I>sin(<I>u</I>/2)<I>n</I>+<I>l</I>cos(<I>u</I>/2)<I>k</I><BR>
+donc<BR>
+<I>MA</I>=[−<I>l</I>sin(<I>u</I>/2)cos(<I>u</I>),−<I>l</I> sin(<I>u</I>/2)sin(<I>u</I>),<I>l</I>*cos(<I>u</I>/2)]<BR>
+Lorsque <I>N</I> se trouve sur le segment <I>AB</I> on a :<BR>
+<I>MN</I>=<I>v</I>*<I>MA</I> pour <I>v</I>=−1..+1 donc<BR>
+<I>ON</I>=<I>OM</I>+<I>MN</I>=<I>OM</I>+<I>v</I>*<I>MA</I><BR>
+<I>ON</I>=[<I>R</I>cos(<I>u</I>),<I>R</I> sin(<I>u</I>),0]−<I>v</I>[<I>l</I> sin(<I>u</I>/2)cos(<I>u</I>),−<I>l</I> sin(<I>u</I>/2)sin(<I>u</I>),<I>l</I> cos(<I>u</I>/2)]<BR>
+donc<BR>
+<I>ON</I>=[<I>R</I>cos(<I>u</I>)−<I>lv</I>sin(<I>u</I>/2)cos(<I>u</I>),<I>R</I> sin(<I>u</I>)−<I>lv</I> sin(<I>u</I>/2)sin(<I>u</I>),<I>lv</I> cos(<I>u</I>/2)]<BR>
+Avec <TT>Xcas</TT>, on tape :<BR>
+<TT>f(u,v,R,l):=R*cos(u)-l*v*cos(u)*sin(u/2)</TT><BR>
+<TT>g(u,v,R,l):=R*sin(u)-l*v*sin(u)*sin(u/2)</TT><BR>
+<TT>h(u,v,l):=l*v*cos(u/2)</TT><BR>
+On ouvre un écran de géométrie 3d et on tape :<BR>
+<TT>plotparam([f(u,v,4,1),g(u,v,4,1),h(u,v,1)],[u=0..2*pi, v=-1..1], ustep=0.1,vstep=0.2)</TT><BR>
+<TT>affichage(cercle(point(4,0,0),point(-4,0,0),point(0,4,0)),1)</TT>
+On obtient :<BR>
+
+<SPAN CLASS="textboxed"><IMG SRC="casexo104.png"></SPAN></P><P>Ou bien pour avoir dela couleur, on tape dans un éditeur de programmes:
+</P><PRE CLASS="verbatim">mobcolor():={
+local L,j;
+L:=NULL;
+pour j de 0 jusque 9  faire 
+L:=L,affichage(plotparam([f(u,v,4,1),g(u,v,4,1),h(u,v,1)],
+[u=0..2*pi, v=-1+j*0.1..-1+0.1*j+0.1], ustep=0.1,vstep=0.1),
+ 168+j);
+L:=L,affichage(plotparam([f(u,v,4,1),g(u,v,4,1),h(u,v,1)],
+[u=0..2*pi, v=1-j*0.1-0.1..1-j*0.1], ustep=0.1,vstep=0.1),
+168+j);
+//pour le second dessin
+//168+j+9);
+fpour;
+retourne L;
+}:;
+</PRE><P>Puis on ouvre un écran de géométrie 3d et on tape :<BR>
+<TT>mobcolor()</TT><BR>
+On obtient :</P><P> <IMG SRC="casexo105.png">
+<IMG SRC="casexo106.png"></P><H2 CLASS="section"><A NAME="toc114"></A><A NAME="htoc309">20.7</A>  Le cube</H2><H3 CLASS="subsection"><A NAME="htoc310">20.7.1</A>  L’énoncé</H3><P>
+On veut trouver les intersections du cube avec un plan passant par les milieux
+de ses côtés.<BR>
+Soient <I>A</I>,<I>B</I>,<I>C</I>,<I>D</I>,<I>E</I>,<I>F</I>,<I>G</I>,<I>H</I> les sommets du cube (<I>ABCD</I> et <I>EFGH</I> sont deux faces 
+parallèles du cube et <I>AE</I> en est un côté), <I>M</I> le milieu de <I>AB</I>, et <I>N</I>
+le milieu de <I>AD</I>.<BR>
+On cherche l’intersection du cube avec le plan <I>MNP</I> avec <I>P</I> le milieu de
+l’un des 10 autres côtés.<BR>
+Au cube on associe le repère orthonormé 
+<I>AM</I>,<I>AN</I>,<I>AE</I>/2
+</P><H3 CLASS="subsection"><A NAME="htoc311">20.7.2</A>  La solution</H3><H4 CLASS="subsubsection"><I>P</I> milieu de <I>BC</I> ou <I>DC</I></H4><P>
+Ici la solution est évidente car <I>P</I> se trouve dans le plan <I>ABCD</I>.<BR>
+L’intersection du cube avec le plan <I>MNP</I> est donc le carré <I>ABCD</I> 
+Le plan <I>MNP</I> a pour équation <I>z</I>=0<BR>
+On note <I>P</I>0 le milieu de <I>BC</I> et <I>P</I>1 le milieu de <I>DC</I>. 
+</P><H4 CLASS="subsubsection"><I>P</I> milieu de <I>AE</I></H4><P>
+Les trois segments <I>MN</I>, <I>MP</I>, <I>NP</I> se trouvent chacun sur une des faces du 
+cube.<BR>
+L’intersection du cube avec le plan <I>MNP</I> est donc le triangle <I>MNP</I>.<BR>
+Le plan <I>MNP</I> a pour équation <I>x</I>+<I>y</I>+<I>z</I>=1.<BR>
+On note <I>P</I>2 le milieu de <I>AE</I>.
+</P><H4 CLASS="subsubsection"><I>P</I> milieu de <I>EF</I> ou <I>EH</I></H4><P>
+Si <I>P</I>3 est le milieu de <I>EF</I> et si <I>P</I>4 est le milieu de <I>EH</I>, les segments
+<I>MP</I>3 et <I>NP</I>4 sont parallèles, donc <I>M</I>,<I>N</I>,<I>P</I>3,<I>P</I>4 sont dans le même plan.<BR>
+Les segments <I>MP</I>3 et <I>NP</I>4 se trouvent chacun sur une des faces du 
+cube et dans le plan <I>MNP</I>3<I>P</I>4.<BR>
+Donc, le plan <I>MNP</I>3 (resp <I>MNP</I>4) contient <I>P</I>4 (resp <I>P</I>3) et coupe le 
+cube selon le rectangle <I>MP</I>3<I>P</I>4<I>N</I>.<BR>
+Le plan <I>MNP</I> a pour équation <I>x</I>+<I>y</I>=1.
+</P><H4 CLASS="subsubsection"><I>P</I> milieu de <I>BF</I> ou <I>FG</I> ou <I>GH</I> ou <I>DH</I></H4><P>
+Si <I>P</I>5 est le milieu de <I>BF</I>, si <I>P</I>6 est le milieu de <I>FG</I>, si <I>P</I>7 est le 
+milieu de <I>GH</I> et si <I>P</I>8 est le milieu de <I>DH</I>, les segments <I>P</I>5<I>P</I>8, <I>P</I>6<I>P</I>7
+<I>BD</I> et <I>MN</I> sont parallèles. Le milieu de <I>P</I>5<I>P</I>8 est le centre du cube et 
+c’est aussi le milieu de <I>MP</I>7 et de <I>NP</I>6. Donc <I>N</I>,<I>M</I>,<I>P</I>5,<I>P</I>6,<I>P</I>7,<I>P</I>8 sont dans 
+un même plan. 
+L’intersection du cube avec le plan <I>MNP</I> est donc l’hexagone <I>NMP</I>5<I>P</I>6<I>P</I>7<I>P</I>8.<BR>
+Le plan <I>MNP</I> a pour équation <I>x</I>+<I>y</I>−<I>z</I>=1.
+</P><H4 CLASS="subsubsection"><I>P</I> milieu de <I>CG</I></H4><P>
+Si <I>MN</I> coupe <I>BC</I> en <I>I</I> et <I>DC</I> en <I>J</I>.<BR>
+<I>PI</I> coupe <I>BF</I> en <I>Q</I> et <I>PJ</I> coupe <I>DH</I> en <I>R</I>.<BR>
+On a <I>BQ</I>=<I>BF</I>/6 et <I>DR</I>=<I>DH</I>/6.<BR>
+Les segments <I>MN</I>,<I>MQ</I>,<I>QP</I>,<I>PR</I>,<I>RN</I> se trouvent chacun sur une des faces du 
+cube et dans le plan <I>MNP</I>.<BR>
+L’intersection du cube avec le plan <I>MNP</I> est donc le pentagone <I>NMQPR</I>.<BR>
+Le plan <I>MNP</I> a pour équation <I>x</I>+<I>y</I>−3<I>z</I>=1.<BR>
+On note <I>P</I>9 le milieu de <I>CG</I>.
+</P><H3 CLASS="subsection"><A NAME="htoc312">20.7.3</A>  Visualisation de l’hexagone avec <TT>Xcas</TT></H3><P>
+On peut se servir du bouton du milieu de la souris pour modifier les unités 
+de l’axe des <I>z</I>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">A:=point(0,0,0);
+B:=point(2,0,0);
+C:=point(2,2,0);
+E:=point(0,0,2);
+M:=point(1,0,0);
+N:=point(0,1,0);
+P0:=point(2,1,0);
+P1:=point(1,2,0);
+P2:=point(0,0,1);
+P3:=point(1,0,2);
+P4:=point(0,1,2);
+P5:=point(2,0,1);
+P6:=point(2,1,2);
+P7:=point(1,2,2);
+P8:=point(0,2,1);
+P9:=point(2,2,1);
+cube(A,B,C);
+polygone(N,M,P5,P6,P7,P8);
+plan(M,N,P0);
+plan(M,N,P2);
+plan(M,N,P3);
+equation(plan(M,N,P5));
+equation(plan(M,N,P9));
+</PRE><P>On peut aussi visualiser tous les résultats précédents.<BR>
+Si vous voulez voir même les lignes cachées il faut décocher
+<TT>hidden3d</TT> dans la configuration du graphique.
+</P><H2 CLASS="section"><A NAME="toc115"></A><A NAME="htoc313">20.8</A>  Exercice sur plans et droites</H2><H3 CLASS="subsection"><A NAME="htoc314">20.8.1</A>  L’énoncé</H3><P>
+Soient <I>A</I>=(1,0,0), <I>B</I>=(0,1,0) et <I>C</I>=(0,0,1) trois points de ℝ<SUP>3</SUP>.</P><P>1/ Déterminer l’équation du plan <I>P</I> passant par <I>A</I>,<I>B</I>,<I>C</I>.
+Donner un vecteur normal au plan <I>P</I>.</P><P>2/ Soit <I>D</I><SUB>0</SUB> la droite perpendiculaire à <I>P</I> passant par l’origine.<BR>
+Déterminer une équation paramétrique de <I>D</I><SUB>0</SUB>.<BR>
+Calculer les coordonnées du point <I>J</I> intersection de <I>P</I> et <I>D</I><SUB>0</SUB>.</P><P>3/ Déterminer les équations paramétriques de la droite <I>D</I><SUB>1</SUB> passant par 
+<I>A</I> et <I>J</I> et de la droite <I>D</I><SUB>2</SUB> passant par <I>B</I> et <I>C</I>.<BR>
+Montrer que <I>D</I><SUB>1</SUB> et <I>D</I><SUB>2</SUB> se coupent au milieu <I>M</I> de <I>BC</I>. On precisera les 
+coordonnées de <I>M</I>.
+</P><H3 CLASS="subsection"><A NAME="htoc315">20.8.2</A>  La solution avec l’aide de <TT>Xcas</TT></H3><P>
+1/ L’équation du plan <I>P</I> est de la forme :<I>ax</I>+<I>by</I>+<I>cz</I>+<I>d</I>=0.<BR>
+<I>P</I> passe par <I>A</I> donc : <I>a</I>+<I>d</I>=0<BR>
+<I>P</I> passe par <I>B</I> donc : <I>b</I>+<I>d</I>=0<BR>
+<I>P</I> passe par <I>C</I> donc : <I>c</I>+<I>d</I>=0<BR>
+donc <I>a</I>=<I>b</I>=<I>c</I>=−<I>d</I> et une équation du plan <I>P</I> est <I>x</I>+<I>y</I>+<I>z</I>=1.<BR>
+Un vecteur normal au plan <I>P</I> est donc (<I>a</I>,<I>b</I>,<I>c</I>)=(1,1,1).<BR>
+Ou encore on a :<BR>
+<I>n</I>=<I>AB</I>∧<I>AC</I><BR>
+On a :<BR>
+<I>AB</I>=(−1,1,0) et <I>AC</I>=(−1,0,1)<BR>
+On tape :<BR>
+<TT>cross([-1,1,0],[-1,0,1])</TT><BR>
+On obtient un vecteur normal <I>n</I> au plan <I>P</I> :<BR>
+<TT>[1,1,1]</TT><BR>
+Si <I>M</I>=(<I>x</I>,<I>y</I>,<I>z</I>) est un point du plan <I>P</I>, l’équation du plan <I>P</I> est :<BR>
+<I>n</I> · <I>AM</I>=0.<BR>
+On tape :<BR>
+<TT>dot([1,1,1],[x-1,y,z])=0</TT><BR>
+On obtient une équation du plan <I>P</I> :
+<TT>(x-1+y+z)=0</TT></P><P>2/ Si <I>M</I>=(<I>x</I>,<I>y</I>,<I>z</I>) est un point de <I>D</I><SUB>0</SUB>, <I>OM</I> est parallèle
+à <I>n</I> donc :<BR>
+<I>OM</I>=λ · <I>n</I> 
+avec λ ∈ ℝ.<BR>
+Ou on tape :<BR>
+<TT>cross([x,y,z],[1,1,1])=[0,0,0]</TT><BR>
+On obtient :<BR>
+<TT>[y-z,z-x,x-y]=[0,0,0]</TT><BR>
+L’équation de <I>D</I><SUB>0</SUB> est donc :<BR>
+<I>x</I>=<I>y</I>=<I>z</I> ou encore :<BR>
+<I>x</I>=λ,<I>y</I>=λ,<I>z</I>=λ avec λ ∈ ℝ.<BR>
+Pour obtenir l’intersection de <I>P</I> et <I>D</I><SUB>0</SUB>, on tape :<BR>
+<TT>solve([y-z,z-x,x-y,x-1+y+z],[x,y,z])</TT><BR>
+On obtient les coordonnées de <I>J</I> :<BR>
+<TT>[[1/3,1/3,1/3]]</TT></P><P>3/ Pour obtenir l’équation de <I>D</I><SUB>1</SUB> on a :<BR>
+<I>AM</I>=λ ·<I>AJ</I> donc :<BR>
+[<I>x</I>−1=(−2)/3,<I>y</I>=λ/3,<I>z</I>=λ/3]<BR>
+Ou on tape :<BR>
+<TT>cross([x-1,y,z],[-2/3,1/3,1/3])=[0,0,0]</TT><BR>
+On obtient :<BR>
+<TT>[y/3-z/3,(z*-2)/3-(x-1)/3,(x-1)/3-(y*-2)/3]=[0,0,0]</TT><BR>
+On tape :<BR>
+<TT>solve([y/3-z/3,(z*-2)/3-(x-1)/3,(x-1)/3-(y*-2)/3],[x,y,z])</TT><BR>
+et on obtient : <TT>[[x,(x-1)/-2,(x-1)/-2]]</TT><BR>
+donc <TT>x=x,y=(x-1)/-2,z=(x-1)/-2</TT> est l’équation paramétrique de <I>D</I><SUB>1</SUB> 
+de paramètre <TT>x</TT>.</P><P>Pour obtenir l’équation de <I>D</I><SUB>2</SUB> on a :<BR>
+<I>BM</I>=λ ·<I>BC</I> donc :<BR>
+<I>x</I>=0, <I>y</I>−1=−λ, <I>z</I>=λ<BR>
+Ou on tape :<BR>
+<TT>cross([x,y-1,z],[0,-1,1])=[0,0,0]</TT><BR>
+On obtient :<BR>
+<TT>[y-1+z,-x,-x]=[0,0,0]</TT><BR>
+donc <TT>x=0, y=y, z=1-y</TT> est l’équation paramétrique de <I>D</I><SUB>2</SUB> de 
+paramètre <TT>y</TT>.</P><P>Pour avoir l’intersection de <I>D</I><SUB>1</SUB> et de <I>D</I><SUB>2</SUB>, on tape :<BR>
+<TT>solve([ x=x,y=(x-1)/-2,z=(x-1)/-2, x=0,y=y,z=1-y],[x,y,z])</TT><BR>
+On obtient les coordonnées de <I>M</I> :<BR>
+<TT>[[0,1/2,1/2]]</TT><BR>
+Ce point est bien le milieu de <I>BC</I> puisque :<BR>
+2*<I>OM</I>=<I>OB</I>+<I>OC</I>.</P><H2 CLASS="section"><A NAME="toc116"></A><A NAME="htoc316">20.9</A>  Le problème des quatre cônes</H2><P>
+Ce problème aète donné aux olympiades académiques de 2005.<BR>
+Quatre cônes opaques sont posés sur le sol.<BR>
+Les trois cônes <I>K</I><SUB>1</SUB>,<I>K</I><SUB>2</SUB>,<I>K</I><SUB>3</SUB> sont identiques : leur hauteur est égale au 
+rayon <I>r</I> de leurs cercles de base et les centres de ces cercles sont les 
+sommets d’un triangle équilatèral de côté 1.<BR>
+Le cône <I>K</I><SUB>4</SUB> a une hauteur égale au diamètre de son cercle de base et 
+celui-ci est tangent extérieurement aux cercles de base des trois autres 
+cônes.<BR>
+Quelle condition doit vérifier <I>r</I> pour que, depuis le sommet de chacun des 
+quatre cônes, les trois autres sommets soient visibles ?
+</P><H3 CLASS="subsection"><A NAME="htoc317">20.9.1</A>  La modélisation avec <TT>Xcas</TT></H3><P>
+Pour tracer on cône, ayant un sommet et une base , il faut utiliser la 
+commande <TT>demi_cone</TT> de <TT>Xcas</TT> qui a comme patramètres :<BR>
+son sommet, la direction de son axe, son demi-angle au sommet et,
+sa hauteur algégrique.<BR>
+Le rayon des cercles de base des cônes <I>K</I><SUB>1</SUB>,<I>K</I><SUB>2</SUB>,<I>K</I><SUB>3</SUB> vaut <I>r</I> avec 
+0 ≤ <I>r</I>≤ 0.5.<BR>
+Le rayon du cercle de base du cône <I>K</I><SUB>4</SUB> vaut <I>R</I>=√<SPAN style="text-decoration:overline">3</SPAN>/3−<I>r</I>, et son 
+demi-angle au sommet a pour tangente 1/2.<BR>
+On appelle <I>A</I>,<I>B</I>,<I>C</I>,<I>D</I> les sommets des cônes <I>K</I><SUB>1</SUB>,<I>K</I><SUB>2</SUB>,<I>K</I><SUB>3</SUB>,<I>K</I><SUB>4</SUB>.<BR>
+On tape ou on exécute <TT>cones.xws</TT> :
+</P><PRE CLASS="verbatim">r:=element(0 .. 0.5,0.19);
+A:=point([0,0,r]):;
+B:=point(1,0,r):;
+C:=point(1/2,sqrt(3)/2,r):;
+demi_cone(A,[0,0,1],pi/4,-r);
+demi_cone(B,[0,0,1],pi/4,-r);
+demi_cone(C,[0,0,1],pi/4,-r);
+R:=sqrt(3)/3-r;
+D:=point(1/2,sqrt(3)/6,2*R):;
+K4:=affichage(demi_cone(D,[0,0,1],atan(0.5),-2*R),rempli+bleu);
+segment(A,B,couleur=rouge);
+segment(C,B,couleur=rouge);
+segment(C,A,couleur=rouge);
+affichage(inter(plan(A,B,C),K4),vert);
+evalf(sqrt(3)/9);
+</PRE><P>On peut faire varier <I>r</I> et voir qu’il faut choisir <I>r</I>&gt;<I>a</I> avec <I>a</I>≃ 0.2.<BR>
+Le cas limite étant que les segments <I>AB</I>, <I>BC</I> et <I>AC</I> doivent être 
+tangent au cercle <I>C</I><SUB>4</SUB> qui est l’intersection du cône <I>K</I><SUB>4</SUB> et du plan 
+<I>ABC</I>.<BR>
+Il est interessant de regarder la vue de dessus (<TT>Menu-&gt;3-d</TT>) pour voir comment évolue l’intersection du cône <I>K</I><SUB>4</SUB> avec le plan <I>ABC</I>.</P><H3 CLASS="subsection"><A NAME="htoc318">20.9.2</A>  Le raisonnement</H3><P>
+Il est évident que depuis <I>D</I> on peut toujours voir les points <I>A</I>,<I>B</I>,<I>C</I> et 
+inversement d’un des points <I>A</I>,<I>B</I>,<I>C</I> on peut toujours voir le point <I>D</I>.<BR>
+Pour que l’on puisse voir <I>B</I> et <I>C</I> depuis le point <I>A</I> il ne faut pas que le
+cercle <I>C</I><SUB>4</SUB>, intersection du cône <I>K</I><SUB>4</SUB> avec le plan <I>ABC</I> coupe les 
+segments <I>AB</I> et <I>AC</I>. Pour que l’on puisse voir <I>C</I> depuis le point <I>B</I> il ne 
+faut pas que le cercle <I>C</I><SUB>4</SUB> coupe le segments <I>BC</I>.
+IL faut donc chercher l’intersection <I>C</I><SUB>4</SUB>, du cône <I>K</I><SUB>4</SUB> avec le plan <I>ABC</I>,
+à savoir son centre et son rayon. Son centre a pour coordonnées
+1/2,√<SPAN style="text-decoration:overline">3</SPAN>/6,<I>r</I>.<BR>
+Si son rayon vaut <I>r</I>1, on sait que la hauteur du cône <I>K</I><SUB>4</SUB> vaut 2*<I>R</I> et 
+Comme le demi-angle au sommet du cône <I>K</I><SUB>4</SUB>
+a pour tangente 1/2, la distance du centre de <I>C</I><SUB>4</SUB> au sommet de <I>K</I><SUB>4</SUB> est
+égale au double du rayon du cercle <I>C</I><SUB>4</SUB> donc :<BR>
+2*<I>R</I>=<I>r</I>+2*<I>r</I>1 or <I>R</I>=√<SPAN style="text-decoration:overline">3</SPAN>/3−<I>r</I> donc :<BR>
+ 2*<I>R</I>=2*√<SPAN style="text-decoration:overline">3</SPAN>/3−2*<I>r</I>=<I>r</I>+2*<I>r</I>1
+<I>r</I>1=√<SPAN style="text-decoration:overline">3</SPAN>/3−3*<I>r</I>/2.<BR>
+Pour tracer ce cercle en vert il faut taper :<BR>
+<TT>r1:=sqrt(3)/3-3*r/2</TT><BR>
+<TT>affichage(cercle([1/2,sqrt(3)/6,r],[r1,0,0],A),vert)</TT><BR>
+
+Lorsque ce cercle est tangent aux segments <I>AB</I>,
+<I>BC</I> et <I>AC</I> il est facile de trouver son rayon car c’est donc le cercle 
+inscrit au triangle <I>ABC</I>. Comme le 
+triangle <I>ABC</I> est équilatéral, son rayon vaut √<SPAN style="text-decoration:overline">3</SPAN>/6. 
+donc 2*<I>R</I>=<I>r</I>+√<SPAN style="text-decoration:overline">3</SPAN>/3 
+0n a donc, le cercle <I>C</I><SUB>4</SUB> est tangent aux segments <I>AB</I>, <I>BC</I> et <I>AC</I> :<BR>
+<I>r</I>1=√<SPAN style="text-decoration:overline">3</SPAN>/3−3*<I>r</I>=√<SPAN style="text-decoration:overline">3</SPAN>/6,<BR>
+c’est à dire :<BR>
+<I>r</I>=√<SPAN style="text-decoration:overline">3</SPAN>/9=<I>a</I> et <TT>evalf(sqrt(3)/9)=0.19245008973</TT>.<BR>
+Si <I>r</I>&lt;<I>a</I> chaque segment <I>AB</I>, <I>BC</I> et <I>AC</I> coupent le cône <I>K</I><SUB>4</SUB> en 2 points
+et si <I>r</I> ≥ <I>a</I> les segments sont tangents ou extérieurs au cône <I>K</I><SUB>4</SUB>. </P>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casexo019.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo021.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Pour traduire un programme Xcas en C++</title>
+</head>
+<body >
+<a href="cascmd_fr1117.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr1119.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1355" class="subsection">12.3.1  Pour traduire un programme <span style="font-family:monospace">Xcas</span> en <span style="font-style:italic">C</span><sup>++</sup></h3>
+<p><a id="hevea_default2163"></a><a id="hevea_default2164"></a>
+Lorsqu’un programme <span style="font-family:monospace">Xcas</span> (par exemple <span style="font-family:monospace">nomprog</span>) a des variables typées, on pourra le traduire en <span style="font-style:italic">C</span><sup>++</sup> et le compiler grâce à la commande <span style="font-family:monospace">cpp</span> suivi du nom du 
+programme (par exemple <span style="font-family:monospace">cpp(nomprog)</span>)<br>
+Cela va créer un fichier <span style="font-family:monospace">giac_nomprog.cpp</span> et un fichier 
+<span style="font-family:monospace">libgiac_nomfichier.so</span> sur le disque dur.<br>
+<span style="font-weight:bold">Attention</span> le nom du fichier doit avoir plus qu’une lettre.<br>
+Par exemple :<br>
+<span style="font-family:monospace">truc(n:integer):={return 2*n+1;}</span> puis <br>
+<span style="font-family:monospace">cpp(truc)</span><br>
+On obtient :<br>
+<span style="font-family:monospace">1</span><br>
+et cela a créé sur le disque dur le fichier <span style="font-family:monospace">giac_truc.cpp</span> qui est 
+un fichier <span style="font-style:italic">C</span><sup>++</sup> et le fichier <span style="font-family:monospace">libgiac_truc.so</span> qui est 
+le fichier <span style="font-style:italic">C</span><sup>++</sup> compilé :<br>
+Voici ce que contient <span style="font-family:monospace">giac_truc.cpp</span> :
+</p><pre class="verbatim">#include &lt;giac/giac.h&gt;
+using namespace std;
+namespace giac {
+giac::gen truc(int n_i,const giac::context * contextptr){
+giac::makevecteur(return 2*n_i+1)
+}
+giac::gen _truc(const giac::gen &amp; g,const giac::context * contextptr){
+return truc(g,contextptr);
+}
+
+const string _truc_s("truc");
+unary_function_eval __truc(0,&amp;_truc,_truc_s);
+unary_function_ptr at_truc(&amp;__truc,0,true);
+}
+</pre><p>
+La commande <span style="font-family:monospace">insmode(nomprog)</span> utilisé dans une session <span style="font-family:monospace">Xcas</span> va lire
+le module compilé <span style="font-family:monospace">libgiac_truc.so</span> sur le disque dur.<br>
+On peut alors utiliser le même nom <span style="font-family:monospace">nomprog</span>) dans cette session <span style="font-family:monospace">Xcas</span> 
+mais le programme sera plus efficace grâce à la compilation.</p>
+<hr>
+<a href="cascmd_fr1117.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr1119.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

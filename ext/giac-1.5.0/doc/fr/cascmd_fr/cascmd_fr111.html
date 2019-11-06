@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Solution approchée de y’=f(t,y) : odesolve</title>
+</head>
+<body >
+<a href="cascmd_fr110.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr112.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec167" class="subsection">4.3.5  Solution approchée de y’=f(t,y) : <span style="font-family:monospace">odesolve</span></h3>
+<p><a id="hevea_default198"></a><a id="hevea_default199"></a>
+Soit <span style="font-style:italic">f</span> une fonction de ℝ<sup>2</sup> 
+dans ℝ.<br>
+<span style="font-family:monospace">odesolve</span> renvoie la valeur approchée <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>1) de la solution 
+de léquation differentielle <span style="font-style:italic">y</span>′=<span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">y</span>) lorsque <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span><sub>0</sub>)=<span style="font-style:italic">y</span><sub>0</sub>.<br>
+<span style="font-family:monospace">odesolve</span> a comme paramètres :
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">odesolve(f(t,y),[t,y],[t0,y0],t1)</span> ou<br>
+<span style="font-family:monospace">odesolve(f(t,y),t=t0..t1,y,y0)</span> ou<br>
+<span style="font-family:monospace">odesolve(t0..t1,f,y0)</span> ou<br>
+<span style="font-family:monospace">odesolve(t0..t1,(t,y)-&gt;f(t,y),y0)</span><br>
+renvoie la valeur approchée de 
+<span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>1) lorsque <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>) est la 
+solution de <span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>)=<span style="font-style:italic">f</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)) qui vérifie  <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>0)=<span style="font-style:italic">y</span>0.
+</li><li class="li-itemize">On peut ajouter un paramètre optionnel pour
+indiquer la discrétisation en temps souhaitée
+(<span style="font-family:monospace">tstep=valeur</span>). Cette valeur n’est pas forcément
+respectée par le solver. Par défaut <span style="font-family:monospace">tstep=0.3</span>)
+</li><li class="li-itemize">On peut indiquer en paramètre optionnel <span style="font-family:monospace">curve</span>
+pour obtenir la liste des [<span style="font-style:italic">t</span>,[<span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)]] calculés au lieu
+de la seule valeur de <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>1).
+</li></ul><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">odesolve(sin(t*y),[t,y],[0,1],2)</span></div><p>
+ou :
+</p><div class="center">
+<span style="font-family:monospace">odesolve(sin(t*y),t=0..2,y,1)</span>
+</div><p>
+ou :
+</p><div class="center">
+<span style="font-family:monospace">odesolve(0..2,(t,y)-&gt;sin(t*y),1)</span>
+</div><p>
+ou encore on définit la fonction :
+</p><div class="center">
+<span style="font-family:monospace">f(t,y):=sin(t*y)</span>
+</div><p>
+et on tape:
+</p><div class="center"><span style="font-family:monospace">odesolve(0..2,f,1)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[1.82241255675]</span></div><p>
+puis on tape :
+</p><div class="center"><span style="font-family:monospace">odesolve(0..2,f,1,tstep=0.3)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[1.82241255675]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">odesolve(sin(t*y),t=0..2,y,1,tstep=0.5)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[1.82241255675]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">odesolve(sin(t*y),t=0..2,y,1,tstep=0.5,curve)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[0.0,[1.0]],[0.3906,[1.07811817892]],[0.760963058921,[1.30972370161]],[1.07086790074,[1.60476137064]],[1.39334557444,[1.86417104883]],[1.78645581533,[1.90374891395]],[2.0,[1.82241253071]]]</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">odesolve(sin(t*y),t=0..2,y,1,curve)</span></div><p>
+Ou on tape :
+</p><div class="center"><span style="font-family:monospace">odesolve(sin(t*y),t=0..2,y,1,tstep=0.3,curve)</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">[[0.0,[1.0]],[0.3781,[1.07309655677]],[0.6781,[1.24392692452]],[0.9781,[1.51224777765]],[1.2781,[1.7904830809]],[1.5781,[1.92164503333]],[1.8781,[1.87481063533]],[2.0,[1.82241255617]]]</span></div>
+<hr>
+<a href="cascmd_fr110.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr112.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

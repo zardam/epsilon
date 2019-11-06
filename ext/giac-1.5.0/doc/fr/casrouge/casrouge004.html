@@ -1,0 +1,809 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casrouge.css">
+<TITLE>Les exercices d’algorithmiques au baccalauréat série S</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casrouge003.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge005.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc113">Chapitre 4</A>  Les exercices d’algorithmiques au baccalauréat série S</H1><H2 CLASS="section"><A NAME="toc26"></A><A NAME="htoc114">4.1</A>  Trois exercices classiques</H2><H3 CLASS="subsection"><A NAME="htoc115">4.1.1</A>  La série harmonique</H3><P>
+On considère la suite <I>u</I><SUB><I>n</I></SUB>=∑<SUB><I>j</I>=1</SUB><SUP><I>n</I></SUP>1/<I>j</I>.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Montrer que <I>u</I><SUB>2<I>n</I></SUB>−<I>u</I><SUB><I>n</I></SUB> est une somme de <I>n</I> termes et que chaque terme
+est supérieur ou égal à 1/2<I>n</I>. En déduire que pour tout <I>n</I>, 
+on a <I>u</I><SUB>2<I>n</I></SUB>−<I>u</I><SUB><I>n</I></SUB>≥1/2.
+</LI><LI CLASS="li-itemize">En déduire que <I>u</I><SUB><I>n</I></SUB> tend vers +∞ quand <I>n</I> tend vers +∞.
+</LI><LI CLASS="li-itemize">On écrit <I>u</I><SUB>16</SUB>=∑<SUB><I>j</I>=1</SUB><SUP>16</SUP>1/<I>j</I>=1+1/2+(1/3+1/4)+(1/5+1/6+1/7+1/8)+∑<SUB><I>j</I>=9</SUB><SUP>16</SUP>1/<I>j</I>. Montrer que <I>u</I><SUB>16</SUB>&gt;3.
+</LI><LI CLASS="li-itemize">Écrire un algorithme permettant de trouver la plus petite valeur de <I>n</I> pour laquelle 3&lt;<I>u</I><SUB><I>n</I></SUB>.
+</LI><LI CLASS="li-itemize">Écrire un algorithme permettant de trouver la plus petite valeur de <I>n</I> pour laquelle <I>p</I>≤ <I>u</I><SUB><I>n</I></SUB> avec <I>p</I>∈ ℝ. Tester ce programme pour <I>p</I>=3,5,10,11
+</LI></UL><P> 
+<B>La solution</B><BR>
+<I>u</I><SUB>2<I>n</I></SUB>−<I>u</I><SUB><I>n</I></SUB>= 1/<I>n</I>+1+..+1/<I>n</I>+<I>n</I> et on a :
+1/<I>n</I>+<I>n</I>≤ 1/<I>n</I>+<I>k</I> pour <I>k</I>=1..<I>n</I>.<BR>
+<I>u</I><SUB>2<I>n</I></SUB>−<I>u</I><SUB><I>n</I></SUB> a donc <I>n</I> termes et chaque terme est supérieur ou égal à
+ 1/2<I>n</I> donc<BR>
+ <I>u</I><SUB>2<I>n</I></SUB>−<I>u</I><SUB><I>n</I></SUB>≥ <I>n</I>/2<I>n</I>=1/2.<BR>
+Donc <I>u</I><SUB>2<I>n</I></SUB>−<I>u</I><SUB><I>n</I></SUB> ne tend pas vers zéro quand <I>n</I> tend vers +∞ donc <I>u</I><SUB><I>n</I></SUB> n’est pas convergente. Comme <I>u</I><SUB><I>n</I></SUB> est croissante et non convergente, 
+<I>u</I><SUB><I>n</I></SUB> n’est pas bornée donc <I>u</I><SUB><I>n</I></SUB> tend vers +∞ quand <I>n</I> tend vers 
++∞<BR>
+<B>L’algorithme en langage naturel</B>
+</P><PRE CLASS="verbatim">Entrée :         p entier
+Variables :      j entier,S reel
+Initialisation : Affecter à S la valeur 0
+                 Affecter à j la valeur 0 
+Traitement :     Tant que S&lt;p faire
+                   Affecter à j la valeur j+1
+                   Affecter à S la valeur S+1/j
+                 FinTantque
+Sortie :         j
+</PRE><P><B>La solution en langage </B><B><TT>Xcas</TT></B>
+</P><PRE CLASS="verbatim">harmonique(p):={
+local j, S;
+S:=0;
+j:=0;
+tantque S&lt;p faire
+  j:=j+1;
+  S:=S+1/j;
+ftantque;
+retoune j;
+}:;
+</PRE><P>On tape :
+<TT>harmonique(3)</TT><BR>
+On obtient :
+<TT>11</TT><BR>
+On tape :
+<TT>harmonique(5)</TT><BR>
+On obtient :
+<TT>83</TT><BR>
+On tape :
+<TT>harmonique(10)</TT><BR>
+On obtient :
+<TT>12367</TT><BR>
+On tape : <TT>harmonique(11)</TT><BR>
+On obtient :
+<TT>33617</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc116">4.1.2</A>  Le compte bancaire</H3><P>
+Lors de la naissance de Pierre son grand-père dépose sur un compte bancaire
+100 euros. À chaque anniversaire de Pierre, il dépose sur ce compte 
+100 euros auquel il ajoute le double de l’age de Pierre.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Écrire un algorithme permettant de trouver le montant se trouvant sur 
+son compte le lendemain des 10 ans de Pierre
+</LI><LI CLASS="li-itemize">Modifier l’algorithme précédent pour déterminer à quel age Pierre pourra-t-il acheter un objet de 2000 euros ? de <I>P</I> euros ?
+</LI><LI CLASS="li-itemize">Modifier les algorithmes précédents lorsque le compte sur lequel est 
+déposé l’argent rapporte 2.5% l’an (net d’impots, de taxes et de droit de 
+succession !)
+</LI></UL><P>
+<B>La solution en langage naturel</B><BR>
+Montant du compte lorsque Pierre a <I>n</I> ans :
+</P><PRE CLASS="verbatim">Entrée :         n entier
+Variables :      S reel, j entier
+Initialisation : Affecter à S la valeur 100
+Traitement :     Pour j allant de 1 à n faire 
+                     Affecter à S la valeur S+100+2*j
+                 FinPour
+Sortie :         S
+</PRE><P>Somme disponible&gt;P et age correspondant de Pierre 
+</P><PRE CLASS="verbatim">Entrée :         P reel
+Variables :      S reel, j entier
+Initialisation : Affecter à S la valeur 100
+                 Affecter à j la valeur 0
+Traitement :     Tantque S&lt;P 
+                   Affecter à j la valeur j+1
+                   Affecter à S la valeur S+100+2*j
+                 FinTantque
+Sortie :         S,j
+</PRE><P>Si le compte rapporte 2.5% par an, on écrira dans le traitement des deux 
+algorithmes précédents :<BR>
+<TT>Affecter à S la valeur S*1.0.25+100+2*j</TT> (au lieu de
+<TT>Affecter à S la valeur S+100+2*j</TT>)<BR>
+Éventuellement on renverra la valeur de <I>S</I> arrondie avec seulement 2 
+chiffres après la virgule (<TT>evalf(S,2)</TT>).<BR>
+<B>La solution en langage </B><B><TT>Xcas</TT></B>
+</P><PRE CLASS="verbatim">banque(n):={
+//Montant du compte lorsque Pierre a n ans 
+local S,j;
+S:=100;
+pour j de 1 jusque n faire
+  S:=S+100+2*j;
+fpour;
+retourne S;
+}:;
+banques(P):={
+//Somme disponible&gt;=P et age correspondant de Pierre 
+local S,j;
+S:=100;
+j:=0;
+tantque S&lt;P faire
+  j:=j+1;
+  S:=S+100+2*j;
+ftantque;
+retourne S,j;
+}:;
+banquier(n):={
+//On applique un interet de 2.5 pour cent 
+//Montant du compte lorsque Pierre a n ans 
+local S,j;
+S:=100;
+pour j de 1 jusque n faire
+  S:=S*1.025+100+2*j;
+fpour;
+retourne evalf(S,2);
+}:;
+banquiers(P):={
+//On applique un interet de 2.5 pour cent 
+//Somme disponible&gt;=P et age correspondant de Pierre 
+local S,j;
+S:=100;
+j:=0;
+tantque S&lt;P faire
+  j:=j+1;
+  S:=S*1.025+100+2*j;
+ftantque;
+retourne evalf(S,2),j;
+}:;
+</PRE><P>On tape :
+<TT>banque(10)</TT><BR>
+On obtient :
+<TT>1210</TT><BR>
+On tape :
+<TT>banques(2000)</TT><BR>
+On obtient :
+<TT>2106,17</TT><BR>
+On tape :
+<TT>banquier(10)</TT><BR>
+On obtient :
+<TT>1367.02</TT><BR>
+On tape :
+<TT>banquiers(2000)</TT><BR>
+On obtient :
+<TT>2027.75,14</TT></P><H3 CLASS="subsection"><A NAME="htoc117">4.1.3</A>  La suite de Syracuse</H3><P>
+Soit <I>a</I> un entier positif. On veut étudier la suite de 
+Syracuse définie par :<BR>
+<I>u</I><SUB>0</SUB>=<I>a</I><BR>
+<I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>−1</SUB>/2      si <I>u</I><SUB><I>n</I>−1</SUB> est pair<BR>
+<I>u</I><SUB><I>n</I></SUB>=3*<I>u</I><SUB><I>n</I>−1</SUB>+1    si <I>u</I><SUB><I>n</I>−1</SUB> est impair.<BR>
+Cette suite se termine toujours (???) par 1, 4, 2, 1, 4, 2, 1... mais on ne sait pas 
+le démontrer !!!
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Écrire un algorithme permettant de trouver la première valeur <I>n</I> de <I>k</I>
+pour laquelle <I>u</I><SUB><I>k</I></SUB>=1.
+</LI><LI CLASS="li-itemize">Modifier cet algorithme afin de connaitre en plus la plus grande valeur
+<I>m</I> prise par <I>u</I><SUB><I>k</I></SUB> lorsque <I>k</I>=0..<I>n</I>.
+</LI><LI CLASS="li-itemize">Tester ce programme pour <I>a</I>=3, <I>a</I>=5, <I>a</I>=7 , <I>a</I>=75 et <I>a</I>=97 
+</LI><LI CLASS="li-itemize">Tracer dans un repère orthogonal, pour <I>a</I>=1...100,
+les points de coordonnées (<I>a</I>,<I>n</I>) (en rouge) et les points de coordonnées 
+(<I>a</I>,<I>m</I>) (en noir).
+</LI></UL><P> 
+<B>La solution en langage naturel</B><BR>
+Algorithme qui renvoie <I>n</I>. <I>n</I> est la première valeur de <I>k</I>
+pour laquelle <I>u</I><SUB><I>k</I></SUB>=1
+</P><PRE CLASS="verbatim">Entrée :         a
+Variables :      k
+Initialisation : Affecter à k la valeur 0
+Traitement :     Tant que a!=1 faire
+                   Si a est pair alors 
+                     Affecter à a la valeur a/2
+                   Sinon
+                     Affecter à a la valeur 3a+1
+                   FinSi
+                   Affecter à k la valeur k+1
+                 FinTantque
+Sortie :         k
+</PRE><P>Algorithme qui renvoie <I>m</I>,<I>n</I> où <I>m</I> est la plus grande valeur
+prise par <I>u</I><SUB><I>k</I></SUB> lorsque <I>k</I>=0..<I>n</I> et <I>n</I> est la première valeur de <I>k</I>
+pour laquelle <I>u</I><SUB><I>k</I></SUB>=1
+</P><PRE CLASS="verbatim">Entrée :         a
+Variables :      k,m
+Initialisation : Affecter à m la valeur a
+                 Affecter à k la valeur 0 
+Traitement :     Tant que a!=1 faire
+                   Si a est pair alors 
+                     Affecter à a la valeur a/2
+                   Sinon
+                     Affecter à a la valeur 3a+1
+                     Si a&gt;m alors Affecter à m la valeur a
+                   FinSi
+                   Affecter à k la valeur k+1
+                 FinTantque
+Sortie :         m,k
+</PRE><P><B>La solution en langage </B><B><TT>Xcas</TT></B>
+</P><PRE CLASS="verbatim">syracuse(a):={
+  local k,m;
+  k:=0;
+  m:=a;
+  tantque a!=1 faire
+    si irem(a,2)==0 alors 
+      a:=iquo(a,2); 
+    sinon
+      a:=a*3+1;
+      si a&gt;m alors m:=a; fsi;
+    fsi;
+    k:=k+1;
+  ftantque;
+retourne m,k;
+}:;
+</PRE><P>On tape :
+<TT>syracuse(3)</TT>   
+On obtient :
+<TT>16,7</TT><BR>
+On tape :
+<TT>syracuse(5)</TT>   
+On obtient :
+<TT>16,5</TT><BR>
+On tape :
+<TT>syracuse(7)</TT>   
+On obtient :
+<TT>52,16</TT><BR>
+On tape :
+<TT>syracuse(75)</TT>  
+On obtient :
+<TT>340,14</TT><BR>
+On tape :
+<TT>syracuse(97)</TT>  
+On obtient :
+<TT>9232,118</TT><BR>
+On tape le programme qui affiche en rouge les points (<I>a</I>,<I>n</I>) et en noir les 
+points (<I>a</I>,<I>m</I>) lorsque <I>a</I>=1..100.
+</P><PRE CLASS="verbatim">syracuse100():={
+local a,n,m,L;
+L:=NULL;
+pour a de 1 jusque 100 faire
+  m,n:=syracuse(a);
+  L:=L,point(a,n,affichage=1),point(a,m,affichage=1);
+fpour;
+retourne L;
+}:;
+</PRE><P>On tape :
+<TT>syracuse100()</TT> et on obtient :<BR><BR>
+<IMG SRC="casrouge001.png">
+Mais en changeant le repère, on voit les points tels que point(97,9232)<BR><BR>
+<IMG SRC="casrouge002.png"></P><H2 CLASS="section"><A NAME="toc27"></A><A NAME="htoc118">4.2</A>  En 2009 Centre étranger</H2><P>
+On considère la fonction <I>f</I>(<I>x</I>)=<I>xe</I><SUP><I>x</I></SUP>−1 sur ℝ.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Calculer <I>f</I>(0 et <I>f</I>(1).
+En étudiant les variations de <I>f</I> sur ℝ, montrer que <I>f</I>(<I>x</I>)=0 
+admet une solution unique dans [0;1].
+</LI><LI CLASS="li-itemize">On considère l’algorithme :
+<PRE CLASS="verbatim">Entrée :         f la fonction pr\'ec\'edente 
+                 n un entier
+Variables :      a,b,m,p
+Initialisation : Affecter à a la valeur 0
+                 Affecter à b la valeur 1 
+Traitement :     Tant que b-a&gt;10^-n faire
+                   Affecter à m la valeur (a+b)/2
+                   Affecter à p la valeur f(a)*f(m)
+                   Si p&gt;0 
+                     Affecter à a la valeur m
+                   Sinon
+                     Affecter à b la valeur m
+                   FinSi 
+                 FinTantque
+Sortie :         a,b
+</PRE>On fait fonctionner cet algorithme avec <I>n</I>=1.<BR>
+Donner les valeurs que prennent successivement les différents paramètres. 
+</LI><LI CLASS="li-itemize">Que détermine cet algorithme ?<BR>
+Quel influence le nombre <I>n</I> a-t-il sur le résultat obtenu ?
+</LI></UL><P><BR>
+<B>La solution</B><BR>
+On a <I>f</I>(0)=−1 et <I>f</I>(1)≃ 1.71828182846<BR>
+Sur ]−∞;0] <I>f</I>(<I>x</I>)=<I>xe</I><SUP><I>x</I></SUP>−1≤ −1&lt;0 donc <I>f</I> ne s’annule pas.<BR>
+La fonction <I>f</I> est continue et est strictement croissante sur [0;+∞[ 
+puisque sa derivée <I>f</I>′(<I>x</I>)=<I>e</I><SUP><I>x</I></SUP>(<I>x</I>+1) est négative sur ]−∞;−1[ et 
+positive sur ]−1;+∞[.<BR>
+Donc d’après le théorème des valeurs intermédiaires <I>f</I>(<I>x</I>)=0 a une 
+solution unique comprise entre 0 et 1 puisque <I>f</I>(0)&lt;0 et <I>f</I>(1)&gt;0.<BR>
+L’algorithme trouve un encadrement de longueur inférieure à 1<I>O</I><SUP>−<I>n</I></SUP> de 
+cette solution : a chaque étape on partage l’intervalle [<I>a</I>;<I>b</I>] en deux 
+(dichotomie). Si <I>m</I> est le milieu de [<I>a</I>;<I>b</I>], on regarde si <I>f</I>(<I>a</I>) et <I>f</I>(<I>m</I>) 
+sont de même signe : si oui, <I>m</I> peut remplacer <I>a</I> et sinon <I>m</I> peut 
+remplacer <I>b</I> et le zéro se trouve toujours entre <I>a</I> et <I>b</I>.<BR>
+Lorsque <I>n</I>=1 cet encadrement est de longueur 0,1<BR>
+<B>Initialisation : </B> <I>a</I>=0 et <I>b</I>=1<BR>
+<B>Etape 1 : </B> <I>m</I>=0.5, <I>p</I>=<I>f</I>(0)<I>f</I>(0.5)=0.17563936465, <I>a</I>=0.5, <I>b</I>=1<BR>
+<B>Etape 2 : </B> <I>m</I>=0.75, <I>p</I>=<I>f</I>(0.5)<I>f</I>(0.75)=−0.103232038761, <I>a</I>=0.5, <I>b</I>=0.75<BR>
+<B>Etape 3 : </B> <I>m</I>=0.625, <I>p</I>=<I>f</I>(0.5)<I>f</I>(0.625)=−0.02944659346,<I>a</I>=0.5, <I>b</I>=0.625<BR>
+<B>Etape 4 : </B> <I>m</I>=0.5625, <I>p</I>=<I>f</I>(0.5)<I>f</I>(0.5625)=0.002244979408,<I>a</I>=0.5625, <I>b</I>=0.625<BR>
+<B>Résultat : </B> 0.5625,0.625<BR>
+Arrêt du tantque car (<I>b</I>−<I>a</I>)&lt;0.1 et le résultat est donc 0.5625,0.625.<BR><BR>
+<B>La traduction en langage </B><B><TT>Xcas</TT></B>
+</P><PRE CLASS="verbatim">dichotomie(f,n):={
+local a,b,m,p;
+a:=0.;
+b:=1.;
+tantque b-a&gt;10^-n faire
+  m:=(a+b)/2;
+  p:=f(a)*f(m);
+  si p&gt;0 alors 
+    a:=m;
+  sinon
+    b:=m;
+  fsi;
+ftantque;
+retourne a,b;
+}:;
+</PRE><P>On tape :
+<TT>dichotomie(f,1)</TT><BR>
+On obtient :
+<TT>0.5625,0.6250</TT><BR>
+On tape :
+<TT>dichotomie(f,2)</TT><BR>
+On obtient :
+<TT>0.5625,0.5703125</TT><BR>
+On tape :
+<TT>dichotomie(f,5)</TT><BR>
+On obtient :
+<TT>0.567138671875,0.56714630127</TT>
+<B>Compléments</B>
+Dans la fonction <TT>dichotomie</TT> si dessus on a supposé que la fonction 
+<TT>f</TT> avait un zéro sur ]0.0,1.0[. Voici une fonction <TT>dichotomie</TT>
+plus générale que je nomme <TT>dichotom</TT>
+</P><PRE CLASS="verbatim">dichotom(f,a,b,n):={
+  local m,p;
+  a:=evalf(a);b:=evalf(b);
+  si a&gt;b alors m:=b;b:=a;a:=m; fsi;
+  p:=f(b)*f(a);
+  si p&gt;0 alors return("f(",a,")*f(",b,")&gt;0"); fsi;
+  DIGITS:=n+2;
+  tantque (b-a)&gt;10.0^-n faire 
+    m:=(a+b)/2;
+    p:=f(a)*f(m);
+    si p&gt;0 alors
+      a:=m;
+    sinon
+      b:=m;
+    fsi;
+  ftantque ;
+  retourne a,b;
+}:;
+</PRE><P>On tape :<BR>
+<TT>f(x):=x*exp(x)-1;</TT>
+<TT>dichotom(f,0,1,15)</TT>
+On obtient :<BR>
+<TT>0.56714329040978351</TT><BR>
+On tape :<BR>
+<TT>dichotom(f,2,1,5)</TT>
+On obtient :<BR>
+<TT>"f(",1.0,")*f(",2.0,")&gt;0"</TT>
+</P><H2 CLASS="section"><A NAME="toc28"></A><A NAME="htoc119">4.3</A>  En 2010 Amérique du sud</H2><UL CLASS="itemize"><LI CLASS="li-itemize">
+On considère l’algorithme :
+<PRE CLASS="verbatim">Entrée :         n un entier
+Variables :      u,S,j
+Initialisation : Affecter à u la valeur 1
+                 Affecter à S la valeur 1 
+                 Affecter à j la valeur 0 
+Traitement :     Tant que j&lt;n faire
+                   Affecter à u la valeur 2u+1-j
+                   Affecter à S la valeur S+u
+                   Affecter à j la valeur j+1
+                 FinTantque
+Sortie :         u,S
+</PRE>Justifier que pour <I>n</I>=3, le résultat de cet algorithme est 11,21 
+</LI><LI CLASS="li-itemize">On considère les suites <I>u</I><SUB><I>n</I></SUB><I>n</I> et <I>S</I><SUB><I>n</I></SUB> définies par :<BR>
+<I>u</I><SUB>0</SUB>=1 et <I>u</I><SUB><I>n</I>+1</SUB>=2<I>u</I><SUB><I>n</I></SUB>+1−<I>n</I><BR>
+<I>S</I><SUB><I>n</I></SUB>=<I>u</I><SUB>0</SUB>+<I>u</I><SUB>+</SUB>...+<I>u</I><SUB><I>n</I></SUB>.<BR>
+Que représente les valeurs données par cet algorithme ?
+</LI><LI CLASS="li-itemize">Le but de cette question est de trouver <I>u</I><SUB><I>n</I></SUB> en fonction de <I>n</I>
+Modifier l’algorithme pour qu’il renvoie aussi <I>u</I><SUB><I>n</I></SUB>−<I>n</I>.
+Montrer que <I>u</I><SUB><I>n</I></SUB>−<I>n</I>=2<SUP><I>n</I></SUP>
+</LI><LI CLASS="li-itemize">Calculer 1+2+...+<I>n</I>  et  1+2+2<SUP>2</SUP>+...+2<SUP><I>n</I></SUP>.<BR>
+En déduire <I>S</I><SUB><I>n</I></SUB> en fonction de <I>n</I>.
+</LI></UL><P><BR>
+<B>La solution</B><BR>
+Pour <I>n</I>=3, on a :<BR>
+<B>Initialisation : </B> u=1, S=1, j=0<BR>
+<B>Etape 1 : </B> u=3, S=4, j=1<BR>
+<B>Etape 2 : </B> u=6, S=10, j=2<BR>
+<B>Etape 3 : </B> u=11, S=21, j=3<BR>
+<B>Résultat : </B> 11,21<BR>
+Arrêt du tantque car j&gt;=3 et le résultat est donc 11,21.<BR>
+Dans le corps du tantque on calcule <I>u</I>,<I>S</I> et <I>j</I> et on a <I>u</I>=<I>u</I><SUB><I>j</I></SUB> et <I>S</I>=<I>S</I><SUB><I>j</I></SUB>.<BR>
+Lorsque <I>j</I>=<I>n</I> le tantque s’arrête et renvoie <I>u</I><SUB><I>n</I></SUB>,<I>S</I><SUB><I>n</I></SUB>.<BR><BR>
+<B>La traduction en langage </B><B><TT>Xcas</TT></B>
+</P><PRE CLASS="verbatim">suiteserie(n):= {
+local u,S,j;
+u:=1;
+S:=1;
+j:=0;
+tantque j&lt;n faire
+  u:=2u+1-j;
+  S:=S+u;
+  j:=j+1;
+ftantque;
+retourne u,S
+}:;
+</PRE><P>On veut trouver <I>u</I><SUB><I>n</I></SUB> en fonction de <I>n</I>, on modifie l’algorithme pour qu’il 
+renvoie aussi <I>u</I><SUB><I>n</I></SUB>−<I>n</I>, on modifie seulement la sortie en <TT>u,s-n,S</TT><BR>
+Pour <I>n</I>=0, on a :<BR>
+<B>Initialisation : </B> u=1, S=1, j=0<BR>
+<B>Résultat : </B> 1,1,1<BR>
+Pour <I>n</I>=1, on a :<BR>
+<B>Initialisation : </B> u=1, S=1, j=0<BR>
+<B>Etape 1 : </B> u=3, S=4, j=1<BR>
+<B>Résultat : </B> 3,2,4<BR>
+Pour <I>n</I>=2, on a :<BR>
+<B>Initialisation : </B> u=1, S=1, j=0<BR>
+<B>Etape 1 : </B> u=3, S=4, j=1<BR>
+<B>Etape 2 : </B> u=6, S=10, j=2<BR>
+<B>Résultat : </B> 6,4,10<BR>
+Pour <I>n</I>=3, on a :<BR>
+<B>Initialisation : </B> u=1, S=1, j=0<BR>
+<B>Etape 1 : </B> u=3, S=4, j=1<BR>
+<B>Etape 2 : </B> u=6, S=10, j=2<BR>
+<B>Etape 3 : </B> u=11, S=21, j=3<BR>
+<B>Résultat : </B> 11,8,21<BR>
+Il semble que <I>u</I><SUB><I>n</I></SUB>−<I>n</I>=2<SUP><I>n</I></SUP>.<BR>
+On a en effet <I>u</I><SUB><I>n</I>+1</SUB>−(<I>n</I>+1)=2<I>u</I><SUB><I>n</I></SUB>+1−<I>n</I>−(<I>n</I>+1)=2(<I>u</I><SUB><I>n</I></SUB>−<I>n</I>).<BR>
+On a 1+2+..+<I>n</I>=<I>n</I>(<I>n</I>+1)/2 et 1+2+2<SUP>2</SUP>+..+2<SUP><I>n</I></SUP>=2<SUP><I>n</I>+1</SUP>−1<BR>
+Donc <I>S</I><SUB><I>n</I></SUB>=<I>n</I>(<I>n</I>+1)/2+2<SUP><I>n</I>+1</SUP>−1<BR>
+On vérifie pour <I>n</I>=3 <I>u</I><SUB>3</SUB>=2<SUP>3</SUP>+3=8+3=11 et <I>S</I><SUB>3</SUB>=6+2<SUP>4</SUP>−1=16+5=21<BR>
+On a bien <I>u</I><SUB>5</SUB>=2<SUP>5</SUP>+5=32+5=37 et <I>S</I><SUB>5</SUB>=5*3+64−1=78<BR>
+On tape :
+<TT>suiteserie(3)</TT>   
+On obtient :
+<TT>11,21</TT><BR>
+On tape :
+<TT>suiteserie(5)</TT>   
+On obtient :
+<TT>37,78</TT><BR><BR>
+<B>Remarque</B>
+Il me semble préférable d’écrire cet algorithme avec un <TT>pour</TT>.<BR>
+Mais attention !!! 
+On doit utiliser la relation de récurrence sous la forme :<BR>
+<I>u</I><SUB><I>n</I></SUB>=2<I>u</I><SUB><I>n</I>−1</SUB>+2−<I>n</I> ou bien <I>u</I><SUB><I>n</I>+1</SUB>=2<I>u</I><SUB><I>n</I></SUB>+2−(<I>n</I>+1)<BR>
+car dans le corps du 
+<TT>pour</TT> on calcule successivement :<BR>
+<I>u</I><SUB>1</SUB>,<I>S</I><SUB>1</SUB> lorsque <I>j</I>=1, <I>u</I><SUB>2</SUB>,<I>S</I><SUB>2</SUB> 
+lorsque <I>j</I>=2 et <I>u</I><SUB><I>n</I></SUB>,<I>S</I><SUB><I>n</I></SUB> lorsque <I>j</I>=<I>n</I>.<BR>
+Alors que précédement avec <TT>tantque</TT>,
+on utilise la relation <I>u</I><SUB><I>n</I>+1</SUB>=2<I>u</I><SUB><I>n</I></SUB>+1−<I>n</I> car on
+calcule successivement <I>u</I><SUB>1</SUB>,<I>S</I><SUB>1</SUB> lorsque <I>j</I>=0, <I>u</I><SUB>2</SUB>,<I>S</I><SUB>2</SUB> 
+lorsque <I>j</I>=1 et <I>u</I><SUB><I>n</I></SUB>,<I>S</I><SUB><I>n</I></SUB> lorsque <I>j</I>=<I>n</I>−1 et c’est pourquoi la condition 
+d’arrêt du <TT>tantque</TT> est <TT>j&lt;n</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">suiteserie1(n):= {
+local u,S,j;
+u:=1;
+S:=1;
+pour j de 1 jusque n faire
+  u:=2u+2-j;
+  S:=S+u;
+fpour;
+retourne u,u-n,S
+}:;
+</PRE><H2 CLASS="section"><A NAME="toc29"></A><A NAME="htoc120">4.4</A>  En 2011 La Réunion</H2><P>
+On considère la fonction <I>f</I>(<I>x</I>)=4<I>e</I><SUP><I>x</I>/2</SUP>−5 sur ℝ.<BR>
+On note <I>C</I><SUB><I>f</I></SUB> le graphe de <I>f</I> dans un repère orthogonal
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Calculer <I>f</I>(0) et <I>f</I>(1).<BR>
+En étudiant les variations de <I>f</I> sur ℝ, montrer que <I>f</I>(<I>x</I>)=0 
+admet une solution unique dans [0;1].
+</LI><LI CLASS="li-itemize">On considère l’algorithme :
+<PRE CLASS="verbatim">Entrée :         f la fonction precedente
+                 p un réel &gt;0
+Variables :      a,b
+Initialisation : Affecter à a la valeur 0
+                 Affecter à b la valeur -1 
+Traitement :     Tant que b&lt;0 faire
+                   Affecter à a la valeur a+p
+                   Affecter à b la valeur f(a)
+                 FinTantque
+Sortie :         a-p,a
+</PRE>Que fait cet algorithme ?<BR>
+Que renvoie ce programme lorsque <I>p</I>=1 ? <I>p</I>=0.1 ? <I>p</I>=0.01 ? <I>p</I>=0.001 ?
+</LI></UL><P>
+<B>La solution et traduction en langage </B><B><TT>Xcas</TT></B><BR>
+On a <I>f</I>(0)=−1 et <I>f</I>(1)≃ 1.5948850828<BR>
+La fonction <I>f</I> est continue et est strictement croissante sur ℝ puisque sa 
+derivé qui vaut <I>f</I>′(<I>x</I>)=2<I>e</I><SUP><I>x</I>/2</SUP> est positive.<BR>
+Donc d’après le théorème des valeurs intermédiaires <I>f</I>(<I>x</I>)=0 a une 
+solution unique comprise entre 0 et 1 puisque <I>f</I>(0)&lt;0 et <I>f</I>(1)&gt;0.<BR>
+L’algorithme trouve un encadrement de longueur <I>p</I> de cette solution.<BR>
+Lorsque <I>p</I>=1 cet encadrement est 0,1<BR>
+Lorsque <I>p</I>=0.1 cet encadrement est 0.4,0.5 car <I>f</I>(0.4)≃ −0.114388967359&lt;0 et <I>f</I>(0.5)≃ 0.136101666751&gt;0<BR>
+Lorsque <I>p</I>=0.1 cet encadrement est 0.44,0.45 car <I>f</I>(0.44)≃ −0.0156930776507&lt;0 et <I>f</I>(0.45)≃ 0.00929086476731&gt;0<BR>
+Avec <TT>Xcas</TT>, on tape pour définir la fonction <I>f</I> :<BR>
+<TT>f(x):=4*exp(x/2)-5)</TT><BR>
+On tape la traduction de l’algorithme avec <TT>Xcas</TT> :
+</P><PRE CLASS="verbatim">zeroapprox(f,p):={
+local a,b;
+a:=0;
+b:=f(a);
+tantque b&lt;0 faire 
+  a:=a+p;
+  b:=f(a);
+ftantque;
+retourne a-p,a
+}:;
+</PRE><P>On tape :
+<TT>zeroapprox(f,0.1)</TT><BR>
+On obtient :
+<TT>0.4,0.5</TT><BR>
+On tape :
+<TT>zeroapprox(f,0.01)</TT><BR>
+On obtient :
+<TT>0.44,0.45</TT><BR>
+On tape :
+<TT>zeroapprox(f,0.001)</TT><BR>
+On obtient :
+<TT>0.445999999998,0.446999999998</TT><BR>
+On tape :
+<TT>zeroapprox(f,0.0001)</TT><BR>
+On obtient :
+<TT>0.446199999974,0.446299999974</TT><BR>
+On remarquera que cet algorithme est 
+valable pour toutes les fonctions continues <I>f</I> qui vérifient
+<I>f</I>(0)&lt;0 et <I>f</I>(1)&gt;0.<BR>
+<B>Remarque</B> 
+Ce programme est moins performant que le programme de dichotomie vu 
+précédemment.</P><H2 CLASS="section"><A NAME="toc30"></A><A NAME="htoc121">4.5</A>  En 2012 France</H2><P>
+Soit (<I>u</I><SUB><I>n</I></SUB> ) la suite définie pour tout entier strictement positif par :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>u</I><SUB><I>n</I></SUB> = 1 +</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">...+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">−ln(<I>n</I>)</TD></TR>
+</TABLE><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On considère l’algorithme suivant :
+<PRE CLASS="verbatim">Entrée :         l'entier n
+Variables :      j  est un entier
+                 u est un réel
+Initialisation : Affecter à u la valeur 0
+Traitement :     Pour j variant de 1 à n
+                   Affecter à u la valeur u +1/j
+                 fPour
+Sortie :        Afficher u
+</PRE>Donner la valeur exacte affichée par cet algorithme lorsque l’utilisateur 
+entre la valeur <I>n</I>=3.
+</LI><LI CLASS="li-enumerate">Recopier et compléter l’algorithme précédent afin qu’il affiche la 
+valeur de <I>u</I><SUB><I>n</I></SUB> lorsque l’utilisateur entre la valeur de <I>n</I>.
+</LI><LI CLASS="li-enumerate">Voici les résultats fournis par l’algorithme modifié, arrondis à 
+10<SUP>−3</SUP>.<BR>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=center NOWRAP><I>n</I></TD><TD ALIGN=center NOWRAP>6</TD><TD ALIGN=center NOWRAP>7</TD><TD ALIGN=center NOWRAP>8</TD><TD ALIGN=center NOWRAP>9</TD><TD ALIGN=center NOWRAP>10</TD><TD ALIGN=center NOWRAP>100</TD><TD ALIGN=center NOWRAP>1000</TD><TD ALIGN=center NOWRAP>1500</TD><TD ALIGN=center NOWRAP>2000</TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>u</I><SUB><I>n</I></SUB></TD><TD ALIGN=center NOWRAP>0.658</TD><TD ALIGN=center NOWRAP>0.647</TD><TD ALIGN=center NOWRAP>0.638</TD><TD ALIGN=center NOWRAP>0.632</TD><TD ALIGN=center NOWRAP>0.626</TD><TD ALIGN=center NOWRAP>0.582</TD><TD ALIGN=center NOWRAP>0.578</TD><TD ALIGN=center NOWRAP>0.578</TD><TD ALIGN=center NOWRAP>0.577</TD></TR>
+</TABLE>
+À l’aide de ce tableau, formuler des conjectures sur le sens de variation de 
+la suite (<I>u</I><SUB><I>n</I></SUB>) et son éventuelle convergence.
+</LI></OL><P><BR>
+<B>La solution et la traduction avec </B><B><TT>Xcas</TT></B><BR>
+Le but de l’exercice est de trouver une approximation de la constante 
+d’Euler :<BR>
+γ=lim<SUB><I>n</I> → +∞</SUB>(1+1/2+1/3...+1/<I>n</I>−ln(<I>n</I>)).<BR>
+On montre dans un premier temps que cette limite existe car :<BR>
+<I>u</I><SUB><I>n</I></SUB> est décroissante en effet 
+ <I>u</I><SUB><I>n</I>+1</SUB>−<I>u</I><SUB><I>n</I></SUB>=1/<I>n</I>+1+ln(<I>n</I>/<I>n</I>+1)&lt;0 et<BR>
+l’étude de  <I>f</I>(<I>x</I>)=1/<I>x</I>+1+ln(<I>x</I>/<I>x</I>+1) montre que 
+<I>f</I> est négative sur [1;+∞[.<BR>
+de plus <I>u</I><SUB><I>n</I></SUB> est minorée par 0. En effet pour <I>p</I>∈ ℕ<SUP>*</SUP>,on a :<BR>
+∫<SUB><I>x</I>=<I>p</I></SUB><SUP><I>x</I>=<I>p</I>+1</SUP><I>dx</I>/<I>x</I>=ln(<I>p</I>+1)−ln(<I>p</I>)&lt;1/<I>p</I><BR>
+En sommant cette inégalité pour <I>p</I>=1..<I>n</I> on a :<BR>
+ln(<I>n</I>+1)&lt;1+1/2+1/3...+1/<I>n</I> donc<BR>
+0&lt;ln(1+1/<I>n</I>)&lt;1+1/2+1/3...+1/<I>n</I>−1+1/<I>n</I>−ln(<I>n</I>)<BR>
+Ainsi <I>u</I><SUB><I>n</I></SUB> est décroissante et minorée par 0 elle a donc une limite 
+positive appelée "constante d’Euler".<BR>
+<B>L’algorithme</B> calcule 1+1/2+1/3...+1/<I>n</I><BR>
+Pour <I>n</I>=3<BR>
+<B>Initialisation : </B> u=0<BR>
+<B>Etape 1 : </B> j=1, u=1<BR>
+<B>Etape 2 : </B> j=2, u=3/2<BR>
+<B>Etape 3 : </B> j=3, u=11/6<BR>
+<B>Resultat : </B> 11/6 ou 1.83333333333<BR>
+On modifie l’algorithme pour qu’il affiche la suite  <I>u</I><SUB><I>n</I></SUB>=1+1/2+...+1/<I>n</I>−ln(<I>n</I>), pour cela, il suffit de modifier la sortie :
+</P><PRE CLASS="verbatim">Entrée :         l'entier n
+Variables :      j et n sont des entiers naturels
+                 u est un réel
+Initialisation : Affecter à u la valeur 0
+Traitement :     Pour j variant de 1 à n
+                   Affecter à u la valeur u +1/j
+                 fPour
+Sortie :        Afficher u-ln(n)
+</PRE><P><B>La traduction avec </B><B><TT>Xcas</TT></B><BR>
+On retourne une valeur numérique grâce à <TT>evalf(u)</TT> qui transforme le
+rationnel <I>u</I> en un nombre décimal. 
+</P><PRE CLASS="verbatim">csteuler(n):={
+local j, u;
+u:=0;
+pour j de 1 jusque n faire
+  u:=u+1/j;
+fpour;
+retourne evalf(u)-ln(n);
+}:;
+</PRE><P>On tape :
+<TT>csteuler(10)</TT><BR>
+On obtient :
+<TT>0.626383160974</TT><BR>
+On tape :
+<TT>csteuler(100)</TT><BR>
+On obtient :
+<TT>0.582207331651</TT><BR>
+On tape :
+<TT>csteuler(1000)</TT><BR>
+On obtient :
+<TT>0.577715581568</TT><BR>
+On tape :
+<TT>csteuler(2000)</TT><BR>
+On obtient :
+<TT>0.577465644068</TT><BR>
+On tape :
+<TT>csteuler(20000)</TT><BR>
+On obtient :
+<TT>0.577240664693</TT><BR>
+Cela montre que la constante d’Euler est proche de 0.577240664693.<BR>
+On tape car <TT>Xcas</TT> connait cette constante :<BR>
+<TT>evalf(euler_gamma)</TT><BR>
+On obtient :<BR>
+<TT>0.5772156649018</TT><BR>
+<B>Remarque</B>
+Les deux variantes de <TT>csteuler</TT> écrites ci-dessous font à chaque 
+étape un calcul numérique car on a mis <TT>1./j</TT> au lieu de <TT>1/j</TT>.
+<TT>csteuler0</TT> calcule la somme des 1/<I>k</I> pour <I>k</I> allant de 1 à <I>n</I>, alors que
+<TT>csteuler1</TT> calcule la somme des 1/<I>k</I> pour <I>k</I> allant de <I>n</I> à 1
+</P><PRE CLASS="verbatim">csteuler0(n):={
+local j, u;
+u:=0;
+pour j de 1 jusque n faire
+  u:=u+1./j;
+fpour;
+retourne u-ln(n);
+}
+:;
+csteuler1(n):={
+local j, u;
+u:=0;
+pour j de n jusque 1 pas -1 faire
+  u:=u+1./j;
+fpour;
+retourne u-ln(n);
+}:;
+</PRE><P>On tape :
+<TT>csteuler0(2000)</TT><BR>
+On obtient :
+<TT>0.577465643831</TT><BR>
+On tape :
+<TT>csteuler1(2000)</TT><BR>
+On obtient :
+<TT>0.577465644032</TT><BR>
+On tape :
+<TT>csteuler(2000)</TT><BR>
+On obtient :
+<TT>0.577465644068</TT><BR>
+Il faut comprendre la différence des résultats obtenus entre les 
+fonctions <TT>csteuler0</TT>, <TT>csteuler1</TT> et <TT>csteuler</TT> :<BR>
+<TT>csteuler1</TT> donne un résultat meilleur que <TT>csteuler0</TT> car il 
+commence par ajouter des petits nombres donc la somme conserve plus de 
+décimales.<BR>
+Le résultat de <TT>csteuler</TT> est encore meilleur car il ne fait 
+l’approximation décimale qu’à la fin du programme.
+</P><H2 CLASS="section"><A NAME="toc31"></A><A NAME="htoc122">4.6</A>  D’autres algorithmes sur ce modèle</H2><H3 CLASS="subsection"><A NAME="htoc123">4.6.1</A>  Calcul de 1+2+..+<I>n</I><SUP>2</SUP></H3><P>
+Soit la suite <I>u</I><SUB><I>n</I></SUB>=1+4+..+<I>n</I><SUP>2</SUP>.<BR>
+Écrire un algorithme qui calcule <I>u</I><SUB><I>n</I></SUB> en fonction de <I>n</I>.<BR>
+Puis calculer successivement <I>u</I><SUB><I>n</I></SUB>/<I>n</I> et <I>u</I><SUB><I>n</I></SUB>/(<I>n</I>(<I>n</I>+1)) pour <I>n</I>=1..10<BR>
+Montrer que  <I>u</I><SUB><I>n</I></SUB>=<I>n</I>(<I>n</I>+1)(2<I>n</I>+1)/6<BR>
+<B>La solution</B><BR>
+On écrit l’algorithme :
+</P><PRE CLASS="verbatim">Entrée :         l'entier n
+Variables :      j est un entier
+                 S est un réel
+Initialisation : Affecter à S la valeur 0
+Traitement :     Pour j variant de 1 à n
+                   Affecter à S la valeur S+j^2
+                 fPour
+Sortie :        Afficher S
+</PRE><P><B>Avec </B><B><TT>Xcas</TT></B> :
+</P><PRE CLASS="verbatim">Scarre(n):={
+local j,S;
+S:=0;
+pour j de 1 jusque n faire
+  S:=S+j^2;
+fpour
+retourne S;
+}:;
+</PRE><P>On tape :
+<TT>Scarre(p)$(p=0..10)</TT><BR>
+On obtient :<BR>
+<TT>0,1,5,14,30,55,91,140,204,285,385</TT><BR>
+On tape :
+<TT>(Scarre(p)/p)$(p=0..10)</TT><BR>
+On obtient :<BR>
+<TT>1,5/2,14/3,15/2,11,91/6,20,51/2,95/3,77/2</TT><BR>
+On tape :
+<TT>(Scarre(p)/(p*(p+1)))$(p=1..10)</TT><BR>
+On obtient :<BR>
+<TT>1/2,5/6,7/6,3/2,11/6,13/6,5/2,17/6,19/6,7/2</TT><BR>
+On tape :
+<TT>((2p+1)/6)$(p=1..10)</TT> et
+on obtient le résultat précédent.<BR>
+Il reste donc à démontrer par récurrence que :<BR>
+ <I>u</I><SUB><I>n</I></SUB>=1+2<SUP>2</SUP>+..+<I>n</I><SUP>2</SUP>=<I>n</I>(<I>n</I>+1)(2<I>n</I>+1)/6
+</P><H3 CLASS="subsection"><A NAME="htoc124">4.6.2</A>  Calcul de 1+1/4+..+1/<I>n</I><SUP>2</SUP></H3><P>
+Écrire un algorithme qui calcule <I>u</I><SUB><I>n</I></SUB>=1+1/4+..+1/<I>n</I><SUP>2</SUP> en fonction de <I>n</I>.<BR>
+<B>La solution :</B> on écrit l’algorithme :
+</P><PRE CLASS="verbatim">Entrée :         l'entier n&gt;=1
+Variables :      j un entier, S un réel
+Initialisation : Affecter à S la valeur 0
+Traitement :     Pour j variant de 1 à n
+                   Affecter à S la valeur S+1/j^2
+                 fPour
+Sortie :        Afficher S
+</PRE><P><B>Avec </B><B><TT>Xcas</TT></B>
+</P><PRE CLASS="verbatim">Scarre(n):={
+local j,S;
+S:=0;
+pour j de 1 jusque n faire
+  S:=S+1/j^2;
+fpour
+retourne S;
+}:;
+</PRE><P>On tape :
+<TT>Sinvcarre(p)$(p=1..9)</TT><BR>
+On obtient :
+<TT>1,5/4,49/36,205/144,5269/3600,5369/3600,<BR>
+266681/176400,1077749/705600,9778141/6350400</TT><BR>
+On tape :
+<TT>evalf(Sinvcarre(p))$(p=0..9)</TT><BR>
+On obtient :
+<TT>1.0,1.25,1.36111111111,1.42361111111,1.46361111111,<BR>
+1.49138888889,1.51179705215,1.52742205215,1.53976773117,</TT><BR>
+On tape (on admet que <I>u</I><SUB><I>n</I></SUB> tend vers π<SUP>2</SUP>/6 quand <I>n</I> tend vers +∞) :<BR>
+<TT>sqrt(6.*Sinvcarre(1000))</TT><BR>
+On obtient :
+<TT>3.14063805621</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc125">4.6.3</A>  Calcul des termes de la suite de Fibonacci</H3><P>
+La suite de Fibonacci <I>u</I><SUB><I>n</I></SUB> est définie par :<BR>
+<I>u</I><SUB>0</SUB>=1, <I>u</I><SUB>1</SUB>=1, <I>u</I><SUB><I>n</I>+2</SUB>=<I>u</I><SUB><I>n</I>+1</SUB>+<I>u</I><SUB><I>n</I></SUB> pour <I>n</I>∈ ℕ<BR>
+Écrire un algorithme qui calcule <I>u</I><SUB><I>n</I></SUB> en fonction de <I>n</I>.<BR>
+<B>La solution :</B> on écrit l’algorithme :
+</P><PRE CLASS="verbatim">Entrée :         l'entier n.
+Variables :      j,a,b,c sont des entiers
+Initialisation : Affecter à a la valeur 1
+                 Affecter à b la valeur 1
+Traitement :     Pour j variant de 2 à n
+                   Affecter à c la valeur a+b
+                   Affecter à a la valeur b
+                   Affecter à b la valeur c
+                 fPour
+Sortie :         Afficher b
+</PRE><P><B>Avec </B><B><TT>Xcas</TT></B>
+</P><PRE CLASS="verbatim">fibo(n):={
+local j,a,b,c;
+a:=1;
+b:=1;
+pour j de 2 jusque n faire
+  c:=a+b;
+  a:=b;
+  b:=c;
+fpour;
+retourne b;
+}:;
+</PRE><P>On tape :<BR>
+<TT>fibo(p)$(p=0..10)</TT><BR>
+On obtient les 11 premiers termes de la suite de Fibonacci :<BR>
+<TT>1,1,2,3,5,8,13,21,34,55,89</TT><BR>
+On tape :<BR>
+<TT>fibo(101)/fibo(100)</TT><BR>
+On obtient :<BR>
+<TT>927372692193078999176/573147844013817084101</TT><BR>
+On tape :<BR>
+<TT>evalf(fibo(101)/fibo(100)),(1+sqrt(5))/2.</TT><BR>
+On obtient :<BR>
+<TT>1.61803398875, 1.61803398875</TT><BR>
+Il reste à montrer que  <I>v</I><SUB><I>n</I></SUB>=<I>u</I><SUB><I>n</I>+1</SUB>/<I>u</I><SUB><I>n</I></SUB> tend vers à 
+ 1+√<SPAN style="text-decoration:overline">5</SPAN>/2 qui est le nombre d’or.
+</P><HR>
+<A HREF="casrouge003.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casrouge005.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

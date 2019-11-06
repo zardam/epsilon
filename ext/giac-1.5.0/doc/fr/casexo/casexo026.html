@@ -1,0 +1,444 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casexo.css">
+<TITLE>Exercices sur les suites</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casexo025.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo027.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc388">Chapitre 26</A>  Exercices sur les suites</H1><P>
+La commande <TT>limite</TT> de <TT>Xcas</TT> donne la limite d’une suite losqu’elle existe !<BR>
+La commande <TT>seqsolve</TT> de <TT>Xcas</TT> donne la valeur d’une suite 
+récurrente de la forme <I>u</I><SUB><I>n</I>+1</SUB>=<I>f</I>(<I>u</I><SUB><I>n</I></SUB>) ou <I>u</I><SUB><I>n</I>+2</SUB>=<I>f</I>(,<I>u</I><SUB><I>n</I></SUB>,<I>u</I><SUB><I>n</I>+1</SUB>,...) ou 
+d’un système de suites récurrentes.<BR>
+Par exemple :<BR>
+Pour trouver la limite quand <I>n</I> tend vers +∞ de la suite <I>u</I><SUB><I>n</I></SUB> 
+définie par :<BR>
+<I>u</I><SUB><I>n</I></SUB>=∑<SUB><I>p</I>=1</SUB><SUP><I>n</I></SUP>1/<I>n</I>+<I>p</I>, on tape :<BR>
+<TT>limite(sum(1/((n+p)),p=1..n),n,inf)</TT><BR>
+On obtient :<BR>
+<TT>ln(2)</TT><BR>
+Pour trouver la valeur de la suite <I>u</I><SUB><I>n</I></SUB> définie par :<BR>
+<I>u</I><SUB><I>n</I>+2</SUB>=<I>u</I><SUB><I>n</I></SUB>+2<I>u</I><SUB><I>n</I>+1</SUB>+<I>n</I>+1 <I>u</I><SUB>0</SUB>=0, <I>u</I><SUB>1</SUB>=1, on tape :<BR>
+<TT>seqsolve(x+2*y+n+1,[x,y,n],[0,1])</TT><BR>
+On obtient :<BR>
+<TT>(-4*n-(sqrt(2)+1)</TT><CODE><TT>^</TT></CODE><TT>n*(-sqrt(2)*3-2)-(-(sqrt(2))+1)</TT><CODE><TT>^</TT></CODE><TT>n*(sqrt(2)*3-2)-4)/8</TT><BR>
+Pour trouver la valeur des suite <I>u</I><SUB><I>n</I></SUB> et <I>v</I><SUB><I>n</I></SUB> définies par :<BR>
+<I>u</I><SUB><I>n</I>+1</SUB>=<I>u</I><SUB><I>n</I></SUB>+2<I>v</I><SUB><I>n</I></SUB>, <I>v</I><SUB><I>n</I>+1</SUB>=<I>u</I><SUB><I>n</I></SUB>+<I>n</I>+1 <I>u</I><SUB>0</SUB>=0, <I>v</I><SUB>0</SUB>=1, on tape :<BR>
+<TT>seqsolve([x+2*y,n+1+x],[x,y,n],[0,1])</TT><BR>
+On obtient :<BR>
+<TT>[(-2*n-(-1)</TT><CODE><TT>^</TT></CODE><TT>n+2</TT><CODE><TT>^</TT></CODE><TT>n*4-3)/2,((-1)</TT><CODE><TT>^</TT></CODE><TT>n+2*2</TT><CODE><TT>^</TT></CODE><TT>n-1)/2]</TT><BR>
+
+<B>Exercices</B>
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Soient <I>a</I><SUB><I>n</I></SUB>, et <I>b</I><SUB><I>n</I></SUB> les suites définies par :<BR>
+<I>a</I><SUB>0</SUB>, <I>b</I><SUB>0</SUB> ((<I>a</I><SUB>0</SUB>,<I>b</I><SUB>0</SUB>)≠ (0,0)),<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=<I>a</I><SUB><I>n</I></SUB>/<I>a</I><SUB><I>n</I></SUB><SUP>2</SUP>+<I>b</I><SUB><I>n</I></SUB><SUP>2</SUP>,<BR>
+<I>b</I><SUB><I>n</I>+1</SUB>=<I>b</I><SUB><I>n</I></SUB>/<I>a</I><SUB><I>n</I></SUB><SUP>2</SUP>+<I>b</I><SUB><I>n</I></SUB><SUP>2</SUP>,<BR>
+Calculer les 4 premiers termes de ces suites pour <I>a</I><SUB>0</SUB>=<I>a</I>, <I>b</I><SUB>0</SUB>=<I>b</I>,<BR>
+On utilise le tableur pour avoir les valeurs des termes de ces suites.<BR>
+On tape pour :<BR>
+<TT>A0</TT> <TT>1</TT> (ou <TT>a</TT>)<BR>
+<TT>B0</TT> <TT>3</TT> (ou <TT>b</TT>)<BR>
+<TT>A1</TT> <TT>=simplfy(A0/(A0</TT><CODE><TT>^</TT></CODE><TT>2+B0</TT><CODE><TT>^</TT></CODE><TT>2))</TT><BR>
+<TT>B1</TT> <TT>=simplfy(B0/(A0</TT><CODE><TT>^</TT></CODE><TT>2+B0</TT><CODE><TT>^</TT></CODE><TT>2))</TT><BR>
+Puis on remplit vers le bas.
+On obtient commes valeurs dans la colonne <TT>A</TT> :<BR>
+<TT>a, a/(a</TT><CODE><TT>^</TT></CODE><TT>2+b</TT><CODE><TT>^</TT></CODE><TT>2), a, a/(a</TT><CODE><TT>^</TT></CODE><TT>2+b</TT><CODE><TT>^</TT></CODE><TT>2) ...</TT><BR>
+On obtient commes valeurs dans la colonne <TT>B</TT> :<BR>
+<TT>b, b/(a</TT><CODE><TT>^</TT></CODE><TT>2+b</TT><CODE><TT>^</TT></CODE><TT>2), b, b/(a</TT><CODE><TT>^</TT></CODE><TT>2+b</TT><CODE><TT>^</TT></CODE><TT>2) ...</TT><BR>
+Soit la fonction de ℝ<SUP>2</SUP> dans ℝ<SUP>2</SUP> :<BR>
+<I>g</I>(<I>x</I>,<I>y</I>)=(<I>x</I>/(<I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP>),<I>y</I>/(<I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP>))
+Montrons avec <TT>Xcas</TT> que <I>g</I>∘ <I>g</I>=<I>id</I><BR>
+On tape :<BR>
+<TT>g(x,y):=(x/(x</TT><CODE><TT>^</TT></CODE><TT>2+y</TT><CODE><TT>^</TT></CODE><TT>2),y/(x</TT><CODE><TT>^</TT></CODE><TT>2+y</TT><CODE><TT>^</TT></CODE><TT>2))</TT><BR>
+<TT>simplify((g@g)(x,y))</TT><BR>
+On obtient :<BR>
+<TT>x,y</TT><BR>
+La fonction <I>g</I> transforme un vecteur <I>V</I> de ℝ<SUP>2</SUP> en <I>W</I>=<I>V</I>/<I>norm</I>(<I>V</I>)<SUP>2</SUP>.
+On a <I>norm</I>(<I>W</I>)=1/<I>norm</I>(<I>V</I>) donc <I>g</I> transforme <I>W</I> en <I>W</I>/<I>norm</I>(<I>W</I>)<SUP>2</SUP>=<I>V</I>.</LI><LI CLASS="li-enumerate">Soient <I>a</I><SUB><I>n</I></SUB>, <I>b</I><SUB><I>n</I></SUB>, et <I>c</I><SUB><I>n</I></SUB> les suites définies par :<BR>
+<I>a</I><SUB>0</SUB>=1, <I>b</I><SUB>0</SUB>=3 et <I>c</I><SUB>0</SUB>=8,<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=1/2(<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>),<BR>
+<I>b</I><SUB><I>n</I>+1</SUB>=1/2(<I>c</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>),<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=1/2(<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>),<BR>
+Calculer les 4 premiers termes de ces suites,<BR>
+Montrer que <I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB> est constant.<BR>
+Exprimer <I>a</I><SUB><I>n</I>+1</SUB>−<I>b</I><SUB><I>n</I>+1</SUB> en fonction de <I>a</I><SUB><I>n</I></SUB>−<I>b</I><SUB><I>n</I></SUB>,<BR>
+Montrer que pour <I>n</I>≥ 1, 2<I>a</I><SUB><I>n</I>+1</SUB>=<I>a</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I>−1</SUB>.<BR>
+En déduire une expression de <I>a</I><SUB><I>n</I></SUB>, <I>b</I><SUB><I>n</I></SUB>, et <I>c</I><SUB><I>n</I></SUB> en fonction de <I>n</I>.<BR>
+Étudier la convergence de <I>a</I><SUB><I>n</I></SUB>, <I>b</I><SUB><I>n</I></SUB>, et <I>c</I><SUB><I>n</I></SUB>.<BR>
+
+On peut faire le calcul des 4 premiers termes avec le tableur, on obtient :
+<TT>A:=(1,11/2,13/4,35/8,61/16)</TT> pour les premiers termes de <I>a</I><SUB><I>n</I></SUB>,<BR>
+<TT>B:=(3,9/2,15/4,33/8,63/16)</TT> pour les premiers termes de <I>b</I><SUB><I>n</I></SUB>,<BR>
+<TT>C:=(8,2,5,7/2,17/4)</TT> pour les premiers termes de <I>c</I><SUB><I>n</I></SUB>,<BR>
+On tape :<BR>
+<TT>[A]+[B]+[C]</TT><BR>
+On obtient :<BR>
+<TT>[12,12,12,12,12]</TT><BR>
+On a :<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>+<I>b</I><SUB><I>n</I>+1</SUB>+<I>c</I><SUB><I>n</I>+1</SUB>=1/2(<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>)=<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>
+Donc on montre par récurrence que <I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>=12
+On a :<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>−<I>b</I><SUB><I>n</I>+1</SUB>=1/2(<I>b</I><SUB><I>n</I></SUB>−<I>a</I><SUB><I>n</I></SUB>)=−1/2(<I>a</I><SUB><I>n</I></SUB>−<I>b</I><SUB><I>n</I></SUB>)<BR>
+2<I>a</I><SUB><I>n</I>+1</SUB>=<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>=<I>a</I><SUB><I>n</I>−1</SUB>+1/2(<I>b</I><SUB><I>n</I>−1</SUB>+<I>c</I><SUB><I>n</I>−1</SUB>)=<I>a</I><SUB><I>n</I>−1</SUB>+<I>a</I><SUB><I>n</I></SUB><BR>
+Donc on peut définir <I>a</I><SUB><I>n</I></SUB> par :<BR>
+<I>a</I><SUB>0</SUB>=1,<I>a</I><SUB>1</SUB>=11/2 et la relation de récurrence 2<I>a</I><SUB><I>n</I>+1</SUB>=<I>a</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I>−1</SUB>.<BR>
+L’ensemble <I>E</I> des suites réelles <I>u</I> qui vérifient la relation de 
+récurrence :<BR>
+2<I>u</I><SUB><I>n</I>+1</SUB>=<I>u</I><SUB><I>n</I></SUB>+<I>u</I><SUB><I>n</I>−1</SUB> pour <I>n</I>&gt;0<BR>
+forment un espace vectoriel sur ℝ de dimension 2.<BR>
+En effet <I>E</I> est un espace vectoriel sur ℝ et l’application :<BR>
+<I>f</I> de <I>E</I> dans ℝ<SUP>2</SUP> qui à <I>u</I>∈ <I>E</I> fait correspondre (<I>u</I><SUB>0</SUB>,<I>u</I><SUB>1</SUB>) est un 
+isomorphisme d’espaces vectoriels.<BR>
+On cherche les progressions géométriques <I>u</I><SUB><I>n</I></SUB>=<I>u</I><SUB>0</SUB><I>r</I><SUP><I>n</I></SUP> qui vérifient :<BR>
+2<I>u</I><SUB><I>n</I>+1</SUB>=<I>u</I><SUB><I>n</I></SUB>+<I>u</I><SUB><I>n</I>−1</SUB> ont pour raison <I>r</I>=1 ou <I>r</I>=−1/2 donc<BR>
+<I>a</I><SUB><I>n</I></SUB>=α+β(−1/2)<SUP><I>n</I></SUP> avec :<BR>
+α+β=1 et α−β/2=11/2<BR>
+On tape :<BR>
+<TT>solve([x+y=1,x-y/2=11/2],[x,y])</TT><BR>
+On obtient :<BR>
+<TT>[[4,-3]]</TT><BR>
+Donc <I>a</I><SUB><I>n</I></SUB>=4−3(−1/2)<SUP><I>n</I></SUP>
+De même :<BR>
+<I>b</I><SUB><I>n</I></SUB>=α+β(−1/2)<SUP><I>n</I></SUP> avec :<BR>
+α+β=3 et α−β/2=19/2<BR>
+On tape :<BR>
+<TT>solve([x+y=3,x-y/2=9/2],[x,y])</TT><BR>
+On obtient :<BR>
+<TT>[[4,-1]]</TT><BR>
+Donc <I>b</I><SUB><I>n</I></SUB>=4−(−1/2)<SUP><I>n</I></SUP>
+et,<BR>
+<I>c</I><SUB><I>n</I></SUB>=α+β(−1/2)<SUP><I>n</I></SUP> avec :<BR>
+α+β=8 et α−β/2=2<BR>
+On tape :<BR>
+<TT>solve([x+y=8,x-y/2=2],[x,y])</TT><BR>
+On obtient :<BR>
+<TT>[[4,4]]</TT><BR>
+Donc <I>c</I><SUB><I>n</I></SUB>=4+4(−1/2)<SUP><I>n</I></SUP>
+On vérifie, on tape :<BR>
+<TT>seqsolve([(b+c)/2,(c+a)/2,(a+b)/2],[a,b,c,n],[1,3,8])</TT><BR>
+On obtient :<BR>
+<TT>[-3*(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n+4,-(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n+4,4*(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n+4]</TT><BR>
+Quand <I>n</I> tend vers +∞ on a (−1/2)<SUP><I>n</I></SUP> tend vers 0 donc :<BR>
+<I>a</I><SUB><I>n</I></SUB> tend vers 4 quand <I>n</I> tend vers +∞<BR>
+<I>b</I><SUB><I>n</I></SUB> tend vers 4 quand <I>n</I> tend vers +∞<BR>
+<I>c</I><SUB><I>n</I></SUB> tend vers 4 quand <I>n</I> tend vers +∞
+<B>Prolongement : cas général</B>
+Soient <I>a</I><SUB><I>n</I></SUB>, <I>b</I><SUB><I>n</I></SUB>, et <I>c</I><SUB><I>n</I></SUB> les suites définies par :<BR>
+<I>a</I><SUB>0</SUB>, <I>b</I><SUB>0</SUB> et <I>c</I><SUB>0</SUB>,<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=1/2(<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>),<BR>
+<I>b</I><SUB><I>n</I>+1</SUB>=1/2(<I>c</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>),<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=1/2(<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>),<BR>
+On a toujours :<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>+<I>b</I><SUB><I>n</I>+1</SUB>+<I>c</I><SUB><I>n</I>+1</SUB>=1/2(<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>)=<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>
+Donc :<BR>
+<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>=<I>a</I><SUB>0</SUB>+<I>b</I><SUB>0</SUB>+<I>c</I><SUB>0</SUB>
+On a toujours :<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>−<I>b</I><SUB><I>n</I>+1</SUB>=1/2(<I>b</I><SUB><I>n</I></SUB>−<I>a</I><SUB><I>n</I></SUB>)=−1/2(<I>a</I><SUB><I>n</I></SUB>−<I>b</I><SUB><I>n</I></SUB>)<BR>
+2<I>a</I><SUB><I>n</I>+1</SUB>=<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>=<I>a</I><SUB><I>n</I>−1</SUB>+1/2(<I>b</I><SUB><I>n</I>−1</SUB>+<I>c</I><SUB><I>n</I>−1</SUB>)=<I>a</I><SUB><I>n</I>−1</SUB>+<I>a</I><SUB><I>n</I></SUB><BR>
+Donc <I>a</I><SUB><I>n</I></SUB> est définie par :<BR>
+2<I>a</I><SUB><I>n</I>+1</SUB>=<I>a</I><SUB><I>n</I>−1</SUB>+<I>a</I><SUB><I>n</I></SUB> et <I>a</I><SUB>0</SUB> et <I>a</I><SUB>1</SUB>=1/2(<I>b</I><SUB>0</SUB>+<I>c</I><SUB>0</SUB>)<BR>
+Donc :<BR>
+<I>a</I><SUB><I>n</I></SUB>=α+β(−1/2)<SUP><I>n</I></SUP> avec :<BR>
+α+β=<I>a</I><SUB>0</SUB> et α−β/2=1/2(<I>b</I><SUB>0</SUB>+<I>c</I><SUB>0</SUB>)<BR>
+On tape :<BR>
+<TT>solve([x+y=a0,x-y/2=1/2*(b0+c0)],[x,y])</TT><BR>
+On obtient :<BR>
+<TT>[[a0/3+b0/3+c0/3,2*a0/3-b0/3-c0/3]]</TT><BR>
+Donc :<BR>
+<I>a</I><SUB><I>n</I></SUB>=−1/3(<I>a</I>0+<I>b</I>0+<I>c</I>0)+(2<I>a</I>0−<I>b</I>0−<I>c</I>0)(−1/2)<SUP><I>n</I></SUP>
+<I>b</I><SUB><I>n</I></SUB>=−1/3(<I>a</I>0+<I>b</I>0+<I>c</I>0)+(2<I>b</I>0−<I>c</I>0−<I>ca</I>0)(−1/2)<SUP><I>n</I></SUP>
+<I>c</I><SUB><I>n</I></SUB>=−1/3(<I>a</I>0+<I>b</I>0+<I>c</I>0)+(2<I>c</I>0−<I>a</I>0−<I>b</I>0)(−1/2)<SUP><I>n</I></SUP>
+On vérifie, on tape :<BR>
+<TT>seqsolve([(b+c)/2,(c+a)/2,(a+b)/2],[a,b,c,n],[a0,b0,c0])</TT><BR>
+On obtient :<BR>
+<TT>[(2*(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n*a0+a0-(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n*b0+b0-(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n*c0+c0)/3, 
+(-(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n*a0+a0+2*(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n*b0+b0-(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n*c0+c0)/3,
+(-(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n*a0+a0-(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n*b0+b0+2*(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n*c0+c0)/3]</TT><BR>
+On applique la commande <TT>factor</TT> et on obtient :<BR>
+<TT>[((2*a0-b0-c0)*(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n+a0+b0+c0)/3,
+((-a0+2*b0-c0)*(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n+a0+b0+c0)/3,
+((-a0-b0+2*c0)*(-1/2)</TT><CODE><TT>^</TT></CODE><TT>n+a0+b0+c0)/3]</TT></LI><LI CLASS="li-enumerate">Soient <I>a</I><SUB><I>n</I></SUB>, <I>b</I><SUB><I>n</I></SUB>, et <I>c</I><SUB><I>n</I></SUB> les suites définies par :<BR>
+<I>a</I><SUB>0</SUB>=1, <I>b</I><SUB>0</SUB>=0 et <I>c</I><SUB>0</SUB>=0,<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>,<BR>
+<I>b</I><SUB><I>n</I>+1</SUB>=<I>c</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>,<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>,<BR>
+Calculer les 4 premiers termes de ces suites,<BR>
+Montrer que pour tout <I>n</I> <I>b</I><SUB><I>n</I></SUB>=<I>c</I><SUB><I>n</I></SUB><BR>
+Calculer <I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>.<BR>
+On a :<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>+<I>b</I><SUB><I>n</I>+1</SUB>+<I>c</I><SUB><I>n</I>+1</SUB>=(<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>)=2(<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>)<BR>
+donc:<BR>
+<I>a</I><SUB>1</SUB>+<I>b</I><SUB>1</SUB>+<I>c</I><SUB>1</SUB>=2(<I>a</I><SUB>0</SUB>+<I>b</I><SUB>0</SUB>+<I>c</I><SUB>0</SUB>)<BR>
+<I>a</I><SUB>2</SUB>+<I>b</I><SUB>2</SUB>+<I>c</I><SUB>2</SUB>=2(<I>a</I><SUB>1</SUB>+<I>b</I><SUB>1</SUB>+<I>c</I><SUB>1</SUB>)=2<SUP>2</SUP>(<I>a</I><SUB>0</SUB>+<I>b</I><SUB>0</SUB>+<I>c</I><SUB>0</SUB>)<BR>
+etc...
+<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>=2<SUP><I>n</I></SUP>(<I>a</I><SUB>0</SUB>+<I>b</I><SUB>0</SUB>+<I>c</I><SUB>0</SUB>)
+On en déduit que :<BR>
+<I>a</I><SUB><I>n</I></SUB>=2<SUP><I>n</I></SUP>
+<I>b</I><SUB><I>n</I>+1</SUB>=<I>b</I><SUB><I>n</I></SUB>+2<SUP><I>n</I></SUP>
+donc<BR>
+<I>b</I><SUB><I>n</I></SUB>=2<SUP><I>n</I>−1</SUP>+<I>b</I><SUB><I>n</I>−1</SUB>=2<SUP><I>n</I>−1</SUP>+2<SUP><I>n</I>−2</SUP>+<I>b</I><SUB><I>n</I>−2</SUB>=..=∑<SUB><I>k</I>=0</SUB><SUP><I>n</I>−1</SUP>2<SUP><I>k</I></SUP>=
+<B>Prolongement : cas général</B>
+Soient <I>a</I><SUB><I>n</I></SUB>, <I>b</I><SUB><I>n</I></SUB>, et <I>c</I><SUB><I>n</I></SUB> les suites définies par :<BR>
+<I>a</I><SUB>0</SUB>, <I>b</I><SUB>0</SUB> et <I>c</I><SUB>0</SUB>,<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>,<BR>
+<I>b</I><SUB><I>n</I>+1</SUB>=<I>c</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>,<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>,<BR>
+On a toujours :<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>+<I>b</I><SUB><I>n</I>+1</SUB>+<I>c</I><SUB><I>n</I>+1</SUB>=<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>=2(<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>)<BR>
+Donc :<BR>
+<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>=2<SUP><I>n</I></SUP>(<I>a</I><SUB>0</SUB>+<I>b</I><SUB>0</SUB>+<I>c</I><SUB>0</SUB>)
+On n’a plus <I>b</I><SUB><I>n</I></SUB>=<I>c</I><SUB><I>n</I></SUB> mais
+<I>a</I><SUB><I>n</I>+1</SUB>−<I>b</I><SUB><I>n</I>+1</SUB>=<I>b</I><SUB><I>n</I></SUB>−<I>a</I><SUB><I>n</I></SUB>=−(<I>a</I><SUB><I>n</I></SUB>−<I>b</I><SUB><I>n</I></SUB>),<BR>
+Donc :<BR>
+<I>a</I><SUB><I>n</I></SUB>−<I>b</I><SUB><I>n</I></SUB>=(−1)<SUP><I>n</I></SUP>(<I>a</I><SUB>0</SUB>−<I>b</I><SUB>0</SUB>),<BR>
+De même :<BR>
+<I>a</I><SUB><I>n</I></SUB>−<I>c</I><SUB><I>n</I></SUB>=(−1)<SUP><I>n</I></SUP>(<I>a</I><SUB>0</SUB>−<I>c</I><SUB>0</SUB>),<BR>
+On a :<BR>
+<I>a</I><SUB><I>n</I></SUB>=1/3((<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>)+<I>a</I><SUB><I>n</I></SUB>−<I>b</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>−<I>c</I><SUB><I>n</I></SUB>)<BR>
+<I>a</I><SUB><I>n</I></SUB>=1/3(2<SUP><I>n</I></SUP>(<I>a</I><SUB>0</SUB>+<I>b</I><SUB>0</SUB>+<I>c</I><SUB>0</SUB>)+(−1)<SUP><I>n</I></SUP>(<I>a</I><SUB>0</SUB>−<I>b</I><SUB>0</SUB>)+(−1)<SUP><I>n</I></SUP>(<I>a</I><SUB>0</SUB>−<I>c</I><SUB>0</SUB>)<BR>
+Donc :<BR>
+<I>a</I><SUB><I>n</I></SUB>=1/3(2<SUP><I>n</I></SUP>(<I>a</I><SUB>0</SUB>+<I>b</I><SUB>0</SUB>+<I>c</I><SUB>0</SUB>)+(−1)<SUP><I>n</I></SUP>(2<I>a</I><SUB>0</SUB>−<I>b</I><SUB>0</SUB>−<I>c</I><SUB>0</SUB>)<BR>
+De même :<BR>
+<I>b</I><SUB><I>n</I></SUB>=1/3(2<SUP><I>n</I></SUP>(<I>a</I><SUB>0</SUB>+<I>b</I><SUB>0</SUB>+<I>c</I><SUB>0</SUB>)+(−1)<SUP><I>n</I></SUP>(2<I>b</I><SUB>0</SUB>−<I>c</I><SUB>0</SUB>−<I>a</I><SUB>0</SUB>)<BR>
+<I>c</I><SUB><I>n</I></SUB>=1/3(2<SUP><I>n</I></SUP>(<I>a</I><SUB>0</SUB>+<I>b</I><SUB>0</SUB>+<I>c</I><SUB>0</SUB>)+(−1)<SUP><I>n</I></SUP>(2<I>c</I><SUB>0</SUB>−<I>b</I><SUB>0</SUB>−<I>a</I><SUB>0</SUB>)<BR>
+On vérifie, on tape :<BR>
+<TT>seqsolve([b+c,c+a,a+b],[a,b,c,n],[a0,b0,c0])</TT><BR>
+On obtient après avoir fait agir la commande <TT>factor</TT> :<BR>
+<TT>[((-b0-c0+2*a0)*(-1)</TT><CODE><TT>^</TT></CODE><TT>n+2</TT><CODE><TT>^</TT></CODE><TT>n*(b0+c0+a0))/3,
+((-a0-c0+2*b0)*(-1)</TT><CODE><TT>^</TT></CODE><TT>n+2</TT><CODE><TT>^</TT></CODE><TT>n*(a0+c0+b0))/3,((-a0-b0+2*c0)*(-1)</TT><CODE><TT>^</TT></CODE><TT>n+2</TT><CODE><TT>^</TT></CODE><TT>n(a0+b0+c0))/3]</TT>
+</LI><LI CLASS="li-enumerate">Explicitez <I>a</I><SUB><I>n</I></SUB>, <I>b</I><SUB><I>n</I></SUB>, et <I>c</I><SUB><I>n</I></SUB> les suites définies par :<BR>
+<I>a</I><SUB>0</SUB>, <I>b</I><SUB>0</SUB> et <I>c</I><SUB>0</SUB>,<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=<I>a</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>,<BR>
+<I>b</I><SUB><I>n</I>+1</SUB>=<I>b</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>,<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=<I>c</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>,<BR>
+
+On a toujours :<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>+<I>b</I><SUB><I>n</I>+1</SUB>+<I>c</I><SUB><I>n</I>+1</SUB>=<I>a</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>=2(<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>)<BR>
+Donc :<BR>
+<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>=2<SUP><I>n</I></SUP>(<I>a</I><SUB>0</SUB>+<I>b</I><SUB>0</SUB>+<I>c</I><SUB>0</SUB>)
+On a :<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>−<I>c</I><SUB><I>n</I>+1</SUB>+<I>b</I><SUB><I>n</I>+1</SUB>=2<I>a</I><SUB><I>n</I></SUB>
+<I>b</I><SUB><I>n</I>+1</SUB>−<I>a</I><SUB><I>n</I>+1</SUB>+<I>c</I><SUB><I>n</I>+1</SUB>=2<I>b</I><SUB><I>n</I></SUB>
+<I>c</I><SUB><I>n</I>+1</SUB>−<I>b</I><SUB><I>n</I>+1</SUB>+<I>a</I><SUB><I>n</I>+1</SUB>=2<I>c</I><SUB><I>n</I></SUB>
+Malheureusement, on a moins de chances que dans l’exercice précédent...<BR>
+On va donc utiliser une solution matricielle.<BR>
+Soit :<BR>
+<TT>A:=[[1,0,1],[1,1,0],[0,1,1]]</TT>
+On a :<BR>
+<TT>[an,bn,cn]=A</TT><CODE><TT>^</TT></CODE><TT>n*[a0,b0,c0]</TT><BR>
+Il faut donc calculer <I>A</I><SUP><I>n</I></SUP>.<BR>
+On tape :<BR>
+<TT>P,B:=jordan(A)</TT><BR>
+On obtient :<BR>
+<TT>[[1,sqrt(3)*(-i)-1,sqrt(3)*(i)-1],[1,sqrt(3)*(i)-1,sqrt(3)*(-i)-1],[1,2,2]],[[2,0,0],[0,(sqrt(3)*(i)+1)/2,0],[0,0,(sqrt(3)*(-i)+1)/2]]</TT><BR>
+On tape :<BR>
+<TT>P1:=simplify(inv(P))</TT><BR>
+On obtient :<BR>
+<TT>[[1/3,1/3,1/3],[((i)*sqrt(3)-1)/12,((-i)*sqrt(3)-1)/12,1/6],[((-i)*sqrt(3)-1)/12,((i)*sqrt(3)-1)/12,1/6]]</TT>
+On tape :<BR>
+<TT>An:=factor(simplify(exp2trig(pow2exp(P*Bn*P1))))</TT><BR>
+On obtient :<BR>
+<TT>[[(2</TT><CODE><TT>^</TT></CODE><TT>n+2*cos(n*pi/3))/3, (2</TT><CODE><TT>^</TT></CODE><TT>n-cos(n*pi/3)-sqrt(3)*sin(n*pi/3))/3, (2</TT><CODE><TT>^</TT></CODE><TT>(n+1)-2*cos(n*pi/3)+sin(n*pi/3)*2*sqrt(3))/6],</TT><BR>
+<TT>[(2</TT><CODE><TT>^</TT></CODE><TT>n-cos(n*pi/3)+sqrt(3)*sin(n*pi/3))/3, (2</TT><CODE><TT>^</TT></CODE><TT>n+2*cos(n*pi/3))/3, (2</TT><CODE><TT>^</TT></CODE><TT>(n+1)-2*cos(n*pi/3)-2*sqrt(3)*sin(n*pi/3))/6],</TT><BR>
+<TT>[(2</TT><CODE><TT>^</TT></CODE><TT>n-cos(n*pi/3)-sqrt(3)*sin(n*pi/3))/3, (2</TT><CODE><TT>^</TT></CODE><TT>n-cos(n*pi/3)+sqrt(3)*sin(n*pi/3))/3, (2</TT><CODE><TT>^</TT></CODE><TT>(n+1)+4*cos(n*pi/3))/6]]</TT><BR>
+On tape :<BR><BR>
+On obtient :<BR><BR>
+On tape en mode complexe :<BR>
+<TT>simplify(exp2trig(pow2exp(seqsolve([x+z,y+x,z+y],[x,y,z,n],[a0,b0,c0]))))</TT><BR>
+On obtient après avoir utilisé <TT>factor</TT>:<BR>
+<TT>((a0+b0+c0)*2</TT><CODE><TT>^</TT></CODE><TT>n+cos(n*pi/3)*(2*a0-b0-c0)+sqrt(3)*sin(n*pi/3)*(-b0+c0))/3,</TT><BR>
+<TT>((a0+b0+c0)*2</TT><CODE><TT>^</TT></CODE><TT>n-cos(n*pi/3)*(a0-2*b0+c0)+sqrt(3)*(a0-c0)*sin(n*pi/3))/3</TT><BR>
+<TT>((a0+b0+c0)*2</TT><CODE><TT>^</TT></CODE><TT>n-cos(n*pi/3)*(a0+b0-2*c0)+sqrt(3)*(-a0+b0)*sin(n*pi/3))/3</TT><BR>
+Si on pose :<BR>
+<I>j</I>=(<I>sqrt</I>(3)*(<I>i</I>)−1)/2 on a <I>j</I><SUP>2</SUP>=(−<I>sqrt</I>(3)*(<I>i</I>)−1)/2.<BR>
+Donc :<BR>
+<I>B</I>=[[2,0,0],[0,−<I>j</I><SUP>2</SUP>,0],[0,0,−<I>j</I>]]<BR>
+<I>P</I>=[[1,2<I>j</I><SUP>2</SUP>,2<I>j</I>],[1,2<I>j</I>,2<I>j</I><SUP>2</SUP>],[1,2,2]]<BR>
+<I>P</I>1=<I>P</I><SUP>−1</SUP><BR>
+On peux faire les calculs à la main.... :<BR>
+<TT>B:=[[2,0,0],[0,-j</TT><CODE><TT>^</TT></CODE><TT>2,0],[0,0,-j]]</TT><BR>
+<TT>Bn:=matpow(B,n)</TT><BR>
+<TT>Bn:=[[2</TT><CODE><TT>^</TT></CODE><TT>n,0,0],[0,(-j</TT><CODE><TT>^</TT></CODE><TT>2)</TT><CODE><TT>^</TT></CODE><TT>n,0],[0,0,(-j)</TT><CODE><TT>^</TT></CODE><TT>n]]</TT><BR>
+<TT>P:=[[1,2j</TT><CODE><TT>^</TT></CODE><TT>2,2j],[1,2j,2j</TT><CODE><TT>^</TT></CODE><TT>2],[1,2,2]]</TT><BR>
+<TT>P1:=[[1/3,1/3,1/3],[j/6,j</TT><CODE><TT>^</TT></CODE><TT>2/6,1/6],[j</TT><CODE><TT>^</TT></CODE><TT>2/6,j/6,1/6]]</TT><BR>
+<TT>An:=P*Bn*P1</TT><BR>
+On obtient pour <TT>An</TT> après simplification à la main :<BR>
+<TT>[[u(n),w(n),v(n)],[v(n),u(n),w(n)],[w(n),v(n),u(n)]]</TT><BR>
+avec :<BR>
+<TT>u(n):=1/3*(2</TT><CODE><TT>^</TT></CODE><TT>n+(-j)</TT><CODE><TT>^</TT></CODE><TT>n+(-j</TT><CODE><TT>^</TT></CODE><TT>2)</TT><CODE><TT>^</TT></CODE><TT>n])</TT><BR>
+<TT>v(n):=1/3*(2</TT><CODE><TT>^</TT></CODE><TT>n+j*(-j)</TT><CODE><TT>^</TT></CODE><TT>n+j</TT><CODE><TT>^</TT></CODE><TT>2*(-j</TT><CODE><TT>^</TT></CODE><TT>2)</TT><CODE><TT>^</TT></CODE><TT>n)</TT><BR>
+<TT>w(n):=1/3*(2</TT><CODE><TT>^</TT></CODE><TT>n+j</TT><CODE><TT>^</TT></CODE><TT>2*(-j)</TT><CODE><TT>^</TT></CODE><TT>n+j*(-j</TT><CODE><TT>^</TT></CODE><TT>2)</TT><CODE><TT>^</TT></CODE><TT>n)</TT><BR>
+Donc on a :<BR>
+<I>a</I><SUB><I>n</I></SUB>=<I>a</I>0*<I>u</I>(<I>n</I>)+<I>b</I>0*<I>w</I>(<I>n</I>)+<I>c</I>0*<I>v</I>(<I>n</I>)<BR>
+<I>b</I><SUB><I>n</I></SUB>=<I>a</I>0*<I>v</I>(<I>n</I>)+<I>b</I>0*<I>u</I>(<I>n</I>)+<I>c</I>0*<I>w</I>(<I>n</I>)<BR>
+<I>c</I><SUB><I>n</I></SUB>=<I>a</I>0*<I>w</I>(<I>n</I>)+<I>b</I>0*<I>v</I>(<I>n</I>)+<I>c</I>0*<I>u</I>(<I>n</I>)
+</LI></OL><P>
+<B>Prolongements</B><BR>
+Soit <I>E</I> un ensemble fini de cardinal <I>n</I>.<BR>
+Soit <I>a</I><SUB><I>n</I></SUB> le nombre de parties de <I>E</I> de cardinal congru à 0mod3,<BR>
+Soit <I>b</I><SUB><I>n</I></SUB> le nombre de parties de <I>E</I> de cardinal congru à 1mod3,<BR>
+Soit <I>c</I><SUB><I>n</I></SUB> le nombre de parties de <I>E</I> de cardinal congru à 2mod3,<BR>
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Montrer que :<BR>
+<I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>=2<SUP><I>n</I></SUP>.
+</LI><LI CLASS="li-enumerate">Montrer que :<BR>
+<I>a</I><SUB><I>n</I></SUB>=1+<I>comb</I>(<I>n</I>,3)+<I>comb</I>(<I>n</I>,6)+...
+<I>b</I><SUB><I>n</I></SUB>=<I>comb</I>(<I>n</I>,1)+<I>comb</I>(<I>n</I>,4)+<I>comb</I>(<I>n</I>,7)+...
+<I>c</I><SUB><I>n</I></SUB>=1+<I>comb</I>(<I>n</I>,2)+<I>comb</I>(<I>n</I>,5)+<I>comb</I>(<I>n</I>,8)+...
+</LI><LI CLASS="li-enumerate">En développant (1+<I>X</I>)<SUP><I>n</I></SUP> successivement pour <I>X</I>=1, <I>X</I>=<I>j</I>, <I>X</I>=<I>j</I><SUP>2</SUP>, 
+calculer <I>a</I><SUB><I>n</I></SUB>, <I>b</I><SUB><I>n</I></SUB>, <I>c</I><SUB><I>n</I></SUB>.
+</LI><LI CLASS="li-enumerate">Donner la valeur de <I>a</I><SUB>0</SUB>, <I>b</I><SUB>0</SUB> et <I>c</I><SUB>0</SUB>.
+Calculer:<BR>
+<I>a</I><SUB><I>n</I>+1</SUB> en fonction de <I>a</I><SUB><I>n</I></SUB> et <I>c</I><SUB><I>n</I></SUB>,<BR>
+<I>b</I><SUB><I>n</I>+1</SUB> en fonction de <I>b</I><SUB><I>n</I></SUB> et <I>a</I><SUB><I>n</I></SUB>,<BR>
+<I>c</I><SUB><I>n</I>+1</SUB> en fonction de <I>c</I><SUB><I>n</I></SUB> et <I>b</I><SUB><I>n</I></SUB>
+Et faire le lien avec l’exercice précédent.<BR>
+</LI></OL><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Soit <I>n</I>=3<I>q</I>+<I>r</I> avec 0≤ <I>r</I>&lt;3.<BR>
+Le nombre de parties de <I>E</I> est 2<SUP><I>n</I></SUP> donc <I>a</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>=2<SUP><I>n</I></SUP>.
+</LI><LI CLASS="li-enumerate">Les parties de <I>E</I> de cardinal congru à 0mod3 sont de cardinal <I>p</I>
+avec <I>p</I>∈ (0,3,6..3<I>q</I>)
+Les parties de <I>E</I> de cardinal congru à 1mod3 sont de cardinal <I>p</I>
+avec <I>p</I>∈ (1,4,7..3<I>q</I>−2) si <I>r</I>=0 ou <I>p</I>∈ (1,4,7..3<I>q</I>+1) si 0&lt;<I>r</I>&lt;3
+Les parties de <I>E</I> de cardinal congru à 2mod3 sont de cardinal <I>p</I>
+avec <I>p</I>∈ (2,5,8..3<I>q</I>−1) si <I>r</I>=0 ou <I>r</I>=1 ou <I>p</I>∈ (2,5,8..3<I>q</I>+2) si <I>r</I>=2
+Donc
+<I>a</I><SUB><I>n</I></SUB>=1+<I>comb</I>(<I>n</I>,3)+<I>comb</I>(<I>n</I>,6)+...<I>comb</I>(<I>n</I>,3<I>q</I>)
+<I>b</I><SUB><I>n</I></SUB>=<I>comb</I>(<I>n</I>,1)+<I>comb</I>(<I>n</I>,4)+<I>comb</I>(<I>n</I>,7)+...+<I>comb</I>(<I>n</I>,3<I>q</I>−2)+<I>comb</I>(<I>n</I>,3<I>q</I>+1)
+<I>c</I><SUB><I>n</I></SUB>=1+<I>comb</I>(<I>n</I>,2)+<I>comb</I>(<I>n</I>,5)+<I>comb</I>(<I>n</I>,8)+...+<I>comb</I>(<I>n</I>,3<I>q</I>−1)+<I>comb</I>(<I>n</I>,3<I>q</I>+2)
+</LI><LI CLASS="li-enumerate">On a :<BR>
+(1+1)<SUP><I>n</I></SUP>)=1+<I>comb</I>(<I>n</I>,1)+<I>comb</I>(<I>n</I>,2)+<I>comb</I>(<I>n</I>,3)+....+<I>comb</I>(<I>n</I>,<I>n</I>)<BR>
+(1+<I>j</I>)<SUP><I>n</I></SUP>)=1+<I>j</I>*<I>comb</I>(<I>n</I>,1)+<I>j</I><SUP>2</SUP>*<I>comb</I>(<I>n</I>,2)+<I>comb</I>(<I>n</I>,3)+....+<I>j</I><SUP><I>n</I></SUP>*<I>comb</I>(<I>n</I>,<I>n</I>)<BR>
+(1+<I>j</I><SUP>2</SUP>)<SUP><I>n</I></SUP>)=1+<I>j</I><SUP>2</SUP>*<I>comb</I>(<I>n</I>,1)+<I>j</I>*<I>comb</I>(<I>n</I>,2)+<I>comb</I>(<I>n</I>,3)+....+<I>j</I><SUP>2<I>n</I></SUP><I>comb</I>(<I>n</I>,<I>n</I>)<BR>
+On additionne ces égalités après les avoir mulltiplié successivement 
+par :<BR>
+(1,1,1) puis par (1,<I>j</I><SUP>2</SUP>,<I>j</I>) puis par (1,<I>j</I>,<I>j</I><SUP>2</SUP>).
+On obtient (puisque <I>j</I><SUP>3</SUP>=1 et 1+<I>j</I>+<I>j</I><SUP>2</SUP>=0) :<BR>
+3<I>a</I><SUB><I>n</I></SUB>=2<SUP><I>n</I></SUP>+(1+<I>j</I>)<SUP><I>n</I></SUP>+(1+<I>j</I><SUP>2</SUP>)<SUP><I>n</I></SUP><BR>
+3<I>b</I><SUB><I>n</I></SUB>=2<SUP><I>n</I></SUP>+<I>j</I><SUP>2</SUP>(1+<I>j</I>)<SUP><I>n</I></SUP>+<I>j</I>(1+<I>j</I><SUP>2</SUP>)<SUP><I>n</I></SUP><BR>
+3<I>c</I><SUB><I>n</I></SUB>=2<SUP><I>n</I></SUP>+<I>j</I>(1+<I>j</I>)<SUP><I>n</I></SUP>+<I>j</I><SUP>2</SUP>(1+<I>j</I><SUP>2</SUP>)<SUP><I>n</I></SUP><BR>
+</LI><LI CLASS="li-enumerate">On a :<BR>
+<I>a</I><SUB>0</SUB>=1, <I>b</I><SUB>0</SUB>=<I>c</I><SUB>0</SUB>=0<BR>
+Quand on rajoute un élément α à <I>E</I> :<BR>
+parmi les sous-ensembles de cardinal congru à 0mod3, il y en a <I>a</I><SUB><I>n</I></SUB> 
+qui ne 
+contiennent pas α et <I>c</I><SUB><I>n</I></SUB> qui contiennent α donc<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=<I>a</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>,<BR>
+parmi les sous-ensembles de cardinal congru à 1mod3 il y en a <I>b</I><SUB><I>n</I></SUB> qui
+ne contiennent pas α et <I>a</I><SUB><I>n</I></SUB> qui contiennent α donc<BR>
+<I>b</I><SUB><I>n</I>+1</SUB>=<I>b</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>,<BR>
+parmi les sous-ensembles de cardinal congru à 2mod3 il y en a <I>c</I><SUB><I>n</I></SUB> qui
+ne contiennent pas α et <I>b</I><SUB><I>n</I></SUB> qui contiennent α donc<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=<I>c</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB>,<BR>
+Donc <I>a</I><SUB><I>n</I></SUB>, <I>b</I><SUB><I>n</I></SUB>, <I>c</I><SUB><I>n</I></SUB> sont définies par :<BR>
+<I>a</I><SUB>0</SUB>=1, <I>b</I><SUB>0</SUB>=<I>c</I><SUB>0</SUB>=0<BR>
+<I>a</I><SUB><I>n</I>+1</SUB>=<I>a</I><SUB><I>n</I></SUB>+<I>c</I><SUB><I>n</I></SUB>,<BR>
+<I>b</I><SUB><I>n</I>+1</SUB>=<I>b</I><SUB><I>n</I></SUB>+<I>a</I><SUB><I>n</I></SUB>,<BR>
+<I>c</I><SUB><I>n</I>+1</SUB>=<I>c</I><SUB><I>n</I></SUB>+<I>b</I><SUB><I>n</I></SUB><BR>
+On tape :<BR>
+<TT>simplify(exp2trig(pow2exp(seqsolve([x+z,y+x,z+y],[x,y,z,n],[1,0,0]))))</TT><BR>
+On obtient :<BR>
+<TT>[(2</TT><CODE><TT>^</TT></CODE><TT>n+2*cos(n*pi/3))/3,</TT><BR>
+<TT>(2</TT><CODE><TT>^</TT></CODE><TT>n-cos(n*pi/3)+(sqrt(3))*sin(n*pi/3))/3),</TT><BR>
+<TT>(2</TT><CODE><TT>^</TT></CODE><TT>n-cos(n*pi/3)+(-(sqrt(3))*sin(n*pi/3))/3]</TT><BR>
+</LI><LI CLASS="li-enumerate">On tape :<BR><BR>
+On obtient :<BR><BR>
+</LI><LI CLASS="li-enumerate">On tape :<BR><BR>
+On obtient :<BR><BR><BR>
+</LI></OL><H2 CLASS="section"><A NAME="toc143"></A><A NAME="htoc389">26.1</A>  Exercices sur les séries</H2><P>
+La commande <TT>sum</TT> de <TT>Xcas</TT> calcule les sommes de certaines séries.<BR>
+Voici queques exemples :<BR>
+On tape :<BR>
+<TT>sum(1/2</TT><CODE><TT>^</TT></CODE><TT>n,n=0..inf)</TT><BR>
+On obtient :<BR>
+<TT>2</TT><BR>
+On tape :<BR>
+<TT>sum(n/2</TT><CODE><TT>^</TT></CODE><TT>n,n=0..inf)</TT><BR>
+On obtient :<BR>
+<TT>2</TT><BR>
+On tape :<BR>
+<TT>sum(1/(n*(n+1)),n=1..inf)</TT><BR>
+On obtient :<BR>
+<TT>1</TT><BR>
+On tape :<BR>
+<TT>sum(1/((2n+1)*(2n-1)),n=1..inf)</TT><BR>
+On obtient :<BR>
+<TT>1/2</TT><BR>
+On tape :<BR>
+<TT>sum(1/n</TT><CODE><TT>^</TT></CODE><TT>2,n=1..inf)</TT><BR>
+On obtient :<BR>
+<TT>pi</TT><CODE><TT>^</TT></CODE><TT>2/6</TT><BR>
+On tape :<BR>
+<TT>sum((-1)</TT><CODE><TT>^</TT></CODE><TT>(n+1)/n,n=1..inf)</TT><BR>
+On obtient :<BR>
+<TT>ln(2)</TT><BR>
+On tape :<BR>
+<TT>sum((-1)</TT><CODE><TT>^</TT></CODE><TT>n/(2n+1),n=0..inf)</TT><BR>
+On obtient :<BR>
+<TT>pi/4</TT><BR>
+<B>Exercices</B>
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Montrer que :<BR>
+(1−<I>x</I>)*∑<I>k</I>=0<SUP><I>n</I></SUP><I>x</I><SUP><I>k</I></SUP>=1−<I>x</I><SUP><I>n</I>+1</SUP>
+En déduire que :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∑</FONT><I>k</I>=<I>p</I><SUP><I>n</I></SUP><I>x</I><SUP><I>k</I></SUP>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1−<I>x</I><SUP><I>n</I>+1</SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">1−<I>x</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+Montrer que :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=6>∑</FONT><I>k</I>=<I>p</I><SUP><I>inf</I></SUP><I>x</I><SUP><I>k</I></SUP>=<I>x</I><SUP><I>p</I></SUP></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">1−<I>x</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+Application :<BR>
+Calculer : ∑<I>k</I>=0<SUP><I>inf</I></SUP>2<SUP>−<I>k</I></SUP>,∑<I>k</I>=0<SUP><I>inf</I></SUP>3−<I>k</I> 
+</LI><LI CLASS="li-enumerate">Soit <I>u</I><SUB><I>n</I></SUB>=<I>n</I>/2<SUP><I>n</I></SUP>. Monter que :<BR>
+4<I>u</I><SUB><I>n</I>+1</SUB>&lt;3<I>u</I><SUB><I>n</I></SUB> lorsque <I>n</I>&gt;2<BR>
+En déduire que <I>u</I><SUB><I>n</I></SUB> tend vers 0 quand <I>n</I> tend vers +∞.
+</LI><LI CLASS="li-enumerate">pour ceux qui connaissent le critére de d’Alembert sur les séries 
+à termes positifs,<BR>
+Calculer <I>u</I><SUB><I>n</I>+1</SUB>/<I>u</I><SUB><I>n</I></SUB> (pour ceux qui connaissent le critére de 
+d’Alembert sur les séries à termes positifs).<BR>
+En déduire que la série de terme général <I>u</I><SUB><I>n</I></SUB> est convergente.
+</LI><LI CLASS="li-enumerate">pour ceux qui ne connaissent pas le critére de d’Alembert,<BR>
+Montrer que lim<SUB><I>N</I>−&gt;∞</SUB>∑<SUB><I>k</I>=0</SUB><SUP><I>N</I></SUP><I>u</I><SUB><I>n</I></SUB> existe et calculer sa valeur.
+</LI><LI CLASS="li-enumerate">Calculer la somme ∑<SUB><I>k</I>=0</SUB><SUP><I>N</I></SUP><I>u</I><SUB><I>n</I></SUB>.<BR>
+</LI></OL><P>
+On tape :<BR>
+<TT>u(n):=n/2</TT><CODE><TT>^</TT></CODE><TT>n</TT><BR>
+<TT>factor(simplify(4u(n+1)-3u(n)))</TT><BR>
+On obtient :<BR>
+<TT>(-n+2)/2</TT><CODE><TT>^</TT></CODE><TT>n</TT><BR>
+On a donc :<BR>
+<I>u</I><SUB><I>n</I>+1</SUB>/<I>u</I><SUB><I>n</I></SUB>&lt;3/4<BR>
+<I>u</I><SUB><I>n</I>+1</SUB>/<I>u</I><SUB><I>n</I></SUB>=<I>n</I>+1/2<I>n</I><BR>
+Donc <I>u</I><SUB><I>n</I>+1</SUB>/<I>u</I><SUB><I>n</I></SUB> tend vers 1/2 quand <I>n</I> tend vers 
++∞.<BR>
+On tape :<BR>
+<TT>limit(u(n+1)/u(n),n,inf)</TT><BR>
+On obtient :<BR>
+<TT>1/2</TT><BR>
+Calcul de <I>S</I><SUB><I>N</I></SUB>=∑<I>n</I>=0<SUP><I>N</I></SUP> <I>u</I><SUB><I>n</I></SUB><BR>
+<I>S</I><SUB><I>N</I></SUB>=0+∑<I>n</I>=1<SUP><I>N</I></SUP> 1/2<SUP><I>n</I></SUP>+∑<I>n</I>=2<SUP><I>N</I></SUP> 1/2<SUP><I>n</I></SUP>+...∑<I>n</I>=<I>k</I><SUP><I>N</I></SUP> 1/2<SUP><I>n</I></SUP>+..∑<I>n</I>=<I>N</I><SUP><I>N</I></SUP> 1/2<SUP><I>n</I></SUP>.<BR>
+Donc<BR>
+<I>S</I><SUB><I>N</I></SUB>=1+1/2<SUP><I>N</I></SUP>+1/2+1/2<SUP><I>N</I></SUP>+..1/2<SUP><I>k</I></SUP>+1/2<SUP><I>N</I></SUP>+1/2<SUP><I>N</I></SUP><BR>
+<I>S</I><SUB><I>N</I></SUB>=∑<SUB><I>k</I>=1</SUB><SUP><I>N</I></SUP>1/2<SUP><I>k</I></SUP>+<I>N</I>/2<SUP><I>N</I></SUP><BR>
+Comme <I>N</I>/2<SUP><I>N</I></SUP> tend vers 0 quand <I>N</I> tend vers +∞, on en déduit
+que :<BR>
+<I>S</I><SUB><I>N</I></SUB> tend vers ∑<SUB><I>k</I>=0</SUB><SUP>∞</SUP>1/2<SUP><I>k</I></SUP>=2.</P>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casexo025.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo027.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

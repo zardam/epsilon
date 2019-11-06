@@ -1,0 +1,15 @@
+#! /bin/bash
+cd ~
+cp giac-1.2.0/doc/aide_cas /c/xcas64/aide_cas
+cp giac-1.2.0/doc/aide_cas /c/xcas64/doc/aide_cas
+cp giac-1.2.0/doc/fr/xcasmenu /c/xcas64/doc/fr
+rm /c/xcas64/xcas.rc
+rm giac-1.2.0/src/hist.o
+rm giac-1.2.0/src/usual.o
+cd giac-1.2.0/src
+make -f Makefile.win64 xcasdll icasdll
+cp -f xcas.exe icas.exe giac.dll /c/xcas64
+cp -f icas.exe /c/xcas64/giac.exe
+cd ~
+/cygdrive/c/NSIS/Unicode/makensis.exe xcas64.nsi
+

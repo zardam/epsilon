@@ -1,0 +1,841 @@
+#!/usr/bin/perl -w
+##
+# $Id: gphtml,v 1.7 2002/12/25 16:12:02 fenrir Exp $
+# gphelp originally written by Niels Skoruppa;  maintained by
+# Karim Belabas (since v 1.8)
+#
+# This script generates html documentation of the gp/pari functions
+# on using the tex documentation as given in chapter 3 of the users manual.
+# Currently this is a workaround since there seems to exist no reasonable
+# plain TeX to html converter. Here we just take the outputs of
+# gphelp -raw (or alternatively -detex) and translate them into html form.
+# It will be easy to replace, in the following code, the use of this
+# function by a more powerful tex2html translator
+# (if there were one in sight).
+#
+# Usage: gphtml [--dist|--4gui|--subsections|--no_entries|--use_detex]
+#
+# Without any option this will create, in the directory where you
+# called, a subdirectory named html, and therein the html documentation.
+# With --dist this will add this file and a tar archive of html to html.
+# With --4gui this creates a directory called ref containing the reference
+# docs for pariguide.
+# The other options are for debugging purposes or consistency checks only.
+#
+# Adjust the three pathes below (look for AdJuSt).
+#########################################################################
+
+#use strict 'vars';
+
+my (
+    $USERSCH3_TEX, $REF, $REF_HEADER,
+#    $HTML, 
+#    $DATE,
+    $distFlag, $guiFlag, $subsectionsFlag, $no_entriesFlag, $checkFlag, $option,
+    %pics, %basicFrames,
+#    $version,
+    @shortcuts, %subsections, %sections, %fill,
+    @ou, %tr, %html,
+    $gl_key, $gl_item, $gl_letter, $gl_contents,
+    );
+
+$DATE = localtime();
+
+##############
+# AdJuSt these
+##############
+$HTML = './html/'; # or where ever you like the html pages
+$REF  = './ref/';  # or wherever you like the pariguide ref pages
+$base = "/usr/local/src/pari"; # the toplevel PARI/GP sources 
+
+#########################
+# Parse the argument line
+#########################
+$option = '-raw';
+$distFlag = $guiFlag = $subsectionsFlag = $no_entriesFlag = $checkFlag = 0;
+for (@ARGV) {
+  /--dist/        and do { $distFlag = 1; next;};
+  /--4gui/        and do { $guiFlag = 1; $HTML = $REF; next;};
+  /--subsections/ and do { $subsectionsFlag = 1; next;};
+  /--no_entries/  and do { $no_entriesFlag = 1; next;};
+  /--use_detex/   and do { $option = '-detex'; next;};
+  /--base=(.*)/   and do { $base = $1; next;};
+  /--HTML=(.*)/   and do { $HTML = $1; next;};
+  &usage;
+}
+$USERSCH3_TEX = "$base/doc/usersch3.tex";
+$gp           = "$base/gp";
+$gphelp       = "$base/doc/gphelp";
+
+sub usage {
+  print STDERR "Usage: $0 [--dist|--4gui|--subsections|--no_entries|--use_detex]\n";
+  exit( 0);
+}
+
+# We see first what information the system has about pari/gp and collect it
+initVersionAndShortcuts();
+initSubsections();
+cleanSubsections();
+
+# If we only want to list the subsections of usersch3.tex, then this
+1 == $subsectionsFlag and do {
+  foreach $gl_key ( sort keys %sections) {
+    print "$gl_key $sections{$gl_key}\n";
+  }
+  foreach $gl_key ( sort keys %subsections) {
+    print "\n\n $gl_key \n\n";
+    foreach $gl_item ( @{ $subsections{ $gl_key}}) {
+      print "\t$gl_item\n";
+    }
+  }
+  exit( 0);
+};
+
+#######################################################################
+# Here we write all *.html files of the pariguide doc to directory $REF
+#######################################################################
+1 == $guiFlag and do {
+  system( "mkdir -p $REF");
+  $REF_HEADER = "<table cellpadding=2 cellspacing=0 bgcolor=\"#83a2ef\" width=\"100%\" border=0>\n<tr>\n"
+    ."<td><b>Pari/GP Reference Documentation</b></td>\n"
+      ."<td align=right><a href=\"index.html\"><img src=\"./home.gif\" border=0 />&nbsp;Contents</a>\n"
+        ." - <a href=\"function_index.html\">Index</a>\n"
+          ." - <a href=\"meta_commands.html\">Meta commands</a></td>\n"
+            ."</tr>\n</table><br/>\n\n";
+
+  writeData4Ref( *DATA); # icons
+  writeToC4Ref(); #toc
+  writeIndex( 6); # function index using 6 columns,
+  # subsection pages,
+  foreach $gl_key ( sort keys %subsections) {
+    1 == $no_entriesFlag or &writeEntries4Ref( $gl_key);
+  }
+  # and meta commands.
+  $gl_contents = $REF_HEADER;
+  $gl_contents = $gl_contents."<h3 align=left>Meta commands</h3>\n";
+  foreach $gl_item (@shortcuts) { $gl_contents .= $gl_item.'<br/>'; }
+  printHTML('meta_commands.html', 'Meta Commands',
+            'bgcolor="#FFFFFF"', $gl_contents);
+  exit(0);
+};
+
+#######################################################################
+# Here we write all *.html files to a directory $HTML, according to the
+# frame layout sketched in the data section below (after __DATA__ ).
+# Change look and feel by altering the descriptions in the data section.
+#######################################################################
+system( "mkdir -p $HTML");
+
+# Write basic frames
+writeData( *DATA);
+writeToC();
+# ... and the pages for the frame "item"
+foreach $gl_key (sort keys %subsections) {
+  writeFunctionsByCategory( $gl_key);
+}
+foreach $gl_letter ((A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z)) {
+  writeFunctionsByAlphabet( $gl_letter);
+}
+# ... and the pages for the frame "entry"
+foreach $gl_key (sort keys %subsections) {
+  1 == $no_entriesFlag or &writeEntries($gl_key);
+}
+$gl_contents = "\n<H3>Keyboard Shortcuts</H3>\n";
+foreach $gl_item (@shortcuts) { $gl_contents .= $gl_item."<br>\n"; }
+printHTML('keyboard_shortcuts.html', 'GP Keyboard Shortcuts',
+	  'bgcolor="#FFFFFF"', $gl_contents);
+if (1 == $distFlag) {
+  system("cp gphtml $HTML; tar cfz `basename $HTML`.tgz $HTML");
+}
+
+
+########### The subroutines ##################
+sub warning { print STDERR "\t\e[0;31m\e[1mWarning:\e[m ".$_[0]."\n"; } 
+sub fatal { die "\t\e[0;31m\e[1mError:\e[m ".$_[0]."\n"; }
+sub happy { print STDERR "\t".$_[0]." ...... \e[0;32m\e[1m OK\e[m\n"; }
+sub unhappy { print STDERR "\t".$_[0]." ...... \e[0;31m\e[1m FAILED\e[m\n"; }
+
+###############################################################################
+# Sets ups $version and the list @shortcuts of GP keyboard shortcuts. Calls gp!
+# Checks if gphelp is available
+###############################################################################
+sub initVersionAndShortcuts {
+  my($entry);
+  $_ = `$gp --version 2>&1 | head -n 1`;
+  s/^\s*//;
+  s/\(.*//;
+  s/\s*$//;
+  $version = $_;
+  @shortcuts = split "\n", `echo '?\\' | $gp -q --test`;
+  if ($version eq "")
+  { warning( "gp not found: no version, no keyboard shortcut information"); }
+  else
+  { happy( "gp found ($gp)"); }
+  #
+  $entry = `$gphelp -detex addprimes`;
+  if ($entry eq "") { fatal( "gphelp not found"); }
+  happy( "gphelp found ($gphelp)");
+}
+
+###########################################################################
+# Sets up hash of lists %subsections. Keys are the sections of usersch3.tex
+# Values are the list of corresponding subsections.
+###########################################################################
+sub initSubsections {
+  my($j, $key, $tmp);
+
+  open IN, "<$USERSCH3_TEX"
+    or fatal("Cannot open $USERSCH3_TEX: Adjust the path in the script or make a link");
+
+  $j=1; $key = "Dummy";
+  while (<IN>) {
+    if (s/\\section\{(.*?)\}//) {
+      $key = $1;
+      $subsections{$key} = [];
+      $sections{$j} = $key;
+      $tmp = $key; $tmp =~ s/ /_/g;
+      $fill{$key} = $tmp;
+      $j++;
+    }
+    if( s/\\subseckbd\{(.*?)\}//) {
+      $id = $1; $lbl = "kbd";
+    }
+    elsif( s/\\subsecidx\{(.*?)\}//) {
+      $id = $1; $lbl = "idx";
+    }
+    elsif( s/\\subsec\{(.*?)\}//) {
+      $id = $1;
+      $id =~ s/\$.*//; 
+      $id =~ s/\\//g; 
+      $lbl = "nix";
+    }
+    else { next; }
+    push @{ $subsections{ $key}}, "[$id]__($lbl)__";
+  }
+  close IN;
+}
+
+# Some subsection titles are not found by gphelp. Help "by hand".
+sub cleanSubsections {
+  my( $pair, $item, $a, $j);
+  my(%table) = (
+    "Conversions and similar elementary functions or commands"
+    => [["components of a PARI object", "component"]],
+
+    "Programming in GP"
+    => [['Control statements', '?'],
+        ['Specific functions used in GP programming', '?']],
+
+    "Standard monadic or dyadic operators"
+    => [['\%', '?'],
+        ['+$/$-', '+/-'],
+        ['\bs','\\'],
+        ['\bs/','\/'],
+        ['\pow','^'],
+        ['Comparison and boolean operators','<,<,>=,>,==,!=,||,&&,!,|,&,<>']],
+
+    "Transcendental functions"
+    => [['\pow','^']]
+  );
+
+  while (my ($key, $val) = each %table) {
+    next if (!defined($subsections{$key}));
+    foreach $pair ( @{ $val}) {
+      $j=0;
+      foreach $item ( @{ $subsections{ $key}}) {
+        $a = quotemeta(@{ $pair}[0]);
+        if( $item =~ /^\[$a\]/) {
+          if( @{ $pair}[1] eq '?') {
+            splice @{ $subsections{ $key}}, $j, 1;
+          }
+          else {
+            splice @{ $subsections{ $key}}, $j, 1, "[@{ $pair}[1]]__()__";
+          }
+        }
+        $j++;
+      }
+    }
+  }
+}
+
+# Writes index.html, the entry page for the reference documentation.
+# Relies on the hash %subsection.
+sub writeToC4Ref {
+  my( $key, $contents, $toc1, $toc2, $letter);
+
+  $toc1 = $toc2 =''; $z = 0;
+  foreach $key ( sort keys %subsections) {
+    0 == $z and $toc1 .= "<tr>\n";
+    $toc1 .= '<td><a href="./'."$fill{$key}".'.html">'.$key.'</a></td>'."\n";
+    1 == $z and $toc1 .= "</tr>\n";
+    $z = 1 - $z;
+  }
+  1 == $z and $toc1 .= "<td>&nbsp;</td>\n</tr>";
+
+  foreach $letter ( (A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z)) {
+    $toc2 .= '<a href = "./function_index.html#'.$letter.'">'
+             .$letter.'</a>'."\n";
+  }
+
+  $contents = <<"__UP_TO_HERE__";
+<DIV align=left>
+
+<h4 align=left>Functions by Category</h4>
+<table cellpadding=0 cellspacing=0 border=0 width="100%">
+$toc1
+</table>
+
+<h4 align=left><a href="./meta_commands.html">Meta Commands</a></h4><br/>
+
+<h4>Functions in Alphabetical Order</h4><br/>
+$toc2
+<br><hr><br>
+<small>
+Catalogue of Functions for the $version.
+<br>
+(generated by gphtml on $DATE.)</small>
+</DIV>
+__UP_TO_HERE__
+
+  printHTML("index.html", "Table of Contents",
+            'bgcolor="#FFFFFF"', $REF_HEADER.$contents);
+}
+
+# Writes toc.html. Relies on the hash %subsection.
+sub writeToC {
+  my($key, $contents, $toc1, $toc2, $letter);
+
+  $toc1 = $toc2 ='';
+  foreach $key (sort keys %subsections) {
+    die "Unknown subsection: $key" if (!defined($fill{$key}) );
+    $toc1 .=
+      '<A href="./'."cont_$fill{$key}".'.html" target="itemFrame">'
+      .$key.'</A>'."\n".'<HR>'."\n";
+  }
+  foreach $letter ((A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z)) {
+    $toc2 .= '&nbsp;<A href = "./cont_'.$letter.'.html" target="itemFrame">'
+             .$letter.'</A>'."\n";
+  }
+
+  $contents = <<"__UP_TO_HERE__";
+<DIV align=center>
+<A href="http://pari.math.u-bordeaux.fr/" target="_top">
+<IMG border=0 alt="Pari/GP Home Page" src="http://pari.math.u-bordeaux1.fr/site_icons/Logo_PARI-GP_Couleurs_L150px.png"></A>
+</DIV>
+
+<DIV align=left>
+<H4>Functions by Category</H4>
+<small>
+$toc1
+<A href="./keyboard_shortcuts.html" target="entryFrame">Keyboard Shortcuts</A>
+</small>
+<hr>
+
+<H4>Functions in Alphabetical Order</H4>
+<div style="font-size: 80%; text-align: justify;">
+$toc2
+</div>
+</DIV>
+__UP_TO_HERE__
+
+  printHTML("toc.html", "Table of Contents",
+            'background="./toc.jpg"', $contents);
+}
+
+#############################################################################
+# Writes, for each list of subsection titles pointed to by $key, an html file
+# cont_$key.html. This a a collection of links to the respective entries in
+# $key.html. Uses the hash %subsection.
+# Call in the form writeFunctionsByCategory( $key)
+#############################################################################
+sub writeFunctionsByCategory {
+  my($key, $item, $txt, @A);
+  $key = $_[0];
+
+  foreach $item (sort @{$subsections{$key}}) {
+    $item =~ /^\[(.*?)\]\_\_\((.*?)\)\_\_$/;
+    push(@A, "<A href=\"$fill{$key}.html#$1\" target=\"entryFrame\">$1</A>");
+  }
+  $txt = "\n<h3 align=center>Index: $key</h3>\n"
+       . '<div style="font-size: 80%; text-align: justify;">'
+       . join(",\n", @A)
+       . "\n</div>";
+  printHTML("cont_$fill{$key}.html", "$key", 'bgcolor = "#FFFFFF"', $txt);
+}
+
+############################################################################
+# Writes function_index.html. This a a collection of links to the respective
+# entries in the entry pages. Uses the hash %subsection.
+# Call in the form writeIndex(number_of_columns)
+############################################################################
+sub writeIndex {
+  my( $numOfCols, $letter, @tmp, $key, $item, $contents, $z, %subsectionsByAl);
+
+  $numOfCols = $_[0];
+
+  $contents = $REF_HEADER . "<h3 align=left>Index of Functions</h3>\n"
+              .'<table cellpadding=0 cellspacing=0 width="100%" border=0>'."\n"; 
+  foreach $letter ( (A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z)) {
+    $subsectionsByAl{ $letter} = []; @tmp = ();
+    foreach $key ( keys %subsections) {
+      foreach $item ( @{ $subsections{ $key}}) {
+        if( $item =~ /^\[$letter/ || $item =~ /^\[\l$letter/) {
+          $item =~ /^\[(.*?)\]__\((.*?)\)__$/;
+          push @{ $subsectionsByAl{ $letter}}, "[$1]__($key)__\n";
+          push @tmp, "[$1]__($key)__\n";
+        }
+      }
+    }
+    $contents .= "<tr>\n<td><a name=\"$letter\" /><b>$letter</b></td>\n";
+    $z = 1;
+    foreach $item (sort @tmp) {
+      $item =~ /^\[(.*?)\]\_\_\((.*?)\)\_\_$/;
+      if( $z == $numOfCols) {
+        $contents = $contents."</tr>\n<tr>\n<td>&nbsp;</td>\n";
+        $z = 1;
+      }
+      $contents .=
+        '<td><A href="./'.$fill{$2}.'.html#'.$1.'">'.$1.'</A>'."</td>\n";
+      $z++;
+    }
+    for(; $z < $numOfCols; $z++) { $contents .= "<td>&nbsp;</td>\n"; } 
+    $contents .= '</tr>'."\n";
+    
+  }
+  $contents .= "</table>";
+  printHTML("function_index.html", "Index of Functions", 'bgcolor = "#FFFFFF"', $contents);
+}
+
+############################################################################
+# Writes, for each letter the file cont_$letter.html. This a a collection of
+# links to the respective entries in the entry pages.
+# Uses the hash %subsection.
+# Call in the form  writeFunctionsByAlphabet( $letter)
+############################################################################
+sub writeFunctionsByAlphabet {
+  my( $letter, @tmp, $key, $item, $contents, %subsectionsByAl);
+
+  $letter = $_[0];
+
+  $subsectionsByAl{ $letter} = []; @tmp = ();
+  foreach $key ( keys %subsections) {
+    foreach $item ( @{ $subsections{ $key}}) {
+      if( $item =~ /^\[$letter/ || $item =~ /^\[\l$letter/) {
+        $item =~ /^\[(.*?)\]\_\_\((.*?)\)\_\_$/;
+        push @{ $subsectionsByAl{ $letter}}, "\[$1\]\_\_\($key\)\_\_\n";
+        push @tmp, "\[$1\]\_\_\($key\)\_\_\n";
+      }
+    }
+  }
+  $contents = "\n<h3 align=center>Index: $letter</h3>\n";;
+  foreach $item (sort @tmp) {
+    $item =~ /^\[(.*?)\]__\((.*?)\)__$/;
+    $contents .=
+      '&nbsp;&nbsp;<A href="./'.$fill{$2}.'.html#'.$1.'" target="entryFrame">'
+      .$1.'</A>'."\n";
+  }
+  printHTML("cont_$letter.html", "$letter", 'bgcolor = "#FFFFFF"', $contents);
+  
+}
+
+sub get_entry {
+  my ($item) = @_;
+  my ($l, $r, $d);
+  my (%trans0, %trans);
+  %trans0 = (
+    '&' => '&amp;',
+    '<' => '&#60;',
+    '>' => '&#62;',
+    '~{O}' => '&Otilde;',
+  );
+  %trans = (
+    '\{'         => '{',
+    '\}'         => '}',
+    '\langle'    => '&#60;',
+    '\rangle'    => '&#62;',
+    '@0'         => '  ',
+    '@1'         => '',
+    '@2'         => '',
+    '@3'         => '',
+    );
+
+  $entry = `$gphelp '$option' '$item'`;
+  ($entry =~ /^'.*' not\ found !$/) and unhappy("\t$item");
+  if( $option eq '-raw') {
+    # first kill TeX leftovers
+    for $key ( keys %trans0) {
+      $l = quotemeta($key); $r = $trans0{$key};
+      $entry =~ s/$l/$r/gs;
+    }
+# TO_DO: Fix the dirty hack from here
+    # handle \bprog @com
+    $entry =~ s/(\@1 *\@\[startcode\][^\@]*)\@\[endcode\]([^\n]*)\@\[startcode\]/$1 $2/gs;
+    # handle @com
+    $entry =~ s/(\@0[^\@]*)\@\[endcode\]([^\n]*)\@\[startcode\]/$1 $2/gs;
+    $l = '\@1 *\@\[startcode\]'; $r = '<pre class="code">  ';  
+    $entry =~ s/$l(.*?)/$r$1/gs;
+    $l = '\@[23] *\@\[endcode\]'; $r = '</pre>';
+    $entry =~ s/$l(.*?)/$r$1/gs;
+# to here.
+    for $key (keys %trans) {
+      $l = quotemeta($key); $r = $trans{$key};
+      $entry =~ s/$l/$r/gs;
+    }
+    # then make a nice header
+    $entry =~ s/^\@\[startbold](.*?)\:\@\[endbold]\n\n/<h4>$1<\/h4>\n<p>/gs;
+    # now care for the @[] markers
+    for $key ( @ou) {
+      $l = quotemeta($tr{$key}); $r = $html{$key};
+      $entry =~ s/$l(.*?)/$r$1/gs;
+    }
+    # where @[dollar] is more difficult (or should we just throw it ?)
+    $d = '\@\[dollar\]';
+    # while( $entry =~ s/$d(.*?)$d/\<math\>$1\<\/math\>/gs) {;}
+    $entry =~ s/$d//gs;
+    # finally break into paragraphs
+    $entry =~ s/\n\n/\<\/p\>\n<p\>/gs;
+    $entry =~ s/\<p\>(\n*?)\e\[0m//gs;
+  } else {
+    # heading
+    $entry =~ s/\e\[1m(.*?)\e\[m(.*?):\n\n/\<h4\>$1$2\<\/h4\>\n\<p\>/g;
+    # bold
+    while( $entry =~ s/\e\[1m(.*?)\e\[m/\<b\>$1\<\/b\>/gs) {;}
+    # underline
+    while( $entry =~ s/\e\[4m(.*?)\e\[m/\<var\>$1\<\/var\>/gs) {;}
+    # break into paragraphs
+    $entry =~ s/\n\n/<\/p>\n\n\<p\>/gs;
+    # throw the rest
+    $entry =~ s/\e\[m//gs;
+    $entry =~ s/\<p\>\e\[0m//gs;
+  }
+  return $entry;
+}
+
+sub writeEntries4Ref() {
+  my( $contents, $item, $key, $link, $function);
+
+  $key = $_[0];
+  print STDERR "\twriting: $key";
+  initFixedData();
+  $contents = "<A NAME=\"top\" />\n".$REF_HEADER;
+  $contents = $contents."<h3 align=left>$key</h3><br/>\n\n";
+  $contents = $contents
+    ."<table cellpadding=4 cellspacing=0 bgcolor=\"\#FFFFEE\" width=\"100%\" border=0>\n"
+    ."<tr><td colspan=2>\n";
+
+  foreach $item (sort @{ $subsections{$key}}) {
+    $item =~ /^\[(.*?)\]__\((.*?)\)__$/;
+    $contents .=
+      '<a href="./'.$fill{$key}.'.html#'.$1.'">'.$1.'</a>&nbsp;&nbsp;'."\n";
+  }
+
+  $contents .= "</td></tr>\n<tr><td colspan=2>&nbsp;</td></tr>\n";
+
+  foreach $item (@{ $subsections{$key}}) {
+    my ($entry);
+    $item =~ s/^\[(.*?)\]\_\_\((.*?)\)\_\_$/$1/;
+    $entry = get_entry($item);
+    $entry =~ s/\<h4\>(.*?)\<\/h4\>//;
+    $function = $1;
+
+    $link = "</td><td align=right><a href=\"./index.html\">"
+      ."<img src=\"./home.gif\" border=0 /></a>&nbsp;&nbsp;<a href=\"#top\">"
+      ."<img src=\"./top.gif\" border=0 /></a></td></tr>";
+
+    $contents .= "<tr bgcolor=\"#EEEEAA\">\n"
+          ."<td><a name=\"$item\"></a> $function$link\n"
+            ."<tr><td colspan=2>$entry\</td></tr>\n"
+            ."<tr bgcolor=\"#FFFFFF\"><td colspan=2 height=6></td></tr>\n";
+  }
+  $contents .= '</table>';
+
+  printHTML( "$fill{$key}.html", "$key", 'bgcolor=\"#FFFFFF\"', $contents); 
+  print STDERR " \e[0;32m\e[1m DONE\e[m\n";
+}
+
+###########################################################################
+# Writes, for each list pointed to by $key, a file $key.html containing the
+# subsections of the corresponding section in usersch3.tex. Needs %subsections
+# and uses "gphelp $option" to convert subsections of usersch3.tex into html.
+# Use in the form writeEntries( $key)
+###########################################################################
+sub writeEntries() {
+  my ($contents, $item, $key);
+
+  $key = $_[0];
+  print STDERR "\twriting: $key";
+  initFixedData();
+  $contents = "\n<h3 align=center>$key</h3>\n\n";
+  foreach $item (@{ $subsections{$key}}) {
+    my ($entry);
+    $item =~ s/^\[(.*?)\]\_\_\((.*?)\)\_\_$/$1/;
+    $entry = get_entry($item);
+    $contents .= "<a name=\"$item\"></a>\n$entry\n<hr></hr>\n";
+  }
+  printHTML( "$fill{$key}.html", "$key", 'bgcolor="#FFFFFF"', $contents); 
+  print STDERR " \e[0;32m\e[1m DONE\e[m\n";
+}
+
+###############################################################
+# Writes the images home.gif and top.gif described in file FILE
+# (Use hexdump for byte to hex conversion.)
+# See below __DATA__ for description syntax.
+# Call in the form writeData( *FILEHANDLE)
+###############################################################
+sub writeData4Ref {
+  my( $IN, $Mode, @parm, $data);
+  
+  $IN = $_[0];
+  $Mode = '';
+  while ( <$IN>) {
+    if (/^\s*\@PIC\{\s*(.*?)\s*\}/) {
+      @parm = ($1);
+      if ("home.gif" eq $parm[0] or "top.gif" eq $parm[0]) {
+        $Mode = 'PIC';
+        $data = '';
+      }
+      next;
+    }
+    if (/^\s*\@HTML\{\s*(.*?)\s*,\s*(.*?)\s*,\s*(.*?)\s*\}/) {
+      $Mode = 'HTML'; next;
+    }
+    if (/\@DONE/) {
+      if ($Mode eq 'PIC') {
+        $data =~ s/\s//g;
+        printPIC( @parm, $data);
+      }
+      $Mode = ''; next;
+    }
+    if ($Mode eq 'PIC') { $data .= $_; next; }
+  }
+}
+
+################################################################
+# Writes html pages and images described in file FILE. See below
+# __DATA__ for the description syntax.
+# Call in the form writeData ( *FILEHANDLE)
+################################################################
+sub writeData {
+  my($IN, $Mode, @parm, $data);
+  
+  $IN = $_[0];
+  $Mode = '';
+  while ( <$IN>) {
+    if (/^\s*\@PIC\{\s*(.*?)\s*\}/) {
+      $Mode = 'PIC';
+      @parm = ($1);
+      $data = ''; next;
+    }
+    if (/^\s*\@HTML\{\s*(.*?)\s*,\s*(.*?)\s*,\s*(.*?)\s*\}/) {
+      $Mode = 'HTML';
+      $parm[0] = $1;
+      @parm = ($1, $2, $3);
+      $data = ''; next;
+    }
+    if (/\@DONE/) {
+      if( $Mode eq 'PIC') {
+        $data =~ s/\s//g;
+        printPIC(@parm, $data);
+      }
+      if ($Mode eq 'HTML') { printHTML( @parm, $data); }
+      $Mode = ''; next;
+    }
+    next if (!$Mode);
+
+    # eval. variables in DATA section
+    if ($Mode eq 'HTML') { s/\$(\w+)/${$1}/g; };
+    $data .= $_; next;
+  }
+}
+
+##################################################################
+# Writes a html page. Call in the form
+# printHTML($name_of_file, $title_of_page, $background, $contents)
+# with properly initialized scalar arguments.
+# If $background = 'NO_BODY_TAGS', then no <BODY> tag is printed
+##################################################################
+sub printHTML { my ($f, $title, $bgd, $con) = @_;
+  my ($Bstart, $Bend) = ('','');
+  if ($bgd ne 'NO_BODY_TAGS') { $Bstart = "<BODY $bgd>"; $Bend = "</BODY>"; }
+  open OUT, ">$HTML/$f" or fatal("Cannot create the file $HTML/$f\n");
+  print OUT <<"__UP_TO_HERE__";
+<HTML>
+<HEAD>
+  <TITLE>
+    Catalogue of GP/PARI Functions: $title
+  </TITLE>
+
+  <META NAME="author"       CONTENT="Nils-Peter Skoruppa">
+  <META NAME="created"      CONTENT="$DATE">
+  <META NAME="author-email" CONTENT="skoruppa\@math.uni-siegen.de">
+  <META NAME="keywords"     CONTENT="PARI, GP, DOC">
+  <link rel="stylesheet" href="/pari.css">
+</HEAD>
+$Bstart
+$con
+$Bend
+</HTML>
+__UP_TO_HERE__
+  close OUT;
+}
+
+
+########################################################
+# Writes a stream of 2 digit hex values as chars to file
+# Call in the form printPIC( $file, $stream)
+########################################################
+sub printPIC { my ($f, $data) = @_;
+  open OUT, ">${HTML}/$f" or fatal( "Cannot create the file ${HTML}/$f\n");	
+  $data =~ s/(..)/chr(hex($1))/ge;
+  print OUT $data;
+  close OUT;
+}
+
+################DO NOT ALTER BELOW THIS LINE #############################
+sub initFixedData
+{
+  @ou = qw( 
+    nbrk
+    startbold endbold
+    startcode endcode
+    startpodcode endpodcode
+    startbi endbi
+    startit endit
+    startword endword
+    startlword endlword
+    pm
+    obr cbr
+    lt gt
+    agrave eacute uuml ouml
+  );
+#         dollar                              => <math> ... </math>
+#         nbrk                                               => ignore
+#         startbold endbold        -gp/pari functions        => boldface
+#         startcode endcode        -???                      => color
+#         startpodcode endpodcode  -???                      => go
+#startlink endlink                 -nix da in raw
+#startbcode endbcode               -nix da in raw
+#         startbi endbi            -blackboard boldface      => boldface
+#         startit endit            -optional argments        => underline
+#         startword endword        -greek letters            => color
+#         startlword endlword      -math.abbrev. like $\log$ => ignore
+#         pm                       -+-                       =>
+#empty gt lt podleader             -nix da in raw            => ignore
+#
+# Neu in parigp.2.1.1:
+#         obr cbr                                            => { }
+#         lt gt                                              => < >
+#	  agrave eacute uuml ouml                            => &agrave; ...
+
+  @tr{@ou} = map "\@[$_]", @ou;
+
+  %html = (
+    nbrk         => '&nbsp;',
+    startbold    => '<b>',
+    endbold      => '</b>',
+#    startcode    => "<font color=#a3682a><tt>\n",
+#    endcode      => '</tt></font>',
+#    startcode    => "<pre class=\"code\">\n",
+#    endcode      => '</pre>',
+    startcode    => '<code>',
+    endcode      => '</code>',
+    startpodcode => '',
+    endpodcode   => '',
+    startbi      => '<b>',
+    endbi        => '</b>',
+    startit      => '<em>',
+    endit        => '</em>',
+    startword    => '<font color=#FF0000>',
+    endword      => '</font>',
+    startlword   => '',
+    endlword     => '',
+    pm           => '&#177;',
+    obr          => '{',
+    cbr          => '}',
+    lt           => '&#60;',
+    gt           => '&#62;',
+    agrave       => '&agrave;',
+    eacute       => '&eacute;',
+    uuml         => '&uuml;',
+    ouml         => '&uml;',
+  );
+}
+
+__DATA__
+
+Layout of frames:
+=================
+
+         / empty empty empty empty
+        /              item
+ index <   empty toc   ----- empty
+        \              entry
+         \ empty empty title empty
+
+@HTML{index.html, Main Page, NO_BODY_TAGS}
+<FRAMESET COLS="1%,280,*,1%" ROWS="1%,91%,8%" BORDER=0 FRAMEBORDER="no" FRAMESPACING=0>
+<FRAME src="empty.html" scrolling="no"></FRAME>
+<FRAME src="empty.html" scrolling="no"></FRAME>
+<FRAME src="empty.html" scrolling="no"></FRAME>
+<FRAME src="empty.html" scrolling="no"></FRAME>
+
+<FRAME src="empty.html" scrolling="no"></FRAME>
+<FRAME src="toc.html"></FRAME>
+<FRAMESET rows="140,*" border=0 frameborder="yes" framespacing=0>
+<FRAME name="itemFrame"   src="item.html"></FRAME>
+<FRAME name="entryFrame"  src="entry.html"></FRAME>
+</FRAMESET>
+<FRAME src="empty.html" scrolling="no"></FRAME>
+
+<FRAME src="empty.html" scrolling="no"></FRAME>
+<FRAME src="empty.html" scrolling="no"></FRAME>
+<FRAME src="title.html" scrolling="no"></FRAME>
+<FRAME src="empty.html" scrolling="no"></FRAME>
+</FRAMESET>
+@DONE
+
+@HTML{ empty.html, Empty Page :-), BACKGROUND="./empty.jpg"}
+@DONE
+
+@HTML{ title.html, Title Page, BACKGROUND="./empty.jpg"}
+Catalogue of Functions for $version.
+<br>
+<small>(generated by gphtml on $DATE.)</small>
+@DONE
+
+@HTML{ item.html, Items Page, BGCOLOR=#FFFFFF}
+@DONE
+
+@HTML{ entry.html, Welcome Page, BGCOLOR=#FFFFFF}
+<br><br>
+<center>
+<h2>This is a html documentation of<br>
+functions available under the $version.</h2>
+</center>
+<br>
+Comments and proposals for improvement
+<a href="mailto:pari@math.u-bordeaux1.fr">
+are welcome</a>.
+<br>
+<br>
+You can <a href="../$HTML.tgz">download these html files</a> (as gzipped tar
+file) or generate them by yourself using the perl script
+<a href="../gphtml">gphtml</a> (provided perl, gp, gphelp and the gp/pari tex
+documentation file usersch3.tex are installed on your system).
+@DONE
+
+@PIC{empty.jpg}
+ffd8ffe000104a46494600010101004800480000fffe0017437265617465642077697468205468652047494d50ffdb004300080606070605080707070909080a0c140d0c0b0b0c1912130f141d1a1f1e1d1a1c1c20242e2720222c231c1c2837292c30313434341f27393d38323c2e333432ffdb0043010909090c0b0c180d0d1832211c213232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232ffc0001108000a000a03012200021101031101ffc4001500010100000000000000000000000000000006ffc40014100100000000000000000000000000000000ffc4001501010100000000000000000000000000000506ffc40014110100000000000000000000000000000000ffda000c03010002110311003f00b800c261ffd9
+@DONE
+
+@PIC{toc.jpg}
+ffd8ffe000104a46494600010101004800480000fffe0017437265617465642077697468205468652047494d50ffdb004300080606070605080707070909080a0c140d0c0b0b0c1912130f141d1a1f1e1d1a1c1c20242e2720222c231c1c2837292c30313434341f27393d38323c2e333432ffdb0043010909090c0b0c180d0d1832211c213232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232ffc00011080014011803012200021101031101ffc40017000101010100000000000000000000000002000106ffc4001510010100000000000000000000000000000001ffc40017010101010100000000000000000000000002010506ffc4001511010100000000000000000000000000000001ffda000c03010002110311003f00ee0a0946c399850861094694128850a10c242850a0c28250a3632362142282510a142830a2146c3810e2146c2184250a1418510a146c646c42850a0c282508a09442850a0c28851b0a0c28850a10c24285128909c01449aae76142484a34a24850a124850a14484a146c490a114490a142892146c3892146c2484a1428921428d8921428512128451242850a24851b0a24850a124850a24909ffd9
+@DONE
+
+@PIC{home.gif}
+47494638396110000d00b30000000000664433995522444444bb6644bb8866aa8888ccbb88bbccddddddddddbb99ffddbbffffddddeeffc0c0c0ffffff21f9040100000c002c0000000010000d0040042c90c949ab7429eb9d9cbf5cd84d5e699614b6391673bedee88a2b4b9a2d18be3a9db12a5acc1614a17a464604003b
+@DONE
+
+@PIC{top.gif}
+4749463839610f000b00f10300000000c0c0c0ddddddffffff21f90401000003002c000000000f000b0000025edcb871e3c28d1b376edcb871a1c28d1b376edcb850a2c28d1b376e5c2851a2c28d1b372e942851a2c28d1b17268c283161c28d1b372e94a870e3c68d1b3746949871e3c68d1b174a54b871e3c68d1b234accb871e3c68d0b1326dcb87105003b
+@DONE

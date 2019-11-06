@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Παραγοντοποίηση :  collect</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el191.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el193.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc217">1.24.12</A>  Παραγοντοποίηση : <TT> collect</TT></H3><P><A NAME="@default367"></A>
+	
+<TT>collect</TT> παίρνει ως όρισμα ένα πολυώνυμο ή μια λίστα 
+πολυωνύμων και προεραιτικά μια αλγεβρική παράσταση όπως 	
+<TT>sqrt(n)</TT>
+(για √<SPAN style="text-decoration:overline"><I>n</I></SPAN>).<BR>
+	
+<TT>collect</TT> παραγοντοποιεί το πολυώνυμο (ή τα πολυώνυμα της 
+λίστας) στο πεδίο των συντελεστών του (για παράδειγμα ℚ)
+ή στη μικρότερη επέκταση που περιέχει το προαιρετικό δεύτερο όρισμα (π.χ.
+ℚ[√<SPAN style="text-decoration:overline"><I>n</I></SPAN>]). Στoν τρόπο λειτουργίας 	
+<TT>"</TT>στους μιγαδικούς	
+<TT>"</TT> (στις Ρυθμίσεις του 	
+<TT>Cas</TT>), το πεδίο είναι αυτό των μιγαδικών αριθμών.<BR>
+<B>Παραδείγματα</B> :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Παραγοντοποιείστε το <I>x</I><SUP>2</SUP>−4 στους ακεραίους. Εισαγωγή :
+<DIV CLASS="center">	
+<TT>collect(x</TT><CODE><TT>^</TT></CODE><TT>2-4)</TT></DIV>
+Έξοδος στoν τρόπο λειτουργίας για πραγματικούς αριθμούς:
+<DIV CLASS="center">	
+<TT>(x-2)*(x+2)</TT></DIV>
+</LI><LI CLASS="li-itemize">Παραγοντοποιείστε το <I>x</I><SUP>2</SUP>+4 στους ακεραίους. Εισαγωγή :
+<DIV CLASS="center">	
+<TT>collect(x</TT><CODE><TT>^</TT></CODE><TT>2+4)</TT></DIV>
+Έξοδος στoν τρόπο λειτουργίας για πραγματικούς αριθμούς:
+<DIV CLASS="center">	
+<TT>x</TT><CODE><TT>^</TT></CODE><TT>2+4</TT></DIV>
+Έξοδος στoν τρόπο λειτουργίας 	
+<TT>"</TT>στους μιγαδικούς	
+<TT>"</TT>:
+<DIV CLASS="center">	
+<TT>(x+2*i)*(x-2*i)</TT></DIV>
+</LI><LI CLASS="li-itemize">Παραγοντοποιείστε το <I>x</I><SUP>2</SUP>−2 στους ακεραίους. Εισαγωγή :
+<DIV CLASS="center">	
+<TT>collect(x</TT><CODE><TT>^</TT></CODE><TT>2-2)</TT></DIV>
+Έξοδος στoν τρόπο λειτουργίας για πραγματικούς αριθμούς:
+<DIV CLASS="center">	
+<TT>x</TT><CODE><TT>^</TT></CODE><TT>2-2</TT></DIV>
+Αλλά εάν εισάγετε :
+<DIV CLASS="center">	
+<TT>collect((x</TT><CODE><TT>^</TT></CODE><TT>2-2),sqrt(2))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>(x-sqrt(2))*(x+sqrt(2))</TT></DIV>
+</LI><LI CLASS="li-itemize">Παραγοντοποιείστε στους ακεραίους τα πολυώνυμα : 
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I><SUP>3</SUP>−2<I>x</I><SUP>2</SUP>+1  και  <I>x</I><SUP>2</SUP>−<I>x</I></TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>collect([x</TT><CODE><TT>^</TT></CODE><TT>3-2*x</TT><CODE><TT>^</TT></CODE><TT>2+1,x</TT><CODE><TT>^</TT></CODE><TT>2-x])</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[(x-1)*(x</TT><CODE><TT>^</TT></CODE><TT>2-x-1),x*(x-1)]</TT></DIV>
+Αλλά, αν εισάγετε :
+<DIV CLASS="center">	
+<TT>collect((x</TT><CODE><TT>^</TT></CODE><TT>3-2*x</TT><CODE><TT>^</TT></CODE><TT>2+1)*sqrt(5))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+ <TT>√</TT><TT><SPAN style="text-decoration:overline">5</SPAN></TT><TT> (<I>x</I>+</TT><TT>-(√</TT><TT><SPAN style="text-decoration:overline">5</SPAN></TT><TT>)-1/2</TT><TT>) (<I>x</I>-1) (<I>x</I>+</TT><TT>√</TT><TT><SPAN style="text-decoration:overline">5</SPAN></TT><TT>-1/2</TT><TT>)</TT></DIV>
+Ή, αν εισάγετε :
+<DIV CLASS="center">	
+<TT>collect(x</TT><CODE><TT>^</TT></CODE><TT>3-2*x</TT><CODE><TT>^</TT></CODE><TT>2+1,sqrt(5))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+ <TT>(<I>x</I>+</TT><TT>-(√</TT><TT><SPAN style="text-decoration:overline">5</SPAN></TT><TT>)-1/2</TT><TT>) (<I>x</I>-1) (<I>x</I>+</TT><TT>√</TT><TT><SPAN style="text-decoration:overline">5</SPAN></TT><TT>-1/2</TT><TT>) </TT></DIV></LI></UL><HR>
+<A HREF="cascmd_el191.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el193.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

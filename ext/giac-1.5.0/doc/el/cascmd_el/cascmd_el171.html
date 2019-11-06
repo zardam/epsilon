@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Μια άσκηση με fft</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el170.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el172.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc194">1.22.5</A>  Μια άσκηση με <TT>fft</TT></H3><P>
+Στον ακόλουθο πίνακα είναι οι θερμοκρασίες <I>T</I>, σε βαθμούς 	
+Celsius, την χρονική στιγμή <I>t</I> :
+</P><DIV CLASS="center">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=right NOWRAP><I>t</I></TD><TD ALIGN=right NOWRAP>0</TD><TD ALIGN=right NOWRAP>3</TD><TD ALIGN=right NOWRAP>6</TD><TD ALIGN=right NOWRAP>9</TD><TD ALIGN=right NOWRAP>12</TD><TD ALIGN=right NOWRAP>15</TD><TD ALIGN=right NOWRAP>19</TD><TD ALIGN=right NOWRAP>21</TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>T</I></TD><TD ALIGN=right NOWRAP>11</TD><TD ALIGN=right NOWRAP>10</TD><TD ALIGN=right NOWRAP>17</TD><TD ALIGN=right NOWRAP>24</TD><TD ALIGN=right NOWRAP>32</TD><TD ALIGN=right NOWRAP>26</TD><TD ALIGN=right NOWRAP>23</TD><TD ALIGN=right NOWRAP>19</TD></TR>
+</TABLE>
+</DIV><P>
+Ποια ήταν η θερμοκρασία στις 13:45 ?</P><P>Εδώ <I>N</I>=8=2*<I>m</I>. Το πολυώνυμο παρεμβολής είναι :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>p</I>(<I>t</I>)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> <I>p</I><SUB>−<I>m</I></SUB>(exp(−2<I>i</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π <I>mt</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">24</TD></TR>
+</TABLE></TD><TD CLASS="dcell">)+
+exp(2<I>i</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π <I>mt</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">24</TD></TR>
+</TABLE></TD><TD CLASS="dcell">))+
+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>m</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=−<I>m</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>p</I><SUB><I>k</I></SUB> exp(2<I>i</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π <I>kt</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">24</TD></TR>
+</TABLE></TD><TD CLASS="dcell">) </TD></TR>
+</TABLE><P>
+και
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>p</I><SUB><I>k</I></SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I>−1</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>=<I>j</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>T</I><SUB><I>k</I></SUB> exp(2<I>i</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π <I>k</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">) </TD></TR>
+</TABLE><P>
+Είσοδος :<BR>
+	
+<TT>q:=1/8*fft([11,10,17,24,32,26,23,19])</TT><BR>
+Έξοδος :<BR>
+	
+<TT>q:=[20.25,-4.48115530061+1.72227182413*i,-0.375+0.875*i,<BR>
+-0.768844699385+0.222271824132*i,0.5,<BR>
+-0.768844699385-0.222271824132*i,<BR>
+-0.375-0.875*i,-4.48115530061-1.72227182413*i]</TT><BR>
+Επομένως, :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<I>p</I><SUB>0</SUB>=20.25
+</LI><LI CLASS="li-itemize"><I>p</I><SUB>1</SUB>=−4.48115530061+1.72227182413*<I>i</I>=<SPAN style="text-decoration:overline"><I>p</I></SPAN><SUB><SPAN style="text-decoration:overline">−1</SPAN></SUB>,
+</LI><LI CLASS="li-itemize"><I>p</I><SUB>2</SUB>=0.375+0.875*<I>i</I>=<SPAN style="text-decoration:overline"><I>p</I></SPAN><SUB><SPAN style="text-decoration:overline">−2</SPAN></SUB>,
+</LI><LI CLASS="li-itemize"><I>p</I><SUB>3</SUB>=−0.768844699385+0.222271824132*<I>i</I>=<SPAN style="text-decoration:overline"><I>p</I></SPAN><SUB><SPAN style="text-decoration:overline">−3</SPAN></SUB>,
+</LI><LI CLASS="li-itemize"><I>p</I><SUB>−4</SUB>=0.5
+</LI></UL><P>
+Πράγματι,
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>q</I>=[<I>q</I><SUB>0</SUB>,...<I>q</I><SUB><I>N</I>−1</SUB>]=[<I>p</I><SUB>0</SUB>,..<I>p</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−1</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">,<I>p</I></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">,..,<I>p</I><SUB>−1</SUB>]=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>F</I><SUB><I>N</I></SUB>([<I>y</I><SUB>0</SUB>,..<I>y</I><SUB><I>N</I>−1</SUB>])=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TT>1</TT></TD></TR>
+<TR><TD CLASS="hbar"><TT></TT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TT><I>N</I></TT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><TT><I>fft</I>(<I>y</I>)</TT></TD></TR>
+</TABLE></TD><TD CLASS="dcell"> </TD></TR>
+</TABLE><P>
+Είσοδος :<BR>
+	
+<TT>pp:=[q[4],q[5],q[6],q[7],q[0],q[1],q[2],q[3]]</TT><BR>
+Εδώ, <I>p</I><SUB><I>k</I></SUB>=<I>pp</I>[<I>k</I>+4] για <I>k</I>=−4...3.
+Απομένει να υπολογίσουμε την τιμή του πολυωνύμου παρεμβολής στο σημείο
+<I>t</I>0=13,75=55/4, εισάγουμε<BR>
+	
+<TT>t0(j):=exp(2*i*pi*(13+3/4)/24*j)</TT><BR>
+	
+<TT>T0:=1/2*pp[0]*(t0(4)+t0(-4))+sum(pp[j+4]*t0(j),j,-3,3)</TT><BR>
+	
+<TT>evalf(re(T0))</TT><BR>
+Έξοδος :<BR>
+<TT>29.4863181684</TT><BR>
+Η θερμοκρασία υπολογίζεται ίση με 29.49 βαθμούς 	
+Celsius.<BR>
+Είσοδος :<BR>
+	
+<TT>q1:=[q[4]/2,q[3],q[2],q[1],q[0]/2]</TT><BR>
+	
+<TT>a:=t0(1)</TT> (ή 	
+<TT>a:=-exp(i*pi*7/48)</TT>)<BR>
+	
+<TT>g(x):=r2e(q1,x)</TT><BR>
+	
+<TT>evalf(2*re(g(a)))</TT><BR>
+ή<BR>
+	
+<TT>2.0*re(q[0]/2+q[1]*t0(1)+q[2]*t0(2)+q[3]*t0(3)+q[4]/2*t0(4))</TT><BR>
+Έξοδος :<BR>
+<TT>29.4863181684</TT><BR>
+
+<B>Σχόλιο</B><BR>
+Χρησιμοποιώντας το πολυώνυμο παρεμβολής 	
+Lagrange (το πολυώνυμο δεν είναι περιοδικό),
+εισάγουμε :<BR>
+	
+<TT>l1:=[0,3,6,9,12,15,18,21]</TT><BR>
+	
+<TT>l2:=[11,10,17,24,32,26,23,19]</TT><BR>
+	
+<TT>subst(lagrange(l1,l2,13+3/4),x=13+3/4)</TT><BR>
+Έξοδος :<BR>
+<TT> </TT><TT>8632428959/286654464</TT><TT>≃ 30.1144061688</TT></P><HR>
+<A HREF="cascmd_el170.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el172.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

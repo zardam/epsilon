@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Maximum and minimum of an expression: fMax fMin</title>
+</head>
+<body >
+<a href="cascmd_en223.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en225.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec276" class="subsection">5.19.3  Maximum and minimum of an expression: <span style="font-family:monospace">fMax fMin</span></h3>
+<p><a id="hevea_default388"></a><a id="hevea_default389"></a> 
+<span style="font-family:monospace">fMax</span> and <span style="font-family:monospace">fMin</span> take one or two arguments : an expression 
+of a variable and the name of this variable (by default <span style="font-family:monospace">x</span>).<br>
+<span style="font-family:monospace">fMax</span> returns the abscissa 
+of a maximum of the expression.<br>
+<span style="font-family:monospace">fMin</span> returns the abscissa 
+of a minimum of the expression.<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">fMax(sin(x),x)</span></div><p>
+Or :
+</p><div class="center"><span style="font-family:monospace">fMax(sin(x))</span></div><p>
+Or :
+</p><div class="center"><span style="font-family:monospace">fMax(sin(y),y)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">pi/2</span></div><p> 
+Input :
+</p><div class="center"><span style="font-family:monospace">fMin(sin(x),x)</span></div><p>
+Or :
+</p><div class="center"><span style="font-family:monospace">fMin(sin(x))</span></div><p>
+Or :
+</p><div class="center"><span style="font-family:monospace">fMin(sin(y),y)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">-pi/2</span></div><p> 
+Input :
+</p><div class="center"><span style="font-family:monospace">fMin(sin(x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x)</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">0</span></div><p><span style="font-family:monospace">fMax</span> and <span style="font-family:monospace">fMin</span> can also compute the maximum resp. minimum of a nonlinear multivariate expression subject to a set of nonlinear equality and/or inequality constraints. Both functions in such cases take four to six arguments:
+</p><ul class="itemize"><li class="li-itemize">
+	objective function (an expression)
+	</li><li class="li-itemize">list of constraints (equalities and inequalities)
+	</li><li class="li-itemize">list of problem variables
+	</li><li class="li-itemize">initial guess (must be a list of nonzero reals representing a feasible point)
+	</li><li class="li-itemize">precision (optional), if not given the default epsilon value is used
+	</li><li class="li-itemize">maximum number of iterations (optional)
+</li></ul><p>
+The objective function does not need to be differentiable.
+Both <span style="font-family:monospace">fMin</span> and <span style="font-family:monospace">fMax</span> return the optimal solution as a vector. Note that the actual optimal value of the objective is not returned.</p><p>Although the initial point is required to be feasible, the algorithm will sometimes succeed even if it is infeasible. Note that the initial value of a variable must not be zero.</p><p>For example, input :
+</p><div class="center">
+	<span style="font-family:monospace">fMin((x-5)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-25,[y&gt;=x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2],[x,y],[1,1])
+</span></div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[1.2347728624961,1.5246640219568]
+</span></div><p>
+Input :
+</p><div class="center">
+	<span style="font-family:monospace">fMax((x-2)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+(y-1)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,[-.25x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+1&gt;=0,x-2y+1=0],
+	[x,y],[.5,.75])
+</span></div><p>
+Output :
+</p><div class="center">
+	<span style="font-family:monospace">[-1.82287565553,-0.411437827766]
+</span></div>
+<hr>
+<a href="cascmd_en223.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en225.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

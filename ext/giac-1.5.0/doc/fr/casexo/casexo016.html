@@ -1,0 +1,780 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="casexo.css">
+<TITLE>Les courbes de degré au plus 2.</TITLE>
+</HEAD>
+<BODY >
+<A HREF="casexo015.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo017.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<H1 CLASS="chapter"><A NAME="htoc207">Chapitre 16</A>  Les courbes de degré au plus 2.</H1><P>
+Ce sont les courbes qui ont comme équation, dans un repère <I>Oxy</I>, 
+<I>P</I>(<I>x</I>,<I>y</I>)=0 où <I>P</I> est un polynôme de degré inférieur ou égal
+à 2.
+</P><H2 CLASS="section"><A NAME="toc75"></A><A NAME="htoc208">16.1</A>  La droite</H2><P>
+L’équation cartésienne d’une droite non parallèle à l’axe <I>Oy</I> est 
+<I>y</I>=<I>a</I>*<I>x</I>+<I>b</I>.<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+Si on veut voir l’influence de <I>a</I> et <I>b</I> on tape dans un écran de 
+géométrie :
+</P><PRE CLASS="verbatim">a:=element(-4..5);
+b:=element(-4..2);
+droite(y=a*x+b);
+</PRE><P>L’équation cartésienne d’une droite quelconque est <I>m</I>*<I>x</I>+<I>n</I>*<I>y</I>+<I>p</I>=0 : son 
+vecteur normal est <I>m</I>+<I>i</I>*<I>n</I> et elle passe par le point −<I>i</I>*<I>p</I>/<I>n</I> si <I>n</I>≠ 0 ou 
+par le point −<I>p</I>/<I>m</I> si <I>m</I>≠ 0 (on suppose <I>m</I>*<I>n</I> ≠ 0).<BR>
+L’équation paramétrique d’une droite passant par le point <I>A</I>=<I>x</I><SUB>0</SUB>+<I>i</I>*<I>y</I><SUB>0</SUB> et 
+parallèle au vecteur <I>V</I>=<I>u</I>+<I>i</I>*<I>v</I> est <I>x</I>(<I>t</I>)=<I>x</I><SUB>0</SUB>+<I>u</I>*<I>t</I>, <I>y</I>(<I>t</I>)=<I>y</I><SUB>0</SUB>+<I>v</I>*<I>t</I> (on suppose 
+<I>u</I>*<I>v</I> ≠ 0).<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+si on veut voir l’influence de <I>A</I>, <I>u</I> et <I>v</I> on tape dans un écran de 
+géométrie :
+</P><PRE CLASS="verbatim">A:=point(0,1);
+u:=element(-4..5);
+v:=element(-4..2);
+plotparam(re(A)+u*t+i*(im(A)+v*t),t);
+plotparam(evalc(A+(u+i*v)*t),t)
+//plotparam(A+(a+i*b)*t,t);
+</PRE><P>L’équation paramétrique d’une droite passant par le point <I>A</I>=<I>x</I><SUB>0</SUB>+<I>i</I>*<I>y</I><SUB>0</SUB> et 
+le point <I>B</I>=<I>x</I>1+<I>i</I>*<I>y</I>1 est 
+ <I>x</I>(<I>t</I>)=<I>x</I><SUB>0</SUB>+<I>t</I>*<I>x</I>1/1+<I>t</I>, <I>y</I>(<I>t</I>)=<I>y</I><SUB>0</SUB>+<I>t</I>*<I>y</I>1/1+<I>t</I> 
+(si <I>t</I> ≠ −1).<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+Si on veut voir l’influence de <I>A</I> et <I>B</I> on tape dans un écran de 
+géométrie :
+</P><PRE CLASS="verbatim">A:=point(1,0);
+B:=point(0,1);
+plotparam(affixe(A+B*t)/(1+t),t);
+m:=element(-4..5);
+M:=point((A+B*m)/(1+m));
+</PRE><H2 CLASS="section"><A NAME="toc76"></A><A NAME="htoc209">16.2</A>  Le cercle</H2><P>
+L’équation cartésienne d’un cercle centré à l’origine et 
+de rayon |<I>a</I>| est :<BR>
+<I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP>=<I>a</I><SUP>2</SUP>.<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+Si on veut voir l’influence de <I>a</I> on tape dans un écran de 
+géométrie :
+</P><PRE CLASS="verbatim">a:=element(0..5);
+plotfunc(sqrt(a^2-x^2),x);
+plotfunc(-sqrt(a^2-x^2),x);
+</PRE><P>L’équation cartésienne d’un cercle centré en <I>A</I>=<I>x</I><SUB>0</SUB>+<I>i</I>*<I>y</I><SUB>0</SUB> et 
+de rayon |<I>a</I>| est (<I>x</I>−<I>x</I><SUB>0</SUB>)<SUP>2</SUP>+(<I>y</I>−<I>y</I><SUB>0</SUB>)<SUP>2</SUP>=<I>a</I><SUP>2</SUP>.<BR>
+L’équation paramétrique d’un cercle centré en <I>A</I>=<I>x</I><SUB>0</SUB>+<I>i</I>*<I>y</I><SUB>0</SUB> et 
+de rayon |<I>a</I>| est
+<I>x</I>(<I>t</I>)=<I>x</I><SUB>0</SUB>+|<I>a</I>|*cos(<I>t</I>), <I>y</I>(<I>t</I>)=<I>y</I><SUB>0</SUB>+|<I>a</I>|*sin(<I>t</I>).<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+Si on veut voir l’influence de <I>A</I> et de <I>a</I> on tape dans un écran de 
+géométrie :
+</P><PRE CLASS="verbatim">A:=point(0,1);
+a:=element(0..5);
+plotparam(affixe(A)+a*cos(t)+i*a*sin(t),t)
+</PRE><P>Pour avoir un demi-cercle pour <I>t</I> allant de −π/2 à π/2, on tape 
+dans un écran de géométrie :
+</P><PRE CLASS="verbatim">A:=point(0,1);
+a:=element(0..5);
+plotparam(affixe(A)+a*cos(t)+i*a*sin(t),t=-pi/2..pi/2)
+</PRE><P>L’équation polaire d’un cercle centré à l’origine est
+<I>r</I>=|<I>a</I>|.<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+Si on veut voir l’influence de <I>a</I> on tape dans un écran de 
+géométrie :
+</P><PRE CLASS="verbatim">A:=point(0,1);
+a:=element(0..5);
+plotpolar(a,t);
+</PRE><P>Le cercle centré en <I>A</I>=<I>x</I><SUB>0</SUB>+<I>i</I>*<I>y</I><SUB>0</SUB> est le translaté du précédent dans 
+la translation de vecteur l’affixe du point <I>A</I>.<BR>
+Si on veut voir l’influence de <I>A</I> et de <I>a</I> on tape dans un écran de 
+géométrie :
+</P><PRE CLASS="verbatim">A:=point(0,1);
+a:=element(0..5);
+translation(affixe(A),plotpolar(a,t))
+</PRE><P>L’équation polaire d’un cercle passant par l’origine et de diamètre <I>OA</I>=<I>d</I>
+avec (<I>Ox</I>,<I>OA</I>)=<I>t</I><SUB>0</SUB>
+<I>r</I>=<I>d</I>*cos(<I>t</I>−<I>t</I><SUB>0</SUB>).<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+Si on veut voir l’influence de <I>a</I> on tape dans un écran de 
+géométrie :
+</P><PRE CLASS="verbatim">A:=point(0,1);
+a:=affixe(A);
+plotpolar(abs(a)*cos(t-arg(a)),t);
+</PRE><P>Le cercle centré en <I>B</I>=<I>x</I><SUB>0</SUB>+<I>i</I>*<I>y</I><SUB>0</SUB> est le translaté du précédent dans 
+la translation de vecteur l’affixe du point <I>B</I>.<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+Si on veut voir l’influence de <I>A</I> et de <I>B</I> on tape dans un écran de 
+géométrie :
+</P><PRE CLASS="verbatim">A:=point(1,0);
+B:=point(0,1);
+ba:=affixe(A-B);
+translation(affixe(B),plotpolar(abs(ba)*cos(t-arg(ba)),t));
+</PRE><H2 CLASS="section"><A NAME="toc77"></A><A NAME="htoc210">16.3</A>  L’ellipse</H2><P>
+L’équation cartésienne d’une ellipse centrée en <I>A</I>=<I>x</I><SUB>0</SUB>+<I>i</I>*<I>y</I><SUB>0</SUB> 
+et de demi-axes parallèles aux axes et de longueur |<I>a</I>| et |<I>b</I>| est :<BR>
+  (<I>x</I>−<I>x</I><SUB>0</SUB>)<SUP>2</SUP>/<I>a</I><SUP>2</SUP>+(<I>y</I>−<I>y</I><SUB>0</SUB>)<SUP>2</SUP>/<I>b</I><SUP>2</SUP>=1<BR>
+on a <I>a</I><SUP>2</SUP>=<I>b</I><SUP>2</SUP>+<I>c</I><SUP>2</SUP> et <I>AF</I>=<I>AF</I>′=|<I>c</I>| si <I>F</I> et <I>F</I>′ sont les foyers.</P><P>L’équation paramétrique d’une ellipse centrée en <I>A</I>=<I>x</I><SUB>0</SUB>+<I>i</I>*<I>y</I><SUB>0</SUB>, de 
+demi-axes parallèles aux axes et de longueur <I>a</I>&gt;0 et <I>b</I>&gt;0 est :<BR>
+ <I>x</I>(<I>t</I>)=<I>x</I><SUB>0</SUB>+<I>a</I>*cos(<I>t</I>), <I>y</I>(<I>t</I>)=<I>y</I><SUB>0</SUB>+<I>b</I>*sin(<I>t</I>).<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+Si on veut voir l’influence de <I>A</I> et de <I>a</I> on tape dans un écran de 
+géométrie :
+</P><PRE CLASS="verbatim">A:=point(0,1);
+a:=element(0..5);
+plotparam(affixe(A+a*cos(t)+i*b*sin(t)),t)
+</PRE><P><B>Remarque</B><BR>
+On peut aussi utiliser les commandes :<BR>
+ <TT>ellipse</TT>, <TT>conique</TT> et <TT>conique_reduite</TT>. 
+</P><H2 CLASS="section"><A NAME="toc78"></A><A NAME="htoc211">16.4</A>  L’hyperbole</H2><P>
+L’équation cartésienne d’une hyperbole centrée en <I>A</I>=<I>x</I><SUB>0</SUB>+<I>i</I>*<I>y</I><SUB>0</SUB>,
+de demi-axes parallèles aux axes et et de longueur |<I>a</I>| et |<I>b</I>| est :<BR>
+ (<I>x</I>−<I>x</I><SUB>0</SUB>)<SUP>2</SUP>/<I>a</I><SUP>2</SUP>−(<I>y</I>−<I>y</I><SUB>0</SUB>)<SUP>2</SUP>/<I>b</I><SUP>2</SUP>=1 (on a <I>a</I><SUP>2</SUP>=<I>b</I><SUP>2</SUP>+<I>c</I><SUP>2</SUP> et 
+<I>AF</I>=<I>AF</I>′=|<I>c</I>| si <I>F</I> et <I>F</I>′ sont les foyers).</P><P>L’équation paramétrique d’une hyperbole centrée en <I>A</I>=<I>x</I><SUB>0</SUB>+<I>i</I>*<I>y</I><SUB>0</SUB>, de 
+demi-axes parallèles aux axes et de longueur <I>a</I>&gt;0 et <I>b</I>&gt;0 est:<BR>
+ <I>x</I>(<I>t</I>)=<I>x</I><SUB>0</SUB>+<I>a</I>*cosh(<I>t</I>), <I>y</I>(<I>t</I>)=<I>y</I><SUB>0</SUB>+<I>a</I>*sinh(<I>t</I>).<BR>
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+Si on veut voir l’influence de <I>A</I> et de <I>a</I> on tape dans un écran de 
+géométrie :
+</P><PRE CLASS="verbatim">A:=point(0,1);
+a:=element(0..5);
+plotparam(affixe(A+a*cosh(t)+i*b*sinh(t)),t)
+</PRE><P><B>Remarque</B><BR>
+On peut aussi utiliser les commandes :<BR>
+<TT>hyperbole</TT>, <TT>conique</TT> et <TT>conique_reduite</TT>. </P><H2 CLASS="section"><A NAME="toc79"></A><A NAME="htoc212">16.5</A>  La parabole</H2><P>
+L’équation cartésienne d’une parabole de sommet <I>A</I>=<I>x</I><SUB>0</SUB>+<I>i</I>*<I>y</I><SUB>0</SUB> et 
+de directrice <I>d</I> d’équation <I>x</I>=<I>a</I>=<I>x</I><SUB>0</SUB>−<I>p</I>/2 (où <I>p</I>/2 est la distance de <I>A</I>
+à <I>d</I>) a pour équation :<BR>
+(<I>y</I>−<I>y</I><SUB>0</SUB>)<SUP>2</SUP>=4<I>x</I>(<I>x</I><SUB>0</SUB>−<I>a</I>)−<I>x</I><SUB>0</SUB>(<I>x</I><SUB>0</SUB>−<I>a</I>)=4(<I>x</I>−<I>x</I><SUB>0</SUB>)(<I>x</I><SUB>0</SUB>−<I>a</I>)=2*<I>p</I>*(<I>x</I>−<I>x</I><SUB>0</SUB>)
+Par exemple, si <I>p</I>=3, <I>x</I><SUB>0</SUB>=1 et <I>y</I><SUB>0</SUB>=2, son sommet est <TT>A:=point(1,2)</TT>, 
+son foyer <I>F</I> est défini par <TT>F:=point(1+3/2,2)</TT> et son 
+équation est :<BR>
+(<I>y</I>−2)<SUP>2</SUP>=6*(<I>x</I>−1)
+L’équation paramétrique de cette parabole est :<BR>
+<I>x</I><SUB>0</SUB>+<I>t</I><SUP>2</SUP>/(2*<I>p</I>)+<I>i</I>(<I>t</I>+<I>y</I><SUB>0</SUB>)
+<B>Avec </B><B><TT>Xcas</TT></B><BR>
+Si on veut voir l’influence de <I>A</I> et de <I>p</I>, on tape dans un écran de 
+géométrie :
+</P><PRE CLASS="verbatim">A:=point(0,1);
+p:=element(-5..5);
+plotparam(affixe(A)+t^2/(2*p)+i*t,t)
+</PRE><P><B>Remarque</B><BR>
+On peut aussi utiliser les commandes :<BR>
+<TT>parabole</TT>, <TT>conique</TT> et <TT>conique_reduite</TT>. 
+</P><H2 CLASS="section"><A NAME="toc80"></A><A NAME="htoc213">16.6</A>  Propriétés caractéristiques de la parabole</H2><H3 CLASS="subsection"><A NAME="htoc214">16.6.1</A>  Définitions</H3><P>
+En géométrie plane la définition est :
+On appelle parabole le lieu géométrique du centre <I>M</I> d’un cercle tangent 
+à une droite <I>d</I> et passant par un point <I>F</I>.<BR>
+<I>d</I> est la directrice de la parabole<BR>
+<I>F</I> est le foyer de la parabole<BR>
+la distance de <I>F</I> à <I>d</I> est le paramètre <I>p</I> de la parabole.
+</P><H3 CLASS="subsection"><A NAME="htoc215">16.6.2</A>  Propriétés de la parabole</H3><P>
+Une condition nécessaire et suffisante pour que <I>M</I> appartienne à la 
+parabole de foyer <I>F</I> et de directrice <I>d</I> est que <I>M</I> est équidistant de <I>F</I>
+et de <I>d</I>.<BR>
+En tout point la parabole admet une tangente.<BR>
+Soit <I>K</I> est la projection de <I>m</I> sur <I>d</I>. La tangente en <I>M</I> est la 
+médiatrice du segment <I>FK</I> où <I>K</I> est la projection de <I>m</I> sur <I>d</I> et c’est
+aussi la bissectrice de l’angle <I>FMK</I>.
+</P><H3 CLASS="subsection"><A NAME="htoc216">16.6.3</A>  Propriétés caractéristiques de la parabole</H3><P>
+Soit (<I>P</I>) une parabole de foyer <I>F</I> et de directrice <I>d</I>.<BR>
+On suppose que des rayons lumineux perpendiculaires à <I>d</I> arrivent sur <I>P</I> 
+du même côté que <I>F</I>.
+Alors tous les rayons réfléchis par la parabole perpendiculairement à <I>d</I>
+passent par le foyer <I>F</I>.<BR>
+<IMG SRC="casexo063.png"><BR>
+
+En effet la tangente <I>t</I> en <I>M</I> est la bissectrice de l’angle <I>FMK</I>.<BR>
+ <B>Question</B>
+Quelles sont les courbes qui ont cette propriété ?<BR>
+On cherche donc les courbes telles que :
+les rayons lumineux qui se réfléchissent sur sa surface 
+passent par tous par un même point <I>F</I>.<BR>
+Si <I>t</I> est la tangente en <I>M</I>, On considère le point <I>K</I> situé dans le 
+prolongement du rayon incident et tel que <I>KM</I>=<I>MF</I>.<BR>
+Soit <I>I</I> est le milieu de <I>KM</I>. On va montrer que <I>K</I> se déplace sur une 
+droite fixe <I>d</I>. Pour cela on prend 
+<I>F</I> comme origine d’un repère avec <I>Fx</I> parrallle au rayon incident.<BR>
+On a donc la figure :<BR>
+
+<IMG SRC="casexo064.png"></P><P>Soient (<I>x</I>,<I>y</I>) les coordonnées de <I>M</I> et <I>a</I>=<I>KMI</I>=<I>IMF</I>.
+On suppose <I>y</I>&gt;0 i.e <I>y</I>′&gt;0 car le problème est symétrique par rapport 
+à <I>Fx</I>.<BR>
+On a donc :
+<I>y</I>′=tan(<I>a</I>) (c’est la pente de la tangente <I>t</I>)<BR>
+tan(2*<I>a</I>)=<I>y</I>/<I>x</I>=2tan(<I>a</I>)/1−tan(<I>a</I>)<SUP>2</SUP>2<I>y</I>′/1−<I>y</I>′<SUP>2</SUP> 
+donc
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>yy</I>′<SUP>2</SUP>+2<I>y</I>′<I>x</I>−<I>y</I>=0</TD></TR>
+</TABLE><P>
+ou puisque l’on a supposé <I>y</I>′&gt;0
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>′=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">−<I>x</I>+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>y</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+ou
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>yy</I>′=−<I>x</I>+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On obtient une équation différentielle à résoudre.<BR>
+
+<B>Résolution de </B><B><I>yy</I>′=−<I>x</I>+√</B><B><SPAN style="text-decoration:overline"><I>x</I></SPAN></B><SUP><B><SPAN style="text-decoration:overline">2</SPAN></B></SUP><B><SPAN style="text-decoration:overline">+<I>y</I></SPAN></B><SUP><B><SPAN style="text-decoration:overline">2</SPAN></B></SUP><B> par changement de variable</B></P><P>On a :<BR>
+<I>yy</I>′+<I>x</I>=√<SPAN style="text-decoration:overline"><I>x</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>y</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>
+Le premier membre est la dérivée de (<I>y</I><SUP>2</SUP>+<I>x</I><SUP>2</SUP>)/2, on pose donc :<BR>
+<I>z</I>=(<I>y</I><SUP>2</SUP>+<I>x</I><SUP>2</SUP>)/2 et l’équation différentielle devient :<BR>
+<I>z</I>′=√<SPAN style="text-decoration:overline">2<I>z</I></SPAN> ou <I>z</I>′/√<SPAN style="text-decoration:overline">2<I>z</I></SPAN>=1donc<BR>
+√<SPAN style="text-decoration:overline">2<I>z</I></SPAN>=<I>x</I>+<I>p</I> où <I>p</I>=<I>Cste</I><BR>
+donc <I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP>=(<I>x</I>+<I>p</I>)<SUP>2</SUP><BR>
+On trouve l’équation de la parabole de foyer l’origine <I>F</I> et de directrice 
+<I>d</I> d’équation <I>x</I>=−<I>p</I>.<BR>
+
+<B>Résolution de </B><B><I>yy</I>′=−<I>x</I>+√</B><B><SPAN style="text-decoration:overline"><I>x</I></SPAN></B><SUP><B><SPAN style="text-decoration:overline">2</SPAN></B></SUP><B><SPAN style="text-decoration:overline">+<I>y</I></SPAN></B><SUP><B><SPAN style="text-decoration:overline">2</SPAN></B></SUP><B> géométriquement</B></P><P>On a :<BR>
+<I>KM</I>=<I>MF</I><I>i</I>=√<SPAN style="text-decoration:overline"><I>x</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>y</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><I>i</I><BR>
+donc <I>OK</I>=<I>OM</I>+<I>MK</I> a pour coordonnées :
+<I>x</I><SUB><I>K</I></SUB>=<I>x</I>−√<SPAN style="text-decoration:overline"><I>x</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>y</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP> et <I>y</I><SUB><I>K</I></SUB>=<I>y</I>
+Montrons que lorsque <I>M</I> se déplase sur le courbe, <I>x</I><SUB><I>K</I></SUB> reste constant.
+<I>x</I><SUB><I>K</I></SUB> est une fonction de <I>x</I> dérivable de dérivee :<BR>
+<I>x</I>′<SUB><I>K</I></SUB>=1−<I>x</I>+<I>y</I>*<I>y</I>′/√<SPAN style="text-decoration:overline"><I>x</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>y</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>=√<SPAN style="text-decoration:overline"><I>x</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>y</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>−<I>x</I>−<I>y</I>*<I>y</I>′/√<SPAN style="text-decoration:overline"><I>x</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>y</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><BR>
+On remplace <I>yy</I>′ par sa valeur et on obtient :<BR>
+<I>x</I>′<SUB><I>K</I></SUB>=√<SPAN style="text-decoration:overline"><I>x</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>y</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>−<I>x</I>−(−<I>x</I>+√<SPAN style="text-decoration:overline"><I>x</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>y</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>)/√<SPAN style="text-decoration:overline"><I>x</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP><SPAN style="text-decoration:overline">+<I>y</I></SPAN><SUP><SPAN style="text-decoration:overline">2</SPAN></SUP>=0<BR>
+Donc <I>x</I><SUB><I>K</I></SUB>=−<I>p</I> et <I>M</I> est sur une parabole de foyer <I>F</I> et de directrice <I>d</I>
+d’équation <I>x</I>=−<I>p</I>.</P><H2 CLASS="section"><A NAME="toc81"></A><A NAME="htoc217">16.7</A>  Équation tangentielle des coniques, foyers, directrices</H2><P>
+<B>Exercice</B> :<BR>
+Déterminer les foyers de la conique d’équation dans le reère <I>Oxy</I> :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">−2<I>x</I><SUP>2</SUP>−2*<I>x</I>*<I>y</I>−2*<I>y</I><SUP>2</SUP>−2*<I>x</I>+2*<I>y</I>+3=0</TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc218">16.7.1</A>  On utilise conique_reduite</H3><P>
+On tape :<BR>
+</P><DIV CLASS="center"><TT>conique_reduite(-2*x</TT><CODE><TT>^</TT></CODE><TT>2-2*x*y-2*y</TT><CODE><TT>^</TT></CODE><TT>2-2*x+2*y+3,[x,y])</TT></DIV><P>
+On obtient :
+</P><DIV CLASS="center"><TT>[[-1,1],[[(-(sqrt(2)))/2,-((sqrt(2))/2)],
+[(sqrt(2))/2,(-(sqrt(2)))/2]], 1,-x</TT><CODE><TT>^</TT></CODE><TT>2-3*y</TT><CODE><TT>^</TT></CODE><TT>2+5,
+[[-1+i+((-(sqrt(2)))/2+((i)*sqrt(2))/2)*(sqrt(5)*cos(t)+<BR>
+((i)*sqrt(15)*sin(t))/3),t,0,2*pi,(2*pi)/60]]]</TT></DIV><P>
+Dans le nouveau repère l’équation de l’ellipse est :<BR>
+<I>X</I><SUP>2</SUP>/5+<I>Y</I><SUP>2</SUP>/5/3=1
+On a donc <I>a</I><SUP>2</SUP>=5, <I>b</I><SUP>2</SUP>=5/3 et <I>c</I><SUP>2</SUP>=<I>a</I><SUP>2</SUP>−<I>b</I><SUP>2</SUP>=10/3
+On tape :
+<TT>c:=sqrt(5-5/3)</TT><BR>
+On obtient <TT>(sqrt(30))/3</TT><BR>
+L’origine du nouveau repère est <I>O</I>1=<TT>point(-1+i)</TT> et la matrice de 
+passage est :<BR>
+<I>P</I>=[[−√<SPAN style="text-decoration:overline">2</SPAN>/2,−√<SPAN style="text-decoration:overline">2</SPAN>/2],[√<SPAN style="text-decoration:overline">2</SPAN>/2,−√<SPAN style="text-decoration:overline">2</SPAN>/2]]<BR>
+On tape pour définir la matrice de passage :<BR>
+<TT>P:=[[-sqrt(2)/2,-sqrt(2)/2],[sqrt(2)/2,-sqrt(2)/2]]</TT><BR>
+On tape pour définir les foyers :<BR>
+<TT>F1:=point(P*[c,0]+[-1,1])</TT><BR>
+<TT>F2:=point(P*[-c,0]+[-1,1])</TT><BR>
+On tape :<BR>
+<TT>coordonnees(F1)</TT><BR>
+On obtient :<BR>
+<TT>[(-2*sqrt(15))/6-1,(sqrt(15)*2)/6+1]</TT><BR>
+On tape :<BR>
+<TT>coordonnees(F2)</TT><BR>
+On obtient :<BR>
+<TT>[(2*sqrt(15))/6-1,-((sqrt(15)*2)/6)+1]</TT><BR>
+La directrice <I>D</I>1 a pour équation dans le nouveau repère
+<I>X</I>=<I>a</I><SUP>2</SUP>/<I>c</I>=√<SPAN style="text-decoration:overline">30</SPAN>/2<BR>
+Pour avoir dans le repère <I>Oxy</I>, l’équation de <I>D</I>1, on tape :<BR>
+<TT>A:=normal(P*[sqrt(30)/2,0]+[-1,1])</TT><BR>
+On obtient :<BR>
+<TT>[(-4*sqrt(15)-8)/8,(4*sqrt(15)+8)/8] </TT><BR>
+On tape :<BR>
+<TT>B:=normal(P*[sqrt(30)/2,sqrt(2)]+[-1,1])</TT><BR>
+On obtient :
+<TT>[(-4*sqrt(15)-16)/8,(4*sqrt(15))/8]</TT><BR>
+On tape :<BR>
+<TT>D1:=droite(point(A),point(B))</TT><BR>
+<TT>equation(D1)</TT><BR>
+On obtient :
+<TT>y=(x+sqrt(15)+2)</TT><BR>
+La directrice <I>D</I>2 a pour équation dans le nouveau repère
+<I>X</I>=<I>a</I><SUP>2</SUP>/<I>c</I>=−√<SPAN style="text-decoration:overline">30</SPAN>/2<BR>
+Pour avoir dans le repère <I>Oxy</I>, l’équation de <I>D</I>2, on tape :<BR>
+<TT>C:=normal(P*[-sqrt(30)/2,0]+[-1,1])</TT><BR>
+On obtient :
+<TT>[(sqrt(15)-2)/2,(-(sqrt(15))+2)/2]</TT><BR>
+On tape :<BR>
+<TT>D:=normal(P*[-sqrt(30)/2,sqrt(2)]+[-1,1])</TT><BR>
+On obtient :
+<TT>[(sqrt(15)-4)/2,(-(sqrt(15)))/2]</TT><BR>
+On tape :<BR>
+<TT>D2:=droite(point(C),point(D))</TT><BR>
+<TT>equation(D2)</TT><BR>
+On obtient :<BR>
+<TT>y=(x-(sqrt(15))+2)</TT><BR>
+On tape :<BR>
+<TT>conique(-2*x</TT><CODE><TT>^</TT></CODE><TT>2-2*x*y-2*y</TT><CODE><TT>^</TT></CODE><TT>2-2*x+2*y+3,[x,y]);<BR>
+F1:=F1;F2:=F2;D1:=D1;D2:=D2;O:=point(-1+i);<BR>
+M:=point(i*-1/2*(-1+sqrt(7)));</TT><BR>
+On obtient :<BR>
+<IMG SRC="casexo065.png"><BR>
+On peut vérifier que :<BR>
+<I>MF</I>1+<I>MF</I>2=2*√<SPAN style="text-decoration:overline">(</SPAN>5) et que<BR>
+<I>MF</I>1/<I>MH</I>1=<I>e</I>=<I>c</I>/<I>a</I>=√<SPAN style="text-decoration:overline">(</SPAN>6)/3 avec <I>H</I>1 la projection de <I>M</I> sur <I>D</I>1.<BR>
+On tape :<BR>
+<TT>simplify(longueur2(M,F1)),simplify(longueur2(M,F2))</TT><BR>
+On obtient :<BR>
+<TT>(2*sqrt(15)*sqrt(7)+6*sqrt(15)+3*sqrt(7)+38)/6,</TT><BR>
+<TT>(-2*sqrt(15)*sqrt(7)-6*sqrt(15)+3*sqrt(7)+38)/6</TT><BR>
+On pose :<BR>
+<TT>a:=3*sqrt(7)+38</TT><BR>
+<TT>b:=2*sqrt(15)*sqrt(7)+6*sqrt(15)</TT><BR>
+Car on a <TT>sqrt(6)*longueur(M,F1)=sqrt(a+b)</TT> et<BR>
+ <TT>sqrt(6)*longueur(M,F2)=sqrt(a-b)</TT>.<BR>
+On tape :<BR>
+<TT>simplify(sqrt(a+b)+sqrt(a-b))</TT><BR>
+On obtient :<BR>
+<TT>2*sqrt(30)</TT><BR>
+Soit : <I>MF</I>1+<I>MF</I>2=2√<SPAN style="text-decoration:overline">3</SPAN>0/√<SPAN style="text-decoration:overline">6</SPAN>=2√<SPAN style="text-decoration:overline">5</SPAN><BR>
+On tape :<BR>
+<TT>H1:=projection(D1,M)</TT><BR>
+<TT>normal(longueur2(M,F1)/longueur2(M,H1))</TT><BR>
+On obtient :<BR>
+<TT>2/3</TT><BR>
+Donc <I>MF</I>1/<I>MH</I>1=√<SPAN style="text-decoration:overline">6</SPAN>/3</P><H3 CLASS="subsection"><A NAME="htoc219">16.7.2</A>  On utilise l’équation tangentielle</H3><P>
+On rappelle l’énoncé :<BR>
+Déterminer les foyers de la conique d’équation dans le reère <I>Oxy</I> :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">−2<I>x</I><SUP>2</SUP>−2*<I>x</I>*<I>y</I>−2*<I>y</I><SUP>2</SUP>−2*<I>x</I>+2*<I>y</I>+3=0</TD></TR>
+</TABLE><P>
+On pose :<BR>
+<I>f</I>(<I>x</I>,<I>y</I>)=−2<I>x</I><SUP>2</SUP>−2*<I>x</I>*<I>y</I>−2*<I>y</I><SUP>2</SUP>−2*<I>x</I>+2*<I>y</I>+3 et<BR>
+<I>g</I>(<I>x</I>,<I>y</I>,<I>t</I>)=<I>t</I><SUP>2</SUP><I>f</I>(<I>x</I>/<I>t</I>,<I>y</I>/<I>t</I>)<BR>
+On tape pour définir la fonction <I>f</I> :<BR>
+<TT>f(x,y):=-2*x</TT><CODE><TT>^</TT></CODE><TT>2-2*x*y+-2*y</TT><CODE><TT>^</TT></CODE><TT>2-2*x+2*y+3</TT><BR>
+On obtient :<BR>
+<TT>(x,y)-&gt;-2*x</TT><CODE><TT>^</TT></CODE><TT>2-2*x*y-2*y</TT><CODE><TT>^</TT></CODE><TT>2-2*x+2*y+3</TT><BR>
+On tape pour définir la fonction <I>g</I> :<BR>
+<TT>g:=unapply(normal(t</TT><CODE><TT>^</TT></CODE><TT>2*f(x/t,y/t)),[x,y,t])</TT><BR>
+On obtient :<BR>
+<TT>(x,y,t)-&gt;3*t</TT><CODE><TT>^</TT></CODE><TT>2-2*t*x+2*t*y-2*x</TT><CODE><TT>^</TT></CODE><TT>2-2*x*y-2*y</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+L’équation tangentielle est la condition nécessaire et suffisante sur
+<I>u</I>,<I>v</I>,<I>w</I> pour qu’une droite d’équation <I>ux</I>+<I>vy</I>+<I>w</I>=0 soit tangente à cette 
+conique.<BR>
+En coordonnées homogènes l’équation de la tangente à la courbe 
+<I>g</I>(<I>x</I>,<I>y</I>,<I>t</I>)=0 au point <I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>t</I><SUB>0</SUB> est :<BR>
+<I>xg</I><SUB><I>x</I></SUB>′(<I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>t</I><SUB>0</SUB>)+<I>yg</I><SUB><I>y</I></SUB>′(<I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>t</I><SUB>0</SUB>)+<I>tg</I><SUB><I>t</I></SUB>′(<I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>t</I><SUB>0</SUB>)=0<BR>
+On tape :<BR>
+<TT>g1:=normal(diff(g(x,y,t),x)/2)</TT><BR>
+On obtient :<BR>
+<TT>-t-2*x-y</TT><BR>
+On tape :<BR>
+<TT>g2:=normal(diff(g(x,y,t),y)/2)</TT><BR>
+On obtient :<BR>
+<TT>t-x-2*y</TT><BR>
+On tape :<BR>
+<TT>g3:=normal(diff(g(x,y,t),t)/2)</TT><BR>
+On obtient :<BR>
+<TT>3*t-x+y</TT><BR>
+Donc <I>xg</I><SUB>1</SUB>+<I>yg</I><SUB>2</SUB>+<I>t</I><SUB><I>g</I></SUB>3=0 est tangente à la courbe <I>g</I>(<I>x</I>,<I>y</I>,<I>t</I>)=0.<BR>
+On cherche la 
+condition nécessaire et suffisante sur <I>u</I>,<I>v</I>,<I>w</I> pour que la droite 
+d’équation <I>ux</I>+<I>vy</I>+<I>w</I>=0 soit tangente à cette conique.<BR>
+On cherche donc à résoudre les équations lin’eaires en <I>x</I>,<I>y</I>,<I>t</I> :<BR>
+<I>g</I><SUB>1</SUB>=<I>u</I>,<I>g</I><SUB>2</SUB>=<I>v</I>,<I>g</I><SUB>3</SUB>=<I>w</I>.<BR>
+On tape pour avoir <I>x</I>,<I>y</I>,<I>z</I> en fonction de <I>u</I>,<I>v</I>,<I>w</I> :<BR>
+<TT>L:=linsolve([g1-u,g2-v,g3-w],[x,y,t])</TT><BR>
+On obtient :<BR>
+<TT>[-7/15*u-(-2)/15*v-1/5*w,2/15*u+(-7)/15*v+1/5*w,</TT><BR>
+<TT>-1/5*u-(-1)/5*v-(-1)/5*w]</TT><BR>
+On tape pour définir l’équation tangentielle <I>G</I>(<I>u</I>,<I>v</I>,<I>w</I>)=0 de la conique
+d’équation <I>g</I>(<I>x</I>,<I>y</I>,<I>t</I>)=0 :<BR>
+<TT>G:=unapply(numer(g(L[0],L[1],L[2])),[u,v,w])</TT><BR>
+On obtient :<BR>
+<TT>(u,v,w)-&gt;-7*u</TT><CODE><TT>^</TT></CODE><TT>2+4*u*v-6*u*w-7*v</TT><CODE><TT>^</TT></CODE><TT>2+6*v*w+3*w</TT><CODE><TT>^</TT></CODE><TT>2</TT><BR>
+Pour une courbe, un foyer au sens de Plücker est un point d’où l’on peut 
+mener deux tangentes isotropes à la courbe.
+Une isotrope est une droite de pente <I>i</I> ou de pente −<I>i</I>, par exemple si 
+<I>F</I>1=<TT>point(x1+i*y1)</TT>, la droite :<BR>
+<I>i</I>*<I>x</I>−<I>y</I>−<I>i</I>*<I>x</I><SUB>1</SUB>+<I>y</I><SUB>1</SUB>=0 est une isotrope qui passe par <I>F</I><SUB>1</SUB>.<BR>
+Donc pour que <I>F</I><SUB>1</SUB> soit un foyer il faut que :<BR>
+<I>G</I>(<I>i</I>,−1,<I>w</I><SUB>1</SUB>)=0 avec <I>w</I><SUB>1</SUB>=−<I>i</I>*<I>x</I><SUB>1</SUB>+<I>y</I><SUB>1</SUB>.<BR>
+Pour avoir les foyers, on tape :<BR>
+<TT>C:=normal(G(i,-1,w1))</TT><BR>
+On obtient :<BR>
+<TT>3*w1</TT><CODE><TT>^</TT></CODE><TT>2+(-6-6*i)*w1-4*i</TT><BR>
+On tape pour déterminer <I>w</I><SUB>1</SUB>=−<I>i</I>*<I>x</I><SUB>1</SUB>+<I>y</I><SUB>1</SUB> tel que <I>G</I>(<I>i</I>,−1,<I>w</I><SUB>1</SUB>)=0 :<BR>
+<TT>LF:=normal(csolve(C,w1))</TT><BR>
+On obtient :<BR>
+<TT>[((1+i)*sqrt(15)+3+3*i)/3,((-1-i)*sqrt(15)+3+3*i)/3]</TT><BR>
+Il y a donc 2 foyers <I>F</I><SUB>1</SUB> et <I>F</I><SUB>2</SUB> qui ont comme coordonnées <I>x</I><SUB>1</SUB>,<I>y</I><SUB>1</SUB> et 
+<I>x</I><SUB>2</SUB>,<I>y</I><SUB>2</SUB>.<BR>
+On tape pour avoir les coordonnées de <I>F</I><SUB>1</SUB> :<BR>
+<TT>x1:=-im(LF[0]);y1:=re(LF[0]);</TT><BR>
+On obtient :<BR>
+<TT>-((sqrt(15)+3)/3),(sqrt(15)+3)/3</TT><BR>
+Donc :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>F</I><SUB>1</SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">−(</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>15</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+3)+<I>i</I>(</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>15</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+3)</TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On tape pour avoir les coordonnées de <I>F</I><SUB>2</SUB> :<BR>
+<TT>x2:=-im(LF[1]);y2:=re(LF[1]);</TT><BR>
+On obtient :<BR>
+<TT>-((-(sqrt(15))+3)/3),(-(sqrt(15))+3)/3</TT><BR>
+Donc </P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>F</I><SUB>2</SUB>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>15</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−3)+<I>i</I>(−</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>15</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+3)</TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+La directrice d’une conique propre associée à un foyer <I>F</I> est la polaire
+de <I>F</I>.<BR>
+La polaire d’un point <I>x</I><SUB>0</SUB>,<I>y</I><SUB>0</SUB>,<I>t</I><SUB>0</SUB> d’une conique <I>g</I>(<I>x</I>,<I>y</I>,<I>t</I>)=0 a pour 
+équation homogène :<BR>
+<I>x</I>*<I>g</I><SUB><I>x</I><SUB>0</SUB></SUB>′+<I>y</I>*<I>g</I><SUB><I>y</I><SUB>0</SUB></SUB>′+<I>t</I>*<I>g</I><SUB><I>t</I><SUB>0</SUB></SUB>′=0<BR>
+Pour avoir la directrice <I>D</I><SUB>1</SUB> associée au foyer <I>F</I><SUB>1</SUB> de coefficients 
+<I>u</I><SUB>1</SUB>,<I>v</I><SUB>1</SUB>,<I>w</I><SUB>1</SUB>, on tape :<BR>
+<TT>u1:=normal(subst(g1,[x=x1,y=y1,t=1]))</TT><BR>
+On obtient :<BR>
+<TT>sqrt(15)/3</TT><BR>
+On tape :<BR>
+<TT>v1:=normal(subst(g2,[x=x1,y=y1,t=1]))</TT><BR>
+On obtient :<BR>
+<TT>-sqrt(15)/3</TT><BR>
+On tape :<BR>
+<TT>w1:=normal(subst(g3,[x=x1,y=y1,t=1]))</TT><BR>
+On obtient :<BR>
+<TT>(2*sqrt(15)+15)/3</TT><BR>
+Donc la directrice <I>D</I><SUB>1</SUB> associée au foyer <I>F</I><SUB>1</SUB> a pour équation :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I></TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>15</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−<I>y</I></TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>15</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+2</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>15</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+15=0</TD></TR>
+</TABLE><P>
+Pour avoir la directrice <I>D</I><SUB>2</SUB> associée au foyer <I>F</I><SUB>2</SUB> de coefficients 
+<I>u</I><SUB>2</SUB>,<I>v</I><SUB>2</SUB>,<I>w</I><SUB>2</SUB>, on tape :<BR>
+<TT>u2:=normal(subst(g1,[x=x2,y=y2,t=1]))</TT><BR>
+On obtient :<BR>
+<TT>-(sqrt(15))/3</TT><BR>
+On tape :<BR>
+<TT>v2:=normal(subst(g2,[x=x2,y=y2,t=1]))</TT><BR>
+On obtient :<BR>
+<TT>sqrt(15)/3</TT><BR>
+On tape :<BR>
+<TT>w2:=normal(subst(g3,[x=x2,y=y2,t=1]))</TT><BR>
+On obtient :<BR>
+<TT>(-2*sqrt(15)+15)/3</TT><BR>
+Donc la directrice <I>D</I><SUB>2</SUB> associée au foyer <I>F</I><SUB>2</SUB> a pour équation :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">−<I>x</I></TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>15</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+<I>y</I></TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>15</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−2</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>15</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+15=0</TD></TR>
+</TABLE><P>
+On fait le dessin, on tape :<BR>
+<TT>conique(f(x,y));F1:=point(x1+i*y1);F2:=point(x2+i*y2);</TT><BR>
+<TT>D1:=droite(u1*x+v1*y+w1=0);D2:=droite(u2*x+v2*y+w2=0)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casexo066.png"><BR>
+Si <I>M</I> est un point de la conique (par exemple <I>M</I>)(0;(−√<SPAN style="text-decoration:overline">7</SPAN>+1)/2) et si
+<I>H</I> est la projection de <I>M</I> sur la directrice associée à <I>F</I> alors
+l’éxcentricité <I>e</I> de la conique vaut :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>e</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>MF</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>MH</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+On tape :<BR>
+<TT>M:=point(i*(1-sqrt(7))/2);</TT><BR>
+<TT>H1:=projection(D1,M)</TT><BR>
+<TT>e2:=normal(longueur2(M,F1)/longueur2(M,H1))</TT><BR>
+On obtient <I>e</I><SUP>2</SUP> :<BR>
+<TT>2/3</TT><BR>
+donc 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>e</I>=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>6</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">3</TD></TR>
+</TABLE></TD></TR>
+</TABLE><H3 CLASS="subsection"><A NAME="htoc220">16.7.3</A>  Avec un programme</H3><P>
+On rappelle l’énoncé :<BR>
+Déterminer les foyers de la conique d’équation dans le reère <I>Oxy</I> :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>(<I>x</I>,<I>y</I>)=−2<I>x</I><SUP>2</SUP>−2*<I>x</I>*<I>y</I>−2*<I>y</I><SUP>2</SUP>−2*<I>x</I>+2*<I>y</I>+3=0</TD></TR>
+</TABLE><P>
+On écrit le programme <TT>conique2fd</TT> qui a comme argument la fonction de 
+2 variables qui définit la conique.<BR>
+On tape dans l’éditeur de programmes :
+</P><PRE CLASS="verbatim">conique2fd(f):={
+local t,x,y,g,g1,g2,g3,L,G,u,v,w,w1,C, 
+      LF,x1,x2,y1,y2,u1,u2,v1,v2,w1,w2,s;
+purge(x);purge(y);purge(t);
+purge(u);purge(v);purge(w);
+g:=unapply(normal(t^2*f(x/t,y/t)),[x,y,t]);
+g1:=normal(diff(g(x,y,t),x)/2);
+g2:=normal(diff(g(x,y,t),y)/2);
+g3:=normal(diff(g(x,y,t),t)/2);
+L:=linsolve([g1-u,g2-v,g3-w],[x,y,t]);
+G:=unapply(numer(g(L[0],L[1],L[2])),[u,v,w]);
+C:=normal(G(i,-1,w));
+LF:=normal(csolve(C,w));
+s:=size(LF);
+si s==0 alors 
+return[]; 
+fsi;
+x1:=-im(LF[0]);y1:=re(LF[0]);
+u1:=normal(subst(g1,[x=x1,y=y1,t=1]));
+v1:=normal(subst(g2,[x=x1,y=y1,t=1]));
+w1:=normal(subst(g3,[x=x1,y=y1,t=1]));
+si s==1 alors 
+return [normal([x1,y1]),numer(u1*x+v1*y+w1)];
+fsi;
+x2:=-im(LF[1]);y2:=re(LF[1]);
+u2:=normal(subst(g1,[x=x2,y=y2,t=1]));
+v2:=normal(subst(g2,[x=x2,y=y2,t=1]));
+w2:=normal(subst(g3,[x=x2,y=y2,t=1]));
+return [normal([x1,y1]),numer(u1*x+v1*y+w1)],
+       [normal([x2,y2]),numer(u2*x+v2*y+w2)];
+}:;
+</PRE><P>Puis, on tape :<BR>
+<TT>f(x,y)=-2x</TT><CODE><TT>^</TT></CODE><TT>2-2*x*y-2*y</TT><CODE><TT>^</TT></CODE><TT>2-2*x+2*y+3</TT><BR>
+<TT>conique2fd(f)</TT><BR>
+On obtient :<BR>
+<TT>[[(-(sqrt(15))-3)/3,(sqrt(15)+3)/3],<BR>
+sqrt(15)*x-sqrt(15)*y+2*sqrt(15)+15],</TT><BR>
+<TT>[[(sqrt(15)-3)/3,(-(sqrt(15))+3)/3],<BR>
+-sqrt(15)*x+sqrt(15)*y-2*sqrt(15)+15]</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc221">16.7.4</A>  Avec un programme en utilisant <TT>q2a</TT></H3><P>
+On rappelle l’énoncé :<BR>
+Déterminer les foyers de la conique d’équation dans le repère <I>Oxy</I> :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>(<I>x</I>,<I>y</I>)=−2<I>x</I><SUP>2</SUP>−2*<I>x</I>*<I>y</I>−2*<I>y</I><SUP>2</SUP>−2*<I>x</I>+2*<I>y</I>+3=0</TD></TR>
+</TABLE><P>
+On écrit le programme <TT>conique2fd</TT> qui a comme argument la fonction de 2 variables qui définit la conique.<BR>
+On tape dans l’éditeur de programmes:
+</P><PRE CLASS="verbatim">conique2fdir(f):={
+local t,x,y,g,A,A1,B,C,g,L,G,u,v,w,w1,
+      LF,x1,x2,y1,y2,u1,u2,v1,v2,w1,w2,s;
+purge(x);purge(y);purge(t);
+purge(u);purge(v);purge(w);
+g:=unapply(normal(t^2*f(x/t,y/t)),[x,y,t]);
+A:=q2a(g(x,y,t),[x,y,t]);
+si det(A)!=0 alors B:=inverse(A) else return 0 fsi;
+G(u,v,w):=g(op(B*[u,v,w]));
+C:=normal(G(i,-1,w));
+LF:=normal(csolve(C,w));
+s:=size(LF);
+si s==0 alors 
+return[]; 
+fsi;
+x1:=-im(LF[0]);y1:=re(LF[0]);
+A1:=A*[x1,y1,1];
+u1:==normal(A1[0]);
+v1:=normal(A1[1]);
+w1:=normal(A1[2]);
+si s==1 alors 
+return [normal([x1,y1]),numer(u1*x+v1*y+w1)];
+fsi;
+x2:=-im(LF[1]);y2:=re(LF[1]);
+A1:=A*[x2,y2,1];
+u2:=normal(A1[0]);
+v2:=normal(A1[1]);
+w2:=normal(A1[2]);
+return [normal([x1,y1]),numer(u1*x+v1*y+w1)],
+       [normal([x2,y2]),numer(u2*x+v2*y+w2)];
+}
+:;
+</PRE><P>Puis, on tape :<BR>
+<TT>f(x,y):=-2x</TT><CODE><TT>^</TT></CODE><TT>2-2*x*y-2*y</TT><CODE><TT>^</TT></CODE><TT>2-2*x+2*y+3</TT><BR>
+<TT>conique2fdir(f)</TT><BR>
+On obtient :<BR>
+<TT>[[(-(sqrt(15))-3)/3,(sqrt(15)+3)/3],<BR>
+sqrt(15)*x-sqrt(15)*y+2*sqrt(15)+15],</TT><BR>
+<TT>[[(sqrt(15)-3)/3,(-(sqrt(15))+3)/3],<BR>
+-sqrt(15)*x+sqrt(15)*y-2*sqrt(15)+15]</TT>
+</P><H3 CLASS="subsection"><A NAME="htoc222">16.7.5</A>  Tangentes communes à 2 coniques</H3><P>
+On utilise l’équation tangentielle de ces 2 coniques :
+</P><PRE CLASS="verbatim">tangentes(f,g):={
+local x,y,t,u,v,w,A,A1,B,B1,F,G,FT,GT,D,k,L0,L1;;
+purge(x);purge(y);purge(t);
+purge(u);purge(v);purge(w);
+F:=unapply(normal(t^2*f(x/t,y/t)),[x,y,t]);
+A:=q2a(F(x,y,t),[x,y,t]);
+si det(A)!=0 alors A1:=inverse(A) else return 0 fsi;
+FT(u,v,w):=F(op(A1*[u,v,w]));
+G:=unapply(normal(t^2*g(x/t,y/t)),[x,y,t]);
+B:=q2a(G(x,y,t),[x,y,t]);
+si det(B)!=0 alors B1:=inverse(B) else return 0 fsi;
+GT(u,v,w):=G(op(B1*[u,v,w]));
+L0:=solve(normal(FT(u,v,0),GT(u,v,0)),[u,v]);
+L1:=solve(normal(FT(u,v,1),GT(u,v,1)),[u,v]);
+D:=NULL;
+if (L0[0]==[0,0]) {L0:=tail(L0);}
+for (k:=0;k&lt;size(L0);k++){
+D:=D, droite(L0[k,0]*x+ L0[k,1]*y);
+}
+for (k:=0;k&lt;size(L1);k++){
+D:=D,droite( L1[k,0]*x+ L1[k,1]*y+1)
+;}
+return D;
+}
+:;
+</PRE><P>On tape :<BR>
+<TT>f(x,y):=x</TT><CODE><TT>^</TT></CODE><TT>2+y</TT><CODE><TT>^</TT></CODE><TT>2-2*x</TT><BR>
+<TT>g(x,y):=x</TT><CODE><TT>^</TT></CODE><TT>2+y</TT><CODE><TT>^</TT></CODE><TT>2-8x+12</TT><BR>
+<TT>cercle(f(x,y)),cercle(g(x,y)),tangentes(f,g)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casexo067.png"><BR>
+On tape :<BR>
+<TT>f(x,y):=2*x</TT><CODE><TT>^</TT></CODE><TT>2+y</TT><CODE><TT>^</TT></CODE><TT>2-2*x</TT><BR>
+<TT>g(x,y):=x</TT><CODE><TT>^</TT></CODE><TT>2+y</TT><CODE><TT>^</TT></CODE><TT>2-8*x+12</TT><BR>
+<TT>conique(f(x,y)),cercle(g(x,y)),tangentes(f,g)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casexo068.png"><BR>
+On tape :<BR>
+<TT>f(x,y):=2*x</TT><CODE><TT>^</TT></CODE><TT>2+y</TT><CODE><TT>^</TT></CODE><TT>2-2*x</TT><BR>
+<TT>g(x,y):=x</TT><CODE><TT>^</TT></CODE><TT>2-y</TT><CODE><TT>^</TT></CODE><TT>2-8x+12</TT><BR>
+<TT>conique(f(x,y)),conique(g(x,y)),tangentes(f,g)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casexo069.png"><BR>
+On tape :<BR>
+<TT>f(x,y):=2*x</TT><CODE><TT>^</TT></CODE><TT>2+y</TT><CODE><TT>^</TT></CODE><TT>2-2*x-4*y</TT><BR>
+<TT>g(x,y):=x</TT><CODE><TT>^</TT></CODE><TT>2-y</TT><CODE><TT>^</TT></CODE><TT>2-8x+12</TT><BR>
+<TT>conique(f(x,y)),conique(g(x,y)),tangentes(f,g)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casexo070.png">
+On tape :<BR>
+<TT>f(x,y):=2*x</TT><CODE><TT>^</TT></CODE><TT>2+y</TT><CODE><TT>^</TT></CODE><TT>2-16*x-8*y+32</TT><BR>
+<TT>g(x,y):=x</TT><CODE><TT>^</TT></CODE><TT>2-y</TT><CODE><TT>^</TT></CODE><TT>2-8x+12</TT><BR>
+<TT>conique(f(x,y)),conique(g(x,y)),tangentes(f,g)</TT><BR>
+On obtient :<BR>
+<IMG SRC="casexo071.png"></P><H2 CLASS="section"><A NAME="toc82"></A><A NAME="htoc223">16.8</A>  Équation d’une ellipse ou d’une hyperbole</H2><H3 CLASS="subsection"><A NAME="htoc224">16.8.1</A>  L’ellipse ou l’hyperbole est donnée par ses foyers et 1 point</H3><P>
+<B>L’ellipse</B><BR>
+Soient <I>F</I><SUB>1</SUB> et <I>F</I><SUB>2</SUB> les foyers et <I>M</I><SUB>0</SUB> un point de l’ellipse.<BR>
+On a :<BR>
+<I>a</I>=(<I>M</I><SUB>0</SUB><I>F</I><SUB>1</SUB>+<I>M</I><SUB>0</SUB><I>F</I><SUB>2</SUB>)/2<BR>
+<I>M</I><SUB>0</SUB><I>F</I><SUB>1</SUB><SUP>2</SUP>−<I>M</I><SUB>0</SUB><I>F</I><SUB>2</SUB><SUP>2</SUP>=2<I>a</I>*(<I>M</I><SUB>0</SUB><I>F</I><SUB>1</SUB>−<I>M</I><SUB>0</SUB><I>F</I><SUB>2</SUB>)<BR>
+donc puisque pour qu’un point <I>M</I> soit un point de l’ellipse on a : 
+<I>MF</I><SUB>1</SUB>+<I>MF</I><SUB>2</SUB>=2<I>a</I> et<BR>
+<I>MF</I><SUB>1</SUB>−<I>MF</I><SUB>2</SUB>=(<I>MF</I><SUB>1</SUB><SUP>2</SUP>−<I>MF</I><SUB>2</SUB><SUP>2</SUP>)/(2<I>a</I>) on a :<BR>
+<I>MF</I><SUB>1</SUB>=<I>a</I>+(<I>MF</I><SUB>1</SUB><SUP>2</SUP>−<I>MF</I><SUB>2</SUB><SUP>2</SUP>)/(4*<I>a</I>)<BR>
+ou encore :<BR>
+<I>MF</I><SUB>1</SUB><SUP>2</SUP>=(<I>a</I>+(<I>MF</I><SUB>1</SUB><SUP>2</SUP>−<I>MF</I><SUB>2</SUB><SUP>2</SUP>)/(4*<I>a</I>))<SUP>2</SUP>
+L’équation de l’ellipse est donc :
+<I>MF</I><SUB>1</SUB><SUP>2</SUP>−(<I>a</I>+(<I>MF</I><SUB>1</SUB><SUP>2</SUP>−<I>MF</I><SUB>2</SUB><SUP>2</SUP>)/(4*<I>a</I>))<SUP>2</SUP>=0 avec <I>a</I>=(<I>M</I><SUB>0</SUB><I>F</I><SUB>1</SUB>+<I>M</I><SUB>0</SUB><I>F</I><SUB>2</SUB>)/2.<BR>
+<B>L’hyperbole</B><BR>
+Soient <I>F</I><SUB>1</SUB> et <I>F</I><SUB>2</SUB> les foyers et <I>M</I><SUB>0</SUB> un point de l’hyperbole.<BR>
+On a :<BR>
+<I>a</I>=|<I>M</I><SUB>0</SUB><I>F</I><SUB>1</SUB>−<I>M</I><SUB>0</SUB><I>F</I><SUB>2</SUB>|/2<BR>
+|<I>M</I><SUB>0</SUB><I>F</I><SUB>1</SUB><SUP>2</SUP>−<I>M</I><SUB>0</SUB><I>F</I><SUB>2</SUB><SUP>2</SUP>|=2<I>a</I>*(<I>M</I><SUB>0</SUB><I>F</I><SUB>1</SUB>+<I>M</I><SUB>0</SUB><I>F</I><SUB>2</SUB>)<BR>
+donc puisque pour qu’un point <I>M</I> soit un point de l’hyperbole on a : 
+<I>MF</I><SUB>1</SUB>−<I>MF</I><SUB>2</SUB>=2<I>a</I>*<I>s</I> (avec <I>s</I>=+1 ou <I>s</I>=−1) et<BR>
+<I>MF</I><SUB>1</SUB>+<I>MF</I><SUB>2</SUB>=(<I>MF</I><SUB>1</SUB><SUP>2</SUP>−<I>MF</I><SUB>2</SUB><SUP>2</SUP>)/(2*<I>a</I>*<I>s</I>) on a :<BR>
+<I>MF</I><SUB>1</SUB>=<I>s</I>*(<I>a</I>+(<I>MF</I><SUB>1</SUB><SUP>2</SUP>−<I>MF</I><SUB>2</SUB><SUP>2</SUP>)/(4*<I>a</I>))<BR>
+ou encore :<BR>
+<I>MF</I><SUB>1</SUB><SUP>2</SUP>=(<I>a</I>+(<I>MF</I><SUB>1</SUB><SUP>2</SUP>−<I>MF</I><SUB>2</SUB><SUP>2</SUP>)/(4*<I>a</I>))<SUP>2</SUP>
+L’équation de l’hyperbole est donc :
+<I>MF</I><SUB>1</SUB><SUP>2</SUP>−(<I>a</I>+(<I>MF</I><SUB>1</SUB><SUP>2</SUP>−<I>MF</I><SUB>2</SUB><SUP>2</SUP>)/(4*<I>a</I>))<SUP>2</SUP>=0 avec <I>a</I>=|<I>M</I><SUB>0</SUB><I>F</I><SUB>1</SUB>−<I>M</I><SUB>0</SUB><I>F</I><SUB>2</SUB>|/2.<BR>
+On tape le programme :<BR>
+</P><PRE CLASS="verbatim">eqcon2fm(F1,F2,M0,s):={
+local x1,x2,y1,y2,x0,y0,x,y,ae,ah,a,M,eq,l1,l2,l,l3;
+x1,y1:=coordonnees(F1);
+x2,y2:=coordonnees(F2);
+x0,y0:=coordonnees(M0);
+l3:=longueur2(F1,F2)/4;
+ae:=(longueur(M0,F1)+longueur(M0,F2))/2;
+ah:=abs(longueur(M0,F1)-longueur(M0,F2))/2
+si s=="ellipse" alors a:=simplify(ae); sinon a:=simplify(ah); fsi;
+si simplify(a^2-l3)==0 alors si s=="ellipse" alors print("segment");sinon 
+print("2 demi-droites");fsi;fsi
+purge(x,y);
+M:=point(x,y);
+l2:=longueur2(M,F1);
+l:=(l2-longueur2(M,F2))/(4*a);
+l1:=simplify(a+l);
+eq:=numer(simplify(l2-l1^2));
+si simplify(a^2-l3)&gt;0 alors print("ellipse centre "+(F1+F2)/2+" a="+a);
+ sinon 
+ si simplify(a^2-l3)&lt;0 alors print("hyperbole centre "+(F1+F2)/2+" a="+a); 
+   sinon
+     eq:=factors(eq)[0];
+ fsi;
+fsi;
+return eq;
+}:;
+</PRE><P>On tape :<BR>
+<TT>eqcon2fm(point(1-i),point(i),point(1+i),"ellipse")</TT>
+On obtient :<BR>
+<TT>ellipse centre 1/2 a=3/2</TT><BR>
+<TT>8*x</TT><CODE><TT>^</TT></CODE><TT>2+4*x*y-8*x+5*y</TT><CODE><TT>^</TT></CODE><TT>2-2*y-7</TT>
+On tape :<BR>
+<TT>eqcon2fm(point(1-i),point(i),point(1+i),"hyp")</TT>
+On obtient :<BR>
+<TT>hyperbole centre 1/2 a=(sqrt(5))/4</TT><BR>
+<TT>16*x</TT><CODE><TT>^</TT></CODE><TT>2+256*x*y-16*x-176*y</TT><CODE><TT>^</TT></CODE><TT>2-128*y+79</TT>
+On tape :<BR>
+<TT>eqcon2fm(point(1-i),point(i),point(1/4+i/2),"ellipse")</TT>
+On obtient :<BR>
+<TT>segment</TT><BR>
+<TT>2*x+y-1</TT><BR>
+On tape :<BR>
+<TT>eqcon2fm(point(1-i),point(i),point(-1/4+3*i/2),"hyp")</TT>
+On obtient :<BR>
+<TT>2 demi droites</TT><BR>
+<TT>2*x+y-1</TT></P><H3 CLASS="subsection"><A NAME="htoc225">16.8.2</A>  L’ellipse ou l’hyperbole est donnée par ses foyers et <I>a</I></H3><P>
+On a donc comme précédement :<BR>
+L’équation de l’ellipse ou de l’hyperbole est :
+<I>MF</I><SUB>1</SUB><SUP>2</SUP>−(<I>a</I>+(<I>MF</I><SUB>1</SUB><SUP>2</SUP>−<I>MF</I><SUB>2</SUB><SUP>2</SUP>)/(4*<I>a</I>))<SUP>2</SUP>=0.<BR>
+On tape le programme :<BR>
+</P><PRE CLASS="verbatim">eqcon2fa(F1,F2,a):={
+local x1,x2,y1,y2,x,y,M,eq,l1,l2,l,l3;
+x1,y1:=coordonnees(F1);
+x2,y2:=coordonnees(F2);
+purge(x,y);
+M:=point(x,y);
+l2:=longueur2(M,F1);
+l:=(l2-longueur2(M,F2))/(4*a);
+l1:=simplify(a+l);
+eq:=numer(simplify(l2-l1^2));
+l3:=longueur2(F1,F2)/4;
+si simplify(a^2-l3)&gt;0 alors print("ellipse centre "+(F1+F2)/2+" a="+a);
+ sinon 
+ si simplify(a^2-l3)&lt;0 alors print("hyperbole centre "+(F1+F2)/2+" a="+a); 
+   sinon
+     eq:=factors(eq)[0];
+     print("segment ou 2 demi droites") 
+ fsi;
+fsi;
+return eq;
+}:;
+</PRE><P>On tape :<BR>
+<TT>eqcon2fa(point(1-i),point(i),sqrt(5)/2))</TT>
+On obtient :<BR>
+<TT>segment ou 2 demi droites</TT><BR>
+<TT>2*x+y-1</TT>
+On tape :<BR>
+<TT>eqcon2fa(point(1-i),point(i),sqrt(5)))</TT>
+On obtient :<BR>
+<TT>ellipse centre 1/2 a=sqrt(5)</TT><BR>
+<TT>76*x</TT><CODE><TT>^</TT></CODE><TT>2+16*x*y-76*x+64*y</TT><CODE><TT>^</TT></CODE><TT>2-8*y-281</TT><BR>
+On tape :<BR>
+<TT>eqcon2fa(point(1-i),point(i),sqrt(5)/3))</TT>
+On obtient :<BR>
+<TT>hyperbole centre 1/2 a=(sqrt(5))/3</TT><BR>
+<TT>396*x</TT><CODE><TT>^</TT></CODE><TT>2+1296*x*y-396*x-576*y</TT><CODE><TT>^</TT></CODE><TT>2-648*y+599</TT></P>Retour à la page personnelle de <A HREF="http://www-fourier.ujf-grenoble.fr/parisse">Bernard Parisse</A>.<HR>
+<A HREF="casexo015.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="casexo017.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

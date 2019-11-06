@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Αλγόριθμος Simplex : simplex_reduce</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el398.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el400.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc444">1.44.1</A>  Αλγόριθμος <TT>Simplex</TT> : <TT>simplex_reduce</TT></H3><P>
+<B>Η απλή περίπτωση</B><BR>
+Η συνάρτηση 	
+<TT>simplex_reduce</TT> κάνει την αναγωγή 
+με τον αλγόριθμο <TT>simplex</TT> για την εύρεση : 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">	
+max(<I>c</I>.<I>x</I>),     <I>A</I>.<I>x</I> ≤ <I>b</I>, <I>x</I> ≥ 0, <I>b</I>≥ 0 </TD></TR>
+</TABLE><P>
+όπου <I>c</I>,<I>x</I> είναι διανύσματα του ℝ<SUP><I>n</I></SUP>, <I>b</I>≥ 0 είναι ένα διάνυσμα του 
+ℝ<SUP><I>p</I></SUP> και <I>A</I> είναι ένας πίνακας με <I>p</I> γραμμές και <I>n</I> στήλες.<BR>
+	
+<TT>simplex_reduce</TT> παίρνει ως όρισμα 	
+<TT>A,b,c</TT> και
+επιστρέφει το 	
+<TT>max(c.x)</TT>, την επαυξημένη λύση του 	
+<TT>x</TT>
+(επαυξημένη επειδή ο αλγόριθμος δουλεύει προσθέτοντας 	
+<TT>nrows(</TT><TT><I>A</I></TT><TT>)</TT> βοηθητικές
+μεταβλητές) και τον ανηγμένο πίνακα.<BR>
+<B>Παράδειγμα</B><BR>
+Βρείτε το </P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">	
+max(<I>X</I>+2<I>Y</I>)   όπου 
+</TD><TD CLASS="dcell">⎧<BR>
+⎪<BR>
+⎨<BR>
+⎪<BR>
+⎩</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>(<I>X</I>,<I>Y</I>)</TD><TD ALIGN=center NOWRAP>≥</TD><TD ALIGN=left NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=right NOWRAP>−3<I>X</I> +2<I>Y</I></TD><TD ALIGN=center NOWRAP>≤</TD><TD ALIGN=left NOWRAP>3</TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>X</I> +<I>Y</I></TD><TD ALIGN=center NOWRAP>≤</TD><TD ALIGN=left NOWRAP>4</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> 
+</TD></TR>
+</TABLE><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>simplex_reduce([[-3,2],[1,1]],[3,4],[1,2])</TT></DIV><P>
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>(7,[1,3,0,0],[[0,1,1/5,3/5,3],[1,0,(-1)/5,2/5,1], [0,0,1/5,8/5,7]])</TT></DIV><P>
+Το οποίο σημαίνει ότι το μέγιστο του 	
+<TT>X+2Y</TT> κάτω από αυτές τις συνθήκες είναι 	
+<TT>7</TT>, που προκύπτει θέτοντας 	
+<TT>X=1,Y=3</TT> 
+επειδή το 	
+<TT>[1,3,0,0]</TT> είναι η επαυξημένη λύση και ο ανηγμένος πίνακας είναι ο :<BR>
+	
+<TT>[[0,1,1/5,3/5,3],[1,0,(-1)/5,2/5,1], [0,0,1/5,8/5,7]]</TT>.</P><P><B>Μια πιο περίπλοκη περίπτωση που ανάγεται στην απλή περίπτωση</B><BR>
+Για να καλέσουμε την 	
+<TT>simplex_reduce</TT>, πρέπει το πρόβλημα να έχει μετασχηματισθεί στην κανονική του μορφή (για περισσότερες λεπτομέρειες δείτε και 	
+http://en.wikipedia.org/wiki/Simplex_algorithm). Δηλαδή πρέπει να έχουν γίνουν τα ακόλουθα :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+οι περιορισμοί να έχουν ξαναγραφεί στη μορφή <I>x</I><SUB><I>k</I></SUB> ≥ 0,
+</LI><LI CLASS="li-itemize">οι μεταβλητές χωρίς περιορισμούς να έχουν απαλειφεί,
+</LI><LI CLASS="li-itemize">να έχουν προστεθεί (χαλαρές) μεταβλητές (	
+slack variables) ώστε όλοι οι περιορισμοί να εκφράζονται με ισότητες.
+</LI></UL><P>
+Για παράδειγμα, βρείτε :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">	
+min(2<I>x</I>+<I>y</I>−<I>z</I>+4)      όπου    
+</TD><TD CLASS="dcell">⎧<BR>
+⎪<BR>
+⎪<BR>
+⎨<BR>
+⎪<BR>
+⎪<BR>
+⎩</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>x</I></TD><TD ALIGN=center NOWRAP>≤</TD><TD ALIGN=left NOWRAP>1 </TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>y</I></TD><TD ALIGN=center NOWRAP>≥</TD><TD ALIGN=left NOWRAP>2 </TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>x</I>+3<I>y</I>−<I>z</I></TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP>2 </TD></TR>
+<TR><TD ALIGN=right NOWRAP>2<I>x</I>−<I>y</I>+<I>z</I></TD><TD ALIGN=center NOWRAP>≤</TD><TD ALIGN=left NOWRAP>8</TD></TR>
+<TR><TD ALIGN=right NOWRAP>−<I>x</I>+<I>y</I></TD><TD ALIGN=center NOWRAP>≤</TD><TD ALIGN=left NOWRAP>5</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> 
+</TD></TR>
+</TABLE><P>
+Αν θέσουμε <I>x</I>=1−<I>X</I>, <I>y</I>=<I>Y</I>+2, <I>z</I>=5−<I>X</I>+3<I>Y</I>
+τότε το παραπάνω πρόβλημα είναι ισοδύναμο με την εύρεση του ελαχίστου της παράστασης
+(−2<I>X</I>+<I>Y</I>−(5−<I>X</I>+3<I>Y</I>)+8) 
+όπου :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎧<BR>
+⎪<BR>
+⎨<BR>
+⎪<BR>
+⎩</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>X</I></TD><TD ALIGN=center NOWRAP>≥</TD><TD ALIGN=left NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>Y</I></TD><TD ALIGN=center NOWRAP>≥</TD><TD ALIGN=left NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=right NOWRAP>2(1−<I>X</I>)−(<I>Y</I>+2)+ 5−<I>X</I>+3<I>Y</I></TD><TD ALIGN=center NOWRAP>≤</TD><TD ALIGN=left NOWRAP>8</TD></TR>
+<TR><TD ALIGN=right NOWRAP>−(1−<I>X</I>) +(<I>Y</I>+2)</TD><TD ALIGN=center NOWRAP>≤</TD><TD ALIGN=left NOWRAP>5</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> 
+</TD></TR>
+</TABLE><P>
+το οποίο είναι ισοδύναμο με την εύρεση του ελαχίστου της παράστασης :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">(−<I>X</I>−2<I>Y</I>+3)     όπου   
+</TD><TD CLASS="dcell">⎧<BR>
+⎪<BR>
+⎨<BR>
+⎪<BR>
+⎩</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP><I>X</I></TD><TD ALIGN=center NOWRAP>≥</TD><TD ALIGN=left NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>Y</I></TD><TD ALIGN=center NOWRAP>≥</TD><TD ALIGN=left NOWRAP>0 </TD></TR>
+<TR><TD ALIGN=right NOWRAP>−3<I>X</I>+2<I>Y</I></TD><TD ALIGN=center NOWRAP>≤</TD><TD ALIGN=left NOWRAP>3</TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>X</I> +<I>Y</I></TD><TD ALIGN=center NOWRAP>≤</TD><TD ALIGN=left NOWRAP>4</TD></TR>
+</TABLE></TD><TD CLASS="dcell"> 
+</TD></TR>
+</TABLE><P>
+Δηλαδή το πιο σύνθετο πρόβλημα ανάγεται στο να βρούμε το μέγιστο της παράστασης −(−<I>X</I>−2<I>Y</I>+3)=<I>X</I>+2<I>Y</I>−3
+κάτω από συνθήκες, που είναι ίδιες με εκείνες της 
+εύρεσης του μεγίστου της παράστασης <I>X</I>+2<I>Y</I> (απλή περίπτωση). Στην απλή περίπτωση η απάντηση ήταν <TT>7</TT>, 
+συνεπώς, το αποτέλεσμα εδώ είναι το <TT>7-3=4</TT>.</P><P><B>Η γενική περίπτωση</B><BR>
+Ένα πρόβλημα γραμμικού προγραμματισμού μπορεί, γενικά, να μην ανάγεται άμεσα στην
+απλή περίπτωση όπως παραπάνω. Ο λόγος είναι ότι, πριν την εφαρμογή του αλγορίθμου 	
+simplex,
+πρέπει να βρεθεί μια αρχική κορυφή (αρχικό σημείο). Επομένως,
+	
+<TT>simplex_reduce</TT> μπορεί να κληθεί συγκεκριμενοποιώντας αυτήν την αρχική
+κορυφή. Στην περίπτωση αυτή, όλα τα ορίσματα, συμπεριλαμβανομένης και της αρχικής
+κορυφής, ομαδοποιούνται σε ένα μόνο πίνακα. </P><P>Επεξηγούμε αρχικά αυτό το είδος της
+κλήσης στην <B>απλή περίπτωση</B> όπου για το αρχικό σημείο δεν απαιτείται
+η επίλυση βοηθητικού προβλήματος.
+Εάν ο 	
+<TT>A</TT> έχει <I>p</I> γραμμές και <I>n</I> στήλες και αν ορίσουμε :
+</P><DIV CLASS="center">
+	
+<TT>B:=augment(A,idn(p));</TT> 	
+<TT>C:=border(B,b);</TT><BR>
+	
+<TT>d:=append(-c,0$(p+1));</TT> 	
+<TT>D:=augment(C,[d]);</TT>
+</DIV><P>
+τότε η εντολή 	
+<TT>simplex_reduce</TT> μπορεί να κληθεί με το 	
+<TT>D</TT> σαν το μόνο όρισμα.<BR>
+Για το προηγούμενο παράδειγμα, εισάγετε :
+</P><DIV CLASS="center">	
+<TT>A:=[[-3,2],[1,1]];B:=augment(A,idn(2)); C:=border(B,[3,4]);
+D:=augment(C,[[-1,-2,0,0,0]])</TT></DIV><P>
+Εδώ το 
+	
+<TT>C=[[-3,2,1,0,3],[1,1,0,1,4]]</TT><BR>
+και το 	
+<TT>D=[[-3,2,1,0,3],[1,1,0,1,4],[-1,-2,0,0,0]]</TT><BR>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>simplex_reduce(D)</TT></DIV><P>
+Έξοδος είναι το ίδιο αποτέλεσμα όπως πριν.</P><P><B>Επανερχόμαστε στην γενική περίπτωση.</B><BR>
+Η κανονική μορφή ενός προβλήματος γραμμικού προγραμματισμού είναι ίδια με
+την απλή περίπτωση παραπάνω, αλλά με ισότητα <I>Ax</I>=<I>b</I> (αντί <I>Ax</I>≤ <I>b</I>)
+και <I>x</I>≥ 0. Μπορούμε επιπλέον να υποθέσουμε ότι <I>b</I>≥ 0
+(εάν όχι, μπορούμε να αλλάξουμε το πρόσημο της αντίστοιχης γραμμής).
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Το πρώτο πρόβλημα είναι να βρούμε ένα <I>x</I> που να ικανοποιεί <I>Ax</I>=<I>b</I>,    <I>x</I>≥ 0 .
+Έστω <I>m</I> ο αριθμός των γραμμών του <I>A</I>. Προσθέτουμε τις χαλαρές μεταβλητές 
+<I>y</I><SUB>1</SUB>,...,<I>y</I><SUB><I>m</I></SUB> και μεγιστοποιούμε το άθροισμα
+−∑<I>y</I><SUB><I>i</I></SUB> κάτω από τις συνθήκες <I>Ax</I>=<I>b</I>, <I>x</I> ≥ 0, <I>y</I> ≥ 0 
+ξεκινώντας με την αρχική τιμή <I>x</I>=0
+και <I>y</I>=<I>b</I>
+(για να λυθεί αυτό με το 	
+<TT>Xcas</TT>, καλούμε 	
+<CODE><TT>simplex_reduce</TT></CODE> με
+μονaδικό όρισμα τον πίνακα που προκύπτει επαυξάνοντας τον <I>A</I> με τον
+ταυτοτικό πίνακα, την στήλη <I>b</I> αμετάβλητη και μία επαυξημένη γραμμή 
+<I>c</I> με 0 κάτω από τον <I>A</I> και 1 κάτω από τον ταυτοτικό).
+Εάν το μέγιστο υπάρχει και είναι 0, μας δίνεται και μια λύση <I>x</I> , όπου όλες οι χαλαρές 
+μεταβλητές είναι 0.
+</LI><LI CLASS="li-itemize">Στην συνέχεια κάνουμε μια δεύτερη κλήση στο 	
+<CODE><TT>simplex_reduce</TT></CODE>
+με το αρχικό <I>c</I> και τον ανηγμένο πίνακα που βρίσκουμε λύνοντας το πρώτο πρόβλημα παραπάνω.
+</LI><LI CLASS="li-itemize">Παράδειγμα : βρείτε το ελάχιστο του 2<I>x</I>+3<I>y</I>−<I>z</I>+<I>t</I> με 
+<I>x</I>,<I>y</I>,<I>z</I>,<I>t</I>≥ 0 και :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎧<BR>
+⎨<BR>
+⎩</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>−<I>x</I>−<I>y</I>+<I>t</I></TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP>1</TD></TR>
+<TR><TD ALIGN=right NOWRAP><I>y</I>−<I>z</I>+<I>t</I></TD><TD ALIGN=center NOWRAP>=</TD><TD ALIGN=left NOWRAP>3</TD></TR>
+</TABLE></TD><TD CLASS="dcell">
+</TD></TR>
+</TABLE>
+Αυτό είναι ισοδύναμο με το να βρούμε το μέγιστο του αντίθετου −(2<I>x</I>+3<I>y</I>−<I>z</I>+<I>t</I>).
+Προσθέτουμε δύο χαλαρές μεταβλητές <I>y</I><SUB>1</SUB> και <I>y</I><SUB>2</SUB>, και εισάγουμε
+	
+<PRE CLASS="verbatim">simplex_reduce([[-1,-1,0,1,1,0,1], 
+                [ 0,1,-1,1,0,1,3], 
+                [ 0,0, 0,0,1,1,0]])
+</PRE>
+Έξοδος: βέλτιστο=0, λύση <I>x</I>=(0,1,0,2,0,0) όπου οι χαλαρές μεταβλητές=0 (τα δύο μηδενικά στο τέλος του διανύσματος <I>x</I>), και ο ανηγμένος πίνακας
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">⎛<BR>
+⎜<BR>
+⎜<BR>
+⎝</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP>−1/2</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>−1/2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1/2</TD><TD ALIGN=center NOWRAP>1/2</TD><TD ALIGN=center NOWRAP>2 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>1/2</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>−1/2</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>−1/2</TD><TD ALIGN=center NOWRAP>1/2</TD><TD ALIGN=center NOWRAP>1 </TD></TR>
+<TR><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>0</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>1</TD><TD ALIGN=center NOWRAP>0</TD></TR>
+</TABLE></TD><TD CLASS="dcell">⎞<BR>
+⎟<BR>
+⎟<BR>
+⎠</TD></TR>
+</TABLE>
+Επομένως, <I>x</I>=(0,1,0,2) είναι ένα αρχικό σημείο που ικανοποιεί τις συνθήκες.
+Για να βρούμε την λύση του αρχικού προβλήματος, αντικαθιστούμε τις 
+γραμμές του <I>Ax</I>=<I>b</I> με τις πρώτες δύο γραμμές του παραπάνω ανηγμένου πίνακα,
+αφαιρώντας τις τελευταίες στήλες που αντιστοιχούν στις χαλαρές μεταβλητές.
+Προσθέτουμε το <I>c</I> ως τελευταία γραμμή.
+	
+<PRE CLASS="verbatim">simplex_reduce([[-1/2,0,-1/2,1,2],
+                [ 1/2,1,-1/2,0,1],
+                [  2, 3, -1, 1,0]])
+</PRE>
+Έξοδος: 	
+<TT>maximum=-5</TT>, γι’ αυτό το ελάχιστο του αντίθετου είναι 5,
+και προκύπτει από την λύση <I>x</I>=(0,1,0,2), μετά την αντικατάσταση 
+<I>x</I>=0, <I>y</I>=1, <I>z</I>=0 και <I>t</I>=2.
+</LI></UL><P>Για περισσότερες λεπτομέρειες, ψάξτε στο 	
+<TT>google</TT> τον 	
+<CODE><TT>simplex algorithm</TT></CODE>.</P><HR>
+<A HREF="cascmd_el398.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el400.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

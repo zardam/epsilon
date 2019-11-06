@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Pour transformer une chaîne en un nombre, une fonction ou en une commande : expr</title>
+</head>
+<body >
+<a href="cascmd_fr157.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr159.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec228" class="subsection">6.5.16  Pour transformer une chaîne en un nombre, une fonction ou en une commande : <span style="font-family:monospace">expr</span></h3>
+<p><a id="hevea_default290"></a><a id="sec:expr1"></a>
+Voici , selon la chaîne, les transformations que fait <span style="font-family:monospace">expr</span> :
+</p><ul class="itemize"><li class="li-itemize">
+<span style="font-family:monospace">expr</span> permet de transformer une chaîne de chiffres ou lettres
+en un nombre entier ayant comme écriture en base 8,ou 10 ou 16 cette chaîne
+de chiffres. Il faut bien sûr que l’écriture soit valide et représente 
+un nombre entier dans la base donnée : toutefois <span style="font-family:monospace">expr("019")</span> renvoie
+le nombre décimale <span style="font-family:monospace">19.0</span> (voir aussi <a href="cascmd_fr864.html#sec%3Aexpr2">9.5.5</a>).<br>
+<span style="font-weight:bold">Attention</span><br>
+Si la chaîne commence par <span style="font-family:monospace">0x</span>, <span style="font-family:monospace">expr</span> transforme cette chaîne en 
+le nombre entier écrit en base 16, sinon,<br>
+si la chaîne commence par 0, <span style="font-family:monospace">expr</span> transforme cette chaîne en 
+le nombre entier écrit en base 8 et sinon<br>
+<span style="font-family:monospace">expr</span> transforme cette chaîne en le nombre entier écrit en base 10.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">expr("123")</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">123</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">expr("0123")</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">83</span></div>
+En effet : 1*8<sup>2</sup>+2*8+3=83
+On tape :
+<div class="center"><span style="font-family:monospace">expr("0x12f")</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">303</span></div>
+En effet 1*16<sup>2</sup>+2*16+15=303<br>
+<span style="font-weight:bold">Remarque</span>
+On tape :
+<div class="center"><span style="font-family:monospace">expr(char([48,50,56,56]))</span></div>
+On obtient un nombre flottant :
+<div class="center"><span style="font-family:monospace">288.0</span></div>
+En effet <span style="font-family:monospace">char([48,50,56,56])</span> renvoie <span style="font-family:monospace">"0288"</span>.<br>
+Or un nombre entier commençant par 0 est un nombre écrit en octal, du coup 
+il ne doit pas contenir de chiffre supérieur ou égal à 8. Ici le nombre
+a des chiffres égaux à 8, il est donc réinterprété (après 
+détection d’erreur de saisie en octal) comme un nombre flottant.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">expr(char([48,50,55,55]))</span></div>
+On obtient un nombre exact car l’écriture <span style="font-family:monospace">"0277"</span> est valide :
+<div class="center"><span style="font-family:monospace">191</span></div>
+En effet <span style="font-family:monospace">char([48,50,55,55])</span> renvoie <span style="font-family:monospace">"0277"</span> et <span style="font-family:monospace">0277</span>
+est l’écriture en base 8 de <span style="font-family:monospace">191</span> (7+8*7+64*2=191).<br>
+On tape :
+<div class="center"><span style="font-family:monospace">expr(char([48,48,50,51]))</span></div>
+On obtient un nombre exact car l’écriture <span style="font-family:monospace">"0023"</span> est valide :
+<div class="center"><span style="font-family:monospace">19</span></div>
+En effet <span style="font-family:monospace">char([48,50,55,55])</span> renvoie <span style="font-family:monospace">"0023"</span> et <span style="font-family:monospace">0023</span>
+est l’écriture en base 8 de <span style="font-family:monospace">19</span> (3+2*8=19).
+</li><li class="li-itemize"><span style="font-family:monospace">expr</span> permet aussi de transformer une chaîne de chiffres 
+représentant un nombre décimal en ce nombre.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">expr("123.4567")</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">123.4567</span></div>
+On tape :
+<div class="center"><span style="font-family:monospace">expr("123e-5")</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">0.00123</span></div>
+</li><li class="li-itemize"><span style="font-family:monospace">expr</span> permet de transformer une chaîne de chiffres 
+représentant un nombre rationel en ce nombre.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">expr("123/6")</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">41/2</span></div>
+</li><li class="li-itemize"><span style="font-family:monospace">expr</span> permet de transformer une chaîne 
+représentant une expression réelle en ce réel.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">expr("sqrt(2)+pi")</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">sqrt(2)+pi</span></div>
+</li><li class="li-itemize"><span style="font-family:monospace">expr</span> permet de transformer une chaîne 
+représentant un complexe réelle en ce complexe.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">expr("(1+2i)/(1-i)")</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">(-1+3*i)/2</span></div>
+</li><li class="li-itemize"><span style="font-family:monospace">expr</span> permet de transformer une chaîne 
+représentant la définition d’une fonction en cette fonction.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">f:=expr("x-&gt;x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+sqrt(2)");f(2)</span></div>
+On obtient en vert //Succès:
+<div class="center"><span style="font-family:monospace">(x)-&gt;x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+sqrt(2),4+sqrt(2)</span></div>
+</li><li class="li-itemize"><span style="font-family:monospace">expr</span> permet aussi de transformer une chaîne de caractères 
+pouvant être interprétée comme une commande.<br>
+On tape :
+<div class="center"><span style="font-family:monospace">expr("a:=1")</span></div>
+On obtient :
+<div class="center"><span style="font-family:monospace">1 et, la variable a contient 1</span></div>
+</li></ul><p>
+<span style="font-weight:bold">Remarque2</span><br>
+On peut aussi utiliser la commande <span style="font-family:monospace">convert</span> en utilisant l’une des options 
+<span style="font-style:oblique">integer, rational, float, real, complex, symbol, identifier</span> pour trandformer une chaîne de caractères en un nombre entier, rationnel, décimal,
+réel, complexe ou en une expression ou un nom de variable.
+</p>
+<hr>
+<a href="cascmd_fr157.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr159.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

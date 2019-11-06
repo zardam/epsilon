@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Adjoint matrix : adjoint_matrix</title>
+</head>
+<body >
+<a href="cascmd_en599.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en601.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec719" class="subsection">5.55.10  Adjoint matrix : <span style="font-family:monospace">adjoint_matrix</span></h3>
+<p><a id="hevea_default945"></a>
+<span style="font-family:monospace">adjoint_matrix </span> takes as argument a square matrix 
+<span style="font-style:italic">A</span> of size <span style="font-style:italic">n</span>.<br>
+<span style="font-family:monospace">adjoint_matrix </span> returns the list of the coefficients of <span style="font-style:italic">P</span> 
+(the characteristic polynomial of <span style="font-style:italic">A</span>), and
+the list of the matrix coefficients of <span style="font-style:italic">Q</span> (the adjoint matrix 
+of <span style="font-style:italic">A</span>). </p><p>The comatrix of a square matrix <span style="font-style:italic">A</span> of size <span style="font-style:italic">n</span> is the matrix <span style="font-style:italic">B</span> 
+defined by <span style="font-style:italic">A</span>× <span style="font-style:italic">B</span>=det(<span style="font-style:italic">A</span>)× <span style="font-style:italic">I</span>. The adjoint matrix of <span style="font-style:italic">A</span>
+is the comatrix of <span style="font-style:italic">xI</span>−<span style="font-style:italic">A</span>. It is a polynomial of degree <span style="font-style:italic">n</span>−1 in <span style="font-style:italic">x</span>
+having matrix coefficients.
+The following relation holds:
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">P</span>(<span style="font-style:italic">x</span>)× <span style="font-style:italic">I</span>=det(<span style="font-style:italic">xI</span>−<span style="font-style:italic">A</span>)<span style="font-style:italic">I</span>=(<span style="font-style:italic">xI</span>−<span style="font-style:italic">A</span>)<span style="font-style:italic">Q</span>(<span style="font-style:italic">x</span>)</td></tr>
+</table><p>
+Since the polynomial <span style="font-style:italic">P</span>(<span style="font-style:italic">x</span>)× <span style="font-style:italic">I</span>−<span style="font-style:italic">P</span>(<span style="font-style:italic">A</span>) (with matrix coefficients)
+is also divisible by <span style="font-style:italic">x</span>× <span style="font-style:italic">I</span>−<span style="font-style:italic">A</span> (by algebraic identities), 
+this proves that <span style="font-style:italic">P</span>(<span style="font-style:italic">A</span>)=0.
+We also have <span style="font-style:italic">Q</span>(<span style="font-style:italic">x</span>) = <span style="font-style:italic">I</span>× <span style="font-style:italic">x</span><sup><span style="font-style:italic">n</span>−1</sup>+...+<span style="font-style:italic">B</span><sub>0</sub>  
+where <span style="font-style:italic">B</span><sub>0</sub>= is the comatrix of <span style="font-style:italic">A</span> (up to the sign if <span style="font-style:italic">n</span> is odd).<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">adjoint_matrix([[4,1,-2],[1,2,-1],[2,1,0]])</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[
+</span><span style="font-family:monospace"><span style="font-weight:bold">[</span></span><span style="font-family:monospace">1,-6,12,-8</span><span style="font-family:monospace"><span style="font-weight:bold">]</span></span><span style="font-family:monospace">,<br>
+</span><span style="font-family:monospace"><span style="font-weight:bold">[</span></span><span style="font-family:monospace"> [[1,0,0],[0,1,0],[0,0,1]],
+[[-2,1,-2], [1,-4,-1],[2,1,-6]],
+[[1,-2,3],[-2,4,2],[-3,-2,7]] </span><span style="font-family:monospace"><span style="font-weight:bold">]</span></span><span style="font-family:monospace">
+] </span></div><p>
+Hence the characteristic polynomial is :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">P</span>(<span style="font-style:italic">x</span>)=<span style="font-style:italic">x</span><sup>3</sup>−6*<span style="font-style:italic">x</span><sup>2</sup>+12*<span style="font-style:italic">x</span>−8 </td></tr>
+</table><p>
+The determinant of <span style="font-style:italic">A</span> is equal to −<span style="font-style:italic">P</span>(0)=8.
+The comatrix of <span style="font-style:italic">A</span> is equal to :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">B</span>=<span style="font-style:italic">Q</span>(0)=[[1,−2,3],[−2,4,2],[−3,−2,7]] </td></tr>
+</table><p>
+Hence the inverse of <span style="font-style:italic">A</span> is equal to :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">1/8*[[1,−2,3],[−2,4,2],[−3,−2,7]] </td></tr>
+</table><p>
+The adjoint matrix of <span style="font-style:italic">A</span> is :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">[[<span style="font-style:italic">x</span><sup>2</sup>−2<span style="font-style:italic">x</span>+1,<span style="font-style:italic">x</span>−2,−2<span style="font-style:italic">x</span>+3],[<span style="font-style:italic">x</span>−2,<span style="font-style:italic">x</span><sup>2</sup>−4<span style="font-style:italic">x</span>+4,−<span style="font-style:italic">x</span>+2],[2<span style="font-style:italic">x</span>−3,<span style="font-style:italic">x</span>−2,<span style="font-style:italic">x</span><sup>2</sup>−6<span style="font-style:italic">x</span>+7]] </td></tr>
+</table><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">adjoint_matrix([[4,1],[1,2]])</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">[[1,-6,7],[[[1,0],[0,1]],[[-2,1],[1,-4]]]]</span></div><p>
+Hence the characteristic polynomial <span style="font-style:italic">P</span> is :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">P</span>(<span style="font-style:italic">x</span>)=<span style="font-style:italic">x</span><sup>2</sup>−6*<span style="font-style:italic">x</span>+7 </td></tr>
+</table><p>
+The determinant of <span style="font-style:italic">A</span> is equal to +<span style="font-style:italic">P</span>(0)=7.
+The comatrix of <span style="font-style:italic">A</span> is equal to 
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">Q</span>(0)= −[[−2,1],[1,−4]] </td></tr>
+</table><p>
+Hence the inverse of <span style="font-style:italic">A</span> is equal to :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">−1/7*[[−2,1],[1,−4]] </td></tr>
+</table><p>
+The adjoint matrix of <span style="font-style:italic">A</span> is :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">−[[<span style="font-style:italic">x</span>−2,1],[1,<span style="font-style:italic">x</span>−4]] </td></tr>
+</table>
+<hr>
+<a href="cascmd_en599.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en601.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

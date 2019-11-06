@@ -1,0 +1,459 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Επίλυση διαφορικών εξισώσεων :  desolve deSolve 
+dsolve</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el450.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el452.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc505">1.53.1</A>  Επίλυση διαφορικών εξισώσεων : <TT> desolve deSolve<BR>
+dsolve</TT></H3><P><A NAME="@default738"></A><A NAME="@default739"></A><A NAME="@default740"></A>
+	
+<TT>desolve</TT> (ή 	
+<TT>deSolve</TT>) μπορεί να λύσει:
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+γραμμικές διαφορικές εξισώσεις με σταθερούς συντελεστές,
+</LI><LI CLASS="li-itemize">γραμμικές διαφορικές εξισώσεις πρώτης τάξης,
+</LI><LI CLASS="li-itemize">πρώτης τάξης διαφορικές εξισώσεις χωρίς <I>y</I>,
+</LI><LI CLASS="li-itemize">πρώτης τάξης διαφορικές εξισώσεις χωρίς <I>x</I>,
+</LI><LI CLASS="li-itemize">πρώτης τάξης διαφορικές εξισώσεις με χωρισμένες μεταβλητές,
+</LI><LI CLASS="li-itemize">πρώτης τάξης ομογενείς διαφορικές εξισώσεις (<I>y</I>′=<I>F</I>(<I>y</I>/<I>x</I>)),
+</LI><LI CLASS="li-itemize">πρώτης τάξης διαφορικές εξισώσεις με ολοκληρωτικό παράγοντα,
+</LI><LI CLASS="li-itemize">πρώτης τάξης διαφορικές εξισώσεις 	
+<TT>Bernoulli</TT> (<I>a</I>(<I>x</I>)<I>y</I>′+<I>b</I>(<I>x</I>)<I>y</I>=<I>c</I>(<I>x</I>)<I>y</I><SUP><I>n</I></SUP>),
+</LI><LI CLASS="li-itemize">πρώτης τάξης διαφορικές εξισώσεις 	
+<TT>Clairaut</TT> (<I>y</I>=<I>x</I>*<I>y</I>′+<I>f</I>(<I>y</I>′)).
+</LI></UL><P>
+	
+<TT>desolve</TT> παίρνει σαν ορίσματα : 
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+εάν η ανεξάρτητη μεταβλητή είναι η τρέχουσα μεταβλητή (εδώ υποτίθεται 
+ότι είναι το <I>x</I>), 
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+την διαφορική εξίσωση (ή την λίστα της
+διαφορικής εξίσωσης και των αρχικών συνθηκών) 
+</LI><LI CLASS="li-itemize">την άγνωστο (συνήθως 	
+<TT>y</TT>).
+</LI></UL>
+Στη διαφορική εξίσωση, η συνάρτηση <I>y</I> παρίσταται ως <I>y</I>, 
+η πρώτη της παράγωγος <I>y</I>′ παρίσταται ως 
+	
+ <TT><I>y</I>′</TT>, και η δεύτερη παράγωγός της <I>y</I>′′ γράφεται ως
+	
+ <TT><I>y</I>″</TT>.<BR>
+Για παράδειγμα 	
+<TT>desolve(y</TT><TT>″</TT><TT>+2*y</TT><TT>′</TT><TT>+y,y)</TT> ή<BR>
+	
+<TT>desolve([y</TT><TT>″</TT><TT>+2*y</TT><TT>′</TT><TT>+y,y(0)=1,y</TT><TT>′</TT><TT>(0)=0],y)</TT>.
+</LI><LI CLASS="li-itemize">εάν η ανεξάρτητη μεταβλητή δεν είναι η τρέχουσα μεταβλητή, 
+για παράδειγμα <I>t</I> αντί για <I>x</I>, 
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+την διαφορική εξίσωση (ή την λίστα της 
+διαφορικής εξίσωσης και των αρχικών συνθηκών), 
+</LI><LI CLASS="li-itemize">την μεταβλητή, π.χ. 	
+<TT>t</TT> 
+</LI><LI CLASS="li-itemize">την άγνωστο σαν μεταβλητή 	
+<TT>y</TT> ή σαν συνάρτηση 	
+<TT>y(t)</TT>.
+</LI></UL>
+Στη διαφορική εξίσωση, η συνάρτηση <I>y</I> παρίσταται ως <I>y</I>(<I>t</I>),
+η πρώτη της παράγωγος <I>y</I>′ παρίσταται ως 	
+<TT>diff(y(t),t)</TT>, και η δεύτερη παράγωγός της
+<I>y</I>′′ γράφεται ως 	
+<TT>diff(y(t),t$2)</TT>.<BR>
+Για παράδειγμα :<BR>
+	
+<TT>desolve(diff(y(t),t$2)+2*diff(y(t),t)+y(t),y(t))</TT>, ή<BR>
+	
+<TT>desolve(diff(y(t),t$2)+2*diff(y(t),t)+y(t),t,y)</TT>
+και<BR>
+
+	
+<PRE CLASS="verbatim"><TT>desolve([diff(y(t),t$2)+2*diff(y(t),t)+y(t),
+         y(0)=1,y'(0)=0],y(t)), or
+desolve([diff(y(t),t$2)+2*diff(y(t),t)+y(t), 
+         y(0)=1,y'(0)=0],t,y)
+</TT></PRE>
+</LI></UL><P>
+Εάν δεν υπάρχουν αρχικές συνθήκες (ή μια αρχική συνθήκη για μια εξίσωση
+δευτέρας τάξης), 	
+<TT>desolve</TT> επιστρέφει την γενική λύση ως προς τις 
+σταθερές ολοκλήρωσης
+	
+<TT>c_0, c_1</TT>, όπου 	
+<TT>y(0)=c_0</TT> και 	
+<TT>y</TT><TT>′</TT><TT>(0)=c_1</TT>,
+ή μια λίστα λύσεων.<BR>
+<B>Παραδείγματα</B>
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Γραμμικές διαφορικές εξισώσεις δευτέρας τάξης με σταθερούς 
+συντελεστές.
+<OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>″+<I>y</I>=cos(<I>x</I>) </TD></TR>
+</TABLE>
+Εισάγετε (πληκτρολογώντας δύο φορές ′ για 	
+<TT>y</TT><TT>″</TT>): 
+<DIV CLASS="center">	
+<TT>desolve(y</TT><TT>″</TT><TT>+y=cos(x),y)</TT></DIV>
+ή εισάγετε :
+<DIV CLASS="center">	
+<TT>desolve((diff( diff(y))+y)=(cos(x)),y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>c_0*cos(x)+(x+2*c_1)*sin(x)/2</TT></DIV>
+	
+<TT>c_0, c_1</TT> είναι οι σταθερές της ολοκλήρωσης: 	
+<TT>y(0)=c_0</TT> και
+	
+<TT>y</TT><TT>′</TT><TT>(0)=c_1</TT>.<BR>
+Εάν η μεταβλητή δεν είναι 	
+<TT>x</TT> αλλά 	
+<TT>t</TT>, εισάγετε : 
+<DIV CLASS="center">
+	
+<TT>desolve(derive(derive(y(t),t),t)+y(t)=cos(t),t,y)</TT>
+</DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>c_0*cos(t)+(t+2*c_1)/2*sin(t)</TT></DIV>
+	
+<TT>c_0, c_1</TT> είναι οι σταθερές της ολοκλήρωσης : 	
+<TT>y(0)=c_0</TT> και
+	
+<TT>y</TT><TT>′</TT><TT>(0)=c_1</TT>.
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>″+<I>y</I>=cos(<I>x</I>),     <I>y</I>(0)=1 </TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve([y</TT><TT>″</TT><TT>+y=cos(x),y(0)=1],y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[cos(x)+(x+2*c_1)/2*sin(x)]</TT></DIV>
+τα στοιχεία του διανύσματος είναι λύσεις (εδώ υπάρχει μόνο ένα στοιχείο, 
+έτσι έχουμε ακριβώς μία λύση που εξαρτάται από το 	
+<TT>c_1</TT>).
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>″+<I>y</I>=cos(<I>x</I>)     (<I>y</I>(0))<SUP>2</SUP>=1 </TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve([y</TT><TT>″</TT><TT>+y=cos(x),y(0)</TT><CODE><TT>^</TT></CODE><TT>2=1],y)</TT></DIV>
+Έξοδος:
+<DIV CLASS="center">	
+<TT>[-cos(x)+(x+2*c_1)/2*sin(x),cos(x)+(x+2*c_1)/2*sin(x)]</TT></DIV>
+κάθε στοιχείο αυτής της λίστας είναι μια λύση, 
+έχουμε δύο λύσεις που εξαρτώνται από
+τη σταθερά 	
+<TT>c_1</TT> (<I>y</I>′(0)=<I>c</I><SUB>1</SUB>)
+και που αντιστοιχούν σε <I>y</I>(0)=1 και σε <I>y</I>(0)=−1.
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>″+<I>y</I>=cos(<I>x</I>),     (<I>y</I>(0))<SUP>2</SUP>=1     <I>y</I>′(0)=1</TD></TR>
+</TABLE>
+Είσοδος:
+<DIV CLASS="center">	
+<TT>desolve([y</TT><TT>″</TT><TT>+y=cos(x),y(0)</TT><CODE><TT>^</TT></CODE><TT>2=1,y’(0)=1],y)</TT>
+</DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[-cos(x)+(x+2)/2*sin(x),cos(x)+(x+2)/2*sin(x)]</TT></DIV>
+κάθε στοιχείο αυτής της λίστας είναι μια λύση (έχουμε δύο λύσεις).
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>″+2<I>y</I>′+<I>y</I>=0</TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(y</TT><TT>″</TT><TT>+2*y</TT><TT>′</TT><TT>+y=0,y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>(x*c_0+x*c_1+c_0)*exp(-x)</TT></DIV>
+Η λύση εξαρτάται από δύο σταθερές ολοκλήρωσης : 
+	
+<TT>c_0, c_1</TT> (	
+<TT>y(0)=c_0</TT> και 	
+<TT>y</TT><TT>′</TT><TT>(0)=c_1</TT>).
+</LI><LI CLASS="li-enumerate">Λύστε:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>″−6<I>y</I>′+9<I>y</I>=<I>xe</I><SUP>3<I>x</I></SUP></TD></TR>
+</TABLE>
+Είσοδος:
+<DIV CLASS="center">	
+<TT>desolve(y</TT><TT>″</TT><TT>-6*y</TT><TT>′</TT><TT>+9*y=(x*exp(3*x),y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>(x</TT><CODE><TT>^</TT></CODE><TT>3+(-(18*x))*c_0+6*x*c_1+6*c_0)*1/6*exp(3*x)</TT></DIV>
+η λύση εξαρτάται από δύο σταθερές ολοκλήρωσης : 
+	
+<TT>c_0, c_1</TT> (	
+<TT>y(0)=c_0</TT> και 	
+<TT>y</TT><TT>′</TT><TT>(0)=c_1</TT>).
+</LI></OL>
+</LI><LI CLASS="li-itemize">Γραμμικές διαφορικές εξισώσεις πρώτης τάξης.
+<OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>xy</I>′+<I>y</I>−3<I>x</I><SUP>2</SUP>=0</TD></TR>
+</TABLE>
+Είσοδος :
+	
+<DIV CLASS="center"><TT> desolve(x*y</TT><TT>′</TT><TT>+y-3*x</TT><CODE><TT>^</TT></CODE><TT>2,y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>(3*1/3*x</TT><CODE><TT>^</TT></CODE><TT>3+c_0)/x </TT></DIV>
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>′+<I>x</I>*<I>y</I>=0, <I>y</I>(0)=1</TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve([y</TT><TT>′</TT><TT>+x*y=0, y(0)=1]),y)</TT></DIV>
+ή :
+<DIV CLASS="center">	
+<TT>desolve((y</TT><TT>′</TT><TT>+x*y=0) &amp;&amp; (y(0)=1),y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[1/(exp(1/2*x</TT><CODE><TT>^</TT></CODE><TT>2))]</TT></DIV> 
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I>(<I>x</I><SUP>2</SUP>−1)<I>y</I>′+2<I>y</I>=0</TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(x*(x</TT><CODE><TT>^</TT></CODE><TT>2-1)*y</TT><TT>′</TT><TT>+2*y=0,y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>(c_0)/((x</TT><CODE><TT>^</TT></CODE><TT>2-1)/(x</TT><CODE><TT>^</TT></CODE><TT>2))</TT></DIV>
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I>(<I>x</I><SUP>2</SUP>−1)<I>y</I>′+2<I>y</I>=<I>x</I><SUP>2</SUP></TD></TR>
+</TABLE>
+Είσοδος:
+<DIV CLASS="center">	
+<TT>desolve(x*(x</TT><CODE><TT>^</TT></CODE><TT>2-1)*y</TT><TT>′</TT><TT>+2*y=x</TT><CODE><TT>^</TT></CODE><TT>2,y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>(ln(x)+c_0)/((x</TT><CODE><TT>^</TT></CODE><TT>2-1)/(x</TT><CODE><TT>^</TT></CODE><TT>2))</TT></DIV>
+</LI><LI CLASS="li-enumerate">Εάν η μεταβλητή είναι <I>t</I> αντί για <I>x</I>, για παράδειγμα :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>t</I>(<I>t</I><SUP>2</SUP>−1)<I>y</I>′(<I>t</I>)+2<I>y</I>(<I>t</I>)=<I>t</I><SUP>2</SUP></TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(t*(t</TT><CODE><TT>^</TT></CODE><TT>2-1)*diff(y(t),t)+2*y(t)=(t</TT><CODE><TT>^</TT></CODE><TT>2),y(t))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>(ln(t)+c_0)/((t</TT><CODE><TT>^</TT></CODE><TT>2-1)/(t</TT><CODE><TT>^</TT></CODE><TT>2))</TT></DIV>
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I>(<I>x</I><SUP>2</SUP>−1)<I>y</I>′+2<I>y</I>=<I>x</I><SUP>2</SUP>,<I>y</I>(2)=0</TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve([x*(x</TT><CODE><TT>^</TT></CODE><TT>2-1)*y</TT><TT>′</TT><TT>+2*y=x</TT><CODE><TT>^</TT></CODE><TT>2,y(0)=1],y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[(ln(x)-ln(2))*1/(x</TT><CODE><TT>^</TT></CODE><TT>2-1)*x</TT><CODE><TT>^</TT></CODE><TT>2]</TT></DIV>
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>1+<I>x</I><SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>y</I>′−<I>x</I>−<I>y</I>=</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>1+<I>x</I><SUP>2</SUP></TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(y</TT><TT>′</TT><TT>*sqrt(1+x</TT><CODE><TT>^</TT></CODE><TT>2)-x-y-sqrt(1+x</TT><CODE><TT>^</TT></CODE><TT>2),y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>(-c_0+ln(sqrt(x</TT><CODE><TT>^</TT></CODE><TT>2+1)-x))/(x-sqrt(x</TT><CODE><TT>^</TT></CODE><TT>2+1))</TT></DIV>
+</LI></OL></LI><LI CLASS="li-itemize">Διαφορικές εξισώσεις πρώτης τάξης με χωρισμένες μεταβλητές
+<OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>′=2</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>y</I></TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(y</TT><TT>′</TT><TT>=2*sqrt(y),y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[x</TT><CODE><TT>^</TT></CODE><TT>2+-2*x*c_0+c_0</TT><CODE><TT>^</TT></CODE><TT>2]</TT></DIV>
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>xy</I>′ln(<I>x</I>)−<I>y</I>(3ln(<I>x</I>)+1)=0</TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(x*y</TT><TT>′</TT><TT>*ln(x)-(3*ln(x)+1)*y,y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>c_0*x</TT><CODE><TT>^</TT></CODE><TT>3*ln(x)</TT></DIV>
+</LI></OL></LI><LI CLASS="li-itemize">Διαφορικές εξισώσεις 	
+<TT>Bernoulli</TT>
+<I>a</I>(<I>x</I>)<I>y</I>′+<I>b</I>(<I>x</I>)<I>y</I>=<I>c</I>(<I>x</I>)<I>y</I><SUP><I>n</I></SUP> όπου <I>n</I> είναι μια πραγματική σταθερά.<BR>
+Η μέθοδος που χρησιμοποιείται είναι να διαιρέσουμε την εξίσωση με <I>y</I><SUP><I>n</I></SUP>, 
+έτσι ώστε να γίνει μια διαφορική εξίσωση πρώτης τάξης
+ως προς <I>u</I>=1/<I>y</I><SUP><I>n</I>−1</SUP>.
+<OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>xy</I>′+2<I>y</I>+<I>xy</I><SUP>2</SUP>=0</TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(x*y</TT><TT>′</TT><TT>+2*y+x*y</TT><CODE><TT>^</TT></CODE><TT>2,y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[1/(exp(2*ln(x))*(-1/x+c_0))]</TT></DIV>
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>xy</I>′−2<I>y</I>=<I>xy</I><SUP>3</SUP></TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(x*y</TT><TT>′</TT><TT>-2*y-x*y</TT><CODE><TT>^</TT></CODE><TT>3,y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[((-2*1/5*x</TT><CODE><TT>^</TT></CODE><TT>5+c_0)*exp(-(4*log(x))))</TT><CODE><TT>^</TT></CODE><TT>(1/-2),</TT></DIV>
+<DIV CLASS="center">	
+<TT>-((-2*1/5*x</TT><CODE><TT>^</TT></CODE><TT>5+c_0)*exp(-(4*log(x))))</TT><CODE><TT>^</TT></CODE><TT>(1/-2)]</TT></DIV>
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I><SUP>2</SUP><I>y</I>′−2<I>y</I>=<I>xe</I><SUP>4/<I>x</I></SUP><I>y</I><SUP>3</SUP></TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(x*y</TT><TT>′</TT><TT>-2*y-x*exp(4/x)*y</TT><CODE><TT>^</TT></CODE><TT>3,y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[((-2*ln(x)+c_0)*exp(-(4*(-(1/x)))))</TT><CODE><TT>^</TT></CODE><TT>(1/-2),</TT></DIV>
+<DIV CLASS="center">	
+<TT>-(((-2*ln(x)+c_0)*exp(-(4*(-(1/x)))))</TT><CODE><TT>^</TT></CODE><TT>(1/-2))]</TT></DIV>
+</LI></OL></LI><LI CLASS="li-itemize">Ομογενείς διαφορικές εξισώσεεις πρώτης τάξης (<I>y</I>′=<I>F</I>(<I>y</I>/<I>x</I>),
+η μέθοδος της ολοκλήρωσης συνίσταται στο να ψάξουμε για <I>t</I>=<I>y</I>/<I>x</I> αντί για <I>y</I>).
+<OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">(3<I>x</I><SUP>3</SUP><I>y</I>′=<I>y</I>(3<I>x</I><SUP>2</SUP>−<I>y</I><SUP>2</SUP>)</TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(3*x</TT><CODE><TT>^</TT></CODE><TT>3*diff(y)=((3*x</TT><CODE><TT>^</TT></CODE><TT>2-y</TT><CODE><TT>^</TT></CODE><TT>2)*y),y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[0,[c_0*exp((3*1/2)/(‘t‘</TT><CODE><TT>^</TT></CODE><TT>2)),<BR>
+‘t‘*c_0*exp((3*1/2)/(‘t‘</TT><CODE><TT>^</TT></CODE><TT>2))]]</TT></DIV>
+έτσι, οι λύσεις είναι <I>y</I>=0 και η οικογένεια των καμπυλών 
+των παραμετρικών εξισώσεων <I>x</I>=<I>c</I><SUB>0</SUB>exp(3/(2<I>t</I><SUP>2</SUP>)), <I>y</I>=<I>t</I>*<I>c</I><SUB>0</SUB>exp(3/(2<I>t</I><SUP>2</SUP>)) 
+(η παράμετρος δηλώνεται με 	
+<TT>‘t‘</TT> στην απάντηση).
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>xy</I>′=<I>y</I>+</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP></TD></TR>
+</TABLE></TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(x*y</TT><TT>′</TT><TT>=y+sqrt(x</TT><CODE><TT>^</TT></CODE><TT>2+y</TT><CODE><TT>^</TT></CODE><TT>2),y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[(-i)*x,(i)*x,[c_0/(sqrt(‘t‘</TT><CODE><TT>^</TT></CODE><TT>2+1)-‘t‘),<BR>
+(‘t‘*c_0)/(sqrt(‘t‘</TT><CODE><TT>^</TT></CODE><TT>2+1)-‘t‘)]]</TT></DIV>
+άρα οι λύσεις είναι :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>=<I>ix</I>,<I>y</I>=−<I>ix</I></TD></TR>
+</TABLE>
+και η οικογένεια των καμπυλών των παραμετρικών εξισώσεων
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I>=<I>c</I><SUB>0</SUB>/(</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>t</I><SUP>2</SUP>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−<I>t</I>), <I>y</I>=<I>t</I>*<I>c</I><SUB>0</SUB>/(</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>t</I><SUP>2</SUP>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">−<I>t</I>)</TD></TR>
+</TABLE> 
+(η παράμετρος δηλώνεται με 	
+<TT>‘t‘</TT> στην απάντηση).
+</LI></OL></LI><LI CLASS="li-itemize">Διαφορικές εξισώσεις πρώτης τάξης με ολοκληρωτικό παράγοντα. Πολλαπλασιάζοντας την εξίσωση με μια συνάρτηση του <I>x</I>,<I>y</I>,
+γίνεται μια κλειστή διαφορική μορφή.
+<OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>yy</I>′+<I>x</I></TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(y*y</TT><TT>′</TT><TT>+x,y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[sqrt(-2*c_0-x</TT><CODE><TT>^</TT></CODE><TT>2),-(sqrt(-2*c_0-x</TT><CODE><TT>^</TT></CODE><TT>2))]</TT></DIV>
+Σε αυτό το παράδειγμα, το <I>xdx</I>+<I>ydy</I> είναι κλειστό, ο ολοκληρωτικός παράγοντας ήταν 1.
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">2<I>xyy</I>′+<I>x</I><SUP>2</SUP>−<I>y</I><SUP>2</SUP>+<I>a</I><SUP>2</SUP>=0</TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(2*x*y*y</TT><TT>′</TT><TT>+x</TT><CODE><TT>^</TT></CODE><TT>2-y</TT><CODE><TT>^</TT></CODE><TT>2+a</TT><CODE><TT>^</TT></CODE><TT>2,y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>[sqrt(a</TT><CODE><TT>^</TT></CODE><TT>2-x</TT><CODE><TT>^</TT></CODE><TT>2-c_1*x),-(sqrt(a</TT><CODE><TT>^</TT></CODE><TT>2-x</TT><CODE><TT>^</TT></CODE><TT>2-c_1*x))]</TT></DIV>
+Σε αυτό το παράδειγμα, ο ολοκληρωτικός παράγοντας ήταν 1/<I>x</I><SUP>2</SUP>.
+</LI></OL></LI><LI CLASS="li-itemize">Διαφορικές εξισώσεις πρώτης τάξης χωρίς το <I>x</I>.<BR>
+Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">(<I>y</I>+<I>y</I>′)<SUP>4</SUP>+<I>y</I>′+3<I>y</I>=0</TD></TR>
+</TABLE>
+Αυτό το είδος εξισώσεων δεν μπορεί να λυθεί άμεσα με το 	
+<TT>Xcas</TT>, εξηγούμε όμως πως
+λύνονται με τη βοήθειά του. 
+Η ιδέα είναι να βρούμε μια παραμετρική αναπαράσταση του 
+<I>F</I>(<I>u</I>,<I>v</I>)=0 όπου η εξίσωση είναι <I>F</I>(<I>y</I>,<I>y</I>′)=0, 
+Έστω <I>u</I>=<I>f</I>(<I>t</I>),<I>v</I>=<I>g</I>(<I>t</I>) μια τέτοια παραμετροποίηση του <I>F</I>=0, τότε 
+<I>y</I>=<I>f</I>(<I>t</I>) και <I>dy</I>/<I>dx</I>=<I>y</I>′=<I>g</I>(<I>t</I>). Άρα,
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>dy</I>/<I>dt</I>=<I>f</I>′(<I>t</I>)=<I>y</I>′*<I>dx</I>/<I>dt</I>=<I>g</I>(<I>t</I>)*<I>dx</I>/<I>dt</I> </TD></TR>
+</TABLE>
+Η λύση είναι η καμπύλη των παραμετρικών εξισώσεων
+<I>x</I>(<I>t</I>), <I>y</I>(<I>t</I>)=<I>f</I>(<I>t</I>), όπου <I>x</I>(<I>t</I>) είναι λύση της διαφορικής εξίσωσης 
+<I>g</I>(<I>t</I>)<I>dx</I>=<I>f</I>′(<I>t</I>)<I>dt</I>.<BR>
+Πίσω στο παράδειγμα, θέτουμε <I>y</I>+<I>y</I>′=<I>t</I>, οπότε:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>=−<I>t</I>−8*<I>t</I><SUP>4</SUP>,    <I>y</I>′=<I>dy</I>/<I>dx</I>=3*<I>t</I>+8*<I>t</I><SUP>4</SUP>    <I>dy</I>/<I>dt</I>=−1−32*<I>t</I><SUP>3</SUP>
+</TD></TR>
+</TABLE> 
+και επομένως
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">(3*<I>t</I>+8*<I>t</I><SUP>4</SUP>)*<I>dx</I>=(−1−32*<I>t</I><SUP>3</SUP>)<I>dt</I> </TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve((3*t+8*t</TT><CODE><TT>^</TT></CODE><TT>4)*diff(x(t),t)=(-1-32*t</TT><CODE><TT>^</TT></CODE><TT>3),x(t))</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>-11*1/9*ln(8*t</TT><CODE><TT>^</TT></CODE><TT>3+3)+1/-9*ln(t</TT><CODE><TT>^</TT></CODE><TT>3)+c_0</TT></DIV>
+Η λύση είναι η καμπύλη της παραμετρικής εξίσωσης:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>x</I>(<I>t</I>)=−11*1/9*ln(8*<I>t</I><SUP>3</SUP>+3)+1/−9*ln(<I>t</I><SUP>3</SUP>)+<I>c</I><SUB>0</SUB>,
+   <I>y</I>(<I>t</I>)=−<I>t</I>−8*<I>t</I><SUP>4</SUP> </TD></TR>
+</TABLE></LI><LI CLASS="li-itemize">Διαφορικές εξισώσεις
+	
+<TT>Clairaut</TT> πρώτης τάξης (<I>y</I>=<I>x</I>*<I>y</I>′+<I>f</I>(<I>y</I>′)).<BR>
+Οι λύσεις είναι οι γραμμές <I>D</I><SUB><I>m</I></SUB> της εξίσωσης <I>y</I>=<I>mx</I>+<I>f</I>(<I>m</I>) όπου
+<I>m</I> είναι μια πραγματική σταθερά.
+<OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>xy</I>′+<I>y</I>′<SUP>3</SUP>−<I>y</I>)=0</TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve(x*y</TT><TT>′</TT><TT>+y</TT><TT>′</TT><CODE><TT>^</TT></CODE><TT>3-y),y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>c_0*x+c_0</TT><CODE><TT>^</TT></CODE><TT>3</TT></DIV>
+</LI><LI CLASS="li-enumerate">Λύστε :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>y</I>−<I>xy</I>′=</TD><TD CLASS="dcell"><FONT SIZE=5>√</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>*<I>y</I>′<SUP>2</SUP></TD></TR>
+</TABLE></TD><TD CLASS="dcell">=0</TD></TR>
+</TABLE>
+Είσοδος :
+<DIV CLASS="center">	
+<TT>desolve((y-x*y</TT><TT>′</TT><TT>-sqrt(a</TT><CODE><TT>^</TT></CODE><TT>2+b</TT><CODE><TT>^</TT></CODE><TT>2*y</TT><TT>′</TT><CODE><TT>^</TT></CODE><TT>2),y)</TT></DIV>
+Έξοδος :
+<DIV CLASS="center">	
+<TT>c_0*x+sqrt(a</TT><CODE><TT>^</TT></CODE><TT>2+b</TT><CODE><TT>^</TT></CODE><TT>2*c_0</TT><CODE><TT>^</TT></CODE><TT>2)</TT></DIV>
+</LI></OL>
+</LI></UL><HR>
+<A HREF="cascmd_el450.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el452.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

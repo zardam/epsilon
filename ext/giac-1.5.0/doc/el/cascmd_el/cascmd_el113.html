@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascmd_el.css">
+<TITLE>Αντικατάσταση μιας μεταβλητής με μια τιμή (συμβατότητα με Maple και Mupad ) : subs</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascmd_el112.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el114.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H3 CLASS="subsection"><A NAME="htoc126">1.12.17</A>  Αντικατάσταση μιας μεταβλητής με μια τιμή (συμβατότητα με Maple και Mupad ) : <TT>subs</TT></H3><P><A NAME="@default177"></A><A NAME="sec:subs"></A>
+Στο 	
+<TT>Maple</TT> και στο 	
+<TT>Mupad</TT>, κάποιος θα χρησιμοποιούσε την εντολή 	
+<TT>subs</TT>
+για να αντικαταστήσει σε μια παράσταση μια μεταβλητή με μια τιμή. Αλλά η σειρά των ορισμάτων διαφέρει ανάμεσα στο 	
+<TT>Maple</TT> και στο 	
+<TT>Mupad</TT>. Επομένως, για να επιτευχθεί η συμβατότητα, η διάταξη των ορισμάτων της εντολής 	
+<TT>subs</TT> του 	
+<TT>Xcas</TT> εξαρτάται από τον τρόπο λειτουργίας του
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Στον τρόπο λειτουργίας 	
+<TT>Maple</TT>, το 	
+<TT>subs</TT> παίρνει δύο ορίσματα: μια ισότητα
+(μεταβλητή=τιμή αντικατάστασης) και την παράσταση.<BR>
+Για την αντικατάσταση πολλών μεταβλητών σε μια παράσταση, χρησιμοποιείστε μια λίστα με ισότητες
+(όνομα μεταβλητής = τιμή αντικατάστασης) ως πρώτο όρισμα.
+</LI><LI CLASS="li-itemize">Στον τρόπο λειτουργίας 	
+<TT>Mupad</TT> ή 	
+<TT>Xcas</TT> ή 	
+<TT>TI</TT>, το 	
+<TT>subs</TT> 
+παίρνει δύο ή τρία ορίσματα : 
+μία παράσταση και μια ισότητα (μεταβλητή=τιμή αντικατάστασης) ή 
+μια παράσταση, ένα όνομα μεταβλητής και την τιμή αντικατάστασης.<BR>
+Για την αντικατάσταση διαφόρων μεταβλητών, το 	
+<TT>subs</TT> παίρνει δύο ή τρία ορίσματα :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+μια παράσταση από μεταβλητές και μια λίστα με ισότητες 
+(όνομα μεταβλητής = τιμή αντικατάστασης),</LI><LI CLASS="li-itemize">μία παράσταση από μεταβλητές, μια λίστα από μεταβλητές και μία λίστα από τις 
+τιμές αντικατάστασης.</LI></UL>
+</LI></UL><P>
+	
+<TT>subs</TT> επιστρέφει την παράσταση όπου έχει γίνει η αντικατάσταση.
+Να σημειωθεί πως το 	
+<TT>subs</TT> δεν αναφέρει (	
+quote) το όρισμά του, γιαυτό το λόγο
+σε μια κανονική διαδικασία αποτίμησης, δεν θα πρέπει να έχει γίνει απόδοση τιμής στην μεταβλητή που αντικαθίσταται, αλλιώς θα αντικαθίσται από την τιμή που της αποδόθηκε
+πριν να γίνει η αντικατάσταση.<BR>
+Εισάγετε στον τρόπο λειτουργίας 	
+<TT>Maple</TT> (εάν δεν έχει αποδοθεί τιμή στην 	
+<TT>a</TT> αλλιώς εισάγετε
+	
+<TT>purge(a)</TT>) :
+</P><DIV CLASS="center">	
+<TT>subs(a=2,a</TT><CODE><TT>^</TT></CODE><TT>2+1)</TT></DIV><P>
+Έξοδος 
+</P><DIV CLASS="center">	
+<TT>2</TT><CODE><TT>^</TT></CODE><TT>2+1</TT></DIV><P>
+Εισάγετε στον τρόπο λειτουργίας 	
+<TT>Maple</TT> (εάν δεν έχουν αποδοθεί τιμές στις μεταβλητές 	
+<TT>a</TT> και 	
+<TT>b</TT> 
+αλλιώς εισάγετε 	
+<TT>purge(a,b)</TT>):
+</P><DIV CLASS="center">	
+<TT>subs([a=2,b=1],a</TT><CODE><TT>^</TT></CODE><TT>2+b)</TT></DIV><P> 
+Έξοδος :
+</P><DIV CLASS="center">	
+<TT>2</TT><CODE><TT>^</TT></CODE><TT>2+1</TT></DIV><P>
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>subs(a</TT><CODE><TT>^</TT></CODE><TT>2+1,a=2)</TT></DIV><P> 
+ή :
+</P><DIV CLASS="center">	
+<TT>subs(a</TT><CODE><TT>^</TT></CODE><TT>2+1,a,2)</TT></DIV><P> 
+Έξοδος (εάν δεν έχει αποδοθεί τιμή στην μεταβλητή 	
+<TT>a</TT> αλλιώς εισάγετε 	
+<TT>purge(a)</TT>) :
+</P><DIV CLASS="center">	
+<TT>5</TT></DIV><P> 
+Είσοδος :
+</P><DIV CLASS="center">	
+<TT>subs(a</TT><CODE><TT>^</TT></CODE><TT>2+b,[a=2,b=1])</TT></DIV><P> 
+ή :
+</P><DIV CLASS="center">	
+<TT>subs(a</TT><CODE><TT>^</TT></CODE><TT>2+b,[a,b],[2,1])</TT></DIV><P> 
+Έξοδος (εάν δεν έχουν αποδοθεί τιμές στις μεταβλητές 	
+<TT>a</TT> και 	
+<TT>b</TT> αλλιώς εισάγετε 
+	
+<TT>purge(a,b)</TT>) :
+</P><DIV CLASS="center">	
+<TT>2</TT><CODE><TT>^</TT></CODE><TT>2+1</TT></DIV><HR>
+<A HREF="cascmd_el112.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascmd_el114.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

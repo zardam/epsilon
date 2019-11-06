@@ -1,0 +1,193 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others 
+  Translation to greek : George Nassopoulos-->
+<HTML>
+<HEAD>
+<TITLE>Παράγωγοι</TITLE>
+<META NAME="description" CONTENT="D&#233;riv&#233;es">
+<META NAME="keywords" CONTENT="tutoriel">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutoriel.css">
+
+<LINK REL="next" HREF="node16.html">
+<LINK REL="previous" HREF="node14.html">
+<LINK REL="up" HREF="node14.html">
+<LINK REL="next" HREF="node16.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html275"
+  HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html269"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html263"
+  HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html271"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html273"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html276"
+  HREF="node16.html">Όρια και πεπερασμένα αναπτύγματα</A>
+<B> εμφάνιση:</B> <A NAME="tex2html270"
+  HREF="node14.html">Εργαλεία για την Ανάλυση</A>
+<B> προηγούμενο:</B> <A NAME="tex2html264"
+  HREF="node14.html">Εργαλεία για την Ανάλυση</A>
+ &nbsp; <B>  <A NAME="tex2html272"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html274"
+  HREF="node47.html">Ευρετήριο</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00031000000000000000"></A>
+<A NAME="344"></A>
+<A NAME="345"></A>
+<BR>
+Παράγωγοι
+</H2>
+<A NAME="1637"></A>
+<A NAME="1638"></A>
+Η συνάρτηση <code>diff</code> μας επιτρέπει να υπολογίσουμε την 
+παράγωγο μίας παράστασης ως προς
+μία ή περισσότερες εκ των μεταβλητών της, αλλά έτσι το αποτέλεσμα θα είναι 
+μία παράσταση.
+Εάν επιθυμούμε να ορίσουμε την  παράγωγο ως συνάρτηση, πρέπει να 
+χρησιμοποιήσουμε την συνάρτηση <code>function_diff</code>. Τα παραδείγματα που 
+ακολουθούν, διευκρινίζουν τις έννοιες.
+<PRE>
+E:=x^2-1; diff(E);
+f:=unapply(E,x); diff(f(x));
+f1:=function_diff(f);f1(x);
+</PRE>
+<B>Προσοχή:</B> Έχοντας ορίσει μία συνάρτηση, π.χ. <code>f(x):=x^2-1</code>,
+ δεν μπορούμε να ορίσουμε την  παράγωγό της ως συνάρτηση γράφοντας 
+<code>f1(x):=diff(f(x))</code>, διότι με αυτόν τον τρόπο, 
+το <code>x</code> 
+έχει δύο ασυμβίβαστες έννοιες:  από την μία είναι η μεταβλητή της 
+παραγώγου και από την άλλη είναι το όρισμα της συνάρτησης <code>f1</code>. 
+
+Πρέπει λοιπόν να χρησιμοποιήσουμε είτε
+<PRE>
+<code>f1:=unapply(diff(f(x)),x)</code>
+</PRE>
+είτε
+<PRE>
+<code>f1:=function_diff(f)</code>
+</PRE>
+χωρίς να εμφανίζεται η μεταβλητή 
+<code>x</code>.
+<BR>
+<BR>
+<P>
+Η συνάρτηση <code>diff</code> εφαρμόζεται σε οποιαδήποτε συνδυασμό μεταβλητών, 
+και μας επιτρέπει να υπολογίζουμε μερικές παράγωγους.
+<A NAME="351"></A>
+<PRE>
+E:=sin(x*y)
+diff(E,x)
+diff(E,y)
+diff(E,x,y)-diff(E,y,x)
+simplify(ans())
+</PRE>
+Εάν το δεύτερο όρισμα της συνάρτησης <code>diff</code> είναι  μία λίστα,
+το αποτέλεσμα είναι μία λίστα μερικών παραγώγων. Παραδείγματος χάρη,
+ για να υπολογίσουμε την κλίση (το ανάδελτα) του sin(<I>xy</I>) γράφουμε:
+<code>diff(sin(x*y),[x,y])</code> (μπορούμε επίσης να χρησιμοποιήσουμε 
+την συνάρτηση <code>grad</code>). 
+Ειδικές εντολές μας επιτρέπουν να υπολογίσουμε κλασικούς συνδυασμούς 
+μερικών παραγώγων.
+<BR>
+<BR>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><B>Παράγωγοι</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>diff(ex,t)</code></TD>
+<TD ALIGN="LEFT">παράγωγος μίας παράστασης ως προς t</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>function_diff(f)</code></TD>
+<TD ALIGN="LEFT">Η συνάρτηση της παραγώγου μίας συνάρτησης</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>diff(ex,x$n,y$m)</code></TD>
+<TD ALIGN="LEFT">μερικές παράγωγοι</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>grad</code></TD>
+<TD ALIGN="LEFT">κλίση (ανάδελτα)</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>divergence</code></TD>
+<TD ALIGN="LEFT">απόκλιση</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>curl</code></TD>
+<TD ALIGN="LEFT">στροβιλισμός</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>laplacian</code></TD>
+<TD ALIGN="LEFT">Λαπλασιανή</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>hessian</code></TD>
+<TD ALIGN="LEFT">πίνακας Hesse</TD>
+</TR>
+</TABLE>
+</DIV>
+<A NAME="1639"></A>
+<A NAME="363"></A>
+<A NAME="1640"></A>
+<A NAME="365"></A>
+<A NAME="1641"></A>
+<A NAME="367"></A>
+<A NAME="1642"></A>
+<A NAME="369"></A>
+<A NAME="1643"></A>
+<A NAME="371"></A>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html275"
+  HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html269"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html263"
+  HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html271"
+  HREF="node46.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html273"
+  HREF="node47.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> 
+<BR>
+<B> επόμενο:</B> <A NAME="tex2html276"
+  HREF="node16.html">Όρια και πεπερασμένα αναπτύγματα</A>
+<B> εμφάνιση:</B> <A NAME="tex2html270"
+  HREF="node14.html">Εργαλεία για την Ανάλυση</A>
+<B> προηγούμενο:</B> <A NAME="tex2html264"
+  HREF="node14.html">Εργαλεία για την Ανάλυση</A>
+ &nbsp; <B>  <A NAME="tex2html272"
+  HREF="node46.html">Πίνακας περιεχομένων</A></B> 
+ &nbsp; <B>  <A NAME="tex2html274"
+  HREF="node47.html">Ευρετήριο</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+Βιβλιογραφία του <A HREF="http://www-fourier.ujf-grenoble.fr/~parisse/giac_fr.html">giac</A> από τους Renee De Graeve, Bernard Parisse και Bernard Ycart
+</ADDRESS>
+Μετάφραση στα Ελληνικά : Γιώργος Νασόπουλος. Διασκευή : Αλκιβιάδης Γ. Ακρίτας
+</BODY>
+</HTML>

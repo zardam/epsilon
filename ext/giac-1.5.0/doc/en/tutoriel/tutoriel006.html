@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="tutoriel.css">
+<title>Algebra with Xcas</title>
+</head>
+<body >
+<a href="tutoriel005.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel007.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h2 id="sec28" class="section">5&#XA0;&#XA0;Algebra with <span style="font-family:monospace">Xcas</span></h2>
+<h3 id="sec29" class="subsection">5.1&#XA0;&#XA0;Integer arithmetic</h3>
+<div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Integers</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">irem</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >remainder</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">iquo</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >quotient</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">iquorem</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >quotient and remainder</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">ifactor</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >prime factorization</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">ifactors</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >list of prime factors</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">idivis</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >list of divisors</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">gcd</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >greatest common divisor</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">lcm</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >least common multiple</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">iegcd</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >Bezout&#X2019;s identity</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">isprime</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >primality test</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">nextprime</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >next prime number</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">previousprime</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >previous prime number</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">a%p</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-style:italic">a</span> modulo <span style="font-style:italic">p</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">powmod(a,n,p)</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-style:italic">a</span><sup><span style="font-style:italic">n</span></sup> modulo <span style="font-style:italic">p</span></td></tr>
+</table>
+</div><p>
+<a id="hevea_default199"></a>
+<a id="hevea_default200"></a>
+<a id="hevea_default201"></a>
+<a id="hevea_default202"></a>
+<a id="hevea_default203"></a>
+<a id="hevea_default204"></a>
+<a id="hevea_default205"></a>
+<a id="hevea_default206"></a>
+<a id="hevea_default207"></a>
+<a id="hevea_default208"></a>
+<a id="hevea_default209"></a>
+<a id="hevea_default210"></a>
+<a id="hevea_default211"></a>
+<a id="hevea_default212"></a>
+<a id="hevea_default213"></a>
+<a id="hevea_default214"></a>
+<a id="hevea_default215"></a>
+<a id="hevea_default216"></a></p><p><span style="font-family:monospace">Xcas</span> has the usual number theoretic functions. The
+<span style="font-family:monospace">iquo</span> command will find the integer quotient of two integers
+and <span style="font-family:monospace">irem</span> will find the remainder. The <span style="font-family:monospace">iquorem</span>
+command will return a list of both the quotient and remainder; if you
+enter
+</p><blockquote class="quote"><span style="font-family:monospace">iquorem(30,7)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+[4,2]
+</td></tr>
+</table><p>
+since 30 divided by 7 is 4 with a remainder of 2.</p><p>The <span style="font-family:monospace">gcd</span> and <span style="font-family:monospace">lcm</span> commands will find the greatest
+common divisor and least common multiple of two integers. If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">gcd(72,120)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+24
+</td></tr>
+</table><p>
+The greatest common divisor <span style="font-style:italic">d</span> of two integers <span style="font-style:italic">a</span> and <span style="font-style:italic">b</span> can always be
+written in the form <span style="font-style:italic">a</span>*<span style="font-style:italic">u</span> + <span style="font-style:italic">b</span>*<span style="font-style:italic">v</span> = <span style="font-style:italic">d</span> for integers <span style="font-style:italic">u</span> and <span style="font-style:italic">v</span>. (This
+is known as B&#XE9;zout&#X2019;s Identity.) The <span style="font-family:monospace">iegcd</span> will
+return the coefficients <span style="font-style:italic">u</span> and <span style="font-style:italic">v</span> as well as the greatest commond
+divisor. If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">iegcd(72,120)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+[2,&#X2212;1,24]
+</td></tr>
+</table><p>
+since
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">72&#XB7;&#XA0;2&#XA0;+&#XA0;120&#XB7;(&#X2212;1)&#XA0;=&#XA0;24</td></tr>
+</table><p>The <span style="font-family:monospace">ifactor</span> command will give the prime factorization of an
+integer; if you enter
+</p><blockquote class="quote"><span style="font-family:monospace">ifactor(250)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+2*5<sup>3</sup>
+</td></tr>
+</table><p>
+You can use <span style="font-family:monospace">ifactors</span> to get a list of the prime factors of an
+integer, where in the list each factor is followed by its multiplicity.
+If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">ifactors(250)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+[2,1,5,3]
+</td></tr>
+</table><p>
+since 250 has a prime factor of 2 (it has 1 factor of 2) and a
+prime factor of 5 (it has 3 factors of 5).
+The <span style="font-family:monospace">idivis</span> command will return a complete list of factors;
+</p><blockquote class="quote"><span style="font-family:monospace">idivis(250)
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+[1,2,5,10,25,50,125,250]
+</td></tr>
+</table><p>The subject of primes is a difficult one, and you should see the
+manual for a discussion of how <span style="font-family:monospace">Xcas</span> checks for primes. But
+the command <span style="font-family:monospace">isprime</span> will return <span style="font-family:monospace">true</span> or <span style="font-family:monospace">false</span>
+depending on whether or not you enter a prime. If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">isprime(37)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+<span style="font-style:italic">true</span>
+</td></tr>
+</table><p>
+since 37 is a prime number. The commands <span style="font-family:monospace">nextprime</span> and
+<span style="font-family:monospace">previousprime</span> will find the first prime after (or before) the
+number that you give it; if you enter
+</p><blockquote class="quote"><span style="font-family:monospace">nextprime(37)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+41
+</td></tr>
+</table><p>
+since the first prime after 37 is 41.</p><p>Integers modulo <span style="font-style:italic">p</span> are defined by putting <span style="font-family:monospace">% p</span> after them.
+Once an integer modulo <span style="font-style:italic">p</span> is defined, then any calculations done with
+it are done in &#X2124;/<span style="font-style:italic">p</span>&#X2124;. For example, if you define
+</p><blockquote class="quote"><span style="font-family:monospace">a := 3 % 5
+</span></blockquote><p>
+then
+</p><blockquote class="quote"><span style="font-family:monospace">a*2
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+1&#XA0;%&#XA0;5
+</td></tr>
+</table><p>
+(since 6 mod 5 is reduced to 1 mod 5); 
+</p><blockquote class="quote"><span style="font-family:monospace">1/a
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+2&#XA0;%&#XA0;5
+</td></tr>
+</table><p>
+etc. The <span style="font-family:monospace">powermod</span> or <span style="font-family:monospace">powmod</span> functions can be used
+to efficiently calculate powers modulo a number.</p>
+<h3 id="sec30" class="subsection">5.2&#XA0;&#XA0;Polynomials and rational functions</h3>
+<div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Polynomials</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">normal</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >normal form (expanded and reduced)</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">expand</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >expanded form</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">ptayl</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >Taylor form</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">peval</span> or <span style="font-family:monospace">horner</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >evaluation using Horner&#X2019;s method</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">canonical_form</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >canonical form for a trinomial</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">coeff</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >list of coefficients</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">poly2symb</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >transform an algebraic polynomial to list form</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">symb2poly</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >transform the list form of a polynomial to
+algebraic form</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">pcoeff</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >return the polynomial (list form) given a list of zeroes</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">degree</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >degree</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">lcoeff</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >the coefficient of the leading term</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">valuation</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >the lowest degree of the terms</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">tcoeff</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >the coefficient of the term with the lowest degree</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">factor</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >prime factorization</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">factors</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >list of prime factors</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">divis</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >list of divisors</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">froot</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >roots with multiplicities</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">proot</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >approximate values of the roots</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">sturmab</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >the number of roots in an interval</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">getNum</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >the numerator of a rational function</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">getDenom</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >the denominator of a rational function</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">propfrac</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >writes a rational expression as a whole part and a
+proper rational part</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">partfrac</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >partial fraction decomposition</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">quo</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >quotient</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">rem</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >remainder</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">gcd</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >greatest common divisor</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">lcm</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >least common multiple</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">egcd</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >Bezout&#X2019;s identity
+</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">divpc</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >Taylor polynomial for a rational expression</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">randpoly</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >random polynomial</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">cyclotomic</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >cyclotomic polynomial</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">lagrange</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >Lagrange polynomials</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">hermite</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >Hermite polynomials</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">laguerre</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >Laguerre polynomials</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">tchebyshev1</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >Tchebyshev polynomials</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">tchebyshev2</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >Tchebyshev polynomials</td></tr>
+</table>
+</div><p>
+<a id="hevea_default217"></a>
+<a id="hevea_default218"></a>
+<a id="hevea_default219"></a>
+<a id="hevea_default220"></a>
+<a id="hevea_default221"></a>
+<a id="hevea_default222"></a>
+<a id="hevea_default223"></a>
+<a id="hevea_default224"></a>
+<a id="hevea_default225"></a>
+<a id="hevea_default226"></a>
+<a id="hevea_default227"></a>
+<a id="hevea_default228"></a>
+<a id="hevea_default229"></a>
+<a id="hevea_default230"></a>
+<a id="hevea_default231"></a>
+<a id="hevea_default232"></a>
+<a id="hevea_default233"></a>
+<a id="hevea_default234"></a>
+<a id="hevea_default235"></a>
+<a id="hevea_default236"></a>
+<a id="hevea_default237"></a>
+<a id="hevea_default238"></a>
+<a id="hevea_default239"></a>
+<a id="hevea_default240"></a>
+<a id="hevea_default241"></a>
+<a id="hevea_default242"></a>
+<a id="hevea_default243"></a>
+<a id="hevea_default244"></a>
+<a id="hevea_default245"></a>
+<a id="hevea_default246"></a>
+<a id="hevea_default247"></a>
+<a id="hevea_default248"></a>
+<a id="hevea_default249"></a>
+<a id="hevea_default250"></a>
+<a id="hevea_default251"></a>
+<a id="hevea_default252"></a>
+<a id="hevea_default253"></a>
+<a id="hevea_default254"></a>
+<a id="hevea_default255"></a>
+<a id="hevea_default256"></a> 
+<a id="hevea_default257"></a>
+<a id="hevea_default258"></a>
+<a id="hevea_default259"></a>
+<a id="hevea_default260"></a>
+<a id="hevea_default261"></a>
+<a id="hevea_default262"></a></p><p>Various polynomial operations are available in the <span style="font-family:monospace">Polynomials</span>
+submenu of the <span style="font-family:monospace">Cmds</span> menu.</p><p>The <span style="font-family:monospace">expand</span> and <span style="font-family:monospace">normal</span> operators will distribute
+multiplication across addition, and so expand a polynomial completely
+out. If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">expand((x+1)*(x+2)^2)
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+<span style="font-style:italic">x</span><sup>3</sup>+5*<span style="font-style:italic">x</span><sup>2</sup>+8*<span style="font-style:italic">x</span>+4
+</td></tr>
+</table><p>
+Additionally, <span style="font-family:monospace">normal</span> will reduce a rational expression to
+lowest terms; if you enter
+</p><blockquote class="quote"><span style="font-family:monospace">normal((x-1)^2/(x^2-1))
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span>&#X2212;1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span>+1</td></tr>
+</table></td></tr>
+</table><p>The <span style="font-family:monospace">factor</span> operator will factor a polynomial. 
+If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">factor(x^3+6*x^2+3*x-10
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+(<span style="font-style:italic">x</span>&#X2212;1)*(<span style="font-style:italic">x</span>+2)*(<span style="font-style:italic">x</span>+5)
+</td></tr>
+</table><p>
+The result often depends on the number field being used. For example, over the
+rational numbers the polynomial <span style="font-style:italic">x</span><sup>4</sup> &#X2212; 1 factors as 
+(<span style="font-style:italic">x</span>&#X2212;1)(<span style="font-style:italic">x</span>+1)(<span style="font-style:italic">x</span><sup>2</sup> + 1), while over the complex numbers it factors as 
+(<span style="font-style:italic">x</span>&#X2212;1)(<span style="font-style:italic">x</span>+1)(<span style="font-style:italic">x</span>&#X2212;<span style="font-style:italic">i</span>)(<span style="font-style:italic">x</span>+<span style="font-style:italic">i</span>). If the coefficients of a polynomial are exact
+fractions, then the factoring will be over the rationals. To factor
+over the complex numbers, you can configure <span style="font-family:monospace">Xcas</span> to do
+complex factorization (see section <a href="tutoriel003.html#config">2.3</a>, &#X201C;Configuration&#X201D;)
+or use the <span style="font-family:monospace">cfactor</span> command.
+If the coefficients are in &#X2124;/<span style="font-style:italic">p</span>&#X2124; then the polynomial will be
+factored over &#X2124;/<span style="font-style:italic">p</span>&#X2124;.</p>
+<h3 id="sec31" class="subsection">5.3&#XA0;&#XA0;Trigonometry</h3>
+<div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Trigonom&#XE9;trie</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">tlin</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >linearize</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">tcollect</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >linearize and regroup</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">texpand</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >expand</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">trig2exp</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >trigonometric to exponential</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">exp2trig</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >exponential to trigonometric</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">hyp2exp</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >hyperbolic to exponential</td></tr>
+</table>
+</div><p>
+<a id="hevea_default263"></a>
+<a id="hevea_default264"></a>
+<a id="hevea_default265"></a>
+<a id="hevea_default266"></a>
+<a id="hevea_default267"></a>
+<a id="hevea_default268"></a></p><p><span style="font-family:monospace">Xcas</span> has the usual trigonometic functions, both circular and
+hyperbolic, as well as their inverses. It also has commands for
+manipulating trigonometric expressions; these are in the
+<span style="font-family:monospace">Trigo</span> submenus of the <span style="font-family:monospace">Expression</span> menu.</p><p>One example is the <span style="font-family:monospace">tlin</span> command will write products and powers of sines and
+cosines as linear combinations of sin(<span style="font-style:italic">n</span> <span style="font-style:italic">x</span>)s and cos(<span style="font-style:italic">n</span> <span style="font-style:italic">x</span>)s. If
+you enter
+</p><blockquote class="quote"><span style="font-family:monospace">tlin(2*sin(x)^2*cos(3*x))
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+&#X2212;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">cos(<span style="font-style:italic">x</span>)</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td><td class="dcell">&#XA0;+&#XA0;cos(3*<span style="font-style:italic">x</span>)&#XA0;&#X2212;&#XA0;</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">cos(5*<span style="font-style:italic">x</span>)</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2</td></tr>
+</table></td></tr>
+</table><p>The <span style="font-family:monospace">texpand</span> command will take expressions involving 
+sin(<span style="font-style:italic">n</span> <span style="font-style:italic">x</span>) and cos(<span style="font-style:italic">n</span> <span style="font-style:italic">x</span>) and write them in terms of powers if
+sin(<span style="font-style:italic">x</span>) and cos(<span style="font-style:italic">x</span>). If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">texpand(sin(2*x)^2*cos(3*x))
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+16*cos(<span style="font-style:italic">x</span>)<sup>5</sup>*sin(<span style="font-style:italic">x</span>)<sup>2</sup>&#X2212;12*cos(<span style="font-style:italic">x</span>)<sup>3</sup>*sin(<span style="font-style:italic">x</span>)<sup>2</sup>
+</td></tr>
+</table>
+<h3 id="sec32" class="subsection">5.4&#XA0;&#XA0;Vectors and matrices</h3>
+<div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Vectors and matrices</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">v*w</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >scalar product</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">cross(v,w)</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >cross product</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">A*B</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >matrix product</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">A.*B</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >term by term product</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">1/A</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >inverse</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">tran</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >transpose</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">rank</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >rank</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">det</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >determinant</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">ker</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >basis for the kernel</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">image</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >base for the image</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">idn</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >identity matrix</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">ranm</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >matrix with random coefficients</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">makematrix</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >make a matrix from a function</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">matrix</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >make a matrix from a function</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">blockmatrix</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >combine matrices</td></tr>
+</table>
+</div><p>
+<a id="hevea_default269"></a>
+<a id="hevea_default270"></a>
+<a id="hevea_default271"></a>
+<a id="hevea_default272"></a>
+<a id="hevea_default273"></a>
+<a id="hevea_default274"></a>
+<a id="hevea_default275"></a>
+<a id="hevea_default276"></a>
+<a id="hevea_default277"></a>
+<a id="hevea_default278"></a>
+<a id="hevea_default279"></a>
+<a id="hevea_default280"></a>
+<a id="hevea_default281"></a>
+<a id="hevea_default282"></a>
+<a id="hevea_default283"></a>
+<a id="hevea_default284"></a>
+<a id="hevea_default285"></a>
+<a id="hevea_default286"></a>
+<a id="hevea_default287"></a></p><p>A vector is a list of numbers, such as <span style="font-family:monospace">[2,3,5]</span>, and a matrix
+is a list of vectors all of the same length, such as
+<span style="font-family:monospace">[[1,2,3],[4,5,6]]</span>.</p><p>The usual matrix operations (addition, scalar multiplication, matrix
+multiplication) are done with the usual operators <span style="font-family:monospace">+</span> and
+<span style="font-family:monospace">*</span>. If you define
+</p><blockquote class="quote"><span style="font-family:monospace">A := [[1,2,3],[4,5,6],[7,8,9]]
+</span></blockquote><blockquote class="quote"><span style="font-family:monospace">B := [[1,1,1],[2,2,2]]
+</span></blockquote><p>
+then
+</p><blockquote class="quote"><span style="font-family:monospace">3*A
+</span></blockquote><p>
+will give you
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+
+</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >3</td><td style="text-align:center;white-space:nowrap" >6</td><td style="text-align:center;white-space:nowrap" >9</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >12</td><td style="text-align:center;white-space:nowrap" >15</td><td style="text-align:center;white-space:nowrap" >18</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >21</td><td style="text-align:center;white-space:nowrap" >24</td><td style="text-align:center;white-space:nowrap" >27
+</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table></td></tr>
+</table><p>
+and
+</p><blockquote class="quote"><span style="font-family:monospace">B*A
+</span></blockquote><p>
+will give you
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+
+</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >12</td><td style="text-align:center;white-space:nowrap" >15</td><td style="text-align:center;white-space:nowrap" >18</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >24</td><td style="text-align:center;white-space:nowrap" >30</td><td style="text-align:center;white-space:nowrap" >36
+</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table></td></tr>
+</table><p>
+A vector can be regarded as a matrix with one row, except that if a matrix
+is multiplied on the right by a vector, the vector will be regarded as
+a column. In particular, if <span style="font-family:monospace">v</span> and <span style="font-family:monospace">w</span> are vectors of
+the same length, then <span style="font-family:monospace">v*w</span> will return the scalar product.</p><p>The <span style="font-family:monospace">idn</span> command will create an identity matrix;
+</p><blockquote class="quote"><span style="font-family:monospace">idn(2)
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+
+</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >0</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >1
+</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table></td></tr>
+</table><p>
+You can also use <span style="font-family:monospace">makemat</span> or <span style="font-family:monospace">matrix</span> commands to build
+a matrix. They both require a real-valued function of two variables,
+the number of rows and the number of columns. The indices start at 0,
+and with the <span style="font-family:monospace">makemat</span> the function comes first, with
+<span style="font-family:monospace">matrix</span> the function comes last. Both
+</p><blockquote class="quote"><span style="font-family:monospace">makemat((j,k)-&gt;j+k,3,2)
+</span></blockquote><p>
+and
+</p><blockquote class="quote"><span style="font-family:monospace">matrix(3,2,(j,k)-&gt;j+k)
+</span></blockquote><p>
+produce
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+
+</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >2</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >2</td><td style="text-align:center;white-space:nowrap" >3
+</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table></td></tr>
+</table><p>Several matrices can be combined into a larger matrix with the
+<span style="font-family:monospace">blockmatrix</span> command. To arrange <span style="font-style:italic">m</span> * <span style="font-style:italic">n</span> matrices
+into <span style="font-style:italic">m</span> rows and <span style="font-style:italic">n</span> columns, you give <span style="font-family:monospace">blockmatrix</span> the
+values <span style="font-style:italic">m</span>, <span style="font-style:italic">n</span> and a list of the matrices. If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">A := [[1,2,3],[4,5,6]]
+</span></blockquote><blockquote class="quote"><span style="font-family:monospace">B := [[1,2],[2,3]]
+</span></blockquote><p>
+then
+</p><blockquote class="quote"><span style="font-family:monospace">blockmatrix(2,2,[A,B,B,A])
+</span></blockquote><p>
+will give you
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+
+</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239C;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >2</td><td style="text-align:center;white-space:nowrap" >3</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >2</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >4</td><td style="text-align:center;white-space:nowrap" >5</td><td style="text-align:center;white-space:nowrap" >6</td><td style="text-align:center;white-space:nowrap" >2</td><td style="text-align:center;white-space:nowrap" >3</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >2</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >2</td><td style="text-align:center;white-space:nowrap" >3</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >2</td><td style="text-align:center;white-space:nowrap" >3</td><td style="text-align:center;white-space:nowrap" >4</td><td style="text-align:center;white-space:nowrap" >5</td><td style="text-align:center;white-space:nowrap" >5
+</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X239F;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table></td></tr>
+</table><p>You can get the elements from a matrix by following the matrix with
+the indices in brackets, separated by commas. For <span style="font-family:monospace">A</span> as above,
+</p><blockquote class="quote"><span style="font-family:monospace">A[1,2]
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+6
+</td></tr>
+</table><p>
+You can extract a submatrix<a id="hevea_default288"></a> by using intervals of indices (the
+beginning and end index separated by two periods);
+</p><blockquote class="quote"><span style="font-family:monospace">A[0..1,1..2]
+</span></blockquote><p>
+returns
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+
+</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >2</td><td style="text-align:center;white-space:nowrap" >3</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >5</td><td style="text-align:center;white-space:nowrap" >6
+</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table></td></tr>
+</table><p>Note that if you change one value of a matrix in <span style="font-family:monospace">Xcas</span>, the
+entire matrix will be copied. If a program modifies parts of a large
+matrix one element at a time, this time can add up.</p>
+<h3 id="sec33" class="subsection">5.5&#XA0;&#XA0;Linear systems</h3>
+<div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Linear systems</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">linsolve</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >solution of a linear system</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">simult</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >solutions of many linear systems</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">rref</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >Gauss-Jordan reduction</td></tr>
+</table>
+</div><p>
+<a id="hevea_default289"></a>
+<a id="hevea_default290"></a>
+<a id="hevea_default291"></a>
+<a id="hevea_default292"></a></p><p>The <span style="font-family:monospace">linsolve</span> command will solve a system of linear equations;
+its syntax is the same as that of <span style="font-family:monospace">solve</span> (see section
+<a href="tutoriel005.html#solve">4.4</a>, &#X201C;Solving equations&#X201D;).
+If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">linsolve([2*x + 3*y = 4, 5*x + 4*y = 3],[x,y])
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+[&#X2212;1,2]
+</td></tr>
+</table><p>The <span style="font-family:monospace">simult</span> command can also solve a system of linear
+equations; more generally, it can solve several systems with the same
+coefficient matrix. To solve the systems
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">A</span><span style="font-weight:bold"><span style="font-style:italic">x</span></span>&#XA0;=&#XA0;<span style="font-weight:bold"><span style="font-style:italic">b</span></span><sub>1</sub>,&#X2026;,<span style="font-style:italic">A</span><span style="font-weight:bold"><span style="font-style:italic">x</span></span>=<span style="font-weight:bold"><span style="font-style:italic">b</span></span><sub><span style="font-style:italic">k</span></sub></td></tr>
+</table><p>
+you can enter
+</p><blockquote class="quote"><span style="font-family:monospace">simult(A,B)
+</span></blockquote><p>
+where
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">B</span>&#XA0;=&#XA0;</td><td class="dcell">&#X239B;<br>
+&#X239D;</td><td class="dcell"><span style="font-weight:bold"><span style="font-style:italic">b</span></span><sub>1</sub>&#XA0;&#X22EF;&#XA0;<span style="font-weight:bold"><span style="font-style:italic">b</span></span><sub><span style="font-style:italic">k</span></sub></td><td class="dcell">&#X239E;<br>
+&#X23A0;</td></tr>
+</table><p>
+The result will be a matrix whose <span style="font-style:italic">j</span>th column is the solution of
+<span style="font-style:italic">A</span><span style="font-weight:bold"><span style="font-style:italic">x</span></span>=<span style="font-weight:bold"><span style="font-style:italic">b</span></span><sub><span style="font-style:italic">j</span></sub>.
+For example, if you want to solve the systems
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">&#X23A7;<br>
+&#X23AA;<br>
+&#X23A8;<br>
+&#X23AA;<br>
+&#X23A9;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:left;white-space:nowrap" >&#XA0;<span style="font-style:italic">x</span></td><td style="text-align:left;white-space:nowrap" >+</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">y</span></td><td style="text-align:left;white-space:nowrap" >&#X2212;</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">z</span></td><td style="text-align:left;white-space:nowrap" >=</td><td style="text-align:right;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" >&#XA0;<span style="font-style:italic">x</span></td><td style="text-align:left;white-space:nowrap" >&#X2212;</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">y</span></td><td style="text-align:left;white-space:nowrap" >+</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">z</span></td><td style="text-align:left;white-space:nowrap" >=</td><td style="text-align:right;white-space:nowrap" >1&#XA0;</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" >&#XA0;&#X2212;<span style="font-style:italic">x</span></td><td style="text-align:left;white-space:nowrap" >+</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">y</span></td><td style="text-align:left;white-space:nowrap" >+</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">z</span></td><td style="text-align:left;white-space:nowrap" >=</td><td style="text-align:right;white-space:nowrap" >&#X2212;2&#XA0;
+</td></tr>
+</table></td></tr>
+</table><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">&#X23A7;<br>
+&#X23AA;<br>
+&#X23A8;<br>
+&#X23AA;<br>
+&#X23A9;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:left;white-space:nowrap" >&#XA0;<span style="font-style:italic">x</span></td><td style="text-align:left;white-space:nowrap" >+</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">y</span></td><td style="text-align:left;white-space:nowrap" >&#X2212;</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">z</span></td><td style="text-align:left;white-space:nowrap" >=</td><td style="text-align:right;white-space:nowrap" >&#X2212;2</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" >&#XA0;<span style="font-style:italic">x</span></td><td style="text-align:left;white-space:nowrap" >&#X2212;</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">y</span></td><td style="text-align:left;white-space:nowrap" >+</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">z</span></td><td style="text-align:left;white-space:nowrap" >=</td><td style="text-align:right;white-space:nowrap" >1&#XA0;</td></tr>
+<tr><td style="text-align:left;white-space:nowrap" >&#XA0;&#X2212;<span style="font-style:italic">x</span></td><td style="text-align:left;white-space:nowrap" >+</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">y</span></td><td style="text-align:left;white-space:nowrap" >+</td><td style="text-align:left;white-space:nowrap" ><span style="font-style:italic">z</span></td><td style="text-align:left;white-space:nowrap" >=</td><td style="text-align:right;white-space:nowrap" >1&#XA0;
+</td></tr>
+</table></td></tr>
+</table><p>
+which both have the same matrix of coefficients
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >&#XA0;&#XA0;1</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >&#X2212;1</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >&#XA0;&#XA0;1</td><td style="text-align:center;white-space:nowrap" >&#X2212;1</td><td style="text-align:center;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >&#XA0;&#XA0;&#X2212;1</td><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >1
+</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table></td></tr>
+</table><p>
+you can create the matrix which has one column for each system
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >&#XA0;&#XA0;1</td><td style="text-align:center;white-space:nowrap" >&#X2212;2</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >&#XA0;&#XA0;1</td><td style="text-align:center;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >&#XA0;&#XA0;&#X2212;2</td><td style="text-align:center;white-space:nowrap" >1
+</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table></td></tr>
+</table><p>
+If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">simult([[1,1,-1],[1,-1,1],[-1,1,1]],[[1,-2],[1,1],[-2,1]])
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+
+</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >&#X2212;1/2</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >&#X2212;1/2</td><td style="text-align:center;white-space:nowrap" >&#X2212;1/2</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >&#X2212;1/2</td><td style="text-align:center;white-space:nowrap" >1
+</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table></td></tr>
+</table><p>
+The solution to the first system is the first column,
+<span style="font-style:italic">x</span>=1,<span style="font-style:italic">y</span>=&#X2212;1/2,<span style="font-style:italic">z</span>=&#X2212;1/2, and the solution to the second system is the
+second column, <span style="font-style:italic">x</span>=&#X2212;1/2,<span style="font-style:italic">y</span>=&#X2212;1/2,<span style="font-style:italic">z</span>=1.</p><p>When there are no solutions, <span style="font-family:monospace">linsolve</span> will return the empty
+list while <span style="font-family:monospace">simult</span> will return an error. When there are
+infinitely many solutions, <span style="font-family:monospace">linsolve</span> will return formulas for
+all solutions while <span style="font-family:monospace">simult</span> will return one solution.</p>
+<h3 id="sec34" class="subsection">5.6&#XA0;&#XA0;Matrix reduction</h3>
+<div class="center">
+<table border=1  style="border-spacing:0;" class="cellpadding1"><tr><td style="text-align:center;border:solid 1px;white-space:nowrap"  colspan=2><span style="font-weight:bold">Matrix reduction</span></td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">jordan</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >diagonalization or Jordan reduction</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">pcar</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >characteristic polynomial (list form)</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">pmin</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >minimal polynomial (list form)</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">eigenvals</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >eigenvalues</td></tr>
+<tr><td style="vertical-align:top;text-align:left;border:solid 1px;" ><span style="font-family:monospace">eigenvects</span></td><td style="vertical-align:top;text-align:left;border:solid 1px;" >eigenvectors</td></tr>
+</table>
+</div><p>
+<a id="hevea_default293"></a>
+<a id="hevea_default294"></a>
+<a id="hevea_default295"></a>
+<a id="hevea_default296"></a>
+<a id="hevea_default297"></a>
+<a id="hevea_default298"></a>
+<a id="hevea_default299"></a>
+<a id="hevea_default300"></a>
+<a id="hevea_default301"></a>
+<a id="hevea_default302"></a>
+<a id="hevea_default303"></a></p><p>The <span style="font-family:monospace">jordan</span> command will take a matrix <span style="font-style:italic">A</span> and returns a
+transition matrix <span style="font-style:italic">P</span> and a matrix <span style="font-style:italic">J</span> in Jordan canonical form, so
+that <span style="font-style:italic">P</span><sup>&#X2212;1</sup> <span style="font-style:italic">A</span> <span style="font-style:italic">P</span> = <span style="font-style:italic">J</span>. In particular, if <span style="font-style:italic">A</span> is diagonalizable, then
+<span style="font-style:italic">J</span> will be diagonal with the eigenvalues of <span style="font-style:italic">A</span> on the diagonal and
+the columns of <span style="font-style:italic">P</span> will be the corresponding eigenvectors.
+If you enter
+</p><blockquote class="quote"><span style="font-family:monospace">jordan([[4,1],[-8,-5]])
+</span></blockquote><p>
+you will get
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+
+</td><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >&#X2212;1</td><td style="text-align:center;white-space:nowrap" >&#X2212;8&#XA0;</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table></td><td class="dcell">,
+</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >3</td><td style="text-align:center;white-space:nowrap" >0</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >&#X2212;4&#XA0;</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table><p>
+This means that 3 and &#X2212;4 (the diagonal elements of the second
+matrix) are the eigenvalues of 
+(</p><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >4</td><td style="text-align:center;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >&#X2212;8</td><td style="text-align:center;white-space:nowrap" >&#X2212;5</td></tr>
+</table><p>) and the corresponding
+eigenvectors are (</p><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >&#X2212;1</td></tr>
+</table><p>) and
+(</p><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >&#X2212;8</td></tr>
+</table><p>) (the columns of the first matrix).
+For diagonalizable matrices you can also get this information with the
+<span style="font-family:monospace">eigenvals</span> and <span style="font-family:monospace">eigenvects</span> commands;
+</p><blockquote class="quote"><span style="font-family:monospace">eigenvals([[4,1],[-8,-5]])
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+(3,&#X2212;4)
+</td></tr>
+</table><p>
+and 
+</p><blockquote class="quote"><span style="font-family:monospace">eigenvects([[4,1],[-8,-5]])
+</span></blockquote><p>
+will return
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >1</td><td style="text-align:center;white-space:nowrap" >1</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >&#X2212;1</td><td style="text-align:center;white-space:nowrap" >&#X2212;8&#XA0;</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table></td></tr>
+</table><p>For matrices with exact and symbolic values, the only eigenvalues used
+are those computable with <span style="font-family:monospace">solve</span>; for matrices with floating
+point numbers, a numerical algorithm is used to find the eigenvalues.
+This algorithm may fail in some cases where there are very close
+eigenvalues or eigenvalues with multiplicity greater than one.</p><p>If a function is defined by a polynomial, you can evaluate it with an
+argument of a square matrix. If a function is given by a series, the
+Jordan form of the matrix can be used to define the value of the
+function at a matrix. For example, you can find the exponential of a
+square matrix;
+</p><blockquote class="quote"><span style="font-family:monospace">exp([[0,-1],[1,2]])
+</span></blockquote><p>
+will result in
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">
+
+</td><td class="dcell"><table class="display"><tr style="vertical-align:middle"><td class="dcell">&#X239B;<br>
+&#X239C;<br>
+&#X239D;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="text-align:center;white-space:nowrap" >0</td><td style="text-align:center;white-space:nowrap" >&#X2212;exp(1)</td></tr>
+<tr><td style="text-align:center;white-space:nowrap" >exp(1)</td><td style="text-align:center;white-space:nowrap" >2*exp(1)
+</td></tr>
+</table></td><td class="dcell">&#X239E;<br>
+&#X239F;<br>
+&#X23A0;</td></tr>
+</table></td></tr>
+</table>
+<hr>
+<a href="tutoriel005.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="tutoriel007.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

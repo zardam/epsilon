@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Dealing with errors: try, catch, throw, error, ERROR</title>
+</head>
+<body >
+<a href="cascmd_en813.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en815.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1046" class="subsection">11.4.11  Dealing with errors: <span style="font-family:monospace">try, catch, throw, error, ERROR</span></h3>
+<p>
+<a id="hevea_default1445"></a><a id="hevea_default1446"></a><a id="hevea_default1447"></a><a id="hevea_default1448"></a><a id="hevea_default1449"></a></p><p>Some commands produce errors, and if your program tries to run such a
+command it will halt with an error. To avoid this, you can use the
+<span style="font-family:monospace">try</span> and <span style="font-family:monospace">catch</span> commands. To
+use these, you put any potentially problematic statements in a block
+following <span style="font-family:monospace">try</span>, and immediately after the block put
+<span style="font-family:monospace">catch</span> with an argument of an unused symbol. If the
+<span style="font-family:monospace">try</span> block doesn’t produce an error, then <span style="font-family:monospace">catch</span> and
+the block following <span style="font-family:monospace">catch</span> will be ignored. If the
+<span style="font-family:monospace">try</span> block does produce an error, then a string describing the
+error is assigned to the argument to <span style="font-family:monospace">catch</span>, and the block
+following catch is evaluated. For example, the command
+</p><div class="center">
+<span style="font-family:monospace">[[1,1]]*[[2,2]]</span>
+</div><p>
+will produce an error saying <span style="font-style:italic">Error: Invalid dimension</span>. 
+However,
+</p><pre class="verbatim">  try {[[1,1]]*[[2,2]]}
+  catch (err) {
+    print("The error is " + err)
+    }
+</pre><p>
+will not produce an error; instead it will print
+</p><div class="center">
+<span style="font-family:monospace">The error is Error: Invalid dimension</span>
+</div><p>With the following program
+</p><pre class="verbatim">  test(x) := {
+    local y, str, err;
+    try { y := [[1,1]]*x; str := "This produced a product.";}
+    catch (err)
+    {y := x; 
+     str := "This produced an error " + err + " The input is returned.";}
+    print(str);
+    return y;
+    }
+</pre><p>
+if you enter
+</p><div class="center">
+<span style="font-family:monospace">test([[2],[2]])</span>
+</div><p>
+then 
+</p><div class="center">
+<span style="font-family:monospace">This produced a product.</span>
+</div><p>
+will be printed and the result will be
+</p><div class="center">
+<span style="font-family:monospace">[4]</span>
+</div><p>.
+If you enter
+</p><div class="center">
+<span style="font-family:monospace">test([[2,2]])</span>
+</div><p>
+then
+</p><div class="center">
+<span style="font-family:monospace">This produced an error Error: Invalid dimension The input is
+returned.</span>
+</div><p>
+will be printed and the result will be
+</p><div class="center">
+<span style="font-family:monospace">[[2,2]]</span>
+</div><p>You can use the <span style="font-family:monospace">throw</span> command (or equivalently,
+the <span style="font-family:monospace">error</span> or <span style="font-family:monospace">ERROR</span>
+command) to generate an error and error string, possibly to be caught
+by <span style="font-family:monospace">catch</span>. The <span style="font-family:monospace">throw</span> command takes as argument a
+string, which will be used as the error message. For example, suppose
+you have the program
+</p><pre class="verbatim">  f(x) := {
+  if (type(x) != DOM_INT)
+    throw("Not an integer");
+  else
+    return x;
+  }
+</pre><p>
+Then
+</p><div class="center">
+<span style="font-family:monospace">f(12)</span>
+</div><p>
+will simply return
+</p><div class="center">
+<span style="font-family:monospace">12</span>
+</div><p>
+since 12 is an integer, but
+</p><div class="center">
+<span style="font-family:monospace">f(1.2)</span>
+</div><p>
+will signal an error
+</p><div class="center">
+<span style="font-family:monospace">Not an integer Error: Bad Argument Value</span>
+</div><p>
+since 1.2 in not an integer. You can catch this error in other
+programs; the program
+</p><pre class="verbatim">  g(x) := {
+  try(f(x)) catch(err) {x := 0;}
+  return x;
+  }
+</pre><p>
+will return <span style="font-family:monospace">x</span> is <span style="font-family:monospace">x</span> is an integer, but if <span style="font-family:monospace">x</span>
+is not an integer, <span style="font-family:monospace">f(x)</span> will give an error and so
+<span style="font-family:monospace">g(x)</span> will return 0.</p>
+<hr>
+<a href="cascmd_en813.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en815.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

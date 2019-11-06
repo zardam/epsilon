@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_fr.css">
+<title>Déterminant d’une matrice : det</title>
+</head>
+<body >
+<a href="cascmd_fr614.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr616.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec755" class="subsection">6.53.4  Déterminant d’une matrice : <span style="font-family:monospace">det</span></h3>
+<p><a id="hevea_default1146"></a>
+<a id="hevea_default1147"></a><a id="hevea_default1148"></a><a id="hevea_default1149"></a><a id="hevea_default1150"></a>
+<span style="font-family:monospace">det</span> a comme argument une matrice <span style="font-style:italic">A</span>.<br>
+<span style="font-family:monospace">det</span> renvoie le déterminant de la matrice <span style="font-style:italic">A</span>.<br>
+On tape :
+</p><div class="center"><span style="font-family:monospace">det([[1,2],[3,4]])</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">-2</span></div><p>
+On tape :
+</p><div class="center"><span style="font-family:monospace">det(idn(3))</span></div><p>
+On obtient :
+</p><div class="center"><span style="font-family:monospace">1</span></div><p>On peut spécifier l’algorithme de calcul du déterminant en
+ajoutant un argument optionnel
+</p><ul class="itemize"><li class="li-itemize">
+<code>lagrange</code> : lorsque les coefficients de la matrice sont
+des polynômes ou des fractions rationnelles, calcule le
+déterminant par évaluation des variables de ces polynômes
+ou fractions et interpolation de Lagrange
+</li><li class="li-itemize"><code>rational_det</code> : l’algorithme du pivot de Gauss est
+appliqué sans conversion au format interne pour les fractions, et
+sans réduction préalable vers des coefficients sans
+dénominateurs
+</li><li class="li-itemize"><code>bareiss</code> : l’algorithme de Gauss-Bareiss est utilisé
+(réduction sans fraction et division par le pivot de 
+l’étape précédente).
+</li><li class="li-itemize"><code>linsolve</code> : algorithme p-adique (pour une matrice
+à coefficients entiers).
+</li><li class="li-itemize"><code>minor_det</code> : l’algorithme utilisé est le développement
+des mineurs. Ceci nécessite 2<sup><span style="font-style:italic">n</span></sup> opérations, mais est parfois
+plus rapide que les autres algorithmes pour des matrices de taille
+moyenne (jusquà <span style="font-style:italic">n</span>=20 environ) à coefficients polynomiaux.
+</li></ul><p>
+Par défaut, l’algorithme utilisé est choisi parmi Bareiss et
+Lagrange, celui donnant à priori en fonction des coefficients
+le temps de calcul le plus rapide est utilisé.
+Pour les matrices à coefficients entiers, l’algorithme utilisé
+par défaut est un mix d’une méthode <span style="font-style:italic">p</span>-adique et d’une méthode
+modulaire. On commence par résoudre un système linéaire modulo
+un premier <span style="font-style:italic">p</span> pour trouver un grand facteur du déterminant, puis
+on termine le calcul en complétant par les restes chinois
+avec quelques nombres premiers. On arrête l’algorithme de manière
+probabiliste (en fonction de la valeur de
+є=<code>proba_epsilon</code>)
+lorsque le déterminant reconstruit par les restes chinois reste
+constant pour un produit de nombres premiers supérieur à
+1/є.
+Si є=0, l’algorithme est déterministe, le test d’arrêt
+utilise la borne de Hadamard du déterminant. Le temps de calcul
+est en <span style="font-style:italic">O</span>(<span style="font-style:italic">n</span>4 ln(<span style="font-style:italic">n</span>)) mais pour des valeurs de <span style="font-style:italic">n</span> pas trop grandes
+il ressemble plutot à un <span style="font-style:italic">O</span>(<span style="font-style:italic">n</span>3).</p>
+<hr>
+<a href="cascmd_fr614.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_fr616.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

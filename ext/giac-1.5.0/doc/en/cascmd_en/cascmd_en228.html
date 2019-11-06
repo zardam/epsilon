@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Antiderivative and definite integral : integrate int Int</title>
+</head>
+<body >
+<a href="cascmd_en227.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en229.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec283" class="subsection">5.20.1  Antiderivative and definite integral : <span style="font-family:monospace">integrate int Int</span></h3>
+<p><a id="hevea_default396"></a><a id="hevea_default397"></a><a id="hevea_default398"></a>
+<span style="font-family:monospace">integrate</span> (or <span style="font-family:monospace">int</span>) computes a primitive
+or a definite integral. A difference between the two 
+commands is that if you input <span style="font-family:monospace">quest()</span> just after the evaluation of 
+<span style="font-family:monospace">integrate</span>, the answer is written with the ∫ symbol.</p><p><span style="font-family:monospace">integrate</span> (or <span style="font-family:monospace">int</span> or <span style="font-family:monospace">Int</span>) takes one, two or four arguments.
+</p><ul class="itemize"><li class="li-itemize">
+with one or two arguments<br>
+an expression or an expression and 
+the name of a variable (by default <span style="font-family:monospace">x</span>),<br>
+<span style="font-family:monospace">integrate</span> (or <span style="font-family:monospace">int</span>) returns a primitive of the expression with 
+respect to the variable given as second argument.<br>
+Input :
+<div class="center"><span style="font-family:monospace">integrate(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3/3</span></div>
+Input :
+<div class="center"><span style="font-family:monospace">integrate(t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,t)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">t</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3/3</span></div>
+</li><li class="li-itemize">with four arguments :<br>
+an expression, a name of a variable and the bounds of the definite integral,<br>
+<span style="font-family:monospace">integrate</span> (or <span style="font-family:monospace">int</span>) returns the exact
+value of the definite integral if the computation was successful or
+an unevaluated integral otherwise.<br>
+Input :
+<div class="center"><span style="font-family:monospace">integrate(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,x,1,2)</span></div>
+Output :
+<div class="center"><span style="font-family:monospace">7/3</span></div>
+Input :
+<div class="center"><span style="font-family:monospace">integrate(1/(sin(x)+2),x,0,2*pi)</span></div>
+Output after simplification (with the <span style="font-family:monospace">simplify</span> command) :
+<div class="center"><span style="font-family:monospace">2*pi*sqrt(3)/3</span></div>
+</li></ul><p><span style="font-family:monospace">Int</span> is the inert form of <span style="font-family:monospace">integrate</span>, it prevents evaluation
+for example to avoid a symbolic computation that might not be
+successful if you just want a numeric
+evaluation.<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">evalf(Int(exp(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),x,0,1))</span></div><p>
+or :
+</p><div class="center"><span style="font-family:monospace">evalf(int(exp(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2),x,0,1))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">1.46265174591</span></div><p><span style="font-weight:bold">Exercise 1</span><br>
+Let </p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>)=</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span><sup>2</sup>−1</td></tr>
+</table></td><td class="dcell">+ln(</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span>+1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span>−1</td></tr>
+</table></td><td class="dcell">)</td></tr>
+</table><p>
+Find a primitive of <span style="font-style:italic">f</span>.<br>
+Input :
+</p><div class="center"><span style="font-family:monospace">int(x/(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)+ln((x+1)/(x-1)))</span></div><p>
+Output : 
+</p><div class="center"><span style="font-family:monospace">x*log((x+1)/(x-1))+log(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)+1/2*log(2*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/2-1)</span></div><p>
+Or define the function <span style="font-family:monospace">f</span>, input :
+</p><div class="center"><span style="font-family:monospace">f(x):=x/(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-1)+ln((x+1)/(x-1))</span></div><p>
+then input :
+</p><div class="center"><span style="font-family:monospace">int(f(x))</span></div><p>
+Output of course the same result.<br>
+<span style="font-weight:bold">Warning</span><br>
+For <span style="font-family:monospace">Xcas</span>, <span style="font-family:monospace">log</span> is the natural logarithm (like <span style="font-family:monospace">ln</span>),
+as <span style="font-family:monospace">log10</span> is 10-basis logarithm</p><p><span style="font-weight:bold">Exercise 2</span><br>
+Compute :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">2</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">x</span><sup>6</sup>+2 · <span style="font-style:italic">x</span><sup>4</sup>+<span style="font-style:italic">x</span><sup>2</sup></td></tr>
+</table></td><td class="dcell">  <span style="font-style:italic">dx</span> </td></tr>
+</table><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">int(2/(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">6+2*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4+x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">2*((3*x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+2)/(-(2*(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+x)))+-3/2*atan(x))</span></div><p><span style="font-weight:bold">Exercise 3</span><br>
+Compute :
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:center">1</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">sin(<span style="font-style:italic">x</span>)+sin(2 · <span style="font-style:italic">x</span> )</td></tr>
+</table></td><td class="dcell">  <span style="font-style:italic">dx</span> </td></tr>
+</table><p>
+Input :
+</p><div class="center"><span style="font-family:monospace">integrate(1/(sin(x)+sin(2*x )))</span></div><p>
+Output :
+</p><div class="center"><span style="font-family:monospace">(1/-3*log((tan(x/2))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-3)+1/12*log((tan(x/2))</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2))*2</span></div>
+<hr>
+<a href="cascmd_en227.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en229.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Loci: locus</title>
+</head>
+<body >
+<a href="cascmd_en929.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en931.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec1194" class="subsection">12.18.1  Loci: <span style="font-family:monospace">locus</span><a id="hevea_default1607"></a></h3>
+<p>The <span style="font-family:monospace">locus</span> command draws the locus of points determined by
+geometric objects moving in the plane, where the object depends on a
+point moving along a curve. It can draw
+a locus of points which depends on points on a curve, or 
+the envelope of a family of lines depending on points on a curve.</p>
+<h4 id="sec1195" class="subsubsection">The locus of points depending on points on a curve.</h4>
+<p>For this, the <span style="font-family:monospace">locus</span> command takes two mandatory arguments and two
+optional arguments.
+</p><ul class="itemize"><li class="li-itemize">
+The first mandatory argument is a variable name. This variable
+needs to already have been assigned to a point, and that point
+should be a function of a second point which moves along a curve.
+This second point is the second argument to <span style="font-family:monospace">locus</span>. 
+</li><li class="li-itemize">The second mandatory argument is another variable name. This
+variable needs to already have been assigned to a point,
+that point should be the result of the <span style="font-family:monospace">element</span> command; for
+example, defined by <span style="font-family:monospace">element(C)</span> for a curve <span style="font-family:monospace">C</span>.
+(See section <a href="cascmd_en841.html#sec%3Aelement">12.6.15</a>.)
+</li><li class="li-itemize">The optional third argument is used to set <span style="font-family:monospace">t</span> to
+an interval, where <span style="font-family:monospace">t</span> is the parameter
+for the curve <span style="font-family:monospace">C</span>. (You can double check the
+name of the parameter for a curve <span style="font-family:monospace">C</span> with the command
+<span style="font-family:monospace">parameq(C)</span>.)
+</li><li class="li-itemize">The optional fourth argument is used to set the value of
+<span style="font-family:monospace">tstep</span> for the parameter <span style="font-family:monospace">t</span>.
+</li></ul><p><span style="font-family:monospace">locus</span> will draw the locus of points formed by the first
+argument, as the second argument traces over the curve <span style="font-family:monospace">C</span>.<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">P := element(line(i, i+1))
+</span></div><p>
+then:
+</p><div class="center">
+<span style="font-family:monospace">G := isobarycenter(-1,1,P)
+</span></div><p>
+then:
+</p><div class="center">
+<span style="font-family:monospace">locus(G,P)
+</span></div><p>
+This will draw the set of isobarycenters of the triangles with vertices
+<span style="font-family:monospace">-1</span>, <span style="font-family:monospace">1</span> and <span style="font-family:monospace">P</span>, where <span style="font-family:monospace">P</span> ranges over
+the line through <span style="font-family:monospace">i</span> and <span style="font-family:monospace">i+1</span>.<br>
+Output:
+</p><div class="center">
+<img src="cascmd_en187.png">
+</div><p>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">parameq(C)
+</span></div><p>
+Output:
+</p><div class="center">
+<span style="font-family:monospace">t + i 
+</span></div><p>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">locus(G,P,t=-3..3,tstep=0.1)
+</span></div><p>
+Output:
+</p><div class="center">
+<img src="cascmd_en188.png">
+</div>
+<h4 id="sec1196" class="subsubsection">The envelope of a family of lines which depend on points on a
+curve.</h4>
+<p>For this, the <span style="font-family:monospace">locus</span> command takes two mandatory arguments and
+two optional arguments.
+</p><ul class="itemize"><li class="li-itemize">
+The first mandatory argument is a variable name. This variable
+needs to already have been assigned to a line, and that line
+should be a function of a point which moves along a curve. This point is the
+second argument to <span style="font-family:monospace">locus</span>. 
+</li><li class="li-itemize">The second mandatory argument is another variable name. This
+variable needs to already have been assigned to a point,
+that point should be the result of the <span style="font-family:monospace">element</span> command; for
+example, defined by <span style="font-family:monospace">element(C)</span> for a curve <span style="font-family:monospace">C</span>.
+(See section <a href="cascmd_en841.html#sec%3Aelement">12.6.15</a>.)
+</li><li class="li-itemize">The optional third argument is used to set <span style="font-family:monospace">t</span> to
+an interval, where <span style="font-family:monospace">t</span> is the parameter
+for the curve <span style="font-family:monospace">C</span>. (You can double check the
+name of the parameter for a curve <span style="font-family:monospace">C</span> with the command
+<span style="font-family:monospace">parameq(C)</span>.)
+</li><li class="li-itemize">The optional fourth argument is used to set the value of
+<span style="font-family:monospace">tstep</span> for the parameter <span style="font-family:monospace">t</span>.
+</li></ul><p><span style="font-family:monospace">locus</span> will draw the envelope of the lines formed by the first
+argument, as the second argument traces over the curve <span style="font-family:monospace">C</span>.<br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">F := point(1)
+</span></div><p>
+then:
+</p><div class="center">
+<span style="font-family:monospace">H := element(line(x=0))
+</span></div><p>
+then:
+</p><div class="center">
+<span style="font-family:monospace">d := perpen_bisector(F,H)
+</span></div><p>
+then:
+</p><div class="center">
+<span style="font-family:monospace">locus(d,H)
+</span></div><p>
+This will draw the envelope of the family of perpendicular bisectors
+of the segments from the point <span style="font-family:monospace">1</span> to the points on the line
+<span style="font-family:monospace">x=0</span>.
+Output:
+</p><div class="center">
+<img src="cascmd_en189.png">
+</div><p>To draw the envelope of a family of lines which depend on a parameter,
+such as the lines given by the equations
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell">  <span style="font-style:italic">y</span> + <span style="font-style:italic">x</span> tan(<span style="font-style:italic">t</span>) − 2sin(<span style="font-style:italic">t</span>)=0
+</td></tr>
+</table><p>
+over the parameter <span style="font-style:italic">t</span>, the parameter can be regarded as the affixes
+of points on the line <span style="font-style:italic">y</span>=0. <br>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">H := element(line(y=0))
+</span></div><p>
+then:
+</p><div class="center">
+<span style="font-family:monospace">D := line(y + x*tan(affix(H)) - 2*sin(affix(H)))
+</span></div><p>
+then:
+</p><div class="center">
+<span style="font-family:monospace">locus(D,H)
+</span></div><p>
+Output:
+</p><div class="center">
+<img src="cascmd_en190.png">
+</div><p>
+Input:
+</p><div class="center">
+<span style="font-family:monospace">locus(D,H,t=0..pi) 
+</span></div><p>
+Output:
+</p><div class="center">
+<img src="cascmd_en191.png">
+</div>
+<hr>
+<a href="cascmd_en929.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en931.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

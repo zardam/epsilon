@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>Determining whether a function is convex : convex</title>
+</head>
+<body >
+<a href="cascmd_en233.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en235.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec292" class="subsection">5.21.1  Determining whether a function is convex : <span style="font-family:monospace">convex</span><a id="hevea_default404"></a></h3>
+<p>
+<span style="font-family:monospace">convex</span> takes two mandatory arguments, an at least twice differentiable function(al) <span style="font-style:italic">f</span>:ℝ<sup><span style="font-style:italic">n</span></sup>→ℝ and a variable or list of variables. Some variables may depend on a common independent parameter, say <span style="font-style:italic">t</span>, when entered as e.g. <span style="font-style:italic">x</span>(<span style="font-style:italic">t</span>) instead of <span style="font-style:italic">x</span>. The first derivatives of such variables, when encountered in <span style="font-style:italic">f</span>, are treated as independent parameters of <span style="font-style:italic">f</span>.</p><p>The command returns a condition or list of conditions under which <span style="font-style:italic">f</span> is convex. If <span style="font-style:italic">f</span> is convex on the entire domain, the return value is <span style="font-family:monospace">true</span>. If it is nowhere convex, the return value is <span style="font-family:monospace">false</span>. Otherwise, the conditions are returned as inequalities which depend on the parameters of <span style="font-style:italic">f</span>. The returned inequalities are not necessarily independent.</p><p>An optional third argument <span style="font-family:monospace">simplify=false</span> or <span style="font-family:monospace">simplify=true</span> may be given. By default is <span style="font-family:monospace">simplify=true</span>, which means that simplification is applied when generating convexity conditions. If <span style="font-family:monospace">simplify=false</span>, only rational normalization is performed (using the <span style="font-family:monospace">ratnormal</span> command).</p><p>The command operates by computing the Hessian <span style="font-style:italic">H</span><sub><span style="font-style:italic">f</span></sub> of <span style="font-style:italic">f</span> and its principal minors (in total 2<sup><span style="font-style:italic">n</span></sup> of them where <span style="font-style:italic">n</span> is the number of parameters) and checks their signs. If all minors are nonnegative, then <span style="font-style:italic">H</span><sub><span style="font-style:italic">f</span></sub> is positive semidefinite and <span style="font-style:italic">f</span> is therefore convex.</p><p>The function <span style="font-style:italic">f</span> is said to be <em>concave</em> if the function <span style="font-style:italic">g</span>=−<span style="font-style:italic">f</span> is convex.</p><p>For example, input :
+</p><div class="center">
+<span style="font-family:monospace">convex(3*exp(x)+5x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">4-ln(x),x)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">true
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">convex(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+3z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-x*y+2x*z+y*z,[x,y,z])
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">true
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">convex(x1</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3+2x1</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+2*x1*x2+x2</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2/2-8x1-2x2-8,[x1,x2])
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[(3*x1+2)&gt;=0,x1&gt;=0]
+</span></div><p>
+In the example below, the function <span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>)=<span style="font-style:italic">x</span><sup>2</sup>+<span style="font-style:italic">x</span> <span style="font-style:italic">z</span>+<span style="font-style:italic">a</span> <span style="font-style:italic">y</span> <span style="font-style:italic">z</span>+<span style="font-style:italic">z</span><sup>2</sup> is not convex regardless of the value <span style="font-style:italic">a</span>∈ℝ :
+</p><div class="center">
+<span style="font-family:monospace">convex(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+x*z+a*y*z+z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2,[x,y,z])
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">false
+</span></div><p>
+In the next example we find all values <span style="font-style:italic">a</span>∈ℝ for which the function </p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">f</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>)=<span style="font-style:italic">x</span><sup>2</sup>+2 <span style="font-style:italic">y</span><sup>2</sup>+<span style="font-style:italic">a</span> <span style="font-style:italic">z</span><sup>2</sup>−2 <span style="font-style:italic">x</span> <span style="font-style:italic">y</span>+2 <span style="font-style:italic">x</span> <span style="font-style:italic">z</span>−6 <span style="font-style:italic">y</span> <span style="font-style:italic">z</span></td></tr>
+</table><p> is convex on ℝ<sup>3</sup>. Input :
+</p><div class="center">
+<span style="font-family:monospace">cond:=convex(x</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+2y</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+a*z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2-2x*y+2x*z-6y*z,[x,y,z])
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">[a&gt;=0,(a-1)&gt;=0,(2*a-9)&gt;=0,(a-5)&gt;=0]
+</span></div><p>
+The returned inequalities are simplified by <span style="font-family:monospace">solve</span> :
+</p><div class="center">
+<span style="font-family:monospace">solve(cond,a)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">list[a&gt;=5]
+</span></div><p>
+Therefore <span style="font-style:italic">f</span> is convex for <span style="font-style:italic">a</span>≥ 5.</p><p>Let’s find the set <span style="font-style:italic">S</span>⊂ℝ<sup>2</sup> on which the function <span style="font-style:italic">f</span>:ℝ<sup>2</sup>→ℝ defined by
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">f</span>(<span style="font-style:italic">x</span><sub>1</sub>,<span style="font-style:italic">x</span><sub>2</sub>)=exp(<span style="font-style:italic">x</span><sub>1</sub>)+exp(<span style="font-style:italic">x</span><sub>2</sub>)+<span style="font-style:italic">x</span><sub>1</sub> <span style="font-style:italic">x</span><sub>2</sub> </td></tr>
+</table><p>
+is convex. Input :
+</p><div class="center">
+<span style="font-family:monospace">cond:=convex(exp(x1)+exp(x2)+x1*x2,[x1,x2]
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">(exp(x1)*exp(x2)-1)&gt;=0
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">lin(cond)
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">(exp(x1+x2)-1)&gt;=0
+</span></div><p>
+From here we conclude that <span style="font-style:italic">f</span> is convex when <span style="font-style:italic">x</span><sub>1</sub>+<span style="font-style:italic">x</span><sub>2</sub>≥ 0. The sought set <span style="font-style:italic">S</span> is therefore the half-space defined by this inequality.</p><p>The algorithm respects the assumptions that may be set upon variables. Therefore, the convexity of a given function can be checked only on a particular domain. For example, input :
+</p><div class="center">
+<span style="font-family:monospace">assume(x1&gt;0),assume(x2&gt;0):; convex(exp(x1)+exp(x2)+x1*x2,[x1,x2]
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">true
+</span></div><p>
+Input :
+</p><div class="center">
+<span style="font-family:monospace">assume(x&gt;=0 and x&lt;=pi/4):; convex(exp(y)*sec(x)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">3-z,[x,y,z])
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">true
+</span></div>
+<h5 id="brachistochrone" class="paragraph">The Brachistochrone Problem.</h5>
+<p>
+We want to minimize the objective functional </p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">T</span>(<span style="font-style:italic">y</span>)=</td><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left"><span style="font-style:italic">x</span><sub>1</sub></td></tr>
+<tr><td class="dcell" style="text-align:left"><br>
+<br>
+</td></tr>
+<tr><td class="dcell" style="text-align:left">0</td></tr>
+</table></td><td class="dcell"><span style="font-style:italic">L</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>),<span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>)) <span style="font-style:italic">d</span> <span style="font-style:italic">t</span></td></tr>
+</table><p> where the Lagrangian <span style="font-style:italic">L</span> is defined by
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">L</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>),<span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>))=</td><td class="dcell"><table style="border-spacing:0" class="cellpadding0"><tr><td ALIGN="right"><div CLASS="vbar" STYLE="height:2em;"></div></td></tr>
+<tr><td><span style="font-size:xx-large"><span style="font-size:150%">√</span></span></td></tr>
+</table></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><table class="display"><tr><td class="dcell" style="text-align:center">1+<span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>)<sup>2</sup></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2 <span style="font-style:italic">g</span> <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)</td></tr>
+</table></td></tr>
+</table></td><td class="dcell"> </td></tr>
+</table><p>
+for <span style="font-style:italic">y</span>:[0,<span style="font-style:italic">x</span><sub>1</sub>]→ℝ such that <span style="font-style:italic">y</span>(0)=<span style="font-style:italic">y</span><sub>0</sub> and <span style="font-style:italic">y</span>(<span style="font-style:italic">x</span><sub>1</sub>)=0 where <span style="font-style:italic">x</span><sub>1</sub>&gt;0 and <span style="font-style:italic">y</span><sub>0</sub>&gt;0 are fixed (the constant <span style="font-style:italic">g</span> is the gravitational acceleration). This is called the <em>brachistochrone problem</em> (the problem of shortest travel by own weight from the point (0,<span style="font-style:italic">y</span><sub>0</sub>) to (<span style="font-style:italic">x</span><sub>1</sub>,0)).
+By solving Euler-Lagrange equation one obtains a cycloid <span style="text-decoration:overline"><span style="font-style:italic">y</span></span>(<span style="font-style:italic">t</span>) as the only stationary function for <span style="font-style:italic">L</span>. The problem is to prove that it minimizes <span style="font-style:italic">T</span>, which would be easy if the integrand <span style="font-style:italic">L</span> was convex. However, it’s not the case here :
+</p><div class="center">
+<span style="font-family:monospace">assume(y&gt;=0):; assume(g&gt;0):; convex(sqrt((1+y’</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)/(2*g*y)),y(t))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">(-diff(y(t),t)</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2+3)&gt;=0
+</span></div><p>
+This is equivalent to |<span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>)|≤√<span style="text-decoration:overline">3</span>, which is certainly not satisfied by the cycloid <span style="text-decoration:overline"><span style="font-style:italic">y</span></span> near the point <span style="font-style:italic">x</span>=0.</p><p>Using the substitution <span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>)=<span style="font-style:italic">z</span>(<span style="font-style:italic">t</span>)<sup>2</sup>/2 we obtain <span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>)=<span style="font-style:italic">z</span>′(<span style="font-style:italic">t</span>) <span style="font-style:italic">z</span>(<span style="font-style:italic">t</span>) and
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">L</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">y</span>(<span style="font-style:italic">t</span>),<span style="font-style:italic">y</span>′(<span style="font-style:italic">t</span>))=<span style="font-style:italic">P</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">z</span>(<span style="font-style:italic">t</span>),<span style="font-style:italic">z</span>′(<span style="font-style:italic">t</span>))=</td><td class="dcell"><table style="border-spacing:0" class="cellpadding0"><tr><td ALIGN="right"><div CLASS="vbar" STYLE="height:2em;"></div></td></tr>
+<tr><td><span style="font-size:xx-large"><span style="font-size:150%">√</span></span></td></tr>
+</table></td><td class="dcell"><table style="border:0;border-spacing:1;border-collapse:separate;" class="cellpadding0"><tr><td class="hbar"></td></tr>
+<tr><td style="text-align:center;white-space:nowrap" ><table class="display"><tr><td class="dcell" style="text-align:center"><span style="font-style:italic">z</span>(<span style="font-style:italic">t</span>)<sup>−2</sup>+<span style="font-style:italic">z</span>′(<span style="font-style:italic">t</span>)<sup>2</sup></td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center"><span style="font-style:italic">g</span></td></tr>
+</table></td></tr>
+</table></td><td class="dcell">. </td></tr>
+</table><p>
+The function <span style="font-style:italic">P</span> is convex :
+</p><div class="center">
+<span style="font-family:monospace">assume(z&gt;=0):; convex(sqrt((z</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">-2+z’</span><code><span style="font-family:monospace">^</span></code><span style="font-family:monospace">2)/g),z(t))
+</span></div><p>
+Output :
+</p><div class="center">
+<span style="font-family:monospace">true
+</span></div><p>
+Hence the function <span style="text-decoration:overline"><span style="font-style:italic">z</span></span>(<span style="font-style:italic">t</span>)=√<span style="text-decoration:overline">2 </span><span style="text-decoration:overline"><span style="font-style:italic">y</span></span><span style="text-decoration:overline">(</span><span style="text-decoration:overline"><span style="font-style:italic">t</span></span><span style="text-decoration:overline">)</span>, stationary for <span style="font-style:italic">P</span> (which is verified directly), minimizes the objective functional </p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">U</span>(<span style="font-style:italic">z</span>)=</td><td class="dcell"><span style="font-size:xx-large">∫</span></td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left"><span style="font-style:italic">x</span><sub>1</sub></td></tr>
+<tr><td class="dcell" style="text-align:left"><br>
+<br>
+</td></tr>
+<tr><td class="dcell" style="text-align:left">0</td></tr>
+</table></td><td class="dcell"><span style="font-style:italic">P</span>(<span style="font-style:italic">t</span>,<span style="font-style:italic">z</span>(<span style="font-style:italic">t</span>),<span style="font-style:italic">z</span>′(<span style="font-style:italic">t</span>)) <span style="font-style:italic">d</span> <span style="font-style:italic">t</span>.</td></tr>
+</table><p> From here and <span style="font-style:italic">U</span>(<span style="font-style:italic">z</span>)=<span style="font-style:italic">T</span>(<span style="font-style:italic">y</span>) it easily follows that <span style="text-decoration:overline"><span style="font-style:italic">y</span></span> minimizes <span style="font-style:italic">T</span> and therefore the brachistochrone. For details see John L. Troutman, <em>Variational Calculus and Optimal Control</em> (second edition), page 257.</p>
+<hr>
+<a href="cascmd_en233.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en235.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

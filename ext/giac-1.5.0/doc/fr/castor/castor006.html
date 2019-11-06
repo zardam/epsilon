@@ -1,0 +1,652 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="castor.css">
+<TITLE>D’autres exemples d’activités</TITLE>
+</HEAD>
+<BODY >
+<A HREF="castor005.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="castor007.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc95">Chapitre 5</A>  D’autres exemples d’activités</H1><H2 CLASS="section"><A NAME="toc39"></A><A NAME="htoc96">5.1</A>  Le plan de la classe</H2><P>
+Travail sur le repérage dans le plan et les coordonnées et sur la notion 
+d’echelle.<BR>
+Chaque élève est responsable du tracé de son bureau.<BR>
+Le professeur étant chargé de tracer son bureau et de déterminer 
+par exemple l’empacement des fenêtres.
+</P><H2 CLASS="section"><A NAME="toc40"></A><A NAME="htoc97">5.2</A>  La croix de pharmacie</H2><P>
+Faire le tracé d’une croix ayant la forme d’un plus.<BR>
+Faire le tracé du contour externe d’une croix de pharmacie (les branches 
+externes de la croix sont des carrés).<BR>
+<IMG SRC="castor030.png"></P><P>Faire le tracé de 4 croix emboitées à l’image des croix de pharmacie.<BR>
+-Analyse d’un dessin en le décomposant en éléments pertinents.<BR>
+-Essayer d’avoir une écriture consise.<BR>
+-Première approche de la notion de paramètres.<BR>
+-Première approche de la notion de boucle <TT>pour</TT>.
+</P><PRE CLASS="verbatim">plus(a):={
+repete(4,avance(a),recule(a),tourne_gauche);
+}:;
+</PRE><PRE CLASS="verbatim">croix(a,b):={
+repete(4,avance(a),tourne_gauche,avance(b),tourne_gauche,avance(a),tourne_droite);
+}:;
+</PRE><PRE CLASS="verbatim">deplace(b):={
+saute(b);pas_de_cote(-b);
+}:;
+</PRE><P>Puis, on veut de plus que la position d’arrivée de la tortue soit la même 
+que celle de départ, on tape :
+</P><PRE CLASS="verbatim">plus(60);
+deplace(10);
+croix(60,20);
+deplace(10);
+croix(60,40);
+deplace(10);
+croix(60,60);
+deplace(-30);
+</PRE><P>Puis on définit :
+</P><PRE CLASS="verbatim">croix_pharma(a):={
+plus(a);
+deplace(a/6);
+croix(a,a/3);
+deplace(a/6);
+croix(a,2*a/3);
+deplace(a/6);
+croix(a,a);
+deplace(-a/2);
+}:;
+</PRE><P>On remarque que <TT>plus(a)</TT> fait le même dessin que <TT>croix(a,0)</TT>, 
+l’écriture de la procédure <TT>plus</TT> est donc inutile.
+On veut de plus que la position d’arrivée de la tortue soit la même que 
+celle de départ et on veut utiliser une boucle <TT>pour</TT>, on tape :
+</P><PRE CLASS="verbatim">croix_pharmacie(a):={
+pour n de 0 jusque 3 faire croix(a,n*a/3);deplace(a/6);fpour;
+deplace(-2*a/3);
+}:;
+</PRE><P>On peut aussi écrire une procédure récursive, mais on a alors besion de 2
+paramètres <TT>a,b</TT> : cette procédure ne dessine rien si <TT>a&lt;b</TT> 
+et dessine les croix emboitées avec 10 pas d’écart jusqu’à obtenir la 
+<TT>croix(a,a)</TT>.<BR>
+On tape :
+</P><PRE CLASS="verbatim">croix_pharmar(a,b):={
+si b&lt;=a alors
+croix(a,b);
+deplace(10);
+croix_pharmar(a,b+20);
+deplace(-10);
+fsi;
+}:;
+</PRE><P>puis on tape :<BR>
+<TT>croix_pharma(40);saute 130;</TT>
+<TT>croix_pharmar(40,0);</TT>
+On obtient :<BR>
+<IMG SRC="castor031.png">
+</P><H2 CLASS="section"><A NAME="toc41"></A><A NAME="htoc98">5.3</A>  Les polygones réguliers</H2><P>
+Faire le tracé d’un triangle équilatèral, d’un carré, d’un hexagone,
+d’un octogone puis, d’un pentagone et d’un polygone régulier ayant 
+<I>n</I> cotés.<BR>
+Écrire la procédure des triangles équilatèraux de cotés de longueur 
+<I>a</I> puis, celle des carrés de cotés de longueur <I>a</I> etc...<BR>
+Écrire la procédure des polygones réguliers ayant <I>n</I> cotés de longueur
+<I>a</I>.<BR>
+Le triangle équilatèral :
+</P><PRE CLASS="verbatim">triequi(a):={
+repete(3,avance(a),tourne_gauche(120));
+}
+</PRE><P>Le carré :
+</P><PRE CLASS="verbatim">ca(a):={
+repete(4,avance(a),tourne_gauche);
+}
+</PRE><P>L’hexagone :
+</P><PRE CLASS="verbatim">hexa(a):={
+repete(6,avance(a),tourne_gauche(60));
+}
+</PRE><P>L’octogone :
+</P><PRE CLASS="verbatim">octo(a):={
+repete(8,avance(a),tourne_gauche(45));
+}
+</PRE><P>Le polygone régulier à <I>n</I> cotés :
+</P><PRE CLASS="verbatim">polyg(a,n):={
+repete(n,avance(a),tourne_gauche(360/n));
+}:;
+</PRE><H2 CLASS="section"><A NAME="toc42"></A><A NAME="htoc99">5.4</A>  Les toiles d’araignées</H2><P>
+L’activité consiste à tracer des polygones réguliers emboités et de 
+dessiner aussi les segments joignant le centre aux sommets du polygone 
+extérieur. Cela met en évidence le centre du polygone. Mais sans notion de 
+trigonométrie c’est difficile. On peut faire faire une toile d’araignée 
+hexagonale ou aussi faire cherher par tatonement la longueur de la diagonale
+d’un polygône régulier ayant un nombre pair de côtés</P><H3 CLASS="subsection"><A NAME="htoc100">5.4.1</A>  Les toiles d’araignées hexagonales</H3><P>
+On commence par écrire une procédure qui trace un hexagone de côté 
+<TT>l</TT> lorsque la tortue part du centre et est dirigée vers un sommet et 
+revient à son point de départ.<BR>
+On tape :
+</P><PRE CLASS="verbatim">hexag_centre(l):={
+avance l;
+tourne_gauche 120;
+repete(6,avance l,tourne_gauche 60);
+tourne_droite 120;
+recule l;
+}:;
+</PRE><P>On dessine les diagonales de l’hexagone centré facilement, on tape :
+</P><PRE CLASS="verbatim">diag_hexagc(l):={
+repete(6,avance l,recule l,tourne_gauche 60);
+}:;
+</PRE><P>Pour faire la toile il faut faire des hexagones emboités avec un pas de 
+<TT>p</TT>. On dessine les hexagones de côtés <TT>p, 2p,3p...</TT> et on donne le 
+nombre <TT>n</TT> d’hexagones. La tortue part du centre de la toile, est dirigée
+selon un sommet de la toile et revient à son point de départ.<BR>
+On tape :
+</P><PRE CLASS="verbatim">araign6(p,n):={
+diag_hexagc(n*p);
+pour j de 1 jusque n faire 
+hexag_centre(j*p);
+fpour;
+}:;  
+</PRE><P>On peut remarquer qu’il n’est pas astucieux de faire revenir la tortue au 
+centre lorsqu’on a fait un hexagone et que ce serait mieux de passer au suivant
+directement. On écrit alors la procédure <TT>hexag</TT> qui dessine un 
+hexagone direct de côté <TT>l</TT> lorsque la tortue part d’un sommet et est 
+dirigée selon un côté.<BR>
+On tape :
+</P><PRE CLASS="verbatim">hexag(l):={
+repete(6,avance l,tourne_gauche 60);
+}:;
+</PRE><P>La toile est obtenue en tapant (la tortue part du centre et revient au centre) :
+On tape :
+</P><PRE CLASS="verbatim">toile6(p,n):={
+diag_hexagc(n*p);
+pour j de 1 jusque n faire 
+avance p;
+tourne_gauche 120;
+hexag(j*p);
+tourne_droite 120;
+fpour;
+recule n*p;
+}:;
+</PRE><P>On tape ;<BR>
+<TT>efface ;araign6(10,7);</TT><BR>
+Ou on tape :<BR>
+<TT>efface ;toile6(10,7);</TT><BR>
+On obtient :<BR>
+<IMG SRC="castor032.png"></P><H3 CLASS="subsection"><A NAME="htoc101">5.4.2</A>  Une activité sur la proportionalité</H3><P>
+On essaye par essai et erreur de trouver la longueur de la diagonale d’un
+octogone.<BR>
+On tape :
+</P><PRE CLASS="verbatim">octog(l):={
+repete(8,avance l,tourne_gauche 45);
+}:;
+</PRE><P>Puis, on tape :
+</P><PRE CLASS="verbatim">efface ;
+crayon jaune;
+dessine_tortue;
+crayon noir;
+octog(80);
+tourne_gauche 135/2;
+avance 200;
+</PRE><P>On obtient :<BR>
+<IMG SRC="castor033.png"><BR>
+Puis on fait des essais et on estime que la dagonale vaut d’un octogone de 
+côté 80 vaut 209.<BR>
+On remplit le tableau suivant en faisantt calculer par <TT>Xcas</TT> la dernière
+ligne avec <TT>Digits:=4</TT> :<BR>
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=left NOWRAP><I>cote</I></TD><TD ALIGN=right NOWRAP>40</TD><TD ALIGN=right NOWRAP>50</TD><TD ALIGN=right NOWRAP>60</TD><TD ALIGN=right NOWRAP>70</TD><TD ALIGN=right NOWRAP>80</TD><TD ALIGN=right NOWRAP>90</TD><TD ALIGN=right NOWRAP>100</TD></TR>
+<TR><TD ALIGN=left NOWRAP><I>diagonale</I></TD><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP><I>diagonale</I>/<I>cote</I></TD><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+</TABLE><P>On obtient par exemple :<BR>
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=left NOWRAP><I>cote</I></TD><TD ALIGN=right NOWRAP>40</TD><TD ALIGN=right NOWRAP>50</TD><TD ALIGN=right NOWRAP>60</TD><TD ALIGN=right NOWRAP>70</TD><TD ALIGN=right NOWRAP>80</TD><TD ALIGN=right NOWRAP>90</TD><TD ALIGN=right NOWRAP>100</TD></TR>
+<TR><TD ALIGN=left NOWRAP><I>diagonale</I></TD><TD ALIGN=right NOWRAP>104.5</TD><TD ALIGN=right NOWRAP>130.5</TD><TD ALIGN=right NOWRAP>157.</TD><TD ALIGN=right NOWRAP>183.</TD><TD ALIGN=right NOWRAP>209.</TD><TD ALIGN=right NOWRAP>235.</TD><TD ALIGN=right NOWRAP>261.</TD></TR>
+<TR><TD ALIGN=left NOWRAP><I>diagonale</I>/<I>cote</I></TD><TD ALIGN=right NOWRAP>2.612</TD><TD ALIGN=right NOWRAP>2.61</TD><TD ALIGN=right NOWRAP>2.617</TD><TD ALIGN=right NOWRAP>2.614</TD><TD ALIGN=right NOWRAP>2.612</TD><TD ALIGN=right NOWRAP>2.611</TD><TD ALIGN=right NOWRAP>2.61</TD></TR>
+</TABLE><P>On en déduit que :<BR>
+<I>diagonale</I>*<I>cote</I>≃ 2.61.<BR>
+</P><PRE CLASS="verbatim">toile8(p,n):={
+repete(8,avance n*p*2.61/2,recule n*p*2.61/2,tourne_gauche 45);
+pour j de 1 jusque n faire 
+avance p*2.61/2;
+tourne_gauche 135/2+45;
+octog(j*p);
+tourne_droite 135/2+45;
+fpour;
+recule n*p*2.61/2;
+}:;
+</PRE><P>Puis, on tape :
+</P><PRE CLASS="verbatim">efface ;
+crayon jaune;
+dessine_tortue;
+crayon noir;
+toile8(10,5);
+</PRE><P>On obtient :
+<IMG SRC="castor034.png">
+</P><H3 CLASS="subsection"><A NAME="htoc102">5.4.3</A>  La toile d’araignée et la trigonométrie</H3><P>
+On écrit une procédure qui trace un polygone régulier direct de <TT>k</TT> 
+côtés de longueur <TT>l</TT> lorsque la tortue part d’un sommet et est 
+dirigée vers un sommet et revient à son point de départ.<BR>
+On tape :
+</P><PRE CLASS="verbatim">polyg(l,k):={
+repete(k,avance l,tourne_gauche 360/k);
+}:;
+</PRE><P>La procédure <TT>araignee(k,p,n)</TT> trace 
+<TT>n</TT> polygones emboités, réguliers, directs et de <TT>k</TT> 
+côtés où le plus petit polygone <I>P</I> a des côtés de longueur <TT>p</TT>. 
+La distance du centre de <I>P</I> a un de ces sommets donne l’espacement entre les 
+différents polygones. La tortue part du centre et est 
+dirigée vers un sommet et revient à son point de départ.
+On tape dans l’èditeur de programme :
+On tape :
+</P><PRE CLASS="verbatim">araignee(k,p,n):={
+local r,j;
+r:=p/sin(pi/k)/2;
+repete(k,avance n*r,recule n*r,tourne_gauche 360/k);
+pour j de 1 jusque n faire 
+saute r;
+tourne_gauche 90+180/k;
+crayon rouge;
+polyg(j*p,k);
+tourne_droite 90+180/k;
+fpour;
+saute -n*r;
+}:;
+</PRE><P>Puis, on tape :
+</P><PRE CLASS="verbatim">efface ;
+crayon jaune;
+dessine_tortue;
+crayon noir;
+araignee(9,10,8);
+</PRE><P>On obtient :<BR>
+<IMG SRC="castor035.png">
+On peut écrire une procédure récursive :
+</P><PRE CLASS="verbatim">araigneer(k,p,n):={
+local r;
+r:=p/sin(pi/k)/2;
+crayon noir;
+repete(k,avance n*r,recule n*r,tourne_gauche 360/k);
+si n&gt;0 alors 
+saute n*r;
+tourne_gauche 90+180/k;
+crayon rouge;
+polyg(n*p,k);
+tourne_droite 90+180/k;
+saute -n*r;
+araigneer(k,p,n-1)
+fsi;}
+:;
+</PRE><H2 CLASS="section"><A NAME="toc43"></A><A NAME="htoc103">5.5</A>  Le drapeau anglais</H2><P>
+L’activité consiste à tracer un carré avec ses diagonales et ses 
+médianes.<BR>
+Au début, les dimensions du carré ne sont pas imposées.<BR>
+On fait ensuite varier le coté du carré.
+Cette activité est double :<BR>
+-travail sur les valeurs approchées (quelle est la longueur de la diagonale 
+d’un carré ?),<BR>
+-travail sur les procédures paramétrées.<BR>
+On choisit de faire partir la tortue en bas et à gauche du drapeau, on tape :
+</P><PRE CLASS="verbatim">drapeau(a):={
+repete(4,avance(a),tourne_gauche);
+leve_crayon;
+avance(a/2);tourne_gauche;avance(a/2);
+baisse_crayon;
+repete(4,avance(a/2),saute(-a/2),tourne_gauche);
+tourne_gauche(45);
+repete(4,avance(a*sqrt(2)/2),saute(-a*sqrt(2)/2),tourne_gauche);
+tourne_droite(45);
+leve_crayon;
+recule(a/2);tourne_droite;recule(a/2);
+baisse_crayon;
+}:;
+</PRE><P>Ou encore, on choisit de faire partir la tortue au centre du drapeau, on tape :
+</P><PRE CLASS="verbatim">carre_diag(a):={
+repete(4,avance(a),tourne_gauche);
+tourne_gauche(45);
+avance(a*sqrt(2));
+saute(-a*sqrt(2));
+tourne_droite(45);
+}:;
+</PRE><PRE CLASS="verbatim">drapeau_centre(a):={
+repete(4,carre_diag(a/2),tourne_gauche);
+}:;
+</PRE><P>On tape :<BR>
+<TT>drapeau(80);saute 160;</TT>
+<TT>pas_de_cote 40;</TT>
+<TT>drapeau_centre(80);</TT>
+On obtient :<BR>
+<IMG SRC="castor036.png"></P><P>ou encore
+</P><PRE CLASS="verbatim">triang(a):={
+repete(2,avance(a),tourne_gauche);
+avance(a);
+saute(-a);
+tourne_gauche(45);
+avance(a*sqrt(2));
+tourne_gauche(135);
+}:;
+</PRE><PRE CLASS="verbatim">drapeaut(a):={
+repete(4,triang(a/2),tourne_gauche);
+}:;
+</PRE><H2 CLASS="section"><A NAME="toc44"></A><A NAME="htoc104">5.6</A>  La famille des sapins et la proportionalié</H2><P>
+<B>1-ière séance</B><BR>
+On dessine un triangle rectangle isocèle plein et direct <I>ABC</I> avec comme 
+position de départ et d’arrivée de la tortue, le milieu de l’hypoténuse 
+<I>BC</I> avec un cap dirigé selon le vecteur <I>BC</I>.
+</P><PRE CLASS="verbatim">tri(a):={
+triangle_plein(a,a);
+tourne_droite;
+triangle_plein(a,a);
+tourne_gauche;
+}:;
+</PRE><P>On dessine un sapin formé de 2 triangles <TT>tri</TT> de dimensions 50 et 40 pas
+de tortue et décalés de 40 pas de tortue, avec comme position de départ 
+et d’arrivée de la tortue le milieu de l’hypoténuse avex un cap dirigé 
+selon la hauteur de <TT>tri(50)</TT>.</P><P><IMG SRC="castor037.png"></P><P>Pour faire le dessin dans l’écran de <TT>géométrie</TT> :
+</P><PRE CLASS="verbatim">//dessin du triangle qui represente la tortue
+tortue_g(a):={
+[triangle_rectangle(a,a+0.1,2),triangle_rectangle(a,a+0.2*i,0.5)];
+}
+//dessin du triangle rectangle isocele d'hypothenuse 2a
+tri_g(a,l):={
+[triangle_rectangle(a,a+l,1),triangle_rectangle(a,a+i*l,1)];
+}
+sapin_g(a,l1,l2):={
+[triangle_rectangle(a,a+l1,1),triangle_rectangle(a,a+i*l1,1),triangle_rectangle(a+i*l2,a+i*l2+l2,1),triangle_rectangle(a+i*l2,a+2*i*l2,1)];
+}
+</PRE><P>puis 
+</P><PRE CLASS="verbatim">tortue_g(-3);
+tri_g(-3,1);
+legende(-3.5-0.5*(i),"tri(50)");
+tortue_g(0);
+sapin_g(0,0.8,1);
+legende(-0.5-0.5*(i),"sapin(50,40)");
+</PRE><P>Revenons à la tortue, on écrit la procédure <TT>sapin</TT> :
+</P><PRE CLASS="verbatim">sapin():={
+tri(50);
+avance(40);
+tri(40);
+recule(40);
+}:;
+</PRE><P><B>2-ième séance</B><BR>
+On demande d’écrire à partir de sapin une procédure paramétrée avec 
+2 paramètres <TT>a</TT> et <TT>b</TT> : <TT>a</TT> pour <TT>50</TT> et <TT>b</TT> pour 
+<TT>40</TT>.<BR>
+On écrit en classe en expliquant : 
+</P><PRE CLASS="verbatim">sapin(a,b):={
+tri(a);
+avance(b);
+tri(b);
+recule(b);
+}
+</PRE><P>On a donc fait dessiner la dernière fois <TT>sapin(50,40)</TT>.<BR>
+On demande maintenant de dessiner les sapins de la famille du 
+<TT>sapin(50,40)</TT>,
+c’est à dire ceux qui ont la même forme 
+que lui à un agrandissement ou à une réducion près.<BR>
+On demande aux enfants de remplir le tableau suivant :<BR>
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=left NOWRAP>a</TD><TD ALIGN=left NOWRAP>b</TD></TR>
+<TR><TD ALIGN=left NOWRAP>5</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>10</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>15</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>20</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>25</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>30</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>35</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>40</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>45</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>50</TD><TD ALIGN=left NOWRAP>40</TD></TR>
+<TR><TD ALIGN=left NOWRAP>55</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>60</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>70</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>80</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>90</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>100</TD><TD ALIGN=left NOWRAP>&nbsp;</TD></TR>
+</TABLE><P>Les enfants remplissent tous le tableau au début en se servant 
+systématiquement de l’addition ils écrivent :<BR>
+</P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=left NOWRAP>a</TD><TD ALIGN=left NOWRAP>b</TD></TR>
+<TR><TD ALIGN=left NOWRAP>15</TD><TD ALIGN=left NOWRAP>5</TD></TR>
+<TR><TD ALIGN=left NOWRAP>20</TD><TD ALIGN=left NOWRAP>10</TD></TR>
+<TR><TD ALIGN=left NOWRAP>25</TD><TD ALIGN=left NOWRAP>15</TD></TR>
+<TR><TD ALIGN=left NOWRAP>30</TD><TD ALIGN=left NOWRAP>20</TD></TR>
+<TR><TD ALIGN=left NOWRAP>35</TD><TD ALIGN=left NOWRAP>25</TD></TR>
+<TR><TD ALIGN=left NOWRAP>40</TD><TD ALIGN=left NOWRAP>30</TD></TR>
+<TR><TD ALIGN=left NOWRAP>45</TD><TD ALIGN=left NOWRAP>35</TD></TR>
+<TR><TD ALIGN=left NOWRAP>50</TD><TD ALIGN=left NOWRAP>40</TD></TR>
+</TABLE><P>Mais lorsqu’il testent <TT>sapin(20,10)</TT> ils n’obtiennent qu’un seul triangle
+et s’apercoivent que’il y a une erreur....et ils sont alors obligés de 
+procéder par essais et erreurs ...mais cela est quelquefois difficile car il
+n’y a guére de différence entre <TT>sapin(45,35)</TT> et <TT>sapin(45,36)</TT>.<BR>
+Il faut donc demander :<BR>
+si <TT>a=100</TT> que vaut <TT>b</TT> ?<BR>
+si <TT>a=25</TT> que vaut <TT>b</TT> ?<BR>
+si <TT>a=5</TT> que vaut <TT>b</TT> ?<BR>
+si <TT>a=10</TT> que vaut <TT>b</TT> ?<BR>
+si <TT>a=20</TT> que vaut <TT>b</TT> ?<BR>
+Comment écrire cette famille avec un seul paramètre ?
+On veut arriver à l’écriture de la procédure :
+</P><PRE CLASS="verbatim">famille_sapin(k):={
+sapin(5*k,4*k);
+}
+</PRE><P>Ainsi le <TT>sapin(50,40)</TT> est le même que <TT>famille_sapin(10)</TT>.</P><H2 CLASS="section"><A NAME="toc45"></A><A NAME="htoc105">5.7</A>  La symétrie orthogonale</H2><P>
+Activité réalisée dans une classe de CM2.<BR>
+Les élèves viennent de faire des travaux pratiques de physique sur la réflexion de la lumière : fabrication de périscope, boite noire et image réfléchie par un miroir.<BR>
+Ils ont observé comment un dessin tracé sur une feuille de papier se 
+réfléchit dans un miroir, lorsqu’on pose ce miroir perpendiculairement à 
+cette feuille.<BR>
+Les symétriques de dessins faits sur un tableau noir muni d’un quadrillage
+sont réalisés aisément lorsque la droite symbolisant le miroir est
+une horizontale ou une verticale ou encore est inclinée de 45 ou de 135
+degrés en passant par des nœud du quadrillage, mais le quadrillage est 
+source d’erreur quand le symétrique d’un nœud n’est pas un nœud.
+</P><H3 CLASS="subsection"><A NAME="htoc106">5.7.1</A>  Première séance en informatique</H3><P>
+Je dessine au tableau les dessins suivants :<BR>
+un drapeau, un képi, une casserole :<BR>
+<IMG SRC="castor038.png"><BR>
+Il faut que les enfants fasse dessiner à la tortue :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+le miroir qui doit avoir une position quelconque,
+</LI><LI CLASS="li-itemize">un des objets ci-dessus : l’objet doit avoir une position quelconque par
+rapport au miroir,
+</LI><LI CLASS="li-itemize">l’image de l’objet crée par le miroir. 
+</LI></UL><P>
+Voici ce que font la plupart des enfants :
+le tracé d’une droite <TT>D</TT> horizontale ou verticale puis le tracé d’un 
+drapeau et de son symétrique. Il donne un nom à cette suite d’instruction par exemple <TT>exercice</TT>. Puis pour répondre à la consigne :<BR>
+le miroir doit avoir une position quelconque, il tape :<BR>
+<TT>efface; tourne_droite(30);exercice</TT> 
+</P><H3 CLASS="subsection"><A NAME="htoc107">5.7.2</A>  Deuxième séance en informatique</H3><P>
+On demande de définir une fonction <TT>objet</TT> qui dessine un objet avec au 
+plus 5 traits. Puis on demande de refaire le même travail que lors de la 
+première séance en dessinant le symétrique de <TT>objet</TT> par rapport 
+à <I>D</I> mais la position de <TT>objet</TT> par rapport à la droite ne doit pas
+être figée.<BR>
+Il faut donc prévoir une fonction <TT>place_objet</TT>
+qui place l’objet par rapport à la droite ainsi qu’une fonction 
+<TT>place_objetsym</TT> qui place l’objet symétrique par 
+rapport à la droite et une fonction <TT>objetsym</TT> qui dessine le
+symétrique de <TT>objet</TT>.
+</P><PRE CLASS="verbatim">axe(c):={
+pas_de_cote(100);
+tourne_gauche(c);
+avance(200);
+recule(400);
+avance(200);
+};
+objet():={
+avance 30;
+repete(2,avance 60,tourne_droite,avance 30,tourne_droite);
+recule 30;
+};
+objetsym():={
+avance(30);
+repete(2,avance(60),tourne_gauche,avance(30),tourne_gauche);
+recule(30);
+};
+place_objet(a,b):={
+leve_crayon;
+tourne_gauche;
+avance a;
+tourne_gauche b;
+baisse_crayon;
+};
+replace_tortue(a,b):={
+leve_crayon;
+tourne_droite b;
+recule a;
+tourne_droite;
+baisse_crayon;
+};
+place_objetsym(a,b):={
+leve_crayon;
+tourne_droite;
+avance a;
+tourne_droite b;
+baisse_crayon;
+};
+retoursym(a,b):={
+leve_crayon;
+tourne_gauche b;
+recule a;
+tourne_gauche;
+baisse_crayon;
+};
+exo(a,b,c):={
+efface;
+axe(c);
+place_objet(a,b);
+objet();
+replace_tortue(a,b);
+place_objetsym(a,b);
+objetsym();
+retoursym(a,b);
+tourne_droite c;
+pas_de_cote(-100);
+};
+</PRE><P>Puis on tape : <TT>exo(30,40,20)</TT></P><H2 CLASS="section"><A NAME="toc46"></A><A NAME="htoc108">5.8</A>  Feuille de TP</H2><P>
+Voici la feuille d’un TP suivi d’une correction possible où l’on a utilisé 
+<TT>pas_de_cote</TT>.
+</P><DIV CLASS="center"><B>La tortue et la symétrie orthogonale par rapport à une droite</B></DIV><H3 CLASS="subsection"><A NAME="htoc109">5.8.1</A>  Exercice I</H3><P>
+Voici les dessins d’un drapeau, d’un képi, d’une casserole :<BR>
+<IMG SRC="castor039.png"><BR>
+1/ Écrire une procédure <TT>objet</TT> qui réalise l’un de ces dessins : on 
+prendra soin de noter sur le dessin la position choisie pour
+le départ et l’arrivée de la tortue.</P><P>2/ On veut dessiner l’image de <TT>objet</TT> dans un miroir, pour cela :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+Dessiner une droite qui symbolise un miroir : le miroir doit avoir une position quelconque,
+</LI><LI CLASS="li-itemize">Dessiner l’objet ci-dessus : l’objet doit avoir une position quelconque 
+par rapport au miroir,
+</LI><LI CLASS="li-itemize">Dessiner l’image de l’objet crée par le miroir. 
+</LI></UL><H3 CLASS="subsection"><A NAME="htoc110">5.8.2</A>  Exercice II</H3><P>
+1/ Refaire l’exercice précédent en écrivant les procédures suivantes :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<TT>miroir</TT> qui trace une droite, 
+</LI><LI CLASS="li-itemize"><TT>place_miroir</TT> qui place et oriente le miroir,
+</LI><LI CLASS="li-itemize"><TT>objet</TT> qui dessine l’objet de votre choix, 
+</LI><LI CLASS="li-itemize"><TT>place_objet</TT> qui place et oriente l’objet par rapport au miroir,
+</LI><LI CLASS="li-itemize"><TT>objetsym</TT> qui dessine l’objet symétrique par rapport au miroir,
+</LI><LI CLASS="li-itemize"><TT>place_objetsym</TT> qui place et oriente <TT>objetsym</TT> selon le
+symétrique de <TT>objet</TT> par rapport au miroir,
+</LI></UL><P>
+2/ Comment peut-on écrire de façon automatique la procédure 
+<TT>objetsym</TT> à partir de la procédure <TT>objet</TT> ?<BR>
+Comment peut-on écrire de façon automatique la procédure 
+<TT>place_objetsym</TT> à partir de la procédure <TT>place_objet</TT> ?
+</P><H3 CLASS="subsection"><A NAME="htoc111">5.8.3</A>  Corrections</H3><P>
+Une solution pour l’exercice I peut être :
+</P><PRE CLASS="verbatim">objet(a):={
+avance(a);
+repete(2,avance(2*a),tourne_droite,avance(a),tourne_droite);
+recule(a);
+};
+objetsym(a):={
+avance(a);
+repete(2,avance(2*a),tourne_gauche,avance(a),tourne_gauche);
+recule(a);
+};
+exo1():={
+pas_de_cote(200);
+objet(40);
+pas_de_cote(-100);
+tourne_droite(20);
+avance(200);
+recule(400);
+avance(200);
+tourne_droite(110);
+saute(100);
+tourne_gauche;
+objetsym(40);
+}
+</PRE><P>Les procédures de l’exercice II :
+</P><PRE CLASS="verbatim">miroir():={
+avance(200);
+recule(400);
+avance(200);
+};
+place_miroir(d):={
+pas_de_cote(100);
+tourne_gauche(d);
+miroir();
+}
+</PRE><P>Le paramètre <TT>d</TT> représente l’angle du miroir avec l’horizontale.<BR>
+Le paramètre <TT>b</TT> représente la distance du départ de l’objet avec le 
+miroir et le paramètre <TT>c</TT> représente son inclinaison par rapport au 
+miroir.
+</P><PRE CLASS="verbatim">place_objet(b,c):={
+pas_de_cote(-b);
+tourne_gauche(c);
+};
+replace_tortue(b,c):={
+tourne_droite(c);
+pas_de_cote(b);
+};
+place_objetsym(b,c):={
+pas_de_cote(b);
+tourne_droite(c);
+}
+</PRE><P>On remarque que la procédure <TT>place_objetsym</TT> est inutile puisque :<BR>
+<TT>place_objetsym(b,c)=place_objet(-b,-c)</TT>.<BR>
+À la fin pour remettre la tortue sur le miroir on utilisera
+<TT>replace_tortue(-b,-c)</TT>
+On peut aussi écrire la procédure <TT>objet2</TT> qui réalise 
+<TT>objet</TT> (resp <TT>objetsym</TT>) quand la valeur du deuxième paramètre 
+est 1 (resp -1).
+</P><PRE CLASS="verbatim">objet2(a,s):={
+avance(a);
+repete(2,avance(2*a),tourne_droite s*90,avance(a),
+       tourne_droite s*90);
+recule(a);
+}
+</PRE><P>et alors 
+<TT>objet(a):=objet2(a,1)</TT>
+et <TT>objetsym(a):=objet2(a,-1)</TT></P><P>On écrit alors :
+</P><PRE CLASS="verbatim">exo2(a,b,c,d):={
+place_miroir(d);
+miroir();
+place_objet(b,c);
+objet(a);
+replace_tortue(b,c);
+place_objetsym(b,c)
+objetsym(a);
+replace_tortue(-b,-c);
+}
+</PRE><P>ou encore, si on suppose que le miroir est dessiné et que la tortue est sur 
+le miroir, on peut utiliser la procédure suivante :
+</P><PRE CLASS="verbatim">finexo2(a,b,c):={
+place_objet(b,c);
+objet2(a,1);
+replace_tortue(b,c);
+place_objet(-b,-c)
+objet2(a,-1);
+replace_tortue(-b,-c);
+};
+exo2(a,b,c,d):={
+place_miroir(d);
+miroir();
+finexo2(a,b,c);
+}
+</PRE><P>On tape par exemple :<BR>
+<TT>exo2(40,100,20,-10)</TT>
+<TT>finexo2(-20,40,30)</TT>
+<TT>finexo2(...)</TT>
+</P><HR>
+<A HREF="castor005.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="castor007.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

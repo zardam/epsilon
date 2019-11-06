@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.29+5 of 2017-05-18">
+<link rel="stylesheet" type="text/css" href="cascmd_en.css">
+<title>The binomial distribution</title>
+</head>
+<body >
+<a href="cascmd_en714.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en716.html"><img src="next_motif.gif" alt="Next"></a>
+<hr>
+<h3 id="sec877" class="subsection">8.4.1  The binomial distribution</h3>
+<h4 id="sec878" class="subsubsection">The probability density function for the binomial
+distribution : <span style="font-family:monospace">binomial</span><a id="hevea_default1220"></a></h4>
+<p>If you perform an experiment <span style="font-style:italic">n</span> times, where the probability of
+success each time is <span style="font-style:italic">p</span>, then the probability of exactly <span style="font-style:italic">k</span>
+successes is 
+</p><table class="display dcenter"><tr style="vertical-align:middle"><td class="dcell"><span style="font-family:monospace">binomial(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,</span><span style="font-style:italic">k</span><span style="font-family:monospace">,</span><span style="font-style:italic">p</span><span style="font-family:monospace">)</span> = </td><td class="dcell">⎛<br>
+⎝</td><td class="dcell"><table class="display"><tr><td class="dcell" style="text-align:left"><span style="font-style:italic">n</span></td></tr>
+<tr><td class="dcell" style="text-align:left">&nbsp;</td></tr>
+<tr><td class="dcell" style="text-align:left"><span style="font-style:italic">k</span></td></tr>
+</table></td><td class="dcell">⎞<br>
+⎠</td><td class="dcell"><span style="font-style:italic">p</span><sup><span style="font-style:italic">k</span></sup> (1−<span style="font-style:italic">p</span>)<sup><span style="font-style:italic">n</span>−<span style="font-style:italic">k</span></sup></td></tr>
+</table><p>
+This determines the binomial distribution, and so this is called the 
+<span style="font-family:monospace">binomial</span> command. If you enter
+</p><div class="center">
+<span style="font-family:monospace">binomial(10,2,0.4)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">0.120932352
+</span></div><p>
+If no third argument <span style="font-style:italic">p</span> is given, then <span style="font-family:monospace">binomial</span> will just
+compute (<sub><span style="font-style:italic">k</span></sub><sup><span style="font-style:italic">n</span></sup>), which recall is called the binomial
+coefficient and is also computed by <span style="font-family:monospace">comb</span>. If you enter
+</p><div class="center">
+<span style="font-family:monospace">binomial(10,2)
+</span></div><p>
+or
+</p><div class="center">
+<span style="font-family:monospace">comb(10,2)
+</span></div><p>
+then you will get
+</p><div class="center">
+<span style="font-family:monospace">45
+</span></div>
+<h4 id="sec879" class="subsubsection">The cumulative distribution function for the binomial
+distribution: <span style="font-family:monospace">binomial_cdf</span><a id="hevea_default1221"></a></h4>
+<p>Recall that the cumulative distribution function (cdf) for a
+distribution is <span style="font-style:italic">cdf</span>(<span style="font-style:italic">x</span>) = Prob(<span style="font-style:italic">X</span> ≤ <span style="font-style:italic">x</span>). For the binomial
+distribution, this is given by the <span style="font-family:monospace">binomial_cdf</span> command; 
+<span style="font-family:monospace">binomial_cdf(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,</span><span style="font-style:italic">p</span><span style="font-family:monospace">,</span><span style="font-style:italic">x</span><span style="font-family:monospace">)</span>, which in this case will equal
+<span style="font-family:monospace">binomial(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,</span>0<span style="font-family:monospace">,</span><span style="font-style:italic">p</span><span style="font-family:monospace">) + …+ binomial(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,floor(</span><span style="font-style:italic">x</span><span style="font-family:monospace">,</span><span style="font-style:italic">p</span><span style="font-family:monospace">)</span>.
+If you enter
+</p><div class="center">
+<span style="font-family:monospace">binomial_cdf(4,0.5,2)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">0.6875
+</span></div><p>
+You can give <span style="font-family:monospace">binomial_cdf</span> an additional argument;
+<span style="font-family:monospace">binomial_cdf(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,</span><span style="font-style:italic">p</span><span style="font-family:monospace">,</span><span style="font-style:italic">x</span><span style="font-family:monospace">,</span><span style="font-style:italic">y</span><span style="font-family:monospace">) = Prob(</span><span style="font-style:italic">x</span> ≤ <span style="font-style:italic">X</span> ≤ <span style="font-style:italic">y</span><span style="font-family:monospace">)</span>, which
+in this case would be
+<span style="font-family:monospace">binomial(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,ceil(</span><span style="font-style:italic">x</span><span style="font-family:monospace">),</span><span style="font-style:italic">p</span><span style="font-family:monospace">) + </span>⋯<span style="font-family:monospace"> + binomial(</span><span style="font-style:italic">n</span><span style="font-family:monospace">,floor(</span><span style="font-style:italic">y</span><span style="font-family:monospace">),</span><span style="font-style:italic">p</span><span style="font-family:monospace">)</span>.
+If you enter
+</p><div class="center">
+<span style="font-family:monospace">binomial_cdf(2,0.3,1,2)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">0.51
+</span></div>
+<h4 id="sec880" class="subsubsection">The inverse distribution function for the binomial
+distribution: <span style="font-family:monospace">binomial_icdf</span><a id="hevea_default1222"></a></h4>
+<p>Given a value <span style="font-style:italic">h</span>, the inverse distribution function gives the value
+of <span style="font-style:italic">x</span> so that Prob(<span style="font-style:italic">X</span> ≤ <span style="font-style:italic">x</span>) = <span style="font-style:italic">h</span>; or for discrete distributions,
+the smallest <span style="font-style:italic">x</span> so that Prob(<span style="font-style:italic">X</span> ≤ <span style="font-style:italic">x</span>) ≥ <span style="font-style:italic">h</span>. For the binomial
+distribution with <span style="font-style:italic">n</span> and <span style="font-style:italic">p</span>, the <span style="font-family:monospace">binomial_icdf</span> gives the
+inverse distribution function. If you enter
+</p><div class="center">
+<span style="font-family:monospace">binomial_icdf(4,0.5,0.9)
+</span></div><p>
+you will get
+</p><div class="center">
+<span style="font-family:monospace">3
+</span></div><p>
+Note that <span style="font-family:monospace">binomial_cdf(4,0.5,3)</span>
+is 0.9375, bigger than 0.9, while 
+<span style="font-family:monospace">binomial_cdf(4,0.5,2)</span> is 0.6875, smaller than 0.9.</p>
+<hr>
+<a href="cascmd_en714.html"><img src="previous_motif.gif" alt="Previous"></a>
+<a href="index.html"><img src="contents_motif.gif" alt="Up"></a>
+<a href="cascmd_en716.html"><img src="next_motif.gif" alt="Next"></a>
+</body>
+</html>

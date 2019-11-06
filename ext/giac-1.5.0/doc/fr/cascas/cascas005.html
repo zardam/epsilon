@@ -1,0 +1,1022 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="cascas.css">
+<TITLE>Les entiers de Gauss et l’algorithme de Todd</TITLE>
+</HEAD>
+<BODY >
+<A HREF="cascas004.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas006.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+<HR>
+<H1 CLASS="chapter"><A NAME="htoc85">Chapitre 5</A>  Les entiers de Gauss et l’algorithme de Todd</H1><P>
+Merci à Bernard Ycart de nous avoir envoyé le fichier
+de l’article de Raymond Seroul sur les formules à la
+machin et l’algorithme de Todd, paru en 1986 à l’IREM de Strasbourg.
+</P><H2 CLASS="section"><A NAME="toc31"></A><A NAME="htoc86">5.1</A>  ℤ[<I>i</I>] ou les entiers de Gauss ℤ[<I>i</I>]</H2><H3 CLASS="subsection"><A NAME="htoc87">5.1.1</A>  La division euclidienne et le pgcd dans ℤ[<I>i</I>]</H3><P>
+On rappelle que ℤ[<I>i</I>]={<I>m</I>+<I>in</I>, (<I>m</I>,<I>n</I>)∈ ℤ<SUP>2</SUP>}.<BR>
+ℤ[<I>i</I>] est un anneau intègre euclidien.<BR>
+Soient <I>a</I> ∈ ℤ[<I>i</I>] et <I>b</I> ∈ ℤ[<I>i</I>]−{0}, alors on dit que le quotient entier
+<I>q</I> de <I>a</I> par <I>b</I> est l’affixe du (ou des) point(s) le plus proche pour le 
+module du point d’affixe <I>a</I>/<I>b</I> et alors le reste de la division euclidienne est
+<I>r</I>=<I>a</I>−<I>bq</I>.<BR>
+On choisit <I>q</I> pour que <I>bq</I> soit le plus proche 
+possible de <I>a</I> et on peut montrer que l’on peut choisir <I>r</I>=<I>a</I>−<I>bq</I> tel que 
+|<I>r</I>|<SUP>2</SUP> ≤ |<I>b</I>|<SUP>2</SUP>/2.<BR>
+Le pgcd dans ℤ[<I>i</I>] se calcule comme dans ℕ par l’algorithme d’Euclide.
+</P><H3 CLASS="subsection"><A NAME="htoc88">5.1.2</A>  Les fonctions iquo, irem iquorem et gcd de <TT>Xcas</TT></H3><P><A NAME="@default0"></A><A NAME="@default1"></A><A NAME="@default2"></A><A NAME="@default3"></A>
+Si <I>a</I> et <I>b</I> sont des entiers ou des entiers de Gauss :<BR>
+<TT>iquo(a,b)</TT> renvoie le quotient <I>q</I> de la division euclidienne de <I>a</I> par 
+<I>b</I> et<BR>
+<TT>irem(a,b)</TT> renvoie le reste <I>r</I> de la division euclidienne de <I>a</I> par 
+<I>b</I>.<BR>
+<I>q</I> et <I>r</I> vérifient :<BR>
+si <I>a</I> et <I>b</I> sont entiers <I>a</I>=<I>bq</I>+<I>r</I> avec 0 ≤ <I>r</I>&lt;<I>b</I><BR>
+si <I>a</I> et <I>b</I> sont des entiers de Gauss <I>a</I>=<I>bq</I>+<I>r</I> avec |<I>r</I>|<SUP>2</SUP>) ≤ |<I>b</I>|<SUP>2</SUP>/2.<BR>
+<TT>iquorem(a,b)</TT> renvoie la liste [<I>q</I>,<I>r</I>] du quotient et du reste de la 
+division euclidienne de <I>a</I> par <I>b</I> .<BR>
+<TT>gcd(a,b)</TT> renvoie le pgcd de <I>a</I> et <I>b</I><BR>
+Par exemple :<BR>
+si <I>a</I>=−6+17<I>i</I> et si <I>b</I>=7+<I>i</I> on tape :<BR>
+<TT>iquo(-6+17*i,7+i)</TT><BR>
+et on obtient : <TT>-1+3*i</TT><BR>
+<TT>irem(-6+17*i,7+i)</TT><BR>
+et on obtient : <TT>4-3*i</TT><BR>
+<TT>iquorem(-6+17*i,7+i)</TT><BR>
+et on obtient : <TT>[-1+3*i,4-3*i]</TT><BR>
+ Donc la 
+division euclidienne de <I>a</I> par <I>b</I> a pour quotient −1+3<I>i</I> et pour reste 
+4−3<I>i</I> .<BR>
+On tape : <TT>iquorem(7+i,4-3*i)</TT><BR>
+et on obtient : <TT>[1+i,0]</TT><BR>
+Donc 7+<I>i</I> est un multiple de 4−3<I>i</I>
+<TT>gcd(7+i,-6+17*i)</TT><BR>
+et on obtient : <TT>4-3*i</TT><BR>
+</P><H3 CLASS="subsection"><A NAME="htoc89">5.1.3</A>  Exercice</H3><UL CLASS="itemize"><LI CLASS="li-itemize">
+Soit <I>q</I>∈ ℤ[<I>i</I>] tel que <I>bq</I> soit le plus proche 
+possible de <I>a</I> et <I>r</I>=<I>a</I>−<I>bq</I>.<BR>
+Montrer que l’on peut choisir <I>r</I> tel que 
+|<I>r</I>|<SUP>2</SUP> ≤ |<I>b</I>|<SUP>2</SUP>/2.<BR>
+</LI><LI CLASS="li-itemize">Montrer que |<I>q</I>−<I>a</I>/<I>b</I>|<SUP>2</SUP> ≤ 1/2. En déduire que |<I>a</I>−<I>bq</I>|<SUP>2</SUP> ≤ |<I>b</I>|<SUP>2</SUP>/2
+et que l’algorithme d’Euclide se termine lorsqu’on prend <I>q</I> comme quotient 
+euclidien.
+</LI><LI CLASS="li-itemize">Écrire un programme qui calcule le pgcd de 2 nombres de ℤ[<I>i</I>]. On 
+normalisera le résultat (en multipliant le résultat par 1,-1,i ou -i)
+pour que le pgcd soit un nombre de partie rèelle 
+strictement positive et de partie imaginaire positive ou nulle.
+</LI></UL><P>On tape :
+</P><PRE CLASS="verbatim">quotient(a,b):={
+local q1,q2,c;
+c:=normal(a/b);
+q1:=re(c);
+q2:=im(c);
+return round(q1)+i*round(q2);
+}
+:;
+reste(a,b):={
+local q;
+q:=quotient(a,b);
+
+return a-b*q;
+}
+:;
+
+pgcdzi(a,b):={
+local q,r;
+tantque b!=0 faire
+  q:=quotient(a,b);
+  r:=a-b*q;
+  a:=b;
+  b:=r;
+ftantque;
+//on normalise
+si re(a)&lt;0 et im(a)&lt;=0 alors retourne -a;fsi;
+si im(a)&lt;0 alors retourne i*a;fsi;
+si re(a)&lt;=0 alors retourne -i*a;fsi;
+retourne a;
+}:;
+</PRE><P>On tape :<BR>
+<TT>pgcdzi(3+i,3-i)</TT><BR>
+On obtient :<BR>
+<TT>1+i</TT><BR>
+On tape :<BR>
+<TT>pgcdzi(7+i,-6+17*i</TT><BR>
+On obtient :<BR>
+<TT>3+4*i</TT></P><H3 CLASS="subsection"><A NAME="htoc90">5.1.4</A>  La fonction pa2b2 de <TT>Xcas</TT></H3><P><A NAME="@default4"></A>
+<B>Théorème</B><BR>
+Si <I>p</I> est un nombre premier de ℕ congru à 1 modulo 4, alors 
+il existe deux entiers <I>a</I> et <I>b</I> tel que <I>p</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>.<BR>
+On tape :<BR>
+<TT>pa2b2(89)</TT><BR>
+On obtient :<BR>
+<TT>[5,8]</TT><BR>
+On tape :<BR>
+<TT>pa2b2(317)</TT><BR>
+On obtient :<BR>
+<TT>[11,14]</TT><BR>
+<B>Idée de la preuve du théorème</B><BR>
+Dans ce qui suit, <I>p</I> est un nombre premier de ℕ congru à 1 modulo 4.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<B>Lemme</B><BR>
+-1 admet une racine carrée modulo <I>p</I>.<BR>
+<B>Preuve du lemme</B><BR>
+On rappelle le théorème de <B>Wilson</B> qui dit que 
+si <I>p</I>≥ 3 est premier alors (<I>p</I>−1)!=−1 mod<I>p</I>.<BR>
+(En effet ℤ/<I>p</I>ℤ−{0} est un group multiplicatif donc si <I>a</I>=(<I>p</I>−1)! on a 
+<I>a</I><SUP>2</SUP>=1 mod<I>p</I> car on peut associer chaque facteur de <I>a</I> avec son inverse 
+dans ℤ/<I>p</I>ℤ−{0}.Donc <I>a</I><SUP>2</SUP>−1=(<I>a</I>−1)*(<I>a</I>+1)=<I>k</I>*<I>p</I>. Comme <I>p</I> est premier, <I>p</I> 
+divise <I>a</I>−1 ou <I>a</I>+1.)<BR>
+Posons <I>p</I>=2<I>q</I>+1. Puisque <I>p</I>=1 mod4 on a <I>q</I> est pair.<BR>
+On a :<BR>
+<I>q</I>!=(<I>q</I>−<I>p</I>)(<I>q</I>−1−<I>p</I>)...(2−<I>p</I>)(1−<I>p</I>)mod<I>p</I>=(−1)<SUP><I>q</I></SUP>(<I>q</I>+1)(<I>q</I>+2)...(2<I>q</I>−1)(2<I>q</I>)mod<I>p</I>
+donc :<BR>
+<I>q</I>!<SUP>2</SUP>=(1*2*...<I>q</I>)*((−1)<SUP><I>q</I></SUP>(<I>q</I>+1)(<I>q</I>+2)...(2<I>q</I>−1)(2<I>q</I>)) mod<I>p</I>
+donc puisque <I>q</I> est pair :<BR>
+<I>q</I>!<SUP>2</SUP>=(<I>p</I>−1)!mod<I>p</I>=−1 mod<I>p</I>
+On notera <I>rac</I>=<I>q</I>!mod<I>p</I>.<BR>
+Par exemple pour <I>p</I>=5 <I>rac</I>=2, pour p=pour <I>p</I>=17 <I>rac</I>=13.
+</LI><LI CLASS="li-itemize">On pose <I>u</I>=[1,<I>rac</I>] et <I>v</I>=[0,<I>p</I>] et on considère le réseau engendré 
+par <I>u</I> et <I>v</I> : Λ=ℤ <I>u</I>+ℤ <I>v</I>. On cherche une autre base du réseau 
+dont un vecteur est de longueur minimale. Quitte à échanger <I>u</I> et <I>v</I>, on 
+peut supposer que <I>v</I>*<I>v</I>≤ <I>u</I>*<I>u</I> (* est le produit scalaire).<BR>
+On montre facilement que si on remplace (<I>u</I>,<I>v</I>) par (<I>u</I>+<I>mv</I>,<I>v</I>) avec <I>m</I>∈ ℤ,
+le réseau engendré est identique.<BR>
+On montre facilement que si <I>w</I>=[<I>w</I><SUB>1</SUB>,<I>w</I><SUB>2</SUB>]∈ Λ=ℤ <I>u</I>+ℤ <I>v</I> alors le produit
+scalaire <I>w</I>*<I>w</I> est divisible par <I>p</I> (on a en effet 1+<I>rac</I><SUP>2</SUP>=0 mod<I>p</I> donc :<BR>
+<I>w</I>*<I>w</I>=<I>w</I><SUB>1</SUB><SUP>2</SUP>(1+<I>rac</I><SUP>2</SUP>)+<I>w</I><SUB>2</SUB><SUP>2</SUP>(<I>p</I><SUP>2</SUP>)+2<I>w</I><SUB>1</SUB><I>w</I><SUB>2</SUB><I>p</I>*<I>rac</I>=0 mod<I>p</I>).<BR>
+On montre facilement que tous les parallélogrammes engendrés par une base
+<I>u</I><SUB>1</SUB> et <I>v</I>−1 du réseau ont une aire égale à <I>p</I> (car le produit 
+vectoriel de <I>u</I> et <I>v</I> a comme longueur <I>p</I> et il est égal au produit 
+vectoriel de <I>u</I>+<I>mv</I> et <I>v</I> et est aussi égal au produit vectoriel de <I>v</I>+<I>mu</I> 
+et <I>u</I>).<BR>
+On choisit <I>m</I>∈ ℤ pour que la projection de <I>w</I>=<I>u</I>+<I>m</I>*<I>v</I> sur <I>v</I> soit dans 
+]−<I>v</I>/2,<I>v</I>/2] (i.e.−(<I>v</I>*<I>v</I>)/2&lt;<I>w</I>*<I>v</I>=(<I>u</I>+<I>m</I>*<I>v</I>)*<I>v</I>≤ (<I>v</I>*<I>v</I>)/2 où * est le 
+produit scalaire ou encore <I>m</I>=<I>floor</I>(1/2−<I>u</I>*<I>v</I>/<I>v</I>*<I>v</I>)=.<BR>
+On a alors <I>w</I>*<I>w</I>≤ <I>u</I>*<I>u</I>.<BR>
+En effet :<BR>
+<I>v</I>*<I>v</I>≤ <I>u</I>*<I>u</I> et<BR>
+|<I>w</I>*<I>v</I>|=(<I>u</I>+<I>mv</I>)*<I>v</I>≤ (<I>v</I>*<I>v</I>)/2 (d’après le choix de <I>m</I><BR>
+Puisque <I>u</I>*<I>v</I> n’est pas dans le segment ]]−<I>v</I>*<I>v</I>/2;<I>v</I>*<I>v</I>/2 c’est que :<BR>
+soit <I>u</I>*<I>v</I>&gt;<I>v</I>*<I>v</I>/2 et alors <I>m</I>&lt;0<BR>
+soit <I>u</I>*<I>v</I>≤ −<I>v</I>*<I>v</I>/2 et alors <I>m</I>&gt;0<BR>
+On a :<BR>
+<I>w</I>*<I>w</I>=(<I>u</I>+<I>mv</I>)*<I>w</I>=<I>u</I>*<I>w</I>++<I>m</I>*(<I>v</I>*<I>w</I>)==<I>u</I>*<I>u</I>+<I>m</I>(<I>u</I>*<I>v</I>+<I>w</I>*<I>v</I>)<BR>
+si <I>m</I>&gt;0 alors <I>u</I>*<I>v</I>+<I>w</I>*<I>v</I>&lt; −<I>v</I>*<I>v</I>/2+(<I>v</I>*<I>v</I>)/2≤ 0 et<BR>
+si <I>m</I>&lt;0 alors <I>u</I>*<I>v</I>+<I>w</I>*<I>v</I>&gt;<I>v</I>*<I>v</I>/2−(<I>v</I>*<I>v</I>)/2≥ 0 donc<BR>
+dans les 2 cas <I>m</I>(<I>u</I>*<I>v</I>+<I>w</I>*<I>v</I>)≤ 0 i.e. <I>w</I>*<I>w</I>≤ <I>u</I>*<I>u</I><BR>
+On recommence l’opération jusqu’à ce que <I>u</I> soit dans la bande (<I>m</I>=0).<BR>
+On montre alors que la distance minimale entre 2 points du réseau est 
+ègale à la norme du dernier <I>v</I>.<BR>
+En effet lorsque <I>m</I>=0 c’est que l’on est dans la situation suivante :<BR>
+<I>v</I>*<I>v</I>&lt;=<I>u</I>*<I>u</I> et |<I>u</I>*<I>v</I>|≤ <I>v</I>*<I>v</I>/2 donc l’aire (égale à <I>p</I>/2) du triangle 
+engendré par <I>u</I> et <I>v</I> est supérieure à l’aire du triangle 
+équilatéral <I>T</I> de côté <I>v</I>. <I>T</I> a comme aire
+<I>A</I>=(<I>v</I>*<I>v</I>)*√<SPAN style="text-decoration:overline">3</SPAN>/4.<BR>
+<IMG SRC="cascas014.png"><BR>
+Donc on a (<I>v</I>*<I>v</I>)*√<SPAN style="text-decoration:overline">3</SPAN>/2≤ <I>p</I> puisque :<BR>
+pour tous les nombres <I>w</I> du réseau, on a <I>w</I>*<I>w</I> est divisible par <I>p</I> donc
+si <I>v</I>=(<I>a</I>,<I>b</I>) on a <I>v</I>*<I>v</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>&lt;2<I>p</I> et <I>v</I>*<I>v</I> est un entier divisible par <I>p</I> 
+donc <I>v</I>*<I>v</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>=<I>p</I>.<BR>
+<B>Remarque</B>
+Lorsque l’algorithme s’arrête les vecteur <I>u</I> et <I>v</I> ont même norme et 
+sont perpendiculaires.<BR>
+En effet lorsque l’algorithme s’arrête on a :
+<OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+<I>v</I>*<I>v</I>=<I>p</I>,
+</LI><LI CLASS="li-enumerate">|<I>u</I>*<I>v</I>|≤ <I>v</I>*<I>v</I>/2 donc si α est l’angle formé par <I>u</I> et <I>v</I> on 
+a : cos(α)<SUP>2</SUP>≤ 1/4 ou sin(α)<SUP>2</SUP>≥ 3/4,
+</LI><LI CLASS="li-enumerate"><I>u</I>*<I>u</I> est divisible par <I>p</I> (<I>u</I>*<I>u</I>=<I>kp</I> avec <I>k</I>∈ℕ<SUP>*</SUP>) et <I>u</I>*<I>u</I>≥ <I>v</I>*<I>v</I>,
+</LI><LI CLASS="li-enumerate">l’aire <I>A</I> du parallélogramme engendré par <I>u</I> et <I>v</I> vaut <I>p</I>
+</LI><LI CLASS="li-enumerate"><I>v</I>*<I>v</I>=<I>p</I>
+</LI></OL>
+Or <I>A</I><SUP>2</SUP>=sin(α)<SUP>2</SUP>(<I>u</I>*<I>u</I>)(<I>v</I>*<I>v</I>)=<I>p</I><SUP>2</SUP>=sin(α)<SUP>2</SUP>(<I>u</I>*<I>u</I>)<I>p</I><BR>
+Donc : sin(α)<SUP>2</SUP>(<I>u</I>*<I>u</I>)=<I>p</I>=sin(α)<SUP>2</SUP><I>kp</I><BR>
+Donc : <I>k</I> sin(α)<SUP>2</SUP>=1≥ 3<I>k</I>/4 avec <I>k</I>∈ℕ<SUP>*</SUP><BR>
+Ou encore <I>k</I>∈ℕ et <I>k</I>≤ 4/3 donc <I>k</I>=1 ce qui signifie que :<BR>
+<I>u</I>*<I>u</I>=<I>p</I> et sin(α)<SUP>2</SUP>=1 donc <I>u</I>*<I>v</I>=0<BR>
+</LI></UL><P>
+<B>L’algorithme sur un exemple</B><BR>
+On choisit <I>p</I>=13, et prenons <I>rac</I> =5 (puisque 5<SUP>2</SUP>=25=−1 mod13).<BR>
+Dessinons quelques points du reseau en tapant :
+</P><PRE CLASS="verbatim">reseau(p,rac):={
+local L,j,k;
+L:=NULL;
+pour (j:=-2;j&lt;=2;j++) {
+  pour (k:=-3;k&lt;=3;k++) {
+    L:=L,point(k+i*(rac+k*p)+13*j);
+  }
+}
+return affichage(L,epaisseur_point_2+1);
+}:;
+</PRE><P><IMG SRC="cascas015.png"><BR>
+On commence avec <I>u</I>=1,<I>rac</I> et <I>v</I>=0,<I>p</I>. on réduit <I>u</I>,<I>v</I> ce qui veut dire 
+que l’on échange <I>u</I> et <I>v</I> (car <I>u</I>*<I>u</I>&lt;<I>v</I>*<I>v</I>), puis on remplace <I>v</I> par 
+<I>w</I>=<I>v</I>−2*<I>u</I>,<I>u</I> afin que <I>w</I> soit dans la bande bleue.<BR>
+On réduit <I>w</I>,<I>u</I> ce qui veut dire que l’on remplace <I>w</I>,<I>u</I> par <I>u</I>,<I>w</I> (car 
+<I>u</I>*<I>u</I>&gt;<I>w</I>*<I>w</I>) puis on remplace <I>u</I> par <I>t</I>=<I>u</I>−<I>w</I> afin que <I>t</I> soit dans la bande 
+verte. On s’arrête et <I>t</I> et <I>w</I> sont de norme minimale (<I>t</I>*<I>t</I>=<I>w</I>*<I>w</I>=2<SUP>2</SUP>+3<SUP>2</SUP>=13).<BR>
+
+<B>L’algorithme</B>
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+On écrit la fonction puissance rapide <TT>puiss(a,k,p)</TT> qui renvoie
+<I>a</I><SUP><I>k</I></SUP> mod<I>p</I> (ou on utilise la fonction <TT>powmod</TT> de <TT>Xcas</TT>).
+</LI><LI CLASS="li-enumerate">On écrit la fonction <TT>sqrtmod(p)</TT> qui renvoie une racine carrée 
+de -1 modulo <I>p</I> lorsque <I>p</I> est congru à 1 modulo 4.<BR>
+Pour <I>p</I>=13, <TT>sqrtmod(13)</TT> qui renvoie 8.</LI><LI CLASS="li-enumerate">On écrit la fonction <TT>reduire(u,v)</TT> qui prend en entrée deux 
+vecteurs <I>u</I> et <I>v</I> de ℤ<SUP>2</SUP>, qui échange <I>u</I> et <I>v</I> si <I>v</I>*<I>v</I>&gt;<I>u</I>*<I>u</I> et renvoie 
+<I>m</I>,<I>u</I>1,<I>v</I>1 tels que −(<I>v</I>*<I>v</I>)/2&lt;<I>u</I>+<I>m</I>*<I>v</I>≤ (<I>v</I>*<I>v</I>)/2 (le produit étant le produit 
+scalaire).<BR>
+Pour <I>p</I>=13, <TT>reduire([1,8],[0,13])</TT> renvoie <TT>-2,[-2,-3],[1,8]</TT>, (car 
+[0,13]−2*[1,8]=[−2,−3])<BR>
+<TT>reduire([-2,-3],[1,8])</TT> renvoie <TT>2,[-3,2],[-2,-3]</TT> et<BR>
+<TT>reduire([-3,2],[-2,-3])</TT> renvoie <TT>0,[-3,2],[-2,-3]</TT><BR>
+ou si on a pris <I>rac</I>=5<BR>
+<TT>reduire([1,5],[0,13])</TT> renvoie <TT>-2,[-2,-3],[1,5]</TT> et<BR>
+<TT>reduire([-2,-3],[1,5])</TT> renvoie <TT>-1,[-3,2],[-2,-3]</TT> et<BR>
+<TT>reduire([-3,2],[-2,-3])</TT> renvoie <TT>0,[-3,2],[-2,-3]</TT>
+</LI><LI CLASS="li-enumerate">On écrit la fonction <TT>solpa2b2(p)</TT> qui renvoie deux entiers <I>a</I> et 
+<I>b</I> tels que <I>p</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> lorsque <I>p</I> est premier et congru à 1 modulo 4.<BR>
+On itère pour cela la fonction <TT>reduire</TT> avec comme arguments initiaux 
+<I>u</I>=[1,<I>sqrtmod</I>(<I>p</I>)] et <I>v</I>=[0,<I>p</I>] et on s’arrête quand <I>m</I>=0.
+On renvoie alors les coordonnées en valeurs absolues du dernier <I>v</I>.
+Pour <I>p</I>=13, <TT>solpa2b2(13)</TT> renvoie [3,2].
+</LI></OL><P>
+<B>Traduction de l’algorithme en langage </B><B><TT>Xcas</TT></B>
+</P><PRE CLASS="verbatim">puiss(a,k,p):={
+local pui;
+pui:=1;
+while(k&gt;0) {
+if (irem(k,2)!=0){
+pui:=irem(a*pui,p);
+k:=k-1;}
+a:=irem(a*a,p);
+k:=k/2;
+}
+return pui;
+}:;
+sqrtmod(p):={
+local j,k,a,r;
+if (!isprime(p)) {return p+"n'est pas premier"};
+k:=iquo(p-1,4);
+r:=irem(p-1,4);
+if (r!=0) {return "erreur"};
+a:=2;
+j:=puiss(a,k,p);
+while (j == 1 or j==p-1){
+a:=a+1;
+j:=puiss(a,k,p);
+}
+return j;
+}:;
+reduire(u,v):={
+local w,uv,m,v2;
+if (u*u&lt;v*v){
+w:=u;
+u:=v;
+v:=w;
+}
+uv:=u*v;
+v2:=v*v;
+m:=floor(1/2-uv/v2);
+return m,u+m*v,v;
+}:;
+solpa2b2(p):={
+local u,v,m,rac;
+rac:=sqrtmod(p);
+u:=[1,rac];
+v:=[0,p];
+m,u,v:=reduire(u,v);
+while (m!=0) {
+m,u,v:=reduire(u,v);
+}
+return abs(v);
+}:;
+</PRE><P>On tape :<BR>
+<TT>solpa2b2(1009)</TT><BR>
+On obtient :<BR>
+<TT>[15,28]</TT><BR>
+On tape :<BR>
+<TT>pa2b2(1009)</TT><BR>
+On obtient :<BR>
+<TT>[28,15]</TT><BR>
+On tape :<BR>
+<TT>solpa2b2(1000033)</TT><BR>
+On obtient :<BR>
+<TT>[408,913]</TT><BR>
+On tape :<BR>
+<TT>pa2b2(1000033)</TT><BR>
+On obtient :<BR>
+<TT>[913,408]</TT><BR>
+On tape :<BR>
+<TT>solpa2b2(1000000009)</TT><BR>
+On obtient :<BR>
+<TT>[3747,31400]</TT><BR>
+On tape :<BR>
+<TT>pa2b2(1000000009)</TT><BR>
+On obtient :<BR>
+<TT>[31400,3747]</TT><BR>
+On tape :<BR>
+<TT>solpa2b2(1000000000061)</TT><BR>
+On obtient :<BR>
+<TT>[848494,529205]</TT><BR>
+On tape :<BR>
+<TT>pa2b2(1000000000061)</TT><BR>
+On obtient :<BR>
+<TT>[529205,848494]</TT>
+</P><H2 CLASS="section"><A NAME="toc32"></A><A NAME="htoc91">5.2</A>  Les nombres irréductibles de ℤ[<I>i</I>]</H2><H3 CLASS="subsection"><A NAME="htoc92">5.2.1</A>  Définitions et Théorème</H3><P>
+<B>Définition</B><BR>
+On dit que <I>a</I> ∈ ℤ[<I>i</I>] est <B>inversible</B> si il existe <I>b</I> ∈ ℤ[<I>i</I>] 
+tel que <I>ab</I>=1.<BR>
+On dit que <I>b</I> ∈ ℤ[<I>i</I>] est <B>associé</B> à <I>a</I> ∈ ℤ[<I>i</I>] si il existe 
+<I>c</I> ∈ ℤ[<I>i</I>] inversible tel que <I>a</I>=<I>bc</I>.<BR>
+<B>Exercice</B><BR>
+Déterminer les éléments inversibles de ℤ[<I>i</I>].<BR>
+Déterminer les associé de <I>x</I>+<I>iy</I> ∈ ℤ[<I>i</I>].<BR>
+<B>Solution</B><BR>
+Si <I>a</I>=<I>a</I><SUB>1</SUB>+<I>ia</I><SUB>2</SUB> ∈ ℤ[<I>i</I>] est inversible si il existe <I>b</I>=<I>b</I><SUB>1</SUB>+<I>ib</I><SUB>2</SUB> ∈ ℤ[<I>i</I>] 
+tel que <I>ab</I>=1.<BR>
+Donc en égalant les modules :<BR>
+1=(<I>a</I><SUB>1</SUB><SUP>2</SUP>+<I>a</I><SUB>2</SUB><SUP>2</SUP>)(<I>b</I><SUB>1</SUB><SUP>2</SUP>+<I>b</I><SUB>2</SUB><SUP>2</SUP>) comme <I>a</I><SUB>1</SUB><SUP>2</SUP>+<I>a</I><SUB>2</SUB><SUP>2</SUP> ∈ ℕ et 
+<I>b</I><SUB>1</SUB><SUP>2</SUP>+<I>b</I><SUB>2</SUB><SUP>2</SUP> ∈ ℕ cela entraine que <I>a</I><SUB>1</SUB><SUP>2</SUP>+<I>a</I><SUB>2</SUB><SUP>2</SUP>=1 c’est à dire
+<I>a</I>∈ {1,<I>i</I>,−1,−<I>i</I>}
+Les associés de <I>x</I>+<I>iy</I> sont donc {<I>x</I>+<I>iy</I>,−<I>x</I>−<I>iy</I>,<I>y</I>+<I>ix</I>,<I>y</I>−<I>ix</I>}.<BR>
+<B>Définition</B><BR>
+On dit que <I>a</I> ∈ ℤ[<I>i</I>] est <B>irréductible</B> si <I>a</I> est non inversible ou 
+si <I>a</I> n’est le produit de 2 nombres appartenant à ℤ[<I>i</I>] que lorsque l’un 
+de ces nombres est inversible.<BR>
+Par exemple :<BR>
+Les éléments inversibles de ℤ[<I>i</I>], {1,−1,<I>i</I>,−<I>i</I>}, ne sont pas 
+irréductibles dans ℤ[<I>i</I>].<BR>
+2 n’est pas irréductible dans ℤ[<I>i</I>] car 2=(1+<I>i</I>)*(1−<I>i</I>).<BR>
+1+2<I>i</I> est irréductible car si 1+2<I>i</I>=(<I>a</I><SUB>1</SUB>+<I>ia</I><SUB>2</SUB>)(<I>b</I><SUB>1</SUB>+<I>ib</I><SUB>2</SUB>) alors en égalant
+le carré des modules on a :<BR>
+5=(<I>a</I><SUB>1</SUB><SUP>2</SUP>+<I>a</I><SUB>2</SUB><SUP>2</SUP>)(<I>b</I><SUB>1</SUB><SUP>2</SUP>+<I>b</I><SUB>2</SUB><SUP>2</SUP>). Comme 5 est premier cela entraine que 
+<I>a</I><SUB>1</SUB><SUP>2</SUP>+<I>a</I><SUB>2</SUB><SUP>2</SUP>=1 (ou <I>b</I><SUB>1</SUB><SUP>2</SUP>+<SUB>2</SUB><SUP>2</SUP>=1) c’est à dire
+<I>a</I>∈ {1,<I>i</I>,−1,−<I>i</I>} (ou <I>b</I>∈ {1,<I>i</I>,−1,−<I>i</I>})<BR>
+(1+<I>i</I>) est irreductible car si 1+<I>i</I>=(<I>a</I><SUB>1</SUB>+<I>ia</I><SUB>2</SUB>)(<I>b</I><SUB>1</SUB>+<I>ib</I><SUB>2</SUB>) en égalant le
+carré des modules on obtient :<BR>
+2=(<I>a</I><SUB>1</SUB><SUP>2</SUP>+<I>a</I><SUB>2</SUB><SUP>2</SUP>)(<I>b</I><SUB>1</SUB><SUP>2</SUP>+<I>b</I><SUB>2</SUB><SUP>2</SUP>) donc
+(<I>a</I><SUB>1</SUB><SUP>2</SUP>+<I>a</I><SUB>2</SUB><SUP>2</SUP>)=1 et (<I>b</I><SUB>1</SUB><SUP>2</SUP>+<I>b</I><SUB>2</SUB><SUP>2</SUP>)=2 (ou (<I>b</I><SUB>1</SUB><SUP>2</SUP>+<I>b</I><SUB>2</SUB><SUP>2</SUP>)=1 et 
+(<I>a</I><SUB>1</SUB><SUP>2</SUP>+<I>a</I><SUB>2</SUB><SUP>2</SUP>)=2 ) ce qui veut dire que (<I>a</I><SUB>1</SUB>+<I>ia</I><SUB>2</SUB>) est 
+inversible et (<I>b</I><SUB>1</SUB>+<I>ib</I><SUB>2</SUB>) est l’associé de 1+<I>i</I> (ou
+(<I>b</I><SUB>1</SUB>+<I>ib</I><SUB>2</SUB>) est inversible et (<I>a</I><SUB>1</SUB>+<I>ia</I><SUB>2</SUB>) est l’associé de 1+<I>i</I>).<BR>
+<B>Théorème</B><BR>
+Si dans ℤ[<I>i</I>] <I>a</I> irréductible divise <I>bc</I> alors <I>a</I> divise <I>b</I> ou 
+<I>a</I> divise <I>c</I>.<BR>
+<B>Théorème</B><BR>
+Si un entier de Gauss est irréductible alors l’un de ses associé est :
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+le nombre 1+<I>i</I>
+</LI><LI CLASS="li-enumerate"><I>x</I>+<I>iy</I> où <I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP> est un nombre premier de ℤ congru à 1 
+modulo 4
+</LI><LI CLASS="li-enumerate">un nombre premier de ℤ congru à 3 modulo 4
+</LI></OL><P>
+Ainsi un entier de Gauss <I>z</I> est irréductible de type 1 (<I>z</I>=1+<I>i</I>), de type 2 
+(<I>z</I>=<I>x</I>+<I>iy</I> où <I>x</I><SUP>2</SUP>+<I>y</I><SUP>2</SUP> est un nombre premier de ℤ congru à 1 
+modulo 4) ou de type 3 (<I>z</I>∈ℤ avec <I>z</I> congru à 3 modulo 4).<BR>
+<B>Démonstration</B><BR>
+Soit <I>a</I>+<I>ib</I> un entier de Gauss est irréductible
+</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Supposons que <I>b</I>=0 alors <I>a</I>+<I>ib</I>=<I>p</I>∈ ℤ<BR>
+Si <I>p</I> est irréductible, alors <I>p</I> est un nombre premier et <I>p</I> peut être :
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+congru à 3 modulo 4.<BR>
+Montrons qu’un nombre premier <I>p</I>∈ ℤ congru à 3 modulo 4 est 
+irréductible dans ℤ[<I>i</I>].<BR>
+Raisonnons par l’absurde et supposons que <I>p</I>=(<I>a</I><SUB>1</SUB>+<I>ia</I><SUB>2</SUB>)(<I>b</I><SUB>1</SUB>+<I>ib</I><SUB>2</SUB>).<BR>
+En égalant le carré des modules on obtient :<BR>
+<I>p</I><SUP>2</SUP>=(<I>a</I><SUB>1</SUB><SUP>2</SUP>+<I>a</I><SUB>2</SUB><SUP>2</SUP>)(<I>b</I><SUB>1</SUB><SUP>2</SUP>+<I>b</I><SUB>2</SUB><SUP>2</SUP>)
+Comme <I>p</I> est premier cela entraine que :<BR>
+<I>a</I><SUB>1</SUB><SUP>2</SUP>+<I>a</I><SUB>2</SUB><SUP>2</SUP>=<I>p</I> et que (<I>b</I><SUB>1</SUB><SUP>2</SUP>+<I>b</I><SUB>2</SUB><SUP>2</SUP>)=<I>p</I>
+puisque (<I>a</I><SUB>1</SUB>+<I>ia</I><SUB>2</SUB>) et (<I>b</I><SUB>1</SUB>+<I>ib</I><SUB>2</SUB>) ne sont pas inversibles, on sait que 
+<I>a</I><SUB>1</SUB><SUP>2</SUP>+<I>a</I><SUB>2</SUB><SUP>2</SUP>≠ 1 et (<I>b</I><SUB>1</SUB><SUP>2</SUP>+<I>b</I><SUB>2</SUB><SUP>2</SUP>)=¬ 1.<BR>
+On a donc obtenu une contradiction puisque la somme de 2 carrés n’est jamais 
+congru à 3 modulo 4.<BR>
+Donc un nombre premier <I>p</I>∈ ℤ congru à 3 modulo 4 est irréductible dans
+ℤ[<I>i</I>].<BR>
+</LI><LI CLASS="li-itemize">congru à 2 modulo 4.<BR>
+Montrons qu’un nombre premier <I>p</I>∈ ℤ congru à 2 modulo 4 n’est pas
+irréductible dans ℤ[<I>i</I>].<BR>
+Comme <I>p</I> est premier cela entraine que <I>p</I>=2.<BR>
+Puisque <I>p</I>=2=(1+<I>i</I>)*(1−<I>i</I>), <I>p</I> n’est pas
+irréductible dans ℤ[<I>i</I>]
+</LI><LI CLASS="li-itemize">congru à 1 modulo 4.<BR>
+Montrons qu’un nombre premier <I>p</I>∈ ℤ congru à 1 modulo 4 n’est pas
+irréductible dans ℤ[<I>i</I>].<BR>
+On sait que si <I>p</I> est un nombre premier congru à 1 modulo 4, il existe <I>a</I> 
+et <I>b</I> dans ℕ tels qie <I>p</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> donc 
+<I>p</I>=(<I>a</I>+<I>ib</I>)*(<I>a</I>−<I>i</I>*<I>b</I>) donc <I>p</I> n’est pas irréductible.
+</LI></UL><BR>
+Donc si <I>p</I> ∈ ℤ est irréductible dans ℤ[<I>i</I>] c’est que <I>p</I> est premier
+et congru à 3 modulo 4.</LI><LI CLASS="li-enumerate">Soit un nombre <I>a</I>+<I>ib</I> irréductible dans ℤ[<I>i</I>] avec <I>b</I>≠ 0 ou 
+<I>a</I>≠ 0.
+On en déduit que <I>g</I>=<I>gcd</I>(<I>a</I>,<I>b</I>)=1 car sinon <I>a</I>+<I>i</I>*<I>b</I> ne serait pas 
+irréductible car on aurait (<I>a</I>+<I>ib</I>)=<I>g</I>*(<I>a</I>/<I>g</I>+<I>ib</I>/<I>g</I>).
+Montrons tout d’abord que <I>p</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> est un nombre premier de ℤ .<BR>
+On a <I>p</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>=(<I>a</I>+<I>ib</I>)(<I>a</I>−<I>ib</I>) avec <I>a</I>+<I>ib</I> irréductible dans ℤ[<I>i</I>] donc
+(<I>a</I>+<I>ib</I>) divise <I>p</I><SUB>0</SUB> un diviseur premier de <I>p</I> dans ℤ .
+Il existe donc il existe <I>c</I> et <I>d</I> dand ℕ tels que :<BR>
+<I>p</I><SUB>0</SUB>=(<I>a</I>+<I>ib</I>)*(<I>c</I>+<I>id</I>) avec <I>c</I><SUP>2</SUP>+<I>d</I><SUP>2</SUP>≠ 1.<BR>
+En égalant le carré des modules on obtient :<BR>
+<I>p</I><SUB>0</SUB><SUP>2</SUP>=(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)(<I>c</I><SUP>2</SUP>+<I>d</I><SUP>2</SUP>) où <I>p</I><SUB>0</SUB> est un nombre premier de ℤ
+comme <I>c</I><SUP>2</SUP>+<I>d</I><SUP>2</SUP>≠ 1 et (<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)≠ 1 (puisque <I>b</I>≠ 0 ou <I>a</I>≠ 0), 
+on a <I>p</I><SUB>0</SUB>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>=<I>c</I><SUP>2</SUP>+<I>d</I><SUP>2</SUP>.
+Donc si <I>a</I>+<I>ib</I> est irréductible dans ℤ[<I>i</I>] avec <I>b</I>≠ 0 ou <I>a</I>≠ 0
+alors (<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>) est premier.<BR>
+Donc <I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> est congru à 1 ou 2 modulo 4.<BR>
+Si <I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> est congru à 2 modulo 4 c’est que <I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>=2 (car (<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>) 
+est premier) et alors <I>a</I>=1 et <I>b</I>=1 sinon <I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> est congru à 1 modulo 4.
+</LI></OL><P>
+<B>Exercice</B><BR>
+Écrire un programme <TT>estirreductible</TT>, 
+qui prend en entrée un entier de Gauss <I>z</I> et retourne son type (1, 2 ou 3)
+si <I>z</I> est irréductble, et <TT>0</TT> sinon.
+</P><PRE CLASS="verbatim">estirreductible(z):={
+local p,m,n;
+m:=abs(re(z));
+n:=abs(im(z));
+//if(type(m)!=2 or type(n)!=2){return faux; }:
+if (z*conj(z)==1){return 0};
+if (m==0) {m:=n;n:=0;}
+if (n==0) {if (m&gt;2 and irem(m-3,4)==0){return 3; }};
+if (m==1 and n==1) {return 1; };
+p:=m^2+n^2;
+if (est_premier(p) and irem(p-1,4)==0){return 2; } else {return 0;} 
+}
+:;
+</PRE><P><B>Exercice</B><BR>
+Écrire un programme qui décompose un entier de Gauss en un produit de
+facteurs irréductbles.
+</P><PRE CLASS="verbatim">decompose(z):={
+local p,L1,L2,L3,s2,s0,s1,s3,k,c,lc,fc,j,z1,d;
+L1:=NULL;
+L3:=NULL;
+//if (im(z)==0) {p:=abs(z);} else {p:=z*conj(z);}
+p:=z*conj(z);
+L2:=ifactors(p);
+s2:=size(L2);
+c:=L2[0];
+s0:=0;
+if (c==2) {L1:=L1,1+i,,L2[1];s0:=2;z:=z/(1+i);}
+for (k:=s0;k&lt;s2;k:=k+2) {
+c:=L2[k];d:=L2[k+1];
+if (irem(c-1,4)==0) {
+   lc:=pa2b2(c);
+   fc:=lc[1]+i*lc[0];
+   j:=0;z1:=z;
+   while(irem(z1,fc)==0) 
+     {j:=j+1;
+       z1:=z1/fc;
+      }
+     if (j!=0 and j!=d) {
+     L1:=L1,fc,j,conj(fc),d-j;
+     z:=z/fc^j;z:=z/conj(fc)^(d-j);}
+else {
+    if (j==0) {L1:=L1,conj(fc),d;z:=z/conj(fc)^(d-j)}
+else {L1:=L1,fc,j;z:=z/fc^j;}}
+}
+if (irem(c-3,4)==0) {L3:=L3,c,d/2;z:=z/c^(d/2);}
+}
+if (z==1){
+ return [L1,L3];}
+ else
+{return [z,1,L1,L3];}
+}
+:;
+</PRE><P>Ou bien, on utilise la commande <TT>ifactors</TT> ou la commande <TT>ifactor</TT>.
+</P><H2 CLASS="section"><A NAME="toc33"></A><A NAME="htoc93">5.3</A>  Les nombres décomposables</H2><P>
+<B>Définition</B><BR>
+On dit que <I>n</I> ∈ ℤ − {−1,0,1} est <B>décomposable</B>, si pour tout 
+diviseur premier <I>p</I> de 1+<I>n</I><SUP>2</SUP> il existe <I>d</I>∈ ℕ vérifiant <I>d</I>&lt;<I>abs</I>(<I>n</I>) 
+et tel que 1+<I>d</I><SUP>2</SUP> soit un multiple de <I>p</I>.<BR>
+<B>Par exemple</B><BR>
+8 est <B>décomposable</B> car 1+8<SUP>2</SUP>=65=5*13 et on a 
+5 divise 1+2<SUP>2</SUP>=5 (<I>d</I>=2) et 13 divise 1+5<SUP>2</SUP>=26 (<I>d</I>=5).<BR>
+17 est <B>décomposable</B> car 1+17<SUP>2</SUP>=290=2*5*29 et on a 
+2 divise 1+1<SUP>2</SUP>=2 (<I>d</I>=1) et 5 divise 1+2<SUP>2</SUP>=5 (<I>d</I>=2) et 
+29 divise 1+12<SUP>2</SUP>=145=29*5 (<I>d</I>=12).<BR>
+6 est <B>non décomposable</B> car 1+6<SUP>2</SUP>=37=1*37 et on a 
+1 divise 1+2<SUP>2</SUP>=5 (<I>d</I>=2) mais 37 ne divise pas 1+<I>d</I><SUP>2</SUP> quelque soit
+0≤ <I>d</I>≤ 5 (car 37&gt; (1+<I>d</I><SUP>2</SUP>) lorsque 0≤ <I>d</I>≤ 5).<BR>
+19 est <B>non décomposable</B> car 1+19<SUP>2</SUP>=362=2*181 et on a 
+2 divise 1+3<SUP>2</SUP>=10 (<I>d</I>=2) mais 181 ne divise pas 1+<I>d</I><SUP>2</SUP> quelque soit
+0≤ <I>d</I>≤ 18 (car 180 n’est pas un carré).<BR>
+<B>Exercice</B><BR>
+Écrire une fonction <TT>Xcas</TT> <TT>estdecomposable</TT>, 
+qui prend en entrée un entier <I>n</I>, et retourne le booléen <TT>vrai</TT>
+si <I>n</I> est d’ecomposable, <TT>faux</TT> sinon.<BR>
+Et vérifier que les premiers entiers décomposables sont :<BR>
+<TT>3,7,8,12,13,17,18,21,23,27,30</TT><BR><BR>
+Les différentes solutions avec des algorithmes de plus en plus performents.
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<B>Algorithme 0</B><BR>
+L’<B>Algorithme 0</B> est un algorithme naif qui pour tout diviseur premier
+de 1+<I>n</I><SUP>2</SUP> cherche l’existence de <I>d</I> par balayage (la variable <I>t</I> sert de 
+test ). Avec cet algorithme, si <I>n</I> est décomposable on trouve le plus petit 
+entier <I>d</I> : 
+<PRE CLASS="verbatim">estdeconposable0(n):={
+local p,Lf,k,p1,d,t,s;
+n:=abs(n);
+p:=1+n^2;
+if (isprime(p)) {return faux};
+Lf:=ifactors(p);
+s:=size(Lf);
+for (k:=0;k&lt;s;k:=k+2){
+p1:=Lf[k];
+d:=1;
+t:=0;
+while(t!=1 and d&lt;n) {
+if (irem(1+d^2,p1)==0) {t:=1;afficher(d,p1);};
+d:=d+1;
+}
+if (t==0){return faux;}
+}
+return vrai;
+}:;
+</PRE></LI><LI CLASS="li-itemize"><B>Algorithme 1</B><BR>
+L’<B>Algorithme 1</B> va faire appel aux nombres complexes.<BR>
+<I>N</I>=1+<I>n</I><SUP>2</SUP> est la norme au carrée de <I>z</I>=1+<I>i</I>*<I>n</I> et soit <I>p</I> un diviseur premier
+de <I>N</I>.<BR>
+Donc <I>p</I> divise (1+<I>in</I>)(1−<I>in</I>).<BR>
+
+<UL CLASS="itemize"><LI CLASS="li-itemize">
+<I>p</I> n’est pas congru à 3 modulo 4.<BR>
+ En effet si <I>p</I> est congru à 3 modulo 4, <I>p</I> est irréductible dans ℤ[<I>i</I>]
+donc <I>p</I> divise 1+<I>in</I> ou 1−<I>in</I>. Cela veut dire qu’il existe <I>x</I> ∈ ℤ et 
+<I>y</I> ∈ ℤ tel que <I>p</I>(<I>x</I>+<I>iy</I>)=1+<I>in</I> (ou <I>p</I>(<I>x</I>+<I>iy</I>)=1−<I>in</I>) ce qui est impossible car 
+<I>p</I> diviserait 1 puisqu’en égalant les parties réelles on a <I>p</I>*<I>x</I>=1
+</LI><LI CLASS="li-itemize"><I>p</I> n’est pas congru à 0 modulo 4 car <I>p</I> est premier
+</LI><LI CLASS="li-itemize"><I>p</I>=2 ou <I>p</I> est congru à 1 modulo 4
+En effet si <I>p</I> est congru à 2 modulo 4 c’est que <I>p</I>=2 car <I>p</I> est premier
+</LI></UL>
+On sait que tout nombre premier <I>p</I> congru à 1 modulo 4 est la somme des
+carrés de 2 entiers donc il existe <I>a</I>∈ ℕ et <I>b</I>∈ <I>N</I>:<BR>
+<I>p</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>.<BR>
+On cherche les entiers <I>d</I> qui sont tels que :<BR>
+<I>p</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>=(<I>a</I>+<I>i</I>*<I>b</I>)(<I>a</I>−<I>i</I>*<I>b</I>) divise 1+<I>d</I><SUP>2</SUP>=(1+<I>i</I>*<I>d</I>)(1−<I>i</I>*<I>d</I>) donc<BR>
+on cherche les entiers <I>d</I> ∈ <I>Z</I> qui sont tels que :<BR>
+<I>a</I>+<I>i</I>*<I>b</I> divise 1+<I>i</I>*<I>d</I> c’est à dire tel qu’il existe <I>u</I> et <I>v</I> vérifiant :<BR>
+(<I>a</I>+<I>ib</I>)(<I>u</I>+<I>iv</I>)=1+<I>i</I>*<I>d</I><BR>
+donc <I>au</I>−<I>bv</I>=1 et <I>av</I>+<I>bu</I>=<I>d</I><BR>
+Tous les <I>d</I> sont congrus modulo <I>p</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> (car si <I>au</I>0−<I>bv</I>0=1 et
+<I>au</I>−<I>bv</I>=1 alors <I>u</I>=<I>u</I>0+<I>k</I>*<I>b</I> et <I>v</I>=<I>v</I>0+<I>k</I>*<I>a</I>)<BR>
+<PRE CLASS="verbatim">estdecomposable1(n):={
+local p,N,Lf,k,d,d1,a,b,L,a1,b1,s;
+n:=abs(n);
+N:=1+n^2;
+if (isprime(N)) {return faux};
+Lf:=ifactors(N);
+s:=size(Lf);
+for (k:=0;k&lt;s;k:=k+2){
+p:=Lf[k];
+if (p!=2){
+//on irem(p,4)==1 et p premier
+a,b:=pa2b2(p);
+if (a!=1 and b!=1) {
+L:=iegcd(a,b);
+a1:=L[0];
+b1:=-L[1];
+d:=irem(b*a1+a*b1,p);
+d1:=irem(-b*a1-a*b1,p);
+//afficher(d,d1,p);
+};
+if (d&gt;=n et d1&gt;=n) {return faux;}
+}
+}
+return vrai;
+}:;
+</PRE></LI><LI CLASS="li-itemize"><B>Algorithme 2</B><BR>
+l’<B>Algorithme 2</B> simplifie l’algorithme1 puisque <I>n</I> et −<I>n</I> se trouve 
+être un <I>d</I> particuler, donc le plus petit <I>d</I> est égal 
+à <I>n</I> mod<I>p</I> ou à −<I>n</I> mod<I>p</I>.
+<PRE CLASS="verbatim">estdecomposable2(n):={
+local p,N,Lf,k,d,a,b,d1,s;
+n:=abs(n);
+N:=1+n^2;
+if (isprime(N)) {return faux};
+Lf:=ifactors(N);
+s:=size(Lf);
+for (k:=0;k&lt;s;k:=k+2){
+p:=Lf[k];
+if (p!=2){
+d:=irem(n,p);
+d1:=irem(-n,p);
+afficher(d,d1,p);}
+if (d1&gt;=n et d &gt;=n){return faux;}
+}
+}
+return vrai;
+}:;
+</PRE></LI><LI CLASS="li-itemize"><B>Algorithme</B><BR>
+L’<B>Algorithme</B> (le bon !!!!) utilise le théorme suivant :<BR>
+<B>Théorème 1</B>:<BR>
+Si <I>p</I> est premier et est congru à 1 modulo 4 alors il existe <I>a</I> et <I>b</I> tel 
+que <I>p</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> et il existe <I>u</I>+<I>iv</I> unique tel que :<BR>
+(<I>a</I>+<I>ib</I>)(<I>u</I>+<I>iv</I>)=1+<I>im</I> avec <I>m</I>∈ ℤ, <I>abs</I>(<I>m</I>)&lt;<I>p</I>/2 et <I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>≤ 0.29<I>p</I><BR>
+Cela entraine que si <I>p</I> est premier et congru à 1 modulo 4 alors il existe 
+<I>m</I> ∈ ℤ tel que <I>p</I> divise 1+<I>m</I><SUP>2</SUP> et <I>m</I> est unique dans ]−<I>p</I>/2;<I>p</I>/2[.<BR>
+
+<B>Démonstration</B><BR>
+Soit <I>p</I>∈ ℕ un nombre premier congru à 1 modulo 4 il existe <I>a</I> et <I>b</I> 
+tel que <I>p</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>.<BR>
+On cherche <I>u</I>, <I>v</I>,<I>m</I> ∈ ℤ<SUP>3</SUP> de valeur absolue la plus petite possible tels 
+que :<BR>
+(<I>a</I>+<I>ib</I>)(<I>u</I>+<I>iv</I>)=1+<I>im</I><BR>
+on a donc :<BR>
+<I>au</I>−<I>bv</I>=1 et <I>av</I>+<I>bu</I>=<I>m</I>.
+Puisque <I>p</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> est premier <I>a</I> et <I>b</I> sont premier entre eux donc il 
+existe <I>u</I> et <I>v</I> (identité de Bézout) tels que :<BR>
+<I>au</I>−<I>bv</I>=1 et les solutions sont de la forme :<BR>
+<I>u</I>=<I>u</I><SUB>0</SUB>+<I>kb</I> <I>v</I>=<I>v</I><SUB>0</SUB>+<I>ka</I>  <I>k</I>∈ ℤ où <I>u</I><SUB>0</SUB>,<I>v</I><SUB>0</SUB> est une solution 
+particulière de <I>au</I>−<I>bv</I>=1.<BR>
+On a donc :<BR>
+(<I>a</I>+<I>ib</I>)(<I>u</I>0+<I>iv</I>0+<I>k</I>(<I>b</I>+<I>ia</I>))=1+<I>im</I><BR>
+(<I>a</I>+<I>ib</I>)(<I>u</I>0+<I>iv</I>0)+<I>ik</I>(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)=1+<I>im</I><BR>
+Donc : <I>m</I>=<I>av</I><SUB>0</SUB>+<I>bu</I><SUB>0</SUB>+<I>k</I>(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)  <I>k</I>∈ ℤ c’est à dire les <I>m</I> solutions 
+sont ègaux modulo <I>p</I>.<BR>
+Comme <I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>=<I>p</I> est impair on en déduit qu’il existe un <I>m</I><SUB>0</SUB> et un seul 
+tel que |<I>m</I><SUB>0</SUB>|&lt;<I>p</I>/2 (<I>m</I> ∈ {(1−<I>p</I>)/2,..−1,0,1... (<I>p</I>−1)/2 }).<BR>
+Comme (<I>a</I>+<I>ib</I>)(<I>u</I>+<I>iv</I>)=1+<I>im</I><SUB>0</SUB>, on a (<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)(<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)=1+<I>m</I><SUB>0</SUB><SUP>2</SUP>=<I>p</I>(<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)
+Puisque <I>p</I> est un nombre premier congru à 1 modulo 4, on a <I>p</I>≥ 5 donc
+<I>p</I><SUP>2</SUP>≥ 25 ou encore 1/<I>p</I>≤ <I>p</I>/25 donc :<BR>
+<I>p</I>(<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)=1+<I>m</I><SUB>0</SUB><SUP>2</SUP>&lt;1+<I>p</I><SUP>2</SUP>/4 donc<BR>
+(<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)≤ 1/<I>p</I>+<I>p</I>/4&lt;<I>p</I>/25+<I>p</I>/4=0.29<I>p</I><BR>
+On tape :
+<PRE CLASS="verbatim">estdecomposable(n):={
+local p,N,Lf,k,d,d1,s,s1;
+n:=abs(n);
+N:=1+n^2;
+if (isprime(N)) {return faux};
+Lf:=ifactors(N);
+s:=size(Lf);
+p:=Lf[0];
+if (p==2){s1:=2} else {s1:=0};
+for (k:=s1;k&lt;s;k:=k+2){
+p:=Lf[k];
+//on a irem(p,4)==1 et p premier
+if (abs(n)&lt;p/2) {return faux;}
+}
+return vrai;
+}:;
+</PRE></LI></UL><P>
+On tape pour avoir la liste des nombres décomposables plus petit que <I>n</I> :
+</P><PRE CLASS="verbatim">Lestdecomposable(n):={
+local L,k;
+L:=NULL;
+for (k:=1;k&lt;=n;k++){
+if (estdecomposable(k)) {
+L:=L,k;
+}
+}
+return L;
+}:;
+</PRE><P><TT>Lestdecomposable(35)</TT><BR>
+On obtient :<BR>
+<TT>3,7,8,13,17,18,21,30,31,32</TT>
+</P><H2 CLASS="section"><A NAME="toc34"></A><A NAME="htoc94">5.4</A>  Les nombres complétables</H2><P>
+<B>Definition</B> :<BR>
+On dit que le nombre <I>z</I>=<I>a</I>+<I>ib</I> est complétable si il existe <I>u</I>+<I>iv</I> ∈ ℤ[<I>i</I>] 
+et <I>m</I>∈ ℤ tel que : (<I>a</I>+<I>ib</I>)(<I>u</I>+<I>iv</I>)=1+<I>im</I> .<BR>
+<B>Théorème2</B> :<BR>
+Si <I>a</I> et <I>b</I> sont premiers entre eux alors <I>z</I>=<I>a</I>+<I>ib</I> est complétable.
+De plus, si <I>a</I>≠ 1 et <I>b</I>≠ 1, il existe <I>u</I>,<I>v</I>,<I>m</I> ∈ ℤ<SUP>3</SUP> uniques tel 
+que (<I>a</I>+<I>ib</I>)(<I>u</I>+<I>iv</I>)=1+<I>im</I> et |<I>m</I>|&lt;(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)/2 et <I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>&lt;0.29(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>).<BR>
+De plus <I>u</I> et <I>v</I> sont premiers entre eux et donc <I>u</I>+<I>iv</I> et <I>u</I>−<I>iv</I> sont
+complétables.<BR>
+<B>Démonstration</B><BR>
+C’est le théorème1 sans l’hypothèse <I>p</I>=<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> premier.<BR>
+Tout d’abord 1+<I>in</I> et <I>n</I>+<I>i</I> sont complétables car (1+<I>in</I>)*1=1+<I>in</I> et 
+(<I>n</I>+<I>i</I>)*(−<I>i</I>)=1−<I>in</I> et on a <I>n</I>&lt;(1+<I>n</I><SUP>2</SUP>)/2 si et seulement si <I>n</I>≠ 1.<BR>
+Soient <I>a</I>≠ 1 et <I>b</I>≠ 1 premiers entre eux et <I>z</I>=<I>a</I>+<I>ib</I>.<BR>
+On suppose donc que <I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>≥ 5.<BR>
+On a vu (cf th 1) que les <I>m</I> vérifiant (<I>a</I>+<I>ib</I>)(<I>u</I>+<I>iv</I>)=1+<I>im</I> sont congru 
+modulo <I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>.<BR>
+On va considérer 2 cas :
+</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> est impair i.e. <I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>=2<I>q</I>+1<BR>
+il existe donc un <I>m</I> unique dans {−<I>q</I>,−<I>q</I>+1...−1,0,1,..<I>q</I>} donc<BR>
+<I>m</I>≤ <I>q</I>&lt;<I>q</I>+1/2=(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)/2
+</LI><LI CLASS="li-itemize"><I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP> est pair i.e. <I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>=2<I>q</I> et <I>q</I>&gt;2<BR>
+
+il existe donc un <I>m</I> unique dans {−<I>q</I>+1...−1,0,1,..<I>q</I>}.<BR>
+Mais on ne peut pas avoir <I>m</I>=<I>q</I> car alors on aurait :<BR>
+(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)(<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)=2<I>q</I>(<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)=1+<I>q</I><SUP>2</SUP> donc <I>q</I> diviserait 1.<BR>
+Donc il existe un <I>m</I> unique dans {−<I>q</I>+1...−1,0,1,..<I>q</I>−1} donc :<BR>
+<I>m</I>≤ <I>q</I>−1&lt;<I>q</I>=(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)/2.
+</LI></UL><P>
+Puisque <I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>≥ 5 on a (<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)<SUP>2</SUP>≥ 25 ou encore :<BR>
+1/(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)≤ (<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)/25 donc :<BR>
+(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)(<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)=1+<I>m</I><SUP>2</SUP>&lt;1+(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)<SUP>2</SUP>/4 donc<BR>
+(<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)&lt; 1/(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)+(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)/4≤ (1/25+1/4)(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)=0.29(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>).<BR>
+
+Le programme <TT>complete</TT> ci-dessous a comme argument <I>z</I>=<I>a</I>+<I>in</I> et
+renvoie <I>u</I>+<I>iv</I>,1+<I>im</I> avec 
+(<I>a</I>+<I>ib</I>)(<I>u</I>+<I>iv</I>)=1+<I>im</I>  et  −(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)/2&lt;<I>m</I>&lt;(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>)/2
+</P><PRE CLASS="verbatim">complete(z):={
+local p,m,a,b,u,v,L;
+a:=re(z);
+b:=im(z);
+p:=a^2+b^2;
+if (gcd(a,b)!=1){ return faux;}
+if (a==1) {return 1,1+i*b};
+if (b==1) {return -i,1-i*a};
+L:=iegcd(a,b);
+u:=L[0];
+v:=-L[1];
+m:=irem(b*u+a*v,p);
+if (m&gt;p/2){m:=m-p;}
+return u+i*v,1+i*m;
+}:;
+</PRE><P>Si on veut une liste des nombres qui complétent le nombre complétable 
+<I>a</I>+<I>ib</I>, on tape :
+</P><PRE CLASS="verbatim">Lcomplete(z):={
+local L,z1,a1,b1,d1,k,b,a ;
+L:=complete(z);
+z1:=L[0];
+a1:=re(z1);
+b1:=im(z1);
+a:=re(z);
+b:=im(z);
+d1:=L[1];
+return ([a1+k*b+i*b1+i*k*a,d1+i*k*abs(z)^2])$(k=-5..5);
+}:;
+</PRE><H2 CLASS="section"><A NAME="toc35"></A><A NAME="htoc95">5.5</A>  L’algorithme de Todd</H2><P><A NAME="sec:Todd"></A>
+</P><H3 CLASS="subsection"><A NAME="htoc96">5.5.1</A>  Le Théorème3</H3><P>
+Soit <I>n</I>≥ 2 un entier décomposable (i.e. pour tout diviseur premier <I>p</I> de 
+1+<I>n</I><SUP>2</SUP> et il existe <I>d</I>, 0&lt;<I>d</I>&lt;<I>n</I>, tel que <I>p</I> soit aussi un diviseur 
+premier de 1+<I>d</I><SUP>2</SUP>).<BR>
+Il existe un entier <I>M</I>&gt;1 et des entiers <I>w</I><SUB><I>j</I></SUB> (|<I>w</I><SUB><I>j</I></SUB>|&lt;<I>n</I>) tels que :<BR>
+<I>M</I>(1+<I>in</I>)=є(1+<I>iw</I><SUB>1</SUB>)<SUP><I>a</I><SUB>1</SUB></SUP>(1+<I>iw</I><SUB>2</SUB>)<SUP><I>a</I><SUB>2</SUB></SUP>...(1+<I>iw</I><SUB><I>k</I></SUB>)<SUP><I>a</I><SUB><I>k</I></SUB></SUP> (є ∈ {1,−1,<I>i</I>,−<I>i</I>}).<BR>
+Cette formule donne en égalant les arguments :<BR>
+atan(<I>n</I>)=<I>arg</I>(є)+∑<SUB><I>j</I>=1</SUB><SUP><I>k</I></SUP><I>a</I><SUB><I>j</I></SUB>atan(<I>w</I><SUB><I>j</I></SUB>)+<I>m</I>π.<BR>
+et puisque pour <I>x</I>&gt;0 on a :<BR>
+atan(<I>x</I>)+atan(1/<I>x</I>)=π/2<BR>
+on a aussi :<BR>
+atan(1/<I>n</I>)=−<I>arg</I>(є)+∑<SUB><I>j</I>=1</SUB><SUP><I>k</I></SUP>atan(1/<I>w</I><SUB><I>j</I></SUB>)+<I>q</I>*π.<BR>
+
+Soit <I>n</I>≥ 2 un entier décomposable. L’algorithme de Todd factorise
+1+<I>in</I> et compléte par <I>u</I>+<I>iv</I> chaque facteur irréductible <I>a</I>+<I>ib</I> si 
+<I>a</I>≠ 1 ou <I>b</I>≠ 1 pour avoir (<I>a</I>+<I>ib</I>)(<I>u</I>+<I>iv</I>)=1+<I>im</I><BR>
+Par exemple si (1+<I>in</I>)=(<I>a</I>+<I>ib</I>)*<I>z</I>1, on obtient :<BR>
+(1+<I>in</I>)(<I>u</I>+<I>iv</I>)(<I>u</I>−<I>iv</I>)=(<I>a</I>+<I>ib</I>)(<I>u</I>+<I>iv</I>)(<I>u</I>−<I>iv</I>)<I>z</I>1 donc<BR>
+(1+<I>in</I>)(<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)=(1+<I>im</I>)(<I>u</I>−<I>iv</I>)<I>z</I>1<BR>
+Si <I>u</I>==1 ou <I>v</I>==1 on s’occupe d’un autre facteur irréductible, sinon
+on compléte (<I>u</I>+<I>iv</I>)....<BR>
+Comme (<I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP>)&lt;0.29(<I>a</I><SUP>2</SUP>+<I>b</I><SUP>2</SUP>) <I>u</I><SUP>2</SUP>+<I>v</I><SUP>2</SUP> diminue à chaque complétion, donc 
+l’algorithme s’arrête.<BR>
+</P><H3 CLASS="subsection"><A NAME="htoc97">5.5.2</A>  Un Exemple</H3><P> 
+On va montrer sur un exemple comment fonctionne l’algorithme de Todd.<BR>
+Soit <I>n</I>=342 <I>n</I> est décomposable.<BR>
+On tape :<BR>
+<TT>ifactors(1+i*342)</TT><BR>
+On obtient :<BR>
+<TT>[-1,1,2-i,1,10-7*i,1,11-6*i,1]</TT><BR>
+On a : −(2−<I>i</I>)=−2+<I>i</I>=<I>i</I>(1+2<I>i</I>)<BR>
+Donc 1+342<I>i</I>=<I>i</I>(1+2<I>i</I>)(10−7<I>i</I>)(11−6<I>i</I>)<BR>
+On tape :<BR>
+<TT>complete(10-7*i)</TT><BR>
+On obtient :<BR>
+<TT>-2+3*i,1+44*i</TT><BR>
+donc (10−7<I>i</I>)*(−2+3<I>i</I>)=1+44<I>i</I><BR>
+On tape :<BR>
+<TT>complete(-2-3*i)</TT><BR>
+On obtient :<BR>
+<TT>1+i,1-5*i</TT><BR>
+donc<BR>
+(10−7<I>i</I>)(−2+3<I>i</I>)(−2−3<I>i</I>)(1+<I>i</I>)(1−<I>i</I>)=26(10−7<I>i</I>)=(1+44<I>i</I>)(1−5<I>i</I>)(1−<I>i</I>)<BR>
+On tape :<BR>
+<TT>complete(11-6*i)</TT><BR>
+On obtient :<BR>
+<TT>-1+2*i,1+28*i</TT><BR>
+donc (11−6*<I>i</I>)(−1+2<I>i</I>)=1+28<I>i</I><BR>
+donc (11−6*<I>i</I>)(−1+2<I>i</I>)(−1−2<I>i</I>)=5(11−6*<I>i</I>)=(1+28<I>i</I>)(−1−2<I>i</I>)<BR>
+Donc puisque −(2−<I>i</I>)=<I>i</I>(1+2<I>i</I>) on a :<BR>
+5*26(1+342<I>i</I>)=<I>i</I>(1+2<I>i</I>)(1+44<I>i</I>)(1−5<I>i</I>)(1−<I>i</I>)(1+28<I>i</I>)(−1−2<I>i</I>)<BR>
+130(1+342<I>i</I>)=−<I>i</I>(1−<I>i</I>)(1+2<I>i</I>)<SUP>2</SUP>(1−5<I>i</I>)(1+28<I>i</I>)(1+44<I>i</I>)
+</P><H3 CLASS="subsection"><A NAME="htoc98">5.5.3</A>  Exercice</H3><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+Soit <I>f</I>(<I>x</I>)=atan(<I>x</I>)+atan(1/<I>x</I>).<BR>
+Déterminer le domaine de définition de <I>f</I>.<BR>
+Calculer <I>f</I>′(<I>x</I>) puis montrer que :
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">atan(<I>x</I>)+atan(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)=</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">  si <I>x</I>&gt;0</TD></TR>
+</TABLE>
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">atan(<I>x</I>)+atan(</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>x</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">)=−</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">π</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">  si <I>xx</I>0</TD></TR>
+</TABLE>
+</LI><LI CLASS="li-enumerate">Soit <I>g</I>(<I>x</I>)=atan(<I>x</I>+<I>a</I>/1−<I>ax</I>)−atan(<I>x</I>) pour <I>a</I>∈ ℝ
+Déterminer le domaine de définition de <I>g</I>.<BR>
+Calculer <I>g</I>′(<I>x</I>) puis montrer que :<BR>
+si <I>ab</I>&lt;1 alors atan(<I>a</I>)+atan(<I>b</I>)=atan((<I>a</I>+<I>b</I>)/(1−<I>ab</I>)) et<BR>
+si <I>ab</I>=1 et <I>a</I>&gt;0 alors atan(<I>a</I>)+atan(<I>b</I>)=π/2 et<BR>
+si <I>ab</I>=1 et <I>a</I>&lt;0 alors atan(<I>a</I>)+atan(<I>b</I>)=−π/2.<BR>
+si <I>ab</I>&gt;1 et <I>a</I>&gt;0 alors atan(<I>a</I>)+atan(<I>b</I>)=π+atan((<I>a</I>+<I>b</I>)/(1−<I>ab</I>)) et<BR>
+si <I>ab</I>&gt;1 et <I>a</I>&lt;0 alors atan(<I>a</I>)+atan(<I>b</I>)=−π+atan((<I>a</I>+<I>b</I>)/(1−<I>ab</I>)).
+</LI><LI CLASS="li-enumerate">En déduire que :<BR>
+atan(28)+atan(44)=π+atan(−72/1231)<BR>
+2atan(2)+atan(−5)=π+atan(−4/3)+atan(−5)=atan(19/17)<BR>
+π+atan(−72/1231)+atan(19/17)=π+atan(341/343) donc<BR>
+<I>atan</I>(−1)+2atan(2)−atan(5)+atan(28)+atan(44)=π+<I>atan</I>(−1)+atan(341/343)=<BR>
+π−atan(1/342)=π/2+atan(342)<BR>
+Donc puisque atan(−1)=−π/4 et puisque pour <I>x</I>&gt;0 on a :<BR>
+atan(<I>x</I>)+atan(1/<I>x</I>)=π/2 on obtient :<BR>
+atan(342)=−3π/4+2atan(2)−atan(5)+atan(28)+atan(44)<BR>
+Donc puisque pour <I>x</I>&gt;0 on a atan(<I>x</I>)+atan(1/<I>x</I>)=π/2<BR>
+atan(1/342)=−π/4+2atan(1/2)−atan(1/5)+atan(1/28)+atan(1/44)
+</LI></OL><H3 CLASS="subsection"><A NAME="htoc99">5.5.4</A>  Un programme qui simplie les formules précédentes</H3><P>
+On peut écrire un petit programme <TT>ajuste</TT> pour simplifier :
+∑<SUB><I>j</I>=1</SUB><SUP><I>k</I></SUP><I>a</I><SUB><I>j</I></SUB>atan(<I>w</I><SUB><I>j</I></SUB>).<BR>
+<TT>ajuste</TT> a comme argument la liste formée par les arguments <I>w</I><SUB><I>j</I></SUB> des 
+arcs tangentes en répétant <I>a</I><SUB><I>j</I></SUB> fois <I>w</I><SUB><I>j</I></SUB> et renvoie <TT>C,a</TT> 
+tel que :<BR>
+∑<SUB><I>j</I>=1</SUB><SUP><I>k</I></SUP><I>a</I><SUB><I>j</I></SUB>atan(1/<I>w</I><SUB><I>j</I></SUB>)=<I>C</I>+atan(<I>a</I>).<BR>
+Par exemple pour la formule :<BR>
+atan(−1)+2atan(2)−atan(5)+atan(28)+atan(44).
+on met comme argument la liste <TT>L:=[-1,2,2,-5,28,44]</TT> et <TT>ajuste(L)</TT>
+renvoie <TT>pi,-1/342</TT>.<BR>
+On définit <I>f</I> la fonction <I>f</I> par :<BR>
+<TT>f(a,b):=(a+b)/(1-a*b);</TT><BR>
+Pour simplifier atan(<I>a</I>)+atan(<I>b</I>), on écrit tout d’abord la fonction 
+<TT>simpl(a,b)</TT> qui renvoie <TT>C,c</TT> tel que :<BR>
+atan(<I>a</I>)+atan(<I>b</I>)=<I>C</I>+atan(<I>c</I>)<BR>
+Puis, on écrit <TT>ajuste(L)</TT> qui renvoie <TT>C,c</TT> tel que :<BR>
+∑<SUB><I>j</I></SUB>atan(<I>L</I>[<I>j</I>])=<I>C</I>+atan(<I>c</I>)
+</P><PRE CLASS="verbatim">f(a,b):=(a+b)/(1-a*b);
+simpl(a,b):={
+local s;
+if (a==0) {return 0,b;}
+if (b==0) {return 0,a;}
+s:=sign(a);
+if (a*b==1) {return s*pi/2,0;}
+if  (a*b&lt;1) {return 0,f(a,b);}
+if  (a*b&gt;1) {return s*pi,f(a,b);}
+}:;
+ajuste(L):={
+local s,a,b,C,c,ajou,k;
+ajou:=0;
+s:=size(L);
+a:=L[0];
+k:=1;
+while (k&lt;s){
+b:=L[k];
+C,c:=simpl(a,b);
+ajou:=ajou+C;
+a:=c;
+k:=k+1;
+}
+return normal(ajou),a;
+}:;
+</PRE><P>On tape : <TT>ajuste([-1,2,2,-5,28,44])</TT><BR>
+On obtient : <TT>pi,-1/342</TT><BR>
+Donc :<BR>
+atan(342)+π/2=atan(−1/342)+π=atan(−1)+2*atan(1/2)−atan(1/5)+atan(1/28)+atan(1/44)<BR>
+Donc :<BR>
+atan(342)=−π/2+atan(−1)+2*atan(2)−atan(5)+atan(28)+atan(44)<BR>
+On tape : <TT>ajuste([-1,1/2,1/2,-1/5,1/28,1/44])</TT><BR>
+On obtient : <TT>0,1/342</TT><BR>
+Donc :<BR>
+atan(1/342)=atan(−1)+2*atan(1/2)−atan(1/5)+atan(1/28)+atan(1/44)<BR>
+
+<B>Remarque</B><BR>
+En utilisant <TT>Lcomplete(11-6*i)</TT> on voit que:<BR>
+(11−6<I>i</I>)(5−9<I>i</I>)=1−129<I>i</I><BR>
+On peut aussi utiliser cette complétion car 123&lt;342/2 et 
+5<SUP>2</SUP>+9<SUP>2</SUP>=106&lt;342/3.<BR>
+On tape :<BR>
+<TT>complete(5+9i)</TT><BR>
+On obtient :<BR>
+<TT>2+i,1+23*i</TT><BR>
+Donc (5+9<I>i</I>)(2+<I>i</I>)=1+23<I>i</I><BR>
+Donc on a :<BR>
+(11−6<I>i</I>)(5−9<I>i</I>)(5+9<I>i</I>)(2+<I>i</I>)(2−<I>i</I>)=5*106(11−6<I>i</I>)=(1−129<I>i</I>)(1+23<I>i</I>)(2−<I>i</I>)<BR>
+On obtient alors :<BR>
+1+342<I>i</I>=<I>i</I>(1+2<I>i</I>)(10−7<I>i</I>)(11−6<I>i</I>)<BR>
+5*106*26(1+342<I>i</I>)=<I>i</I>(1+2<I>i</I>)(1+44<I>i</I>)(1−5<I>i</I>)(1−<I>i</I>)(1−129<I>i</I>)(1+23<I>i</I>)(2−<I>i</I>)<BR>
+13780(1+342<I>i</I>)=(1−<I>i</I>)(1+2<I>i</I>)<SUP>2</SUP>(1−5<I>i</I>)(1+23<I>i</I>)(1+44<I>i</I>)(1−129<I>i</I>)<BR>
+Donc :<BR>
+atan(342)=−π/4+2atan(2)−atan(5)+atan(23)+atan(44)−atan(129)<BR>
+Donc puisque pour <I>x</I>&gt;0 on a atan(<I>x</I>)+atan(1/<I>x</I>)=π/2 on a :<BR>
+atan(1/342)=−π/4+2atan(1/2)−atan(1/5)+atan(1/23)+atan(1/44)−atan(1/129)<BR>
+On tape : <TT>ajust([-1,2,2,-5,23,44,-129])</TT><BR>
+On obtient : <TT>0,1/342</TT><BR>
+On tape : <TT>ajust([-1,1/2,1/2,-1/5,1/23,1/44,-1/129])</TT><BR>
+On obtient : <TT>0,-342</TT><BR>
+<B>Traduction de l’algorithme de Todd en langage </B><B><TT>Xcas</TT></B><BR>
+</P><PRE CLASS="verbatim"> 
+todd(n):={
+ local L,k,s,s1,z,R,Z,Zc,zc,p;
+ //if (estcompletable(n)==faux) {return faux;};
+ L:=ifactors(1+i*n);
+ s:=size(L);
+ R:=NULL;
+ p:=1;
+ for (k:=2;k&lt;s;k:=k+2){
+  z:=L[k];
+  if (im(z)^2==1 or re(z)^2==1) {
+    R:=R,z,L[k+1];}
+  else {
+    Z:=complete(z);
+    R:=R,Z[1],L[k+1];
+    zc:=conj(Z[0]);
+    p:=p*abs(zc)^(2*L[k+1]);
+    while (re(zc)^2!=1 and im(zc)^2!=1){
+      Zc:=complete(zc);
+      R:=R,Zc[1],L[k+1];
+      zc:=conj(Zc[0]);
+      p:=p*abs(zc)^(2*L[k+1]);
+    }
+    R:=R,zc,L[k+1];
+  }
+ }
+ return normal(p),[L[0],1,R];
+}:;
+</PRE><P>On tape :<BR>
+<TT>todd(342)</TT><BR>
+On obtient :<BR>
+<TT>130,[-1,12-i,1,1+44*i,1,1-5*i,1,1-i,1,1+28*i,1,-1-2*i,1]</TT><BR>
+On tape :<BR>
+<TT>todd(266)</TT><BR>
+On obtient :<BR>
+<TT>1850,[i,1,1-80*i,1,1+6*i,1,1-143*i,1,-1+7*i,1]</TT>
+</P><H2 CLASS="section"><A NAME="toc36"></A><A NAME="htoc100">5.6</A>  Pour obtenir une formule de type Machin</H2><P>
+Une formule de type Machin est une formule qui ressemble à :
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">atan(1/<I>n</I>)=<I>k</I>*π+</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>k</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>∑</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I>=0</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>a</I><SUB><I>j</I></SUB>atan(1/<I>wj</I>)</TD></TR>
+</TABLE><P> avec 0&lt;<I>wj</I>&lt;<I>n</I>
+Si le but est d’obtenir une formule avec des arcs tangentes, on modifie 
+l’algorithme précédent pour avoir seulement comme résultat la liste des 
+<I>w</I><SUB><I>j</I></SUB> compté avec leur multiplicité.<BR>
+On tape :
+</P><PRE CLASS="verbatim"> 
+todd2(n):={
+local L,k,s,s1,z,R,Z,Zc,zc,p,RR;
+//if (estcompletable(n)==faux) {return faux;};
+L:=ifactors(1+i*n);
+s:=size(L);
+R:=NULL;
+p:=1;
+for (k:=2;k&lt;s;k:=k+2){
+z:=L[k];
+if (im(z)^2==1 or re(z)^2==1) {R:=R,z,L[k+1];}
+else {Z:=complete(z);
+R:=R,Z[1],L[k+1];
+zc:=conj(Z[0]);
+p:=p*abs(zc)^(2*L[k+1]);
+while (re(zc)^2!=1 and im(zc)^2!=1){
+Zc:=complete(zc);
+R:=R,Zc[1],L[k+1];
+zc:=conj(Zc[0]);
+p:=p*abs(zc)^(2*L[k+1]);
+}
+R:=R,zc,L[k+1];
+}
+}
+RR:=NULL;
+s:=size(R);
+for (k:=0;k&lt;s;k:=k+2){
+if (re(R[k])^2!=1){R[k]:=i*R[k];}
+RR:=RR,(re(R[k])*im(R[k]))$(R[k+1]);
+}
+return sort(RR);
+}
+:;
+</PRE><P>On tape :<BR>
+<TT>todd2(342)</TT><BR>
+On obtient :<BR>
+<TT>-5,-1,2,2,28,44</TT><BR>
+On tape :<BR>
+<TT>ajust(todd2(342))</TT><BR>
+On obtient :<BR>
+<TT>0,1/266</TT><BR>
+Donc :<BR>
+atan(1/342)=atan(−1/5)+atan(−1)+2atan(1/28)+atan(1/44)<BR>
+On tape :<BR>
+<TT>todd2(266)</TT><BR>
+On obtient :<BR>
+<TT>-143,-80,-7,6</TT><BR>
+On tape :<BR>
+<TT>ajust(todd2(266))</TT><BR>
+On obtient :<BR>
+<TT>0,1/266</TT><BR>
+Donc :<BR>
+atan(1/266)=atan(−1/143)+atan(−1/80)+atan(−1/7)+atan(1/6)</P><HR>
+<A HREF="cascas004.html"><IMG SRC="previous_motif.gif" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="contents_motif.gif" ALT="Up"></A>
+<A HREF="cascas006.html"><IMG SRC="next_motif.gif" ALT="Next"></A>
+</BODY>
+</HTML>

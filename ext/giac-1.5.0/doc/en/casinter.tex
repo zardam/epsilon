@@ -1,0 +1,831 @@
+\documentclass{article}
+%\textwidth 11,8 cm
+%\textheight 17 cm
+\textheight 23 cm
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{makeidx}
+\usepackage{times}
+%Uncomment next line for pdflatex and use includegraphics with eps file
+% for latex2html don't use the option [width=\textwidth]
+% check that xfig files are exported magnif 100%
+\usepackage{ifpdf}
+\ifpdf
+ \usepackage[pdftex]{hyperref}
+\else
+%\usepackage[ps2pdf,breaklinks=true,colorlinks=true,linkcolor=red,citecolor=green]{hyperref}
+ \usepackage{pstricks}
+\fi
+\usepackage{graphicx}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage[francais]{babel}
+\usepackage{latexsym}
+
+\newcommand{\R}{{\mathbb{R}}}
+\newcommand{\C}{{\mathbb{C}}}
+\newcommand{\Z}{{\mathbb{Z}}}
+\newcommand{\N}{{\mathbb{N}}}
+\newcommand{\xcas}{{\tt xcas }}
+\newcommand{\asinh}{\,\,\mbox{asinh\,}}
+\newcommand{\atanh}{\,\,\mbox{atanh\,}}
+
+\title{An introduction to the {\tt Xcas} interface}
+\author{Bernard Parisse, University of Grenoble I}
+\date{}
+\makeindex
+\begin{document}
+
+\maketitle
+
+\copyright 2007, 2009 Bernard Parisse. \\
+Released under the Free Documentation License, 
+as published by the Free Software Fundation.
+
+\begin{abstract}
+This document describes the Xcas software, which combines 
+a computer algebra system, a dynamic geometry and a spreadsheet. 
+It will explain how to organize your worksheet. It does not
+explain in details the functions and syntax of the Xcas 
+computer algebra system (see the relevant documentation).
+\end{abstract}
+
+\section{A first session}
+To run \xcas, 
+\begin{itemize}
+\item under Windows\\
+you must select the xcasen program in the Xcas program group
+\item under Linux\\
+type \xcas in a Terminal (xterm, rxvt, ...), 
+or from a Gnome session, select Xcas in the Education menu
+\item Mac OS X.4, 5\\
+click on the \xcas icon in Applications
+\end{itemize}
+
+You should see a new window with a menubar on the top (the main
+menubar), a tab, a line with buttons (including a status button)
+and a large space for this session. The cursor should
+be in what we call the first level of the session, that is in 
+the white space at the right of the number 1 just
+below the session menubar (otherwise click in this white space).
+Type for example {\tt 30!} then hit the return key. 
+You should see the answer and a new white space (with a number
+2 at the left) ready for another entry.
+Try a few more operations, e.g. type {\tt 1/3+1/6}
+and hit return, or use the {\tt Graph} menu, {\tt Curves} then
+{\tt plotfunc}, etc.
+
+You should now have a session with a few numbered pairs of
+input/answers, each pair is named a level. The levels created so far
+are all commandlines (a commandline is where you
+type a command following the computer algebra system syntax).
+Inside Xcas, there are other kinds of levels, the most frequently used
+being comments, programs, geometry (2-d or 3-d) and spreadsheet levels.
+
+The most important editing operations are
+\begin{itemize}
+\item
+use the main menubar to enter an Xcas function name, for example\\
+{\tt CAS->Arithmetic->isprime}\\
+a dialog box appears
+with a short help on the function, some examples and related
+commands
+\item modify an existing input field and reevaluate it after
+it has been modified by hitting the return key.
+\item
+select a level or a group of levels with the mouse.
+Selected level(s) may be moved or erased.
+\item copy-paste, which follows Windows rules (Ctrl-C copy, Ctrl-X cut,
+Ctrl-V paste) or Linux rules (select with the mouse to copy, paste with
+the middle mouse button or with the paste button at the bottom).
+\end{itemize}
+
+Online help may be accessed using the main menubar {\tt Help->Index}
+(short help, click on {\tt Details} for more help inside your browser) 
+and {\tt Help->Manuals}. 
+If you know a function name, you can also type the beginning and hit the
+tabulation key (at the left of the Q key on a qwerty keyboard) or the
+\verb|?| key.
+
+You can save your work using the {\tt Save} button or the
+{\tt File} menu, this menu provides
+other disk and printing operations.
+
+The software configuration parameters are grouped in three sections:
+cas (computer algebra system), geo (geometry and graphics), general
+(everything else). The main menubar {\tt Cfg} items will help
+you modify the configuration (for the cas configuration you may
+also hit the status button, in the middle of the buttons line at 
+the top of the session).
+
+The buttons at the top of the session, just below the tab are:
+\begin{itemize}
+\item at the left, the help button,
+\item in the middle left, the Save button for quick session saving.
+\item in the middle the status button 
+(displaying Config followed by the number of digits,
+the angle unit, etc.), you can hit it to modify
+the cas configuration
+\item at the middle right, a STOP button to interrupt a computation, 
+\item at the right, a kbd switch buttons that make appear or disappear
+a scientific keyboard.
+\item at the right a \framebox{x} that closes the session.
+\end{itemize}
+
+In the next sections, we will explain in more details the
+capabilities of the Xcas interface: online help,
+the different kinds of levels,
+the management of sessions and the configuration.
+
+\section{Online help}
+If you know a commandname but want to check the syntax, type the 
+beginning of the commandname, then the tabulation key, this will
+display the command index, with the current position at the first
+command after the commandname begin. You have a short description
+and a few examples displayed. Left-clicking on an example should
+complete the commandline with this example. Right-clicking will
+fill up the arguments inputlines with the example, so that you
+can modify some of these arguments before hitting OK.
+You can get a more detailled help inside your browser 
+by hitting the Details button (this works for most but not all commands).
+
+If you don't know a commandname, you might find it using the
+menus or browsing the table of contents of the CAS manual. If you
+know the TI89/TI Nspire CAS or the Maple language, you can 
+also try their commandnames.
+
+\section{Level types}
+Each session is a numbered collection of levels, each level 
+has a type: commandline, comment, expression editor,
+spreadsheet, program, 2-d or
+3-d geometry, or logo-like turtle.
+
+\subsection{Commandline}
+If no commandline is available, you can get a new one by the 
+\verb|CAS->New entry|
+menu. You may modify existing commandlines or write in a new
+commandline. The following shortcuts are available
+\begin{itemize}
+\item Tab: show completions
+\item Enter: parse and evaluate the current commandline. You can
+type Enter while the cursor is at any position. A new commandline
+will be added if it was the last level of the session or if
+the next level is not a commandline.
+\item shift-Enter: make a new line in the current commandline
+\item Ctrl-C: copy selection to clipboard
+\item Ctrl-V: paste clipboard
+\item Ctrl-X: cut and copy selection to clipboard
+\item Ctrl-U: erase commandline without copy in the clipboard
+\item Esc: erase commandline with copy in the clipboard
+\item Ctrl-Z: cancel last edit command
+\item up and down: move in the current commandline if it is a
+  multiline commandline
+\item PageUp and PageDown: move to the previous or next level
+\item Ctrl-Up and Ctrl-Down replace the selection with the previous
+or next command that has been validated in a previous commandline
+(history saving mechanism).
+\end{itemize}
+When you evaluate a commandline, a log output may be displayed
+(written in blue over white by default), followed by the answer, which
+might be an equation or a graphic (2-d or 3-d) widget if the
+answer is a graphic object (for lists, the widget type corresponds
+to the type of the last evaluated object).
+
+If you do not want to see the answer displayed (for example if
+you store a large matrix in a variable), just finish
+your commandline by \verb|:;|
+
+\subsection{Comments}
+Comments are inserted using the \verb|CAS->New comment| menu.
+They are by default written in green instead of red over white.
+Comments are not evaluated when pressing Enter (the effect is to
+put the cursor to the next level).
+
+\subsection{Expression editor} \label{sec:eqw}
+Typing the shortcut {\tt Alt-e} 
+or using the menu {\tt Expression->New expression} will
+open an expression editor above the current level. The scientific
+keyboard should automatically appear (press the \framebox{x} button at the 
+top right of the keyboard if you don't want it).
+
+The expression editor lets you enter complex mathematical expression
+in 2-d like on a paper. 
+For example suppose we want to enter
+\[ \left(\frac{x+1}{x+2}\right) \cdot \left(3+\frac{4}{x} \right)^5 \]
+Open an expression editor ({\tt Alt-e}) then type
+\begin{itemize}
+\item $x+1 \ \uparrow$, this will select $x+1$
+\item \verb|/| (for the division)
+\item $x+2 \ \uparrow \ \uparrow$
+\item
+* 3 $\uparrow$ + 4 $\uparrow$ / x
+\item
+$\uparrow \ \uparrow \ \uparrow$ \verb|^| 5
+\end{itemize}
+You can now move the selection in the tree of the expression
+with the arrows keys~:
+\begin{itemize}
+\item $\uparrow$ moves up one level in the tree, that is select the
+function or operator with had the current selection as argument 
+(it also selects the other arguments of the function/operator)
+\item $\downarrow$ moves down one level in the three, that is select
+the first argument of the function/operator of the current selection
+\item $\leftarrow$ or $\rightarrow$ select the left or right brother 
+of the current selection
+\item Ctrl-$\leftarrow$ or Crtl-$\rightarrow$ exchange the current selection
+with it's left or right brother
+\end{itemize}
+
+Another example, let's enter
+\[ \int_0^{+\infty} \frac{1}{1+x^2} \]
+Type {\tt Alt-e} to open a new expression editor
+\begin{itemize}
+\item the $\int$ key on the scientific keyboard or {\tt Ctrl-S} on
+the keyboard, we now have an undefined integral
+\item the \verb|,| key will switch to a defined integral (to do the
+reverse operation, one would select each bound and press the backspace
+key)
+\item $\downarrow$, replace 0 by the function \verb|1/(1+x^2)|
+and $\uparrow$
+\item $\leftarrow$ to select the upper bound
+\item the $\infty$ key on the scientific keyboard to replace the 1
+\item the Enter key to evaluate the integral
+\end{itemize}
+
+We know list the other special keys in the expression editor:
+\begin{itemize}
+\item \verb|"|: 
+Outside edition mode (no visible cursor), 
+edit the selection like in a commandline, this is especially
+useful if you want to edit a function name.
+In edition mode, switch from considering the edit as a string
+or as a normal edit. 
+\item \verb|,|: if a sequence is selected, add a 0 to the end of the
+sequence and select it. If the selection is not a sequence, creates
+a sequence of size 2 with first element the selection, init the second
+element to 0 and select it. You can move the newly created 0 in the
+sequence with Ctrl-$\rightarrow$ and Ctrl-$\leftarrow$.
+\item \verb|(|: if a sequence is selected, make a user function
+applied to this sequence, the name of the user function is initialized
+to \verb|f| and selected (type the function name to replace 
+the \verb|f| by your function name). If a vector is selected, it is replaced
+by a sequence.
+\item \verb|[|: if a sequence is selected, it is replaced by a vector,
+if a vector is selected, an indexed vector/matrix position is created
+where the variable name of the vector/matrix is initialized to
+\verb|m| and selected (type the matrix/list name to replace \verb|m|)
+\item keys in combination with the Ctrl key
+\begin{itemize}
+\item Ctrl-A: select All
+\item Ctrl-C: Copy selection to clipboard (like under windows)
+\item Ctrl-V: Paste selection from clipboard
+\item Ctrl-T: translate selection to \LaTeX\ and copy to clipboard
+(the translation is also copied to the \verb|Msg| output, click
+on the \verb|Msg| button to make it visible or not)
+\item Ctrl-E: eval selection
+\item Ctrl-F: factor selection
+\item Ctrl-N: apply normal on selection
+\item Ctrl-P: apply partfrac on selection
+\item Ctrl-I (or Tab key) completion key (position in index at the function
+whose name begins the same)
+\item Ctrl-R: integral
+\item Ctrl-S: simplify
+\item Ctrl-L: limit
+\item Ctrl-D: derivative
+\item Ctrl-Z: undo
+\item Ctrl-Y: redo
+\end{itemize}
+\end{itemize}
+
+\subsection{Programs}
+Programs may be written in a commandline if they are one or two
+lines long, but for more complex programs, it is a good idea to
+put them in a separate program level, using the
+\verb|Prg->New program| menu. This will open an editor in
+a new level. Type your program (the {\tt Prg} menu may help you
+for the syntax of tests, loops, function definition, etc.), 
+and press the {\tt OK} button once completed. 
+If parse is successfull, you can test your program
+in any commandline.
+
+The \verb|Prg| menu has items to open or
+import an existing (program) file inside the current text, save
+or export the current program (independently from the worksheet). 
+You can also use the menu 
+to insert programming structures. There are buttons to find the
+next occurence of a search string, to parse the current program
+(errors are displayed in the messages area) and to save the
+program (the current filename is displayed at the right of the
+save button).
+
+The keywords of the language are highlighted. In Xcas programming
+mode, the tabulation key may be used for indentation (experimental
+feature).
+
+Tip: before pressing the {\tt OK} button, check the programming
+syntax by looking at the status area button
+in the middle at the top of the session. If you need
+to change the syntax, hit the status button and select the right syntax.
+
+\subsection{Geometry and graphics}
+A graphic output is made of a 2-d or 3-d scene with controls,
+it corresponds to a unique commandline above it. 
+You can create some examples easily using the {\tt Graph} menu.
+
+A geometry figure is the display of a 2-d or 3-d graphic scene 
+representing the graphical objects of the commandlines 
+that are on it's left:
+\begin{itemize}
+\item you may create some geometric objects using the mouse (points,
+lines, triangles, circles, etc.),
+\item alternatively you can enter commandlines, with the help
+of the Geo menu
+\item
+interactive geometry is implemented by moving points in pointer
+mode or by moving special objects called parameters or cursors. 
+\end{itemize}
+
+\subsubsection{Common features}
+The controls are common to 2-d, 3-d graphics or geometry. You can
+move left, right, up and down the window, redefine it using
+coordinates, zoom in and out, pause and restart an animation using the
+buttons and the {\tt M} menu at the right of the graphic, or 
+using the {\tt Graph} menu.
+In 2-d, the coordinates 
+of the mouse are displayed while it is in the graphic area. 
+You can modify the visualization
+window with the mouse (drag will move, 
+use the scroll button for centered zoom in/out, or select an area with
+the right mouse button for an area zoom in).
+In 3-d,
+you can rotate the representation along the current x, y, z axis
+with a mouse drag outside of the scene rendering, or
+by hitting the x,X, y,Y and z,Z key (if the focus is in the 3-d scene).
+
+Note that the controls apply only to the visualization, not to the creation
+of graphic objects. For example, if you create a plot of a function,
+the discretisation parameters for this plot (e.g. minimal value for
+$x$) are fixed and will not change if you move the minimal visualisation
+value using the controls. You must recreate a graphical object if
+you did not choose correctly the parameters. For example if you
+run the command \verb|plot(sin(x))|, the minimal value for computation
+of $x$ will be the default value 
+(Xmin from the Geo configuration, -10 by default). If
+you move the minimal value of $x$ for visualization below Xmin, you will
+not see the plot there. To see the plot below Xmin, you would have
+to specify something like \verb|plot(sin(x),x=-20..0)| and validate
+the commandline. This limitation does not apply to geometric objetcs
+(point, segments, lines and circles) 
+which will always be drawn if they are visible.
+
+A {\tt M} menu is available below the controls (it's items are also available
+from the top {\tt Geo} menu), 
+it contains items to print
+and control the screen. You can export a graph to encapsulated
+postscript and to PNG (you must have the converting tools 
+netpbm or ImageMagic
+installed, this should be installed by the Xcas installer under Windows. If they
+are not installed under Linux, run your software installer or 
+open a Terminal
+and type \\
+\verb|sudo apt-get install imagemagick| \\
+for Debian/Ubuntu distributions or\\
+\verb|sudo yum install imagemagick| \\
+for Fedora-compatible distributions).
+
+Title and axis legends must be part of the command(s) that generate
+the graph or geometry window. For example, try this on a commandline
+\begin{center}
+\verb|f(t):=sin(t);title="Graph of f on a period",|
+\verb|labels=["t","f(t)"],legend=["cm","m"],|
+\verb|plot(f(t),t=-pi..pi,legend="f")|
+\end{center}
+
+\subsubsection{2-d geometry}
+Use the \verb|Geo->New figure->geo2d| menu to make a new 2-d geometry
+session. This will open a new level with a ``subsession'' (group of
+commandlines) at the left,
+a 2-d screen in the middle, and the controls at the right. If there
+are parameters, they will be below the controls at the right.
+The subsession is a list of commandline levels. Evaluation of
+a commandline level will automatically reevaluate all levels
+below (i.e. with a higher level number), therefore if you use
+one level to define an object and modify the definition of this
+object later, all objects depending on this object will be modified.
+Modification of a level defining a point or a 1-d parameter can be
+done interactively with the mouse either in the geometric screen or in the
+parameter area (below the controls).
+
+The geometry level has a mode, which affects how the mouse behave.
+\begin{itemize}
+\item In all modes, right-clicking (or double-clicking) on an object
+displays a dialog box so that you can easily modify the object
+attributes (or delete the object).
+\item In 2-d frame mode, draging the mouse will move the visualization windows
+and scrolling will zoom in/out.
+\item In pointer mode, you can move an existing point, push the mouse 
+near the point (when the mouse is near enough, it will show
+a different cursor) and move the mouse, release it at the
+new postion.
+\item In point mode, the mouse can be used to define new
+points or segments. To define a new
+point, just click somewhere not near another point or segment. To
+define a segment, push the mouse button at the beginning, move
+the mouse, release the mouse at the end of the segment (if
+you release the mouse out of the screen, the segment will be
+cancelled). 
+\item You can draw a few more complex object with the mouse using
+the other modes, like triangles, circles, bisectors, .... 
+\item You may also type Xcas commands (from the Geo menu)
+in a commandline at the left of the graphic. Each command may evaluate
+to a graphic object and be displayed or to a non graphical object which
+may be used later in the construction.
+\end{itemize}
+To erase a geometrical object, right-click on it, select Delete
+or select it's level in the
+subsession at the left, and use the \verb|Edit->Suppress levels|
+menu or Backspace key.
+
+For example, you can click three points with the mouse (in point mode),
+this will create 3 levels with definitions for points A,B,C.
+Then you can make the circle containing A, B, C either by selecting
+the \verb|Circles->circumcircle| mode and click on A,B,C
+or by entering in a commandline the
+\verb|circumcircle| command (menu \verb|Geo->Circles|)\\
+\verb|c:=circumcircle(A,B,C)|
+
+{\bf Remark: how to work with several figures in a tab}\\
+When you create objets in a figure with a mouse, 
+the name of the created object is
+automatically choosen. This name is shared between figures of the same
+tab so that they don't interfer if you have several figures in the
+same tab. If you want to copy a part of a figure in another figure,
+enter in a level of the target figure
+the instruction {\tt eval([ ],1)} where you put inside the brackets
+the names of the objects to be copied (e.g. {\tt eval([A,B,AB],1)}
+will copy A, B and AB from a previous figure to the new figure). 
+If you change the initial figure (where A,
+etc. were defined), you must reeval the instruction in the target figure
+to reflect the changes (press Enter in the first level of the target figure).
+
+\subsubsection{Parameters (cursors)}
+Parameters or cursors are real values which can move in a fixed interval, e.g.
+between -5 and +5. The real value may be changed by moving a cursor
+with the mouse below the controls at the right of the geometrical
+representation. There are two kinds of parameters: formal
+and numeric parameters. Formal parameters have a formal name
+which is used in all exact calculations, and a numeric value
+which is used for all numeric evaluations (including graphical representation
+of objects depending on the parameter). They can therefore be used
+to make an analytical proof of a geometrical theorem using 
+the CAS engine, while displaying
+a figure. Numerical parameters evaluate always to their numerical value, 
+they can
+not be used to make an analytical proof (only to make conjectures 
+like with most interactive geometry softwares).
+
+To add a new parameter, use the {\tt Geo->Edit->Add parameter} menu.
+For example, add a level with \verb|f(x):=a*x^2+b*x+c|
+then define 3 parameters named a, b, c and add the command
+\verb|plot(f(x))|, then move one of them to see the 
+influence of each parameter
+on the shape of the parabola.
+You could also add a level \verb|mini:=solve(diff(f(x),x))| and
+\verb|M:=point(mini[0],f(mini[0]))| to display the minimum.
+Note  that the coordinates of M are displayed in terms of a and b
+under the commandline defining M at the left. You would have to add a level with
+\verb|evalf(coordonnees(M))| to see the current numerical value.
+
+\subsubsection{3-d rendering.}
+There are several options for 3-d graphs rendering that may be
+configured by hitting the cfg button. First, you have to choose
+between intrinsic colors or a scene viewed with 1 to 8 light spots, 
+see below.
+
+Then you can choose the $x$, $y$, $z$ ranged that will be visible.
+The position of the eye visualizing the scene may be changed by
+specifying a plan equation (normal to the vision direction). You
+may also easily change the view point outside of
+the cfg configuration window either with the
+mouse (push outside of the parallelepipedium, drag the mouse
+and release it at your option) or with the x,X, y,Y, z,Z keys to
+rotate around the $x$, $y$ or $z$ axis. 
+
+By hitting the r key or by selecting 
+\verb|M->3-d->Animation rotation|,
+you can get a visualization animation by rotation around the
+origin. By default, it will rotate the viewpoint around the $z$ axis
+but this is configurable from the \verb|cfg| button, you can configure
+\begin{itemize}
+\item \verb|Anim|: what will be animated, viewpoint if bit8 is 1, 
+spot number 7 to 0 if bit 7 to 0 are set to 1. For example, 255 will
+move all spots leaving the viewpoint unchanged.
+\item \verb|t|: interval between 2 redrawing
+\item \verb|n|: number of steps for a round trip
+\item \verb|x|, \verb|y|, \verb|z|: coordinates of the axis
+\item \verb|d|: normally 0, may be non 0 if you want also to move the
+number of image of a programmed animation
+\end{itemize}
+You can specify the axis of rotation in the commandline defining the
+scene by 
+\begin{center}
+\verb|gl_rotation_axis=[x,y,z]| 
+\end{center}
+where \verb|x,y,z|
+are the coordinates of the axis of rotation.
+
+Do not confuse visualization animation with programmed animation
+obtained by instructions like \verb|animate, animate3d, animation|.
+
+\subsubsection{3-d spots}
+If you enable \verb|Lights| in the \verb|cfg| configuration of a 3-d
+graph, the scene will be rendered by the OpenGL lighting
+algorithm. You can enable 1 to 8 spots of light, each is configurable
+(buttons \verb|l1| to \verb|l8|). 
+
+Each spot has geometric properties: it may be a positional spot
+if $w=1$ or a directional spot if $w=0$
+\begin{itemize}
+\item  A positional spot ($w=1$) is
+at position $x,y,z$ and has a direction, defined by 
+\verb|x->, y->, z->|. Light coming from a positional spot may
+be attenuated, the attenuation may depend on the distance between
+the spot and the object (with a quadratic formula, 
+\verb|att0, att1, att2| in the spot configuration), and by the
+cosine of the angle between the spot direction and the segment
+spot-object to an exponent (\verb|exp| in the spot configuration).
+In addition, the spot may light only inside a cone of angle
+configurable by the \verb|cutoff| value (in degrees, use 180
+for no cutoff or a value between 0 and 90). An additional attenuation
+comes from the cosine of the angle incoming direction-normal to the
+object, so that zenithal lighting is maximal.
+\item A directional spot $w=0$ (emulating e.g. Sun light), does not
+attenuate (except for the angle between the direction of the
+spot and the normal). The direction is defined by $x,y,z$.
+\end{itemize}
+
+Objects from the scene may
+have their own properties with respect to three kinds of light:
+\begin{itemize}
+\item ambient light,
+emulating light coming from all directions and diffused
+in all directions without attenuation, 
+\item diffuse light,
+emulating light coming from one direction and diffused in all directions
+with an attenuation factor proportionnal to the cosine of the
+angle of the incoming direction and the normal to the object,
+\item specular light,
+emulating light coming from one direction and reflected 
+preferentially in the direction symmetric with respect to
+the normal of the object.
+\end{itemize}
+In addition, an object may have intrinsic light, called emission.
+Each property must be specified for 4 channels: r (red), b (blue)
+and g (green) for the colors, and a (alpha) for transparency (if
+you enable \verb|Blending|).
+Object properties must be specified in their definition (on 
+the commandline):
+\begin{itemize}
+\item \verb|gl_material=[gl_front,gl_ambient,[r,g,b,a]]|\\ 
+specifies the property for ambient light, use 
+\verb|gl_diffuse|, \verb|gl_specular| or \verb|gl_emission|
+instead of \verb|gl_ambient| for diffuse, specular or intrinsic
+light. Default is 0.2 for ambient, 0.8 for diffuse and 0 for emission
+on r,g,b channels and 1 on alpha channels.
+\item
+\verb|gl_material=[gl_front,gl_shininess,n]|\\
+specifies the exponent $n$ that will be used for specular light. The
+exponent is that of $\cos(\theta)$, where $\theta$ is the angle
+between reflected incoming light and visualization direction (default
+is $n=50$).
+\item
+\verb|gl_texture="filename"| specify an image filename that
+will be mapped on a sphere or a polygon or a parametric
+defined surface.
+\end{itemize} 
+
+Summing up, the formula for light on each channel is~:
+\begin{eqnarray*}
+ l &=&o_e+ o_a \sum_{j=1}^8 l_{a,j} + o_s \sum_{j=1}^8 l_{s,j}
+ \cos(\gamma_j)^S + \\
+ &  & +  o_d \sum_{j=1}^8 l_{d,j} 
+\cos(\alpha_j)^{e_j} \cos(\beta_j) \frac{1}{a_{0,j}+a_{1,j}
+  d_j+a_{2,j} d_j^2} 
+\end{eqnarray*}
+where~:
+\begin{itemize}
+\item $o_e,o_a,o_d,o_s$ are the material properties with respect to
+ ambiant, diffuse, specular light, $S$ is the
+``shininess'' (exponent for specular light)
+\item $l_{a,j},l_{d,j},l_{s,j}$ are the properties of spot $j$ for
+  ambiant, diffuse and specular light
+\item $a_{0,j}, a_{1,j}, a_{2,j}$ are attenuation coefficients
+of spot $j$, replaced by 1,0,0 if $w=0$ (no attenuation)
+\item $d_j$ is the distance of spot $j$ to the objet
+\item $\alpha_j$ is the angle between the direction of spot $j$ and the
+segment from spot $j$ and the object, except if $\alpha_j$ is
+greater to the angle of cutoff of spot $j$ ($\alpha_j=\pi/2$), 
+or if $w=0$ ($\alpha_j=0$, no attenuation for directionnal light).
+\item $\beta_j$ is the angle between the segment spot $j$-object and
+the normale to the objet (if $w=0$, replace spot $j$-objet by
+the spot direction)
+\item $\gamma_j$ is the angle between the symmetric of the direction 
+of the spot w.r.t. the normal of the object 
+and the segment object-eye
+\end{itemize}
+
+
+\subsubsection{3-d geometry}
+3-d geometry is based on the same principle than 2-d geometry: a
+subsession at the left and the representation in the
+middle. Mouse interaction outside the representation will
+change the viewpoint, inside the representation it will depending
+on the mode: draw a point, a segment, ... according to the mouse
+plan displayed above (all mouse clicks are supposed to refer
+to this plan, which is perpendicular to the visualisation axis).
+
+\subsection{Spreadsheet}
+Use the \verb|Table->new spreadsheet| menu to add a spreadsheet level.
+You will see a small configuration screen where you can change
+the number of rows/columns, if an attached graph is displayed,
+and also a variable name that you can use to get values
+from commandlines outside of the spreadsheet (using the matrix notation,
+e.g. {\tt a[1,2]} will return the value of the cell at row 2, column 3
+in {\tt xcas} syntax mode, or at row 1, column 2 in other syntax modes). 
+You can modify the spreadsheet configuration by hitting the
+status line above the cells or with the 
+spreadsheet \verb|File->variable name| menu later).
+If you have choosed to display the graph inside the spreadsheet
+configuration, it will dynamically
+display all cells that evaluate to a graphic object. 
+You may also display all the graphic
+objects of the spreadsheet in a separate window, either in 2-d or in 3-d by 
+hitting the \framebox{2d} or \framebox{3d} button at the right of 
+the spreadsheet menu.
+
+A cell may contain
+a fixed value (any valid Xcas object: integer, real, symbols,
+algebraic objects, strings, ...) or a formula depending on other
+cells. The syntax for formulas is the same as for many spreadsheet, 
+begin with a \verb|=|, then enter an algebraic expression where
+other cells are represented using a symbol made of the column
+name (e.g. A) and the row number (e.g. 1). When copying cells,
+cell dependance in a formula is considered relative
+unless you write a dollar (\$) sign before the column name or
+row number. You can enter an area instead of a cell name, an area
+is always a rectangular area, it is made of two cell names separated
+by \verb|..| representing opposite vertices of the rectangular area.
+
+To enter a new value or formula in a cell, click on the cell, then
+enter your value or formula with the keyboard. As soon as you type
+a normal character, the focus will move from the sheet to the
+commandline above the sheet. To help enter formula, you can use the mouse 
+to select a cell or a cell area. Once the value or formula is correct
+press the enter key to validate it. You can cancel your edit at
+any time by pressing the Esc key.
+
+To modify a cell value, click on the cell so that the value or formula
+is displayed in the commandline above, then click in the commandline,
+modify it and press Enter (or Esc to cancel).
+
+You can move in the sheet using the mouse or the direction keys, or
+using the ``goto'' input value at the topleft of the sheet. Just enter
+a cell name then enter to move there. If the cell does not exist,
+the sheet will be enlarged to make it exist. You can also enter
+an area in the ``goto'' input value to select this area without the
+mouse. You must use the ``goto'' input value to make special
+selections that are not connected areas, for example \verb|A1..B3,D,F| will
+``select'' the tabular with rows 1 to 3 and columns A, B, D and F.
+You can copy and paste a rectangular area with the mouse like this:
+select the rectangular area with the mouse, click on the target cell,
+click on the commandline, type Ctrl-U to erase the previous
+value then click on the middle button and type enter.
+
+If you want to copy a cell formula to an area of the spreadsheet,
+push at the right bottom part of the cell (when the mouse is on the
+correct area of the cell, it will display a different cursor)
+and move the mouse over the area you want to
+copy, then release the mouse.
+You can also copy cells using a menu item in the spreadsheet
+\verb|Edit| menu, you can either copy to the left, or to the bottom,
+or to a rectangular area previously selected with the mouse (in this
+case the cell which was below the mouse when you pushed the button
+will be copied to the rectangular area).
+
+The spreadsheet can be saved, exported, imported, etc. using the
+spreadsheet \verb|File| menu. The spreadsheet is also saved 
+as part of the session (but not as a standalone spreadsheet)
+when you save the whole session. When you load a session, the
+spreadsheet will not be evaled automatically, you must reeval
+it with the \verb|reeval| button explicitely (or modify one cell).
+
+Xcas does not provide filters for native binary spreadsheet formats,
+but you can import spreadsheet from other softwares or data using
+copy/paste or by saving them in the text CSV (comma separated values) format:
+cells values must always be separated by the same character e.g. a comma, and
+another character should be used to start a new row like a newline.
+For example, you can select a spreadsheet area inside Open Office
+and paste it inside Xcas.
+If you want to import formulas instead of values,
+use the Tools->Option menu of Open Office, find the spreadsheet Display item
+and check Formulas. Select the area inside Open Office, then
+paste at the same upper left cell position inside Xcas.
+Alternatively you can save the spreadsheet in CSV format inside
+Open Office with the \verb|File->Save as| 
+menuitem, then select CSV in the choosebox below. 
+Then inside Xcas, use the \verb|File->Insert CSV| menu item,
+select the file, change the separators if Xcas made a bad guess.
+Note that Xcas must use row numerotation starting
+at 1 instead of 0 for Open Office CSV formula import (this is the default).
+
+Click on the status line or select inside the \verb|Edit| menu
+for configuration and sheet modifications operations. Configuration
+operations should be self-explanatory, except for matrix fill cells : 
+when entering a matrix in the commandline, 
+you can choose between two modes, either the matrix will fill
+a rectangular area of cells, or it will fill only one cell.
+
+The \verb|Stats|
+menu is useful to make statistic plots in the corresponding graph.
+When you make a graph using this menu, you will have to select
+the data area where the statistic function will be applied (e.g.
+a polygonplot on \verb|A1..B10|) and a target cell. The target
+cell is a regular cell which was empty and will contain the formula
+defining the graphic object that will be displayed. If you check the
+value box, the graph will not change later, but if you don't check
+the value box and modify
+one data cell later, the graph will be updated like any cell 
+depending on this data cell would be.
+
+\subsection{Logo-like turtle}
+To add a turtle session, use the \verb|Turtle-> new turtle| menu.
+A logo level is made of three parts, the graphic display 
+in the middle, a subsession of commandlines at the left
+and an editor at the right. Commandlines are executed as in
+a main session (commandlines below an evaluated command
+are not reevaluated unlike in a geometry session). The editor
+records all commands.
+
+In a logo level, you can pilot a turtle, giving it orders like forward
+10 steps, turn left or right, etc. It will display a trace
+using a pen with a defined color. 
+You can use any language construction of Xcas to program the
+turtle moves. The current language use French commandnames
+(e.g. avance=move forward, etc.), the most important commandnames
+are available by clicking on the buttonbar below the turtle screen
+(check that the cursor is on a commandline before clicking on
+the button corresponding to the command you want to enter).
+Most commands have a default argument (e.g. 10 for avance),
+if you want to add parameters, do not add parenthesis. Logo
+commands use the same syntax as the \verb|return| statement,
+if you want to specify priorities, put parenthesis around
+the command and arguments, like this \verb|(hasard 10)|.
+
+\section{Session management}
+Xcas may open different sessions, each with its own levels.
+You can move levels inside a session or copy a level from a 
+session to another session.
+
+You can move one level in the session, push the mouse on its
+level number and release it at the destination.
+If you want to move some contiguous levels, click on
+the first level, then shift-click on the last level (that
+is click on the mouse while pushing the shifT key).
+You can now move these levels by pushing the mouse in the
+selected area and release it at destination.
+You can also copy these levels in another session by 
+Ctrl-C/Ctrl-V or select/middle click.
+
+You can delete the selected levels. You can paste the
+selected levels elsewhere by clicking with the middle mouse button 
+on another level number. You can
+merge the selected levels in a single level.
+You can also group the selected levels in a section and
+give it a section name, sections may be folded or unfolded.
+
+The \verb|File| menu of a session will let you save/export/load/import
+a session in/from the current session. The \verb|Session| menu 
+from the top menu will let you insert a new session.
+
+\section{Configuration}
+There are three main categories of configuration: CAS configuration
+for the computer algebra commands, geo configuration for the
+default graphic options when creating a new graph and general
+configuration for other configuration items (like colors
+or browser for help display, etc.). The first one is
+accessed by the red cas at the bottom middle. All
+configuration items are also accessible using the main 
+\verb|Cfg| menu.
+
+\section{Customization}
+You can alter part of the main menubar, by editing a file named
+{\tt xcasmenu}, either system-wide for the administrator
+(in the Xcas {\tt doc/en} subdirectory), or for you only
+(in the directory where you start \xcas). The same applies
+for the Examples item, the filename being {\tt xcasex}.
+The file {\tt keywords} may be used to translate Xcas commandnames
+in another language.
+\end{document}
