@@ -12,7 +12,8 @@
 MEMORY {
   INTERNAL_FLASH (rx) : ORIGIN = 0x00200000, LENGTH = 64K
   SRAM (rw)  : ORIGIN = 0x20000000, LENGTH = 256K
-  EXTERNAL_FLASH (rx) : ORIGIN = 0x90000000, LENGTH = 8M
+  EXTERNAL_FLASH (rx) : ORIGIN = 0x90000000, LENGTH = 2M
+  GPL_FLASH (rx) : ORIGIN = 0x90200000, LENGTH = 6M
   /*
   ITCM (rwx) : ORIGIN = 0x00000000, LENGTH = 16K
   DTCM (rwx) : ORIGIN = 0x20000000, LENGTH = 64K
@@ -24,6 +25,30 @@ MEMORY {
 STACK_SIZE = 32K;
 
 SECTIONS {
+  .giac : {
+    . = ALIGN(4);
+    *libtommath.a:(.text);
+    *libtommath.a:(.text.*);
+    *libtommath.a:(.rodata);
+    *libtommath.a:(.rodata.*);
+    *libgiac.a:(.text);
+    *libgiac.a:(.text.*);
+    *libgiac.a:(.rodata);
+    *libgiac.a:(.rodata.*);
+    *libmpfi.a:(.text);
+    *libmpfi.a:(.text.*);
+    *libmpfi.a:(.rodata);
+    *libmpfi.a:(.rodata.*);
+    *libmpfr.a:(.text);
+    *libmpfr.a:(.text.*);
+    *libmpfr.a:(.rodata);
+    *libmpfr.a:(.rodata.*);
+    *libgmp.a:(.text);
+    *libgmp.a:(.text.*);
+    *libgmp.a:(.rodata);
+    *libgmp.a:(.rodata.*);
+  } >GPL_FLASH
+
   .isr_vector_table ORIGIN(INTERNAL_FLASH) : {
     /* When booting, the STM32F412 fetches the content of address 0x0, and
      * extracts from it various key infos: the initial value of the PC register
@@ -164,6 +189,23 @@ SECTIONS {
      *(.ARM.exidx* .gnu.linkonce.armexidx.*)
     __exidx_end = .;
   } >INTERNAL_FLASH
+
+  .data.gpl : {
+    . = ALIGN(4);
+    _data_gpl_section_start_flash = LOADADDR(.data.gpl);
+    _data_gpl_section_start_ram = .;
+    *libtommath.a:(.data);
+    *libtommath.a:(.data.*);
+    *libgiac.a:(.data);
+    *libgiac.a:(.data.*);
+    *libmpfi.a:(.data);
+    *libmpfi.a:(.data.*);
+    *libmpfr.a:(.data);
+    *libmpfr.a:(.data.*);
+    *libgmp.a:(.data);
+    *libgmp.a:(.data.*);
+    _data_gpl_section_end_ram = .;
+  } >SRAM AT> GPL_FLASH
 
   .data : {
     /* The data section is written to Flash but linked as if it were in RAM.

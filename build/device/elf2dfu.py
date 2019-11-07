@@ -47,14 +47,15 @@ def print_sections(sections):
       print("%s-%s: %s, %s" % (hex(s['lma']), hex(s['lma'] + s['size'] - 1), s['name'], "{:,} bytes".format(s['size'])))
 
 def elf2dfu(elf_file, usb_vid_pid, dfu_file, verbose):
-  external_address_prefix = "9"; # External addresses start with 0x9
+  # External addresses start with 0x9
   # We don't sort sections on their names (.external, .internal) but on their
   # addresses because some sections like dfu_entry_point can either be the
   # internal or the external flash depending on which targets is built (ie
   # flasher executes dfu in place but epsilon executes dfu relocated in RAM)
-  external_block = {'name': "external", 'sections': loadable_sections(elf_file, external_address_prefix)}
-  internal_block = {'name': "internal", 'sections': [s for s in loadable_sections(elf_file) if s not in external_block['sections']]}
-  blocks = [external_block, internal_block]
+  gpl_block =      {'name': "gpl",      'sections': loadable_sections(elf_file, "90[2-8]")}
+  external_block = {'name': "external", 'sections': loadable_sections(elf_file, "90[01]")}
+  internal_block = {'name': "internal", 'sections': [s for s in loadable_sections(elf_file) if s not in external_block['sections'] and s not in gpl_block['sections']]}
+  blocks = [gpl_block, external_block, internal_block]
   blocks = [b for b in blocks if b['sections']]
   if verbose:
     for b in blocks:
@@ -77,6 +78,8 @@ def elf2dfu(elf_file, usb_vid_pid, dfu_file, verbose):
     # open(bin_file(b), "a").write("\xFF\xFF\xFF\xFF")
     targets.append({'address': address, 'name': name, 'data': open(bin_file(b), "rb").read()})
   generate_dfu_file([targets], usb_vid_pid, dfu_file)
+  generate_dfu_file([[t for t in targets if t["name"] == "gpl"]], usb_vid_pid, dfu_file[:-4] + "_gpl.dfu")
+  generate_dfu_file([[t for t in targets if t["name"] != "gpl"]], usb_vid_pid, dfu_file[:-4] + "_cc.dfu")
   for b in blocks:
     subprocess.call(["rm", bin_file(b)])
 

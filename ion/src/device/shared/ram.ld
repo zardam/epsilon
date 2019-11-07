@@ -85,6 +85,9 @@ SECTIONS {
     _heap_start = .;
     _heap_end = .;
     /* Effectively bypass copying .data to RAM */
+    _data_gpl_section_start_flash = .;
+    _data_gpl_section_start_ram = .;
+    _data_gpl_section_end_ram = .;
     _data_section_start_flash = .;
     _data_section_start_ram = .;
     _data_section_end_ram = .;

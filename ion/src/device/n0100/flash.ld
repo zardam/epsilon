@@ -11,12 +11,21 @@
 MEMORY {
   FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 1024K
   SRAM (rw) : ORIGIN = 0x20000000, LENGTH = 256K
-  EXTERNAL_FLASH (rx) : ORIGIN = 0x90000000, LENGTH = 8M
+  EXTERNAL_FLASH (rx) : ORIGIN = 0x90000000, LENGTH = 2M
+  GPL_FLASH (rx) : ORIGIN = 0x90200000, LENGTH = 6M
 }
 
 STACK_SIZE = 32K;
 
 SECTIONS {
+  .libc : {
+    . = ALIGN(4);
+    *libstdc++_nano.a:(.text)
+    *libstdc++_nano.a:(.text.*)
+    *libstdc++_nano.a:(.rodata)
+    *libstdc++_nano.a:(.rodata.*)
+  } >EXTERNAL_FLASH
+
   .giac : {
     . = ALIGN(4);
     *libtommath.a:(.text);
@@ -39,7 +48,7 @@ SECTIONS {
     *libgmp.a:(.text.*);
     *libgmp.a:(.rodata);
     *libgmp.a:(.rodata.*);
-  } >EXTERNAL_FLASH
+  } >GPL_FLASH
 
   .isr_vector_table ORIGIN(FLASH) : {
     /* When booting, the STM32F412 fetches the content of address 0x0, and
@@ -61,14 +70,6 @@ SECTIONS {
   .header : {
     KEEP(*(.header))
   } >FLASH
-
-  .libc : {
-    . = ALIGN(4);
-    *libstdc++_nano.a:(.text)
-    *libstdc++_nano.a:(.text.*)
-    *libstdc++_nano.a:(.rodata)
-    *libstdc++_nano.a:(.rodata.*)
-  } >EXTERNAL_FLASH
 
   .text : {
     . = ALIGN(4);
@@ -94,6 +95,23 @@ SECTIONS {
      *(.ARM.exidx* .gnu.linkonce.armexidx.*)
     __exidx_end = .;
   } >FLASH
+
+  .data.gpl : {
+    . = ALIGN(4);
+    _data_gpl_section_start_flash = LOADADDR(.data.gpl);
+    _data_gpl_section_start_ram = .;
+    *libtommath.a:(.data);
+    *libtommath.a:(.data.*);
+    *libgiac.a:(.data);
+    *libgiac.a:(.data.*);
+    *libmpfi.a:(.data);
+    *libmpfi.a:(.data.*);
+    *libmpfr.a:(.data);
+    *libmpfr.a:(.data.*);
+    *libgmp.a:(.data);
+    *libgmp.a:(.data.*);
+    _data_gpl_section_end_ram = .;
+  } >SRAM AT> GPL_FLASH
 
   .data : {
     /* The data section is written to Flash but linked as if it were in RAM.

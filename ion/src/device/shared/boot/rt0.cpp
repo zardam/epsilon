@@ -18,6 +18,9 @@ extern "C" {
   extern char _data_section_start_flash;
   extern char _data_section_start_ram;
   extern char _data_section_end_ram;
+  extern char _data_gpl_section_start_flash;
+  extern char _data_gpl_section_start_ram;
+  extern char _data_gpl_section_end_ram;
   extern char _bss_section_start_ram;
   extern char _bss_section_end_ram;
   extern cxx_constructor _init_array_start;
@@ -95,6 +98,14 @@ void __attribute__((noinline)) start() {
   Ion::Device::Board::initFPU();
 
   Ion::Device::Board::init();
+
+  /* Copy data section to RAM
+   * The data section is R/W but its initialization value matters. It's stored
+   * in Flash, but linked as if it were in RAM. Now's our opportunity to copy
+   * it. Note that until then the data section (e.g. global variables) contains
+   * garbage values and should not be used. */
+  size_t dataGplSectionLength = (&_data_gpl_section_end_ram - &_data_gpl_section_start_ram);
+  memcpy(&_data_gpl_section_start_ram, &_data_gpl_section_start_flash, dataGplSectionLength);
 
   /* Call static C++ object constructors
    * The C++ compiler creates an initialization function for each static object.
