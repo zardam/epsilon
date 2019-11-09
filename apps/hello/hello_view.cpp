@@ -1,6 +1,6 @@
 #include "hello_view.h"
 #include <assert.h>
-  extern "C" const char * caseval(const char *);
+extern "C" int ext_main();
 
 namespace Hello {
 
@@ -10,7 +10,7 @@ HelloView::HelloView() :
 }
 
 void HelloView::drawRect(KDContext * ctx, KDRect rect) const {
-  const char * str=caseval("*");
+  ext_main();
   ctx->fillRect(bounds(), KDColorWhite);
   ctx->drawString("   HOME: Menu principal", KDPoint(0,0));
   ctx->drawString("Depuis HOME, HOME lance Khicas", KDPoint(0,18));

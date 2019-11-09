@@ -541,6 +541,10 @@ bool alphawasactive(){
   return alphawasactive_;
 }
 
+bool waitforvblank(){
+  return Ion::Display::waitForVBlank();
+}
+
 bool back_key_pressed() {
   static int c = 0;
 

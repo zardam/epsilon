@@ -10,4 +10,4 @@ SFLAGS += -fPIE
 
 # giac
 SFLAGS += -DGIAC_NUMWORKS -DSIMULATOR
-LDFLAGS += -lgiac
+LDFLAGS += ext/simulator/lib/libgiac.a -lpthread -ldl -lpng -lmpfi -lmpfr -lgmp

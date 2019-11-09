@@ -4,6 +4,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+  int ext_main();
+  bool waitforvblank();
 bool back_key_pressed() ;
 // next 3 functions may be void if not inside a window class hierarchy
 void os_show_graph(); // show graph inside Python shell (Numworks), not used

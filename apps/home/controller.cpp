@@ -5,9 +5,7 @@ extern "C" {
 #include <assert.h>
 }
 
-#ifdef GIAC_NUMWORKS
-  extern "C" const char * caseval(const char *);
-#endif
+extern "C" int ext_main();
 
 namespace Home {
 
@@ -60,7 +58,7 @@ Controller::Controller(Responder * parentResponder, SelectableTableViewDataSourc
 
 bool Controller::handleEvent(Ion::Events::Event event) {
   if (event==Ion::Events::Home){
-    caseval("*");
+    ext_main();
     AppsContainer::sharedAppsContainer()->m_window.redraw(true);
     return true;
   }

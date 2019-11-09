@@ -54,7 +54,9 @@ class Integer final : public TreeHandle {
 public:
   /* Constructors & Destructors */
   static Integer BuildInteger(native_uint_t * digits, uint16_t numberOfDigits, bool negative, bool enableOverflow = false);
+#ifndef SIMULATOR
   Integer(int i) : Integer((native_int_t) i) {}
+#endif
   Integer(native_int_t i = 0);
   Integer(double_native_int_t i);
   Integer(const char * digits, size_t length, bool negative);

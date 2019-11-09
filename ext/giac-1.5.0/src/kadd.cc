@@ -12,6 +12,11 @@ using namespace std;
 using namespace giac;
 using namespace xcas;
 
+int ext_main(){
+  caseval("*");
+  return 0;
+}
+
 unsigned short mmind_col[]={COLOR_BLUE,COLOR_RED,COLOR_MAGENTA,COLOR_GREEN,COLOR_CYAN,COLOR_YELLOW};
 
 void mastermind_disp(const vector<int> & solution,const vector< vector<int> > & essais,const vector<int> & essai,bool fulldisp,GIAC_CONTEXT){

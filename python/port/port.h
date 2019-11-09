@@ -40,6 +40,7 @@ extern "C" {
 /* 
    basic SDK for direct control of the calculator like in KhiCAS 
  */
+  bool waitforvblank();
   int os_file_browser(const char ** filenames,int maxrecords,const char * extension);
   void numworks_hide_graph();
   void numworks_show_graph();

@@ -45,6 +45,7 @@ namespace giac {
   void Bdisp_PutDisp_DD(){
   }
   void Bdisp_AllClr_VRAM(){
+    waitforvblank();
     drawRectangle(0,0,LCD_WIDTH_PX,LCD_HEIGHT_PX,_WHITE);
   }
   void drawLine(int x1,int y1,int x2,int y2,int c){
@@ -235,6 +236,7 @@ namespace giac {
 	  y=C24*(menu->miniMiniTitle ? itemsStartY:menu->startY),
 	  w=C18*menu->width*C6+((menu->scrollbar && menu->scrollout)?C6:0),
 	  h=C24*menu->height-(menu->miniMiniTitle ? C24:0);
+	waitforvblank();
 	drawRectangle(x, y, w, h, COLOR_WHITE);
 	draw_line(x,y,x+w,y,COLOR_BLACK,context0);
 	draw_line(x,y+h,x+w,y+h,COLOR_BLACK,context0);
@@ -5238,7 +5240,8 @@ namespace xcas {
 	if (dy-eqdata.y>eqdata.dy+32)
 	  dy=eqdata.y+eqdata.dy+32;
       }
-      drawRectangle(0, STATUS_AREA_PX, LCD_WIDTH_PX, LCD_HEIGHT_PX-STATUS_AREA_PX,COLOR_WHITE);
+      waitforvblank();
+      drawRectangle(0, 0, LCD_WIDTH_PX, 205,COLOR_WHITE);
       // Bdisp_AllClr_VRAM();
       int save_clip_ymin=clip_ymin;
       clip_ymin=STATUS_AREA_PX;
@@ -6634,6 +6637,7 @@ namespace xcas {
 	  change_mode(text,0,contextptr); // text->python=false;
 	if (l>=4 && src[0]=='d' && src[1]=='e' && src[2]=='f' && src[3]==' ')
 	  change_mode(text,1,contextptr); // text->python=true;
+	waitforvblank();
 	drawRectangle(text->x, text->y, text->width, LCD_HEIGHT_PX-12, COLOR_WHITE);
       }
       int textX=text->x;
@@ -6863,6 +6867,7 @@ namespace xcas {
     }
     //if (editable)
     if (editable){
+      waitforvblank();
       drawRectangle(0,205,LCD_WIDTH_PX,17,44444);
       PrintMiniMini(0,205,"shift-1 tests|2 loops|3 misc|4 tortue|5 +- |      ",4,44444,giac::_BLACK);
       //draw_menu(1);
@@ -8791,7 +8796,9 @@ namespace xcas {
       translate_fkey(key);
       if (key==KEY_CTRL_PASTE)
 	return Console_Input((const char*) paste_clipboard());
-      if ( (key >= '0' && key <= '9' ) || (key >= 'A' && key <= 'Z') || (key >= 'a' && key <= 'z')){
+      if ( (key >= ' ' && key <= '~' )
+	   // (key>='0' && key<='9')|| (key >= 'A' && key <= 'Z') || (key >= 'a' && key <= 'z')
+	   ){
 	tmp_str[0] = key;
 	tmp_str[1] = '\0';
 	Console_Input(tmp_str);
@@ -9577,8 +9584,7 @@ namespace xcas {
     int print_y = 0; //pixel y cursor
     int print_y_locate;
 
-    if (redraw_mode & 1)
-      Bdisp_AllClr_VRAM();
+    // if (redraw_mode & 1) Bdisp_AllClr_VRAM();
 
     //GetFKeyIconPointer( 0x01BE, &ficon );
     //DisplayFKeyIcon( i, ficon);
@@ -9588,7 +9594,7 @@ namespace xcas {
       console_line & curline=Line[i+Start_Line];
       if (i == Cursor.y){
 	// cursor line
-	if ((redraw_mode & 1)==0)
+	//if ((redraw_mode & 1)==0)
 	  drawRectangle(0,i*vfontsize,LCD_WIDTH_PX,vfontsize,_WHITE);
 	if (curline.type == LINE_TYPE_INPUT || curline.type == LINE_TYPE_OUTPUT && curline.disp_len >= COL_DISP_MAX){
 	  locate(1, i + 1);
@@ -9692,6 +9698,7 @@ namespace xcas {
       else {
 	if ((redraw_mode & 1)==0)
 	  continue;
+	drawRectangle(0,i*vfontsize,LCD_WIDTH_PX,vfontsize,_WHITE);
 	bool bigoutput = curline.type==LINE_TYPE_OUTPUT && curline.disp_len>=COL_DISP_MAX-3;
 	locate(bigoutput?3:1,i+1);
 	if (curline.type==LINE_TYPE_INPUT || bigoutput)
@@ -9723,8 +9730,11 @@ namespace xcas {
 	}      
       } // end non cursor line
     } // end loop on all lines
+    drawRectangle(0,i*vfontsize,LCD_WIDTH_PX,205-i*vfontsize,_WHITE);
 
     if ((redraw_mode & 1)==1){
+      for (; (i < LINE_DISP_MAX) ; i++)
+	drawRectangle(0,i*vfontsize,LCD_WIDTH_PX,vfontsize,_WHITE);
       string menu("shift-1 ");
       menu += string(menu_f1);
       menu += "|2 ";
@@ -10228,6 +10238,5 @@ const char * gettext(const char * s) {
   }
   return s;
 }
-
 
 #endif // KHICAS

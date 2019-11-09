@@ -27,6 +27,7 @@ STACK_SIZE = 32K;
 SECTIONS {
   .giac : {
     . = ALIGN(4);
+    *(.text.ext_main)
     *libtommath.a:(.text);
     *libtommath.a:(.text.*);
     *libtommath.a:(.rodata);

@@ -16,7 +16,8 @@ extern "C" {
 #include "k_csdk.h"
 }
 
-int select_item(const char ** ptr,const char * title);
+  int select_item(const char ** ptr,const char * title);
+  const char * gettext(const char * s) ;
 
 #ifndef NO_NAMESPACE_XCAS
 namespace xcas {

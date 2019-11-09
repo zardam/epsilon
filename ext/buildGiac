@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -e
+
+function build {
+  (
+    cd giac-1.5.0/src
+    rm -f *.o *.a
+    make -f Makefile.numworks.$1 -j $(nproc)
+    cp libgiac.a ../../$1/lib/
+    rm -f *.o *.a
+  )
+}
+
+build n0100
+build n0110
+build simulator
