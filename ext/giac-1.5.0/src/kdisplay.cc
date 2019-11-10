@@ -6637,12 +6637,25 @@ namespace xcas {
 	  change_mode(text,0,contextptr); // text->python=false;
 	if (l>=4 && src[0]=='d' && src[1]=='e' && src[2]=='f' && src[3]==' ')
 	  change_mode(text,1,contextptr); // text->python=true;
-	waitforvblank();
-	drawRectangle(text->x, text->y, text->width, LCD_HEIGHT_PX-12, COLOR_WHITE);
+	//drawRectangle(text->x, text->y, text->width, LCD_HEIGHT_PX-(editable?17:0), COLOR_WHITE);
       }
-      int textX=text->x;
-      if(v[cur].newLine) 
-	textY=textY+text->lineHeight+v[cur].lineSpacing; 
+      if (cur%4==0)
+	waitforvblank();
+      int textX=text->x,saveY=textY;
+      if(v[cur].newLine) {
+	textY=textY+text->lineHeight+v[cur].lineSpacing;
+      }
+      int dh=18+v[cur].lineSpacing;
+      if (textY+dh+(editable?17:0)>LCD_HEIGHT_PX){
+	if (isFirstDraw)
+	  dh -= textY+dh+(editable?17:0)-LCD_HEIGHT_PX;
+	else {
+	  textY = saveY;
+	  break;
+	}
+      }
+      if (dh>0)
+	drawRectangle(textX, textY, LCD_WIDTH_PX, dh, COLOR_WHITE);
       if (editable){
 	char line_s[16];
 	sprint_int(line_s,cur+1);
@@ -6783,6 +6796,7 @@ namespace xcas {
 	  //time for a new line
 	  textX=text->x+deltax;
 	  textY=textY+text->lineHeight+v[cur].lineSpacing;
+	  drawRectangle(0, textY, LCD_WIDTH_PX, 18+v[cur].lineSpacing, COLOR_WHITE);
 	  ++nlines;
 	} //else still fits, print new word normally (or just increment textX, if we are not "on stage" yet)
 	if(textY >= -24 && textY < LCD_HEIGHT_PX) {
@@ -6854,12 +6868,12 @@ namespace xcas {
       }
       // free(singleword);
       v[cur].nlines=nlines;
-      if(isFirstDraw) {
+      if (isFirstDraw) 
 	totalTextY = textY+(showtitle ? 0 : 24);
-      } else if(textY>LCD_HEIGHT_PX) {
-	break;
-      }
     } // end main draw loop
+    int dh=LCD_HEIGHT_PX-textY-text->lineHeight-(editable?17:0);
+    if (dh>0)
+      drawRectangle(0, textY+text->lineHeight, LCD_WIDTH_PX, dh, COLOR_WHITE);
     isFirstDraw=0;
     if(showtitle) {
       drawRectangle(0, 0, LCD_WIDTH_PX, 24, _WHITE);
@@ -6867,7 +6881,7 @@ namespace xcas {
     }
     //if (editable)
     if (editable){
-      waitforvblank();
+      // waitforvblank();
       drawRectangle(0,205,LCD_WIDTH_PX,17,44444);
       PrintMiniMini(0,205,"shift-1 tests|2 loops|3 misc|4 tortue|5 +- |      ",4,44444,giac::_BLACK);
       //draw_menu(1);
@@ -9632,7 +9646,7 @@ namespace xcas {
 	  locate(COL_DISP_MAX, i + 1);
 #else
 	  print_y=i*vfontsize;
-	  print_x=LCD_WIDTH_PX-hfontsize;
+	  print_x=LCD_WIDTH_PX+1-hfontsize;
 #endif
 	  if (curline.readonly){
 	    if(curline.disp_len - curline.start_col != COL_DISP_MAX) {
