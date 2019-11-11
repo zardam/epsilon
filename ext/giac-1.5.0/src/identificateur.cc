@@ -62,14 +62,6 @@ namespace giac {
     bool s_dynalloc;
   };
 
-  struct alias_identificateur {
-    int * ref_count;
-    gen * value;
-    const char * id_name;
-    vecteur * localvalue;
-    short int * quoted;
-  };
-
 #ifdef DOUBLEVAL // #ifdef GIAC_GENERIC_CONSTANTS
   const char string_euler_gamma[]="euler_gamma";
   identificateur _IDNT_euler_gamma(string_euler_gamma,(double) .577215664901533);
