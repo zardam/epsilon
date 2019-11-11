@@ -172,7 +172,7 @@ namespace giac {
 
 #define C24 18 // 24 on 90
 #define C18 18 // 18
-#define C10 18 // 18
+#define C10 10 // 18
 #define C6 6 // 6
 
   int MB_ElementCount(const char * s){
@@ -232,21 +232,22 @@ namespace giac {
       if(menu->statusText != NULL) DefineStatusMessage(menu->statusText, 1, 0, 0);
       // Clear the area of the screen we are going to draw on
       if(0 == menu->pBaRtR) {
-	int x=C18*(menu->startX-1),
-	  y=C24*(menu->miniMiniTitle ? itemsStartY:menu->startY),
-	  w=C18*menu->width*C6+((menu->scrollbar && menu->scrollout)?C6:0),
-	  h=C24*menu->height-(menu->miniMiniTitle ? C24:0);
-	waitforvblank();
-	drawRectangle(x, y, w, h, COLOR_WHITE);
+	int x=C10*menu->startX-1,
+	  y=C24*(menu->miniMiniTitle ? itemsStartY:menu->startY)-1,
+	  w=2+C10*menu->width /* + ((menu->scrollbar && menu->scrollout)?C10:0) */,
+	  h=2+C24*menu->height-(menu->miniMiniTitle ? C24:0);
+	// drawRectangle(x, y, w, h, COLOR_WHITE);
 	draw_line(x,y,x+w,y,COLOR_BLACK,context0);
 	draw_line(x,y+h,x+w,y+h,COLOR_BLACK,context0);
 	draw_line(x,y,x,y+h,COLOR_BLACK,context0);
-	draw_line(x+w-1,y,x+w-1,y+h,COLOR_BLACK,context0);
+	draw_line(x+w,y,x+w,y+h,COLOR_BLACK,context0);
       }
       if (menu->numitems>0) {
 	for(int curitem=0; curitem < menu->numitems; curitem++) {
 	  // print the menu item only when appropriate
-	  if(menu->scroll < curitem+1 && menu->scroll > curitem-itemsHeight) {
+	  if(menu->scroll <= curitem && menu->scroll > curitem-itemsHeight) {
+	    if ((curitem-menu->scroll) % 6==0)
+	      waitforvblank();
 	    char menuitem[256] = "";
 	    if(menu->numitems>=100 || menu->type == MENUTYPE_MULTISELECT){
 	      strcpy(menuitem, "  "); //allow for the folder and selection icons on MULTISELECT menus (e.g. file browser)
@@ -273,18 +274,20 @@ namespace giac {
 	      //make sure we have a string big enough to have background when item is selected:          
 	      // MB_ElementCount is used instead of strlen because multibyte chars count as two with strlen, while graphically they are just one char, making fillerRequired become wrong
 	      int fillerRequired = menu->width - MB_ElementCount(menu->items[curitem].text) - (menu->type == MENUTYPE_MULTISELECT ? 2 : 3);
-	      for(int i = 0; i < fillerRequired; i++) strcat(menuitem, " ");
-	      PrintXY(C6*menu->startX,C18*(curitem+itemsStartY-menu->scroll),menuitem, (menu->selection == curitem+1 ? TEXT_MODE_INVERT : TEXT_MODE_NORMAL));
+	      for(int i = 0; i < fillerRequired; i++)
+		strcat(menuitem, " ");
+	      drawRectangle(C10*menu->startX,C18*(curitem+itemsStartY-menu->scroll),C10*menu->width,C24,(menu->selection == curitem+1 ? _BLACK : _WHITE));
+	      PrintXY(C10*menu->startX,C18*(curitem+itemsStartY-menu->scroll),menuitem, (menu->selection == curitem+1 ? TEXT_MODE_INVERT : TEXT_MODE_NORMAL));
 	    } else {
 	      /*int textX = (menu->startX-1) * C18;
-		int textY = curitem*C24+itemsStartY*C24-menu->scroll*C24-C24+C6;
+		int textY = curitem*C24+itemsStartY*C24-menu->scroll*C24-C24+C10;
 		clearLine(menu->startX, curitem+itemsStartY-menu->scroll, (menu->selection == curitem+1 ? textColorToFullColor(menu->items[curitem].color) : COLOR_WHITE));
 		drawLine(textX, textY+C24-4, LCD_WIDTH_PX-2, textY+C24-4, COLOR_GRAY);
 		PrintMini(&textX, &textY, (unsigned char*)menuitem, 0, 0xFFFFFFFF, 0, 0, (menu->selection == curitem+1 ? COLOR_WHITE : textColorToFullColor(menu->items[curitem].color)), (menu->selection == curitem+1 ? textColorToFullColor(menu->items[curitem].color) : COLOR_WHITE), 1, 0);*/
 	    }
 	    // deal with menu items of type MENUITEM_CHECKBOX
 	    if(menu->items[curitem].type == MENUITEM_CHECKBOX) {
-	      PrintXY(C6*(menu->startX+menu->width-1),C18*(curitem+itemsStartY-menu->scroll),
+	      PrintXY(C10*(menu->startX+menu->width-4),C18*(curitem+itemsStartY-menu->scroll),
 		      (menu->items[curitem].value == MENUITEM_VALUE_CHECKED ? " [+]" : " [-]"),
 		      (menu->selection == curitem+1 ? TEXT_MODE_INVERT : (menu->pBaRtR == 1? TEXT_MODE_NORMAL : TEXT_MODE_NORMAL)));
 	    }
@@ -305,14 +308,17 @@ namespace giac {
 	      }
 	      if (menu->items[curitem].isselected) {
 		if (menu->selection == curitem+1) {
-		  PrintXY(C6*menu->startX,C18*(curitem+itemsStartY-menu->scroll),"\xe6\x9b", TEXT_MODE_NORMAL);
+		  PrintXY(C10*menu->startX,C18*(curitem+itemsStartY-menu->scroll),"\xe6\x9b", TEXT_MODE_NORMAL);
 		} else {
-		  PrintXY(C6*menu->startX,C18*(curitem+itemsStartY-menu->scroll),"\xe6\x9b", TEXT_MODE_NORMAL);
+		  PrintXY(C10*menu->startX,C18*(curitem+itemsStartY-menu->scroll),"\xe6\x9b", TEXT_MODE_NORMAL);
 		}
 	      }
 	    }
 	  }
-	}
+	} // end for curitem<menu->numitem
+	int dh=menu->height-menu->numitems;
+	if (dh>0)
+	  drawRectangle(C10*menu->startX,C24*(menu->numitems+(showtitle?1:0)),C10*menu->width,C24*dh,_WHITE);
 	if (menu->scrollbar) {
 #ifdef SCROLLBAR
 	  TScrollbar sb;
@@ -324,7 +330,7 @@ namespace giac {
 	  sb.barheight = itemsHeight*C24;
 	  sb.bartop = (itemsStartY-1)*C24;
 	  sb.barleft = menu->startX*C18+menu->width*C18 - C18 - (menu->scrollout ? 0 : 5);
-	  sb.barwidth = C6;
+	  sb.barwidth = C10;
 	  Scrollbar(&sb);
 #endif
 	}
@@ -333,16 +339,18 @@ namespace giac {
 	giac::printCentered(menu->nodatamsg, (itemsStartY*C24)+(itemsHeight*C24)/2-12);
       }
       if(showtitle) {
-	if(menu->miniMiniTitle) {
-	  int textX = 0, textY=(menu->startY-1)*C24;
+	int textX = C10*menu->startX, textY=menu->startY*C24;
+	drawRectangle(textX,textY,C10*menu->width,C24,_WHITE);
+	if (menu->miniMiniTitle) 
 	  PrintMini( textX, textY, menu->title, 0 );
-	} else PrintXY(6*menu->startX, 1+C18*menu->startY, menu->title, TEXT_MODE_NORMAL);
+	else
+	  PrintXY(textX, textY, menu->title, TEXT_MODE_NORMAL);
 	if(menu->subtitle != NULL) {
-	  int textX=(MB_ElementCount(menu->title)+menu->startX-1)*C18+C10, textY=C6;
+	  int textX=(MB_ElementCount(menu->title)+menu->startX-1)*C18+C10, textY=C10;
 	  PrintMini(textX, textY, menu->subtitle, 0);
 	}
-	PrintXY(278, 1, "____", 0);
-	PrintXY(278, 1, keyword, 0);
+	PrintXY(textX+C10*(menu->width-5), 1, "____", 0);
+	PrintXY(textX+C10*(menu->width-5), 1, keyword, 0);
       }
       /*if(menu->darken) {
 	DrawFrame(COLOR_BLACK);
@@ -6639,7 +6647,7 @@ namespace xcas {
 	  change_mode(text,1,contextptr); // text->python=true;
 	//drawRectangle(text->x, text->y, text->width, LCD_HEIGHT_PX-(editable?17:0), COLOR_WHITE);
       }
-      if (cur%4==0)
+      if (cur%4==0 && textY>=(showtitle?24:0))
 	waitforvblank();
       int textX=text->x,saveY=textY;
       if(v[cur].newLine) {
@@ -6654,7 +6662,7 @@ namespace xcas {
 	  break;
 	}
       }
-      if (dh>0)
+      if (dh>0 && textY>=(showtitle?24:0))
 	drawRectangle(textX, textY, LCD_WIDTH_PX, dh, COLOR_WHITE);
       if (editable){
 	char line_s[16];
@@ -6796,10 +6804,11 @@ namespace xcas {
 	  //time for a new line
 	  textX=text->x+deltax;
 	  textY=textY+text->lineHeight+v[cur].lineSpacing;
-	  drawRectangle(0, textY, LCD_WIDTH_PX, 18+v[cur].lineSpacing, COLOR_WHITE);
+	  if (textY>=(showtitle?24:0))
+	    drawRectangle(0, textY, LCD_WIDTH_PX, 18+v[cur].lineSpacing, COLOR_WHITE);
 	  ++nlines;
 	} //else still fits, print new word normally (or just increment textX, if we are not "on stage" yet)
-	if(textY >= -24 && textY < LCD_HEIGHT_PX) {
+	if(textY >= (showtitle?24:0) && textY < LCD_HEIGHT_PX) {
 	  temptextX=textX;
 	  if (editable){
 	    couleur=linecomment?5:find_color(singleword,contextptr);
@@ -6876,6 +6885,7 @@ namespace xcas {
       drawRectangle(0, textY+text->lineHeight, LCD_WIDTH_PX, dh, COLOR_WHITE);
     isFirstDraw=0;
     if(showtitle) {
+      waitforvblank();
       drawRectangle(0, 0, LCD_WIDTH_PX, 24, _WHITE);
       drawScreenTitle((char*)text->title);
     }
@@ -9646,7 +9656,7 @@ namespace xcas {
 	  locate(COL_DISP_MAX, i + 1);
 #else
 	  print_y=i*vfontsize;
-	  print_x=LCD_WIDTH_PX+1-hfontsize;
+	  print_x=LCD_WIDTH_PX+2-hfontsize;
 #endif
 	  if (curline.readonly){
 	    if(curline.disp_len - curline.start_col != COL_DISP_MAX) {
@@ -9730,7 +9740,7 @@ namespace xcas {
 #ifdef CURSOR
 	  locate(COL_DISP_MAX, i + 1);
 #else
-	  print_x=LCD_WIDTH_PX-hfontsize;
+	  print_x=LCD_WIDTH_PX+2-hfontsize;
 #endif
 	  Print((char *)">",COLOR_BLUE);
 	}

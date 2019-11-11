@@ -658,6 +658,7 @@ int getkey_raw(bool allow_suspend){
 	reset_kbd();
       if (allow_suspend && (key==7 || key==8) ){ // power
 	Ion::Power::suspend(true);
+	numworks_fill_rect(0,0,320,240,65535);
 	Ion::Backlight::setBrightness(GlobalPreferences::sharedGlobalPreferences()->brightnessLevel());
 	AppsContainer::sharedAppsContainer()->reloadTitleBarView();
 	//AppsContainer::sharedAppsContainer()->redrawWindow();

@@ -316,7 +316,7 @@ namespace giac {
     char* nodatamsg; // message to show when there are no menu items to display
     int startX=1; //X where to start drawing the menu. NOTE this is not absolute pixel coordinates but rather character coordinates
     int startY=0; //Y where to start drawing the menu. NOTE this is not absolute pixel coordinates but rather character coordinates
-    int width=22; // NOTE this is not absolute pixel coordinates but rather character coordinates
+    int width=28; // NOTE this is not absolute pixel coordinates but rather character coordinates
     int height=12; // NOTE this is not absolute pixel coordinates but rather character coordinates
     int scrollbar=1; // 1 to show scrollbar, 0 to not show it.
     int scrollout=0; // whether the scrollbar goes out of the menu area (1) or it overlaps some of the menu area (0)
