@@ -5761,10 +5761,29 @@ namespace xcas {
     }
     //*logptr(contextptr) << eq.data << endl;
   }
-
-  void do_run(const char * s,gen & g,gen & ge,GIAC_CONTEXT){
+  
+  void clear_turtle_history(GIAC_CONTEXT){
+    history_in(contextptr).clear();
+    history_out(contextptr).clear();
+    turtle_stack()=vector<logo_turtle>(1,logo_turtle());
+  }    
+  
+  void do_restart(GIAC_CONTEXT){
+    if (contextptr){
+      if (contextptr->globalcontextptr && contextptr->globalcontextptr->tabptr)
+	contextptr->globalcontextptr->tabptr->clear();
+    }
+    else
+      _restart(0,contextptr);
+  }
+  void do_run(const char * s,gen & g,gen & ge,const context * & contextptr){
     if (!contextptr)
       contextptr=new giac::context;
+    if (!strcmp(s,"restart")){
+      clear_turtle_history(contextptr);
+      do_restart(contextptr);
+      return;
+    }
     int S=strlen(s);
     char buf[S+1];
     buf[S]=0;
@@ -5788,20 +5807,27 @@ namespace xcas {
     clear_abort();
     // execution_in_progress = 0;
     if (esc_flag || ctrl_c){
+      esc_flag=ctrl_c=interrupted=false;
       while (confirm("Interrupted","OK",true)==-1)
 	; // insure ON has been removed from keyboard buffer
       ge=string2gen("Interrupted",false);
       // memory full?
       if (!kbd_interrupted){
 	// clear turtle, display msg
-	turtle_stack()=vector<logo_turtle>(1,logo_turtle());
-	while (confirm("Memoire remplie! Choisir","des variables a purger",true)==-1)
-	  ;
-	gen g=select_var(contextptr);
-	if (g.type==_IDNT)
+	clear_turtle_history(contextptr);
+	int res=confirm("Memoire remplie! Purger","EXE variable, Back: tout.",false);
+	if (res==KEY_CTRL_F1 && select_var(contextptr).type==_IDNT){
+	  size_t savestackptr = stackptr;
+#ifdef x86_64
+	  stackptr=0xffffffffffffffff;
+#else
+	  stackptr=0xffffffff;
+#endif
 	  _purge(g,contextptr);
-	else 
-	  _restart(0,contextptr);
+	  stackptr=savestackptr;
+	}
+	else
+	  do_restart(contextptr);
       }
     }
     //Console_Output("Done"); return ;
@@ -8794,10 +8820,6 @@ namespace xcas {
 	python_compat(edptr->python,contextptr);
       dConsolePutChar('\x1e');
     }
-  }
-
-  void do_restart(GIAC_CONTEXT){
-    giac::_restart(gen(vecteur(0),_SEQ__VECT),contextptr);
   }
 
   void chk_restart(GIAC_CONTEXT){

@@ -3,9 +3,9 @@
 #ifdef KHICAS
 #include "kdisplay.h"
 #ifdef DEVICE
-const size_t stackptr=0x20036000;
+size_t stackptr=0x20036000;
 #else
-const size_t stackptr=0xffffffffffffffff;
+size_t stackptr=0xffffffffffffffff;
 #endif
 #endif
 

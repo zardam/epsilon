@@ -3215,9 +3215,11 @@ namespace giac {
     symbolic e=symbolic(at_pnt,gen(makevecteur(x,c,nom),_PNT__VECT));
     gen ee(e);
     ee.subtype=gnuplot_show_pnt(e,contextptr);
+#ifndef KHICAS
     history_plot(contextptr).push_back(ee);
     if (io_graph(contextptr))
       __interactive.op(ee,contextptr);
+#endif
     return ee;
   }
   gen symb_segment(const gen & x,const gen & y,const vecteur & c,int type,GIAC_CONTEXT){
@@ -3230,9 +3232,11 @@ namespace giac {
       e=symbolic(at_pnt,gen(makevecteur(gen(makevecteur(x,y),type),c[0],c[1]),_PNT__VECT));
     gen ee(e);
     ee.subtype=gnuplot_show_pnt(*e._SYMBptr,contextptr);
+#ifndef KHICAS
     history_plot(contextptr).push_back(ee);
     if (io_graph(contextptr))
       __interactive.op(ee,contextptr);
+#endif
     return ee;
   }
   gen symb_pnt(const gen & x,const gen & c,GIAC_CONTEXT){
@@ -3243,9 +3247,11 @@ namespace giac {
 #else
     ee.subtype=-1;
 #endif
+#ifndef KHICAS
     history_plot(contextptr).push_back(ee);
     if (io_graph(contextptr))
       __interactive.op(ee,contextptr);
+#endif
     return ee;
   }
   gen symb_pnt(const gen & x,GIAC_CONTEXT){
@@ -10740,9 +10746,11 @@ namespace giac {
     vecteur v(*b._SYMBptr->feuille._VECTptr);
     v[1]=c;
     gen e=symbolic(at_pnt,gen(v,_PNT__VECT));
+#ifndef KHICAS
     history_plot(contextptr).push_back(e);
     if (io_graph(contextptr))
       __interactive.op(e,contextptr);    
+#endif
     return e;
   }
   static const char _display_s []="display";

@@ -8504,8 +8504,13 @@ static define_unary_function_eval (__os_version,&_os_version,_os_version_s);
       if (plot==1)
 	return tvi; // gprintf("%gen",makevecteur(gen(poi,_SEQ__VECT)),1,contextptr);
     }
-    if (abs_calc_mode(contextptr)!=38)
-      *logptr(contextptr) << (param?"plotparam(":"plotfunc(") << gen(w,_SEQ__VECT) << ')' <<"\nInside Xcas you can see the function with Cfg>Show>DispG." <<  '\n';
+    if (abs_calc_mode(contextptr)!=38){
+      *logptr(contextptr) << (param?"plotparam(":"plotfunc(") << gen(w,_SEQ__VECT) << ')'
+#ifdef HAVE_LIBFLTK
+			  <<"\nInside Xcas you can see the function with Cfg>Show>DispG."
+#endif
+			  <<  '\n';
+    }
     return tvi;
   }
   static const char _tabvar_s []="tabvar";

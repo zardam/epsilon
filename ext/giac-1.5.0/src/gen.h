@@ -17,6 +17,7 @@
  */
 #ifndef _GIAC_GEN_H
 #define _GIAC_GEN_H
+extern size_t stackptr;
 
 /* Warning: the size of a gen depend on the architecture and of compile-time flags
    Define -DSMARTPTR64 on 64 bit CPU if the pointers allocated by new are 48 bits
