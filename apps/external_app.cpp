@@ -33,9 +33,12 @@ ExternalApp::ExternalApp(ExternalApp::Snapshot * snapshot) :
   ::App(snapshot, nullptr)
 {
   AppsContainer * container = AppsContainer::sharedAppsContainer();
-  bool success = Ion::Archive::executeFile(snapshot->descriptor()->name());
+  const uint32_t heapSize = 1<<16;
+  void * heap = malloc(heapSize);
+  uint32_t success = Ion::Archive::executeFile(snapshot->descriptor()->name(), heap, heapSize);
+  free(heap);
   container->switchTo(container->appSnapshotAtIndex(0));
-  if (!success) {
+  if (success != 0) {
     container->activeApp()->displayWarning(I18n::Message::StorageMemoryFull1);
   }
 }

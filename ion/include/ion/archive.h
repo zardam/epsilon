@@ -1,5 +1,5 @@
-#ifndef ION_ARCHIVE_H
-#define ION_ARCHIVE_H
+#ifndef EXTERNAL_ARCHIVE_H
+#define EXTERNAL_ARCHIVE_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -10,16 +10,16 @@ namespace Archive {
 constexpr int MaxNameLength = 40;
 
 struct File {
-    char name[MaxNameLength];
+    const char *name;
     const uint8_t *data;
     size_t dataLength;
     bool isExecutable;
-} ;
+};
 
 bool fileAtIndex(size_t index, File &entry);
 int indexFromName(const char *name);
 size_t numberOfFiles();
-bool executeFile(const char *name);
+uint32_t executeFile(const char *name, void * heap, const uint32_t heapSize);
 
 }
 }

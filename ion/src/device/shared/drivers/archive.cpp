@@ -1,4 +1,5 @@
 #include <ion/archive.h>
+#include <api.h>
 
 #include <string.h>
 #include <stdlib.h>
@@ -27,14 +28,22 @@ struct TarHeader
 
 static_assert(sizeof(TarHeader) == 512);
 
+bool isSane(const TarHeader* tar) {
+  return !memcmp(tar->magic, "ustar  ", 8) && tar->name[0] != '\x00' && tar->name[0] != '\xFF';
+}
+
 bool fileAtIndex(size_t index, File &entry) {
-  const TarHeader* tar = reinterpret_cast<const TarHeader*>(0x90000000);
+  const TarHeader* tar = reinterpret_cast<const TarHeader*>(0x90200000);
   unsigned size = 0;
+
+  // Sanity check.
+  if (!isSane(tar)) {
+    return false;
+  }
 
   /**
    * TAR files are comprised of a set of records aligned to 512 bytes boundary
-   * followed by data. First record is always us, so don't bother checking its
-   * vailidy.
+   * followed by data.
    */
   while (index-- > 0) {
     size = 0;
@@ -47,20 +56,51 @@ bool fileAtIndex(size_t index, File &entry) {
     tar = reinterpret_cast<const TarHeader*>(reinterpret_cast<const char*>(tar) + stride);
 
     // Sanity check.
-    if (memcmp(tar->magic, "ustar  ", 8) || tar->name[0] == '\x00' || tar->name[0] == '\xFF')
-        return false;
+    if (!isSane(tar)) {
+      return false;
+    }
   }
 
   // File entry found, copy data out.
-  strlcpy(entry.name, tar->name, MaxNameLength);
+  entry.name = tar->name;
   entry.data = reinterpret_cast<const uint8_t*>(tar) + sizeof(TarHeader);
   entry.dataLength = size;
 
   return true;
 }
 
-bool executeFile(const char *name) {
-  return false;
+typedef uint32_t (*entrypoint)(const uint32_t, const void *, void *, const uint32_t);
+
+uint32_t executeFile(const char *name, void * heap, const uint32_t heapSize) {
+  File entry;
+  if(fileAtIndex(indexFromName(name), entry)) {
+    uint32_t ep = *reinterpret_cast<const uint32_t*>(entry.data);
+    if(ep >= 0x90200000 && ep < 0x90800000) {
+      return ((entrypoint)ep)(API_VERSION, getApiPointers(), heap, heapSize);
+    }
+  }
+  return -1;
+}
+
+int indexFromName(const char *name) {
+  File entry;
+
+  for (int i = 0; fileAtIndex(i, entry); i++) {
+    if (strcmp(name, entry.name) == 0) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+
+size_t numberOfFiles() {
+  File dummy;
+  size_t count;
+
+  for (count = 0; fileAtIndex(count, dummy); count++);
+
+  return count;
 }
 
 }

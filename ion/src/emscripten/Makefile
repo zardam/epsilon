@@ -11,7 +11,7 @@ ion_src += $(addprefix ion/src/shared/, \
   power.cpp \
   random.cpp \
   timing.cpp \
-	dummy/archive.cpp \
+  dummy/archive.cpp \
   dummy/backlight.cpp \
   dummy/battery.cpp \
   dummy/display.cpp \
